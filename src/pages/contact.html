@@ -294,6 +294,11 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
+
+
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -309,15 +314,47 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 #sl-preloader { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
 </style>
 <style id="csp-header-fixes">
-/* Apply Merienda font to colored gradient text in hero section headlines */
-.csp-hero-title em {
+/* Apply Merienda font to ALL gradient colored text across all section titles and custom sections */
+.csp-hero-title em,
+.csp-section-title span,
+.eael-dch-title-gradient,
+.eael-dch-title .eael-dch-title-gradient,
+.eael-dch-title-text.eael-dch-title-gradient,
+span.eael-dch-title-gradient,
+.elementor-repeater-item-83c38c3,
+.elementor-repeater-item-0d84ade,
+.elementor-repeater-item-52db60f,
+.elementor-repeater-item-10cd455,
+.elementor-repeater-item-ec69b67,
+h1 span[style*="background-clip"],
+h2 span[style*="background-clip"],
+h3 span[style*="background-clip"] {
   font-family: 'Merienda', cursive, sans-serif !important;
   font-style: normal !important;
   font-weight: 700 !important;
-  background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  background-image: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
+}
+
+/* Center Discover by Category card buttons */
+.elementor-element-7ad4723a .elementskit-info-image-box .elementskit-box-footer,
+.elementor-element-7ad4723a .elementskit-info-image-box .box-footer,
+.elementor-element-7ad4723a .elementskit-info-image-box .btn-wraper,
+.elementskit-info-image-box .btn-wraper,
+.elementskit-info-image-box .elementskit-box-footer {
+  text-align: center !important;
+  justify-content: center !important;
+  display: flex !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.elementskit-info-image-box .elementskit-btn {
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* Hide the sticky spacer clone that creates a blank gap at top of page */
@@ -639,10 +676,158 @@ button[type="submit"],
     min-width: unset !important;
   }
 }
+/* ── HIDE LEGACY ORANGE PRELOADER & WP PAGE TRANSITIONS ───────────────────── */
+#sl-preloader,
+.sl-pl-back,
+#safelayout-cute-preloader-css,
+e-page-transition,
+.sl-pl-spin-container,
+#sl-pl-canvas {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ── MODERN SLEEK CONSPODIUM PAGE LOADER (STRICT ZERO-FLASH) ───────────────── */
+#csp-page-loader {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(6, 16, 34, 0.96) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  z-index: 999999999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#csp-page-loader.loaded {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+.csp-loader-box {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 18px !important;
+}
+
+.csp-loader-spinner-ring {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  border: 3px solid rgba(255, 255, 255, 0.08) !important;
+  border-top-color: #00AEFE !important;
+  border-right-color: #B71F71 !important;
+  animation: csp-spin-ring 0.75s linear infinite !important;
+  box-shadow: 0 0 32px rgba(0, 174, 254, 0.4) !important;
+}
+
+@keyframes csp-spin-ring {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.csp-loader-brand {
+  font-family: 'Merienda', cursive, sans-serif !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
 </style>
+
+<!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
+<div id="csp-page-loader">
+  <div class="csp-loader-box">
+    <div class="csp-loader-spinner-ring"></div>
+    <div class="csp-loader-brand">Conspodium</div>
+  </div>
+</div>
 
 <script id="csp-mobile-menu-script">
 (function() {
+  function getRootUrl(targetRoute) {
+    var p = window.location.pathname;
+    var isPublicDir = p.startsWith('/public') || p.includes('/public/');
+    var prefix = isPublicDir ? '/public' : '';
+    if (!targetRoute || targetRoute === '/' || targetRoute === './' || targetRoute === '../') {
+      return prefix + '/';
+    }
+    var clean = targetRoute.replace(/^\.\.\//, '').replace(/^\.\//, '').replace(/^\//, '');
+    return prefix + '/' + clean;
+  }
+
+  function initLoaderAndLogo() {
+    var loader = document.getElementById('csp-page-loader');
+
+    function dismissLoader() {
+      if (loader) {
+        setTimeout(function() {
+          loader.classList.add('loaded');
+        }, 1100);
+      }
+    }
+
+    dismissLoader();
+
+    // Event listeners for page restore/navigation
+    window.addEventListener('pageshow', function() {
+      if (loader) loader.classList.add('loaded');
+    });
+    window.addEventListener('popstate', function() {
+      if (loader) loader.classList.add('loaded');
+    });
+
+    // Intercept link clicks to trigger full 1.2s loader transition
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a[href]');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:') || a.getAttribute('target') === '_blank') return;
+      if (loader) {
+        loader.classList.remove('loaded');
+      }
+    });
+
+    // Fix all header logos to strictly navigate back to Home root
+    var homeUrl = getRootUrl('/');
+    var logos = document.querySelectorAll('img.sticel-logo-shrink, .elementor-element-738d6a4 a, .elementor-element-2d4f26f a');
+    logos.forEach(function(el) {
+      var anchor = el.tagName.toLowerCase() === 'a' ? el : el.closest('a');
+      if (anchor) {
+        anchor.setAttribute('href', homeUrl);
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (loader) loader.classList.add('active');
+          window.location.href = homeUrl;
+        });
+      }
+    });
+
+    // Normalize all menu item links in header nav to prevent 404s
+    document.querySelectorAll('.elementor-nav-menu a').forEach(function(a) {
+      var href = a.getAttribute('href');
+      if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) {
+        a.setAttribute('href', getRootUrl(href));
+      }
+    });
+  }
+
   function initMobileMenu() {
     var modal = document.getElementById('csp-mobile-menu-modal');
     if (!modal) {
@@ -664,13 +849,13 @@ button[type="submit"],
       ul.className = 'csp-modal-menu';
 
       var menuItems = [
-        { text: 'Home', href: './' },
-        { text: 'About Us', href: './about-us/' },
-        { text: 'Contact Us', href: './contact-us/' },
-        { text: 'Stories', href: './stories/' },
-        { text: 'Sponsorship', href: './sponsorship/' },
-        { text: 'Advert', href: './advert/' },
-        { text: 'Submit Story', href: './submit-story/', isCta: true }
+        { text: 'Home', href: getRootUrl('/') },
+        { text: 'About Us', href: getRootUrl('about-us/') },
+        { text: 'Contact Us', href: getRootUrl('contact-us/') },
+        { text: 'Stories', href: getRootUrl('stories/') },
+        { text: 'Sponsorship', href: getRootUrl('sponsorship/') },
+        { text: 'Advert', href: getRootUrl('advert/') },
+        { text: 'Submit Story', href: getRootUrl('submit-story/'), isCta: true }
       ];
 
       var currentPath = window.location.pathname.replace(/\/$/, '') || '/';
@@ -683,7 +868,7 @@ button[type="submit"],
         if (item.isCta) {
           a.className = 'csp-modal-cta';
         }
-        var itemPath = item.href.replace(/^\./, '').replace(/\/$/, '') || '/';
+        var itemPath = item.href.replace(/\/$/, '') || '/';
         if (currentPath === itemPath || (itemPath !== '/' && currentPath.endsWith(itemPath))) {
           a.classList.add('active-link');
         }
@@ -732,10 +917,15 @@ button[type="submit"],
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMobileMenu);
-  } else {
+  function start() {
+    initLoaderAndLogo();
     initMobileMenu();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
   }
 })();
 </script>
@@ -753,13 +943,13 @@ button[type="submit"],
 		<div class="elementor-element elementor-element-f22f163 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="f22f163" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 				<div class="elementor-element elementor-element-738d6a4 elementor-widget__width-initial elementor-hidden-mobile elementor-widget elementor-widget-image" data-id="738d6a4" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-																<a href="./index.html">
+																<a href="../">
 							<img fetchpriority="high" width="1024" height="315" src="../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990 sticel-logo-shrink" alt="" decoding="async"  sizes="(max-width: 1024px) 100vw, 1024px" data-original-height="68" >								</a>
 															</div>
 				</div>
 				<div class="elementor-element elementor-element-2d4f26f elementor-hidden-desktop elementor-hidden-tablet elementor-widget elementor-widget-image" data-id="2d4f26f" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-																<a href="./index.html">
+																<a href="../">
 							<img width="1000" height="1000" src="../wp-content/uploads/2026/01/CONSPODIUM-NEW-2.png" class="attachment-large size-large wp-image-989 sticel-logo-shrink" alt="" decoding="async"  sizes="(max-width: 1000px) 100vw, 1000px" data-original-height="68" style="height: auto;">								</a>
 															</div>
 				</div>
