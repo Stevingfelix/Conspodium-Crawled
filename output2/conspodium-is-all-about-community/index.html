@@ -240,32 +240,34 @@ min-width: 100px;
 #sl-preloader { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
 </style>
 <style id="csp-header-fixes">
-/* Hide the sticky spacer clone that creates a blank gap at top of page */
+/* ── Hide sticky spacer gap ── */
 .elementor-sticky__spacer { display: none !important; }
-/* Ensure the real fixed header is always visible */
 .she-header-yes, .elementor-sticky { visibility: visible !important; }
-/* Fix logo images collapsed to height:0 by JS at crawl time */
-img.sticel-logo-shrink { height: auto !important; max-height: 80px !important; width: auto !important; display: block !important; opacity: 1 !important; }
 
-/* ── Logo fix: force desktop logo to show at correct size ── */
-.elementor-widget__width-initial { width: auto !important; }
-.elementor-element-738d6a4 img,
-.elementor-element-738d6a4 .elementor-widget-container { 
-  display: block !important; 
-  max-height: 68px !important; 
-  width: auto !important;
-  height: auto !important;
-}
-/* ── Mobile burger: push to far right edge ── */
-.elementor-element-27c23fa,
-.elementor-element.elementor-hidden-desktop.elementor-widget-nav-menu {
-  margin-left: auto !important;
-  padding-right: 16px !important;
-}
-.elementor-nav-menu--toggle .elementor-nav-menu-toggle {
-  margin-left: auto !important;
+/* ── REAL LOGO FIX ──────────────────────────────────────────────────────────
+   Elementor's frontend.min.css has TWO rules for .elementor-hidden-mobile:
+     1. (correct) @media (max-width:767px) { .elementor .elementor-hidden-mobile { display:none } }
+     2. (WRONG)   .elementor-hidden-mobile { display:none }  <-- bare, no media query
+   Rule #2 hides the desktop logo on ALL screen sizes.
+   Fix: override it for tablet + desktop with higher specificity.
+────────────────────────────────────────────────────────────────────────────── */
+@media (min-width: 768px) {
+  .elementor .elementor-hidden-mobile,
+  .elementor-hidden-mobile {
+    display: block !important;
+  }
 }
 
+/* ── Hamburger to far right — mobile only ── */
+@media (max-width: 767px) {
+  .elementor-element-27c23fa {
+    margin-left: auto !important;
+  }
+  .elementor-element-27c23fa .elementor-menu-toggle {
+    margin-left: auto !important;
+    margin-right: 4px !important;
+  }
+}
 </style>
 </head>
 <body class="wp-singular post-template-default single single-post postid-2197 single-format-standard wp-custom-logo wp-embed-responsive wp-theme-twentytwentyfour ehf-template-twentytwentyfour ehf-stylesheet-twentytwentyfour jkit-color-scheme elementor-default elementor-template-full-width elementor-kit-9 elementor-page-1468 e--ua-blink e--ua-mac e--ua-webkit sticky-menu yes-is-sticky" data-elementor-device-mode="desktop"><style id="safelayout-cute-preloader-css" data-no-optimize="1" data-no-minify="1">#sl-preloader {height: 100vh;left: 0;max-height: 100%;max-width: 100%;pointer-events: none;position: fixed;top: 0;width: 100vw;z-index: 9999999;}.sl-pl-close-icon {border: 1px solid blue;cursor: pointer;fill: red;height: 30px;stroke-linecap: round;stroke-width: 0.5px;stroke: blue;width: 30px;}#sl-pl-close-button {display: none;pointer-events: auto;position: absolute;right: 10px;top: 10px;z-index: 999;}.sl-pl-loaded .sl-pl-spin,.sl-pl-loaded .sl-pl-text,.sl-pl-loaded .sl-pl-custom,.sl-pl-loaded #sl-pl-canvas,.sl-pl-loaded #sl-pl-counter,.sl-pl-loaded #sl-pl-close-button,.sl-pl-loaded .sl-pl-bar-container,.sl-pl-loaded .sl-pl-brand-container {opacity: 0;transition: opacity 0.5s ease-out 0s;}.sl-pl-back {pointer-events: auto;position: fixed;transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;}.sl-pl-back-ellipse-top {height: 100%;left: 0;top: 0;width: 100%;}.sl-pl-back-ellipse-top {clip-path: ellipse(150% 150% at 0 0);-webkit-clip-path: ellipse(150% 150% at 0 0);}.sl-pl-loaded .sl-pl-back-ellipse-top {clip-path: ellipse(0 0 at 0 0);-webkit-clip-path: ellipse(0 0 at 0 0);}#sl-pl-canvas {height: 100%;isolation: isolate;left: 0;overflow: hidden;pointer-events: auto;position: absolute;top: 0;width: 100%;}#sl-pl-canvas div {animation: sl-pl-rising-squares 18s linear infinite;position:absolute;border-radius: 20%;mix-blend-mode: plus-lighter;bottom: -200px;}#sl-pl-canvas div:nth-child(1) {width: 80px;height: 80px;background: #5f9cec;animation-delay: -3s;}#sl-pl-canvas div:nth-child(2) {width: 96px;height: 96px;background: #ed5464;animation-duration: 12s;left: 10%;animation-delay: 2s;}#sl-pl-canvas div:nth-child(3) {width: 80px;height: 80px;background: #ffce52;animation-delay: 2s;left: 30%;}#sl-pl-canvas div:nth-child(4) {width: 48px;height: 48px;background: #828d31;animation-delay: 4s;left: 35%;animation-duration: 12s;}#sl-pl-canvas div:nth-child(5) {width: 40px;height: 40px;background: #CDDC39;left: 50%;animation-duration: 12s;}#sl-pl-canvas div:nth-child(6) {width: 200px;height: 200px;background: #4acfae;animation-delay: 6s;left: 50%;}#sl-pl-canvas div:nth-child(7) {width: 32px;height: 32px;background: #f00;animation-delay: 6s;left: 66%;animation-duration: 14s;}#sl-pl-canvas div:nth-child(8) {width: 10px;height: 10px;background: #5f9cec;animation-delay: 2s;left: 60%;animation-duration: 10s;}#sl-pl-canvas div:nth-child(9) {width: 24px;height: 24px;background: #2196F3;animation-delay: -3s;left: 80%;}#sl-pl-canvas div:nth-child(10) {width: 100px;height: 100px;background: #FFC107;animation-delay: 8s;left: 88%;animation-duration: 14s;}@keyframes sl-pl-rising-squares {0%{transform: translateY(0) rotate(0deg);opacity: .9;}100%{transform: translateY(-1000px) rotate(720deg);opacity: 0.1;}}.sl-pl-spin-container {left: 50%;position: absolute;text-align: center;top: 50%;transform: translate(-50%, -50%);-webkit-transform: translate(-50%, -50%);width: 100%;}.sl-pl-spin {display: inline-block;height: 50px;position: relative;width: 50px;}.sl-pl-icon-effect {display: inline-block;height: 0;position: absolute;visibility: hidden;width: 0;}.sl-pl-custom {display: inline-block;height: auto;max-width: 100%;}.sl-pl-brand {display: inline-block;height: auto;max-width: 100%;}.sl-pl-brand-container div {display: inline-block;}.sl-pl-brand-container,.sl-pl-brand-container div {perspective: 200px;-webkit-perspective: 200px;position: relative;text-align: center;}#sl-pl-brand-parent {width: 100%;}#sl-pl-brand-bounce {animation: sl-pl-bounce-anim 1.2s linear infinite;-webkit-animation: sl-pl-bounce-anim 1.2s linear infinite;transform-origin: 50% 100%;-webkit-transform-origin: 50% 100%;}@-webkit-keyframes sl-pl-bounce-anim {0% {-webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);-webkit-transform: translate(0, 0) scale(1, 1);}40% {-webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);-webkit-transform: translate(0, -150%) scale(0.8, 1.2);}70% {-webkit-transform: scale(1, 1);}85% {-webkit-transform: translate(0, 0) scale(1.4, 0.6);}95% {-webkit-transform: scale(1, 1);}}@keyframes sl-pl-bounce-anim {0% {animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);transform: translate(0, 0) scale(1, 1);}40% {animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);transform: translate(0, -150%) scale(0.8, 1.2);}70% {transform: scale(1, 1);}85% {transform: translate(0, 0) scale(1.4, 0.6);}95% {transform: scale(1, 1);}}.sl-pl-back{opacity: 1;background: #101010 !important;}.sl-pl-brand-container{margin-top: 0px !important;margin-bottom: 0px !important;}</style><div id="sl-preloader" class="sl-pl-loaded"><div class="sl-pl-back sl-pl-back-ellipse-top"></div><div id="sl-pl-canvas"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div id="sl-pl-close-button"><svg class="sl-pl-close-icon" viewBox="0 0 50 50"><path d="M10 7A3 3 0 0 0 7.879 7.879 3 3 0 0 0 7.879 12.12L20.76 25 7.879 37.88A3 3 0 0 0 7.879 42.12 3 3 0 0 0 12.12 42.12L25 29.24 37.88 42.12A3 3 0 0 0 42.12 42.12 3 3 0 0 0 42.12 37.88L29.24 25 42.12 12.12A3 3 0 0 0 42.12 7.879 3 3 0 0 0 37.88 7.879L25 20.76 12.12 7.879A3 3 0 0 0 10 7Z"></path></svg></div><div class="sl-pl-spin-container"><div class="sl-pl-brand-container"><img style="aspect-ratio: 100 / 100" width="100" height="100" data-no-lazy="1" class="skip-lazy sl-pl-brand" alt="conspodium loader" src="../wp-content/uploads/2026/01/conspodium-loader.png" id="sl-pl-brand-bounce"></div></div></div>
@@ -280,13 +282,13 @@ img.sticel-logo-shrink { height: auto !important; max-height: 80px !important; w
 				<div class="elementor-element elementor-element-738d6a4 elementor-widget__width-initial elementor-hidden-mobile elementor-widget elementor-widget-image" data-id="738d6a4" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 																<a href="./index.html">
-							<img fetchpriority="high" width="1024" height="315" src="../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990 sticel-logo-shrink" alt="" decoding="async" srcset="../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png 1024w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-300x92.png 300w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-768x236.png 768w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1536x473.png 1536w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-2048x630.png 2048w" sizes="(max-width: 1024px) 100vw, 1024px" data-original-height="68" >								</a>
+							<img fetchpriority="high" width="1024" height="315" src="../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990 sticel-logo-shrink" alt="" decoding="async"  sizes="(max-width: 1024px) 100vw, 1024px" data-original-height="68" >								</a>
 															</div>
 				</div>
 				<div class="elementor-element elementor-element-2d4f26f elementor-hidden-desktop elementor-hidden-tablet elementor-widget elementor-widget-image" data-id="2d4f26f" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 																<a href="./index.html">
-							<img width="1000" height="1000" src="../wp-content/uploads/2026/01/CONSPODIUM-NEW-2.png" class="attachment-large size-large wp-image-989 sticel-logo-shrink" alt="" decoding="async" srcset="../wp-content/uploads/2026/01/CONSPODIUM-NEW-2.png 1000w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-2-300x300.png 300w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-2-150x150.png 150w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-2-768x768.png 768w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-2-700x700.png 700w" sizes="(max-width: 1000px) 100vw, 1000px" data-original-height="68" style="height: auto;">								</a>
+							<img width="1000" height="1000" src="../wp-content/uploads/2026/01/CONSPODIUM-NEW-2.png" class="attachment-large size-large wp-image-989 sticel-logo-shrink" alt="" decoding="async"  sizes="(max-width: 1000px) 100vw, 1000px" data-original-height="68" style="height: auto;">								</a>
 															</div>
 				</div>
 				</div>
@@ -375,7 +377,7 @@ img.sticel-logo-shrink { height: auto !important; max-height: 80px !important; w
 				</div>
 				<div class="elementor-element elementor-element-e1f5b76 elementor-widget elementor-widget-theme-post-featured-image elementor-widget-image" data-id="e1f5b76" data-element_type="widget" data-e-type="widget" data-widget_type="theme-post-featured-image.default">
 				<div class="elementor-widget-container">
-															<img width="768" height="512" src="../wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-768x512.jpg" class="attachment-medium_large size-medium_large wp-image-2281" alt="" decoding="async" srcset="../wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-768x512.jpg 768w, ../wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-300x200.jpg 300w, ../wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-1024x683.jpg 1024w, ../wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-1536x1024.jpg 1536w, ../wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-2048x1365.jpg 2048w" sizes="(max-width: 768px) 100vw, 768px">															</div>
+															<img width="768" height="512" src="../wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-768x512.jpg" class="attachment-medium_large size-medium_large wp-image-2281" alt="" decoding="async"  sizes="(max-width: 768px) 100vw, 768px">															</div>
 				</div>
 				<div class="elementor-element elementor-element-6a9f81f elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-id="6a9f81f" data-element_type="widget" data-e-type="widget" data-widget_type="theme-post-title.default">
 				<div class="elementor-widget-container">
@@ -528,17 +530,17 @@ img.sticel-logo-shrink { height: auto !important; max-height: 80px !important; w
 					<div class="jeg-elementor-kit jkit-postlist layout-vertical post-element jkit-pagination-disable jeg_module_2197__6a775042c0b23" data-id="jeg_module_2197__6a775042c0b23" data-settings="{&quot;post_type&quot;:&quot;post&quot;,&quot;number_post&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:3,&quot;sizes&quot;:[]},&quot;post_offset&quot;:0,&quot;unique_content&quot;:&quot;disable&quot;,&quot;include_post&quot;:&quot;&quot;,&quot;exclude_post&quot;:2197,&quot;include_category&quot;:&quot;&quot;,&quot;exclude_category&quot;:&quot;&quot;,&quot;include_author&quot;:&quot;&quot;,&quot;include_tag&quot;:&quot;&quot;,&quot;exclude_tag&quot;:&quot;&quot;,&quot;sort_by&quot;:&quot;random&quot;,&quot;pagination_mode&quot;:&quot;disable&quot;,&quot;pagination_loadmore_text&quot;:&quot;Load More&quot;,&quot;pagination_loading_text&quot;:&quot;Loading...&quot;,&quot;pagination_number_post&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:3,&quot;sizes&quot;:[]},&quot;pagination_scroll_limit&quot;:0,&quot;pagination_icon&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;pagination_icon_position&quot;:&quot;before&quot;,&quot;sg_content_layout&quot;:&quot;vertical&quot;,&quot;sg_content_image_enable&quot;:&quot;yes&quot;,&quot;sg_content_background_image_enable&quot;:&quot;&quot;,&quot;sg_content_icon_enable&quot;:&quot;yes&quot;,&quot;sg_content_icon&quot;:{&quot;value&quot;:&quot;fas fa-circle&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;sg_content_meta_enable&quot;:&quot;yes&quot;,&quot;sg_content_meta_date_enable&quot;:&quot;yes&quot;,&quot;sg_content_meta_date_type&quot;:&quot;published&quot;,&quot;sg_content_meta_date_format&quot;:&quot;ago&quot;,&quot;sg_content_meta_date_format_custom&quot;:&quot;F j, Y&quot;,&quot;sg_content_meta_date_icon&quot;:{&quot;value&quot;:&quot;fas fa-clock&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;sg_content_meta_category_enable&quot;:&quot;yes&quot;,&quot;sg_content_meta_category_icon&quot;:{&quot;value&quot;:&quot;fas fa-tag&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;sg_content_meta_position&quot;:&quot;bottom&quot;,&quot;sg_content_image_size_imagesize_size&quot;:&quot;large&quot;,&quot;paged&quot;:1,&quot;class&quot;:&quot;jkit_post_list&quot;}"><div class="jkit-block-container"><div class="jkit-posts jkit-ajax-flag">
             <article class="jkit-post post-list-item">
                 <a href="../profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2/">
-                    <img loading="lazy" width="1024" height="585" src="../wp-content/uploads/2026/01/AF3-1-png-1024x585.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async" srcset="../wp-content/uploads/2026/01/AF3-1-png-1024x585.jpg 1024w, ../wp-content/uploads/2026/01/AF3-1-png-300x171.jpg 300w, ../wp-content/uploads/2026/01/AF3-1-png-768x439.jpg 768w, ../wp-content/uploads/2026/01/AF3-1-png.jpg 1344w" sizes="(max-width: 1024px) 100vw, 1024px">
+                    <img loading="lazy" width="1024" height="585" src="../wp-content/uploads/2026/01/AF3-1-png-1024x585.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async"  sizes="(max-width: 1024px) 100vw, 1024px">
                     <div class="jkit-postlist-content"><span class="jkit-postlist-title">From mutual aid networks to cultural organizations, discover how diaspora communities create support systems that span the globe.</span><div class="meta-lists"><span class="meta-date"><i aria-hidden="true" class="fas fa-clock"></i>6 months ago</span> <span class="meta-category"><i aria-hidden="true" class="fas fa-tag"></i>Success stories</span></div></div>
                 </a>
             </article><article class="jkit-post post-list-item">
                 <a href="../profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/">
-                    <img loading="lazy" width="545" height="382" src="../wp-content/uploads/2026/01/location-1.webp" class="attachment-large size-large wp-post-image" alt="" decoding="async" srcset="../wp-content/uploads/2026/01/location-1.webp 545w, ../wp-content/uploads/2026/01/location-1-300x210.webp 300w" sizes="(max-width: 545px) 100vw, 545px">
+                    <img loading="lazy" width="545" height="382" src="../wp-content/uploads/2026/01/location-1.webp" class="attachment-large size-large wp-post-image" alt="" decoding="async"  sizes="(max-width: 545px) 100vw, 545px">
                     <div class="jkit-postlist-content"><span class="jkit-postlist-title">Profiles of groundbreaking tech entrepreneurs from diaspora</span><div class="meta-lists"><span class="meta-date"><i aria-hidden="true" class="fas fa-clock"></i>6 months ago</span> <span class="meta-category"><i aria-hidden="true" class="fas fa-tag"></i>Innovation</span></div></div>
                 </a>
             </article><article class="jkit-post post-list-item">
                 <a href="../we-are-the-world/">
-                    <img loading="lazy" width="1024" height="512" src="../wp-content/uploads/2026/02/tourist-carrying-luggage-1024x512.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async" srcset="../wp-content/uploads/2026/02/tourist-carrying-luggage-1024x512.jpg 1024w, ../wp-content/uploads/2026/02/tourist-carrying-luggage-300x150.jpg 300w, ../wp-content/uploads/2026/02/tourist-carrying-luggage-768x384.jpg 768w, ../wp-content/uploads/2026/02/tourist-carrying-luggage-1536x768.jpg 1536w, ../wp-content/uploads/2026/02/tourist-carrying-luggage-2048x1024.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px">
+                    <img loading="lazy" width="1024" height="512" src="../wp-content/uploads/2026/02/tourist-carrying-luggage-1024x512.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async"  sizes="(max-width: 1024px) 100vw, 1024px">
                     <div class="jkit-postlist-content"><span class="jkit-postlist-title">We Are The World</span><div class="meta-lists"><span class="meta-date"><i aria-hidden="true" class="fas fa-clock"></i>6 months ago</span> <span class="meta-category"><i aria-hidden="true" class="fas fa-tag"></i>Community</span></div></div>
                 </a>
             </article>
@@ -582,7 +584,7 @@ img.sticel-logo-shrink { height: auto !important; max-height: 80px !important; w
 		<div class="elementor-element elementor-element-920f34a e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="920f34a" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 				<div class="elementor-element elementor-element-68518ef elementor-widget elementor-widget-image" data-id="68518ef" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-															<img fetchpriority="high" width="1024" height="315" src="../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990" alt="" decoding="async" srcset="../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png 1024w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-300x92.png 300w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-768x236.png 768w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1536x473.png 1536w, ../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-2048x630.png 2048w" sizes="(max-width: 1024px) 100vw, 1024px">															</div>
+															<img fetchpriority="high" width="1024" height="315" src="../wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990" alt="" decoding="async"  sizes="(max-width: 1024px) 100vw, 1024px">															</div>
 				</div>
 				<div class="elementor-element elementor-element-5dd035e sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="5dd035e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
@@ -1017,4 +1019,61 @@ tinymce.ScriptLoader.markDone( '../wp-includes/js/tinymce/langs/en.js' );
 
 
 
-<p id="a11y-speak-intro-text" class="a11y-speak-intro-text" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" hidden="hidden">Notifications</p><div id="a11y-speak-assertive" class="a11y-speak-region" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" aria-live="assertive" aria-relevant="additions text" aria-atomic="true"></div><div id="a11y-speak-polite" class="a11y-speak-region" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" aria-live="polite" aria-relevant="additions text" aria-atomic="true"></div><script src="../wp-content/plugins/elementor/assets/lib/share-link/share-link.min._ver_4_1_4.js"></script></body></html>
+<p id="a11y-speak-intro-text" class="a11y-speak-intro-text" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" hidden="hidden">Notifications</p><div id="a11y-speak-assertive" class="a11y-speak-region" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" aria-live="assertive" aria-relevant="additions text" aria-atomic="true"></div><div id="a11y-speak-polite" class="a11y-speak-region" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" aria-live="polite" aria-relevant="additions text" aria-atomic="true"></div><script src="../wp-content/plugins/elementor/assets/lib/share-link/share-link.min._ver_4_1_4.js"></script><script id="csp-logo-fix">
+(function() {
+  // IDs of the logo image elements to protect
+  var LOGO_SELECTORS = [
+    '.elementor-element-738d6a4 img',  // desktop/tablet horizontal logo
+  ];
+
+  function fixLogoHeight(img) {
+    // Read the natural height from the img element's intrinsic size
+    // or from data-original-height if it was correctly captured (non-zero)
+    var storedH = parseInt(img.getAttribute('data-original-height') || '0', 10);
+    var naturalH = img.naturalHeight;
+    var targetH  = (storedH > 10) ? storedH : (naturalH > 0 ? Math.min(naturalH, 68) : 68);
+
+    // Only override if style is zeroed
+    if (img.style.height === '0px' || img.style.height === '0') {
+      img.style.height = targetH + 'px';
+    }
+    // Also patch data-original-height so the sticky JS itself uses the right value
+    if (storedH < 10) {
+      img.setAttribute('data-original-height', targetH);
+    }
+  }
+
+  function patchAllLogos() {
+    LOGO_SELECTORS.forEach(function(sel) {
+      document.querySelectorAll(sel).forEach(fixLogoHeight);
+    });
+  }
+
+  // Run on load
+  document.addEventListener('DOMContentLoaded', patchAllLogos);
+  window.addEventListener('load', patchAllLogos);
+
+  // MutationObserver: catch the sticky JS zeroing height mid-scroll
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.type === 'attributes' && m.attributeName === 'style') {
+        var el = m.target;
+        if (el.classList.contains('sticel-logo-shrink')) {
+          fixLogoHeight(el);
+        }
+      }
+    });
+  });
+
+  // Start observing once the DOM is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    LOGO_SELECTORS.forEach(function(sel) {
+      document.querySelectorAll(sel).forEach(function(img) {
+        observer.observe(img, { attributes: true, attributeFilter: ['style'] });
+      });
+    });
+    patchAllLogos();
+  });
+})();
+</script>
+</body></html>
