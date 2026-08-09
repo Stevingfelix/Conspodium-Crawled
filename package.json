@@ -1,21 +1,14 @@
 {
   "name": "conspodium",
   "version": "2.0.0",
-  "description": "Conspodium — African Diaspora Media Platform",
+  "description": "Conspodium — African Diaspora Media Platform (PHP PDO + HTML)",
   "type": "module",
   "scripts": {
-    "start": "node src/scripts/serve.js",
     "build": "node src/scripts/build.js",
-    "serve": "node src/scripts/serve.js",
-    "dev": "node src/scripts/build.js && node src/scripts/serve.js"
+    "serve": "php -S localhost:8080 -t public",
+    "start": "php -S localhost:8080 -t public"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "better-sqlite3": "^13.0.3",
-    "express": "^4.19.2",
-    "multer": "^2.2.0",
-    "playwright": "^1.60.0"
-  }
+  "license": "ISC"
 }
