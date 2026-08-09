@@ -241,6 +241,7 @@
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1186,8 +1187,8 @@ e-page-transition,
       </div>
 
       <div class="csp-form-group">
-        <label class="csp-form-label">Full Content (HTML) *</label>
-        <textarea id="post-content" class="csp-form-textarea" rows="6" placeholder="<p>Full article text goes here...</p>" required></textarea>
+        <label class="csp-form-label">Article Content * <span style="font-size:0.75rem;color:var(--text-muted);font-weight:normal;margin-left:4px;">(Paragraphs created automatically from line breaks)</span></label>
+        <textarea id="post-content" class="csp-form-textarea" rows="6" placeholder="Write your full article text here..." required></textarea>
       </div>
 
       <div class="csp-form-row">
@@ -1368,11 +1369,40 @@ e-page-transition,
       });
   }
 
+  function getAbsoluteImageUrl(url) {
+    if (!url) return '';
+    var u = url.trim();
+    if (u.startsWith('http://') || u.startsWith('https://') || u.startsWith('data:')) return u;
+    if (u.startsWith('./')) return '/' + u.slice(2);
+    if (!u.startsWith('/')) return '/' + u;
+    return u;
+  }
+
+  function htmlToPlainText(html) {
+    if (!html) return '';
+    return html.replace(/<\/p>\s*<p>/gi, '\n\n')
+               .replace(/<p>/gi, '')
+               .replace(/<\/p>/gi, '')
+               .replace(/<br\s*\/?>/gi, '\n')
+               .trim();
+  }
+
+  function textToHtmlParagraphs(text) {
+    if (!text) return '';
+    var t = text.trim();
+    if (t.includes('<p>') || t.includes('<div>')) return t;
+    var paragraphs = t.split(/\n\s*\n/);
+    return paragraphs.map(function(p){
+      return '<p>' + p.trim().replace(/\n/g, '<br>') + '</p>';
+    }).join('');
+  }
+
   function openPostModal(post) {
     var form = document.getElementById('form-post-editor');
     form.reset();
     document.getElementById('edit-post-id').value = '';
-    document.getElementById('post-img-preview').style.display = 'none';
+    var imgPreview = document.getElementById('post-img-preview');
+    imgPreview.style.display = 'none';
 
     if(post) {
       document.getElementById('modal-post-title').textContent = 'Edit Article';
@@ -1380,7 +1410,7 @@ e-page-transition,
       document.getElementById('post-title').value = post.title;
       document.getElementById('post-eyebrow').value = post.eyebrow || '';
       document.getElementById('post-excerpt').value = post.excerpt || '';
-      document.getElementById('post-content').value = post.content || '';
+      document.getElementById('post-content').value = htmlToPlainText(post.content || '');
       document.getElementById('post-category').value = post.category_id || '';
       document.getElementById('post-author').value = post.author_name || '';
       document.getElementById('post-reading-time').value = post.reading_time || '';
@@ -1388,9 +1418,8 @@ e-page-transition,
       document.getElementById('post-is-featured').checked = !!post.is_featured;
 
       if(post.featured_image) {
-        var prev = document.getElementById('post-img-preview');
-        prev.src = post.featured_image;
-        prev.style.display = 'block';
+        imgPreview.src = getAbsoluteImageUrl(post.featured_image);
+        imgPreview.style.display = 'block';
       }
     } else {
       document.getElementById('modal-post-title').textContent = 'Create New Article';
@@ -1420,6 +1449,10 @@ e-page-transition,
   var urlInput  = document.getElementById('post-img-url');
   var imgPreview = document.getElementById('post-img-preview');
 
+  imgPreview.onerror = function() {
+    imgPreview.style.display = 'none';
+  };
+
   fileInput.addEventListener('change', function(){
     if(!fileInput.files || !fileInput.files[0]) return;
     var formData = new FormData();
@@ -1430,7 +1463,7 @@ e-page-transition,
       .then(function(res){
         if(res.success) {
           urlInput.value = res.imageUrl;
-          imgPreview.src = res.imageUrl;
+          imgPreview.src = getAbsoluteImageUrl(res.imageUrl);
           imgPreview.style.display = 'block';
         } else {
           alert('Upload failed: ' + res.error);
@@ -1439,9 +1472,11 @@ e-page-transition,
   });
 
   urlInput.addEventListener('input', function(){
-    if(urlInput.value) {
-      imgPreview.src = urlInput.value;
+    if(urlInput.value.trim()) {
+      imgPreview.src = getAbsoluteImageUrl(urlInput.value);
       imgPreview.style.display = 'block';
+    } else {
+      imgPreview.style.display = 'none';
     }
   });
 
@@ -1452,11 +1487,13 @@ e-page-transition,
     var method = id ? 'PUT' : 'POST';
     var url = id ? '/api/posts.php?id=' + id : '/api/posts.php';
 
+    var rawContent = document.getElementById('post-content').value;
+
     var payload = {
       title: document.getElementById('post-title').value,
       eyebrow: document.getElementById('post-eyebrow').value,
       excerpt: document.getElementById('post-excerpt').value,
-      content: document.getElementById('post-content').value,
+      content: textToHtmlParagraphs(rawContent),
       categoryId: document.getElementById('post-category').value,
       authorName: document.getElementById('post-author').value,
       readingTime: document.getElementById('post-reading-time').value,
