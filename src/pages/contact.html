@@ -219,6 +219,9 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 <style>/* conspodium-fix-preloader */
 #sl-preloader { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
 </style>
+<style>/* conspodium-fix-preloader */
+#sl-preloader { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
+</style>
 <style id="csp-header-fixes">
 /* Hide the sticky spacer clone that creates a blank gap at top of page */
 .elementor-sticky__spacer { display: none !important; }
@@ -278,19 +281,45 @@ img.sticel-logo-shrink { height: auto !important; max-height: 80px !important; w
 }
 
 
-/* ── NAV TEXT ───────────────────────────────────────────────────────────────── */
-.elementor-1969 .elementor-element.elementor-element-c6b6140 .elementor-nav-menu--main .elementor-item {
+/* ── NAV TEXT: Homepage (white text over dark hero) ───────────────────────── */
+body.home .elementor-1969 .elementor-nav-menu--main .elementor-item {
   color: #ffffff !important;
   fill: #ffffff !important;
   text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
-.elementor-1969 .elementor-element.elementor-element-c6b6140 .elementor-nav-menu--main .elementor-item:hover,
-.elementor-1969 .elementor-element.elementor-element-c6b6140 .elementor-nav-menu--main .elementor-item.elementor-item-active {
+body.home .elementor-1969 .elementor-nav-menu--main .elementor-item:hover,
+body.home .elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active {
   color: #00AEFE !important;
   fill: #00AEFE !important;
   text-shadow: none;
 }
+body.home .elementor-1969 .elementor-menu-toggle,
+body.home .elementor-1969 .elementor-menu-toggle i {
+  color: #ffffff !important;
+}
+
+/* ── NAV TEXT: Inner Pages (dark black text over white/light hero) ─────────── */
+body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item,
+body:not(.home) .elementor-1969 .elementor-nav-menu--dropdown .elementor-item {
+  color: #0f172a !important;
+  fill: #0f172a !important;
+  text-shadow: none !important;
+}
+body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item:hover,
+body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active,
+body:not(.home) .elementor-1969 .elementor-nav-menu--dropdown .elementor-item:hover,
+body:not(.home) .elementor-1969 .elementor-nav-menu--dropdown .elementor-item.elementor-item-active {
+  color: #00AEFE !important;
+  fill: #00AEFE !important;
+  text-shadow: none !important;
+}
+body:not(.home) .elementor-1969 .elementor-menu-toggle,
+body:not(.home) .elementor-1969 .elementor-menu-toggle i {
+  color: #0f172a !important;
+}
 </style>
+
+
 
 
 </head>

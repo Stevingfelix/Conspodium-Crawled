@@ -73,9 +73,15 @@ for (const page of PAGES) {
 
   let html = await readFile(srcFile, 'utf8');
 
-  // Inject header fixes if not already present
-  if (headerFixesHtml && !html.includes('id="csp-header-fixes"')) {
-    html = html.replace('</head>', headerFixesHtml + '\n</head>');
+  // Replace or inject header fixes
+  if (headerFixesHtml) {
+    if (html.includes('id="csp-header-fixes"')) {
+      html = html.replace(/<style id="csp-header-fixes">[\s\S]*?<\/style>/, headerFixesHtml.replace(/<!--[\s\S]*?-->\n?/g, ''));
+    } else {
+      html = html.replace('</head>', headerFixesHtml + '\n</head>');
+    }
+    // Also save updated template back to src/pages
+    await writeFile(srcFile, html, 'utf8');
   }
 
   await mkdir(dirname(outFile), { recursive: true });
