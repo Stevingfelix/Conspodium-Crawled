@@ -68,7 +68,7 @@ const HERO_HTML = `${HERO_START}
   color:#fff;
   background:linear-gradient(135deg,rgba(0,174,254,0.35),rgba(183,31,113,0.25));
   border:1px solid rgba(0,174,254,0.5);
-  border-radius:50px;padding:10px 30px;margin-bottom:28px;
+  border-radius:50px;padding:10px 36px;margin-bottom:32px;
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
   transform:translateY(24px);opacity:0;
@@ -83,7 +83,7 @@ const HERO_HTML = `${HERO_START}
   font-family:'Merriweather',Georgia,serif;
   font-size:clamp(2rem,5vw,3.6rem);
   font-weight:400;line-height:1.18;color:#fff;
-  margin-bottom:18px;
+  margin-bottom:28px;
   transform:translateY(32px);opacity:0;
   transition:transform 0.75s 0.35s ease,opacity 0.75s 0.35s ease;
 }
@@ -92,7 +92,7 @@ const HERO_HTML = `${HERO_START}
 
 .csp-hero-sub{
   font-size:clamp(0.9rem,1.8vw,1.1rem);color:rgba(255,255,255,0.72);line-height:1.65;
-  margin-bottom:60px;max-width:580px;margin-left:auto;margin-right:auto;
+  margin-bottom:64px;max-width:600px;margin-left:auto;margin-right:auto;
   transform:translateY(28px);opacity:0;
   transition:transform 0.75s 0.5s ease,opacity 0.75s 0.5s ease;
 }
@@ -110,8 +110,8 @@ const HERO_HTML = `${HERO_START}
   background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);
   color:#fff;text-decoration:none;font-weight:600;
   font-family:'Merriweather',Georgia,serif;
-  font-size:0.9rem;padding:14px 36px;border-radius:15px;
-  min-width:190px;
+  font-size:0.95rem;padding:16px 44px;border-radius:15px;
+  min-width:200px;
   box-shadow:0 6px 28px rgba(0,174,254,0.35);
   transition:transform 0.22s ease,box-shadow 0.22s ease,filter 0.22s ease;
   white-space:nowrap;
@@ -125,11 +125,11 @@ const HERO_HTML = `${HERO_START}
 
 .csp-hero-btn-secondary{
   display:inline-flex;align-items:center;justify-content:center;gap:12px;
-  background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.4);
+  background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.45);
   color:#fff;text-decoration:none;font-weight:500;
   font-family:'Merriweather',Georgia,serif;
-  font-size:0.9rem;padding:14px 36px;border-radius:15px;
-  min-width:190px;
+  font-size:0.95rem;padding:15px 44px;border-radius:15px;
+  min-width:200px;
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
   transition:background 0.22s ease,border-color 0.22s ease,transform 0.22s ease;
@@ -137,7 +137,7 @@ const HERO_HTML = `${HERO_START}
 }
 .csp-hero-btn-secondary:hover{
   background:rgba(255,255,255,0.18);
-  border-color:rgba(255,255,255,0.8);
+  border-color:rgba(255,255,255,0.85);
   transform:translateY(-2px);
 }
 
