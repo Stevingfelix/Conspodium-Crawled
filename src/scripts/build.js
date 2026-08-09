@@ -26,7 +26,7 @@ import { extractComponents } from './extract-components.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT      = join(__dirname, '../../');
 const SRC       = join(ROOT, 'src');
-const OUTPUT    = join(ROOT, 'output');
+const PUBLIC    = join(ROOT, 'public');
 const BASE      = join(ROOT, 'output2');
 
 // ── Page map ─────────────────────────────────────────────────────────────────
@@ -195,9 +195,9 @@ async function copyDir(src, dest) {
 
 console.log('\n🔨 Conspodium Build\n');
 
-// Step 1 — Copy base crawled site into output/
-process.stdout.write('  1. Copying base site (output2 → output)... ');
-await copyDir(BASE, OUTPUT);
+// Step 1 — Copy base crawled site into public/
+process.stdout.write('  1. Copying base site (output2 → public)... ');
+await copyDir(BASE, PUBLIC);
 console.log('✓');
 
 // Step 2 — Extract WP components from output2/index.html
@@ -214,7 +214,7 @@ console.log(`  3. Building ${PAGES.length} pages:\n`);
 
 for (const page of PAGES) {
   const srcFile  = join(SRC, 'pages', `${page.id}.html`);
-  const outFile  = join(OUTPUT, page.out);
+  const outFile  = join(PUBLIC, page.out);
 
   // Ensure source page file exists
   if (!existsSync(srcFile)) {
@@ -244,14 +244,14 @@ for (const page of PAGES) {
 
     await mkdir(dirname(outFile), { recursive: true });
     await writeFile(outFile, html, 'utf8');
-    console.log(`     ✓  ${page.id.padEnd(16)} → output/${page.out}`);
+    console.log(`     ✓  ${page.id.padEnd(16)} → public/${page.out}`);
     continue;
   }
 
   // ── Pages with a crawled base ────────────────────────────────────────────
-  const baseFile = join(OUTPUT, page.out);
+  const baseFile = join(PUBLIC, page.out);
   if (!existsSync(baseFile)) {
-    console.warn(`     ⚠  Base not found: output/${page.out} — skipping`);
+    console.warn(`     ⚠  Base not found: public/${page.out} — skipping`);
     continue;
   }
 
@@ -287,7 +287,7 @@ for (const page of PAGES) {
   }
 
   await writeFile(baseFile, html, 'utf8');
-  console.log(`     ✓  ${page.id.padEnd(16)} → output/${page.out}`);
+  console.log(`     ✓  ${page.id.padEnd(16)} → public/${page.out}`);
 }
 
 // Step 5 — Apply header fixes to all remaining pages (not in PAGES map)
@@ -301,7 +301,7 @@ async function fixRemainingHeaders(dir) {
     if (entry.isDirectory()) {
       await fixRemainingHeaders(full);
     } else if (entry.name.endsWith('.html')) {
-      const rel = full.replace(OUTPUT + '/', '');
+      const rel = full.replace(PUBLIC + '/', '');
       if (handledOuts.has(rel)) continue; // already handled above
       let html = await readFile(full, 'utf8');
       if (!html.includes('id="csp-header-fixes"')) {
@@ -311,8 +311,8 @@ async function fixRemainingHeaders(dir) {
     }
   }
 }
-await fixRemainingHeaders(OUTPUT);
+await fixRemainingHeaders(PUBLIC);
 console.log('     ✓  Done\n');
 
-console.log('✅ Build complete → output/');
+console.log('✅ Build complete → public/');
 console.log('   Run: npm run serve  →  http://localhost:8080\n');

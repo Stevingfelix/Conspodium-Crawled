@@ -26,7 +26,7 @@ conspodium-clone/
 │       ├── serve.js            ← Express server
 │       └── crawl.js            ← Re-crawl wrapper
 │
-├── output/                     ← BUILT SITE — served, do not edit directly
+├── public/                    ← BUILT SITE — served, do not edit directly
 ├── output2/                    ← CRAWLED BASE — raw WordPress HTML
 ├── _backup/                    ← Backup of original project before restructure
 │
@@ -50,7 +50,8 @@ npm run build
 ### Run the server
 
 ```bash
-npm run serve
+npm start
+# or npm run serve
 # → http://localhost:8080
 ```
 
@@ -73,18 +74,18 @@ npm run crawl
 
 | Page | Source file | Output |
 |---|---|---|
-| `/` | `src/pages/home.html` | `output/index.html` |
-| `/about-us/` | `src/pages/about.html` + crawled base | `output/about-us/index.html` |
-| `/stories/` | `src/pages/stories.html` + crawled base | `output/stories/index.html` |
-| `/contact-us/` | `src/pages/contact.html` + crawled base | `output/contact-us/index.html` |
-| `/sponsorship/` | `src/pages/sponsorship.html` + crawled base | `output/sponsorship/index.html` |
-| `/advert/` | `src/pages/advert.html` + crawled base | `output/advert/index.html` |
-| `/submit-story/` | `src/pages/submit-story.html` + crawled base | `output/submit-story/index.html` |
-| `/dashboard` | `src/pages/dashboard.html` | `output/dashboard/index.html` |
+| `/` | `src/pages/home.html` | `public/index.html` |
+| `/about-us/` | `src/pages/about.html` + crawled base | `public/about-us/index.html` |
+| `/stories/` | `src/pages/stories.html` + crawled base | `public/stories/index.html` |
+| `/contact-us/` | `src/pages/contact.html` + crawled base | `public/contact-us/index.html` |
+| `/sponsorship/` | `src/pages/sponsorship.html` + crawled base | `public/sponsorship/index.html` |
+| `/advert/` | `src/pages/advert.html` + crawled base | `public/advert/index.html` |
+| `/submit-story/` | `src/pages/submit-story.html` + crawled base | `public/submit-story/index.html` |
+| `/dashboard` | `src/pages/dashboard.html` | `public/dashboard/index.html` |
 
-**Standalone pages** (`home`, `dashboard`) — `src/pages/*.html` is a complete HTML file copied directly to output.
+**Standalone pages** (`home`, `dashboard`) — `src/pages/*.html` is a complete HTML file copied directly to public.
 
-**Crawled-base pages** (all others) — `build.js` reads the crawled WordPress page from `output2/`, applies `header-fixes.html`, injects the custom sections from `src/pages/*.html` before `</body>`, and writes the result to `output/`.
+**Crawled-base pages** (all others) — `build.js` reads the crawled WordPress page from `output2/`, applies `header-fixes.html`, injects the custom sections from `src/pages/*.html` before `</body>`, and writes the result to `public/`.
 
 ---
 

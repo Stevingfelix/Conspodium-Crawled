@@ -20,7 +20,7 @@ import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUTPUT    = join(__dirname, '../../output');
+const PUBLIC    = join(__dirname, '../../public');
 const PORT      = process.env.PORT || 8080;
 
 const app = express();
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
 // ── Static assets (images, CSS, JS, fonts etc.) ──────────────────────────────
 // Served with caching disabled in dev; tweak for production.
-app.use(express.static(OUTPUT, {
+app.use(express.static(PUBLIC, {
   etag: false,
   lastModified: false,
   setHeaders: (res) => {
@@ -48,11 +48,11 @@ app.use(express.static(OUTPUT, {
 
 // ── Page routes ───────────────────────────────────────────────────────────────
 
-/** Serve a page from output/, falling back to output/<slug>/index.html */
+/** Serve a page from public/, falling back to public/<slug>/index.html */
 function servePage(slug) {
   return (req, res) => {
-    const direct = join(OUTPUT, slug, 'index.html');
-    const root   = join(OUTPUT, 'index.html');
+    const direct = join(PUBLIC, slug, 'index.html');
+    const root   = join(PUBLIC, 'index.html');
     if (existsSync(direct)) return res.sendFile(direct);
     if (slug === '' && existsSync(root)) return res.sendFile(root);
     res.status(404).send(`<h1>Page not found</h1><p>Build may be needed. Run: npm run build</p>`);
@@ -68,12 +68,12 @@ app.get('/', servePage(''));
 app.get('/dashboard',         servePage('dashboard'));
 app.get('/dashboard/{*path}', servePage('dashboard'));
 
-// Catch-all: try to find an index.html in the matching output subdirectory
+// Catch-all: try to find an index.html in the matching public subdirectory
 app.get('/{*path}', (req, res) => {
   // Strip leading/trailing slashes and clean the path
   const slug = req.path.replace(/^\/|\/$/g, '');
-  const file = join(OUTPUT, slug, 'index.html');
-  const direct = join(OUTPUT, slug);
+  const file = join(PUBLIC, slug, 'index.html');
+  const direct = join(PUBLIC, slug);
 
   if (existsSync(file)) return res.sendFile(file);
   if (existsSync(direct) && !direct.endsWith('.html')) {
@@ -81,14 +81,14 @@ app.get('/{*path}', (req, res) => {
   }
 
   // True 404
-  const notFound = join(OUTPUT, '404.html');
+  const notFound = join(PUBLIC, '404.html');
   if (existsSync(notFound)) return res.status(404).sendFile(notFound);
   res.status(404).send(`
     <html>
       <head><title>404 — Conspodium</title></head>
       <body style="font-family:sans-serif;padding:40px;background:#050D1A;color:#fff;">
         <h1 style="color:#00AEFE;">404 — Page not found</h1>
-        <p>The page <code>${req.path}</code> does not exist in the built output.</p>
+        <p>The page <code>${req.path}</code> does not exist in the built public directory.</p>
         <p><a href="/" style="color:#00AEFE;">← Back to homepage</a></p>
         <p style="opacity:0.4;font-size:0.8rem;">If you just added a new page, run <code>npm run build</code> first.</p>
       </body>
@@ -100,6 +100,6 @@ app.get('/{*path}', (req, res) => {
 app.listen(PORT, () => {
   console.log('\n🚀 Conspodium server running');
   console.log(`   Local:  \x1b[36mhttp://localhost:${PORT}\x1b[0m`);
-  console.log(`   Output: ${OUTPUT}`);
+  console.log(`   Public: ${PUBLIC}`);
   console.log('\n   Press Ctrl+C to stop\n');
 });
