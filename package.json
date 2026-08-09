@@ -1,20 +1,19 @@
 {
-  "name": "conspodium-clone",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "conspodium",
+  "version": "2.0.0",
+  "description": "Conspodium — African Diaspora Media Platform",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "crawl": "node crawl.js",
-    "rewrite": "node rewrite.js",
-    "serve": "node serve.js",
-    "verify": "node verify.js"
+    "build":  "node src/scripts/build.js",
+    "serve":  "node src/scripts/serve.js",
+    "dev":    "node src/scripts/build.js && node src/scripts/serve.js",
+    "crawl":  "node src/scripts/crawl.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
+    "express": "^4.19.2",
     "playwright": "^1.60.0"
   }
 }

@@ -1,0 +1,89 @@
+<!--
+  src/pages/sponsorship.html
+  =====================================================================
+  Custom sections for the Sponsorship page.
+  Edit here → npm run build → changes appear at /sponsorship/
+  =====================================================================
+-->
+
+<!-- SECTION: sponsorship-banner -->
+<section id="csp-sponsorship-banner" style="background:linear-gradient(180deg,#020918 0%,#050D1A 100%);padding:70px 0;border-bottom:1px solid rgba(0,174,254,0.12);">
+<style>
+#csp-sponsorship-banner{font-family:'Inter',-apple-system,sans-serif;color:#fff;}
+.csp-spon-inner{max-width:1100px;margin:0 auto;padding:0 40px;}
+.csp-spon-header{text-align:center;margin-bottom:60px;}
+.csp-spon-label{font-size:0.72rem;font-weight:700;letter-spacing:0.18em;color:#00AEFE;text-transform:uppercase;margin-bottom:16px;}
+.csp-spon-title{font-family:'Merriweather',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;margin:0 0 16px;}
+.csp-spon-title em{font-style:normal;background:linear-gradient(135deg,#00AEFE,#B71F71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.csp-spon-sub{font-size:1rem;color:rgba(255,255,255,0.55);line-height:1.7;max-width:580px;margin:0 auto;}
+.csp-spon-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;}
+@media(max-width:800px){.csp-spon-tiers{grid-template-columns:1fr;max-width:420px;margin:40px auto 0;}}
+.csp-spon-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:20px;padding:36px 28px;position:relative;transition:transform 0.25s,border-color 0.25s;}
+.csp-spon-card:hover{transform:translateY(-6px);border-color:rgba(0,174,254,0.3);}
+.csp-spon-card.featured{border-color:rgba(0,174,254,0.45);background:rgba(0,174,254,0.06);}
+.csp-spon-card-badge{display:inline-block;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 14px;border-radius:50px;background:linear-gradient(135deg,#00AEFE,#B71F71);color:#fff;margin-bottom:20px;}
+.csp-spon-card-tier{font-size:0.78rem;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
+.csp-spon-card-name{font-family:'Merriweather',serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:8px;}
+.csp-spon-card-price{font-size:2rem;font-weight:700;color:#00AEFE;margin-bottom:4px;}
+.csp-spon-card-period{font-size:0.78rem;color:rgba(255,255,255,0.35);margin-bottom:28px;}
+.csp-spon-card-features{list-style:none;margin:0 0 32px;padding:0;display:flex;flex-direction:column;gap:10px;}
+.csp-spon-card-features li{display:flex;align-items:center;gap:10px;font-size:0.88rem;color:rgba(255,255,255,0.7);}
+.csp-spon-card-features li::before{content:'✓';color:#00AEFE;font-weight:700;flex-shrink:0;}
+.csp-spon-card-btn{display:block;text-align:center;padding:14px 24px;border-radius:50px;text-decoration:none;font-weight:600;font-size:0.9rem;transition:opacity 0.2s,transform 0.2s;}
+.csp-spon-card-btn-primary{background:linear-gradient(135deg,#00AEFE,#B71F71);color:#fff;}
+.csp-spon-card-btn-secondary{background:transparent;border:1.5px solid rgba(255,255,255,0.25);color:#fff;}
+.csp-spon-card-btn:hover{opacity:0.88;transform:translateY(-2px);}
+</style>
+<div class="csp-spon-inner">
+  <div class="csp-spon-header">
+    <p class="csp-spon-label">Partner With Us</p>
+    <h1 class="csp-spon-title">Sponsor <em>Africa's Most Influential</em> Platform</h1>
+    <p class="csp-spon-sub">Reach 2M+ engaged readers across the global African diaspora. Partner with Conspodium to place your brand at the centre of an intellectual movement.</p>
+  </div>
+  <div class="csp-spon-tiers">
+    <div class="csp-spon-card">
+      <div class="csp-spon-card-tier">Tier 1</div>
+      <div class="csp-spon-card-name">Community</div>
+      <div class="csp-spon-card-price">£500</div>
+      <div class="csp-spon-card-period">per month</div>
+      <ul class="csp-spon-card-features">
+        <li>Logo in newsletter footer</li>
+        <li>1 sponsored social post/month</li>
+        <li>Mention in weekly email</li>
+        <li>Brand page listing</li>
+      </ul>
+      <a href="../contact-us/" class="csp-spon-card-btn csp-spon-card-btn-secondary">Get Started</a>
+    </div>
+    <div class="csp-spon-card featured">
+      <div class="csp-spon-card-badge">Most Popular</div>
+      <div class="csp-spon-card-tier">Tier 2</div>
+      <div class="csp-spon-card-name">Scholar</div>
+      <div class="csp-spon-card-price">£1,500</div>
+      <div class="csp-spon-card-period">per month</div>
+      <ul class="csp-spon-card-features">
+        <li>Everything in Community</li>
+        <li>Sponsored essay placement</li>
+        <li>Homepage feature banner</li>
+        <li>3 sponsored social posts</li>
+        <li>Co-branded event listing</li>
+      </ul>
+      <a href="../contact-us/" class="csp-spon-card-btn csp-spon-card-btn-primary">Get Started</a>
+    </div>
+    <div class="csp-spon-card">
+      <div class="csp-spon-card-tier">Tier 3</div>
+      <div class="csp-spon-card-name">Visionary</div>
+      <div class="csp-spon-card-price">Custom</div>
+      <div class="csp-spon-card-period">bespoke partnership</div>
+      <ul class="csp-spon-card-features">
+        <li>Everything in Scholar</li>
+        <li>Named scholarship/award</li>
+        <li>Live event co-hosting</li>
+        <li>Dedicated editorial series</li>
+        <li>Executive interviews</li>
+      </ul>
+      <a href="../contact-us/" class="csp-spon-card-btn csp-spon-card-btn-secondary">Talk to Us</a>
+    </div>
+  </div>
+</div>
+</section>
+<!-- /SECTION: sponsorship-banner -->

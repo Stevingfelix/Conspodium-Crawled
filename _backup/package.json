@@ -1,0 +1,20 @@
+{
+  "name": "conspodium-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "crawl": "node crawl.js",
+    "rewrite": "node rewrite.js",
+    "serve": "node serve.js",
+    "verify": "node verify.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "playwright": "^1.60.0"
+  }
+}

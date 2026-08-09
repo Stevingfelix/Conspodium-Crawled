@@ -1,52 +1,120 @@
-# Conspodium clone
+# Conspodium
 
-A full offline capture of **https://conspodium.com** (WordPress) — the basis for
-rebuilding it as a React/Node app.
+Africa's intellectual platform for the global diaspora.
 
-## What's here
+---
+
+## Project Structure
 
 ```
-crawl.js     Headless-Chromium crawler: renders each page, saves HTML + every
-             CSS/JS/image/font it requests (incl. cross-origin → _ext/).
-rewrite.js   Rewrites absolute URLs to relative paths so the clone runs offline.
-serve.js     Tiny static server for browsing the clone over http://.
-verify.js    Loads cloned pages, reports broken refs, screenshots for comparison.
-output/      The captured site (21 pages, ~19 MB).
+conspodium-clone/
+│
+├── src/                        ← SOURCE OF TRUTH — edit here
+│   ├── pages/
+│   │   ├── home.html           ← Full standalone homepage
+│   │   ├── about.html          ← About Us custom sections
+│   │   ├── stories.html        ← Stories/Essays custom sections
+│   │   ├── contact.html        ← Contact custom sections
+│   │   ├── sponsorship.html    ← Sponsorship tier cards
+│   │   ├── advert.html         ← Advertise page
+│   │   ├── submit-story.html   ← Submit Story page
+│   │   └── dashboard.html      ← Full standalone member dashboard
+│   ├── components/
+│   │   └── header-fixes.html   ← CSS fixes injected into every page
+│   └── scripts/
+│       ├── build.js            ← Assembles output/ from src/
+│       ├── serve.js            ← Express server
+│       └── crawl.js            ← Re-crawl wrapper
+│
+├── output/                     ← BUILT SITE — served, do not edit directly
+├── output2/                    ← CRAWLED BASE — raw WordPress HTML
+├── _backup/                    ← Backup of original project before restructure
+│
+├── recrawl-all.js              ← Full site crawl script
+├── package.json
+└── README.md
 ```
 
-## Browse the clone
+---
+
+## Workflow
+
+### Edit content
+
+Open the relevant file in `src/pages/`, make changes, then rebuild:
 
 ```bash
-npm run serve     # then open http://localhost:8080
+npm run build
 ```
 
-## Re-capture (if the live site changes)
+### Run the server
 
 ```bash
-npm run crawl && npm run rewrite
+npm run serve
+# → http://localhost:8080
 ```
 
-## What was captured vs. what must be rebuilt
+### Build + serve in one command
 
-The clone is a faithful **design + content** reference. It captures everything
-that is sent to the browser. It does **not** (and cannot) capture server-side
-logic — that has to be rebuilt for the React/Node version:
+```bash
+npm run dev
+```
 
-| Captured (static)                          | Must be rebuilt (dynamic / server-side)        |
-| ------------------------------------------ | ---------------------------------------------- |
-| Home, About, Contact, Stories, Sponsorship | Login / accounts (`/login`, `/account`)        |
-| Advert, Submit Story (markup), Community   | User dashboard (`/dashboard`, `/edit`)         |
-| 4 blog posts + layout                      | Subscriptions & payments (`/subscription`,     |
-| All images, fonts, CSS, the visual design  | `/payment`, `/order-received`) → needs Stripe  |
-|                                            | Story submission form handler → needs an API   |
+### Re-crawl from the live site
 
-### Known limitations of the static capture
-- A few Elementor/plugin **icon-font glyphs** and one widget CSS file 404 offline
-  (the plugins lazy-load them via JS). Irrelevant to the React rebuild.
-- `wp-admin/admin-ajax.php` calls fail offline (they're backend endpoints).
-- Auth/payment pages only show their **logged-out** state.
+```bash
+npm run crawl
+# Then: npm run build
+```
 
-## Tech stack detected on the source site
-WordPress 6.8 · Elementor + Elementor Pro · Jeg Elementor Kit · ElementsKit ·
-LiteSpeed cache · hosted on Hostinger. A membership/subscription + story-
-submission magazine.
+---
+
+## How Pages Are Built
+
+| Page | Source file | Output |
+|---|---|---|
+| `/` | `src/pages/home.html` | `output/index.html` |
+| `/about-us/` | `src/pages/about.html` + crawled base | `output/about-us/index.html` |
+| `/stories/` | `src/pages/stories.html` + crawled base | `output/stories/index.html` |
+| `/contact-us/` | `src/pages/contact.html` + crawled base | `output/contact-us/index.html` |
+| `/sponsorship/` | `src/pages/sponsorship.html` + crawled base | `output/sponsorship/index.html` |
+| `/advert/` | `src/pages/advert.html` + crawled base | `output/advert/index.html` |
+| `/submit-story/` | `src/pages/submit-story.html` + crawled base | `output/submit-story/index.html` |
+| `/dashboard` | `src/pages/dashboard.html` | `output/dashboard/index.html` |
+
+**Standalone pages** (`home`, `dashboard`) — `src/pages/*.html` is a complete HTML file copied directly to output.
+
+**Crawled-base pages** (all others) — `build.js` reads the crawled WordPress page from `output2/`, applies `header-fixes.html`, injects the custom sections from `src/pages/*.html` before `</body>`, and writes the result to `output/`.
+
+---
+
+## Adding a New Page
+
+1. Create `src/pages/newpage.html` with your content wrapped in `<!-- SECTION: name -->` blocks
+2. Add an entry to the `PAGES` array in `src/scripts/build.js`
+3. Add a route in `src/scripts/serve.js`
+4. Run `npm run build`
+
+---
+
+## Adding a New Section to Home
+
+The homepage is standalone — just edit `src/pages/home.html` directly and run `npm run build`.
+
+---
+
+## Future Routes (stubbed in serve.js)
+
+- `/dashboard` — Member dashboard (built)
+- More routes ready to wire up as the platform grows
+
+---
+
+## Brand Colours
+
+| Name | Hex |
+|---|---|
+| Background deep | `#020918` |
+| Background dark | `#050D1A` |
+| Blue accent | `#00AEFE` |
+| Pink accent | `#B71F71` |
