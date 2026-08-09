@@ -25,6 +25,7 @@ import pollsRouter from '../backend/routes/polls.js';
 import remindersRouter from '../backend/routes/reminders.js';
 import submissionsRouter from '../backend/routes/submissions.js';
 import dashboardRouter from '../backend/routes/dashboard.js';
+import uploadRouter from '../backend/routes/upload.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PUBLIC    = join(__dirname, '../../public');
@@ -38,6 +39,9 @@ initDb();
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve uploaded images statically
+app.use('/uploads', express.static(join(PUBLIC, 'uploads')));
 
 // ── Logging middleware ────────────────────────────────────────────────────────
 app.use((req, res, next) => {
@@ -56,6 +60,7 @@ app.use('/api', pollsRouter);
 app.use('/api', remindersRouter);
 app.use('/api', submissionsRouter);
 app.use('/api', dashboardRouter);
+app.use('/api', uploadRouter);
 
 // ── Static assets (images, CSS, JS, fonts etc.) ──────────────────────────────
 // Served with caching disabled in dev; tweak for production.
