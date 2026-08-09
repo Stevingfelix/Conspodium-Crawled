@@ -286,6 +286,9 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -862,10 +865,10 @@ button[type="submit"],
 .csp-hero-slide.active{opacity:1;pointer-events:auto;}
 .csp-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center center;transform:scale(1.06);transition:transform 7s cubic-bezier(0.4,0,0.2,1);}
 .csp-hero-slide.active .csp-hero-bg{transform:scale(1);}
-.csp-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,13,26,0.25) 0%,rgba(5,13,26,0.55) 45%,rgba(5,13,26,0.88) 100%);}
+.csp-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,13,26,0.55) 0%,rgba(5,13,26,0.78) 45%,rgba(5,13,26,0.94) 100%);}
 .csp-hero-content{position:relative;z-index:2;max-width:760px;text-align:center;}
-.csp-hero-eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,rgba(0,174,254,0.35),rgba(183,31,113,0.25));border:1px solid rgba(0,174,254,0.5);border-radius:50px;padding:10px 32px;margin-bottom:24px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transform:translateY(24px);opacity:0;transition:transform 0.7s 0.2s ease,opacity 0.7s 0.2s ease;}
-.csp-hero-eyebrow-dot{width:8px;height:8px;border-radius:50%;background:#00AEFE;box-shadow:0 0 10px #00AEFE;flex-shrink:0;animation:csp-hero-blink 1.4s infinite;}
+.csp-hero-eyebrow{display:inline-flex;align-items:center;justify-content:center;text-align:center;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,rgba(0,174,254,0.35),rgba(183,31,113,0.25));border:1px solid rgba(0,174,254,0.5);border-radius:50px;padding:7px 28px !important;margin-bottom:36px !important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transform:translateY(24px);opacity:0;transition:transform 0.7s 0.2s ease,opacity 0.7s 0.2s ease;}
+.csp-hero-eyebrow-dot{display:none !important;}
 @keyframes csp-hero-blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
 .csp-hero-slide.active .csp-hero-eyebrow{transform:translateY(0);opacity:1;}
 .csp-hero-title{font-family:'Merriweather',Georgia,serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:400;line-height:1.18;color:#fff;margin-bottom:20px;transform:translateY(32px);opacity:0;transition:transform 0.75s 0.35s ease,opacity 0.75s 0.35s ease;}
@@ -904,7 +907,7 @@ button[type="submit"],
   <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');"></div>
   <div class="csp-hero-overlay"></div>
   <div class="csp-hero-content">
-    <div class="csp-hero-eyebrow"><span class="csp-hero-eyebrow-dot"></span>This Week's Featured Essay</div>
+    <div class="csp-hero-eyebrow">This Week's Featured Essay</div>
     <h1 class="csp-hero-title">The Digital Sovereignty Crisis:<br><em>Who Controls Africa's Data Future?</em></h1>
     <p class="csp-hero-sub">A landmark investigation into how global tech giants are shaping African digital policy — and what diaspora leaders are doing to fight back.</p>
     <div class="csp-hero-btns">
@@ -918,7 +921,7 @@ button[type="submit"],
   <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/portrait-two-friends-holding-each-other-city-scaled.jpg');"></div>
   <div class="csp-hero-overlay"></div>
   <div class="csp-hero-content">
-    <div class="csp-hero-eyebrow"><span class="csp-hero-eyebrow-dot"></span>Coming Soon</div>
+    <div class="csp-hero-eyebrow">Coming Soon</div>
     <h1 class="csp-hero-title">A New Perspective on<br><em>Global Leadership</em></h1>
     <p class="csp-hero-sub">Prof. Amara Diallo of the London School of Economics shares his groundbreaking framework for African-led multilateral governance in the digital age.</p>
     <div class="csp-hero-btns">
@@ -932,7 +935,7 @@ button[type="submit"],
   <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/couple-using-technology-while-traveling-city-scaled.jpg');"></div>
   <div class="csp-hero-overlay"></div>
   <div class="csp-hero-content">
-    <div class="csp-hero-eyebrow"><span class="csp-hero-eyebrow-dot"></span>Exclusive Interview</div>
+    <div class="csp-hero-eyebrow">Exclusive Interview</div>
     <h1 class="csp-hero-title">In Conversation with<br><em>Dr. Ngozi Eze</em></h1>
     <p class="csp-hero-sub">"Biotechnology is the next frontier of African liberation. We must own our science, our data, and our story." — Dr. Ngozi Eze, MIT Media Lab.</p>
     <div class="csp-hero-btns">
@@ -944,9 +947,9 @@ button[type="submit"],
 
 <div class="csp-hero-slide" data-slide="3">
   <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');background-position:top center;"></div>
-  <div class="csp-hero-overlay" style="background:linear-gradient(180deg,rgba(5,13,26,0.4) 0%,rgba(5,13,26,0.65) 40%,rgba(3,18,42,0.95) 100%);"></div>
+  <div class="csp-hero-overlay" style="background:linear-gradient(180deg,rgba(5,13,26,0.65) 0%,rgba(5,13,26,0.85) 40%,rgba(3,18,42,0.96) 100%);"></div>
   <div class="csp-hero-content">
-    <div class="csp-hero-eyebrow"><span class="csp-hero-eyebrow-dot"></span>Join the Conversation</div>
+    <div class="csp-hero-eyebrow">Join the Conversation</div>
     <h1 class="csp-hero-title">Your Ideas Matter —<br><em>Share Your Story</em> With the World</h1>
     <p class="csp-hero-sub">Conspodium publishes the stories that matter most to the global diaspora. Whether you're a scholar, activist, or community leader — your voice belongs here.</p>
     <div class="csp-hero-btns">
