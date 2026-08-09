@@ -11,6 +11,14 @@ $uploadsDir   = file_exists(__DIR__ . '/../uploads') ? __DIR__ . '/../uploads' :
 $lockFile     = $dataDir . '/install.lock';
 $isInstalled  = file_exists($lockFile);
 
+// If already installed, block access completely and return 404 Not Found
+if ($isInstalled) {
+    http_response_code(404);
+    header("HTTP/1.1 404 Not Found");
+    echo '<!DOCTYPE html><html lang="en"><head><title>404 Not Found</title><style>body{background:#030814;color:#f0f4f8;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;}h1{font-size:3rem;margin-bottom:10px;color:#00aefe;}p{color:#8a99ad;}a{color:#00aefe;text-decoration:none;}</style></head><body><div><h1>404</h1><p>The requested URL was not found on this server.</p><p><a href="/">Return to Homepage &rarr;</a></p></div></body></html>';
+    exit;
+}
+
 if (!file_exists($dataDir)) @mkdir($dataDir, 0777, true);
 if (!file_exists($uploadsDir)) @mkdir($uploadsDir, 0777, true);
 
