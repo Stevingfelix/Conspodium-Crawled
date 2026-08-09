@@ -87,7 +87,25 @@ try {
             user_email TEXT NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
+
+        CREATE TABLE IF NOT EXISTS admins (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            email TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
+            name TEXT NOT NULL,
+            role TEXT DEFAULT 'admin',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
     ");
+
+    // Seed default admin account if empty
+    $adminCount = $pdo->query("SELECT COUNT(*) as count FROM admins")->fetch()['count'];
+    if ($adminCount == 0) {
+        $defaultPassword = password_hash('conspodium2026', PASSWORD_DEFAULT);
+        $stmtAdmin = $pdo->prepare("INSERT INTO admins (username, email, password_hash, name, role) VALUES (?, ?, ?, ?, ?)");
+        $stmtAdmin->execute(['admin', 'admin@conspodium.com', $defaultPassword, 'Editor Admin', 'admin']);
+    }
 
     // Seed initial categories if empty
     $catCount = $pdo->query("SELECT COUNT(*) as count FROM categories")->fetch()['count'];

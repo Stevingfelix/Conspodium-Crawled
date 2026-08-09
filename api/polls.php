@@ -10,13 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/auth_guard.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? '';
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 
-// ── GET ACTIVE POLL ──────────────────────────────────────────────────────────
+// ── GET ACTIVE POLL (PUBLIC) ──────────────────────────────────────────────────
 if ($method === 'GET' && ($action === 'active' || empty($action))) {
     $stmt = $pdo->query("SELECT * FROM polls WHERE is_active = 1 ORDER BY created_at DESC LIMIT 1");
     $poll = $stmt->fetch();
@@ -63,8 +64,9 @@ if ($method === 'GET' && ($action === 'active' || empty($action))) {
     exit;
 }
 
-// ── GET ALL POLLS (ADMIN) ───────────────────────────────────────────────────
+// ── GET ALL POLLS (ADMIN ONLY) ───────────────────────────────────────────────
 if ($method === 'GET' && $action === 'list') {
+    requireAdmin();
     $stmt = $pdo->query("SELECT * FROM polls ORDER BY created_at DESC");
     $polls = $stmt->fetchAll();
 
@@ -163,6 +165,7 @@ if ($method === 'POST' && ($action === 'vote' || isset($input['optionIndex']))) 
 
 // ── CREATE POLL ─────────────────────────────────────────────────────────────
 if ($method === 'POST' && ($action === 'create' || !empty($input['question']))) {
+    requireAdmin();
     $question = trim($input['question'] ?? '');
     $options = $input['options'] ?? [];
     $isActive = !empty($input['isActive']) ? 1 : 0;
@@ -186,6 +189,7 @@ if ($method === 'POST' && ($action === 'create' || !empty($input['question']))) 
 
 // ── ACTIVATE POLL ───────────────────────────────────────────────────────────
 if ($method === 'POST' && $action === 'activate') {
+    requireAdmin();
     $id = intval($_GET['id'] ?? $input['id'] ?? 0);
     $pdo->exec("UPDATE polls SET is_active = 0");
     $pdo->prepare("UPDATE polls SET is_active = 1 WHERE id = ?")->execute([$id]);
@@ -196,6 +200,7 @@ if ($method === 'POST' && $action === 'activate') {
 
 // ── DELETE POLL ─────────────────────────────────────────────────────────────
 if ($method === 'DELETE' || ($method === 'POST' && $action === 'delete')) {
+    requireAdmin();
     $id = intval($_GET['id'] ?? $input['id'] ?? 0);
     $pdo->prepare("DELETE FROM poll_votes WHERE poll_id = ?")->execute([$id]);
     $pdo->prepare("DELETE FROM polls WHERE id = ?")->execute([$id]);

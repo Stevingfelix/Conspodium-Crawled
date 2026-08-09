@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/auth_guard.php';
 
 function slugify($text) {
     $text = preg_replace('~[^\pL\d]+~u', '-', $text);
@@ -40,6 +41,7 @@ if ($resource === 'categories') {
     }
 
     if ($method === 'POST') {
+        requireAdmin();
         $name = trim($input['name'] ?? '');
         $icon = trim($input['icon'] ?? '🏷️');
         $desc = trim($input['description'] ?? '');
@@ -58,6 +60,7 @@ if ($resource === 'categories') {
     }
 
     if ($method === 'PUT') {
+        requireAdmin();
         $id = intval($_GET['id'] ?? 0);
         $name = trim($input['name'] ?? '');
         $icon = trim($input['icon'] ?? '🏷️');
@@ -72,6 +75,7 @@ if ($resource === 'categories') {
     }
 
     if ($method === 'DELETE') {
+        requireAdmin();
         $id = intval($_GET['id'] ?? 0);
         $stmt = $pdo->prepare("DELETE FROM categories WHERE id = ?");
         $stmt->execute([$id]);
@@ -164,6 +168,7 @@ if ($method === 'GET') {
 }
 
 if ($method === 'POST') {
+    requireAdmin();
     $title = trim($input['title'] ?? '');
     $content = trim($input['content'] ?? '');
     $eyebrow = trim($input['eyebrow'] ?? 'Community Essay');
@@ -205,6 +210,7 @@ if ($method === 'POST') {
 }
 
 if ($method === 'PUT') {
+    requireAdmin();
     $id = intval($_GET['id'] ?? 0);
     $stmtExist = $pdo->prepare("SELECT * FROM posts WHERE id = ?");
     $stmtExist->execute([$id]);
@@ -247,6 +253,7 @@ if ($method === 'PUT') {
 }
 
 if ($method === 'DELETE') {
+    requireAdmin();
     $id = intval($_GET['id'] ?? 0);
     $pdo->prepare("DELETE FROM posts WHERE id = ?")->execute([$id]);
     echo json_encode(["success" => true, "message" => "Article deleted successfully"]);

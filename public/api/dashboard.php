@@ -10,6 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/auth_guard.php';
+
+requireAdmin();
 
 try {
     $totalPosts = $pdo->query("SELECT COUNT(*) as count FROM posts")->fetch()['count'];

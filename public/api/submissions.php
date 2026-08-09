@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/auth_guard.php';
 
 function slugify($text) {
     $text = preg_replace('~[^\pL\d]+~u', '-', $text);
@@ -25,15 +26,17 @@ $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? '';
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 
-// ── GET ALL SUBMISSIONS ──────────────────────────────────────────────────────
+// ── GET ALL SUBMISSIONS (ADMIN ONLY) ─────────────────────────────────────────
 if ($method === 'GET') {
+    requireAdmin();
     $stmt = $pdo->query("SELECT * FROM story_submissions ORDER BY submitted_at DESC");
     echo json_encode(["success" => true, "submissions" => $stmt->fetchAll()]);
     exit;
 }
 
-// ── APPROVE SUBMISSION ───────────────────────────────────────────────────────
+// ── APPROVE SUBMISSION (ADMIN ONLY) ──────────────────────────────────────────
 if ($method === 'POST' && $action === 'approve') {
+    requireAdmin();
     $id = intval($_GET['id'] ?? $input['id'] ?? 0);
     $categoryId = intval($input['categoryId'] ?? 1);
     $featuredImage = trim($input['featuredImage'] ?? './wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');
@@ -91,6 +94,7 @@ if ($method === 'POST' && $action === 'approve') {
 
 // ── REJECT SUBMISSION ────────────────────────────────────────────────────────
 if ($method === 'POST' && $action === 'reject') {
+    requireAdmin();
     $id = intval($_GET['id'] ?? $input['id'] ?? 0);
     $pdo->prepare("UPDATE story_submissions SET status = 'rejected' WHERE id = ?")->execute([$id]);
     echo json_encode(["success" => true, "message" => "Submission marked as rejected"]);
@@ -99,6 +103,7 @@ if ($method === 'POST' && $action === 'reject') {
 
 // ── DELETE SUBMISSION ────────────────────────────────────────────────────────
 if ($method === 'DELETE' || ($method === 'POST' && $action === 'delete')) {
+    requireAdmin();
     $id = intval($_GET['id'] ?? $input['id'] ?? 0);
     $pdo->prepare("DELETE FROM story_submissions WHERE id = ?")->execute([$id]);
     echo json_encode(["success" => true, "message" => "Submission deleted"]);
