@@ -73,14 +73,13 @@ for (const page of PAGES) {
 
   let html = await readFile(srcFile, 'utf8');
 
-  // Replace or inject header fixes
+  // Clean out any legacy or duplicate header fix blocks and scripts
+  html = html.replace(/<!-- CSP_HEADER_FIXES_START -->[\s\S]*?<!-- CSP_HEADER_FIXES_END -->\n?/g, '');
+  html = html.replace(/<style id="csp-header-fixes">[\s\S]*?<\/style>\n?/g, '');
+  html = html.replace(/<script id="csp-mobile-menu-script">[\s\S]*?<\/script>\n?/g, '');
+
   if (headerFixesHtml) {
-    if (html.includes('id="csp-header-fixes"')) {
-      html = html.replace(/<style id="csp-header-fixes">[\s\S]*?<\/style>/, headerFixesHtml.replace(/<!--[\s\S]*?-->\n?/g, ''));
-    } else {
-      html = html.replace('</head>', headerFixesHtml + '\n</head>');
-    }
-    // Also save updated template back to src/pages
+    html = html.replace('</head>', headerFixesHtml + '\n</head>');
     await writeFile(srcFile, html, 'utf8');
   }
 
