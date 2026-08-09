@@ -17,17 +17,12 @@
 /* Fix logo images collapsed to height:0 by JS at crawl time */
 img.sticel-logo-shrink { height: auto !important; max-height: 80px !important; width: auto !important; opacity: 1 !important; }
 
-/* Remove transform on sticky header when mobile menu is open so position:fixed spans 100% top to bottom without offset */
-body.csp-menu-is-open .she-header-yes,
-body.csp-menu-is-open .elementor-sticky,
-body.csp-menu-is-open .adv-sticky-elementor,
-body.csp-menu-is-open .elementor-element-2d9e131,
-body.csp-menu-is-open .elementor-location-header,
-body.csp-menu-is-open header {
-  transform: none !important;
-  -webkit-transform: none !important;
-  perspective: none !important;
-  filter: none !important;
+/* ── TEXT COLOR OVERRIDE: Countdown Title "The Future of African Democracy" ─ */
+.csp-cd-title,
+#csp-countdown .csp-cd-title,
+section#csp-countdown h2.csp-cd-title {
+  color: #ffffff !important;
+  font-family: 'Merriweather', Georgia, serif !important;
 }
 
 /* ── LOGO FIX: Desktop/tablet logo must be visible on non-mobile screens ────── */
@@ -98,16 +93,13 @@ body.home .elementor-1969 .elementor-menu-toggle i {
 }
 
 /* ── NAV TEXT: Inner Pages (dark black text over white/light hero) ─────────── */
-body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item,
-body:not(.home) .elementor-1969 .elementor-nav-menu--dropdown .elementor-item {
+body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item {
   color: #0f172a !important;
   fill: #0f172a !important;
   text-shadow: none !important;
 }
 body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item:hover,
-body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active,
-body:not(.home) .elementor-1969 .elementor-nav-menu--dropdown .elementor-item:hover,
-body:not(.home) .elementor-1969 .elementor-nav-menu--dropdown .elementor-item.elementor-item-active {
+body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active {
   color: #00AEFE !important;
   fill: #00AEFE !important;
   text-shadow: none !important;
@@ -117,195 +109,178 @@ body:not(.home) .elementor-1969 .elementor-menu-toggle i {
   color: #0f172a !important;
 }
 
-/* ── HIDE DESKTOP NAV DROPDOWN TO PREVENT DUPLICATE POPUP ───────────────────── */
-.elementor-element-c6b6140 .elementor-nav-menu--dropdown {
+/* ── HIDE DEFAULT ELEMENTOR DROPDOWNS (REPLACED BY CSP STANDALONE MODAL) ────── */
+.elementor-nav-menu--dropdown {
   display: none !important;
   visibility: hidden !important;
   pointer-events: none !important;
   opacity: 0 !important;
 }
 
-/* ── MODERN ANIMATED POPUP MODAL MENU ───────────────────────────────────────── */
-@media (max-width: 1024px) {
-  .elementor-element.elementor-element-27c23fa .elementor-nav-menu__container.elementor-nav-menu--dropdown,
-  .elementor-element-27c23fa .elementor-nav-menu--dropdown,
-  .elementor-nav-menu--dropdown,
-  .elementor-nav-menu__container.elementor-nav-menu--dropdown {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    max-height: 100vh !important;
-    margin: 0 !important;
-    margin-top: 0 !important;
-    padding: 0 !important;
-    background: rgba(0, 0, 0, 0.25) !important;
-    background-color: rgba(0, 0, 0, 0.25) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    z-index: 9999999 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-    transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  }
+/* ── STANDALONE MOBILE MODAL (ATTACHED TO BODY) ────────────────────────────── */
+#csp-mobile-menu-modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 99999999 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
 
-  .elementor-element-27c23fa .elementor-menu-toggle.elementor-active + .elementor-nav-menu--dropdown,
-  .elementor-element-27c23fa .elementor-menu-toggle.elementor-menu-toggle--active + .elementor-nav-menu--dropdown,
-  .elementor-element-27c23fa .elementor-nav-menu--dropdown.elementor-active,
-  .elementor-element-27c23fa .elementor-nav-menu--dropdown.csp-menu-open,
-  .elementor-nav-menu--dropdown.csp-menu-open {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    visibility: visible !important;
-    display: flex !important;
-  }
+#csp-mobile-menu-modal.active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+}
 
-  .elementor-nav-menu--dropdown ul.elementor-nav-menu {
-    width: 88% !important;
-    max-width: 360px !important;
-    background: rgba(6, 16, 34, 0.88) !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
-    border: 1px solid rgba(0, 174, 254, 0.3) !important;
-    border-radius: 28px !important;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 174, 254, 0.15) !important;
-    padding: 60px 20px 32px !important; /* Generous top padding so close button sits cleanly above Home */
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 6px !important;
-    margin: auto !important;
-    position: relative !important;
-    list-style: none !important;
-    transform: scale(0.85) translateY(24px);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  }
+/* Dark blurry backdrop BEHIND card */
+.csp-modal-backdrop {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  z-index: 1 !important;
+}
 
-  .elementor-nav-menu--dropdown ul.elementor-nav-menu > li:first-child {
-    margin-top: 6px !important;
-  }
+/* Menu card ON TOP of backdrop */
+.csp-modal-card {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 88% !important;
+  max-width: 360px !important;
+  background: rgba(6, 16, 34, 0.92) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(0, 174, 254, 0.3) !important;
+  border-radius: 28px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 174, 254, 0.2) !important;
+  padding: 60px 20px 32px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: scale(0.85) translateY(24px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
 
-  .elementor-nav-menu--dropdown.csp-menu-open ul.elementor-nav-menu,
-  .elementor-menu-toggle.elementor-active + .elementor-nav-menu--dropdown ul.elementor-nav-menu {
-    transform: scale(1) translateY(0);
-  }
+#csp-mobile-menu-modal.active .csp-modal-card {
+  transform: scale(1) translateY(0);
+}
 
-  .elementor-nav-menu--dropdown.csp-menu-closing {
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-  .elementor-nav-menu--dropdown.csp-menu-closing ul.elementor-nav-menu {
-    transform: scale(0.9) translateY(16px) !important;
-  }
+.csp-modal-card ul.csp-modal-menu {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
 
-  /* Centered Nav Items with NO Underlines */
-  .elementor-nav-menu--dropdown li.menu-item {
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    text-align: center !important;
-  }
+.csp-modal-card ul.csp-modal-menu > li:first-child {
+  margin-top: 6px !important;
+}
 
-  .elementor-nav-menu--dropdown .elementor-item {
-    font-family: 'Merriweather', Georgia, serif !important;
-    font-size: 1.12rem !important;
-    font-weight: 500 !important;
-    color: #ffffff !important;
-    fill: #ffffff !important;
-    padding: 10px 24px !important;
-    border-radius: 12px !important;
-    width: 100% !important;
-    text-align: center !important;
-    display: inline-block !important;
-    text-decoration: none !important;
-    margin: 0 auto !important;
-    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease !important;
-  }
+.csp-modal-card li {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+}
 
-  /* Remove all underline pseudo elements */
-  .elementor-nav-menu--dropdown .elementor-item:after,
-  .elementor-nav-menu--dropdown .elementor-item:before,
-  .elementor-nav-menu--dropdown a:after,
-  .elementor-nav-menu--dropdown a:before {
-    display: none !important;
-    content: none !important;
-    height: 0 !important;
-    width: 0 !important;
-  }
+.csp-modal-card a {
+  font-family: 'Merriweather', Georgia, serif !important;
+  font-size: 1.12rem !important;
+  font-weight: 500 !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  padding: 10px 24px !important;
+  border-radius: 12px !important;
+  width: 100% !important;
+  text-align: center !important;
+  display: inline-block !important;
+  text-decoration: none !important;
+  margin: 0 auto !important;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease !important;
+}
 
-  .elementor-nav-menu--dropdown .elementor-item:hover,
-  .elementor-nav-menu--dropdown .elementor-item.elementor-item-active {
-    background: rgba(0, 174, 254, 0.15) !important;
-    color: #00AEFE !important;
-    fill: #00AEFE !important;
-    text-decoration: none !important;
-  }
+.csp-modal-card a:hover,
+.csp-modal-card a.active-link {
+  background: rgba(0, 174, 254, 0.15) !important;
+  color: #00AEFE !important;
+  fill: #00AEFE !important;
+  text-decoration: none !important;
+}
 
-  /* Submit Story Pill Button inside Popup */
-  .elementor-nav-menu--dropdown a[href*="submit-story"],
-  .elementor-nav-menu--dropdown .menu-item-2098 a {
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
-    color: #ffffff !important;
-    fill: #ffffff !important;
-    font-family: 'Merriweather', Georgia, serif !important;
-    font-size: 0.95rem !important;
-    font-weight: 600 !important;
-    padding: 14px 32px !important;
-    border-radius: 50px !important;
-    margin-top: 14px !important;
-    box-shadow: 0 6px 24px rgba(0, 174, 254, 0.4) !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    width: auto !important;
-    min-width: 180px !important;
-    text-decoration: none !important;
-  }
+/* Submit Story Pill Button inside Modal */
+.csp-modal-card a.csp-modal-cta {
+  background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  font-family: 'Merriweather', Georgia, serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  padding: 14px 32px !important;
+  border-radius: 50px !important;
+  margin-top: 14px !important;
+  box-shadow: 0 6px 24px rgba(0, 174, 254, 0.4) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: auto !important;
+  min-width: 180px !important;
+  text-decoration: none !important;
+}
 
-  .elementor-nav-menu--dropdown a[href*="submit-story"]:hover {
-    background: linear-gradient(110deg, #B71F71 0%, #00AEFE 100%) !important;
-    transform: translateY(-2px) scale(1.03) !important;
-    box-shadow: 0 8px 30px rgba(0, 174, 254, 0.55) !important;
-    color: #ffffff !important;
-    text-decoration: none !important;
-  }
+.csp-modal-card a.csp-modal-cta:hover {
+  background: linear-gradient(110deg, #B71F71 0%, #00AEFE 100%) !important;
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow: 0 8px 30px rgba(0, 174, 254, 0.55) !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
 
-  .csp-mobile-menu-close {
-    position: absolute !important;
-    top: 16px !important;
-    right: 16px !important;
-    width: 36px !important;
-    height: 36px !important;
-    border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    color: rgba(255, 255, 255, 0.85) !important;
-    font-size: 1.4rem !important;
-    line-height: 1 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    z-index: 1000000 !important;
-    transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease !important;
-  }
-  .csp-mobile-menu-close:hover {
-    background: rgba(255, 255, 255, 0.2) !important;
-    color: #ffffff !important;
-    transform: scale(1.08) !important;
-  }
+.csp-mobile-menu-close {
+  position: absolute !important;
+  top: 16px !important;
+  right: 16px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 1.4rem !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease !important;
+}
+.csp-mobile-menu-close:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  transform: scale(1.08) !important;
 }
 
 /* ── GLOBAL PILL BUTTON STYLING ───────────────────────────────────────────── */
@@ -316,7 +291,7 @@ body:not(.home) .elementor-1969 .elementor-menu-toggle i {
 .wp-block-button__link,
 input[type="submit"],
 button[type="submit"],
-.elementor-nav-menu--dropdown a[href*="submit-story"] {
+.csp-modal-cta {
   border-radius: 50px !important;
 }
 </style>
@@ -324,67 +299,90 @@ button[type="submit"],
 <script id="csp-mobile-menu-script">
 (function() {
   function initMobileMenu() {
-    var toggles = document.querySelectorAll('.elementor-element-27c23fa .elementor-menu-toggle');
-    if (!toggles.length) {
-      toggles = document.querySelectorAll('.elementor-menu-toggle');
-    }
-    toggles.forEach(function(toggle) {
-      var container = toggle.closest('.elementor-widget-nav-menu');
-      if (!container) return;
-      var dropdown = container.querySelector('.elementor-nav-menu--dropdown');
-      if (!dropdown) return;
-      var ul = dropdown.querySelector('ul.elementor-nav-menu');
-      if (!ul) return;
+    var modal = document.getElementById('csp-mobile-menu-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'csp-mobile-menu-modal';
 
-      function closeMenu() {
-        dropdown.classList.add('csp-menu-closing');
-        dropdown.classList.remove('csp-menu-open');
-        document.body.classList.remove('csp-menu-is-open');
-        toggle.classList.remove('elementor-active', 'elementor-menu-toggle--active');
+      var backdrop = document.createElement('div');
+      backdrop.className = 'csp-modal-backdrop';
+
+      var card = document.createElement('div');
+      card.className = 'csp-modal-card';
+
+      var closeBtn = document.createElement('button');
+      closeBtn.className = 'csp-mobile-menu-close';
+      closeBtn.setAttribute('aria-label', 'Close Menu');
+      closeBtn.innerHTML = '&times;';
+
+      var ul = document.createElement('ul');
+      ul.className = 'csp-modal-menu';
+
+      var menuItems = [
+        { text: 'Home', href: './' },
+        { text: 'About Us', href: './about-us/' },
+        { text: 'Contact Us', href: './contact-us/' },
+        { text: 'Stories', href: './stories/' },
+        { text: 'Sponsorship', href: './sponsorship/' },
+        { text: 'Advert', href: './advert/' },
+        { text: 'Submit Story', href: './submit-story/', isCta: true }
+      ];
+
+      var currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+
+      menuItems.forEach(function(item) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.textContent = item.text;
+        a.href = item.href;
+        if (item.isCta) {
+          a.className = 'csp-modal-cta';
+        }
+        var itemPath = item.href.replace(/^\./, '').replace(/\/$/, '') || '/';
+        if (currentPath === itemPath || (itemPath !== '/' && currentPath.endsWith(itemPath))) {
+          a.classList.add('active-link');
+        }
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+
+      card.appendChild(closeBtn);
+      card.appendChild(ul);
+      modal.appendChild(backdrop);
+      modal.appendChild(card);
+      document.body.appendChild(modal);
+
+      function closeModal() {
+        modal.classList.remove('active');
         document.body.style.overflow = '';
-        setTimeout(function() {
-          dropdown.classList.remove('csp-menu-closing');
-        }, 320);
-      }
-
-      if (!ul.querySelector('.csp-mobile-menu-close')) {
-        var closeBtn = document.createElement('button');
-        closeBtn.className = 'csp-mobile-menu-close';
-        closeBtn.setAttribute('aria-label', 'Close Menu');
-        closeBtn.innerHTML = '&times;';
-        ul.appendChild(closeBtn);
-
-        closeBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          closeMenu();
-        });
-
-        dropdown.addEventListener('click', function(e) {
-          if (e.target === dropdown) {
-            closeMenu();
-          }
-        });
-
-        dropdown.querySelectorAll('.elementor-item').forEach(function(link) {
-          link.addEventListener('click', function() {
-            closeMenu();
-          });
+        document.querySelectorAll('.elementor-menu-toggle').forEach(function(t) {
+          t.classList.remove('elementor-active', 'elementor-menu-toggle--active');
         });
       }
 
+      backdrop.addEventListener('click', closeModal);
+      closeBtn.addEventListener('click', closeModal);
+      card.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', closeModal);
+      });
+    }
+
+    var toggles = document.querySelectorAll('.elementor-menu-toggle');
+    toggles.forEach(function(toggle) {
       toggle.addEventListener('click', function(e) {
-        setTimeout(function() {
-          var isOpen = toggle.classList.contains('elementor-active') || toggle.classList.contains('elementor-menu-toggle--active') || dropdown.classList.contains('csp-menu-open');
-          if (isOpen) {
-            dropdown.classList.remove('csp-menu-closing');
-            dropdown.classList.add('csp-menu-open');
-            document.body.classList.add('csp-menu-is-open');
+        e.preventDefault();
+        e.stopPropagation();
+        var m = document.getElementById('csp-mobile-menu-modal');
+        if (m) {
+          var isOpening = !m.classList.contains('active');
+          if (isOpening) {
+            m.classList.add('active');
             document.body.style.overflow = 'hidden';
           } else {
-            closeMenu();
+            m.classList.remove('active');
+            document.body.style.overflow = '';
           }
-        }, 50);
+        }
       });
     });
   }
