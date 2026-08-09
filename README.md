@@ -10,27 +10,24 @@ Africa's intellectual platform for the global diaspora.
 conspodium-clone/
 │
 ├── src/                        ← SOURCE OF TRUTH — edit here
+│   ├── assets/                 ← Static WP assets, images, CSS, JS, fonts
 │   ├── pages/
-│   │   ├── home.html           ← Full standalone homepage
-│   │   ├── about.html          ← About Us custom sections
-│   │   ├── stories.html        ← Stories/Essays custom sections
-│   │   ├── contact.html        ← Contact custom sections
-│   │   ├── sponsorship.html    ← Sponsorship tier cards
+│   │   ├── home.html           ← Homepage
+│   │   ├── about.html          ← About Us page
+│   │   ├── stories.html        ← Stories/Essays page
+│   │   ├── contact.html        ← Contact Us page
+│   │   ├── sponsorship.html    ← Sponsorship page
 │   │   ├── advert.html         ← Advertise page
 │   │   ├── submit-story.html   ← Submit Story page
-│   │   └── dashboard.html      ← Full standalone member dashboard
+│   │   └── dashboard.html      ← Member dashboard
 │   ├── components/
-│   │   └── header-fixes.html   ← CSS fixes injected into every page
+│   │   └── header-fixes.html   ← Shared header & CSS fixes
 │   └── scripts/
-│       ├── build.js            ← Assembles output/ from src/
-│       ├── serve.js            ← Express server
-│       └── crawl.js            ← Re-crawl wrapper
+│       ├── build.js            ← Assembles public/ from src/
+│       └── serve.js            ← Express server
 │
-├── public/                    ← BUILT SITE — served, do not edit directly
-├── output2/                    ← CRAWLED BASE — raw WordPress HTML
-├── _backup/                    ← Backup of original project before restructure
-│
-├── recrawl-all.js              ← Full site crawl script
+├── public/                     ← BUILT SITE — served, do not edit directly
+├── vercel.json
 ├── package.json
 └── README.md
 ```
@@ -41,7 +38,7 @@ conspodium-clone/
 
 ### Edit content
 
-Open the relevant file in `src/pages/`, make changes, then rebuild:
+Open any page in `src/pages/*.html` or assets in `src/assets/`, make changes, then rebuild:
 
 ```bash
 npm run build
@@ -61,13 +58,6 @@ npm start
 npm run dev
 ```
 
-### Re-crawl from the live site
-
-```bash
-npm run crawl
-# Then: npm run build
-```
-
 ---
 
 ## How Pages Are Built
@@ -75,17 +65,15 @@ npm run crawl
 | Page | Source file | Output |
 |---|---|---|
 | `/` | `src/pages/home.html` | `public/index.html` |
-| `/about-us/` | `src/pages/about.html` + crawled base | `public/about-us/index.html` |
-| `/stories/` | `src/pages/stories.html` + crawled base | `public/stories/index.html` |
-| `/contact-us/` | `src/pages/contact.html` + crawled base | `public/contact-us/index.html` |
-| `/sponsorship/` | `src/pages/sponsorship.html` + crawled base | `public/sponsorship/index.html` |
-| `/advert/` | `src/pages/advert.html` + crawled base | `public/advert/index.html` |
-| `/submit-story/` | `src/pages/submit-story.html` + crawled base | `public/submit-story/index.html` |
+| `/about-us/` | `src/pages/about.html` | `public/about-us/index.html` |
+| `/stories/` | `src/pages/stories.html` | `public/stories/index.html` |
+| `/contact-us/` | `src/pages/contact.html` | `public/contact-us/index.html` |
+| `/sponsorship/` | `src/pages/sponsorship.html` | `public/sponsorship/index.html` |
+| `/advert/` | `src/pages/advert.html` | `public/advert/index.html` |
+| `/submit-story/` | `src/pages/submit-story.html` | `public/submit-story/index.html` |
 | `/dashboard` | `src/pages/dashboard.html` | `public/dashboard/index.html` |
 
-**Standalone pages** (`home`, `dashboard`) — `src/pages/*.html` is a complete HTML file copied directly to public.
-
-**Crawled-base pages** (all others) — `build.js` reads the crawled WordPress page from `output2/`, applies `header-fixes.html`, injects the custom sections from `src/pages/*.html` before `</body>`, and writes the result to `public/`.
+All pages in `src/pages/` are 100% self-contained standalone HTML source files. `build.js` copies `src/assets/` and processes `src/pages/` into `public/`.
 
 ---
 

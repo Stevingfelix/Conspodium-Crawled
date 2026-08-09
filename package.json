@@ -7,8 +7,7 @@
     "start":  "node src/scripts/serve.js",
     "build":  "node src/scripts/build.js",
     "serve":  "node src/scripts/serve.js",
-    "dev":    "node src/scripts/build.js && node src/scripts/serve.js",
-    "crawl":  "node src/scripts/crawl.js"
+    "dev":    "node src/scripts/build.js && node src/scripts/serve.js"
   },
   "keywords": [],
   "author": "",
