@@ -325,6 +325,7 @@ min-width: 100px;
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1433,6 +1434,66 @@ e-page-transition,
     </div>
 </article></div>
             <div class="clearfix"></div>
+<script>
+(function(){
+  var appender = document.querySelector('.eael-post-appender');
+  if (!appender) return;
+
+  fetch('/api/posts')
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (!res.success || !res.posts || !res.posts.length) return;
+
+      res.posts.forEach(function(post){
+        // Avoid duplicate rendering if post slug already exists
+        if (document.querySelector('a[href*="' + post.slug + '"]')) return;
+
+        var article = document.createElement('article');
+        article.className = 'eael-grid-post eael-post-grid-column category-dynamic';
+        article.innerHTML = `
+          <div class="eael-grid-post-holder">
+            <div class="eael-grid-post-holder-inner">
+              <div class="eael-entry-media">
+                <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
+                <div class="eael-entry-thumbnail">
+                  <img loading="lazy" width="300" height="200" src="${post.featured_image || '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg'}" alt="${post.title}">
+                </div>
+              </div>
+              <div class="eael-entry-wrapper">
+                <header class="eael-entry-header">
+                  <h2 class="eael-entry-title">
+                    <a class="eael-grid-post-link" href="#" title="${post.title}">${post.title}</a>
+                  </h2>
+                </header>
+                <div class="eael-entry-content">
+                  <div class="eael-grid-post-excerpt">
+                    <p>${post.excerpt}</p>
+                    <a href="#" class="eael-post-elements-readmore-btn">Read More</a>
+                  </div>
+                </div>
+                <div class="eael-entry-header-after style-two">
+                  <div class="eael-entry-meta">
+                    <span class="eael-meta-posted-on"><i class="far fa-clock"></i> ${post.reading_time || '5 min read'} · ${post.author_name}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        article.querySelectorAll('a').forEach(function(a){
+          a.addEventListener('click', function(e){
+            e.preventDefault();
+            alert('📖 Article: ' + post.title + '\n\n' + post.excerpt + '\n\nViews: ' + post.views);
+          });
+        });
+
+        appender.insertBefore(article, appender.firstChild);
+      });
+    })
+    .catch(function(err){ console.error('Error fetching dynamic posts:', err); });
+})();
+</script>
         </div>				</div>
 				</div>
 				</div>

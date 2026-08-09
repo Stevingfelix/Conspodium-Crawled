@@ -4,15 +4,16 @@
   "description": "Conspodium — African Diaspora Media Platform",
   "type": "module",
   "scripts": {
-    "start":  "node src/scripts/serve.js",
-    "build":  "node src/scripts/build.js",
-    "serve":  "node src/scripts/serve.js",
-    "dev":    "node src/scripts/build.js && node src/scripts/serve.js"
+    "start": "node src/scripts/serve.js",
+    "build": "node src/scripts/build.js",
+    "serve": "node src/scripts/serve.js",
+    "dev": "node src/scripts/build.js && node src/scripts/serve.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite3": "^13.0.3",
     "express": "^4.19.2",
     "playwright": "^1.60.0"
   }

@@ -19,11 +19,25 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
 
+import { initDb } from '../backend/db.js';
+import postsRouter from '../backend/routes/posts.js';
+import pollsRouter from '../backend/routes/polls.js';
+import remindersRouter from '../backend/routes/reminders.js';
+import submissionsRouter from '../backend/routes/submissions.js';
+import dashboardRouter from '../backend/routes/dashboard.js';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PUBLIC    = join(__dirname, '../../public');
 const PORT      = process.env.PORT || 8080;
 
 const app = express();
+
+// Initialize SQLite Database & Tables
+initDb();
+
+// ── Middleware ────────────────────────────────────────────────────────────────
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // ── Logging middleware ────────────────────────────────────────────────────────
 app.use((req, res, next) => {
@@ -35,6 +49,13 @@ app.use((req, res, next) => {
   });
   next();
 });
+
+// ── API Routes ────────────────────────────────────────────────────────────────
+app.use('/api', postsRouter);
+app.use('/api', pollsRouter);
+app.use('/api', remindersRouter);
+app.use('/api', submissionsRouter);
+app.use('/api', dashboardRouter);
 
 // ── Static assets (images, CSS, JS, fonts etc.) ──────────────────────────────
 // Served with caching disabled in dev; tweak for production.

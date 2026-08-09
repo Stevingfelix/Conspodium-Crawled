@@ -393,6 +393,7 @@
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1122,27 +1123,27 @@ e-page-transition,
     <div class="csp-stats-row">
       <div class="csp-stat-card">
         <div class="csp-stat-card-icon">📖</div>
-        <div class="csp-stat-card-num">12</div>
-        <div class="csp-stat-card-label">Essays Read This Month</div>
-        <div class="csp-stat-card-change up">↑ 4 more than last month</div>
+        <div class="csp-stat-card-num" id="csp-stat-posts">--</div>
+        <div class="csp-stat-card-label">Total Articles Published</div>
+        <div class="csp-stat-card-change up">Live Database Feed</div>
       </div>
       <div class="csp-stat-card">
         <div class="csp-stat-card-icon">📝</div>
-        <div class="csp-stat-card-num">2</div>
+        <div class="csp-stat-card-num" id="csp-stat-pending">--</div>
         <div class="csp-stat-card-label">Submissions Pending</div>
-        <div class="csp-stat-card-change neutral">Under review</div>
+        <div class="csp-stat-card-change neutral">Under Review</div>
       </div>
       <div class="csp-stat-card">
         <div class="csp-stat-card-icon">⭐</div>
-        <div class="csp-stat-card-num">48</div>
-        <div class="csp-stat-card-label">Articles Saved</div>
-        <div class="csp-stat-card-change up">↑ 6 new saves</div>
+        <div class="csp-stat-card-num" id="csp-stat-views">--</div>
+        <div class="csp-stat-card-label">Total Article Reads</div>
+        <div class="csp-stat-card-change up">↑ Community Engagement</div>
       </div>
       <div class="csp-stat-card">
         <div class="csp-stat-card-icon">🌍</div>
         <div class="csp-stat-card-num">Member</div>
-        <div class="csp-stat-card-label">Since January 2025</div>
-        <div class="csp-stat-card-change neutral">18 months</div>
+        <div class="csp-stat-card-label">Since August 2026</div>
+        <div class="csp-stat-card-change neutral">Active Account</div>
       </div>
     </div>
 
@@ -1248,7 +1249,7 @@ e-page-transition,
 </main>
 
 <script>
-// Mobile sidebar toggle
+// Mobile sidebar toggle & Live API Fetch
 (function(){
   var toggle = document.getElementById('csp-toggle');
   var sidebar = document.getElementById('csp-sidebar');
@@ -1257,6 +1258,26 @@ e-page-transition,
       sidebar.classList.toggle('open');
     });
   }
+
+  function loadDashboardData() {
+    fetch('/api/dashboard/overview')
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (!res.success || !res.stats) return;
+        
+        var postsEl = document.getElementById('csp-stat-posts');
+        var pendingEl = document.getElementById('csp-stat-pending');
+        var viewsEl = document.getElementById('csp-stat-views');
+
+        if (postsEl) postsEl.textContent = res.stats.totalPosts || '0';
+        if (pendingEl) pendingEl.textContent = res.stats.pendingSubmissions || '0';
+        if (viewsEl) viewsEl.textContent = (res.stats.totalViews || 0).toLocaleString();
+      })
+      .catch(function(err){ console.error('Dashboard fetch error:', err); });
+  }
+
+  document.addEventListener('DOMContentLoaded', loadDashboardData);
+  loadDashboardData();
 })();
 </script>
 </body>

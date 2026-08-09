@@ -300,6 +300,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1767,7 +1768,111 @@ e-page-transition,
     <p class="csp-poll-thanks" id="csp-poll-thanks">Thank you for voting! Results update weekly.</p>
   </div>
 </div>
-<script>(function(){var opts=document.querySelectorAll('.csp-poll-opt'),btn=document.getElementById('csp-poll-btn'),thanks=document.getElementById('csp-poll-thanks'),votes=[312,198,271,145],total=926,voted=localStorage.getItem('csp-poll-v1');function showResults(ch){opts.forEach(function(opt,i){opt.querySelector('input').disabled=true;var bw=document.createElement('div');bw.className='csp-poll-bar-wrap';var bi=document.createElement('div');bi.className='csp-poll-bar';bw.appendChild(bi);opt.appendChild(bw);var pw=document.createElement('div');pw.className='csp-poll-pct';opt.appendChild(pw);bw.style.display='block';pw.style.display='block';var p=Math.round(votes[i]/total*100);pw.textContent=p+'%';setTimeout(function(){bi.style.width=p+'%';},50);if(parseInt(opt.querySelector('input').value)===ch)opt.style.borderColor='#00AEFE';});btn.disabled=true;thanks.style.display='block';}if(voted!==null)showResults(parseInt(voted));opts.forEach(function(opt){opt.addEventListener('click',function(){opts.forEach(function(o){o.classList.remove('selected');});opt.classList.add('selected');btn.disabled=false;});});btn.addEventListener('click',function(){var s=document.querySelector('.csp-poll-opt.selected input');if(!s)return;var v=parseInt(s.value);votes[v]++;total++;localStorage.setItem('csp-poll-v1',v);showResults(v);});})();</script>
+<script>
+(function(){
+  var container = document.getElementById('csp-poll-opts'),
+      btn = document.getElementById('csp-poll-btn'),
+      thanks = document.getElementById('csp-poll-thanks'),
+      activePollId = null;
+
+  function renderPollResults(options, totalVotes, userVoted) {
+    if (!container) return;
+    container.innerHTML = '';
+    options.forEach(function(opt) {
+      var label = document.createElement('label');
+      label.className = 'csp-poll-opt';
+      if (userVoted) label.style.borderColor = '#00AEFE';
+      
+      var textSpan = document.createElement('span');
+      textSpan.className = 'csp-poll-opt-label';
+      textSpan.textContent = opt.option;
+
+      var barWrap = document.createElement('div');
+      barWrap.className = 'csp-poll-bar-wrap';
+      barWrap.style.display = 'block';
+
+      var bar = document.createElement('div');
+      bar.className = 'csp-poll-bar';
+      barWrap.appendChild(bar);
+
+      var pct = document.createElement('div');
+      pct.className = 'csp-poll-pct';
+      pct.style.display = 'block';
+      pct.textContent = opt.percentage + '% (' + opt.count + ' votes)';
+
+      label.appendChild(textSpan);
+      label.appendChild(barWrap);
+      label.appendChild(pct);
+      container.appendChild(label);
+
+      setTimeout(function(){ bar.style.width = opt.percentage + '%'; }, 50);
+    });
+
+    if (userVoted) {
+      if (btn) { btn.disabled = true; btn.textContent = 'Voted'; }
+      if (thanks) { thanks.style.display = 'block'; thanks.textContent = 'Thank you for voting! Total votes: ' + totalVotes; }
+    }
+  }
+
+  function loadPoll() {
+    fetch('/api/polls/active')
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (!res.success || !res.poll) return;
+        activePollId = res.poll.id;
+        
+        if (res.poll.userHasVoted) {
+          renderPollResults(res.poll.options, res.poll.totalVotes, true);
+        } else {
+          container.innerHTML = '';
+          res.poll.options.forEach(function(opt, idx) {
+            var lbl = document.createElement('label');
+            lbl.className = 'csp-poll-opt';
+            lbl.innerHTML = '<input type="radio" name="csp-poll" value="' + idx + '"> <span class="csp-poll-opt-label">' + opt.option + '</span>';
+            lbl.addEventListener('click', function(){
+              document.querySelectorAll('.csp-poll-opt').forEach(function(o){ o.classList.remove('selected'); });
+              lbl.classList.add('selected');
+              if (btn) btn.disabled = false;
+            });
+            container.appendChild(lbl);
+          });
+        }
+      }).catch(function(err){ console.error('Poll fetch error:', err); });
+  }
+
+  if (btn) {
+    btn.addEventListener('click', function(){
+      var sel = document.querySelector('.csp-poll-opt.selected input');
+      if (!sel || activePollId === null) return;
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      fetch('/api/polls/vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pollId: activePollId, optionIndex: parseInt(sel.value) })
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.poll) {
+          renderPollResults(res.poll.options, res.poll.totalVotes, true);
+        } else {
+          alert(res.error || 'Could not record vote');
+          btn.disabled = false;
+          btn.textContent = 'Vote Now ›';
+        }
+      }).catch(function(err){
+        console.error('Vote error:', err);
+        btn.disabled = false;
+        btn.textContent = 'Vote Now ›';
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', loadPoll);
+  loadPoll();
+})();
+</script>
 </section>
 <!-- CSP_SECTION_POLL_END -->
 <!-- CSP_SECTION_COUNTDOWN_START -->
