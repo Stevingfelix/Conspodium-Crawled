@@ -291,6 +291,8 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1069,7 +1071,7 @@ e-page-transition,
     var origText = btn ? btn.textContent : 'Submit Story';
     if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
 
-    fetch('/api/submissions', {
+    fetch('/api/submissions.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

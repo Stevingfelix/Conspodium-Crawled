@@ -45,16 +45,14 @@ async function copyDir(src, dest) {
 
 console.log('\n🔨 Conspodium Build\n');
 
-// Step 1 — Copy static assets and PHP API engine
-process.stdout.write('  1. Copying assets and PHP API engine (src/assets & api → public)... ');
+// Step 1 — Copy static assets (wp-content, wp-includes, fonts, images)
+process.stdout.write('  1. Copying assets (src/assets → public)... ');
 if (existsSync(ASSETS)) {
   await copyDir(ASSETS, PUBLIC);
+  console.log('✓');
+} else {
+  console.log('⚠ (src/assets not found)');
 }
-if (existsSync(join(ROOT, 'api'))) {
-  await copyDir(join(ROOT, 'api'), join(PUBLIC, 'api'));
-}
-await mkdir(join(PUBLIC, 'uploads'), { recursive: true });
-console.log('✓');
 
 // Step 2 — Load shared CSS fix component
 const headerFixesHtml = existsSync(join(SRC, 'components/header-fixes.html'))

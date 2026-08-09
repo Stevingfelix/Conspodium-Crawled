@@ -328,6 +328,8 @@ min-width: 100px;
 
 
 
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1441,7 +1443,7 @@ e-page-transition,
   var appender = document.querySelector('.eael-post-appender');
   if (!appender) return;
 
-  fetch('/api/posts')
+  fetch('/api/posts.php')
     .then(function(r){ return r.json(); })
     .then(function(res){
       if (!res.success || !res.posts || !res.posts.length) return;
