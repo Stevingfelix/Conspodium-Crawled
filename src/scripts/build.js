@@ -53,6 +53,9 @@ if (existsSync(ASSETS)) {
 if (existsSync(join(ROOT, 'api'))) {
   await copyDir(join(ROOT, 'api'), join(PUBLIC, 'api'));
 }
+if (existsSync(join(ROOT, 'install.php'))) {
+  await cp(join(ROOT, 'install.php'), join(PUBLIC, 'install.php'));
+}
 await mkdir(join(PUBLIC, 'uploads'), { recursive: true });
 console.log('✓');
 
