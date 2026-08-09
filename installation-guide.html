@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation Guide — Conspodium Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030814;
+      --card-bg: #061022;
+      --border: rgba(0, 174, 254, 0.25);
+      --text: #f0f4f8;
+      --text-muted: #8a99ad;
+      --blue: #00aefe;
+      --pink: #b71f71;
+      --green: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .guide-container {
+      width: 100%;
+      max-width: 720px;
+    }
+    .header-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 36px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      margin-bottom: 30px;
+    }
+    .logo-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--blue), var(--pink));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 auto 18px;
+      box-shadow: 0 10px 30px rgba(0, 174, 254, 0.3);
+    }
+    h1 { font-family: 'Merriweather', serif; font-size: 1.8rem; color: #fff; margin-bottom: 10px; }
+    p.subtitle { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; max-width: 540px; margin: 0 auto; }
+    
+    .steps-grid { display: flex; flex-direction: column; gap: 20px; }
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .step-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+    .step-number {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(0, 174, 254, 0.12);
+      border: 1px solid rgba(0, 174, 254, 0.3);
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .step-content { flex: 1; }
+    .step-title { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+    .step-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
+    
+    code, pre {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 3px 8px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #7dd3fc;
+    }
+    pre { padding: 12px 16px; overflow-x: auto; margin-top: 8px; }
+
+    .note-box {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+      padding: 16px 20px;
+      border-radius: 16px;
+      font-size: 0.88rem;
+      margin-top: 30px;
+      line-height: 1.6;
+    }
+
+    .footer-actions { text-align: center; margin-top: 30px; }
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--blue), #0088cc);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 25px rgba(0, 174, 254, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+<div class="guide-container">
+  <div class="header-card">
+    <div class="logo-badge">C</div>
+    <h1>Conspodium Installation Guide</h1>
+    <p class="subtitle">1-Click Shared Hosting Deployment for cPanel, LiteSpeed, Apache, and Nginx servers.</p>
+  </div>
+
+  <div class="steps-grid">
+    
+    <!-- Step 1 -->
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <div class="step-title">Upload Web Files</div>
+        <div class="step-desc">
+          Upload the contents of the <code>public/</code> folder (or the entire project zip) to your web server root directory (typically <code>public_html</code> or <code>www</code>) via cPanel File Manager or FTP.
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <div class="step-title">Set Directory Write Permissions</div>
+        <div class="step-desc">
+          Ensure that the <code>/data</code> and <code>/uploads</code> folders have writable permissions on your web server:
+        </div>
+        <pre>chmod 775 data uploads  # or 777 depending on host</pre>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <div class="step-title">Run Web Installation Wizard</div>
+        <div class="step-desc">
+          Open your web browser and navigate to the <code>install.php</code> script:
+        </div>
+        <pre>http://your-domain.com/install.php</pre>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step-card">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <div class="step-title">Set Admin Credentials & Launch</div>
+        <div class="step-desc">
+          Enter your custom Admin Full Name, Email, Username, and Password, then click <strong>Install Conspodium Now</strong>.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note-box">
+    🔒 <strong>Automated Security Lock:</strong> Once installation is complete, the installer automatically generates a <code>data/install.lock</code> file and hides <code>install.php</code> behind an <strong>HTTP 404 Not Found</strong> guard, securing your live platform against unauthorized resets.
+  </div>
+
+  <div class="footer-actions">
+    <a href="install.php" class="btn-action">⚡ Run Installer Now (&rarr;)</a>
+  </div>
+</div>
+
+</body>
+</html>

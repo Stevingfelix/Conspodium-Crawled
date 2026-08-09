@@ -56,6 +56,9 @@ if (existsSync(join(ROOT, 'api'))) {
 if (existsSync(join(ROOT, 'install.php'))) {
   await cp(join(ROOT, 'install.php'), join(PUBLIC, 'install.php'));
 }
+if (existsSync(join(ROOT, 'installation-guide.html'))) {
+  await cp(join(ROOT, 'installation-guide.html'), join(PUBLIC, 'installation-guide.html'));
+}
 await mkdir(join(PUBLIC, 'uploads'), { recursive: true });
 console.log('✓');
 
