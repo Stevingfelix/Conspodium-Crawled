@@ -56,6 +56,17 @@ h3 span[style*="background-clip"] {
   margin-right: auto !important;
 }
 
+/* ── FOOTER LINK STYLING ─────────────────────────────────────────────────── */
+.elementor-location-footer a {
+  color: rgba(255, 255, 255, 0.78) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease, opacity 0.2s ease !important;
+}
+.elementor-location-footer a:hover {
+  color: #00AEFE !important;
+  text-decoration: underline !important;
+}
+
 /* Hide the sticky spacer clone that creates a blank gap at top of page */
 .elementor-sticky__spacer { display: none !important; }
 /* Ensure the real fixed header is always visible */
@@ -518,8 +529,8 @@ e-page-transition,
       }
     });
 
-    // Normalize all menu item links in header nav to prevent 404s
-    document.querySelectorAll('.elementor-nav-menu a').forEach(function(a) {
+    // Normalize all menu item links in header nav & footer to prevent 404s
+    document.querySelectorAll('.elementor-nav-menu a, .elementor-location-footer a').forEach(function(a) {
       var href = a.getAttribute('href');
       if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) {
         a.setAttribute('href', getRootUrl(href));

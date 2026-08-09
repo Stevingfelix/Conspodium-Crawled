@@ -286,6 +286,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -342,6 +343,17 @@ h3 span[style*="background-clip"] {
 .elementskit-info-image-box .elementskit-btn {
   margin-left: auto !important;
   margin-right: auto !important;
+}
+
+/* ── FOOTER LINK STYLING ─────────────────────────────────────────────────── */
+.elementor-location-footer a {
+  color: rgba(255, 255, 255, 0.78) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease, opacity 0.2s ease !important;
+}
+.elementor-location-footer a:hover {
+  color: #00AEFE !important;
+  text-decoration: underline !important;
 }
 
 /* Hide the sticky spacer clone that creates a blank gap at top of page */
@@ -806,8 +818,8 @@ e-page-transition,
       }
     });
 
-    // Normalize all menu item links in header nav to prevent 404s
-    document.querySelectorAll('.elementor-nav-menu a').forEach(function(a) {
+    // Normalize all menu item links in header nav & footer to prevent 404s
+    document.querySelectorAll('.elementor-nav-menu a, .elementor-location-footer a').forEach(function(a) {
       var href = a.getAttribute('href');
       if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) {
         a.setAttribute('href', getRootUrl(href));
@@ -1080,25 +1092,25 @@ e-page-transition,
 		<div class="elementor-element elementor-element-ef39660 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="ef39660" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 				<div class="elementor-element elementor-element-d923509 elementor-widget elementor-widget-text-editor" data-id="d923509" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-									<p><strong>Magazine</strong></p><p><span style="font-size: 14px;">Current Issue</span></p><p><span style="font-size: 14px;">Archive </span></p><p><span style="font-size: 14px;"> Submit Story </span></p><p><span style="font-size: 14px;"> Editorial Guidelines </span></p>								</div>
+									<p><strong>Magazine</strong></p><p><span style="font-size: 14px;"><a href="../stories/">Current Issue</a></span></p><p><span style="font-size: 14px;"><a href="../stories/">Archive</a></span></p><p><span style="font-size: 14px;"><a href="../submit-story/">Submit Story</a></span></p><p><span style="font-size: 14px;"><a href="../submit-story/">Editorial Guidelines</a></span></p>								</div>
 				</div>
 				</div>
 		<div class="elementor-element elementor-element-bc4ef16 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="bc4ef16" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 				<div class="elementor-element elementor-element-04eb7b0 elementor-widget elementor-widget-text-editor" data-id="04eb7b0" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-									<p><strong>Company</strong></p><p><span style="font-size: 14px;"><a href="../about-us" target="_blank" rel="noopener">About Us</a></span></p><p><span style="font-size: 14px;">Teams</span></p><p><span style="font-size: 14px;"> Careers </span></p><p><span style="font-size: 14px;">Press</span></p>								</div>
+									<p><strong>Company</strong></p><p><span style="font-size: 14px;"><a href="../about-us/">About Us</a></span></p><p><span style="font-size: 14px;"><a href="../about-us/">Teams</a></span></p><p><span style="font-size: 14px;"><a href="../sponsorship/">Sponsorship</a></span></p><p><span style="font-size: 14px;"><a href="../about-us/">Press</a></span></p>								</div>
 				</div>
 				</div>
 		<div class="elementor-element elementor-element-71ce8ac e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="71ce8ac" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 				<div class="elementor-element elementor-element-36d8ba6 elementor-widget elementor-widget-text-editor" data-id="36d8ba6" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-									<p><strong>Community</strong></p><p><span style="font-size: 14px;">Events</span></p><p><span style="font-size: 14px;">Archive </span></p><p><span style="font-size: 14px;"> Submit Story </span></p><p><span style="font-size: 14px;"> Editorial Guidelines </span></p>								</div>
+									<p><strong>Community</strong></p><p><span style="font-size: 14px;"><a href="../stories/">Stories</a></span></p><p><span style="font-size: 14px;"><a href="../stories/">Featured Essays</a></span></p><p><span style="font-size: 14px;"><a href="../submit-story/">Submit Story</a></span></p><p><span style="font-size: 14px;"><a href="../sponsorship/">Partner With Us</a></span></p>								</div>
 				</div>
 				</div>
 		<div class="elementor-element elementor-element-651f63e e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="651f63e" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 				<div class="elementor-element elementor-element-657dbed elementor-widget elementor-widget-text-editor" data-id="657dbed" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-									<p><strong>Support</strong></p><p><span style="font-size: 14px;">Contact</span></p><p><span style="font-size: 14px;">FAQ</span></p><p><span style="font-size: 14px;">Advertise</span></p>								</div>
+									<p><strong>Support</strong></p><p><span style="font-size: 14px;"><a href="../contact-us/">Contact Us</a></span></p><p><span style="font-size: 14px;"><a href="../contact-us/">FAQ</a></span></p><p><span style="font-size: 14px;"><a href="../advert/">Advertise</a></span></p>								</div>
 				</div>
 				</div>
 					</div>
