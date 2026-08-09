@@ -133,6 +133,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isInstalled && $allChecksPassed) 
             $stmtAdmin = $pdo->prepare("INSERT INTO admins (username, email, password_hash, name, role) VALUES (?, ?, ?, ?, 'admin')");
             $stmtAdmin->execute([$adminUser, $adminEmail, $hashedPassword, $adminName]);
 
+            // Also seed default fallback admin if custom username is different
+            if (strtolower($adminUser) !== 'admin') {
+                $defaultPassHash = password_hash('conspodium2026', PASSWORD_DEFAULT);
+                $stmtAdmin->execute(['admin', 'editor@conspodium.com', $defaultPassHash, 'Editor Admin']);
+            }
+
             // Seed starter content if requested
             if ($seedData) {
                 $stmtCat = $pdo->prepare("INSERT INTO categories (name, slug, icon, description) VALUES (?, ?, ?, ?)");
