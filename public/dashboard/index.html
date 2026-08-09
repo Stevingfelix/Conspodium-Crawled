@@ -382,6 +382,10 @@
 
 
 
+
+
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -390,10 +394,24 @@
   Fixes Elementor/WordPress quirks in the static clone.
   =====================================================================
 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400..900&display=swap" rel="stylesheet">
 <style>/* conspodium-fix-preloader */
 #sl-preloader { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
 </style>
 <style id="csp-header-fixes">
+/* Apply Merienda font to colored gradient text in hero section headlines */
+.csp-hero-title em {
+  font-family: 'Merienda', cursive, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
 /* Hide the sticky spacer clone that creates a blank gap at top of page */
 .elementor-sticky__spacer { display: none !important; }
 /* Ensure the real fixed header is always visible */
@@ -670,6 +688,7 @@ body:not(.home) .elementor-1969 .elementor-menu-toggle i {
 /* ── GLOBAL PILL BUTTON STYLING ───────────────────────────────────────────── */
 .elementor-button,
 .elementor-price-table__button,
+.elementskit-btn,
 .csp-hero-btn-primary,
 .csp-hero-btn-secondary,
 .wp-block-button__link,
@@ -677,6 +696,40 @@ input[type="submit"],
 button[type="submit"],
 .csp-modal-cta {
   border-radius: 50px !important;
+}
+
+/* Ensure ElementsKit buttons (e.g. Read More in About section) match hero button width & sizing and center align */
+.elementor-element-170b1e1a,
+.elementor-element-170b1e1a .elementor-widget-container,
+.elementor-element-170b1e1a .ekit-wid-con,
+.elementor-element-170b1e1a .ekit-btn-wraper {
+  text-align: center !important;
+}
+
+.elementskit-btn,
+.elementor-element-170b1e1a .elementskit-btn,
+.elementor-element-7972d6e7 .elementskit-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  min-width: 180px !important;
+  padding: 16px 36px !important;
+  font-family: 'Merriweather', Georgia, serif !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  border-radius: 50px !important;
+  box-sizing: border-box !important;
+}
+@media (max-width: 767px) {
+  .elementskit-btn,
+  .elementor-element-170b1e1a .elementskit-btn,
+  .elementor-element-7972d6e7 .elementskit-btn {
+    width: 100% !important;
+    max-width: 260px !important;
+    min-width: unset !important;
+  }
 }
 </style>
 
