@@ -111,11 +111,11 @@ try {
     $catCount = $pdo->query("SELECT COUNT(*) as count FROM categories")->fetch()['count'];
     if ($catCount == 0) {
         $stmtCat = $pdo->prepare("INSERT INTO categories (name, slug, icon, description) VALUES (?, ?, ?, ?)");
-        $stmtCat->execute(['Democracy & Politics', 'democracy-politics', '🏛️', 'Multilateral governance and political sovereignty across the diaspora.']);
-        $stmtCat->execute(['AI & Data Ethics', 'ai-data-ethics', '🤖', 'African data sovereignty, algorithm ethics, and diaspora tech innovation.']);
-        $stmtCat->execute(['Climate & Environment', 'climate-environment', '🌿', 'Grassroots climate justice, indigenous knowledge, and sustainability.']);
-        $stmtCat->execute(['Arts & Philosophy', 'arts-philosophy', '📚', 'Decolonising education, pan-African philosophy, and cultural literature.']);
-        $stmtCat->execute(['Biotechnology', 'biotechnology', '🧬', 'Scientific independence, healthcare innovation, and biotechnology in Africa.']);
+        $stmtCat->execute(['Culture & Heritage', 'culture-heritage', '🏛️', 'Heritage, traditions, and the African spirit abroad.']);
+        $stmtCat->execute(['Innovation', 'innovation', '💡', 'Africans in Diaspora influencing economic decisions worldwide.']);
+        $stmtCat->execute(['Art & Entertainment', 'art-entertainment', '🎨', 'Creatives are shaping and representing global culture.']);
+        $stmtCat->execute(['Community', 'community', '👥', 'Stories connecting Africans in Diaspora across the globe.']);
+        $stmtCat->execute(['Success Stories', 'success-stories', '🌟', 'Growth, Success, leadership, and diaspora impact.']);
     }
 
     // Seed initial posts if empty
@@ -127,49 +127,49 @@ try {
         ");
 
         $stmtPost->execute([
-            "The Digital Sovereignty Crisis: Who Controls Africa’s Data Future?",
-            "digital-sovereignty-crisis-africas-data-future",
-            "This Week's Featured Essay",
-            "A landmark investigation into how global tech giants are shaping African digital policy — and what diaspora leaders are doing to fight back.",
-            "<p>Across Africa and its global diaspora, a quiet battle for digital self-determination is underway. As foreign technology conglomerates expand data centers and cloud infrastructure, questions of data governance, privacy rights, and algorithmic bias have reached a critical tipping point.</p><p>African scholars and diaspora technologists are pioneering open frameworks that ensure data generated on the continent empowers local communities rather than extracting value abroad.</p>",
-            2,
+            "Empowering Diaspora Communities Through Innovation & Heritage",
+            "empowering-diaspora-communities-through-innovation-heritage",
+            "Featured Story",
+            "Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.",
+            "<p>Across Africa and its global diaspora, leaders in technology, finance, and arts are building bridges for sustainable economic growth and cultural exchange.</p><p>Through diaspora summits, bilateral investment funds, and cross-border tech incubator networks, pan-African innovators are turning shared history into actionable global impact.</p>",
+            1,
             "Dr. Kemi Adebayo",
             "KA",
-            "./wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg",
+            "./wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg",
             "8 min read",
-            1204,
+            1420,
             1,
             date('Y-m-d H:i:s')
         ]);
 
         $stmtPost->execute([
-            "A New Perspective on Global Leadership",
-            "new-perspective-on-global-leadership",
-            "Coming Soon",
-            "Prof. Amara Diallo of the London School of Economics shares his groundbreaking framework for African-led multilateral governance in the digital age.",
-            "<p>Global governance models inherited from the 20th century are increasingly ill-equipped to address global challenges. Prof. Amara Diallo proposes a restructured pan-African diplomatic framework prioritizing youth representation, economic integration, and digital sovereignty.</p>",
-            1,
+            "Africans in Diaspora Influencing Global Economic Decisions",
+            "africans-in-diaspora-influencing-global-economic-decisions",
+            "Economic Horizons",
+            "How African diaspora founders, venture capitalists, and policy advisors are driving bilateral trade and technology investments in Africa.",
+            "<p>Global financial hubs are seeing an uptick in diaspora-led venture funds aimed at fueling sub-Saharan infrastructure, renewable energy, and fintech ecosystems.</p><p>This new generation of investors prioritizes both high growth and measurable social impact across the African continent.</p>",
+            2,
             "Prof. Amara Diallo",
             "AD",
-            "./wp-content/uploads/2026/01/portrait-two-friends-holding-each-other-city-scaled.jpg",
+            "./wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg",
             "6 min read",
-            987,
+            980,
             0,
             date('Y-m-d H:i:s')
         ]);
 
         $stmtPost->execute([
-            "In Conversation with Dr. Ngozi Eze on Biotechnology",
-            "in-conversation-with-dr-ngozi-eze",
-            "Exclusive Interview",
-            "\"Biotechnology is the next frontier of African liberation. We must own our science, our data, and our story.\" — Dr. Ngozi Eze, MIT Media Lab.",
-            "<p>In this exclusive interview, Dr. Ngozi Eze explores how bio-manufacturing, genetic research ethics, and diaspora-backed laboratories are transforming healthcare self-reliance in West Africa.</p>",
-            5,
+            "Creatives Are Shaping & Representing Global African Culture",
+            "creatives-shaping-representing-global-african-culture",
+            "Art & Identity",
+            "From visual arts exhibitions in San Francisco to Afrobeats on global stages, African artists are redefining modern creative expression.",
+            "<p>Contemporary African artists and filmmakers are captivating international audiences while staying deeply rooted in authentic storytelling and cultural heritage.</p><p>Major museum retrospectives and independent cinema showcases are ensuring that African stories are told on the world's biggest stages by African voices.</p>",
+            3,
             "Dr. Ngozi Eze",
             "NE",
-            "./wp-content/uploads/2026/01/couple-using-technology-while-traveling-city-scaled.jpg",
-            "12 min read",
-            834,
+            "./wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg",
+            "10 min read",
+            1150,
             0,
             date('Y-m-d H:i:s')
         ]);
@@ -179,24 +179,24 @@ try {
     $pollCount = $pdo->query("SELECT COUNT(*) as count FROM polls")->fetch()['count'];
     if ($pollCount == 0) {
         $options = [
-            "AI Ethics & African Data Sovereignty",
-            "Global Political Representation",
-            "Climate Justice & African Communities",
-            "Philosophy & Decolonising Education"
+            "Innovation & Venture Capital",
+            "Cultural Heritage & Arts",
+            "Youth Education & Mentorship",
+            "Diaspora Trade & Economic Policy"
         ];
         $stmtPoll = $pdo->prepare("INSERT INTO polls (question, options_json, is_active) VALUES (?, ?, 1)");
         $stmtPoll->execute([
-            "What is the most pressing issue facing the African diaspora today?",
+            "What area of African diaspora impact should Conspodium feature next?",
             json_encode($options)
         ]);
         $pollId = $pdo->lastInsertId();
 
         // Seed initial vote counts
         $stmtVote = $pdo->prepare("INSERT INTO poll_votes (poll_id, option_index, voter_ip) VALUES (?, ?, ?)");
-        for ($i = 0; $i < 312; $i++) $stmtVote->execute([$pollId, 0, "seed-$i"]);
-        for ($i = 0; $i < 198; $i++) $stmtVote->execute([$pollId, 1, "seed-$i"]);
-        for ($i = 0; $i < 271; $i++) $stmtVote->execute([$pollId, 2, "seed-$i"]);
-        for ($i = 0; $i < 145; $i++) $stmtVote->execute([$pollId, 3, "seed-$i"]);
+        for ($i = 0; $i < 340; $i++) $stmtVote->execute([$pollId, 0, "seed-$i"]);
+        for ($i = 0; $i < 210; $i++) $stmtVote->execute([$pollId, 1, "seed-$i"]);
+        for ($i = 0; $i < 285; $i++) $stmtVote->execute([$pollId, 2, "seed-$i"]);
+        for ($i = 0; $i < 160; $i++) $stmtVote->execute([$pollId, 3, "seed-$i"]);
     }
 
 } catch (PDOException $e) {
