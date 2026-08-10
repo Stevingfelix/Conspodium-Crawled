@@ -1448,12 +1448,14 @@ e-page-transition,
 
         <!-- SHARE SECTION -->
         <div class="csp-share-sec">
-          <div class="csp-share-title">Loved This Story? Share It</div>
+          <div class="csp-share-title">Loved This Story? Share &amp; Listen</div>
           <div class="csp-share-btns">
+            <button id="post-audio-btn" class="csp-share-btn" style="background:linear-gradient(135deg,#00AEFE,#B71F71);cursor:pointer;border:none;"><i class="fas fa-headphones"></i> Listen (Audio)</button>
             <a href="#" class="csp-share-btn csp-share-fb" id="share-fb" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
             <a href="#" class="csp-share-btn csp-share-tw" id="share-tw" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
             <a href="#" class="csp-share-btn csp-share-li" id="share-li" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
             <a href="#" class="csp-share-btn csp-share-wa" id="share-wa" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <button id="share-copy-btn" class="csp-share-btn" style="background:#475569;cursor:pointer;border:none;"><i class="fas fa-link"></i> Copy Link</button>
           </div>
         </div>
 
@@ -1591,13 +1593,28 @@ e-page-transition,
         // Content
         document.getElementById('post-content-body').innerHTML = p.content || p.excerpt || 'No content provided for this article.';
 
-        // Update Social Share Links
+        // Update Social Share Links & Actions
         var postUrl = encodeURIComponent(window.location.href);
         var postTitle = encodeURIComponent(p.title);
         document.getElementById('share-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + postUrl;
         document.getElementById('share-tw').href = 'https://twitter.com/intent/tweet?url=' + postUrl + '&text=' + postTitle;
         document.getElementById('share-li').href = 'https://www.linkedin.com/shareArticle?mini=true&url=' + postUrl + '&title=' + postTitle;
         document.getElementById('share-wa').href = 'https://api.whatsapp.com/send?text=' + postTitle + '%20' + postUrl;
+
+        var postAudioBtn = document.getElementById('post-audio-btn');
+        if (postAudioBtn) {
+          postAudioBtn.addEventListener('click', function(){
+            if (window.playArticleAudio) window.playArticleAudio(p.title, p.excerpt || p.content);
+          });
+        }
+        var copyBtn = document.getElementById('share-copy-btn');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', function(){
+            navigator.clipboard.writeText(window.location.href).then(function(){
+              if (window.cspToast) window.cspToast('Article link copied to clipboard!', 'success');
+            });
+          });
+        }
 
         // Load Comments & Related Posts
         loadComments(p.id);

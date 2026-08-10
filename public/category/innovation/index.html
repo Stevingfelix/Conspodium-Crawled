@@ -1474,6 +1474,285 @@ e-page-transition,
         var currentPath = window.location.pathname;
         if (!currentPath.endsWith('/') && !currentPath.includes('.')) currentPath += '/';
 
+/* ── GLOBAL MICRO-INTERACTIONS & READ PROGRESS BAR STYLING ────────────── */
+#csp-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00AEFE 0%, #B71F71 100%);
+  z-index: 999999;
+  width: 0%;
+  transition: width 0.1s linear;
+  box-shadow: 0 2px 10px rgba(0, 174, 254, 0.5);
+  pointer-events: none;
+}
+
+/* Image Hover Scale Animation */
+.eael-entry-media, .elementskit-box-header, .csp-scholar-avatar, .csp-hero-bg {
+  overflow: hidden !important;
+}
+.eael-entry-media img, .elementskit-box-header img, .csp-scholar-avatar img {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.eael-grid-post-holder:hover .eael-entry-media img,
+.elementskit-info-image-box:hover .elementskit-box-header img,
+.csp-scholar-card:hover .csp-scholar-avatar img {
+  transform: scale(1.05) !important;
+}
+
+/* Audio Player Floating Widget Styling */
+#csp-audio-player {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999999;
+  background: #061022;
+  border: 1px solid rgba(0, 174, 254, 0.4);
+  border-radius: 50px;
+  padding: 10px 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 24px rgba(0,174,254,0.2);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  max-width: 420px;
+}
+#csp-audio-player.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.csp-ap-play-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00AEFE, #B71F71);
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0,174,254,0.4);
+}
+.csp-ap-play-btn:hover { transform: scale(1.08); }
+.csp-ap-info { flex: 1; overflow: hidden; }
+.csp-ap-title { font-size: 0.82rem; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.csp-ap-sub { font-size: 0.72rem; color: #00AEFE; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+.csp-eq-wave { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+.csp-eq-bar { width: 2px; background: #00AEFE; border-radius: 1px; animation: csp-eq 1.2s infinite ease-in-out; }
+.csp-eq-bar:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+.csp-eq-bar:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+.csp-eq-bar:nth-child(3) { height: 40%; animation-delay: 0.2s; }
+@keyframes csp-eq { 0%,100%{height:30%;} 50%{height:100%;} }
+</style>
+
+<div id="csp-scroll-progress"></div>
+
+<!-- Floating Audio Player Widget -->
+<div id="csp-audio-player">
+  <button class="csp-ap-play-btn" id="csp-ap-toggle-btn">⏸</button>
+  <div class="csp-ap-info">
+    <div class="csp-ap-title" id="csp-ap-title">Now Playing Article Audio</div>
+    <div class="csp-ap-sub">
+      <span class="csp-eq-wave"><span class="csp-eq-bar"></span><span class="csp-eq-bar"></span><span class="csp-eq-bar"></span></span>
+      <span id="csp-ap-status">Narrating Story...</span>
+    </div>
+  </div>
+  <button id="csp-ap-close-btn" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:1.2rem;cursor:pointer;padding:4px;">&times;</button>
+</div>
+
+<script>
+(function(){
+  // 1. Reading Scroll Progress Bar
+  function initScrollProgress() {
+    var progressBar = document.getElementById('csp-scroll-progress');
+    if (!progressBar) return;
+    window.addEventListener('scroll', function(){
+      var totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        var pct = (window.scrollY / totalHeight) * 100;
+        progressBar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+      }
+    }, { passive: true });
+  }
+
+  // 2. Audio Narration Synth Player
+  var synthUtterance = null;
+  window.playArticleAudio = function(title, text) {
+    var player = document.getElementById('csp-audio-player');
+    var titleEl = document.getElementById('csp-ap-title');
+    var toggleBtn = document.getElementById('csp-ap-toggle-btn');
+    var statusEl = document.getElementById('csp-ap-status');
+    if (!player || !titleEl) return;
+
+    titleEl.textContent = title || 'Listening to Conspodium Article';
+    player.classList.add('active');
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      var cleanText = (title + '. ' + (text || '')).replace(/<[^>]*>?/gm, '');
+      synthUtterance = new SpeechSynthesisUtterance(cleanText);
+      synthUtterance.rate = 1.0;
+      synthUtterance.pitch = 1.0;
+
+      synthUtterance.onstart = function() {
+        toggleBtn.textContent = '⏸';
+        if (statusEl) statusEl.textContent = 'Narrating Story...';
+      };
+      synthUtterance.onend = function() {
+        toggleBtn.textContent = '▶';
+        if (statusEl) statusEl.textContent = 'Finished Narration';
+      };
+
+      window.speechSynthesis.speak(synthUtterance);
+    } else {
+      cspToast('Audio narration synthesiser not supported in this browser', 'info');
+    }
+  };
+
+  function initAudioPlayer() {
+    var toggleBtn = document.getElementById('csp-ap-toggle-btn');
+    var closeBtn = document.getElementById('csp-ap-close-btn');
+    var player = document.getElementById('csp-audio-player');
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function(){
+        if ('speechSynthesis' in window) {
+          if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+            window.speechSynthesis.pause();
+            toggleBtn.textContent = '▶';
+          } else if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+            toggleBtn.textContent = '⏸';
+          } else if (synthUtterance) {
+            window.speechSynthesis.speak(synthUtterance);
+            toggleBtn.textContent = '⏸';
+          }
+        }
+      });
+    }
+
+    if (closeBtn && player) {
+      closeBtn.addEventListener('click', function(){
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        player.classList.remove('active');
+      });
+    }
+  }
+
+  // 3. Instant Live Search Modal
+  function initLiveSearchModal() {
+    var searchTriggers = document.querySelectorAll('a[href*="search"], .fa-search, .elementor-search-form, .eael-search-icon, .header-search-icon');
+    
+    // Create Modal HTML
+    var searchModal = document.createElement('div');
+    searchModal.id = 'csp-search-modal';
+    searchModal.style.cssText = 'position:fixed;inset:0;z-index:9999999;display:flex;flex-direction:column;align-items:center;padding:80px 20px 40px;background:rgba(5,13,26,0.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:0;pointer-events:none;transition:all 0.3s ease;';
+
+    searchModal.innerHTML = 
+      '<div style="max-width:700px;width:100%;position:relative;">' +
+        '<div style="display:flex;align-items:center;gap:14px;background:#09152b;border:1.5px solid rgba(0,174,254,0.4);border-radius:50px;padding:12px 24px;box-shadow:0 12px 36px rgba(0,0,0,0.5), 0 0 24px rgba(0,174,254,0.25);">' +
+          '<span style="font-size:1.2rem;color:#00AEFE;">🔍</span>' +
+          '<input type="text" id="csp-search-input" placeholder="Search articles, topics, scholars..." style="flex:1;background:none;border:none;outline:none;color:#fff;font-size:1.05rem;font-family:\'Inter\',sans-serif;" />' +
+          '<button id="csp-search-close-btn" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.5rem;cursor:pointer;padding:0 6px;">&times;</button>' +
+        '</div>' +
+        '<div id="csp-search-results" style="margin-top:24px;display:flex;flex-direction:column;gap:12px;max-height:60vh;overflow-y:auto;padding-right:6px;"></div>' +
+      '</div>';
+
+    document.body.appendChild(searchModal);
+
+    var inputEl = searchModal.querySelector('#csp-search-input');
+    var resultsEl = searchModal.querySelector('#csp-search-results');
+    var closeBtn = searchModal.querySelector('#csp-search-close-btn');
+
+    function openSearch(e) {
+      if (e) e.preventDefault();
+      searchModal.style.opacity = '1';
+      searchModal.style.pointerEvents = 'auto';
+      if (inputEl) { inputEl.value = ''; inputEl.focus(); }
+      if (resultsEl) resultsEl.innerHTML = '<div style="color:rgba(255,255,255,0.45);text-align:center;padding:30px;font-size:0.9rem;">Type any keyword to search live articles...</div>';
+    }
+
+    function closeSearch() {
+      searchModal.style.opacity = '0';
+      searchModal.style.pointerEvents = 'none';
+    }
+
+    searchTriggers.forEach(function(trig){ trig.addEventListener('click', openSearch); });
+    if (closeBtn) closeBtn.addEventListener('click', closeSearch);
+    searchModal.addEventListener('click', function(e){ if (e.target === searchModal) closeSearch(); });
+
+    // Live API Fetch on Type
+    var debounceTmr = null;
+    if (inputEl) {
+      inputEl.addEventListener('input', function(){
+        clearTimeout(debounceTmr);
+        var query = inputEl.value.trim();
+        if (!query) {
+          resultsEl.innerHTML = '<div style="color:rgba(255,255,255,0.45);text-align:center;padding:30px;font-size:0.9rem;">Type any keyword to search live articles...</div>';
+          return;
+        }
+
+        resultsEl.innerHTML = '<div style="color:#00AEFE;text-align:center;padding:24px;font-size:0.9rem;">Searching database...</div>';
+
+        debounceTmr = setTimeout(function(){
+          var url = window.getRootUrl ? window.getRootUrl('api/posts.php?search=' + encodeURIComponent(query)) : './api/posts.php?search=' + encodeURIComponent(query);
+          fetch(url)
+            .then(function(r){ return r.json(); })
+            .then(function(res){
+              if (!res.success || !res.posts || res.posts.length === 0) {
+                resultsEl.innerHTML = '<div style="color:rgba(255,255,255,0.5);text-align:center;padding:24px;font-size:0.9rem;">No articles found matching "' + query + '"</div>';
+                return;
+              }
+
+              var html = '';
+              res.posts.forEach(function(post){
+                var postLink = window.getRootUrl ? window.getRootUrl('post/' + post.slug + '/') : './post/' + post.slug + '/';
+                var imgUrl = post.featured_image ? (window.getRootUrl ? window.getRootUrl(post.featured_image) : post.featured_image) : '';
+                
+                html += '<a href="' + postLink + '" style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 18px;text-decoration:none;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background=\'rgba(0,174,254,0.08)\';this.style.borderColor=\'rgba(0,174,254,0.3)\';" onmouseout="this.style.background=\'rgba(255,255,255,0.05)\';this.style.borderColor=\'rgba(255,255,255,0.08)\';">';
+                if (imgUrl) html += '<img src="' + imgUrl + '" style="width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0;" />';
+                html += '<div style="flex:1;"><div style="font-size:0.75rem;font-weight:700;color:#00AEFE;text-transform:uppercase;margin-bottom:2px;">' + (post.category_name || 'Article') + '</div><div style="font-size:0.95rem;font-weight:600;color:#ffffff;line-height:1.35;">' + post.title + '</div></div>';
+                html += '<span style="font-size:0.85rem;color:#00AEFE;">Read →</span>';
+                html += '</a>';
+              });
+              resultsEl.innerHTML = html;
+            })
+            .catch(function(){
+              resultsEl.innerHTML = '<div style="color:rgba(255,255,255,0.5);text-align:center;padding:24px;">Search currently unavailable</div>';
+            });
+        }, 280);
+      });
+    }
+  }
+
+  // 4. Initialise All Features
+  function startEnhancements() {
+    initScrollProgress();
+    initAudioPlayer();
+    initLiveSearchModal();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startEnhancements);
+  } else {
+    startEnhancements();
+  }
+})();
+</script>
+
+<script>
+(function(){
         // Filter active adverts matching current page route or 'all' pages
         var matchingAds = adverts.filter(function(ad){
           if (!ad.enabled) return false;
