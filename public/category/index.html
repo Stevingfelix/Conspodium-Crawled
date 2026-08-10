@@ -43,7 +43,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       color: var(--text-sub);
       margin-bottom: 20px;
     }
@@ -51,6 +51,9 @@
       color: var(--blue-accent);
       text-decoration: none;
       font-weight: 500;
+    }
+    .csp-cat-breadcrumb a:hover {
+      text-decoration: underline;
     }
     .csp-cat-hero-flex {
       display: flex;
@@ -76,7 +79,13 @@
       font-size: 1.05rem;
       color: var(--text-sub);
       line-height: 1.6;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+    }
+    .csp-cat-hero-cta-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
     }
     .csp-cat-count-badge {
       display: inline-flex;
@@ -87,8 +96,26 @@
       color: var(--blue-accent);
       font-size: 0.82rem;
       font-weight: 600;
-      padding: 6px 16px;
+      padding: 8px 18px;
       border-radius: 50px;
+    }
+    .csp-cat-share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
+      color: #ffffff !important;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 24px;
+      border-radius: 50px;
+      text-decoration: none !important;
+      box-shadow: 0 4px 14px rgba(0, 174, 254, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .csp-cat-share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(0, 174, 254, 0.45);
     }
     .csp-cat-banner-img {
       width: 320px;
@@ -148,7 +175,7 @@
 
     /* ── ARTICLES GRID SECTION ── */
     .csp-cat-content-sec {
-      padding: 50px 8% 80px 8%;
+      padding: 50px 8% 60px 8%;
       max-width: 1360px;
       margin: 0 auto;
     }
@@ -259,16 +286,37 @@
       text-align: center;
       box-shadow: 0 4px 20px rgba(0,0,0,0.02);
     }
+
+    /* ── MODAL OVERLAY FIX ── */
+    .csp-modal-overlay {
+      position: fixed !important;
+      inset: 0 !important;
+      background: rgba(15, 23, 42, 0.65) !important;
+      backdrop-filter: blur(8px) !important;
+      -webkit-backdrop-filter: blur(8px) !important;
+      z-index: 999999 !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 20px !important;
+    }
+    .csp-modal-overlay.active {
+      display: flex !important;
+    }
+    .csp-modal {
+      background: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      border-radius: 24px !important;
+      padding: 28px !important;
+      width: 100% !important;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2) !important;
+      transform: scale(0.95);
+      transition: transform 0.25s ease !important;
+    }
+    .csp-modal-overlay.active .csp-modal {
+      transform: scale(1);
+    }
   </style>
-
-
-
-
-
-
-
-
-
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1332,7 +1380,7 @@ e-page-transition,
   <!-- CATEGORY HERO -->
   <section class="csp-cat-hero">
     <div class="csp-cat-breadcrumb">
-      <a href="../">Home</a> &rsaquo; <a href="../stories/">Categories</a> &rsaquo; <span id="cat-bc-name">Category</span>
+      <a href="../">Home</a> &rsaquo; <a href="../stories/">All Stories &amp; Categories</a> &rsaquo; <span id="cat-bc-name">Category</span>
     </div>
     <div class="csp-cat-hero-flex">
       <div class="csp-cat-hero-info">
@@ -1341,7 +1389,10 @@ e-page-transition,
           <span id="cat-hero-name">Loading Category...</span>
         </h1>
         <p class="csp-cat-hero-desc" id="cat-hero-desc">Discover in-depth investigations, personal reflections, and diaspora stories under this category.</p>
-        <span class="csp-cat-count-badge" id="cat-hero-badge">📚 0 Articles Published</span>
+        <div class="csp-cat-hero-cta-bar">
+          <span class="csp-cat-count-badge" id="cat-hero-badge">📚 0 Articles Published</span>
+          <a href="../submit-story/" class="csp-cat-share-btn">✍️ Share Your Story &rarr;</a>
+        </div>
       </div>
       <img id="cat-hero-banner" src="" alt="Category Banner" class="csp-cat-banner-img" style="display:none;">
     </div>
@@ -1361,6 +1412,23 @@ e-page-transition,
       <!-- Loading Skeleton -->
       <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-sub);">
         <div style="font-size:1.2rem;margin-bottom:8px;">⏳ Loading stories...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED / MORE STORIES SECTION -->
+  <section id="csp-related-sec" style="background:#ffffff;border-top:1px solid #e2e8f0;padding:60px 8%;margin-top:20px;">
+    <div style="max-width:1360px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:16px;">
+        <div>
+          <h2 style="font-family:'Merriweather',serif;font-size:1.6rem;color:#0f172a;margin:0 0 6px 0;">Explore Other Diaspora Stories</h2>
+          <p style="color:#64748b;font-size:0.92rem;margin:0;">Discover recent voices, investigations, and features across all topics.</p>
+        </div>
+        <a href="../stories/" class="csp-btn-sm csp-btn-secondary" style="padding:10px 24px;border-radius:50px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;">View All Stories &rarr;</a>
+      </div>
+
+      <div class="csp-grid" id="related-posts-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:30px;color:#94a3b8;">Loading related stories...</div>
       </div>
     </div>
   </section>
@@ -1411,12 +1479,19 @@ e-page-transition,
       var path = window.location.pathname.replace(/\/$/, '');
       var parts = path.split('/');
       var idx = parts.indexOf('category');
-      if (idx !== -1 && parts[idx + 1]) {
+      if (idx !== -1 && parts[idx + 1] && parts[idx + 1] !== 'index.html') {
         return decodeURIComponent(parts[idx + 1]);
       }
-      // Fallback query param
       var urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get('cat') || urlParams.get('category') || 'culture-heritage';
+      var catParam = urlParams.get('cat') || urlParams.get('category');
+      if (catParam) return catParam;
+      
+      // If visiting /category/ directly without a slug, redirect cleanly to /stories/
+      if (path.endsWith('/category') || path.endsWith('/category/index.html')) {
+        window.location.href = getRootUrl('stories/');
+        return 'culture-heritage';
+      }
+      return 'culture-heritage';
     }
 
     var currentSlug = getCategorySlugFromUrl();
@@ -1526,7 +1601,48 @@ e-page-transition,
         }
       });
 
-    // 3. Modal View Handler
+    // 3. Fetch Related / More Stories across all categories
+    fetch(getRootUrl('api/posts.php?limit=6'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        var relGrid = document.getElementById('related-posts-grid');
+        if (!relGrid || !res.success || !res.posts) return;
+
+        var otherPosts = res.posts.filter(function(p){ return p.category_slug !== currentSlug; });
+        if (otherPosts.length === 0) otherPosts = res.posts;
+
+        postsCache = postsCache.concat(otherPosts);
+
+        var relHtml = '';
+        otherPosts.slice(0, 4).forEach(function(p){
+          var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
+          relHtml += `
+            <div class="csp-card-item" onclick="openViewArticleModal(${p.id})">
+              <div class="csp-card-img-wrap">
+                <img src="${imgUrl}" alt="${p.title}" class="csp-card-img" />
+                <span class="csp-card-badge">${p.category_icon || '🏷️'} ${p.category_name || 'Category'}</span>
+              </div>
+              <div class="csp-card-body">
+                <div class="csp-card-meta">
+                  <span>✍️ ${p.author_name || 'Conspodium Editorial'}</span>
+                  <span>⏱️ ${p.reading_time || '5 min'}</span>
+                </div>
+                <h3 class="csp-card-title">${p.title}</h3>
+                <p class="csp-card-excerpt">${p.excerpt || ''}</p>
+                <div class="csp-card-footer">
+                  <span>Read Story</span>
+                  <span>Read Article &rarr;</span>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        relGrid.innerHTML = relHtml;
+      })
+      .catch(function(err){ console.error('Error fetching related stories:', err); });
+
+    // 4. Modal View Handler & Close Listeners
     window.openViewArticleModal = function(id) {
       var p = postsCache.find(function(item){ return item.id == id; });
       if (!p) return;
@@ -1562,6 +1678,13 @@ e-page-transition,
       var modal = document.getElementById('modal-view-article');
       if (modal) modal.classList.add('active');
     };
+
+    document.addEventListener('click', function(e){
+      if (e.target.closest('[data-close="modal-view-article"]') || e.target.id === 'modal-view-article') {
+        var modal = document.getElementById('modal-view-article');
+        if (modal) modal.classList.remove('active');
+      }
+    });
   })();
   </script>
 
