@@ -447,6 +447,7 @@
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -2638,7 +2639,11 @@ e-page-transition,
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('submissions-cms-table');
-        if(!tbody || !res.submissions) return;
+        if(!tbody) return;
+        if (!res.success || !res.submissions) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">No submissions found in this tab.</td></tr>';
+          return;
+        }
         submissionsCache = res.submissions;
         tbody.innerHTML = '';
 
