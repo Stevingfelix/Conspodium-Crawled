@@ -9,8 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
 
+$isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERCEL']) ||
+            !empty($_ENV['VERCEL_ENV']) || !empty($_SERVER['VERCEL_ENV']) ||
+            !empty($_ENV['NOW_REGION']) || !empty($_SERVER['NOW_REGION']) ||
+            strpos(__DIR__, '/var/task') !== false || file_exists('/var/task');
+
 if (session_status() === PHP_SESSION_NONE) {
-    if (getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERCEL'])) {
+    if ($isVercel) {
         @session_save_path('/tmp');
     }
     session_start();

@@ -1,13 +1,28 @@
 <?php
 // api/db.php - PDO SQLite Database Connection & Schema Setup
 
-$isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERCEL']);
+$isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERCEL']) ||
+            !empty($_ENV['VERCEL_ENV']) || !empty($_SERVER['VERCEL_ENV']) ||
+            !empty($_ENV['NOW_REGION']) || !empty($_SERVER['NOW_REGION']) ||
+            strpos(__DIR__, '/var/task') !== false || file_exists('/var/task');
 
 if ($isVercel) {
     $dbPath = '/tmp/conspodium.db';
-    $seedDb = file_exists(__DIR__ . '/../../data/conspodium.db') ? __DIR__ . '/../../data/conspodium.db' : __DIR__ . '/../data/conspodium.db';
-    if ((!file_exists($dbPath) || @filesize($dbPath) < 1000) && file_exists($seedDb)) {
-        @copy($seedDb, $dbPath);
+    if (!file_exists($dbPath) || @filesize($dbPath) < 1000) {
+        $possibleSeedPaths = [
+            __DIR__ . '/../data/conspodium.db',
+            __DIR__ . '/data/conspodium.db',
+            __DIR__ . '/../../data/conspodium.db',
+            '/var/task/data/conspodium.db',
+            '/var/task/conspodium.db',
+            dirname(__DIR__) . '/data/conspodium.db'
+        ];
+        foreach ($possibleSeedPaths as $candidate) {
+            if (file_exists($candidate) && @filesize($candidate) >= 1000) {
+                @copy($candidate, $dbPath);
+                break;
+            }
+        }
     }
 } else {
     $dbDir = file_exists(__DIR__ . '/../../data') ? __DIR__ . '/../../data' : __DIR__ . '/../data';
