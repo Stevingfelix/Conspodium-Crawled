@@ -91,26 +91,42 @@ if ($resource === 'categories') {
 // ── COMMENTS RESOURCE ────────────────────────────────────────────────────────
 if ($resource === 'comments') {
     if ($method === 'GET') {
-        $postId = intval($_GET['post_id'] ?? 0);
-        $stmt = $pdo->prepare("SELECT * FROM comments WHERE post_id = ? AND status = 'approved' ORDER BY created_at DESC");
-        $stmt->execute([$postId]);
+        $postIdentifier = trim($_GET['post_id'] ?? $_GET['slug'] ?? '');
+        $realPostId = is_numeric($postIdentifier) ? intval($postIdentifier) : 0;
+        if (!$realPostId && $postIdentifier) {
+            $stmtP = $pdo->prepare("SELECT id FROM posts WHERE slug = ?");
+            $stmtP->execute([$postIdentifier]);
+            $foundP = $stmtP->fetch();
+            if ($foundP) $realPostId = intval($foundP['id']);
+        }
+
+        $stmt = $pdo->prepare("SELECT * FROM comments WHERE (post_id = ? OR post_id = 0) AND status = 'approved' ORDER BY created_at DESC");
+        $stmt->execute([$realPostId]);
         echo json_encode(["success" => true, "comments" => $stmt->fetchAll()]);
         exit;
     }
 
     if ($method === 'POST') {
-        $postId = intval($input['post_id'] ?? 0);
+        $postIdentifier = trim($input['post_id'] ?? $input['slug'] ?? '');
         $authorName = trim($input['author_name'] ?? 'Anonymous');
         $authorEmail = trim($input['author_email'] ?? '');
         $content = trim($input['content'] ?? '');
 
-        if (!$postId || !$content) {
-            echo json_encode(["success" => false, "error" => "Post ID and comment text are required"]);
+        if (!$postIdentifier || !$content) {
+            echo json_encode(["success" => false, "error" => "Post ID or slug and comment text are required"]);
             exit;
         }
 
+        $realPostId = is_numeric($postIdentifier) ? intval($postIdentifier) : 0;
+        if (!$realPostId) {
+            $stmtP = $pdo->prepare("SELECT id FROM posts WHERE slug = ?");
+            $stmtP->execute([$postIdentifier]);
+            $foundP = $stmtP->fetch();
+            if ($foundP) $realPostId = intval($foundP['id']);
+        }
+
         $stmt = $pdo->prepare("INSERT INTO comments (post_id, author_name, author_email, content, status) VALUES (?, ?, ?, ?, 'approved')");
-        $stmt->execute([$postId, $authorName, $authorEmail, $content]);
+        $stmt->execute([$realPostId, $authorName, $authorEmail, $content]);
 
         echo json_encode(["success" => true, "commentId" => $pdo->lastInsertId(), "message" => "Comment posted successfully"]);
         exit;
