@@ -1,6 +1,6 @@
 # 🏛️ Conspodium — Project Handoff & Technical Documentation
 
-> **Last Updated**: August 9, 2026  
+> **Last Updated**: August 10, 2026  
 > **Repository**: `https://github.com/Stevingfelix/Conspodium-Crawled.git`  
 > **Branch**: `main` (Fully Synchronized)
 
@@ -10,7 +10,33 @@
 
 **Conspodium** is a premium digital media platform dedicated to storytelling, culture, innovation, and community across the African diaspora.
 
-The platform has been completely converted from a Node.js/Express prototype into a **high-performance, native PHP PDO + SQLite architecture**. It features zero production npm dependencies, making it 100% compatible with any shared hosting environment (cPanel, LiteSpeed, Apache, Nginx) while maintaining a dynamic Admin CMS Dashboard and public-facing APIs.
+The platform has been completely converted from a Node.js/Express prototype into a **high-performance, native PHP PDO + SQLite architecture**. It features zero production npm dependencies, making it 100% compatible with any shared hosting environment (cPanel, LiteSpeed, Apache, Nginx) while maintaining a dynamic Admin CMS Dashboard, public-facing APIs, dynamic categories, full blog post pages, and real-time reader comments.
+
+---
+
+## ✨ Recent Major Accomplishments (August 10, 2026)
+
+1. **Dedicated Full Blog Post Pages (`/post/<slug>/`) & Reader Comments Engine**:
+   - Replaced modal popups with dedicated full blog post pages (`src/pages/post.html`) compiled to `/post/<slug>/` matching the original WordPress single article layout.
+   - Features Category badge, Author meta, Date, Reading Time, Views Counter, Featured Image, Excerpt box, and Social Sharing buttons (Facebook, Twitter/X, LinkedIn, WhatsApp).
+   - Related stories sidebar displays 4 related articles from the active category.
+   - Added `comments` SQLite table and REST endpoints (`/api/posts.php?resource=comments`) allowing readers to post responses directly on articles.
+
+2. **Dynamic Database Categories (`/category/<slug>/`) & Admin CMS Category Management**:
+   - Created Light Theme Category page template (`src/pages/category.html`) compiled to `/category/<slug>/`.
+   - Admin CMS Dashboard now supports creating dynamic categories with custom Icon, Description, and Banner Image upload/URL.
+   - Safe category deletion unassigns associated posts (`UPDATE posts SET category_id = NULL WHERE category_id = ?`).
+
+3. **Hero Slider Slow Zoom & Continuous Auto-Rotation**:
+   - Restored dynamic database featured articles fetch handler in `src/pages/home.html`.
+   - Updated Slide 1 featured photo to high-res `African-Diasporans-1536x864-1.jpg`.
+   - Implemented continuous CSS `@keyframes csp-kenburns` zoom animation (`scale(1)` → `scale(1.12)` over 14s infinite alternate).
+   - Removed mouse hover pause trap on the 100vh hero section so auto-advance rotates reliably every 6s.
+
+4. **URL Routing & Navigation Path Resolution**:
+   - Added wildcard rewrite rules in `vercel.json` for `/category/(.*)`, `/post/(.*)`, and `/story/(.*)`.
+   - Fixed relative path nesting errors across `category.html`, `post.html`, `stories.html`, and `home.html` by standardizing on `getRootUrl(...)` absolute paths.
+   - Added immediate script guards in `category.html` and `post.html` to intercept invalid paths (e.g. `/category/stories/` or `/post/stories/`) and redirect to `/stories/`.
 
 ---
 
@@ -36,7 +62,7 @@ The platform has been completely converted from a Node.js/Express prototype into
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                                DATABASE & MEDIA STORAGE                                │
-│  - SQLite 3 Database: `data/conspodium.db` (Auto-migrated 7 relational tables)         │
+│  - SQLite 3 Database: `data/conspodium.db` (Auto-migrated 8 relational tables)         │
 │  - Image Upload Directory: `public/uploads/`                                           │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -53,21 +79,19 @@ conspodium-clone/
 │   ├── dashboard.php                # Admin CMS overview metrics API
 │   ├── db.php                       # PDO SQLite connection, migration & seed data
 │   ├── polls.php                    # Weekly poll fetching, voting & poll management
-│   ├── posts.php                    # Articles & Categories CRUD API
+│   ├── posts.php                    # Articles, Categories & Comments CRUD API
 │   ├── submissions.php              # Story submission & Admin Approve/Publish flow
 │   └── upload.php                   # Multipart image upload handler
 ├── backup_express_node/             # ⚠️ Express Node.js Prototype Backup
-│   ├── backend/                     # Original Express route handlers & db setup
-│   ├── serve.js                     # Original Node server
-│   ├── build.js                     # Original build script
-│   └── package.json                 # Original Node dependencies
 ├── data/                            # Database Persistence Folder
 │   ├── conspodium.db                # SQLite 3 Database File
 │   └── install.lock                 # Security installer lock file (gitignored)
 ├── public/                          # Production Build Target Directory (web root)
 │   ├── api/                         # Production PHP API scripts
+│   ├── category/index.html          # Dynamic Category Filter Page
 │   ├── dashboard/index.html         # Admin CMS Dashboard Interface
 │   ├── index.html                   # Website Homepage
+│   ├── post/index.html              # Dedicated Full Blog Post Page
 │   ├── stories/index.html           # Stories Feed Page
 │   ├── submit-story/index.html      # User Story Submission Form
 │   ├── install.php                  # Web Installation Wizard (404 locked)
@@ -75,10 +99,11 @@ conspodium-clone/
 ├── src/                             # Source Templates & Assets
 │   ├── assets/                      # WP Content media & styling assets
 │   ├── components/                  # Shared HTML header fixes
-│   ├── pages/                       # Raw source HTML pages
+│   ├── pages/                       # Raw source HTML pages (category.html, post.html, etc.)
 │   └── scripts/                     # Build scripts (build.js)
 ├── install.php                      # 1-Click Shared Hosting Web Installer
 ├── package.json                     # Development scripts & server launchers
+├── vercel.json                      # Serverless rewrite rules & routing configuration
 └── PROJECT_HANDOFF.md               # 📖 THIS HANDOFF DOCUMENTATION
 ```
 
@@ -104,15 +129,20 @@ To access the Admin CMS Dashboard locally:
 | `POST` | `/api/auth.php?action=login` | Public | Authenticates admin credentials, sets `$_SESSION['admin_user']` |
 | `GET` | `/api/auth.php?action=me` | Public | Returns currently logged-in admin user info |
 | `POST` | `/api/auth.php?action=logout` | Admin | Destroys PHP session |
-| `GET` | `/api/posts.php` | Public | Fetches articles (filter by `category`, `search`, `featured`) |
+| `GET` | `/api/posts.php` | Public | Fetches articles (filter by `category`, `search`, `featured`, `slug`, `id`) |
 | `POST` | `/api/posts.php` | Admin 🔒 | Creates a new article |
 | `PUT` | `/api/posts.php?id={id}` | Admin 🔒 | Updates an existing article |
 | `DELETE` | `/api/posts.php?id={id}` | Admin 🔒 | Deletes an article |
 | `GET` | `/api/posts.php?resource=categories` | Public | Lists categories with live post counts |
-| `POST` | `/api/posts.php?resource=categories` | Admin 🔒 | Creates a new category |
+| `POST` | `/api/posts.php?resource=categories` | Admin 🔒 | Creates a new category (supports icon, description & banner image) |
+| `PUT` | `/api/posts.php?resource=categories&id={id}` | Admin 🔒 | Updates an existing category |
+| `DELETE` | `/api/posts.php?resource=categories&id={id}` | Admin 🔒 | Deletes a category safely |
+| `GET` | `/api/posts.php?resource=comments&post_id={id}` | Public | Lists approved comments for an article |
+| `POST` | `/api/posts.php?resource=comments` | Public | Posts a new reader comment |
 | `GET` | `/api/polls.php?action=active` | Public | Retrieves active weekly poll & voting options |
 | `POST` | `/api/polls.php?action=vote` | Public | Casts a vote (IP deduplicated) |
 | `POST` | `/api/polls.php?action=create` | Admin 🔒 | Creates a new weekly poll |
+| `POST` | `/api/polls.php?action=toggle_status` | Admin 🔒 | Activates or deactivates a poll |
 | `POST` | `/api/submissions.php` | Public | Submits a story draft for editorial review |
 | `GET` | `/api/submissions.php` | Admin 🔒 | Lists all story submissions |
 | `POST` | `/api/submissions.php?action=approve&id={id}` | Admin 🔒 | **Approve & Publish**: Converts story submission into a published article |
@@ -162,5 +192,6 @@ npm run build
 
 If you are continuing work on this codebase, here are recommended next steps:
 1. **Email Notifications**: Add `mail()` or PHPMailer integration in `api/submissions.php` to email the admin when a new story draft is submitted.
-2. **Pagination UI**: Add page number controls to `src/pages/stories.html` for navigating large article lists.
+2. **Comment Moderation**: Add an Admin CMS tab in `src/pages/dashboard.html` to approve or delete reader comments.
 3. **Rich Text Formatting**: Enhance the Article Editor textarea in `src/pages/dashboard.html` with a lightweight WYSIWYG editor (e.g. Quill or SimpleMDE) if rich HTML formatting is desired.
+
