@@ -430,6 +430,7 @@
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1273,7 +1274,7 @@ e-page-transition,
     <div class="csp-topbar-actions">
       <button class="csp-topbar-btn" id="btn-open-new-post">
         <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        + New Article
+        New Article
       </button>
     </div>
   </div>
@@ -1337,7 +1338,6 @@ e-page-transition,
       <div class="csp-card">
         <div class="csp-card-header">
           <span class="csp-card-header-title">📝 All Published Articles</span>
-          <button class="csp-btn-sm csp-btn-primary" id="btn-create-post-tab">+ Create Article</button>
         </div>
         <div class="csp-table-wrapper">
           <table class="csp-table">
@@ -1818,6 +1818,36 @@ e-page-transition,
 
   // Tab switching
   var tabs = document.querySelectorAll('.csp-nav-item[data-tab]');
+  function updateTopbarActionButton(tabName) {
+    var topbarBtn = document.getElementById('btn-open-new-post');
+    if (!topbarBtn) return;
+
+    var plusSvg = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> ';
+
+    if (tabName === 'overview' || tabName === 'posts') {
+      topbarBtn.style.display = 'inline-flex';
+      topbarBtn.innerHTML = plusSvg + 'New Article';
+      topbarBtn.onclick = function() { openPostModal(); };
+    } else if (tabName === 'polls') {
+      topbarBtn.style.display = 'inline-flex';
+      topbarBtn.innerHTML = plusSvg + 'Create Poll';
+      topbarBtn.onclick = function() {
+        var el = document.getElementById('poll-q');
+        if (el) { el.scrollIntoView({ behavior: 'smooth' }); el.focus(); }
+      };
+    } else if (tabName === 'categories') {
+      topbarBtn.style.display = 'inline-flex';
+      topbarBtn.innerHTML = plusSvg + 'Add Category';
+      topbarBtn.onclick = function() {
+        var el = document.getElementById('cat-name');
+        if (el) { el.scrollIntoView({ behavior: 'smooth' }); el.focus(); }
+      };
+    } else {
+      topbarBtn.style.display = 'none';
+    }
+  }
+
+  var tabs = document.querySelectorAll('.csp-nav-item[data-tab]');
   var panes = document.querySelectorAll('.csp-tab-pane');
   tabs.forEach(function(t){
     t.addEventListener('click', function(){
@@ -1828,6 +1858,8 @@ e-page-transition,
       if(target) target.classList.add('active');
       document.getElementById('csp-topbar-title').textContent = t.textContent.trim();
       if (window.innerWidth <= 768) closeSidebar();
+
+      updateTopbarActionButton(t.dataset.tab);
 
       // Silent real-time refresh whenever switching tabs
       loadOverviewData();
@@ -1850,9 +1882,6 @@ e-page-transition,
   document.querySelectorAll('[data-close]').forEach(function(b){
     b.addEventListener('click', function(){ closeModal(b.dataset.close); });
   });
-
-  document.getElementById('btn-open-new-post').addEventListener('click', function(){ openPostModal(); });
-  document.getElementById('btn-create-post-tab').addEventListener('click', function(){ openPostModal(); });
 
   var categoriesCache = [];
 
