@@ -12,41 +12,42 @@
   <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg-deep:    #020918;
-      --bg-dark:    #050D1A;
-      --bg-card:    rgba(255,255,255,0.04);
-      --border:     rgba(255,255,255,0.09);
+      --bg-deep:    #f8fafc;
+      --bg-dark:    #ffffff;
+      --bg-card:    #ffffff;
+      --border:     #e2e8f0;
       --blue:       #00AEFE;
       --pink:       #B71F71;
-      --text:       #fff;
-      --text-muted: rgba(255,255,255,0.45);
+      --text:       #0f172a;
+      --text-muted: #64748b;
       --sidebar-w:  250px;
     }
 
-    /* ── Quill Dark Mode Styling ── */
+    /* ── Quill Light Mode Styling ── */
     .ql-toolbar.ql-snow {
-      background: rgba(255, 255, 255, 0.04) !important;
-      border: 1px solid var(--border) !important;
+      background: #f8fafc !important;
+      border: 1px solid #cbd5e1 !important;
       border-top-left-radius: 12px;
       border-top-right-radius: 12px;
     }
     .ql-container.ql-snow {
-      background: rgba(255, 255, 255, 0.02) !important;
-      border: 1px solid var(--border) !important;
+      background: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
       border-top: none !important;
       border-bottom-left-radius: 12px;
       border-bottom-right-radius: 12px;
-      color: #ffffff !important;
+      color: #0f172a !important;
       font-family: inherit;
       font-size: 0.9rem;
       min-height: 200px;
     }
     .ql-editor { min-height: 200px; }
-    .ql-snow .ql-stroke { stroke: rgba(255, 255, 255, 0.75) !important; }
-    .ql-snow .ql-fill { fill: rgba(255, 255, 255, 0.75) !important; }
-    .ql-snow .ql-picker { color: rgba(255, 255, 255, 0.75) !important; }
-    .ql-snow .ql-picker-options { background: #061022 !important; border-color: var(--blue) !important; color: #fff !important; }
+    .ql-snow .ql-stroke { stroke: #475569 !important; }
+    .ql-snow .ql-fill { fill: #475569 !important; }
+    .ql-snow .ql-picker { color: #0f172a !important; }
+    .ql-snow .ql-picker-options { background: #ffffff !important; border-color: #cbd5e1 !important; color: #0f172a !important; box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important; }
     .ql-snow.ql-toolbar button:hover .ql-stroke,
     .ql-snow .ql-toolbar button:hover .ql-stroke { stroke: var(--blue) !important; }
     .ql-snow.ql-toolbar button:hover .ql-fill,
@@ -63,7 +64,7 @@
     /* ── Sidebar ── */
     .csp-sidebar {
       width: var(--sidebar-w);
-      background: var(--bg-dark);
+      background: #ffffff;
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
@@ -72,6 +73,7 @@
       z-index: 100;
       padding: 0;
       overflow-y: auto;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.02);
     }
     .csp-sidebar-logo {
       display: flex;
@@ -92,7 +94,7 @@
       font-family: 'Merriweather', serif;
       font-size: 0.95rem;
       font-weight: 700;
-      color: #fff;
+      color: #0f172a;
     }
 
     .csp-nav-section {
@@ -101,7 +103,7 @@
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: #94a3b8;
     }
     .csp-nav-item {
       display: flex;
@@ -110,21 +112,21 @@
       padding: 11px 16px;
       border-radius: 12px;
       margin: 2px 10px;
-      color: var(--text-muted);
+      color: #475569;
       text-decoration: none;
       font-size: 0.88rem;
       font-weight: 500;
       cursor: pointer;
       transition: background 0.18s, color 0.18s;
     }
-    .csp-nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
-    .csp-nav-item.active { background: rgba(0,174,254,0.12); color: var(--blue); }
+    .csp-nav-item:hover { background: #f1f5f9; color: #0f172a; }
+    .csp-nav-item.active { background: rgba(0,174,254,0.08); color: var(--blue); font-weight: 600; }
     .csp-nav-item-icon { width: 18px; text-align: center; font-size: 1rem; flex-shrink: 0; margin-right: 10px; }
     .csp-badge {
       font-size: 0.68rem; font-weight: 700;
       padding: 2px 8px; border-radius: 50px;
-      background: rgba(183,31,113,0.25); color: var(--pink);
-      border: 1px solid rgba(183,31,113,0.4);
+      background: rgba(183,31,113,0.1); color: var(--pink);
+      border: 1px solid rgba(183,31,113,0.3);
     }
 
     .csp-sidebar-footer {
@@ -136,25 +138,25 @@
       display: flex; align-items: center; gap: 12px; padding: 10px 12px;
       border-radius: 12px; cursor: pointer; transition: background 0.18s;
     }
-    .csp-sidebar-user:hover { background: rgba(255,255,255,0.05); }
+    .csp-sidebar-user:hover { background: #f1f5f9; }
     .csp-sidebar-avatar {
       width: 36px; height: 36px; border-radius: 50%;
       background: linear-gradient(135deg, var(--blue), var(--pink));
       display: flex; align-items: center; justify-content: center;
       font-weight: 700; font-size: 0.85rem; color: #fff; flex-shrink: 0;
     }
-    .csp-sidebar-user-name { font-size: 0.88rem; font-weight: 600; color: #fff; }
+    .csp-sidebar-user-name { font-size: 0.88rem; font-weight: 600; color: #0f172a; }
     .csp-sidebar-user-role { font-size: 0.72rem; color: var(--text-muted); }
 
     /* ── Main content ── */
-    .csp-main { margin-left: var(--sidebar-w); flex: 1; padding: 0; min-height: 100vh; }
+    .csp-main { margin-left: var(--sidebar-w); flex: 1; padding: 0; min-height: 100vh; background: #f8fafc; }
     .csp-topbar {
       display: flex; align-items: center; justify-content: space-between;
       padding: 20px 36px; border-bottom: 1px solid var(--border);
-      background: rgba(2,9,24,0.8); backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
       position: sticky; top: 0; z-index: 50;
     }
-    .csp-topbar-title { font-size: 1.05rem; font-weight: 600; color: #fff; }
+    .csp-topbar-title { font-size: 1.05rem; font-weight: 600; color: #0f172a; }
     .csp-topbar-actions { display: flex; align-items: center; gap: 12px; }
     .csp-topbar-btn {
       display: inline-flex; align-items: center; gap: 8px;
@@ -175,36 +177,35 @@
     .csp-stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 32px; }
     @media (max-width: 900px) { .csp-stats-row { grid-template-columns: 1fr 1fr; } }
     .csp-stat-card {
-      background: var(--bg-card); border: 1px solid var(--border);
+      background: #ffffff; border: 1px solid var(--border);
       border-radius: 16px; padding: 24px; position: relative; overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
     }
     .csp-stat-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, var(--blue), var(--pink)); opacity: 0; transition: opacity 0.2s;
     }
     .csp-stat-card:hover::before { opacity: 1; }
     .csp-stat-card-icon { font-size: 1.4rem; margin-bottom: 12px; }
     .csp-stat-card-num {
-      font-size: 2rem; font-weight: 700;
-      background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      font-size: 2rem; font-weight: 700; color: #0f172a;
       line-height: 1; margin-bottom: 6px;
     }
     .csp-stat-card-label { font-size: 0.8rem; color: var(--text-muted); }
 
     /* ── Tables & Cards ── */
-    .csp-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 24px; }
+    .csp-card { background: #ffffff; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
     .csp-card-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      padding: 20px 24px; border-bottom: 1px solid var(--border); background: #ffffff;
     }
-    .csp-card-header-title { font-size: 1rem; font-weight: 600; color: #fff; }
+    .csp-card-header-title { font-size: 1rem; font-weight: 600; color: #0f172a; }
     
     .csp-table { width: 100%; border-collapse: collapse; text-align: left; }
-    .csp-table th { padding: 14px 20px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.01); }
-    .csp-table td { padding: 16px 20px; font-size: 0.88rem; border-bottom: 1px solid var(--border); color: #fff; vertical-align: middle; }
+    .csp-table th { padding: 14px 20px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #475569; border-bottom: 1px solid var(--border); background: #f8fafc; }
+    .csp-table td { padding: 16px 20px; font-size: 0.88rem; border-bottom: 1px solid var(--border); color: #1e293b; vertical-align: middle; }
     .csp-table tr:last-child td { border-bottom: none; }
-    .csp-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .csp-table tr:hover td { background: #f8fafc; }
 
     /* ── Action Buttons & Badges ── */
     .csp-btn-sm {
@@ -213,66 +214,203 @@
       transition: background 0.18s, opacity 0.18s; text-decoration: none;
     }
     .csp-btn-primary { background: linear-gradient(135deg, var(--blue), var(--pink)); color: #fff; }
-    .csp-btn-secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid var(--border); }
-    .csp-btn-danger { background: rgba(230,50,50,0.15); color: #ff5555; border: 1px solid rgba(230,50,50,0.3); }
+    .csp-btn-secondary { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+    .csp-btn-danger { background: rgba(230,50,50,0.08); color: #dc2626; border: 1px solid rgba(230,50,50,0.25); }
     .csp-btn-sm:hover { opacity: 0.88; }
 
     .csp-status-badge {
       display: inline-block; padding: 3px 10px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
     }
-    .csp-status-pending { background: rgba(255,180,0,0.15); color: #ffb400; border: 1px solid rgba(255,180,0,0.3); }
-    .csp-status-approved { background: rgba(0,200,100,0.15); color: #00c864; border: 1px solid rgba(0,200,100,0.3); }
-    .csp-status-rejected { background: rgba(230,50,50,0.15); color: #ff5555; border: 1px solid rgba(230,50,50,0.3); }
+    .csp-status-pending { background: rgba(245,158,11,0.12); color: #d97706; border: 1px solid rgba(245,158,11,0.3); }
+    .csp-status-approved { background: rgba(16,185,129,0.12); color: #059669; border: 1px solid rgba(16,185,129,0.3); }
+    .csp-status-rejected { background: rgba(239,68,68,0.12); color: #dc2626; border: 1px solid rgba(239,68,68,0.3); }
 
     /* ── Modal Dialogs ── */
     .csp-modal-overlay {
-      position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.75);
+      position: fixed; inset: 0; z-index: 1000; background: rgba(15,23,42,0.55);
       backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center;
       opacity: 0; pointer-events: none; transition: opacity 0.25s ease; padding: 20px;
     }
     .csp-modal-overlay.active { opacity: 1; pointer-events: auto; }
     .csp-modal {
-      background: #061022; border: 1px solid rgba(0,174,254,0.3); border-radius: 24px;
+      background: #ffffff; border: 1px solid #e2e8f0; border-radius: 24px;
       width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; padding: 32px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6); transform: scale(0.95); transition: transform 0.25s ease;
+      box-shadow: 0 24px 70px rgba(15,23,42,0.18); transform: scale(0.95); transition: transform 0.25s ease;
+      color: #0f172a;
     }
     .csp-modal-overlay.active .csp-modal { transform: scale(1); }
     .csp-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
-    .csp-modal-title { font-family: 'Merriweather', serif; font-size: 1.2rem; color: #fff; }
-    .csp-modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; }
-    .csp-modal-close:hover { color: #fff; }
+    .csp-modal-title { font-family: 'Merriweather', serif; font-size: 1.2rem; color: #0f172a; }
+    .csp-modal-close { background: none; border: none; color: #64748b; font-size: 1.5rem; cursor: pointer; }
+    .csp-modal-close:hover { color: #0f172a; }
 
     /* ── Form Controls ── */
     .csp-form-group { margin-bottom: 18px; text-align: left; }
-    .csp-form-label { display: block; font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
+    .csp-form-label { display: block; font-size: 0.8rem; font-weight: 600; color: #334155; margin-bottom: 6px; }
     .csp-form-input, .csp-form-select, .csp-form-textarea {
-      width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-      border-radius: 12px; padding: 12px 16px; color: #fff; font-family: inherit; font-size: 0.9rem;
-      transition: border-color 0.2s;
+      width: 100%; background: #ffffff; border: 1px solid #cbd5e1;
+      border-radius: 12px; padding: 12px 16px; color: #0f172a; font-family: inherit; font-size: 0.9rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .csp-form-input:focus, .csp-form-select:focus, .csp-form-textarea:focus { outline: none; border-color: var(--blue); background: rgba(0,174,254,0.05); }
+    .csp-form-input:focus, .csp-form-select:focus, .csp-form-textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,174,254,0.15); }
     .csp-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .csp-img-preview { width: 100%; max-height: 180px; object-fit: cover; border-radius: 12px; margin-top: 10px; display: none; border: 1px solid var(--border); }
 
+    /* ── Settings Grid ── */
+    .csp-settings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    /* ── Table Wrapper & Bleed Prevention ── */
+    .csp-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .csp-sidebar-backdrop {
       position: fixed; inset: 0; z-index: 90;
-      background: rgba(0, 0, 0, 0.65);
+      background: rgba(15, 23, 42, 0.55);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
       opacity: 0; pointer-events: none;
       transition: opacity 0.25s ease;
     }
-    .csp-mobile-toggle { display: none; background: none; border: none; color: #fff; cursor: pointer; }
+
+    .csp-mobile-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.18s, color 0.18s;
+    }
+    .csp-mobile-toggle:hover {
+      background: #e2e8f0;
+      color: var(--blue);
+    }
+
+    @media (max-width: 1024px) {
+      .csp-settings-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+
     @media (max-width: 768px) {
       .csp-sidebar { transform: translateX(-100%); transition: transform 0.3s; }
       .csp-sidebar.open { transform: translateX(0); }
       .csp-sidebar-backdrop.active { opacity: 1; pointer-events: auto; }
-      .csp-main { margin-left: 0; }
+      .csp-main {
+        margin-left: 0;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
       .csp-mobile-toggle { display: flex; }
-      .csp-content { padding: 20px; }
-      .csp-topbar { padding: 16px 20px; }
+      .csp-content {
+        padding: 16px 12px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+      }
+      .csp-topbar {
+        padding: 12px 16px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .csp-topbar-title {
+        font-size: 0.92rem;
+      }
+      .csp-stats-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .csp-card {
+        border-radius: 16px;
+        margin-bottom: 16px;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+      }
+      .csp-card-header {
+        padding: 12px 4px;
+        background: transparent;
+        border-bottom: none;
+      }
+      .csp-table-wrapper {
+        overflow-x: visible;
+      }
+
+      /* ── Option 1: Mobile Stacked Card View ── */
+      .csp-table, .csp-table tbody, .csp-table tr, .csp-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .csp-table thead {
+        display: none;
+      }
+      .csp-table tr {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 16px;
+        margin-bottom: 12px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+      }
+      .csp-table td {
+        padding: 4px 0;
+        border: none;
+        white-space: normal;
+        word-break: break-word;
+      }
+      
+      /* Action buttons inside mobile stacked card */
+      .csp-table td:last-child {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #f1f5f9;
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+      }
+
+      .csp-form-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .csp-modal {
+        padding: 20px 16px;
+        border-radius: 16px;
+        max-width: 95vw;
+      }
     }
   </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -921,9 +1059,112 @@ e-page-transition,
     });
   }
 
+  function initPopupAdvert() {
+    if (window.location.pathname.includes('/dashboard')) return;
+    if (sessionStorage.getItem('csp_popup_ad_dismissed')) return;
+
+    fetch(getRootUrl('api/settings.php'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (!res.success || !res.settings || res.settings.popup_ad_enabled !== '1') return;
+
+        var s = res.settings;
+        var delaySec = (parseInt(s.popup_ad_delay) || 3) * 1000;
+
+        setTimeout(function(){
+          if (sessionStorage.getItem('csp_popup_ad_dismissed')) return;
+
+          var adModal = document.createElement('div');
+          adModal.id = 'csp-popup-ad-modal';
+          adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.4s ease;padding:20px;';
+
+          var card = document.createElement('div');
+          card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.4s ease;text-align:center;';
+
+          var closeBtn = document.createElement('button');
+          closeBtn.innerHTML = '&times;';
+          closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+
+          function closeAd() {
+            sessionStorage.setItem('csp_popup_ad_dismissed', '1');
+            adModal.style.opacity = '0';
+            card.style.transform = 'scale(0.9)';
+            setTimeout(function(){ if(adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 400);
+          }
+
+          closeBtn.addEventListener('click', closeAd);
+          adModal.addEventListener('click', function(e){ if(e.target === adModal) closeAd(); });
+
+          var imgHtml = s.popup_ad_image ? '<img src="' + getRootUrl(s.popup_ad_image) + '" style="width:100%;max-height:220px;object-fit:cover;" />' : '';
+          var titleHtml = s.popup_ad_title ? '<h3 style="font-family:\'Merriweather\',serif;font-size:1.25rem;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + s.popup_ad_title + '</h3>' : '';
+          var linkUrl = s.popup_ad_link ? getRootUrl(s.popup_ad_link) : '#';
+
+          card.innerHTML = imgHtml +
+            '<div style="padding:4px 20px 24px;">' +
+              titleHtml +
+              '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
+            '</div>';
+
+          card.appendChild(closeBtn);
+          adModal.appendChild(card);
+          document.body.appendChild(adModal);
+
+          setTimeout(function(){
+            adModal.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          }, 50);
+        }, delaySec);
+      })
+      .catch(function(){});
+  }
+
+  window.showSuccessModal = function(title, message) {
+    var oldModal = document.getElementById('csp-global-success-modal');
+    if (oldModal && oldModal.parentNode) oldModal.parentNode.removeChild(oldModal);
+
+    var modal = document.createElement('div');
+    modal.id = 'csp-global-success-modal';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:999999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity 0.35s ease;padding:20px;';
+
+    var card = document.createElement('div');
+    card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;padding:32px 24px;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.35s ease;text-align:center;';
+
+    var closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.style.cssText = 'position:absolute;top:14px;right:14px;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+
+    function closeModal() {
+      modal.style.opacity = '0';
+      card.style.transform = 'scale(0.9)';
+      setTimeout(function(){ if (modal.parentNode) modal.parentNode.removeChild(modal); }, 350);
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+
+    card.innerHTML = 
+      '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(0,174,254,0.2),rgba(183,31,113,0.2));border:1px solid rgba(0,174,254,0.4);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;">🎉</div>' +
+      '<h3 style="font-family:\'Merriweather\',serif;font-size:1.3rem;color:#ffffff;margin-bottom:10px;line-height:1.3;">' + (title || 'Submission Successful!') + '</h3>' +
+      '<p style="font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.6;margin-bottom:24px;">' + (message || 'Thank you! Your information has been received.') + '</p>' +
+      '<button id="csp-success-modal-btn" style="padding:12px 32px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border:none;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Got It →</button>';
+
+    card.appendChild(closeBtn);
+    modal.appendChild(card);
+    document.body.appendChild(modal);
+
+    var btn = card.querySelector('#csp-success-modal-btn');
+    if (btn) btn.addEventListener('click', closeModal);
+
+    setTimeout(function(){
+      modal.style.opacity = '1';
+      card.style.transform = 'scale(1)';
+    }, 50);
+  };
+
   function start() {
     initLoaderAndLogo();
     initMobileMenu();
+    initPopupAdvert();
   }
 
   if (document.readyState === 'loading') {
@@ -943,7 +1184,7 @@ e-page-transition,
 
 <!-- ── Sidebar ── -->
 <aside class="csp-sidebar" id="csp-sidebar">
-  <a href="../" class="csp-sidebar-logo">
+  <a href="/" class="csp-sidebar-logo">
     <div class="csp-sidebar-logo-mark">C</div>
     <span class="csp-sidebar-logo-text">Conspodium</span>
   </a>
@@ -953,7 +1194,7 @@ e-page-transition,
     <div><span class="csp-nav-item-icon">📊</span> Overview</div>
   </div>
   <div class="csp-nav-item" data-tab="posts">
-    <div><span class="csp-nav-item-icon">📝</span> Manage Posts</div>
+    <div><span class="csp-nav-item-icon">📝</span> Manage Articles</div>
   </div>
   <div class="csp-nav-item" data-tab="submissions">
     <div><span class="csp-nav-item-icon">📩</span> Submissions</div>
@@ -965,18 +1206,21 @@ e-page-transition,
   <div class="csp-nav-item" data-tab="categories">
     <div><span class="csp-nav-item-icon">🏷️</span> Categories</div>
   </div>
+  <div class="csp-nav-item" data-tab="advert">
+    <div><span class="csp-nav-item-icon">📢</span> Popup Advert</div>
+  </div>
   <div class="csp-nav-item" data-tab="settings">
     <div><span class="csp-nav-item-icon">⚙️</span> App Settings</div>
   </div>
 
   <p class="csp-nav-section">Navigation</p>
-  <a href="../" class="csp-nav-item">
+  <a href="/" class="csp-nav-item">
     <div><span class="csp-nav-item-icon">🏠</span> Main Website</div>
   </a>
-  <a href="../stories/" class="csp-nav-item">
+  <a href="/stories/" class="csp-nav-item">
     <div><span class="csp-nav-item-icon">📚</span> Stories Page</div>
   </a>
-  <a href="../submit-story/" class="csp-nav-item">
+  <a href="/submit-story/" class="csp-nav-item">
     <div><span class="csp-nav-item-icon">✍️</span> Story Submit Form</div>
   </a>
 
@@ -996,9 +1240,9 @@ e-page-transition,
 
 <!-- ── Admin Login Screen (Displayed when unauthenticated) ── -->
 <div id="csp-login-screen" style="position:fixed;inset:0;z-index:9999;background:var(--bg-deep);display:flex;align-items:center;justify-content:center;padding:20px;">
-  <div style="background:#061022;border:1px solid rgba(0,174,254,0.3);border-radius:24px;width:100%;max-width:420px;padding:36px;box-shadow:0 20px 60px rgba(0,0,0,0.6);text-align:center;">
+  <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:24px;width:100%;max-width:420px;padding:36px;box-shadow:0 20px 60px rgba(15,23,42,0.1);text-align:center;">
     <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;color:#fff;margin:0 auto 18px;">C</div>
-    <h2 style="font-family:'Merriweather',serif;font-size:1.4rem;color:#fff;margin-bottom:6px;">Conspodium CMS Portal</h2>
+    <h2 style="font-family:'Merriweather',serif;font-size:1.4rem;color:#0f172a;margin-bottom:6px;">Conspodium CMS Portal</h2>
     <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:24px;">Sign in to access admin tools, publish user submissions, and manage articles.</p>
     
     <form id="form-admin-login" style="text-align:left;">
@@ -1070,19 +1314,21 @@ e-page-transition,
         <div class="csp-card-header">
           <span class="csp-card-header-title">🔥 Top Published Essays</span>
         </div>
-        <table class="csp-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Reading Time</th>
-              <th>Views</th>
-            </tr>
-          </thead>
-          <tbody id="overview-top-posts-table">
-            <tr><td colspan="4">Loading essays...</td></tr>
-          </tbody>
-        </table>
+        <div class="csp-table-wrapper">
+          <table class="csp-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Reading Time</th>
+                <th>Views</th>
+              </tr>
+            </thead>
+            <tbody id="overview-top-posts-table">
+              <tr><td colspan="4">Loading essays...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -1093,52 +1339,65 @@ e-page-transition,
           <span class="csp-card-header-title">📝 All Published Articles</span>
           <button class="csp-btn-sm csp-btn-primary" id="btn-create-post-tab">+ Create Article</button>
         </div>
-        <table class="csp-table">
-          <thead>
-            <tr>
-              <th>Article</th>
-              <th>Category</th>
-              <th>Author</th>
-              <th>Published Date</th>
-              <th>Views</th>
-              <th>Featured</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="posts-cms-table">
-            <tr><td colspan="7">Loading articles...</td></tr>
-          </tbody>
-        </table>
+        <div class="csp-table-wrapper">
+          <table class="csp-table">
+            <thead>
+              <tr>
+                <th>Article</th>
+                <th>Category</th>
+                <th>Author</th>
+                <th>Published Date</th>
+                <th>Views</th>
+                <th>Featured</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="posts-cms-table">
+              <tr><td colspan="7">Loading articles...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
     <!-- ── TAB 3: SUBMISSIONS ── -->
     <div class="csp-tab-pane" id="tab-submissions">
       <div class="csp-card">
-        <div class="csp-card-header">
+        <div class="csp-card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <span class="csp-card-header-title">📩 User Story Submissions</span>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <div class="csp-sub-filter-group" style="display:flex;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:10px;padding:3px;">
+              <button class="sub-filter-btn active" data-sub-filter="all" style="background:rgba(0,174,254,0.15);border:none;color:var(--blue);font-weight:600;padding:6px 14px;border-radius:8px;font-size:0.8rem;cursor:pointer;">All</button>
+              <button class="sub-filter-btn" data-sub-filter="pending" style="background:none;border:none;color:var(--text-muted);padding:6px 14px;border-radius:8px;font-size:0.8rem;cursor:pointer;">Pending</button>
+              <button class="sub-filter-btn" data-sub-filter="approved" style="background:none;border:none;color:var(--text-muted);padding:6px 14px;border-radius:8px;font-size:0.8rem;cursor:pointer;">Approved</button>
+              <button class="sub-filter-btn" data-sub-filter="rejected" style="background:none;border:none;color:var(--text-muted);padding:6px 14px;border-radius:8px;font-size:0.8rem;cursor:pointer;">Rejected (Trash)</button>
+            </div>
+            <button id="btn-empty-trash" class="csp-btn-sm csp-btn-danger" style="display:none;font-size:0.78rem;padding:6px 14px;">🗑️ Empty Trash</button>
+          </div>
         </div>
-        <table class="csp-table">
-          <thead>
-            <tr>
-              <th>Author</th>
-              <th>Title &amp; Excerpt</th>
-              <th>Submitted Date</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="submissions-cms-table">
-            <tr><td colspan="5">Loading submissions...</td></tr>
-          </tbody>
-        </table>
+        <div class="csp-table-wrapper">
+          <table class="csp-table">
+            <thead>
+              <tr>
+                <th>Author</th>
+                <th>Title &amp; Excerpt</th>
+                <th>Submitted Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="submissions-cms-table">
+              <tr><td colspan="5">Loading submissions...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
     <!-- ── TAB 4: WEEKLY POLLS ── -->
     <div class="csp-tab-pane" id="tab-polls">
       <div class="csp-card" style="padding:24px;">
-        <h3 style="font-family:'Merriweather',serif;color:#fff;margin-bottom:16px;">🗳️ Create New Weekly Poll</h3>
+        <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:16px;">🗳️ Create New Weekly Poll</h3>
         <form id="form-create-poll">
           <div class="csp-form-group">
             <label class="csp-form-label">Poll Question</label>
@@ -1167,15 +1426,29 @@ e-page-transition,
     <!-- ── TAB 5: CATEGORIES ── -->
     <div class="csp-tab-pane" id="tab-categories">
       <div class="csp-card" style="padding:24px;">
-        <h3 style="font-family:'Merriweather',serif;color:#fff;margin-bottom:16px;">🏷️ Add New Category</h3>
+        <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:16px;">🏷️ Add New Category</h3>
         <form id="form-create-category" style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">
           <div style="flex:2;min-width:200px;" class="csp-form-group">
             <label class="csp-form-label">Category Name</label>
             <input type="text" id="cat-name" class="csp-form-input" placeholder="e.g. Biotechnology" required>
           </div>
-          <div style="flex:1;min-width:100px;" class="csp-form-group">
+          <div style="flex:1;min-width:140px;" class="csp-form-group">
             <label class="csp-form-label">Icon Emoji</label>
-            <input type="text" id="cat-icon" class="csp-form-input" placeholder="🧬" required>
+            <select id="cat-icon" class="csp-form-select" required>
+              <option value="🏷️">🏷️</option>
+              <option value="🏛️">🏛️</option>
+              <option value="💡">💡</option>
+              <option value="⭐">⭐</option>
+              <option value="🎨">🎨</option>
+              <option value="🌍">🌍</option>
+              <option value="🧬">🧬</option>
+              <option value="📰">📰</option>
+              <option value="💼">💼</option>
+              <option value="🎓">🎓</option>
+              <option value="⚽">⚽</option>
+              <option value="🎵">🎵</option>
+              <option value="🚀">🚀</option>
+            </select>
           </div>
           <div style="flex:3;min-width:260px;" class="csp-form-group">
             <label class="csp-form-label">Description</label>
@@ -1189,30 +1462,67 @@ e-page-transition,
         <div class="csp-card-header">
           <span class="csp-card-header-title">Active Categories</span>
         </div>
-        <table class="csp-table">
-          <thead>
-            <tr>
-              <th>Icon</th>
-              <th>Category Name</th>
-              <th>Slug</th>
-              <th>Post Count</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="categories-cms-table">
-            <tr><td colspan="5">Loading categories...</td></tr>
-          </tbody>
-        </table>
+        <div class="csp-table-wrapper">
+          <table class="csp-table">
+            <thead>
+              <tr>
+                <th>Icon</th>
+                <th>Category Name</th>
+                <th>Slug</th>
+                <th>Post Count</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="categories-cms-table">
+              <tr><td colspan="5">Loading categories...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- ── TAB 6: APP SETTINGS ── -->
+    <!-- ── TAB 6: POPUP ADVERT ── -->
+    <div class="csp-tab-pane" id="tab-advert">
+      <div class="csp-card" style="padding:24px;max-width:720px;">
+        <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:6px;">📢 Frontend Popup Advert Management</h3>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;">Configure and control the modal advertisement displayed to visitors on the main website.</p>
+
+        <form id="form-popup-ad-settings">
+          <div class="csp-form-group" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <input type="checkbox" id="set-popup-enabled" style="width:20px;height:20px;accent-color:var(--blue);">
+            <label for="set-popup-enabled" style="font-size:0.88rem;color:#0f172a;font-weight:600;cursor:pointer;">Enable Frontend Popup Advert</label>
+          </div>
+          <div class="csp-form-group">
+            <label class="csp-form-label">Advert Title</label>
+            <input type="text" id="set-popup-title" class="csp-form-input" placeholder="e.g. Empowering Diaspora Communities Worldwide">
+          </div>
+          <div class="csp-form-group">
+            <label class="csp-form-label">Advert Banner Image URL</label>
+            <input type="text" id="set-popup-image" class="csp-form-input" placeholder="e.g. /wp-content/uploads/2026/01/African-Diasporans.jpg">
+          </div>
+          <div class="csp-form-row">
+            <div class="csp-form-group">
+              <label class="csp-form-label">Target Link URL</label>
+              <input type="text" id="set-popup-link" class="csp-form-input" placeholder="e.g. /submit-story/">
+            </div>
+            <div class="csp-form-group">
+              <label class="csp-form-label">Display Delay (Seconds)</label>
+              <input type="number" id="set-popup-delay" class="csp-form-input" min="1" max="60" value="3">
+            </div>
+          </div>
+
+          <button type="submit" class="csp-btn-sm csp-btn-primary" style="margin-top:16px;height:42px;width:100%;justify-content:center;">🎯 Save Popup Advert Settings</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ── TAB 7: APP SETTINGS ── -->
     <div class="csp-tab-pane" id="tab-settings">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div class="csp-settings-grid">
         
         <!-- Platform Branding & General Configuration -->
         <div class="csp-card" style="padding:24px;">
-          <h3 style="font-family:'Merriweather',serif;color:#fff;margin-bottom:6px;">⚙️ Platform Identity & Branding</h3>
+          <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:6px;">⚙️ Platform Identity &amp; Branding</h3>
           <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;">Configure site title, tagline, default post author, and email settings.</p>
           
           <form id="form-site-settings">
@@ -1239,7 +1549,7 @@ e-page-transition,
               </div>
               <div class="csp-form-group" style="display:flex;align-items:center;gap:10px;margin-top:24px;">
                 <input type="checkbox" id="set-allow-submissions" style="width:20px;height:20px;accent-color:var(--blue);" checked>
-                <label for="set-allow-submissions" style="font-size:0.85rem;color:#fff;cursor:pointer;">Accept Submissions</label>
+                <label for="set-allow-submissions" style="font-size:0.85rem;color:#0f172a;cursor:pointer;">Accept Submissions</label>
               </div>
             </div>
 
@@ -1249,10 +1559,14 @@ e-page-transition,
 
         <!-- Admin Profile & Security -->
         <div class="csp-card" style="padding:24px;">
-          <h3 style="font-family:'Merriweather',serif;color:#fff;margin-bottom:6px;">🔒 Admin Account & Password</h3>
+          <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:6px;">🔒 Admin Account &amp; Password</h3>
           <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;">Update your display name, email, or change your account password.</p>
           
           <form id="form-admin-profile">
+            <div class="csp-form-group">
+              <label class="csp-form-label">Admin Login Username</label>
+              <input type="text" id="prof-username" class="csp-form-input" placeholder="admin" required>
+            </div>
             <div class="csp-form-group">
               <label class="csp-form-label">Admin Display Name</label>
               <input type="text" id="prof-name" class="csp-form-input" placeholder="Editor Admin" required>
@@ -1263,7 +1577,7 @@ e-page-transition,
             </div>
 
             <div style="border-top:1px solid var(--border);margin:20px 0 16px;padding-top:16px;">
-              <h4 style="font-size:0.9rem;color:#fff;margin-bottom:12px;">Change Password <span style="font-size:0.75rem;color:var(--text-muted);font-weight:normal;">(Leave blank to keep unchanged)</span></h4>
+              <h4 style="font-size:0.9rem;color:#0f172a;margin-bottom:12px;">Change Password <span style="font-size:0.75rem;color:var(--text-muted);font-weight:normal;">(Leave blank to keep unchanged)</span></h4>
               
               <div class="csp-form-group">
                 <label class="csp-form-label">Current Password</label>
@@ -1276,6 +1590,47 @@ e-page-transition,
             </div>
 
             <button type="submit" class="csp-btn-sm csp-btn-secondary" style="height:42px;width:100%;justify-content:center;">🔐 Update Admin Credentials</button>
+          </form>
+        </div>
+
+        <!-- 📧 Email SMTP Configuration -->
+        <div class="csp-card" style="padding:24px;">
+          <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:6px;">📧 SMTP Email Configuration</h3>
+          <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;">Configure outgoing SMTP server credentials for story submission alerts.</p>
+
+          <form id="form-smtp-settings">
+            <div class="csp-form-row">
+              <div class="csp-form-group">
+                <label class="csp-form-label">SMTP Host</label>
+                <input type="text" id="set-smtp-host" class="csp-form-input" placeholder="smtp.gmail.com">
+              </div>
+              <div class="csp-form-group">
+                <label class="csp-form-label">SMTP Port</label>
+                <input type="text" id="set-smtp-port" class="csp-form-input" placeholder="587">
+              </div>
+            </div>
+            <div class="csp-form-row">
+              <div class="csp-form-group">
+                <label class="csp-form-label">SMTP Username</label>
+                <input type="text" id="set-smtp-user" class="csp-form-input" placeholder="user@gmail.com">
+              </div>
+              <div class="csp-form-group">
+                <label class="csp-form-label">SMTP Password</label>
+                <input type="password" id="set-smtp-pass" class="csp-form-input" placeholder="••••••••">
+              </div>
+            </div>
+            <div class="csp-form-row">
+              <div class="csp-form-group">
+                <label class="csp-form-label">Sender Email</label>
+                <input type="email" id="set-sender-email" class="csp-form-input" placeholder="noreply@conspodium.com">
+              </div>
+              <div class="csp-form-group">
+                <label class="csp-form-label">Sender Name</label>
+                <input type="text" id="set-sender-name" class="csp-form-input" placeholder="Conspodium Alerts">
+              </div>
+            </div>
+
+            <button type="submit" class="csp-btn-sm csp-btn-primary" style="margin-top:16px;height:42px;width:100%;justify-content:center;">✉️ Save SMTP Configuration</button>
           </form>
         </div>
 
@@ -1350,7 +1705,7 @@ e-page-transition,
         </div>
         <div class="csp-form-group" style="display:flex;align-items:center;gap:10px;margin-top:24px;">
           <input type="checkbox" id="post-is-featured" style="width:20px;height:20px;accent-color:var(--blue);">
-          <label for="post-is-featured" style="font-size:0.88rem;color:#fff;cursor:pointer;">Feature in Hero Slider</label>
+          <label for="post-is-featured" style="font-size:0.88rem;color:#0f172a;cursor:pointer;">Feature in Hero Slider</label>
         </div>
       </div>
 
@@ -1362,7 +1717,37 @@ e-page-transition,
   </div>
 </div>
 
-<!-- ── MODAL: APPROVE SUBMISSION ── -->
+<!-- ── MODAL: DETAILED SUBMISSION VIEW ── -->
+<div class="csp-modal-overlay" id="modal-view-submission">
+  <div class="csp-modal" style="max-width:680px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:12px;">
+      <h3 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.2rem;margin:0;" id="sub-modal-title">Submission Title</h3>
+      <button style="background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;" data-close="modal-view-submission">&times;</button>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:0.85rem;" id="sub-modal-author-bar">
+      <div>
+        <strong id="sub-modal-author" style="color:#0f172a;">Author Name</strong>
+        <span id="sub-modal-email" style="color:var(--text-muted);margin-left:6px;">(email@domain.com)</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="sub-modal-category-badge" class="csp-badge" style="background:rgba(183,31,113,0.1);color:var(--pink);border:1px solid rgba(183,31,113,0.3);">Category</span>
+        <span id="sub-modal-status-badge" class="csp-badge">pending</span>
+      </div>
+    </div>
+
+    <div id="sub-modal-bio" style="display:none;font-size:0.82rem;font-style:italic;color:var(--blue);margin-bottom:16px;background:rgba(0,174,254,0.08);padding:10px 14px;border-radius:10px;border-left:3px solid var(--blue);"></div>
+    <div id="sub-modal-attachment" style="display:none;margin-bottom:16px;"></div>
+
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;max-height:360px;overflow-y:auto;font-size:0.92rem;line-height:1.6;color:#1e293b;white-space:pre-wrap;margin-bottom:24px;" id="sub-modal-body"></div>
+
+    <div style="display:flex;gap:10px;justify-content:flex-end;" id="sub-modal-footer-actions">
+      <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-view-submission">Close</button>
+      <button type="button" class="csp-btn-sm csp-btn-danger" id="btn-sub-modal-reject">Move to Trash</button>
+      <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-sub-modal-approve">Approve &amp; Publish →</button>
+    </div>
+  </div>
+</div>
 <div class="csp-modal-overlay" id="modal-approve">
   <div class="csp-modal" style="max-width:500px;">
     <div class="csp-modal-header">
@@ -1443,6 +1828,13 @@ e-page-transition,
       if(target) target.classList.add('active');
       document.getElementById('csp-topbar-title').textContent = t.textContent.trim();
       if (window.innerWidth <= 768) closeSidebar();
+
+      // Silent real-time refresh whenever switching tabs
+      loadOverviewData();
+      loadSubmissions();
+      if (t.dataset.tab === 'posts') loadPosts();
+      if (t.dataset.tab === 'polls') loadPolls();
+      if (t.dataset.tab === 'categories') loadCategoriesTable();
     });
   });
 
@@ -1524,7 +1916,7 @@ e-page-transition,
               <td>${p.author_name}</td>
               <td>${pubDate}</td>
               <td>${(p.views || 0).toLocaleString()}</td>
-              <td>${p.is_featured ? '⭐ Yes' : 'No'}</td>
+              <td>${p.is_featured ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.75rem;padding:4px 8px;white-space:nowrap;">⭐ Featured in Hero: Enabled</span>' : '<span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">Hero: Disabled</span>'}</td>
               <td>
                 <button class="csp-btn-sm csp-btn-secondary" onclick="editPost(${p.id})">Edit</button>
                 <button class="csp-btn-sm csp-btn-danger" onclick="deletePost(${p.id})">Delete</button>
@@ -1682,18 +2074,66 @@ e-page-transition,
     });
   });
 
+  // Submissions status filter tabs & Empty Trash logic
+  var currentSubFilter = 'all';
+  var submissionsCache = [];
+
+  document.querySelectorAll('.sub-filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.sub-filter-btn').forEach(function(b){
+        b.style.background = 'none';
+        b.style.color = 'var(--text-muted)';
+        b.style.fontWeight = 'normal';
+        b.classList.remove('active');
+      });
+      btn.style.background = 'rgba(0,174,254,0.15)';
+      btn.style.color = 'var(--blue)';
+      btn.style.fontWeight = '600';
+      btn.classList.add('active');
+      currentSubFilter = btn.dataset.subFilter;
+
+      var emptyTrashBtn = document.getElementById('btn-empty-trash');
+      if (emptyTrashBtn) {
+        emptyTrashBtn.style.display = currentSubFilter === 'rejected' ? 'inline-flex' : 'none';
+      }
+
+      loadSubmissions();
+    });
+  });
+
+  var emptyTrashBtn = document.getElementById('btn-empty-trash');
+  if (emptyTrashBtn) {
+    emptyTrashBtn.addEventListener('click', function(){
+      if (!confirm('Are you sure you want to permanently delete all rejected submissions in the trash?')) return;
+      fetch('/api/submissions.php?action=empty_trash', { method: 'POST' })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          alert('🎉 ' + res.message);
+          loadSubmissions();
+          loadOverviewData();
+        });
+    });
+  }
+
   // Load Submissions
   function loadSubmissions() {
-    fetch('/api/submissions.php')
+    fetch('/api/submissions.php?status=' + currentSubFilter)
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('submissions-cms-table');
         if(!tbody || !res.submissions) return;
+        submissionsCache = res.submissions;
         tbody.innerHTML = '';
+
+        if (res.submissions.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-muted);">No submissions found in this tab.</td></tr>';
+          return;
+        }
+
         res.submissions.forEach(function(s){
           var statusClass = s.status === 'approved' ? 'csp-status-approved' : (s.status === 'rejected' ? 'csp-status-rejected' : 'csp-status-pending');
           var dateStr = s.submitted_at ? s.submitted_at.slice(0,10) : 'Today';
-          
+
           tbody.innerHTML += `
             <tr>
               <td>
@@ -1701,16 +2141,17 @@ e-page-transition,
                 <div style="font-size:0.75rem;color:var(--text-muted);">${s.author_email}</div>
               </td>
               <td>
-                <div style="font-weight:600;">${s.title}</div>
-                <div style="font-size:0.78rem;color:var(--text-muted);max-width:320px;">${s.content.slice(0,90)}...</div>
+                <div style="font-weight:600;cursor:pointer;color:var(--blue);" onclick="openViewSubmissionModal(${s.id})">${s.title}</div>
+                <div style="font-size:0.78rem;color:var(--text-muted);max-width:320px;">${s.content.slice(0,80)}...</div>
               </td>
               <td>${dateStr}</td>
               <td><span class="csp-status-badge ${statusClass}">${s.status}</span></td>
               <td>
+                <button class="csp-btn-sm csp-btn-secondary" onclick="openViewSubmissionModal(${s.id})" style="padding:4px 10px;font-size:0.78rem;margin-right:4px;">👁️ View</button>
                 ${s.status === 'pending' ? `
-                  <button class="csp-btn-sm csp-btn-primary" onclick="openApproveModal(${s.id})">Approve &amp; Publish</button>
-                  <button class="csp-btn-sm csp-btn-danger" onclick="rejectSubmission(${s.id})">Reject</button>
-                ` : `<button class="csp-btn-sm csp-btn-danger" onclick="deleteSubmission(${s.id})">Delete</button>`}
+                  <button class="csp-btn-sm csp-btn-primary" onclick="openApproveModal(${s.id})" style="padding:4px 10px;font-size:0.78rem;margin-right:4px;">Approve</button>
+                  <button class="csp-btn-sm csp-btn-danger" onclick="rejectSubmission(${s.id})" style="padding:4px 10px;font-size:0.78rem;">Reject</button>
+                ` : `<button class="csp-btn-sm csp-btn-danger" onclick="deleteSubmission(${s.id})" style="padding:4px 10px;font-size:0.78rem;">Delete</button>`}
               </td>
             </tr>
           `;
@@ -1718,8 +2159,71 @@ e-page-transition,
       });
   }
 
-  window.openApproveModal = function(subId) {
+  window.openViewSubmissionModal = function(id) {
+    var s = submissionsCache.find(function(item){ return item.id == id; });
+    if (!s) return;
+
+    document.getElementById('sub-modal-title').textContent = s.title;
+    document.getElementById('sub-modal-author').textContent = s.author_name;
+    document.getElementById('sub-modal-email').textContent = '(' + s.author_email + ')';
+
+    var catBadge = document.getElementById('sub-modal-category-badge');
+    if (catBadge) {
+      catBadge.textContent = s.category || 'General';
+    }
+
+    var badge = document.getElementById('sub-modal-status-badge');
+    badge.textContent = s.status;
+    badge.className = 'csp-status-badge ' + (s.status === 'approved' ? 'csp-status-approved' : (s.status === 'rejected' ? 'csp-status-rejected' : 'csp-status-pending'));
+
+    var bioEl = document.getElementById('sub-modal-bio');
+    if (s.author_bio && !s.author_bio.startsWith('Category:')) {
+      bioEl.textContent = 'Bio: ' + s.author_bio;
+      bioEl.style.display = 'block';
+    } else {
+      bioEl.style.display = 'none';
+    }
+
+    var attEl = document.getElementById('sub-modal-attachment');
+    if (s.attachment_url) {
+      attEl.innerHTML = '<strong>Attachment:</strong> <a href="' + s.attachment_url + '" target="_blank" style="color:var(--blue);text-decoration:underline;">' + s.attachment_url + '</a>';
+      attEl.style.display = 'block';
+    } else {
+      attEl.style.display = 'none';
+    }
+
+    document.getElementById('sub-modal-body').textContent = s.content;
+
+    var btnApprove = document.getElementById('btn-sub-modal-approve');
+    var btnReject = document.getElementById('btn-sub-modal-reject');
+
+    if (btnApprove) {
+      btnApprove.onclick = function() {
+        closeModal('modal-view-submission');
+        openApproveModal(s.id, s.category);
+      };
+    }
+    if (btnReject) {
+      btnReject.onclick = function() {
+        closeModal('modal-view-submission');
+        rejectSubmission(s.id);
+      };
+    }
+
+    openModal('modal-view-submission');
+  };
+
+  window.openApproveModal = function(subId, userCat) {
     document.getElementById('approve-submission-id').value = subId;
+    var catSelect = document.getElementById('approve-category');
+    if (catSelect && userCat) {
+      for (var i = 0; i < catSelect.options.length; i++) {
+        if (catSelect.options[i].text.toLowerCase().trim() === userCat.toLowerCase().trim()) {
+          catSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
     openModal('modal-approve');
   };
 
@@ -1919,6 +2423,14 @@ e-page-transition,
           loadPolls();
           loadCategoriesTable();
           loadSettings();
+
+          // Background auto-update every 15 seconds (subtle, no screen flicker)
+          if (!window.cspAutoRefreshInterval) {
+            window.cspAutoRefreshInterval = setInterval(function(){
+              loadOverviewData();
+              loadSubmissions();
+            }, 15000);
+          }
         } else {
           if (loginScreen) loginScreen.style.display = 'flex';
         }
@@ -1941,7 +2453,18 @@ e-page-transition,
           if (s.admin_email) document.getElementById('set-admin-email').value = s.admin_email;
           if (s.default_author) document.getElementById('set-default-author').value = s.default_author;
           if (s.posts_per_page) document.getElementById('set-posts-per-page').value = s.posts_per_page;
-          if (s.allow_submissions !== undefined) document.getElementById('set-allow-submissions').checked = s.allow_submissions == '1';
+          if (s.smtp_host) document.getElementById('set-smtp-host').value = s.smtp_host;
+          if (s.smtp_port) document.getElementById('set-smtp-port').value = s.smtp_port;
+          if (s.smtp_user) document.getElementById('set-smtp-user').value = s.smtp_user;
+          if (s.smtp_pass) document.getElementById('set-smtp-pass').value = s.smtp_pass;
+          if (s.sender_email) document.getElementById('set-sender-email').value = s.sender_email;
+          if (s.sender_name) document.getElementById('set-sender-name').value = s.sender_name;
+
+          if (s.popup_ad_enabled !== undefined) document.getElementById('set-popup-enabled').checked = s.popup_ad_enabled == '1';
+          if (s.popup_ad_title) document.getElementById('set-popup-title').value = s.popup_ad_title;
+          if (s.popup_ad_image) document.getElementById('set-popup-image').value = s.popup_ad_image;
+          if (s.popup_ad_link) document.getElementById('set-popup-link').value = s.popup_ad_link;
+          if (s.popup_ad_delay) document.getElementById('set-popup-delay').value = s.popup_ad_delay;
         }
       });
 
@@ -1950,10 +2473,74 @@ e-page-transition,
       .then(function(r){ return r.json(); })
       .then(function(res){
         if (res.success && res.user) {
-          document.getElementById('prof-name').value = res.user.name || '';
-          document.getElementById('prof-email').value = res.user.email || '';
+          if (document.getElementById('prof-username')) document.getElementById('prof-username').value = res.user.username || '';
+          if (document.getElementById('prof-name')) document.getElementById('prof-name').value = res.user.name || '';
+          if (document.getElementById('prof-email')) document.getElementById('prof-email').value = res.user.email || '';
         }
       });
+  }
+
+  // Save SMTP Settings Form Submit
+  var formSmtpSettings = document.getElementById('form-smtp-settings');
+  if (formSmtpSettings) {
+    formSmtpSettings.addEventListener('submit', function(e){
+      e.preventDefault();
+      var payload = {
+        settings: {
+          smtp_host: document.getElementById('set-smtp-host').value,
+          smtp_port: document.getElementById('set-smtp-port').value,
+          smtp_user: document.getElementById('set-smtp-user').value,
+          smtp_pass: document.getElementById('set-smtp-pass').value,
+          sender_email: document.getElementById('set-sender-email').value,
+          sender_name: document.getElementById('set-sender-name').value
+        }
+      };
+
+      fetch('/api/settings.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success) {
+          alert('🎉 SMTP Configuration saved successfully!');
+        } else {
+          alert('Error: ' + (res.error || 'Failed to save SMTP settings'));
+        }
+      });
+    });
+  }
+
+  // Save Popup Advert Settings Form Submit
+  var formPopupAdSettings = document.getElementById('form-popup-ad-settings');
+  if (formPopupAdSettings) {
+    formPopupAdSettings.addEventListener('submit', function(e){
+      e.preventDefault();
+      var payload = {
+        settings: {
+          popup_ad_enabled: document.getElementById('set-popup-enabled').checked ? '1' : '0',
+          popup_ad_title: document.getElementById('set-popup-title').value,
+          popup_ad_image: document.getElementById('set-popup-image').value,
+          popup_ad_link: document.getElementById('set-popup-link').value,
+          popup_ad_delay: document.getElementById('set-popup-delay').value
+        }
+      };
+
+      fetch('/api/settings.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success) {
+          alert('🎉 Popup Advert settings saved successfully!');
+        } else {
+          alert('Error: ' + (res.error || 'Failed to save Popup Advert settings'));
+        }
+      });
+    });
   }
 
   // Save Platform Settings Form Submit
@@ -1994,15 +2581,14 @@ e-page-transition,
     formAdminProfile.addEventListener('submit', function(e){
       e.preventDefault();
       var payload = {
-        profile: {
-          name: document.getElementById('prof-name').value,
-          email: document.getElementById('prof-email').value,
-          currentPassword: document.getElementById('prof-curr-pass').value,
-          newPassword: document.getElementById('prof-new-pass').value
-        }
+        username: document.getElementById('prof-username').value,
+        name: document.getElementById('prof-name').value,
+        email: document.getElementById('prof-email').value,
+        currentPassword: document.getElementById('prof-curr-pass').value,
+        newPassword: document.getElementById('prof-new-pass').value
       };
 
-      fetch('/api/settings.php', {
+      fetch('/api/auth.php?action=update_profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -2010,10 +2596,11 @@ e-page-transition,
       .then(function(r){ return r.json(); })
       .then(function(res){
         if (res.success) {
-          alert('🎉 Admin credentials updated successfully!');
+          alert('🎉 ' + res.message);
           document.getElementById('prof-curr-pass').value = '';
           document.getElementById('prof-new-pass').value = '';
           if (res.user) {
+            document.getElementById('prof-username').value = res.user.username;
             document.getElementById('admin-sidebar-name').textContent = res.user.name;
             var parts = res.user.name.split(' ');
             document.getElementById('admin-sidebar-avatar').textContent = ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || 'AD';

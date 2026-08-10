@@ -6,7 +6,7 @@ $isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERC
 if ($isVercel) {
     $dbPath = '/tmp/conspodium.db';
     $seedDb = file_exists(__DIR__ . '/../../data/conspodium.db') ? __DIR__ . '/../../data/conspodium.db' : __DIR__ . '/../data/conspodium.db';
-    if (!file_exists($dbPath) && file_exists($seedDb)) {
+    if ((!file_exists($dbPath) || @filesize($dbPath) < 1000) && file_exists($seedDb)) {
         @copy($seedDb, $dbPath);
     }
 } else {
@@ -82,13 +82,23 @@ try {
             author_name TEXT NOT NULL,
             author_email TEXT NOT NULL,
             author_bio TEXT,
+            category TEXT,
             title TEXT NOT NULL,
             content TEXT NOT NULL,
             attachment_url TEXT,
             status TEXT DEFAULT 'pending',
             submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
+    ");
 
+    // Migration for existing databases
+    try {
+        $pdo->exec("ALTER TABLE story_submissions ADD COLUMN category TEXT");
+    } catch (Exception $e) {
+        // Column already exists
+    }
+
+    $pdo->exec("
         CREATE TABLE IF NOT EXISTS event_reminders (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             event_name TEXT NOT NULL,
@@ -123,6 +133,17 @@ try {
         $stmtSet->execute(['default_author', 'Conspodium Editorial']);
         $stmtSet->execute(['posts_per_page', '6']);
         $stmtSet->execute(['allow_submissions', '1']);
+        $stmtSet->execute(['smtp_host', 'smtp.gmail.com']);
+        $stmtSet->execute(['smtp_port', '587']);
+        $stmtSet->execute(['smtp_user', '']);
+        $stmtSet->execute(['smtp_pass', '']);
+        $stmtSet->execute(['sender_email', 'noreply@conspodium.com']);
+        $stmtSet->execute(['sender_name', 'Conspodium Alerts']);
+        $stmtSet->execute(['popup_ad_enabled', '0']);
+        $stmtSet->execute(['popup_ad_title', 'Empowering Diaspora Communities Worldwide']);
+        $stmtSet->execute(['popup_ad_image', './wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg']);
+        $stmtSet->execute(['popup_ad_link', '/submit-story/']);
+        $stmtSet->execute(['popup_ad_delay', '3']);
     }
 
     // Seed default admin account if empty

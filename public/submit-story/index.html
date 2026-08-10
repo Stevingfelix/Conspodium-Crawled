@@ -309,6 +309,21 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -938,9 +953,112 @@ e-page-transition,
     });
   }
 
+  function initPopupAdvert() {
+    if (window.location.pathname.includes('/dashboard')) return;
+    if (sessionStorage.getItem('csp_popup_ad_dismissed')) return;
+
+    fetch(getRootUrl('api/settings.php'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (!res.success || !res.settings || res.settings.popup_ad_enabled !== '1') return;
+
+        var s = res.settings;
+        var delaySec = (parseInt(s.popup_ad_delay) || 3) * 1000;
+
+        setTimeout(function(){
+          if (sessionStorage.getItem('csp_popup_ad_dismissed')) return;
+
+          var adModal = document.createElement('div');
+          adModal.id = 'csp-popup-ad-modal';
+          adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.4s ease;padding:20px;';
+
+          var card = document.createElement('div');
+          card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.4s ease;text-align:center;';
+
+          var closeBtn = document.createElement('button');
+          closeBtn.innerHTML = '&times;';
+          closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+
+          function closeAd() {
+            sessionStorage.setItem('csp_popup_ad_dismissed', '1');
+            adModal.style.opacity = '0';
+            card.style.transform = 'scale(0.9)';
+            setTimeout(function(){ if(adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 400);
+          }
+
+          closeBtn.addEventListener('click', closeAd);
+          adModal.addEventListener('click', function(e){ if(e.target === adModal) closeAd(); });
+
+          var imgHtml = s.popup_ad_image ? '<img src="' + getRootUrl(s.popup_ad_image) + '" style="width:100%;max-height:220px;object-fit:cover;" />' : '';
+          var titleHtml = s.popup_ad_title ? '<h3 style="font-family:\'Merriweather\',serif;font-size:1.25rem;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + s.popup_ad_title + '</h3>' : '';
+          var linkUrl = s.popup_ad_link ? getRootUrl(s.popup_ad_link) : '#';
+
+          card.innerHTML = imgHtml +
+            '<div style="padding:4px 20px 24px;">' +
+              titleHtml +
+              '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
+            '</div>';
+
+          card.appendChild(closeBtn);
+          adModal.appendChild(card);
+          document.body.appendChild(adModal);
+
+          setTimeout(function(){
+            adModal.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          }, 50);
+        }, delaySec);
+      })
+      .catch(function(){});
+  }
+
+  window.showSuccessModal = function(title, message) {
+    var oldModal = document.getElementById('csp-global-success-modal');
+    if (oldModal && oldModal.parentNode) oldModal.parentNode.removeChild(oldModal);
+
+    var modal = document.createElement('div');
+    modal.id = 'csp-global-success-modal';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:999999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity 0.35s ease;padding:20px;';
+
+    var card = document.createElement('div');
+    card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;padding:32px 24px;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.35s ease;text-align:center;';
+
+    var closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.style.cssText = 'position:absolute;top:14px;right:14px;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+
+    function closeModal() {
+      modal.style.opacity = '0';
+      card.style.transform = 'scale(0.9)';
+      setTimeout(function(){ if (modal.parentNode) modal.parentNode.removeChild(modal); }, 350);
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+
+    card.innerHTML = 
+      '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(0,174,254,0.2),rgba(183,31,113,0.2));border:1px solid rgba(0,174,254,0.4);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;">🎉</div>' +
+      '<h3 style="font-family:\'Merriweather\',serif;font-size:1.3rem;color:#ffffff;margin-bottom:10px;line-height:1.3;">' + (title || 'Submission Successful!') + '</h3>' +
+      '<p style="font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.6;margin-bottom:24px;">' + (message || 'Thank you! Your information has been received.') + '</p>' +
+      '<button id="csp-success-modal-btn" style="padding:12px 32px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border:none;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Got It →</button>';
+
+    card.appendChild(closeBtn);
+    modal.appendChild(card);
+    document.body.appendChild(modal);
+
+    var btn = card.querySelector('#csp-success-modal-btn');
+    if (btn) btn.addEventListener('click', closeModal);
+
+    setTimeout(function(){
+      modal.style.opacity = '1';
+      card.style.transform = 'scale(1)';
+    }, 50);
+  };
+
   function start() {
     initLoaderAndLogo();
     initMobileMenu();
+    initPopupAdvert();
   }
 
   if (document.readyState === 'loading') {
@@ -1076,6 +1194,9 @@ e-page-transition,
   if (!form) return;
   form.addEventListener('submit', function(e){
     e.preventDefault();
+    e.stopPropagation();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+
     var firstName = form.querySelector('[name="names[first_name]"]')?.value || '';
     var lastName  = form.querySelector('[name="names[last_name]"]')?.value || '';
     var email     = form.querySelector('[name="email"]')?.value || '';
@@ -1087,32 +1208,39 @@ e-page-transition,
     var origText = btn ? btn.textContent : 'Submit Story';
     if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
 
-    fetch('/api/submissions.php', {
+    var p = window.location.pathname;
+    var apiUrl = (p.startsWith('/public') || p.includes('/public/')) ? '/public/api/submissions.php' : '/api/submissions.php';
+
+    fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: (firstName + ' ' + lastName).trim() || 'Anonymous Author',
         email: email,
-        bio: category ? 'Category: ' + category : '',
+        category: category,
+        bio: '',
         title: title,
         content: content
       })
     })
     .then(function(r){ return r.json(); })
     .then(function(res){
+      if (btn) { btn.disabled = false; btn.textContent = origText; }
       if (res.success) {
-        alert('🎉 ' + res.message);
+        if (window.showSuccessModal) {
+          window.showSuccessModal('Story Submitted Successfully!', res.message || 'Thank you! Your story has been submitted and is pending editorial review.');
+        } else {
+          alert('🎉 ' + (res.message || 'Story submitted successfully!'));
+        }
         form.reset();
       } else {
         alert('Error: ' + (res.error || 'Failed to submit story.'));
       }
     })
     .catch(function(err){
+      if (btn) { btn.disabled = false; btn.textContent = origText; }
       console.error('Submission error:', err);
       alert('Error submitting story. Please try again.');
-    })
-    .finally(function(){
-      if (btn) { btn.disabled = false; btn.textContent = origText; }
     });
   });
 })();

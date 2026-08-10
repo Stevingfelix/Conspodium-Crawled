@@ -321,6 +321,21 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -950,9 +965,112 @@ e-page-transition,
     });
   }
 
+  function initPopupAdvert() {
+    if (window.location.pathname.includes('/dashboard')) return;
+    if (sessionStorage.getItem('csp_popup_ad_dismissed')) return;
+
+    fetch(getRootUrl('api/settings.php'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (!res.success || !res.settings || res.settings.popup_ad_enabled !== '1') return;
+
+        var s = res.settings;
+        var delaySec = (parseInt(s.popup_ad_delay) || 3) * 1000;
+
+        setTimeout(function(){
+          if (sessionStorage.getItem('csp_popup_ad_dismissed')) return;
+
+          var adModal = document.createElement('div');
+          adModal.id = 'csp-popup-ad-modal';
+          adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.4s ease;padding:20px;';
+
+          var card = document.createElement('div');
+          card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.4s ease;text-align:center;';
+
+          var closeBtn = document.createElement('button');
+          closeBtn.innerHTML = '&times;';
+          closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+
+          function closeAd() {
+            sessionStorage.setItem('csp_popup_ad_dismissed', '1');
+            adModal.style.opacity = '0';
+            card.style.transform = 'scale(0.9)';
+            setTimeout(function(){ if(adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 400);
+          }
+
+          closeBtn.addEventListener('click', closeAd);
+          adModal.addEventListener('click', function(e){ if(e.target === adModal) closeAd(); });
+
+          var imgHtml = s.popup_ad_image ? '<img src="' + getRootUrl(s.popup_ad_image) + '" style="width:100%;max-height:220px;object-fit:cover;" />' : '';
+          var titleHtml = s.popup_ad_title ? '<h3 style="font-family:\'Merriweather\',serif;font-size:1.25rem;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + s.popup_ad_title + '</h3>' : '';
+          var linkUrl = s.popup_ad_link ? getRootUrl(s.popup_ad_link) : '#';
+
+          card.innerHTML = imgHtml +
+            '<div style="padding:4px 20px 24px;">' +
+              titleHtml +
+              '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
+            '</div>';
+
+          card.appendChild(closeBtn);
+          adModal.appendChild(card);
+          document.body.appendChild(adModal);
+
+          setTimeout(function(){
+            adModal.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          }, 50);
+        }, delaySec);
+      })
+      .catch(function(){});
+  }
+
+  window.showSuccessModal = function(title, message) {
+    var oldModal = document.getElementById('csp-global-success-modal');
+    if (oldModal && oldModal.parentNode) oldModal.parentNode.removeChild(oldModal);
+
+    var modal = document.createElement('div');
+    modal.id = 'csp-global-success-modal';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:999999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity 0.35s ease;padding:20px;';
+
+    var card = document.createElement('div');
+    card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;padding:32px 24px;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.35s ease;text-align:center;';
+
+    var closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.style.cssText = 'position:absolute;top:14px;right:14px;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+
+    function closeModal() {
+      modal.style.opacity = '0';
+      card.style.transform = 'scale(0.9)';
+      setTimeout(function(){ if (modal.parentNode) modal.parentNode.removeChild(modal); }, 350);
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+
+    card.innerHTML = 
+      '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(0,174,254,0.2),rgba(183,31,113,0.2));border:1px solid rgba(0,174,254,0.4);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;">🎉</div>' +
+      '<h3 style="font-family:\'Merriweather\',serif;font-size:1.3rem;color:#ffffff;margin-bottom:10px;line-height:1.3;">' + (title || 'Submission Successful!') + '</h3>' +
+      '<p style="font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.6;margin-bottom:24px;">' + (message || 'Thank you! Your information has been received.') + '</p>' +
+      '<button id="csp-success-modal-btn" style="padding:12px 32px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border:none;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Got It →</button>';
+
+    card.appendChild(closeBtn);
+    modal.appendChild(card);
+    document.body.appendChild(modal);
+
+    var btn = card.querySelector('#csp-success-modal-btn');
+    if (btn) btn.addEventListener('click', closeModal);
+
+    setTimeout(function(){
+      modal.style.opacity = '1';
+      card.style.transform = 'scale(1)';
+    }, 50);
+  };
+
   function start() {
     initLoaderAndLogo();
     initMobileMenu();
+    initPopupAdvert();
   }
 
   if (document.readyState === 'loading') {
@@ -1247,7 +1365,133 @@ e-page-transition,
 <div class="csp-hero-counter"><span id="csp-hero-cur">01</span> / <span id="csp-hero-tot">04</span></div>
 <div class="csp-hero-progress" id="csp-hero-progress"></div>
 <script>
-(function(){var D=6000,s=document.querySelectorAll('.csp-hero-slide'),d=document.querySelectorAll('.csp-hero-dot'),c=0,t=null,p=document.getElementById('csp-hero-progress'),e=document.getElementById('csp-hero-cur'),n=s.length;function pad(x){return x<10?'0'+x:''+x;}function go(i){s[c].classList.remove('active');d[c].classList.remove('active');c=(i+n)%n;s[c].classList.add('active');d[c].classList.add('active');if(e)e.textContent=pad(c+1);run();}function run(){if(p){p.style.transition='none';p.style.width='0%';requestAnimationFrame(function(){requestAnimationFrame(function(){p.style.transition='width '+D+'ms linear';p.style.width='100%';});});}clearInterval(t);t=setInterval(function(){go(c+1);},D);}d.forEach(function(x){x.addEventListener('click',function(){go(parseInt(x.dataset.to));});});var pv=document.getElementById('csp-hero-prev'),nx=document.getElementById('csp-hero-next');if(pv)pv.addEventListener('click',function(){go(c-1);});if(nx)nx.addEventListener('click',function(){go(c+1);});document.addEventListener('keydown',function(ev){if(ev.key==='ArrowLeft')go(c-1);if(ev.key==='ArrowRight')go(c+1);});var h=document.getElementById('csp-hero');if(h){h.addEventListener('mouseenter',function(){clearInterval(t);});h.addEventListener('mouseleave',function(){run();});}var tx=null;if(h){h.addEventListener('touchstart',function(ev){tx=ev.touches[0].clientX;},{passive:true});h.addEventListener('touchend',function(ev){if(tx===null)return;var dx=ev.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)go(dx<0?c+1:c-1);tx=null;},{passive:true});}run();})();
+(function(){
+  var D = 6000, c = 0, t = null;
+  var heroContainer = document.getElementById('csp-hero');
+  var dotsContainer = document.getElementById('csp-hero-dots');
+  var counterTot = document.getElementById('csp-hero-tot');
+  var counterCur = document.getElementById('csp-hero-cur');
+  var progress = document.getElementById('csp-hero-progress');
+
+  function pad(x){ return x < 10 ? '0' + x : '' + x; }
+
+  // Fetch articles marked with is_featured=1 from API and prepend to Hero Slider
+  fetch('/api/posts.php?featured=1')
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success && res.posts && res.posts.length > 0) {
+        var existingSlides = Array.from(document.querySelectorAll('.csp-hero-slide'));
+        existingSlides.forEach(function(s){ s.classList.remove('active'); });
+
+        res.posts.reverse().forEach(function(post, index){
+          var imgUrl = post.featured_image || './wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
+          if (imgUrl.startsWith('./')) imgUrl = '/' + imgUrl.slice(2);
+          if (!imgUrl.startsWith('/') && !imgUrl.startsWith('http')) imgUrl = '/' + imgUrl;
+
+          var slideDiv = document.createElement('div');
+          slideDiv.className = 'csp-hero-slide' + (index === 0 ? ' active' : '');
+          slideDiv.dataset.slide = index;
+
+          var eyebrowText = post.eyebrow || post.category_name || 'Featured Article';
+
+          slideDiv.innerHTML =
+            '<div class="csp-hero-bg" style="background-image:url(\'' + imgUrl + '\');"></div>' +
+            '<div class="csp-hero-overlay"></div>' +
+            '<div class="csp-hero-content">' +
+              '<div class="csp-hero-eyebrow">⭐ ' + eyebrowText + '</div>' +
+              '<h1 class="csp-hero-title">' + post.title + '</h1>' +
+              '<p class="csp-hero-sub">' + (post.excerpt || '') + '</p>' +
+              '<div class="csp-hero-btns">' +
+                '<a href="./stories/" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
+                '<a href="./stories/" class="csp-hero-btn-secondary">Explore All Stories</a>' +
+              '</div>' +
+            '</div>';
+
+          heroContainer.insertBefore(slideDiv, heroContainer.firstChild);
+        });
+
+        initSlider();
+      } else {
+        initSlider();
+      }
+    })
+    .catch(function(){ initSlider(); });
+
+  function initSlider() {
+    var slides = document.querySelectorAll('.csp-hero-slide');
+    var n = slides.length;
+    if (n === 0) return;
+
+    if (counterTot) counterTot.textContent = pad(n);
+
+    if (dotsContainer) {
+      dotsContainer.innerHTML = '';
+      for (var i = 0; i < n; i++) {
+        var dot = document.createElement('button');
+        dot.className = 'csp-hero-dot' + (i === 0 ? ' active' : '');
+        dot.dataset.to = i;
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    var dots = document.querySelectorAll('.csp-hero-dot');
+
+    function go(i) {
+      if (!slides[c] || !dots[c]) return;
+      slides[c].classList.remove('active');
+      dots[c].classList.remove('active');
+      c = (i + n) % n;
+      slides[c].classList.add('active');
+      dots[c].classList.add('active');
+      if (counterCur) counterCur.textContent = pad(c + 1);
+      run();
+    }
+
+    function run() {
+      if (progress) {
+        progress.style.transition = 'none';
+        progress.style.width = '0%';
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){
+            progress.style.transition = 'width ' + D + 'ms linear';
+            progress.style.width = '100%';
+          });
+        });
+      }
+      clearInterval(t);
+      t = setInterval(function(){ go(c + 1); }, D);
+    }
+
+    dots.forEach(function(x){
+      x.addEventListener('click', function(){ go(parseInt(x.dataset.to)); });
+    });
+
+    var pv = document.getElementById('csp-hero-prev');
+    var nx = document.getElementById('csp-hero-next');
+    if (pv) pv.addEventListener('click', function(){ go(c - 1); });
+    if (nx) nx.addEventListener('click', function(){ go(c + 1); });
+
+    var h = document.getElementById('csp-hero');
+    if (h) {
+      h.addEventListener('mouseenter', function(){ clearInterval(t); });
+      h.addEventListener('mouseleave', function(){ run(); });
+    }
+
+    var tx = null;
+    if (h) {
+      h.addEventListener('touchstart', function(ev){ tx = ev.touches[0].clientX; }, {passive:true});
+      h.addEventListener('touchend', function(ev){
+        if (tx === null) return;
+        var dx = ev.changedTouches[0].clientX - tx;
+        if (Math.abs(dx) > 50) go(dx < 0 ? c + 1 : c - 1);
+        tx = null;
+      }, {passive:true});
+    }
+
+    run();
+  }
+})();
 </script>
 <style id="csp-hide-old-hero">
 .elementor-6 .elementor-element.elementor-element-375eb214 { display: none !important; }

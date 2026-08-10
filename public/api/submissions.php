@@ -29,8 +29,23 @@ $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 // ── GET ALL SUBMISSIONS (ADMIN ONLY) ─────────────────────────────────────────
 if ($method === 'GET') {
     requireAdmin();
-    $stmt = $pdo->query("SELECT * FROM story_submissions ORDER BY submitted_at DESC");
+    $statusFilter = $_GET['status'] ?? 'all';
+    if ($statusFilter && in_array($statusFilter, ['pending', 'approved', 'rejected'])) {
+        $stmt = $pdo->prepare("SELECT * FROM story_submissions WHERE status = ? ORDER BY submitted_at DESC");
+        $stmt->execute([$statusFilter]);
+    } else {
+        $stmt = $pdo->query("SELECT * FROM story_submissions ORDER BY submitted_at DESC");
+    }
     echo json_encode(["success" => true, "submissions" => $stmt->fetchAll()]);
+    exit;
+}
+
+// ── EMPTY TRASH (ADMIN ONLY) ─────────────────────────────────────────────────
+if (($method === 'DELETE' || $method === 'POST') && $action === 'empty_trash') {
+    requireAdmin();
+    $stmt = $pdo->query("DELETE FROM story_submissions WHERE status = 'rejected'");
+    $count = $stmt->rowCount();
+    echo json_encode(["success" => true, "message" => "Emptied trash (" . $count . " rejected submissions deleted)"]);
     exit;
 }
 
@@ -97,7 +112,7 @@ if ($method === 'POST' && $action === 'reject') {
     requireAdmin();
     $id = intval($_GET['id'] ?? $input['id'] ?? 0);
     $pdo->prepare("UPDATE story_submissions SET status = 'rejected' WHERE id = ?")->execute([$id]);
-    echo json_encode(["success" => true, "message" => "Submission marked as rejected"]);
+    echo json_encode(["success" => true, "message" => "Submission moved to rejected trash"]);
     exit;
 }
 
@@ -106,16 +121,16 @@ if ($method === 'DELETE' || ($method === 'POST' && $action === 'delete')) {
     requireAdmin();
     $id = intval($_GET['id'] ?? $input['id'] ?? 0);
     $pdo->prepare("DELETE FROM story_submissions WHERE id = ?")->execute([$id]);
-    echo json_encode(["success" => true, "message" => "Submission deleted"]);
+    echo json_encode(["success" => true, "message" => "Submission permanently deleted"]);
     exit;
 }
 
-// ── CREATE NEW STORY SUBMISSION ──────────────────────────────────────────────
 if ($method === 'POST') {
     $name = trim($input['name'] ?? '');
     $email = trim($input['email'] ?? '');
     $bio = trim($input['bio'] ?? '');
     $title = trim($input['title'] ?? '');
+    $category = trim($input['category'] ?? '');
     $content = trim($input['content'] ?? '');
     $attachmentUrl = trim($input['attachmentUrl'] ?? '');
 
@@ -126,25 +141,31 @@ if ($method === 'POST') {
     }
 
     $stmt = $pdo->prepare("
-        INSERT INTO story_submissions (author_name, author_email, author_bio, title, content, attachment_url, status)
-        VALUES (?, ?, ?, ?, ?, ?, 'pending')
+        INSERT INTO story_submissions (author_name, author_email, author_bio, category, title, content, attachment_url, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
     ");
-    $stmt->execute([$name, $email, $bio, $title, $content, $attachmentUrl]);
+    $stmt->execute([$name, $email, $bio, $category, $title, $content, $attachmentUrl]);
 
     $submissionId = $pdo->lastInsertId();
 
     // Send email notification alert to admin
     $emailSent = false;
     try {
-        $adminStmt = $pdo->query("SELECT email FROM admins ORDER BY id ASC LIMIT 1");
-        $adminRow = $adminStmt->fetch();
-        $adminEmail = $adminRow['email'] ?? 'admin@conspodium.com';
+        // Fetch email settings
+        $setStmt = $pdo->query("SELECT key, value FROM site_settings WHERE key IN ('admin_email', 'sender_email', 'sender_name')");
+        $setRows = $setStmt->fetchAll();
+        $setMap = [];
+        foreach ($setRows as $r) $setMap[$r['key']] = $r['value'];
+
+        $adminEmail = !empty($setMap['admin_email']) ? $setMap['admin_email'] : 'admin@conspodium.com';
+        $senderEmail = !empty($setMap['sender_email']) ? $setMap['sender_email'] : 'noreply@conspodium.com';
+        $senderName = !empty($setMap['sender_name']) ? $setMap['sender_name'] : 'Conspodium Alerts';
 
         $subject = "🏛️ [Conspodium] New Story Submission: " . $title;
         $headers = implode("\r\n", [
             "MIME-Version: 1.0",
             "Content-type: text/html; charset=utf-8",
-            "From: Conspodium Alerts <noreply@conspodium.com>",
+            "From: " . $senderName . " <" . $senderEmail . ">",
             "Reply-To: " . $name . " <" . $email . ">",
             "X-Mailer: PHP/" . phpversion()
         ]);
