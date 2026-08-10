@@ -1558,7 +1558,7 @@ e-page-transition,
 
 <script>
 (function(){
-  var DURATION = 5000;
+  var DURATION = 3500; // 3.5 seconds per slide
   var currentIndex = 0;
   var timer = null;
 
@@ -1572,14 +1572,13 @@ e-page-transition,
 
   function pad(x){ return x < 10 ? '0' + x : '' + x; }
 
-  function initSlider() {
+  function buildDots() {
     var slides = document.querySelectorAll('.csp-hero-slide');
     var total = slides.length;
     if (total === 0) return;
 
     if (counterTot) counterTot.textContent = pad(total);
 
-    // Build pagination dots dynamically based on slide count (4 or 5)
     if (dotsContainer) {
       dotsContainer.innerHTML = '';
       for (var i = 0; i < total; i++) {
@@ -1590,52 +1589,53 @@ e-page-transition,
         dotsContainer.appendChild(dot);
       }
     }
+  }
 
-    function goToSlide(targetIdx) {
-      var allSlides = document.querySelectorAll('.csp-hero-slide');
-      var allDots = document.querySelectorAll('.csp-hero-dot');
-      var slideCount = allSlides.length;
-      if (slideCount === 0) return;
+  function goToSlide(targetIdx) {
+    var allSlides = document.querySelectorAll('.csp-hero-slide');
+    var allDots = document.querySelectorAll('.csp-hero-dot');
+    var slideCount = allSlides.length;
+    if (slideCount === 0) return;
 
-      allSlides.forEach(function(s){ s.classList.remove('active'); });
-      allDots.forEach(function(d){ d.classList.remove('active'); });
+    allSlides.forEach(function(s){ s.classList.remove('active'); });
+    allDots.forEach(function(d){ d.classList.remove('active'); });
 
-      currentIndex = (targetIdx + slideCount) % slideCount;
+    currentIndex = (targetIdx + slideCount) % slideCount;
 
-      if (allSlides[currentIndex]) allSlides[currentIndex].classList.add('active');
-      if (allDots[currentIndex]) allDots[currentIndex].classList.add('active');
-      if (counterCur) counterCur.textContent = pad(currentIndex + 1);
+    if (allSlides[currentIndex]) allSlides[currentIndex].classList.add('active');
+    if (allDots[currentIndex]) allDots[currentIndex].classList.add('active');
+    if (counterCur) counterCur.textContent = pad(currentIndex + 1);
 
-      animateProgressBar();
+    animateProgressBar();
+  }
+
+  function animateProgressBar() {
+    if (!progress) return;
+    progress.style.transition = 'none';
+    progress.style.width = '0%';
+    setTimeout(function(){
+      progress.style.transition = 'width ' + DURATION + 'ms linear';
+      progress.style.width = '100%';
+    }, 20);
+  }
+
+  function startAutoScroll() {
+    stopAutoScroll();
+    timer = setInterval(function(){
+      goToSlide(currentIndex + 1);
+    }, DURATION);
+  }
+
+  function stopAutoScroll() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
     }
+  }
 
-    function animateProgressBar() {
-      if (!progress) return;
-      progress.style.transition = 'none';
-      progress.style.width = '0%';
-      requestAnimationFrame(function(){
-        requestAnimationFrame(function(){
-          progress.style.transition = 'width ' + DURATION + 'ms linear';
-          progress.style.width = '100%';
-        });
-      });
-    }
+  function initSlider() {
+    buildDots();
 
-    function startAutoScroll() {
-      stopAutoScroll();
-      timer = setInterval(function(){
-        goToSlide(currentIndex + 1);
-      }, DURATION);
-    }
-
-    function stopAutoScroll() {
-      if (timer) {
-        clearInterval(timer);
-        timer = null;
-      }
-    }
-
-    // Dot navigation
     if (dotsContainer) {
       dotsContainer.onclick = function(e) {
         var dot = e.target.closest('.csp-hero-dot');
@@ -1646,17 +1646,9 @@ e-page-transition,
       };
     }
 
-    // Arrow navigation
     if (prevBtn) prevBtn.onclick = function(){ goToSlide(currentIndex - 1); startAutoScroll(); };
     if (nextBtn) nextBtn.onclick = function(){ goToSlide(currentIndex + 1); startAutoScroll(); };
 
-    // Pause auto-scroll on hover so users can read comfortably
-    if (heroSection) {
-      heroSection.addEventListener('mouseenter', stopAutoScroll);
-      heroSection.addEventListener('mouseleave', startAutoScroll);
-    }
-
-    // Touch swipe support
     var touchStartX = null;
     if (heroSection) {
       heroSection.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
@@ -1671,12 +1663,18 @@ e-page-transition,
       }, {passive:true});
     }
 
-    // Start initial slide & timer
     goToSlide(0);
     startAutoScroll();
   }
 
-  // Fetch the 1 featured CMS article and append it as Slide 5 (index 4)
+  // Initialize immediately on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSlider);
+  } else {
+    initSlider();
+  }
+
+  // Fetch the 1 featured CMS article in background & append as 5th slide (index 4)
   function fetchFeaturedCMSArticle() {
     var endpoint = window.getRootUrl ? window.getRootUrl('api/posts.php?featured=1') : 'api/posts.php?featured=1';
     fetch(endpoint)
@@ -1717,13 +1715,13 @@ e-page-transition,
           `;
 
           var wrapper = document.getElementById('csp-hero-slides-wrapper');
-          if (wrapper) wrapper.appendChild(slideDiv);
+          if (wrapper) {
+            wrapper.appendChild(slideDiv);
+            buildDots();
+          }
         }
-        initSlider();
       })
-      .catch(function(){
-        initSlider();
-      });
+      .catch(function(){});
   }
 
   fetchFeaturedCMSArticle();
