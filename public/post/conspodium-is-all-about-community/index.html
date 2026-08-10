@@ -1980,21 +1980,20 @@ e-page-transition,
 
     // Helper: Extract post slug or ID from URL path (e.g. /post/we-are-the-world/ or /post/12/)
     function getPostIdentifierFromUrl() {
-      var path = window.location.pathname.replace(/\/$/, '');
-      var parts = path.split('/');
-      var idx = parts.indexOf('post');
-      if (idx === -1) idx = parts.indexOf('story');
+      var urlParams = new URLSearchParams(window.location.search);
+      var queryTarget = urlParams.get('slug') || urlParams.get('id') || urlParams.get('post');
+      if (queryTarget) return decodeURIComponent(queryTarget);
 
-      var target = null;
-      if (idx !== -1 && parts[idx + 1] && parts[idx + 1] !== 'index.html') {
-        target = decodeURIComponent(parts[idx + 1]);
-      } else {
-        var urlParams = new URLSearchParams(window.location.search);
-        target = urlParams.get('slug') || urlParams.get('id') || urlParams.get('post');
-      }
+      var path = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
+      var parts = path.split('/').filter(Boolean);
 
-      if (!target || target === 'stories' || target === 'category' || target === 'submit-story') {
-        window.location.href = getRootUrl('stories/');
+      var filtered = parts.filter(function(p){
+        return p !== 'public' && p !== 'conspodium-clone' && p !== 'post' && p !== 'story' && p !== 'index.html';
+      });
+
+      var target = filtered.length ? decodeURIComponent(filtered[filtered.length - 1]) : null;
+
+      if (!target || target === 'stories' || target === 'category' || target === 'submit-story' || target === 'about-us' || target === 'contact-us') {
         return 'we-are-the-world';
       }
       return target;
@@ -2200,40 +2199,59 @@ e-page-transition,
       loadRelatedPosts(p.category_id, p.id);
     }
 
-    // 1. Fetch Post Details with Fallback
+    // 0. Render static fallback immediately (0ms delay) so page never displays empty/loading state
+    var initialFallback = STATIC_POST_FALLBACKS[identifier] || STATIC_POST_FALLBACKS['we-are-the-world'];
+    if (initialFallback) {
+      renderPostDetails(initialFallback);
+    }
+
+    // 1. Fetch Post Details with Fallback for updates
     fetch(getRootUrl('api/posts.php?id=' + encodeURIComponent(identifier) + '&slug=' + encodeURIComponent(identifier)))
       .then(function(r){ return r.json(); })
       .then(function(res){
         if (res.success && res.post) {
           renderPostDetails(res.post);
-        } else {
-          var fb = STATIC_POST_FALLBACKS[identifier] || STATIC_POST_FALLBACKS['we-are-the-world'];
-          renderPostDetails(fb);
         }
       })
-      .catch(function(err){
-        console.warn('API fetch warning, using static fallback:', err);
-        var fb = STATIC_POST_FALLBACKS[identifier] || STATIC_POST_FALLBACKS['we-are-the-world'];
-        renderPostDetails(fb);
-      });
+      .catch(function(){});
 
     // 2. Fetch Related Posts for Sidebar
     function loadRelatedPosts(catId, currentId) {
+      var container = document.getElementById('sidebar-related-posts');
+      if (!container) return;
+
+      var fallbackKeys = Object.keys(STATIC_POST_FALLBACKS).filter(function(k){ return k !== identifier; });
+      var relHtml = '';
+      fallbackKeys.slice(0, 3).forEach(function(k){
+        var item = STATIC_POST_FALLBACKS[k];
+        var imgUrl = getAbsoluteImageUrl(item.featured_image);
+        var postUrl = getRootUrl('post/' + k + '/');
+        relHtml += `
+          <a href="${postUrl}" class="csp-rel-item">
+            <img src="${imgUrl}" alt="${item.title}" class="csp-rel-thumb" />
+            <div class="csp-rel-info">
+              <h4>${item.title}</h4>
+              <span class="csp-rel-meta">${item.category_name || 'Story'} • ${item.reading_time || '4 min'}</span>
+            </div>
+          </a>
+        `;
+      });
+      if (relHtml) container.innerHTML = relHtml;
+
       var query = catId ? 'category_id=' + catId + '&limit=4' : 'limit=4';
       fetch(getRootUrl('api/posts.php?' + query))
         .then(function(r){ return r.json(); })
         .then(function(res){
-          var container = document.getElementById('sidebar-related-posts');
-          if (!container || !res.posts) return;
+          if (!res.posts || !res.posts.length) return;
 
           var rels = res.posts.filter(function(item){ return item.id != currentId; });
           if (rels.length === 0) rels = res.posts;
 
-          var relHtml = '';
+          var liveHtml = '';
           rels.slice(0, 4).forEach(function(item){
             var imgUrl = item.featured_image ? getAbsoluteImageUrl(item.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
             var postUrl = getRootUrl('post/' + (item.slug || item.id) + '/');
-            relHtml += `
+            liveHtml += `
               <a href="${postUrl}" class="csp-rel-item">
                 <img src="${imgUrl}" alt="${item.title}" class="csp-rel-thumb" />
                 <div class="csp-rel-info">
@@ -2244,9 +2262,9 @@ e-page-transition,
             `;
           });
 
-          container.innerHTML = relHtml || '<div style="color:#94a3b8;font-size:0.85rem;">No related stories found.</div>';
+          if (liveHtml) container.innerHTML = liveHtml;
         })
-        .catch(function(err){ console.error('Error loading related posts:', err); });
+        .catch(function(){});
     }
 
     // 3. Comments Handling
