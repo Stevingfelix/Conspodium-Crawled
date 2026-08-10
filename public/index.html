@@ -1629,258 +1629,304 @@ e-page-transition,
 <!-- CSP_HERO_START -->
 <section id="csp-hero" aria-label="Featured content banner">
 <style>
-#csp-hero,#csp-hero *{box-sizing:border-box;margin:0;padding:0;}
-#csp-hero{position:relative;width:100%;height:100vh;min-height:620px;max-height:920px;overflow:hidden;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;}
-.csp-hero-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:120px 8% 120px 8% !important;opacity:0;transition:opacity 1.1s cubic-bezier(0.4,0,0.2,1);pointer-events:none;}
-.csp-hero-slide.active{opacity:1;pointer-events:auto;}
-@keyframes csp-kenburns{0%{transform:scale(1);}50%{transform:scale(1.12);}100%{transform:scale(1);}}
-.csp-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center center;transform:scale(1);transition:opacity 0.8s ease;}
-.csp-hero-slide.active .csp-hero-bg{animation:csp-kenburns 14s ease-in-out infinite alternate;}
-.csp-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,13,26,0.55) 0%,rgba(5,13,26,0.78) 45%,rgba(5,13,26,0.94) 100%);}
-.csp-hero-content{position:relative;z-index:2;max-width:760px;text-align:center;padding-bottom:16px;}
-.csp-hero-eyebrow{display:inline-flex;align-items:center;justify-content:center;text-align:center;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,rgba(0,174,254,0.35),rgba(183,31,113,0.25));border:1px solid rgba(0,174,254,0.5);border-radius:50px;padding:7px 28px !important;margin-bottom:28px !important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transform:translateY(24px);opacity:0;transition:transform 0.7s 0.2s ease,opacity 0.7s 0.2s ease;}
-.csp-hero-eyebrow-dot{display:none !important;}
-@keyframes csp-hero-blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
-.csp-hero-slide.active .csp-hero-eyebrow{transform:translateY(0);opacity:1;}
-.csp-hero-title{font-family:'Merriweather',Georgia,serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:400;line-height:1.18;color:#fff;margin-bottom:16px;transform:translateY(32px);opacity:0;transition:transform 0.75s 0.35s ease,opacity 0.75s 0.35s ease;}
-.csp-hero-slide.active .csp-hero-title{transform:translateY(0);opacity:1;}
-.csp-hero-title em{font-family:'Merienda',cursive,sans-serif !important;font-style:normal !important;font-weight:700 !important;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important;}
-.csp-hero-sub{font-size:clamp(0.92rem,1.8vw,1.1rem);color:rgba(255,255,255,0.85);line-height:1.68;margin-top:18px !important;margin-bottom:0 !important;max-width:620px;margin-left:auto;margin-right:auto;transform:translateY(28px);opacity:0;transition:transform 0.75s 0.5s ease,opacity 0.75s 0.5s ease;}
-.csp-hero-slide.active .csp-hero-sub{transform:translateY(0);opacity:1;}
-.csp-hero-btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:38px !important;margin-bottom:12px !important;padding-top:6px !important;transform:translateY(24px);opacity:0;transition:transform 0.75s 0.65s ease,opacity 0.75s 0.65s ease;}
-.csp-hero-slide.active .csp-hero-btns{transform:translateY(0);opacity:1;}
-.csp-hero-btn-primary{display:inline-flex !important;align-items:center !important;justify-content:center !important;gap:10px !important;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%) !important;color:#fff !important;text-decoration:none !important;font-weight:500 !important;font-family:'Merriweather',Georgia,serif !important;font-size:15px !important;line-height:1.2 !important;padding:16px 36px !important;border-radius:50px !important;min-width:180px !important;box-shadow:0 6px 28px rgba(0,174,254,0.35) !important;transition:transform 0.22s ease,box-shadow 0.22s ease,filter 0.22s ease !important;white-space:nowrap !important;}
-.csp-hero-btn-primary:hover{background:linear-gradient(110deg,#B71F71 0%,#00AEFE 100%) !important;transform:translateY(-3px) !important;box-shadow:0 10px 36px rgba(0,174,254,0.5) !important;filter:brightness(1.08) !important;}
-.csp-hero-btn-secondary{display:inline-flex !important;align-items:center !important;justify-content:center !important;gap:10px !important;background:rgba(255,255,255,0.08) !important;border:1.5px solid rgba(255,255,255,0.45) !important;color:#fff !important;text-decoration:none !important;font-weight:500 !important;font-family:'Merriweather',Georgia,serif !important;font-size:15px !important;line-height:1.2 !important;padding:15px 36px !important;border-radius:50px !important;min-width:180px !important;backdrop-filter:blur(8px) !important;-webkit-backdrop-filter:blur(8px) !important;transition:background 0.22s ease,border-color 0.22s ease,transform 0.22s ease !important;white-space:nowrap !important;}
-.csp-hero-btn-secondary:hover{background:rgba(255,255,255,0.18) !important;border-color:rgba(255,255,255,0.85) !important;transform:translateY(-2px) !important;}
-.csp-hero-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;transition:background 0.2s,border-color 0.2s,transform 0.2s,opacity 0.2s;backdrop-filter:blur(6px);}
-.csp-hero-arrow:hover{background:rgba(255,255,255,0.25);border-color:rgba(255,255,255,0.6);transform:translateY(-50%) scale(1.08);}
-#csp-hero-prev{left:28px;}#csp-hero-next{right:28px;}
-@media(max-width:767px){
-  #csp-hero{height:auto;min-height:650px;max-height:none;}
-  .csp-hero-slide{padding:140px 24px 110px 24px !important;}
-  .csp-hero-content{padding:0 8px 12px 8px !important;}
-  .csp-hero-arrow{width:36px;height:36px;background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.15);opacity:0.3;}
-  .csp-hero-arrow:hover,.csp-hero-arrow:active{opacity:0.85;background:rgba(0,0,0,0.5);}
-  #csp-hero-prev{left:8px;}#csp-hero-next{right:8px;}
-  .csp-hero-counter{display:none;}
-  .csp-hero-btns{margin-top:28px !important;margin-bottom:16px !important;flex-direction:column;align-items:center;gap:12px;}
-  .csp-hero-btn-primary,.csp-hero-btn-secondary{width:100%;max-width:260px;min-width:unset !important;}
+#csp-hero, #csp-hero * { box-sizing: border-box; margin: 0; padding: 0; }
+#csp-hero { position: relative; width: 100%; height: 100vh; min-height: 620px; max-height: 920px; overflow: hidden; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+.csp-hero-slide { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 120px 8% !important; opacity: 0; transition: opacity 1.1s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none; }
+.csp-hero-slide.active { opacity: 1; pointer-events: auto; }
+
+@keyframes csp-kenburns-zoom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
-.csp-hero-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:10px;align-items:center;}
-.csp-hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:pointer;transition:background 0.25s,width 0.25s;border:none;padding:0;}
-.csp-hero-dot.active{background:#00AEFE;width:24px;border-radius:4px;}
-.csp-hero-progress{position:absolute;bottom:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#00AEFE,#B71F71);transition:width 6s linear;z-index:11;}
-.csp-hero-counter{position:absolute;right:32px;bottom:30px;z-index:10;font-size:0.78rem;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:0.08em;}
+.csp-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center center; transform: scale(1); transition: opacity 0.8s ease; will-change: transform; }
+.csp-hero-slide.active .csp-hero-bg { animation: csp-kenburns-zoom 12s ease-in-out infinite alternate; }
+
+.csp-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,13,26,0.55) 0%, rgba(5,13,26,0.78) 45%, rgba(5,13,26,0.94) 100%); }
+.csp-hero-content { position: relative; z-index: 2; max-width: 760px; text-align: center; padding-bottom: 16px; }
+.csp-hero-eyebrow { display: inline-flex; align-items: center; justify-content: center; text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; background: linear-gradient(135deg, rgba(0,174,254,0.35), rgba(183,31,113,0.25)); border: 1px solid rgba(0,174,254,0.5); border-radius: 50px; padding: 7px 28px !important; margin-bottom: 28px !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transform: translateY(24px); opacity: 0; transition: transform 0.7s 0.2s ease, opacity 0.7s 0.2s ease; }
+.csp-hero-slide.active .csp-hero-eyebrow { transform: translateY(0); opacity: 1; }
+.csp-hero-title { font-family: 'Merriweather', Georgia, serif; font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 400; line-height: 1.18; color: #fff; margin-bottom: 16px; transform: translateY(32px); opacity: 0; transition: transform 0.75s 0.35s ease, opacity 0.75s 0.35s ease; }
+.csp-hero-slide.active .csp-hero-title { transform: translateY(0); opacity: 1; }
+.csp-hero-title em { font-family: 'Merienda', cursive, sans-serif !important; font-style: normal !important; font-weight: 700 !important; background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; }
+.csp-hero-sub { font-size: clamp(0.92rem, 1.8vw, 1.1rem); color: rgba(255,255,255,0.85); line-height: 1.68; margin-top: 18px !important; margin-bottom: 0 !important; max-width: 620px; margin-left: auto; margin-right: auto; transform: translateY(28px); opacity: 0; transition: transform 0.75s 0.5s ease, opacity 0.75s 0.5s ease; }
+.csp-hero-slide.active .csp-hero-sub { transform: translateY(0); opacity: 1; }
+.csp-hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 38px !important; margin-bottom: 12px !important; padding-top: 6px !important; transform: translateY(24px); opacity: 0; transition: transform 0.75s 0.65s ease, opacity 0.75s 0.65s ease; }
+.csp-hero-slide.active .csp-hero-btns { transform: translateY(0); opacity: 1; }
+.csp-hero-btn-primary { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 10px !important; background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important; color: #fff !important; text-decoration: none !important; font-weight: 500 !important; font-family: 'Merriweather', Georgia, serif !important; font-size: 15px !important; line-height: 1.2 !important; padding: 16px 36px !important; border-radius: 50px !important; min-width: 180px !important; box-shadow: 0 6px 28px rgba(0,174,254,0.35) !important; transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease !important; white-space: nowrap !important; }
+.csp-hero-btn-primary:hover { background: linear-gradient(110deg, #B71F71 0%, #00AEFE 100%) !important; transform: translateY(-3px) !important; box-shadow: 0 10px 36px rgba(0,174,254,0.5) !important; filter: brightness(1.08) !important; }
+.csp-hero-btn-secondary { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 10px !important; background: rgba(255,255,255,0.08) !important; border: 1.5px solid rgba(255,255,255,0.45) !important; color: #fff !important; text-decoration: none !important; font-weight: 500 !important; font-family: 'Merriweather', Georgia, serif !important; font-size: 15px !important; line-height: 1.2 !important; padding: 15px 36px !important; border-radius: 50px !important; min-width: 180px !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease !important; white-space: nowrap !important; }
+.csp-hero-btn-secondary:hover { background: rgba(255,255,255,0.18) !important; border-color: rgba(255,255,255,0.85) !important; transform: translateY(-2px) !important; }
+.csp-hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; transition: background 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s; backdrop-filter: blur(6px); }
+.csp-hero-arrow:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.6); transform: translateY(-50%) scale(1.08); }
+#csp-hero-prev { left: 28px; } #csp-hero-next { right: 28px; }
+@media(max-width:767px){
+  #csp-hero { height: auto; min-height: 650px; max-height: none; }
+  .csp-hero-slide { padding: 140px 24px 110px 24px !important; }
+  .csp-hero-content { padding: 0 8px 12px 8px !important; }
+  .csp-hero-arrow { width: 36px; height: 36px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.15); opacity: 0.3; }
+  .csp-hero-arrow:hover, .csp-hero-arrow:active { opacity: 0.85; background: rgba(0,0,0,0.5); }
+  #csp-hero-prev { left: 8px; } #csp-hero-next { right: 8px; }
+  .csp-hero-counter { display: none; }
+  .csp-hero-btns { margin-top: 28px !important; margin-bottom: 16px !important; flex-direction: column; align-items: center; gap: 12px; }
+  .csp-hero-btn-primary, .csp-hero-btn-secondary { width: 100%; max-width: 260px; min-width: unset !important; }
+}
+.csp-hero-dots { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; gap: 10px; align-items: center; }
+.csp-hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.35); cursor: pointer; transition: background 0.25s, width 0.25s, border-radius 0.25s; border: none; padding: 0; }
+.csp-hero-dot.active { background: #00AEFE; width: 28px; border-radius: 6px; }
+.csp-hero-progress { position: absolute; bottom: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #00AEFE, #B71F71); transition: width 5s linear; z-index: 11; }
+.csp-hero-counter { position: absolute; right: 32px; bottom: 30px; z-index: 10; font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; }
 </style>
 
-<div class="csp-hero-slide active" data-slide="0">
-  <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');background-position:top center;"></div>
-  <div class="csp-hero-overlay" style="background:linear-gradient(180deg,rgba(5,13,26,0.65) 0%,rgba(5,13,26,0.85) 40%,rgba(3,18,42,0.96) 100%);"></div>
-  <div class="csp-hero-content">
-    <div class="csp-hero-eyebrow">Join the Conversation</div>
-    <h1 class="csp-hero-title">Your Ideas Matter —<br><em>Share Your Story</em> With the World</h1>
-    <p class="csp-hero-sub">Conspodium publishes the stories that matter most to the global diaspora. Whether you're a scholar, activist, or community leader — your voice belongs here.</p>
-    <div class="csp-hero-btns">
-      <a href="/submit-story/" class="csp-hero-btn-primary">Submit Your Story <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a href="/stories/" class="csp-hero-btn-secondary">Explore Stories</a>
+<div id="csp-hero-slides-wrapper">
+  <div class="csp-hero-slide active" data-slide="0">
+    <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');background-position:top center;"></div>
+    <div class="csp-hero-overlay"></div>
+    <div class="csp-hero-content">
+      <div class="csp-hero-eyebrow">Join the Conversation</div>
+      <h1 class="csp-hero-title">Your Ideas Matter —<br><em>Share Your Story</em> With the World</h1>
+      <p class="csp-hero-sub">Conspodium publishes the stories that matter most to the global diaspora. Whether you're a scholar, activist, or community leader — your voice belongs here.</p>
+      <div class="csp-hero-btns">
+        <a href="/submit-story/" class="csp-hero-btn-primary">Submit Your Story <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="/stories/" class="csp-hero-btn-secondary">Explore Stories</a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="csp-hero-slide" data-slide="1">
-  <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg');"></div>
-  <div class="csp-hero-overlay"></div>
-  <div class="csp-hero-content">
-    <div class="csp-hero-eyebrow">This Week's Featured Essay</div>
-    <h1 class="csp-hero-title">The Digital Sovereignty Crisis:<br><em>Who Controls Africa's Data Future?</em></h1>
-    <p class="csp-hero-sub">A landmark investigation into how global tech giants are shaping African digital policy — and what diaspora leaders are doing to fight back.</p>
-    <div class="csp-hero-btns">
-      <a href="./post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/" class="csp-hero-btn-primary">Read More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a href="/stories/" class="csp-hero-btn-secondary">Explore All Essays</a>
+  <div class="csp-hero-slide" data-slide="1">
+    <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg');"></div>
+    <div class="csp-hero-overlay"></div>
+    <div class="csp-hero-content">
+      <div class="csp-hero-eyebrow">Featured Story</div>
+      <h1 class="csp-hero-title">Empowering Diaspora Communities<br>Through <em>Innovation &amp; Heritage</em></h1>
+      <p class="csp-hero-sub">Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.</p>
+      <div class="csp-hero-btns">
+        <a href="./post/empowering-diaspora-communities-through-innovation-heritage/" class="csp-hero-btn-primary">Read Story <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="/stories/" class="csp-hero-btn-secondary">Explore All Essays</a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="csp-hero-slide" data-slide="2">
-  <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/portrait-two-friends-holding-each-other-city-scaled.jpg');"></div>
-  <div class="csp-hero-overlay"></div>
-  <div class="csp-hero-content">
-    <div class="csp-hero-eyebrow">Coming Soon</div>
-    <h1 class="csp-hero-title">A New Perspective on<br><em>Global Leadership</em></h1>
-    <p class="csp-hero-sub">Prof. Amara Diallo of the London School of Economics shares his groundbreaking framework for African-led multilateral governance in the digital age.</p>
-    <div class="csp-hero-btns">
-      <a href="/contact-us/" class="csp-hero-btn-primary">Set Reminder <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
-      <a href="/about-us/" class="csp-hero-btn-secondary">Meet Our Scholars</a>
+  <div class="csp-hero-slide" data-slide="2">
+    <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg');"></div>
+    <div class="csp-hero-overlay"></div>
+    <div class="csp-hero-content">
+      <div class="csp-hero-eyebrow">Economic Horizons</div>
+      <h1 class="csp-hero-title">Africans in Diaspora Influencing<br><em>Global Economic Decisions</em></h1>
+      <p class="csp-hero-sub">How African diaspora founders, venture capitalists, and policy advisors are driving bilateral trade and technology investments in Africa.</p>
+      <div class="csp-hero-btns">
+        <a href="./post/africans-in-diaspora-influencing-global-economic-decisions/" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="/stories/" class="csp-hero-btn-secondary">Browse Innovation</a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="csp-hero-slide" data-slide="3">
-  <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/couple-using-technology-while-traveling-city-scaled.jpg');"></div>
-  <div class="csp-hero-overlay"></div>
-  <div class="csp-hero-content">
-    <div class="csp-hero-eyebrow">Exclusive Interview</div>
-    <h1 class="csp-hero-title">In Conversation with<br><em>Dr. Ngozi Eze</em></h1>
-    <p class="csp-hero-sub">"Biotechnology is the next frontier of African liberation. We must own our science, our data, and our story." — Dr. Ngozi Eze, MIT Media Lab.</p>
-    <div class="csp-hero-btns">
-      <a href="/stories/" class="csp-hero-btn-primary">Read Transcript <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a href="/stories/" class="csp-hero-btn-secondary">Watch Interview</a>
+  <div class="csp-hero-slide" data-slide="3">
+    <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg');"></div>
+    <div class="csp-hero-overlay"></div>
+    <div class="csp-hero-content">
+      <div class="csp-hero-eyebrow">Art &amp; Identity</div>
+      <h1 class="csp-hero-title">Creatives Are Shaping &amp;<br><em>Representing Global Culture</em></h1>
+      <p class="csp-hero-sub">From visual arts exhibitions in San Francisco to Afrobeats on global stages, African artists are redefining modern creative expression.</p>
+      <div class="csp-hero-btns">
+        <a href="./post/creatives-shaping-representing-global-african-culture/" class="csp-hero-btn-primary">Read Essay <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="/stories/" class="csp-hero-btn-secondary">View Gallery</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="csp-hero-slide" data-slide="4">
+    <div class="csp-hero-bg" style="background-image:url('./wp-content/uploads/2026/01/location-1-300x210.webp');"></div>
+    <div class="csp-hero-overlay"></div>
+    <div class="csp-hero-content">
+      <div class="csp-hero-eyebrow">Innovation &amp; Tech</div>
+      <h1 class="csp-hero-title">Profiles of Groundbreaking Tech<br><em>Entrepreneurs From Diaspora</em></h1>
+      <p class="csp-hero-sub">By bringing unique cross-cultural perspectives, tech founders from the African diaspora are building scalable platforms addressing global challenges.</p>
+      <div class="csp-hero-btns">
+        <a href="./post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="/stories/" class="csp-hero-btn-secondary">Tech Leaders</a>
+      </div>
     </div>
   </div>
 </div>
 
 <button id="csp-hero-prev" class="csp-hero-arrow" aria-label="Previous slide"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <button id="csp-hero-next" class="csp-hero-arrow" aria-label="Next slide"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-<div class="csp-hero-dots" id="csp-hero-dots">
-  <button class="csp-hero-dot active" data-to="0" aria-label="Slide 1"></button>
-  <button class="csp-hero-dot" data-to="1" aria-label="Slide 2"></button>
-  <button class="csp-hero-dot" data-to="2" aria-label="Slide 3"></button>
-  <button class="csp-hero-dot" data-to="3" aria-label="Slide 4"></button>
-</div>
-<div class="csp-hero-counter"><span id="csp-hero-cur">01</span> / <span id="csp-hero-tot">04</span></div>
+<div class="csp-hero-dots" id="csp-hero-dots"></div>
+<div class="csp-hero-counter"><span id="csp-hero-cur">01</span> / <span id="csp-hero-tot">05</span></div>
 <div class="csp-hero-progress" id="csp-hero-progress"></div>
+
 <script>
 (function(){
-  var D = 6000, c = 0, t = null;
-  var heroContainer = document.getElementById('csp-hero');
+  var DURATION = 5000;
+  var currentIndex = 0;
+  var timer = null;
+
+  var heroSection = document.getElementById('csp-hero');
   var dotsContainer = document.getElementById('csp-hero-dots');
   var counterTot = document.getElementById('csp-hero-tot');
   var counterCur = document.getElementById('csp-hero-cur');
   var progress = document.getElementById('csp-hero-progress');
+  var prevBtn = document.getElementById('csp-hero-prev');
+  var nextBtn = document.getElementById('csp-hero-next');
 
   function pad(x){ return x < 10 ? '0' + x : '' + x; }
 
   function initSlider() {
     var slides = document.querySelectorAll('.csp-hero-slide');
-    var n = slides.length;
-    if (n === 0) return;
+    var total = slides.length;
+    if (total === 0) return;
 
-    if (counterTot) counterTot.textContent = pad(n);
+    if (counterTot) counterTot.textContent = pad(total);
 
+    // Build pagination dots
     if (dotsContainer) {
       dotsContainer.innerHTML = '';
-      for (var i = 0; i < n; i++) {
+      for (var i = 0; i < total; i++) {
         var dot = document.createElement('button');
-        dot.className = 'csp-hero-dot' + (i === c ? ' active' : '');
+        dot.className = 'csp-hero-dot' + (i === currentIndex ? ' active' : '');
         dot.dataset.to = i;
         dot.setAttribute('aria-label', 'Slide ' + (i + 1));
         dotsContainer.appendChild(dot);
       }
     }
 
-    function go(i) {
+    function goToSlide(targetIdx) {
       var allSlides = document.querySelectorAll('.csp-hero-slide');
       var allDots = document.querySelectorAll('.csp-hero-dot');
-      var total = allSlides.length;
-      if (total === 0) return;
+      var slideCount = allSlides.length;
+      if (slideCount === 0) return;
 
       allSlides.forEach(function(s){ s.classList.remove('active'); });
       allDots.forEach(function(d){ d.classList.remove('active'); });
 
-      c = (i + total) % total;
+      currentIndex = (targetIdx + slideCount) % slideCount;
 
-      if (allSlides[c]) allSlides[c].classList.add('active');
-      if (allDots[c]) allDots[c].classList.add('active');
-      if (counterCur) counterCur.textContent = pad(c + 1);
+      if (allSlides[currentIndex]) allSlides[currentIndex].classList.add('active');
+      if (allDots[currentIndex]) allDots[currentIndex].classList.add('active');
+      if (counterCur) counterCur.textContent = pad(currentIndex + 1);
 
-      runProgress();
+      animateProgressBar();
     }
 
-    function runProgress() {
-      if (progress) {
-        progress.style.transition = 'none';
-        progress.style.width = '0%';
+    function animateProgressBar() {
+      if (!progress) return;
+      progress.style.transition = 'none';
+      progress.style.width = '0%';
+      requestAnimationFrame(function(){
         requestAnimationFrame(function(){
-          requestAnimationFrame(function(){
-            progress.style.transition = 'width ' + D + 'ms linear';
-            progress.style.width = '100%';
-          });
+          progress.style.transition = 'width ' + DURATION + 'ms linear';
+          progress.style.width = '100%';
         });
+      });
+    }
+
+    function startAutoScroll() {
+      stopAutoScroll();
+      timer = setInterval(function(){
+        goToSlide(currentIndex + 1);
+      }, DURATION);
+    }
+
+    function stopAutoScroll() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
       }
     }
 
-    function startTimer() {
-      if (t) clearInterval(t);
-      t = setInterval(function(){
-        go(c + 1);
-      }, D);
-    }
-
+    // Dot navigation
     if (dotsContainer) {
       dotsContainer.onclick = function(e) {
-        var btn = e.target.closest('.csp-hero-dot');
-        if (btn && btn.dataset.to !== undefined) {
-          go(parseInt(btn.dataset.to, 10));
-          startTimer();
+        var dot = e.target.closest('.csp-hero-dot');
+        if (dot && dot.dataset.to !== undefined) {
+          goToSlide(parseInt(dot.dataset.to, 10));
+          startAutoScroll();
         }
       };
     }
 
-    var pv = document.getElementById('csp-hero-prev');
-    var nx = document.getElementById('csp-hero-next');
-    if (pv) pv.onclick = function(){ go(c - 1); startTimer(); };
-    if (nx) nx.onclick = function(){ go(c + 1); startTimer(); };
+    // Arrow navigation
+    if (prevBtn) prevBtn.onclick = function(){ goToSlide(currentIndex - 1); startAutoScroll(); };
+    if (nextBtn) nextBtn.onclick = function(){ goToSlide(currentIndex + 1); startAutoScroll(); };
 
-    var h = document.getElementById('csp-hero');
-    var tx = null;
-    if (h) {
-      h.addEventListener('touchstart', function(ev){ tx = ev.touches[0].clientX; }, {passive:true});
-      h.addEventListener('touchend', function(ev){
-        if (tx === null) return;
-        var dx = ev.changedTouches[0].clientX - tx;
-        if (Math.abs(dx) > 50) {
-          go(dx < 0 ? c + 1 : c - 1);
-          startTimer();
+    // Pause auto-scroll on hover so users can read comfortably
+    if (heroSection) {
+      heroSection.addEventListener('mouseenter', stopAutoScroll);
+      heroSection.addEventListener('mouseleave', startAutoScroll);
+    }
+
+    // Touch swipe support
+    var touchStartX = null;
+    if (heroSection) {
+      heroSection.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
+      heroSection.addEventListener('touchend', function(e){
+        if (touchStartX === null) return;
+        var diffX = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(diffX) > 40) {
+          goToSlide(diffX < 0 ? currentIndex + 1 : currentIndex - 1);
+          startAutoScroll();
         }
-        tx = null;
+        touchStartX = null;
       }, {passive:true});
     }
 
-    runProgress();
-    startTimer();
+    // Start initial slide & timer
+    goToSlide(0);
+    startAutoScroll();
   }
 
-  function loadFeaturedHeroArticles() {
-    fetch(getRootUrl('api/posts.php?featured=1'))
+  // Optional: Fetch live CMS posts to update slider titles dynamically if posts exist
+  function fetchCMSPostsAndUpdate() {
+    var endpoint = window.getRootUrl ? window.getRootUrl('api/posts.php?limit=5') : 'api/posts.php?limit=5';
+    fetch(endpoint)
       .then(function(r){ return r.json(); })
       .then(function(res){
         if (res.success && res.posts && res.posts.length > 0) {
-          document.querySelectorAll('.csp-hero-slide-dynamic').forEach(function(el){ el.remove(); });
+          var wrapper = document.getElementById('csp-hero-slides-wrapper');
+          if (!wrapper) return;
 
-          res.posts.forEach(function(post, index){
-            var imgUrl = getAbsoluteImageUrl(post.featured_image);
-            var slideDiv = document.createElement('div');
-            slideDiv.className = 'csp-hero-slide csp-hero-slide-dynamic';
-            slideDiv.dataset.slide = index + 4;
+          var slidesHtml = '';
+          res.posts.forEach(function(post, idx){
+            var img = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(post.featured_image) : post.featured_image;
+            var eyebrow = post.eyebrow || post.category_name || 'Featured Story';
+            var slug = post.slug || post.id;
+            var link = (window.getRootUrl ? window.getRootUrl('post/' + slug + '/') : './post/' + slug + '/');
+            var titleParts = post.title.split(' ');
+            var formattedTitle = post.title;
+            if (titleParts.length > 3) {
+              var emWord = titleParts.slice(-2).join(' ');
+              var firstWords = titleParts.slice(0, -2).join(' ');
+              formattedTitle = firstWords + ' <em>' + emWord + '</em>';
+            }
 
-            var eyebrowText = post.eyebrow || post.category_name || 'Featured Article';
-
-            slideDiv.innerHTML =
-              '<div class="csp-hero-bg" style="background-image:url(\'' + imgUrl + '\');"></div>' +
-              '<div class="csp-hero-overlay"></div>' +
-              '<div class="csp-hero-content">' +
-                '<div class="csp-hero-eyebrow">⭐ ' + eyebrowText + '</div>' +
-                '<h1 class="csp-hero-title">' + post.title + '</h1>' +
-                '<p class="csp-hero-sub">' + (post.excerpt || '') + '</p>' +
-                '<div class="csp-hero-btns">' +
-                  '<a href="/post/" + (post.slug || post.id) + '/" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
-                  '<a href="/stories/" class="csp-hero-btn-secondary">Explore All Stories</a>' +
-                '</div>' +
-              '</div>';
-
-            if (heroContainer) heroContainer.appendChild(slideDiv);
+            slidesHtml += `
+              <div class="csp-hero-slide ${idx === 0 ? 'active' : ''}" data-slide="${idx}">
+                <div class="csp-hero-bg" style="background-image:url('${img}');"></div>
+                <div class="csp-hero-overlay"></div>
+                <div class="csp-hero-content">
+                  <div class="csp-hero-eyebrow">⭐ ${eyebrow}</div>
+                  <h1 class="csp-hero-title">${formattedTitle}</h1>
+                  <p class="csp-hero-sub">${post.excerpt || ''}</p>
+                  <div class="csp-hero-btns">
+                    <a href="${link}" class="csp-hero-btn-primary">Read Story <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    <a href="${window.getRootUrl ? window.getRootUrl('stories/') : './stories/'}" class="csp-hero-btn-secondary">Explore All Stories</a>
+                  </div>
+                </div>
+              </div>
+            `;
           });
+
+          wrapper.innerHTML = slidesHtml;
         }
         initSlider();
       })
-      .catch(function(err){
-        console.error('Error fetching featured hero articles:', err);
+      .catch(function(){
         initSlider();
       });
   }
 
-  loadFeaturedHeroArticles();
+  fetchCMSPostsAndUpdate();
 })();
 </script>
 <style id="csp-hide-old-hero">
