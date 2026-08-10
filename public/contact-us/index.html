@@ -482,10 +482,9 @@ html, body {
 
 /* ── HEADER NORMAL STATE: 100% TRANSPARENT (NO BACKGROUND COLOR, NO BLUR) ─────── */
 .elementor-location-header:not(.is-sticky),
-.elementor-location-header:not(.is-sticky) *,
 .she-header:not(.is-sticky),
-.she-header:not(.is-sticky) *,
-.elementor-location-header .elementor-element-2d9e131:not(.is-sticky) {
+.elementor-location-header .elementor-element-2d9e131:not(.is-sticky),
+.elementor-location-header .elementor-container:not(.is-sticky) {
   background: transparent !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
@@ -508,6 +507,45 @@ html, body {
   padding-left: 0 !important;
   padding-right: 0 !important;
   transition: transform 0.3s ease, background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+/* ── HEADER CTA BUTTON ("Submit Story"): BEAUTIFUL GRADIENT BUTTON ─────────── */
+.elementor-element-36265fd .elementor-button,
+a.elementor-button[href*="submit-story"],
+.elementor-location-header a.elementor-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  color: #ffffff !important;
+  font-family: 'Merriweather', Georgia, serif !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  padding: 12px 26px !important;
+  border-radius: 50px !important;
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(0, 174, 254, 0.35) !important;
+  text-decoration: none !important;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease !important;
+}
+
+.elementor-element-36265fd .elementor-button:hover,
+a.elementor-button[href*="submit-story"]:hover,
+.elementor-location-header a.elementor-button:hover {
+  background: linear-gradient(110deg, #B71F71 0%, #00AEFE 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0, 174, 254, 0.5) !important;
+  filter: brightness(1.08) !important;
+  color: #ffffff !important;
+}
+
+.elementor-element-36265fd .elementor-button *,
+a.elementor-button[href*="submit-story"] *,
+.elementor-location-header a.elementor-button * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
 }
 
 /* On Homepage only, header overlays top hero banner */
