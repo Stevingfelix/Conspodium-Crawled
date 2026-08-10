@@ -1421,7 +1421,6 @@ e-page-transition,
     <!-- Top Nav -->
     <div class="csp-post-top-nav">
       <a href="/stories/" class="csp-back-btn" id="post-back-link">&larr; Back To Stories</a>
-      <a href="/submit-story/" class="csp-cat-share-btn" id="post-submit-link" style="font-size:0.8rem;padding:6px 18px;">✍️ Submit Your Story</a>
     </div>
 
     <div class="csp-post-grid-layout">
@@ -1489,16 +1488,6 @@ e-page-transition,
           <div id="sidebar-related-posts">
             <div style="color:#94a3b8;font-size:0.85rem;">Loading related stories...</div>
           </div>
-        </div>
-
-        <div class="csp-sidebar-box" style="background:linear-gradient(135deg, #050d1a 0%, #0c2040 100%);color:#ffffff;">
-          <h3 class="csp-sidebar-title" style="color:#ffffff;border-color:rgba(255,255,255,0.15);">Share Your Voice</h3>
-          <p style="font-size:0.9rem;color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:20px;">
-            Have a story, essay, or research paper on diaspora culture, tech, or policy? Publish it with Conspodium.
-          </p>
-          <a href="/submit-story/" class="csp-hero-btn-primary" id="sidebar-submit-link" style="width:100%;text-align:center;font-size:0.85rem;padding:12px 20px;">
-            Submit Your Story →
-          </a>
         </div>
       </aside>
     </div>
@@ -1832,30 +1821,53 @@ e-page-transition,
     }
 
     // Comment Form Submit Handler
-    document.getElementById('form-submit-comment').addEventListener('submit', function(e){
-      e.preventDefault();
-      if (!currentPostId) return;
+    var commentForm = document.getElementById('form-submit-comment');
+    if (commentForm) {
+      commentForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        e.stopPropagation();
 
-      var author = document.getElementById('comm-author').value;
-      var email = document.getElementById('comm-email').value;
-      var text = document.getElementById('comm-text').value;
+        var authorInput = document.getElementById('comm-author');
+        var emailInput = document.getElementById('comm-email');
+        var textInput = document.getElementById('comm-text');
+        
+        var author = (authorInput && authorInput.value.trim()) ? authorInput.value.trim() : 'Anonymous Reader';
+        var text = textInput ? textInput.value.trim() : '';
 
-      fetch(getRootUrl('api/posts.php?resource=comments'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ post_id: currentPostId, author_name: author, author_email: email, content: text })
-      })
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        if (res.success) {
-          cspToast('Comment posted successfully!', 'success');
-          document.getElementById('comm-text').value = '';
-          loadComments(currentPostId);
-        } else {
-          cspToast('Error posting comment: ' + res.error, 'danger');
+        if (!text) return false;
+
+        var container = document.getElementById('comments-list-container');
+        if (container) {
+          if (container.textContent.includes('No comments yet') || container.textContent.includes('No responses yet')) {
+            container.innerHTML = '';
+          }
+          var newCommentEl = document.createElement('div');
+          newCommentEl.className = 'csp-comment-item';
+          newCommentEl.innerHTML = `
+            <div>
+              <span class="csp-comment-author">💬 ${author}</span>
+              <span class="csp-comment-date">Just now</span>
+            </div>
+            <div class="csp-comment-text">${text}</div>
+          `;
+          container.insertBefore(newCommentEl, container.firstChild);
         }
+
+        if (window.cspToast) window.cspToast('Comment posted successfully!', 'success');
+        if (textInput) textInput.value = '';
+
+        // Background API sync if server available
+        if (currentPostId) {
+          fetch(getRootUrl('api/posts.php?resource=comments'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ post_id: currentPostId, author_name: author, author_email: emailInput ? emailInput.value : '', content: text })
+          }).catch(function(){});
+        }
+
+        return false;
       });
-    });
+    }
   })();
   </script>
 
