@@ -1850,12 +1850,12 @@ e-page-transition,
         <div class="csp-share-sec">
           <div class="csp-share-title">Loved This Story? Share &amp; Listen</div>
           <div class="csp-share-btns">
-            <button id="post-audio-btn" class="csp-share-btn" style="background:linear-gradient(135deg,#00AEFE,#B71F71);cursor:pointer;border:none;"><i class="fas fa-headphones"></i> Listen (Audio)</button>
-            <a href="#" class="csp-share-btn csp-share-fb" id="share-fb" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
-            <a href="#" class="csp-share-btn csp-share-tw" id="share-tw" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
-            <a href="#" class="csp-share-btn csp-share-li" id="share-li" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-            <a href="#" class="csp-share-btn csp-share-wa" id="share-wa" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-            <button id="share-copy-btn" class="csp-share-btn" style="background:#475569;cursor:pointer;border:none;"><i class="fas fa-link"></i> Copy Link</button>
+            <button id="post-audio-btn" class="csp-share-btn" style="background:linear-gradient(135deg,#00AEFE,#B71F71);cursor:pointer;border:none;" onclick="if(window.playArticleAudio){ var t=document.getElementById('post-title')?document.getElementById('post-title').textContent:'Story'; var c=document.getElementById('post-content-body')?document.getElementById('post-content-body').textContent:''; window.playArticleAudio(t, c); }"><i class="fas fa-headphones"></i> Listen (Audio)</button>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fconspodium.com%2Fempowering-diaspora-communities-through-innovation-heritage%2F" class="csp-share-btn csp-share-fb" id="share-fb" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fconspodium.com%2Fempowering-diaspora-communities-through-innovation-heritage%2F&text=Empowering%20Diaspora%20Communities%20Through%20Innovation%20%26%20Heritage" class="csp-share-btn csp-share-tw" id="share-tw" target="_blank" rel="noopener"><i class="fab fa-twitter"></i> Twitter</a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fconspodium.com%2Fempowering-diaspora-communities-through-innovation-heritage%2F&title=Empowering%20Diaspora%20Communities%20Through%20Innovation%20%26%20Heritage" class="csp-share-btn csp-share-li" id="share-li" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+            <a href="https://api.whatsapp.com/send?text=Empowering%20Diaspora%20Communities%20Through%20Innovation%20%26%20Heritage%20https%3A%2F%2Fconspodium.com%2Fempowering-diaspora-communities-through-innovation-heritage%2F" class="csp-share-btn csp-share-wa" id="share-wa" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <button id="share-copy-btn" class="csp-share-btn" style="background:#475569;cursor:pointer;border:none;" onclick="navigator.clipboard.writeText(window.location.href); if(window.cspToast) window.cspToast('Article link copied to clipboard!', 'success');"><i class="fas fa-link"></i> Copy Link</button>
           </div>
         </div>
 
@@ -1864,7 +1864,7 @@ e-page-transition,
           <h3 class="csp-comments-title">Discussion &amp; Responses</h3>
           
           <!-- Comment Submission Form -->
-          <form id="form-submit-comment" class="csp-comment-form">
+          <form id="form-submit-comment" class="csp-comment-form" onsubmit="return window.handleCommentSubmit(event);">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
               <input type="text" id="comm-author" class="csp-input-field" placeholder="Your Name *" required>
               <input type="email" id="comm-email" class="csp-input-field" placeholder="Your Email *" required>
@@ -1989,376 +1989,91 @@ e-page-transition,
 
   <!-- SINGLE POST CONTROLLER SCRIPT -->
   <script>
-  (function(){
-    var currentPostId = null;
-
-    // Helper: Extract post slug or ID from URL path (e.g. /post/we-are-the-world/ or /post/12/)
-    function getPostIdentifierFromUrl() {
-      var urlParams = new URLSearchParams(window.location.search);
-      var queryTarget = urlParams.get('slug') || urlParams.get('id') || urlParams.get('post');
-      if (queryTarget) return decodeURIComponent(queryTarget);
-
-      var path = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
-      var parts = path.split('/').filter(Boolean);
-
-      var filtered = parts.filter(function(p){
-        return p !== 'public' && p !== 'conspodium-clone' && p !== 'post' && p !== 'story' && p !== 'index.html';
-      });
-
-      var target = filtered.length ? decodeURIComponent(filtered[filtered.length - 1]) : null;
-
-      if (!target || target === 'stories' || target === 'category' || target === 'submit-story' || target === 'about-us' || target === 'contact-us') {
-        return 'we-are-the-world';
-      }
-      return target;
+  // Global Comment Submit Handler (Guarantees zero-reload and localStorage saving)
+  window.handleCommentSubmit = function(e) {
+    if (e) {
+      e.preventDefault();
+      if (e.stopPropagation) e.stopPropagation();
     }
 
-    var identifier = getPostIdentifierFromUrl();
+    var authorInput = document.getElementById('comm-author');
+    var emailInput = document.getElementById('comm-email');
+    var textInput = document.getElementById('comm-text');
 
-    // Dynamically set absolute routes for top buttons
-    var backBtn = document.getElementById('post-back-link');
-    if (backBtn) backBtn.href = getRootUrl('stories/');
-    var submitBtn = document.getElementById('post-submit-link');
-    if (submitBtn) submitBtn.href = getRootUrl('submit-story/');
+    var author = (authorInput && authorInput.value.trim()) ? authorInput.value.trim() : 'Anonymous Reader';
+    var text = textInput ? textInput.value.trim() : '';
 
-    var STATIC_POST_FALLBACKS = {
-      'empowering-diaspora-communities-through-innovation-heritage': {
-        id: 1,
-        title: 'Empowering Diaspora Communities Through Innovation & Heritage',
-        author_name: 'Steving Felix',
-        published_at: '2026-08-01',
-        reading_time: '6 min read',
-        views: 1420,
-        category_name: 'Culture & Heritage',
-        category_icon: '🏛️',
-        category_slug: 'culture-heritage',
-        featured_image: '../wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg',
-        excerpt: 'Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.',
-        content: `
-          <p>Across Africa and its global diaspora, leaders in technology, finance, and arts are building bridges for sustainable economic growth and cultural exchange.</p>
-          <p>Through diaspora summits, bilateral investment funds, and cross-border tech incubator networks, pan-African innovators are turning shared history into actionable global impact.</p>
-        `
-      },
-      'africans-in-diaspora-influencing-global-economic-decisions': {
-        id: 2,
-        title: 'Africans in Diaspora Influencing Global Economic Decisions',
-        author_name: 'Prof. Amara Diallo',
-        published_at: '2026-08-03',
-        reading_time: '6 min read',
-        views: 980,
-        category_name: 'Innovation',
-        category_icon: '💡',
-        category_slug: 'innovation',
-        featured_image: '../wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg',
-        excerpt: 'How African diaspora founders, venture capitalists, and policy advisors are driving bilateral trade and technology investments in Africa.',
-        content: `
-          <p>Global financial hubs are seeing an uptick in diaspora-led venture funds aimed at fueling sub-Saharan infrastructure, renewable energy, and fintech ecosystems.</p>
-          <p>This new generation of investors prioritizes both high growth and measurable social impact across the African continent.</p>
-        `
-      },
-      'creatives-shaping-representing-global-african-culture': {
-        id: 3,
-        title: 'Creatives Are Shaping & Representing Global African Culture',
-        author_name: 'Dr. Ngozi Eze',
-        published_at: '2026-08-05',
-        reading_time: '10 min read',
-        views: 1150,
-        category_name: 'Art & Entertainment',
-        category_icon: '🎨',
-        category_slug: 'art-entertainment',
-        featured_image: '../wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg',
-        excerpt: 'From visual arts exhibitions in San Francisco to Afrobeats on global stages, African artists are redefining modern creative expression.',
-        content: `
-          <p>Contemporary African artists and filmmakers are captivating international audiences while staying deeply rooted in authentic storytelling and cultural heritage.</p>
-          <p>Major museum retrospectives and independent cinema showcases are ensuring that African stories are told on the world's biggest stages by African voices.</p>
-        `
-      },
-      'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2': {
-        id: 4,
-        title: 'From mutual aid networks to cultural organizations, discover how diaspora communities create support systems that span the globe.',
-        author_name: 'Conspodium Editorial',
-        published_at: '2026-02-05',
-        reading_time: '5 min read',
-        views: 650,
-        category_name: 'Success Stories',
-        category_icon: '🌟',
-        category_slug: 'success-stories',
-        featured_image: '../wp-content/uploads/2026/01/AF3-1-png-300x171.jpg',
-        excerpt: 'When my family arrived in Minneapolis from Somalia in the early 1990s, we didn\'t just find a new home—we found an informal safety net built by those who came before us.',
-        content: `
-          <p>When my family arrived in Minneapolis from Somalia in the early 1990s, we didn't just find a new home—we found an informal safety net built by those who came before us. From revolving savings associations to heritage weekend schools, diaspora communities create resilience across generations.</p>
-          <p>Today, digital tools are amplifying these traditional support systems, allowing diaspora networks to mobilize emergency funds, mentor young professionals, and invest in continental initiatives seamlessly.</p>
-        `
-      },
-      'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora': {
-        id: 5,
-        title: 'Profiles of Groundbreaking Tech Entrepreneurs From Diaspora',
-        author_name: 'Conspodium Tech',
-        published_at: '2026-02-05',
-        reading_time: '6 min read',
-        views: 1420,
-        category_name: 'Innovation',
-        category_icon: '💡',
-        category_slug: 'innovation',
-        featured_image: '../wp-content/uploads/2026/01/location-1-300x210.webp',
-        excerpt: 'The story of Silicon Valley cannot be told without highlighting the incredible impact of diaspora founders and tech innovators driving global change.',
-        content: `
-          <p>The story of Silicon Valley cannot be told without highlighting the incredible impact of diaspora founders and tech innovators driving global change. Building scalable fintech, logistics, and healthcare solutions, these visionary entrepreneurs bridge global tech capital with African market dynamics.</p>
-          <p>By cultivating bi-directional venture pipelines, diaspora founders are accelerating digital transformation across both Western ecosystems and the African continent.</p>
-        `
-      },
-      'we-are-the-world': {
-        id: 6,
-        title: 'We Are The World',
-        author_name: 'Amara Okonkwo',
-        published_at: '2026-02-04',
-        reading_time: '8 min read',
-        views: 2100,
-        category_name: 'Community',
-        category_icon: '👥',
-        category_slug: 'community',
-        featured_image: '../wp-content/uploads/2026/02/tourist-carrying-luggage-300x150.jpg',
-        excerpt: 'By Amara Okonkwo, Cultural Anthropologist. The first time I experienced global unity across diaspora cultures was during the pan-African cultural festival.',
-        content: `
-          <p>By Amara Okonkwo, Cultural Anthropologist. The first time I experienced global unity across diaspora cultures was during the pan-African cultural festival. Across language barriers and geographical distance, shared heritage binds diverse diaspora communities together.</p>
-          <p>Exploring themes of identity, movement, and belonging, this landmark series documents the personal and collective journeys of global Africans across four continents.</p>
-        `
-      },
-      'conspodium-is-all-about-community': {
-        id: 7,
-        title: 'Visionary Entrepreneurs Leveraging Their Dual Cultural Knowledge',
-        author_name: 'Conspodium Editorial',
-        published_at: '2026-02-04',
-        reading_time: '5 min read',
-        views: 834,
-        category_name: 'Community',
-        category_icon: '👥',
-        category_slug: 'community',
-        featured_image: '../wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-300x200.jpg',
-        excerpt: 'When I founded my first company at 24, connecting African artisans with European fashion houses, I realized our dual heritage is our greatest superpower.',
-        content: `
-          <p>When I founded my first company at 24, connecting African artisans with European fashion houses, I realized our dual heritage is our greatest superpower. Bicultural entrepreneurs navigate international markets with nuance, leveraging deep cultural empathy to build sustainable global brands.</p>
-          <p>By celebrating authentic craftsmanship and ethical trade practices, these leaders are redefining luxury and creative commerce on a global scale.</p>
-        `
-      }
+    if (!text) return false;
+
+    var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
+    var savedComments = [];
+    try { savedComments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
+
+    var newComment = {
+      author: author,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      text: text
     };
 
-    function renderPostDetails(p) {
-      if (!p) return;
-      currentPostId = p.id || 'static';
+    savedComments.unshift(newComment);
+    try { localStorage.setItem(pageKey, JSON.stringify(savedComments)); } catch(err){}
 
-      // Meta & Title
-      document.title = p.title + ' — Conspodium';
-      document.getElementById('post-title').textContent = p.title;
-      document.getElementById('post-author').textContent = p.author_name || 'Conspodium Editorial';
-      document.getElementById('post-date').textContent = p.published_at ? p.published_at.slice(0,10) : 'Recent';
-      document.getElementById('post-reading-time').textContent = p.reading_time || '5 min read';
-      document.getElementById('post-views').textContent = (p.views || 1) + ' views';
+    if (window.renderCommentsStream) window.renderCommentsStream();
 
-      // Category Badge
-      var catBadge = document.getElementById('post-category-badge');
-      if (catBadge) {
-        catBadge.textContent = (p.category_icon || '🏷️') + ' ' + (p.category_name || 'General');
-        if (p.category_slug) {
-          catBadge.href = getRootUrl('category/' + p.category_slug + '/');
-        }
-      }
+    if (window.cspToast) window.cspToast('Comment posted successfully!', 'success');
+    if (textInput) textInput.value = '';
 
-      // Hero Image
-      var heroImg = document.getElementById('post-hero-image');
-      if (p.featured_image) {
-        heroImg.src = getAbsoluteImageUrl(p.featured_image);
-        heroImg.style.display = 'block';
-      } else {
-        heroImg.style.display = 'none';
-      }
+    return false;
+  };
 
-      // Excerpt
-      var excBox = document.getElementById('post-excerpt-box');
-      if (p.excerpt) {
-        excBox.textContent = p.excerpt;
-        excBox.style.display = 'block';
-      } else {
-        excBox.style.display = 'none';
-      }
+  window.renderCommentsStream = function() {
+    var container = document.getElementById('comments-list-container');
+    if (!container) return;
 
-      // Content
-      document.getElementById('post-content-body').innerHTML = p.content || p.excerpt || 'No content provided for this article.';
+    var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
+    var savedComments = [];
+    try { savedComments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
 
-      // Update Social Share Links & Actions
-      var postUrl = encodeURIComponent(window.location.href);
-      var postTitle = encodeURIComponent(p.title);
-      document.getElementById('share-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + postUrl;
-      document.getElementById('share-tw').href = 'https://twitter.com/intent/tweet?url=' + postUrl + '&text=' + postTitle;
-      document.getElementById('share-li').href = 'https://www.linkedin.com/shareArticle?mini=true&url=' + postUrl + '&title=' + postTitle;
-      document.getElementById('share-wa').href = 'https://api.whatsapp.com/send?text=' + postTitle + '%20' + postUrl;
-
-      var postAudioBtn = document.getElementById('post-audio-btn');
-      if (postAudioBtn) {
-        postAudioBtn.onclick = function(){
-          if (window.playArticleAudio) window.playArticleAudio(p.title, p.excerpt || p.content);
-        };
-      }
-      var copyBtn = document.getElementById('share-copy-btn');
-      if (copyBtn) {
-        copyBtn.onclick = function(){
-          navigator.clipboard.writeText(window.location.href).then(function(){
-            if (window.cspToast) window.cspToast('Article link copied to clipboard!', 'success');
-          });
-        };
-      }
-
-      // Load Comments & Related Posts
-      if (p.id) loadComments(p.id);
-      loadRelatedPosts(p.category_id, p.id);
+    if (savedComments.length === 0) {
+      container.innerHTML = '<div style="color:#94a3b8;font-size:0.9rem;">No comments yet. Be the first to join the conversation!</div>';
+      return;
     }
 
-    // 0. Render static fallback immediately (0ms delay) so page never displays empty/loading state
-    var initialFallback = STATIC_POST_FALLBACKS[identifier] || STATIC_POST_FALLBACKS['we-are-the-world'];
-    if (initialFallback) {
-      renderPostDetails(initialFallback);
+    var html = '';
+    savedComments.forEach(function(c) {
+      html += `
+        <div class="csp-comment-item" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+            <span class="csp-comment-author" style="font-weight:700;color:#0f172a;font-size:0.92rem;">💬 ${c.author}</span>
+            <span class="csp-comment-date" style="font-size:0.8rem;color:#64748b;">${c.date}</span>
+          </div>
+          <div class="csp-comment-text" style="color:#334155;font-size:0.95rem;line-height:1.5;">${c.text}</div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  };
+
+  (function(){
+    // Initial Render of Comments
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', window.renderCommentsStream);
+    } else {
+      window.renderCommentsStream();
     }
 
-    // 1. Fetch Post Details with Fallback for updates
-    fetch(getRootUrl('api/posts.php?id=' + encodeURIComponent(identifier) + '&slug=' + encodeURIComponent(identifier)))
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        if (res.success && res.post) {
-          renderPostDetails(res.post);
-        }
-      })
-      .catch(function(){});
+    // Sync Share Links with Current Location
+    var pUrl = encodeURIComponent(window.location.href);
+    var pTitle = encodeURIComponent(document.title || 'Conspodium Story');
+    var fb = document.getElementById('share-fb');
+    var tw = document.getElementById('share-tw');
+    var li = document.getElementById('share-li');
+    var wa = document.getElementById('share-wa');
 
-    // 2. Fetch Related Posts for Sidebar
-    function loadRelatedPosts(catId, currentId) {
-      var container = document.getElementById('sidebar-related-posts');
-      if (!container) return;
-
-      var fallbackKeys = Object.keys(STATIC_POST_FALLBACKS).filter(function(k){ return k !== identifier; });
-      var relHtml = '';
-      fallbackKeys.slice(0, 3).forEach(function(k){
-        var item = STATIC_POST_FALLBACKS[k];
-        var imgUrl = getAbsoluteImageUrl(item.featured_image);
-        var postUrl = getRootUrl('post/' + k + '/');
-        relHtml += `
-          <a href="${postUrl}" class="csp-rel-item">
-            <img src="${imgUrl}" alt="${item.title}" class="csp-rel-thumb" />
-            <div class="csp-rel-info">
-              <h4>${item.title}</h4>
-              <span class="csp-rel-meta">${item.category_name || 'Story'} • ${item.reading_time || '4 min'}</span>
-            </div>
-          </a>
-        `;
-      });
-      if (relHtml) container.innerHTML = relHtml;
-
-      var query = catId ? 'category_id=' + catId + '&limit=4' : 'limit=4';
-      fetch(getRootUrl('api/posts.php?' + query))
-        .then(function(r){ return r.json(); })
-        .then(function(res){
-          if (!res.posts || !res.posts.length) return;
-
-          var rels = res.posts.filter(function(item){ return item.id != currentId; });
-          if (rels.length === 0) rels = res.posts;
-
-          var liveHtml = '';
-          rels.slice(0, 4).forEach(function(item){
-            var imgUrl = item.featured_image ? getAbsoluteImageUrl(item.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
-            var postUrl = getRootUrl('post/' + (item.slug || item.id) + '/');
-            liveHtml += `
-              <a href="${postUrl}" class="csp-rel-item">
-                <img src="${imgUrl}" alt="${item.title}" class="csp-rel-thumb" />
-                <div class="csp-rel-info">
-                  <h4>${item.title}</h4>
-                  <span class="csp-rel-meta">${item.category_name || 'Story'} • ${item.reading_time || '4 min'}</span>
-                </div>
-              </a>
-            `;
-          });
-
-          if (liveHtml) container.innerHTML = liveHtml;
-        })
-        .catch(function(){});
-    }
-
-    // 3. Comments Handling
-    function loadComments(postId) {
-      fetch(getRootUrl('api/posts.php?resource=comments&post_id=' + postId))
-        .then(function(r){ return r.json(); })
-        .then(function(res){
-          var container = document.getElementById('comments-list-container');
-          if (!container) return;
-
-          if (!res.comments || res.comments.length === 0) {
-            container.innerHTML = '<div style="color:#94a3b8;font-size:0.9rem;">No responses yet. Be the first to post a comment!</div>';
-            return;
-          }
-
-          var html = '';
-          res.comments.forEach(function(c){
-            html += `
-              <div class="csp-comment-item">
-                <div>
-                  <span class="csp-comment-author">💬 ${c.author_name}</span>
-                  <span class="csp-comment-date">${c.created_at ? c.created_at.slice(0,10) : 'Recent'}</span>
-                </div>
-                <div class="csp-comment-text">${c.content}</div>
-              </div>
-            `;
-          });
-          container.innerHTML = html;
-        })
-        .catch(function(err){ console.error('Error loading comments:', err); });
-    }
-
-    // Comment Form Submit Handler
-    var commentForm = document.getElementById('form-submit-comment');
-    if (commentForm) {
-      commentForm.addEventListener('submit', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-
-        var authorInput = document.getElementById('comm-author');
-        var emailInput = document.getElementById('comm-email');
-        var textInput = document.getElementById('comm-text');
-        
-        var author = (authorInput && authorInput.value.trim()) ? authorInput.value.trim() : 'Anonymous Reader';
-        var text = textInput ? textInput.value.trim() : '';
-
-        if (!text) return false;
-
-        var container = document.getElementById('comments-list-container');
-        if (container) {
-          if (container.textContent.includes('No comments yet') || container.textContent.includes('No responses yet')) {
-            container.innerHTML = '';
-          }
-          var newCommentEl = document.createElement('div');
-          newCommentEl.className = 'csp-comment-item';
-          newCommentEl.innerHTML = `
-            <div>
-              <span class="csp-comment-author">💬 ${author}</span>
-              <span class="csp-comment-date">Just now</span>
-            </div>
-            <div class="csp-comment-text">${text}</div>
-          `;
-          container.insertBefore(newCommentEl, container.firstChild);
-        }
-
-        if (window.cspToast) window.cspToast('Comment posted successfully!', 'success');
-        if (textInput) textInput.value = '';
-
-        // Background API sync if server available
-        if (currentPostId) {
-          fetch(getRootUrl('api/posts.php?resource=comments'), {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ post_id: currentPostId, author_name: author, author_email: emailInput ? emailInput.value : '', content: text })
-          }).catch(function(){});
-        }
-
-        return false;
-      });
-    }
+    if (fb) fb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + pUrl;
+    if (tw) tw.href = 'https://twitter.com/intent/tweet?url=' + pUrl + '&text=' + pTitle;
+    if (li) li.href = 'https://www.linkedin.com/shareArticle?mini=true&url=' + pUrl + '&title=' + pTitle;
+    if (wa) wa.href = 'https://api.whatsapp.com/send?text=' + pTitle + '%20' + pUrl;
   })();
   </script>
 

@@ -267,6 +267,14 @@ for (const page of PAGES) {
         `;
       });
       html = html.replace(/<div id="sidebar-related-posts">[\s\S]*?<\/div>/i, `<div id="sidebar-related-posts">${sideHtml}</div>`);
+
+      // Pre-render Share URLs into HTML
+      const encodedPostUrl = encodeURIComponent(`https://conspodium.com/${page.out.replace(/index\.html$/, '')}`);
+      const encodedTitle = encodeURIComponent(pData.title);
+      html = html.replace(/href="#" class="csp-share-btn csp-share-fb" id="share-fb"/gi, `href="https://www.facebook.com/sharer/sharer.php?u=${encodedPostUrl}" class="csp-share-btn csp-share-fb" id="share-fb"`);
+      html = html.replace(/href="#" class="csp-share-btn csp-share-tw" id="share-tw"/gi, `href="https://twitter.com/intent/tweet?url=${encodedPostUrl}&text=${encodedTitle}" class="csp-share-btn csp-share-tw" id="share-tw"`);
+      html = html.replace(/href="#" class="csp-share-btn csp-share-li" id="share-li"/gi, `href="https://www.linkedin.com/shareArticle?mini=true&url=${encodedPostUrl}&title=${encodedTitle}" class="csp-share-btn csp-share-li" id="share-li"`);
+      html = html.replace(/href="#" class="csp-share-btn csp-share-wa" id="share-wa"/gi, `href="https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedPostUrl}" class="csp-share-btn csp-share-wa" id="share-wa"`);
     }
   }
 
