@@ -449,6 +449,7 @@
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -2116,6 +2117,42 @@ e-page-transition,
   </div>
 </div>
 
+<!-- ── MODAL: DETAILED ARTICLE OVERVIEW ── -->
+<div class="csp-modal-overlay" id="modal-view-article">
+  <div class="csp-modal" style="max-width:720px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:12px;">
+      <div>
+        <span id="art-modal-eyebrow" class="csp-badge" style="background:rgba(0,174,254,0.1);color:var(--blue);border:1px solid rgba(0,174,254,0.3);margin-bottom:6px;display:inline-block;">Featured Article</span>
+        <h3 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.25rem;margin:4px 0 0 0;" id="art-modal-title">Article Title</h3>
+      </div>
+      <button style="background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;" data-close="modal-view-article">&times;</button>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:0.85rem;background:#f8fafc;padding:10px 14px;border-radius:10px;">
+      <div>
+        <strong id="art-modal-author" style="color:#0f172a;">Author Name</strong>
+        <span id="art-modal-date" style="color:var(--text-muted);margin-left:8px;">2026-02-05</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="art-modal-category-badge" class="csp-badge" style="background:rgba(183,31,113,0.1);color:var(--pink);border:1px solid rgba(183,31,113,0.3);">Category</span>
+        <span id="art-modal-views-badge" class="csp-badge" style="background:rgba(15,23,42,0.06);color:#0f172a;">👁️ 0 views</span>
+      </div>
+    </div>
+
+    <img id="art-modal-image" src="" alt="Article Featured Image" style="width:100%;max-height:260px;object-fit:cover;border-radius:12px;margin-bottom:16px;display:none;border:1px solid #cbd5e1;">
+
+    <div id="art-modal-excerpt" style="font-size:0.92rem;font-weight:600;color:#334155;margin-bottom:16px;line-height:1.5;background:rgba(0,174,254,0.05);padding:12px 16px;border-left:4px solid var(--blue);border-radius:6px;"></div>
+
+    <div id="art-modal-body" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;max-height:300px;overflow-y:auto;font-size:0.9rem;line-height:1.6;color:#1e293b;margin-bottom:24px;"></div>
+
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-view-article">Close</button>
+      <button type="button" class="csp-btn-sm csp-btn-danger" id="btn-art-modal-delete">🗑️ Delete Article</button>
+      <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-art-modal-edit">✏️ Edit Article</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── MODAL: DETAILED SUBMISSION VIEW ── -->
 <div class="csp-modal-overlay" id="modal-view-submission">
   <div class="csp-modal" style="max-width:680px;">
@@ -2340,12 +2377,65 @@ e-page-transition,
       });
   }
 
+  var postsCache = [];
+
+  window.openViewArticleModal = function(id) {
+    var p = postsCache.find(function(item){ return item.id == id; });
+    if (!p) return;
+
+    document.getElementById('art-modal-title').textContent = p.title;
+    document.getElementById('art-modal-eyebrow').textContent = p.eyebrow || p.category_name || 'Featured Article';
+    document.getElementById('art-modal-author').textContent = p.author_name || 'Conspodium Editorial';
+    document.getElementById('art-modal-date').textContent = p.published_at ? p.published_at.slice(0,10) : 'Now';
+
+    var catBadge = document.getElementById('art-modal-category-badge');
+    if (catBadge) {
+      catBadge.textContent = (p.category_icon || '🏷️') + ' ' + (p.category_name || 'General');
+    }
+
+    var viewsBadge = document.getElementById('art-modal-views-badge');
+    if (viewsBadge) {
+      viewsBadge.textContent = '👁️ ' + (p.views || 0).toLocaleString() + ' views';
+    }
+
+    var imgEl = document.getElementById('art-modal-image');
+    if (p.featured_image) {
+      imgEl.src = getAbsoluteImageUrl(p.featured_image);
+      imgEl.style.display = 'block';
+    } else {
+      imgEl.style.display = 'none';
+    }
+
+    var excEl = document.getElementById('art-modal-excerpt');
+    if (p.excerpt) {
+      excEl.textContent = p.excerpt;
+      excEl.style.display = 'block';
+    } else {
+      excEl.style.display = 'none';
+    }
+
+    document.getElementById('art-modal-body').innerHTML = p.content || p.excerpt || 'No detailed content available.';
+
+    document.getElementById('btn-art-modal-edit').onclick = function() {
+      closeModal('modal-view-article');
+      editPost(p.id);
+    };
+
+    document.getElementById('btn-art-modal-delete').onclick = function() {
+      closeModal('modal-view-article');
+      deletePost(p.id);
+    };
+
+    openModal('modal-view-article');
+  };
+
   function loadPosts() {
     fetch(getRootUrl('api/posts.php?limit=100'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('posts-cms-table');
         if(!tbody || !res.posts) return;
+        postsCache = res.posts;
         tbody.innerHTML = '';
         var selectAll = document.getElementById('select-all-posts');
         if (selectAll) selectAll.checked = false;
@@ -2362,10 +2452,10 @@ e-page-transition,
           tbody.innerHTML += `
             <tr>
               <td style="text-align:center;"><input type="checkbox" class="post-cb" data-id="${p.id}" style="cursor:pointer;" /></td>
-              <td style="font-weight:600;max-width:320px;">
+              <td style="font-weight:600;max-width:320px;cursor:pointer;" onclick="openViewArticleModal(${p.id})">
                 <div style="display:flex;align-items:center;">
                   ${imgThumb}
-                  <span>${p.title}</span>
+                  <span style="color:var(--blue);" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${p.title}</span>
                 </div>
               </td>
               <td>${p.category_icon || '🏷️'} ${p.category_name || 'Unassigned'}</td>
@@ -2374,7 +2464,8 @@ e-page-transition,
               <td>${(p.views || 0).toLocaleString()}</td>
               <td>${p.is_featured ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.75rem;padding:4px 8px;white-space:nowrap;">⭐ Hero: Enabled</span>' : '<span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">Hero: Disabled</span>'}</td>
               <td>
-                <button class="csp-btn-sm csp-btn-secondary" onclick="editPost(${p.id})">Edit</button>
+                <button class="csp-btn-sm csp-btn-secondary" onclick="openViewArticleModal(${p.id})" style="margin-right:4px;">👁️ View</button>
+                <button class="csp-btn-sm csp-btn-secondary" onclick="editPost(${p.id})" style="margin-right:4px;">Edit</button>
                 <button class="csp-btn-sm csp-btn-danger" onclick="deletePost(${p.id})">Delete</button>
               </td>
             </tr>
