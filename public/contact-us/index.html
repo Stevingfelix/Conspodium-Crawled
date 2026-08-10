@@ -578,6 +578,21 @@ section#csp-countdown h2.csp-cd-title {
   }
 }
 
+/* ── PUSH INNER PAGE ELEMENTS DOWN BELOW ABSOLUTE HEADER ──────────────────── */
+body:not(.home) .csp-post-sec {
+  padding-top: 130px !important;
+}
+body:not(.home) .csp-cat-hero {
+  padding-top: 130px !important;
+}
+body:not(.home) .elementor-location-header + div,
+body:not(.home) .elementor-location-header + section,
+body:not(.home) .elementor-location-header + main,
+body:not(.home) .elementor-section:first-of-type,
+body:not(.home) .e-con.e-parent:first-of-type {
+  padding-top: 120px !important;
+}
+
 /* ── NAV TEXT: Normal State vs Sticky State ──────────────────────────────── */
 /* Homepage normal state: white text over dark hero */
 body.home .elementor-1969 .elementor-nav-menu--main .elementor-item {
@@ -586,7 +601,8 @@ body.home .elementor-1969 .elementor-nav-menu--main .elementor-item {
 }
 
 /* Inner pages normal state (un-scrolled): dark text over light page background */
-body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item {
+body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item,
+body:not(.home) .elementor-item {
   color: #0f172a !important;
   fill: #0f172a !important;
 }
@@ -595,11 +611,20 @@ body:not(.home) .elementor-1969 .elementor-menu-toggle i {
   color: #0f172a !important;
 }
 
-/* STICKY STATE (ALL PAGES): When scrolled down, header turns dark glass, so text turns WHITE */
-.elementor-location-header.is-sticky .elementor-nav-menu--main .elementor-item,
-.elementor-location-header.is-sticky .elementor-menu-toggle,
-.elementor-location-header.is-sticky .elementor-menu-toggle i,
+/* STICKY STATE (ALL PAGES): When scrolled down, header turns dark glass, so text MUST BE BRIGHT WHITE */
+body .is-sticky .elementor-nav-menu--main .elementor-item,
+body .is-sticky .elementor-item,
+body .is-sticky .elementor-menu-toggle,
+body .is-sticky .elementor-menu-toggle i,
+body:not(.home) .is-sticky .elementor-nav-menu--main .elementor-item,
+body:not(.home) .is-sticky .elementor-item,
+body:not(.home) .is-sticky .elementor-menu-toggle,
+body:not(.home) .is-sticky .elementor-menu-toggle i,
+body:not(.home) .elementor-location-header.is-sticky .elementor-nav-menu--main .elementor-item,
+body:not(.home) .elementor-location-header.is-sticky .elementor-menu-toggle,
+body:not(.home) .elementor-location-header.is-sticky .elementor-menu-toggle i,
 .she-header-yes.is-sticky .elementor-nav-menu--main .elementor-item,
+.she-header-yes.is-sticky .elementor-item,
 .she-header-yes.is-sticky .elementor-menu-toggle,
 .she-header-yes.is-sticky .elementor-menu-toggle i {
   color: #ffffff !important;
@@ -609,8 +634,10 @@ body:not(.home) .elementor-1969 .elementor-menu-toggle i {
 
 .elementor-1969 .elementor-nav-menu--main .elementor-item:hover,
 .elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active,
-.elementor-location-header.is-sticky .elementor-nav-menu--main .elementor-item:hover,
-.elementor-location-header.is-sticky .elementor-nav-menu--main .elementor-item.elementor-item-active {
+body .is-sticky .elementor-nav-menu--main .elementor-item:hover,
+body .is-sticky .elementor-nav-menu--main .elementor-item.elementor-item-active,
+body:not(.home) .is-sticky .elementor-item:hover,
+body:not(.home) .is-sticky .elementor-item.elementor-item-active {
   color: #00AEFE !important;
   fill: #00AEFE !important;
 }
