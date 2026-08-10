@@ -357,6 +357,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1704,6 +1705,45 @@ e-page-transition,
 
   function pad(x){ return x < 10 ? '0' + x : '' + x; }
 
+  function loadFeaturedHeroArticles() {
+    fetch(getRootUrl('api/posts.php?featured=1'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.posts && res.posts.length > 0) {
+          document.querySelectorAll('.csp-hero-slide-dynamic').forEach(function(el){ el.remove(); });
+
+          res.posts.forEach(function(post, index){
+            var imgUrl = getAbsoluteImageUrl(post.featured_image);
+            var slideDiv = document.createElement('div');
+            slideDiv.className = 'csp-hero-slide csp-hero-slide-dynamic';
+            slideDiv.dataset.slide = index + 1;
+
+            var eyebrowText = post.eyebrow || post.category_name || 'Featured Article';
+
+            slideDiv.innerHTML =
+              '<div class="csp-hero-bg" style="background-image:url(\'' + imgUrl + '\');"></div>' +
+              '<div class="csp-hero-overlay"></div>' +
+              '<div class="csp-hero-content">' +
+                '<div class="csp-hero-eyebrow">⭐ ' + eyebrowText + '</div>' +
+                '<h1 class="csp-hero-title">' + post.title + '</h1>' +
+                '<p class="csp-hero-sub">' + (post.excerpt || '') + '</p>' +
+                '<div class="csp-hero-btns">' +
+                  '<a href="./stories/" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
+                  '<a href="./stories/" class="csp-hero-btn-secondary">Explore All Stories</a>' +
+                '</div>' +
+              '</div>';
+
+            if (heroContainer) heroContainer.appendChild(slideDiv);
+          });
+        }
+        initSlider();
+      })
+      .catch(function(err){
+        console.error('Error fetching featured hero articles:', err);
+        initSlider();
+      });
+  }
+
   function initSlider() {
     var slides = document.querySelectorAll('.csp-hero-slide');
     var n = slides.length;
@@ -1779,7 +1819,7 @@ e-page-transition,
     run();
   }
 
-  initSlider();
+  loadFeaturedHeroArticles();
 })();
 </script>
 <style id="csp-hide-old-hero">
