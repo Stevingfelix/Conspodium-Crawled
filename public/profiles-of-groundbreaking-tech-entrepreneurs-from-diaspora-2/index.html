@@ -324,6 +324,11 @@
 
 
 
+
+
+
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1388,8 +1393,8 @@ e-page-transition,
   <main class="csp-post-sec">
     <!-- Top Nav -->
     <div class="csp-post-top-nav">
-      <a href="../stories/" class="csp-back-btn" id="post-back-link">&larr; Back To Stories</a>
-      <a href="../submit-story/" class="csp-cat-share-btn" style="font-size:0.8rem;padding:6px 18px;">✍️ Submit Your Story</a>
+      <a href="/stories/" class="csp-back-btn" id="post-back-link">&larr; Back To Stories</a>
+      <a href="/submit-story/" class="csp-cat-share-btn" id="post-submit-link" style="font-size:0.8rem;padding:6px 18px;">✍️ Submit Your Story</a>
     </div>
 
     <div class="csp-post-grid-layout">
@@ -1462,7 +1467,7 @@ e-page-transition,
           <p style="font-size:0.9rem;color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:20px;">
             Have a story, essay, or research paper on diaspora culture, tech, or policy? Publish it with Conspodium.
           </p>
-          <a href="../submit-story/" class="csp-hero-btn-primary" style="width:100%;text-align:center;font-size:0.85rem;padding:12px 20px;">
+          <a href="/submit-story/" class="csp-hero-btn-primary" id="sidebar-submit-link" style="width:100%;text-align:center;font-size:0.85rem;padding:12px 20px;">
             Submit Your Story →
           </a>
         </div>
@@ -1485,14 +1490,28 @@ e-page-transition,
       var idx = parts.indexOf('post');
       if (idx === -1) idx = parts.indexOf('story');
 
+      var target = null;
       if (idx !== -1 && parts[idx + 1] && parts[idx + 1] !== 'index.html') {
-        return decodeURIComponent(parts[idx + 1]);
+        target = decodeURIComponent(parts[idx + 1]);
+      } else {
+        var urlParams = new URLSearchParams(window.location.search);
+        target = urlParams.get('slug') || urlParams.get('id') || urlParams.get('post');
       }
-      var urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get('slug') || urlParams.get('id') || urlParams.get('post') || 'we-are-the-world';
+
+      if (!target || target === 'stories' || target === 'category' || target === 'submit-story') {
+        window.location.href = getRootUrl('stories/');
+        return 'we-are-the-world';
+      }
+      return target;
     }
 
     var identifier = getPostIdentifierFromUrl();
+
+    // Dynamically set absolute routes for top buttons
+    var backBtn = document.getElementById('post-back-link');
+    if (backBtn) backBtn.href = getRootUrl('stories/');
+    var submitBtn = document.getElementById('post-submit-link');
+    if (submitBtn) submitBtn.href = getRootUrl('submit-story/');
 
     // 1. Fetch Post Details
     fetch(getRootUrl('api/posts.php?id=' + encodeURIComponent(identifier) + '&slug=' + encodeURIComponent(identifier)))
@@ -1500,7 +1519,7 @@ e-page-transition,
       .then(function(res){
         if (!res.success || !res.post) {
           document.getElementById('post-title').textContent = 'Article Not Found';
-          document.getElementById('post-content-body').innerHTML = '<div style="text-align:center;padding:40px;color:#ef4444;">Sorry, the requested article could not be found. <br><br><a href="../stories/" style="color:#00AEFE;font-weight:600;">Explore All Stories &rarr;</a></div>';
+          document.getElementById('post-content-body').innerHTML = '<div style="text-align:center;padding:40px;color:#ef4444;">Sorry, the requested article could not be found. <br><br><a href="' + getRootUrl('stories/') + '" style="color:#00AEFE;font-weight:600;">Explore All Stories &rarr;</a></div>';
           return;
         }
 
@@ -1577,8 +1596,9 @@ e-page-transition,
           var relHtml = '';
           rels.slice(0, 4).forEach(function(item){
             var imgUrl = item.featured_image ? getAbsoluteImageUrl(item.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
+            var postUrl = getRootUrl('post/' + (item.slug || item.id) + '/');
             relHtml += `
-              <a href="../post/${item.slug || item.id}/" class="csp-rel-item">
+              <a href="${postUrl}" class="csp-rel-item">
                 <img src="${imgUrl}" alt="${item.title}" class="csp-rel-thumb" />
                 <div class="csp-rel-info">
                   <h4>${item.title}</h4>
