@@ -966,6 +966,7 @@ e-page-transition,
 }
 
 #csp-page-loader.loaded {
+  display: none !important;
   opacity: 0 !important;
   pointer-events: none !important;
   visibility: hidden !important;
@@ -1752,10 +1753,20 @@ e-page-transition,
 (function(){
   function dismiss() {
     var l = document.getElementById('csp-page-loader');
-    if (l) l.classList.add('loaded');
+    if (l) {
+      l.classList.add('loaded');
+      l.style.setProperty('display', 'none', 'important');
+      l.style.setProperty('opacity', '0', 'important');
+      l.style.setProperty('pointer-events', 'none', 'important');
+      l.style.setProperty('visibility', 'hidden', 'important');
+    }
   }
+  dismiss();
   if (document.readyState === 'complete') dismiss();
   else window.addEventListener('load', dismiss);
+  document.addEventListener('DOMContentLoaded', dismiss);
+  setTimeout(dismiss, 100);
+  setTimeout(dismiss, 300);
   setTimeout(dismiss, 600);
 })();
 </script>
