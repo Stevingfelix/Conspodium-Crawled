@@ -363,6 +363,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1735,13 +1736,20 @@ e-page-transition,
     var dots = document.querySelectorAll('.csp-hero-dot');
 
     function go(i) {
-      if (!slides[c] || !dots[c]) return;
-      slides[c].classList.remove('active');
-      dots[c].classList.remove('active');
-      c = (i + n) % n;
-      slides[c].classList.add('active');
-      dots[c].classList.add('active');
+      var allSlides = document.querySelectorAll('.csp-hero-slide');
+      var allDots = document.querySelectorAll('.csp-hero-dot');
+      var total = allSlides.length;
+      if (total === 0) return;
+
+      allSlides.forEach(function(s){ s.classList.remove('active'); });
+      allDots.forEach(function(d){ d.classList.remove('active'); });
+
+      c = (i + total) % total;
+
+      if (allSlides[c]) allSlides[c].classList.add('active');
+      if (allDots[c]) allDots[c].classList.add('active');
       if (counterCur) counterCur.textContent = pad(c + 1);
+
       run();
     }
 
@@ -1787,6 +1795,45 @@ e-page-transition,
     }
 
     run();
+  }
+
+  function loadFeaturedHeroArticles() {
+    fetch(getRootUrl('api/posts.php?featured=1'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.posts && res.posts.length > 0) {
+          document.querySelectorAll('.csp-hero-slide-dynamic').forEach(function(el){ el.remove(); });
+
+          res.posts.forEach(function(post, index){
+            var imgUrl = getAbsoluteImageUrl(post.featured_image);
+            var slideDiv = document.createElement('div');
+            slideDiv.className = 'csp-hero-slide csp-hero-slide-dynamic';
+            slideDiv.dataset.slide = index + 4;
+
+            var eyebrowText = post.eyebrow || post.category_name || 'Featured Article';
+
+            slideDiv.innerHTML =
+              '<div class="csp-hero-bg" style="background-image:url(\'' + imgUrl + '\');"></div>' +
+              '<div class="csp-hero-overlay"></div>' +
+              '<div class="csp-hero-content">' +
+                '<div class="csp-hero-eyebrow">⭐ ' + eyebrowText + '</div>' +
+                '<h1 class="csp-hero-title">' + post.title + '</h1>' +
+                '<p class="csp-hero-sub">' + (post.excerpt || '') + '</p>' +
+                '<div class="csp-hero-btns">' +
+                  '<a href="./stories/" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
+                  '<a href="./stories/" class="csp-hero-btn-secondary">Explore All Stories</a>' +
+                '</div>' +
+              '</div>';
+
+            if (heroContainer) heroContainer.appendChild(slideDiv);
+          });
+        }
+        initSlider();
+      })
+      .catch(function(err){
+        console.error('Error fetching featured hero articles:', err);
+        initSlider();
+      });
   }
 
   loadFeaturedHeroArticles();
