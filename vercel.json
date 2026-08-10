@@ -1,3 +1,78 @@
 {
-  "cleanUrls": true
+  "version": 2,
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.7.3"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)\\.php",
+      "dest": "/api/$1.php"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1.php"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/public/dashboard/index.html"
+    },
+    {
+      "src": "/dashboard/(.*)",
+      "dest": "/public/dashboard/$1"
+    },
+    {
+      "src": "/stories",
+      "dest": "/public/stories/index.html"
+    },
+    {
+      "src": "/stories/(.*)",
+      "dest": "/public/stories/$1"
+    },
+    {
+      "src": "/about-us",
+      "dest": "/public/about-us/index.html"
+    },
+    {
+      "src": "/about-us/(.*)",
+      "dest": "/public/about-us/$1"
+    },
+    {
+      "src": "/contact-us",
+      "dest": "/public/contact-us/index.html"
+    },
+    {
+      "src": "/contact-us/(.*)",
+      "dest": "/public/contact-us/$1"
+    },
+    {
+      "src": "/sponsorship",
+      "dest": "/public/sponsorship/index.html"
+    },
+    {
+      "src": "/sponsorship/(.*)",
+      "dest": "/public/sponsorship/$1"
+    },
+    {
+      "src": "/advert",
+      "dest": "/public/advert/index.html"
+    },
+    {
+      "src": "/advert/(.*)",
+      "dest": "/public/advert/$1"
+    },
+    {
+      "src": "/submit-story",
+      "dest": "/public/submit-story/index.html"
+    },
+    {
+      "src": "/submit-story/(.*)",
+      "dest": "/public/submit-story/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
 }

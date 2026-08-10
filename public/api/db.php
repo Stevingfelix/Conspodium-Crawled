@@ -1,12 +1,21 @@
 <?php
 // api/db.php - PDO SQLite Database Connection & Schema Setup
 
-$dbDir = file_exists(__DIR__ . '/../../data') ? __DIR__ . '/../../data' : __DIR__ . '/../data';
-if (!file_exists($dbDir)) {
-    mkdir($dbDir, 0777, true);
-}
+$isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERCEL']);
 
-$dbPath = $dbDir . '/conspodium.db';
+if ($isVercel) {
+    $dbPath = '/tmp/conspodium.db';
+    $seedDb = file_exists(__DIR__ . '/../../data/conspodium.db') ? __DIR__ . '/../../data/conspodium.db' : __DIR__ . '/../data/conspodium.db';
+    if (!file_exists($dbPath) && file_exists($seedDb)) {
+        @copy($seedDb, $dbPath);
+    }
+} else {
+    $dbDir = file_exists(__DIR__ . '/../../data') ? __DIR__ . '/../../data' : __DIR__ . '/../data';
+    if (!file_exists($dbDir)) {
+        @mkdir($dbDir, 0777, true);
+    }
+    $dbPath = $dbDir . '/conspodium.db';
+}
 
 try {
     $pdo = new PDO("sqlite:" . $dbPath);

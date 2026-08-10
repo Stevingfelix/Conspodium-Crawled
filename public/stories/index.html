@@ -340,6 +340,8 @@ min-width: 100px;
 
 
 
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1448,64 +1450,176 @@ e-page-transition,
     </div>
 </article></div>
             <div class="clearfix"></div>
+            <div id="csp-stories-pagination" class="csp-pagination-container"></div>
+<style id="csp-stories-pagination-style">
+.csp-pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 40px auto 20px;
+  padding: 16px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.csp-page-btn {
+  background: rgba(6, 16, 34, 0.7);
+  border: 1px solid rgba(0, 174, 254, 0.25);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  text-decoration: none;
+}
+.csp-page-btn:hover:not(:disabled) {
+  background: rgba(0, 174, 254, 0.2);
+  border-color: #00AEFE;
+  color: #00AEFE;
+  transform: translateY(-2px);
+}
+.csp-page-btn.active {
+  background: linear-gradient(135deg, #00AEFE, #B71F71) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(0, 174, 254, 0.35);
+}
+.csp-page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+</style>
 <script>
 (function(){
   var appender = document.querySelector('.eael-post-appender');
-  if (!appender) return;
+  var paginationContainer = document.getElementById('csp-stories-pagination');
+  if (!appender || !paginationContainer) return;
 
-  fetch('/api/posts.php')
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      if (!res.success || !res.posts || !res.posts.length) return;
+  var currentPage = 1;
+  var perPage = 6;
 
-      res.posts.forEach(function(post){
-        // Avoid duplicate rendering if post slug already exists
-        if (document.querySelector('a[href*="' + post.slug + '"]')) return;
+  function loadStoriesPage(page) {
+    currentPage = page;
+    var offset = (page - 1) * perPage;
 
-        var article = document.createElement('article');
-        article.className = 'eael-grid-post eael-post-grid-column category-dynamic';
-        article.innerHTML = `
-          <div class="eael-grid-post-holder">
-            <div class="eael-grid-post-holder-inner">
-              <div class="eael-entry-media">
-                <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
-                <div class="eael-entry-thumbnail">
-                  <img loading="lazy" width="300" height="200" src="${post.featured_image || '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg'}" alt="${post.title}">
-                </div>
-              </div>
-              <div class="eael-entry-wrapper">
-                <header class="eael-entry-header">
-                  <h2 class="eael-entry-title">
-                    <a class="eael-grid-post-link" href="#" title="${post.title}">${post.title}</a>
-                  </h2>
-                </header>
-                <div class="eael-entry-content">
-                  <div class="eael-grid-post-excerpt">
-                    <p>${post.excerpt}</p>
-                    <a href="#" class="eael-post-elements-readmore-btn">Read More</a>
+    fetch('/api/posts.php?limit=' + perPage + '&offset=' + offset)
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (!res.success || !res.posts) return;
+
+        // Clear previous dynamic grid articles
+        appender.querySelectorAll('.category-dynamic').forEach(function(el){ el.remove(); });
+
+        res.posts.forEach(function(post){
+          var article = document.createElement('article');
+          article.className = 'eael-grid-post eael-post-grid-column category-dynamic';
+          article.innerHTML = `
+            <div class="eael-grid-post-holder">
+              <div class="eael-grid-post-holder-inner">
+                <div class="eael-entry-media">
+                  <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
+                  <div class="eael-entry-thumbnail">
+                    <img loading="lazy" width="300" height="200" src="${post.featured_image || '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg'}" alt="${post.title}">
                   </div>
                 </div>
-                <div class="eael-entry-header-after style-two">
-                  <div class="eael-entry-meta">
-                    <span class="eael-meta-posted-on"><i class="far fa-clock"></i> ${post.reading_time || '5 min read'} · ${post.author_name}</span>
+                <div class="eael-entry-wrapper">
+                  <header class="eael-entry-header">
+                    <h2 class="eael-entry-title">
+                      <a class="eael-grid-post-link" href="#" title="${post.title}">${post.title}</a>
+                    </h2>
+                  </header>
+                  <div class="eael-entry-content">
+                    <div class="eael-grid-post-excerpt">
+                      <p>${post.excerpt || ''}</p>
+                      <a href="#" class="eael-post-elements-readmore-btn">Read More</a>
+                    </div>
+                  </div>
+                  <div class="eael-entry-header-after style-two">
+                    <div class="eael-entry-meta">
+                      <span class="eael-meta-posted-on"><i class="far fa-clock"></i> ${post.reading_time || '5 min read'} · ${post.author_name || 'Conspodium'}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        `;
+          `;
 
-        article.querySelectorAll('a').forEach(function(a){
-          a.addEventListener('click', function(e){
-            e.preventDefault();
-            alert('📖 Article: ' + post.title + '\n\n' + post.excerpt + '\n\nViews: ' + post.views);
+          article.querySelectorAll('a').forEach(function(a){
+            a.addEventListener('click', function(e){
+              e.preventDefault();
+              alert('📖 Article: ' + post.title + '\n\n' + (post.excerpt || '') + '\n\nViews: ' + (post.views || 0));
+            });
           });
+
+          appender.appendChild(article);
         });
 
-        appender.insertBefore(article, appender.firstChild);
-      });
-    })
-    .catch(function(err){ console.error('Error fetching dynamic posts:', err); });
+        renderPaginationControls(res.total || res.posts.length);
+      })
+      .catch(function(err){ console.error('Error fetching dynamic posts page:', err); });
+  }
+
+  function renderPaginationControls(totalItems) {
+    paginationContainer.innerHTML = '';
+    var totalPages = Math.ceil(totalItems / perPage);
+    if (totalPages <= 1) return;
+
+    // Previous Button
+    var prevBtn = document.createElement('button');
+    prevBtn.className = 'csp-page-btn';
+    prevBtn.innerHTML = '← Prev';
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.addEventListener('click', function(){
+      if (currentPage > 1) {
+        loadStoriesPage(currentPage - 1);
+        scrollToGrid();
+      }
+    });
+    paginationContainer.appendChild(prevBtn);
+
+    // Number Buttons
+    for (var i = 1; i <= totalPages; i++) {
+      (function(p){
+        var numBtn = document.createElement('button');
+        numBtn.className = 'csp-page-btn' + (p === currentPage ? ' active' : '');
+        numBtn.textContent = p;
+        numBtn.addEventListener('click', function(){
+          loadStoriesPage(p);
+          scrollToGrid();
+        });
+        paginationContainer.appendChild(numBtn);
+      })(i);
+    }
+
+    // Next Button
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'csp-page-btn';
+    nextBtn.innerHTML = 'Next →';
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.addEventListener('click', function(){
+      if (currentPage < totalPages) {
+        loadStoriesPage(currentPage + 1);
+        scrollToGrid();
+      }
+    });
+    paginationContainer.appendChild(nextBtn);
+  }
+
+  function scrollToGrid() {
+    appender.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Initial load
+  loadStoriesPage(1);
 })();
 </script>
         </div>				</div>

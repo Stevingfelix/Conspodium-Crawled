@@ -131,9 +131,47 @@ if ($method === 'POST') {
     ");
     $stmt->execute([$name, $email, $bio, $title, $content, $attachmentUrl]);
 
+    $submissionId = $pdo->lastInsertId();
+
+    // Send email notification alert to admin
+    $emailSent = false;
+    try {
+        $adminStmt = $pdo->query("SELECT email FROM admins ORDER BY id ASC LIMIT 1");
+        $adminRow = $adminStmt->fetch();
+        $adminEmail = $adminRow['email'] ?? 'admin@conspodium.com';
+
+        $subject = "🏛️ [Conspodium] New Story Submission: " . $title;
+        $headers = implode("\r\n", [
+            "MIME-Version: 1.0",
+            "Content-type: text/html; charset=utf-8",
+            "From: Conspodium Alerts <noreply@conspodium.com>",
+            "Reply-To: " . $name . " <" . $email . ">",
+            "X-Mailer: PHP/" . phpversion()
+        ]);
+
+        $body = "
+        <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #061022; color: #ffffff; padding: 24px; border-radius: 12px;'>
+            <h2 style='color: #00AEFE; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;'>📰 New Story Submission</h2>
+            <p><strong>Title:</strong> " . htmlspecialchars($title) . "</p>
+            <p><strong>Author:</strong> " . htmlspecialchars($name) . " (&lt;" . htmlspecialchars($email) . "&gt;)</p>
+            " . ($bio ? "<p><strong>Bio:</strong> " . htmlspecialchars($bio) . "</p>" : "") . "
+            <hr style='border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 16px 0;' />
+            <p><strong>Content Preview:</strong></p>
+            <div style='background: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px; font-size: 0.9rem; line-height: 1.6; white-space: pre-wrap;'>" . htmlspecialchars(substr($content, 0, 500)) . (strlen($content) > 500 ? "..." : "") . "</div>
+            <br/>
+            <p style='font-size: 0.85rem; color: #888;'>Logged into CMS: <a href='http://localhost:8080/dashboard/' style='color: #00AEFE;'>Review on Admin CMS Dashboard</a></p>
+        </div>
+        ";
+
+        $emailSent = @mail($adminEmail, $subject, $body, $headers);
+    } catch (Exception $e) {
+        $emailSent = false;
+    }
+
     echo json_encode([
         "success" => true,
-        "submissionId" => $pdo->lastInsertId(),
+        "submissionId" => $submissionId,
+        "email_sent" => $emailSent,
         "message" => "Your story has been successfully submitted for editorial review!"
     ]);
     exit;
