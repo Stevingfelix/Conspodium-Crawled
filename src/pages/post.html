@@ -1377,39 +1377,85 @@ e-page-transition,
     modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
 
     card.innerHTML = 
-      '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(0,174,254,0.2),rgba(183,31,113,0.2));border:1px solid rgba(0,174,254,0.4);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;">🎉</div>' +
-      '<h3 style="font-family:\'Merriweather\',serif;font-size:1.3rem;color:#ffffff;margin-bottom:10px;line-height:1.3;">' + (title || 'Submission Successful!') + '</h3>' +
-      '<p style="font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.6;margin-bottom:24px;">' + (message || 'Thank you! Your information has been received.') + '</p>' +
-      '<button id="csp-success-modal-btn" style="padding:12px 32px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border:none;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Got It →</button>';
+      var btn = card.querySelector('#csp-success-modal-btn');
+      if (btn) btn.addEventListener('click', closeModal);
 
-    card.appendChild(closeBtn);
-    modal.appendChild(card);
-    document.body.appendChild(modal);
+      setTimeout(function(){
+        modal.style.opacity = '1';
+        card.style.transform = 'scale(1)';
+      }, 50);
+    };
 
-    var btn = card.querySelector('#csp-success-modal-btn');
-    if (btn) btn.addEventListener('click', closeModal);
-
-    setTimeout(function(){
-      modal.style.opacity = '1';
-      card.style.transform = 'scale(1)';
-    }, 50);
-  };
-
-  function start() {
-    initLoaderAndLogo();
-    initMobileMenu();
-    initPopupAdvert();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start);
-  } else {
-    start();
-  }
-})();
-</script>
-<!-- CSP_HEADER_FIXES_END -->
-
+    /* ── COMMENTS SECTION ── */
+    .csp-comments-sec {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.03);
+    }
+    .csp-comments-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.35rem;
+      color: #0f172a;
+      margin-bottom: 24px;
+    }
+    .csp-comment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .csp-comment-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    @media (max-width: 768px) {
+      .csp-comment-form-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+    .csp-input-field {
+      width: 100%;
+      box-sizing: border-box !important;
+      padding: 14px 18px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      background: #ffffff;
+      color: #0f172a;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .csp-input-field:focus {
+      border-color: var(--blue-accent);
+      box-shadow: 0 0 0 3px rgba(0, 174, 254, 0.15);
+    }
+    .csp-comment-item {
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+    .csp-comment-author {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 0.95rem;
+    }
+    .csp-comment-date {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      margin-left: 8px;
+    }
+    .csp-comment-text {
+      font-size: 0.92rem;
+      color: #334155;
+    }
+  </style>
 </head>
 <body class="wp-custom-logo wp-embed-responsive wp-theme-twentytwentyfour ehf-template-twentytwentyfour ehf-stylesheet-twentytwentyfour jkit-color-scheme elementor-default elementor-template-full-width elementor-kit-9 sticky-menu yes-is-sticky" data-elementor-device-mode="desktop">
 
@@ -1464,7 +1510,7 @@ e-page-transition,
           
           <!-- Comment Submission Form -->
           <form id="form-submit-comment" class="csp-comment-form" onsubmit="return window.handleCommentSubmit(event);">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div class="csp-comment-form-row">
               <input type="text" id="comm-author" class="csp-input-field" placeholder="Your Name *" required>
               <input type="email" id="comm-email" class="csp-input-field" placeholder="Your Email *" required>
             </div>
@@ -1499,6 +1545,77 @@ e-page-transition,
   <!-- SINGLE POST CONTROLLER SCRIPT -->
   <script>
   window.isAdminLoggedIn = false;
+
+  // Bulletproof Embedded Toast Notification
+  window.cspToast = window.cspToast || function(message, type, duration) {
+    type = type || 'info';
+    duration = duration || 3500;
+
+    var container = document.getElementById('csp-toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'csp-toast-container';
+      document.body.appendChild(container);
+    }
+
+    var icons = { success: '🎉', danger: '🚨', info: 'ℹ️' };
+
+    var toast = document.createElement('div');
+    toast.className = 'csp-toast csp-toast-' + type;
+    toast.innerHTML = '<span class="csp-toast-icon">' + (icons[type] || 'ℹ️') + '</span><span>' + message + '</span>';
+    container.appendChild(toast);
+
+    setTimeout(function(){ toast.classList.add('show'); }, 10);
+    setTimeout(function(){
+      toast.classList.remove('show');
+      setTimeout(function(){ if (toast.parentNode) toast.parentNode.removeChild(toast); }, 350);
+    }, duration);
+  };
+
+  // Bulletproof Embedded Confirmation Modal
+  window.cspConfirm = window.cspConfirm || function(options) {
+    return new Promise(function(resolve) {
+      options = options || {};
+      var title = options.title || 'Confirm Action';
+      var message = options.message || 'Are you sure you want to proceed?';
+      var confirmText = options.confirmText || 'Yes, Delete';
+      var cancelText = options.cancelText || 'Cancel';
+      var type = options.type || 'danger';
+
+      var backdrop = document.getElementById('csp-confirm-backdrop');
+      if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.id = 'csp-confirm-backdrop';
+        backdrop.innerHTML = `
+          <div class="csp-confirm-modal">
+            <div class="csp-confirm-icon-box ${type === 'danger' ? 'csp-confirm-icon-danger' : 'csp-confirm-icon-info'}">${type === 'danger' ? '🗑️' : '💡'}</div>
+            <h3 class="csp-confirm-title">${title}</h3>
+            <p class="csp-confirm-desc">${message}</p>
+            <div class="csp-confirm-actions">
+              <button type="button" class="csp-confirm-btn csp-confirm-cancel" id="csp-confirm-btn-cancel">${cancelText}</button>
+              <button type="button" class="csp-confirm-btn ${type === 'danger' ? 'csp-confirm-danger-btn' : 'csp-confirm-primary-btn'}" id="csp-confirm-btn-ok">${confirmText}</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(backdrop);
+      }
+
+      var cancelBtn = document.getElementById('csp-confirm-btn-cancel');
+      var okBtn = document.getElementById('csp-confirm-btn-ok');
+
+      backdrop.classList.add('show');
+
+      function cleanup(result) {
+        backdrop.classList.remove('show');
+        cancelBtn.onclick = null;
+        okBtn.onclick = null;
+        resolve(result);
+      }
+
+      cancelBtn.onclick = function() { cleanup(false); };
+      okBtn.onclick = function() { cleanup(true); };
+    });
+  };
 
   // Check Admin Authentication Status
   window.checkAdminStatus = function() {
@@ -1558,12 +1675,8 @@ e-page-transition,
     if (emailInput) emailInput.value = '';
     if (textInput) textInput.value = '';
 
-    // Show Toast Notification
-    if (window.cspToast) {
-      window.cspToast('Comment posted successfully!', 'success');
-    } else {
-      alert('Comment posted successfully!');
-    }
+    // Show Modern UI Toast Notification
+    window.cspToast('Comment posted successfully!', 'success');
 
     // Background API Sync
     var postSlugOrId = window.location.pathname.replace(/\/$/, '').split('/').pop() || 'we-are-the-world';
@@ -1579,15 +1692,13 @@ e-page-transition,
 
   // Admin Delete Comment Action
   window.deleteComment = function(commentId, index) {
-    var confirmPromise = window.cspConfirm ? window.cspConfirm({
+    window.cspConfirm({
       title: 'Delete Comment',
       message: 'Are you sure you want to delete this comment? This action cannot be undone.',
       confirmText: 'Yes, Delete',
       cancelText: 'Cancel',
       type: 'danger'
-    }) : Promise.resolve(confirm('Are you sure you want to delete this comment?'));
-
-    confirmPromise.then(function(confirmed){
+    }).then(function(confirmed){
       if (!confirmed) return;
 
       var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
@@ -1606,7 +1717,7 @@ e-page-transition,
       }
 
       if (window.renderCommentsStream) window.renderCommentsStream();
-      if (window.cspToast) window.cspToast('Comment deleted successfully!', 'danger');
+      window.cspToast('Comment deleted successfully!', 'danger');
     });
   };
 
