@@ -2,6 +2,9 @@
 // api/auth_guard.php - Security Guard for Protected Admin API Routes
 
 if (session_status() === PHP_SESSION_NONE) {
+    if (getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERCEL'])) {
+        @session_save_path('/tmp');
+    }
     session_start();
 }
 

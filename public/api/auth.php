@@ -10,6 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 if (session_status() === PHP_SESSION_NONE) {
+    if (getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERCEL'])) {
+        @session_save_path('/tmp');
+    }
     session_start();
 }
 
