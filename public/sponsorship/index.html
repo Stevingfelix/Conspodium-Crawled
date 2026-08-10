@@ -375,7 +375,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400..900&display=swap" rel="stylesheet">
 <style>/* conspodium-fix-preloader */
-#sl-preloader { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
+#sl-preloader, e-page-transition, .e-page-transition { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
 </style>
 <style id="csp-header-fixes">
 /* Apply Merienda font to ALL gradient colored text across all section titles and custom sections */
@@ -1221,7 +1221,7 @@ e-page-transition,
       if (loader) {
         setTimeout(function() {
           loader.classList.add('loaded');
-        }, 1100);
+        }, 150);
       }
     }
 
