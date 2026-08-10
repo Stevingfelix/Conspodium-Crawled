@@ -2386,8 +2386,9 @@ e-page-transition,
       <div style="font-size:0.8rem;color:#94a3b8;margin-top:4px;" id="contact-modal-date">Date</div>
     </div>
     <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;max-height:360px;overflow-y:auto;font-size:0.92rem;line-height:1.6;color:#1e293b;white-space:pre-wrap;margin-bottom:24px;" id="contact-modal-body"></div>
-    <div style="display:flex;gap:10px;justify-content:flex-end;">
+    <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;">
       <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-view-contact">Close</button>
+      <button type="button" class="csp-btn-sm csp-btn-secondary" id="btn-contact-modal-toggle-status">📬 Mark Unread</button>
       <button type="button" class="csp-btn-sm csp-btn-danger" id="btn-contact-modal-delete">Delete Message</button>
       <a href="#" id="btn-contact-modal-reply" class="csp-btn-sm csp-btn-primary" style="text-decoration:none;">✉️ Reply via Email</a>
     </div>
@@ -3222,6 +3223,7 @@ e-page-transition,
               <td>${statusBadge}</td>
               <td style="white-space:nowrap;">
                 <button class="csp-btn-sm csp-btn-secondary" onclick="openViewContactModal(${m.id})" style="margin-right:4px;">👁️ Read</button>
+                <button class="csp-btn-sm csp-btn-secondary" onclick="toggleContactStatus(${m.id})" style="margin-right:4px;">${m.status === 'unread' ? '✉️ Mark Read' : '📬 Mark Unread'}</button>
                 <button class="csp-btn-sm csp-btn-danger" onclick="deleteContact(${m.id})">Delete</button>
               </td>
             </tr>
@@ -3279,6 +3281,19 @@ e-page-transition,
     });
   }
 
+  window.toggleContactStatus = function(id) {
+    var m = contactMessagesCache.find(function(item){ return item.id == id; });
+    if (!m) return;
+    var newAction = m.status === 'unread' ? 'mark_read' : 'mark_unread';
+    fetch(getRootUrl('api/contact.php?action=' + newAction + '&id=' + id), { method: 'POST' })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        cspToast(res.message, 'success');
+        loadContactMessages();
+        loadOverviewData();
+      });
+  };
+
   window.openViewContactModal = function(id) {
     var m = contactMessagesCache.find(function(item){ return item.id == id; });
     if (!m) return;
@@ -3294,6 +3309,22 @@ e-page-transition,
     var badge = document.getElementById('contact-modal-status-badge');
     badge.textContent = m.status;
     badge.className = 'csp-status-badge ' + (m.status === 'read' ? 'csp-status-approved' : 'csp-status-pending');
+
+    var toggleBtn = document.getElementById('btn-contact-modal-toggle-status');
+    if (toggleBtn) {
+      toggleBtn.textContent = m.status === 'unread' ? '✉️ Mark as Read' : '📬 Mark as Unread';
+      toggleBtn.onclick = function() {
+        var newAction = m.status === 'unread' ? 'mark_read' : 'mark_unread';
+        fetch(getRootUrl('api/contact.php?action=' + newAction + '&id=' + m.id), { method: 'POST' })
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            cspToast(res.message, 'success');
+            closeModal('modal-view-contact');
+            loadContactMessages();
+            loadOverviewData();
+          });
+      };
+    }
 
     var replyBtn = document.getElementById('btn-contact-modal-reply');
     if (replyBtn) {
@@ -3312,6 +3343,7 @@ e-page-transition,
       fetch(getRootUrl('api/contact.php?action=mark_read&id=' + m.id), { method: 'POST' })
         .then(function(){
           m.status = 'read';
+          loadContactMessages();
           loadOverviewData();
         });
     }
