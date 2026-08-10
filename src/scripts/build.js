@@ -40,10 +40,20 @@ const PAGES = [
   { id: 'category',     out: 'category/success-stories/index.html' },
   { id: 'dashboard',    out: 'dashboard/index.html' },
   { id: 'post',         out: 'post/index.html' },
+  { id: 'post',         out: 'post/we-are-the-world/index.html' },
+  { id: 'post',         out: 'post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/index.html' },
+  { id: 'post',         out: 'post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2/index.html' },
+  { id: 'post',         out: 'post/conspodium-is-all-about-community/index.html' },
+  { id: 'post',         out: 'post/empowering-diaspora-communities-through-innovation-heritage/index.html' },
+  { id: 'post',         out: 'post/africans-in-diaspora-influencing-global-economic-decisions/index.html' },
+  { id: 'post',         out: 'post/creatives-shaping-representing-global-african-culture/index.html' },
   { id: 'post',         out: 'we-are-the-world/index.html' },
   { id: 'post',         out: 'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/index.html' },
   { id: 'post',         out: 'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2/index.html' },
   { id: 'post',         out: 'conspodium-is-all-about-community/index.html' },
+  { id: 'post',         out: 'empowering-diaspora-communities-through-innovation-heritage/index.html' },
+  { id: 'post',         out: 'africans-in-diaspora-influencing-global-economic-decisions/index.html' },
+  { id: 'post',         out: 'creatives-shaping-representing-global-african-culture/index.html' },
 ];
 
 /** Recursively copy a directory */
