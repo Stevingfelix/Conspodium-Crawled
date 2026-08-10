@@ -23,9 +23,15 @@ if ($method === 'GET' && ($action === 'active' || empty($action))) {
     $poll = $stmt->fetch();
 
     if (!$poll) {
-        http_response_code(404);
-        echo json_encode(["success" => false, "error" => "No active poll found"]);
-        exit;
+        $stmtAny = $pdo->query("SELECT * FROM polls ORDER BY created_at DESC LIMIT 1");
+        $poll = $stmtAny->fetch();
+        if ($poll) {
+            $pdo->exec("UPDATE polls SET is_active = 1 WHERE id = " . intval($poll['id']));
+        } else {
+            http_response_code(404);
+            echo json_encode(["success" => false, "error" => "No active poll found"]);
+            exit;
+        }
     }
 
     $options = json_decode($poll['options_json'], true) ?? [];
