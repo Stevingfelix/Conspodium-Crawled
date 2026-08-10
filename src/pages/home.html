@@ -2916,98 +2916,95 @@ e-page-transition,
 						</div>
 				</div>
 		<div class="elementor-element elementor-element-1667980d e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="1667980d" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-		<div class="elementor-element elementor-element-36e194ec e-con-full e-grid elementor-invisible e-con e-child adv-sticky-elementor" data-id="36e194ec" data-element_type="container" data-e-type="container" data-settings="{&quot;animation&quot;:&quot;zoomIn&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-		<div class="elementor-element elementor-element-6a58cb98 e-con-full e-flex elementor-invisible e-con e-child adv-sticky-elementor" data-id="6a58cb98" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;zoomIn&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-79d2ebfe elementor-widget elementor-widget-eael-progress-bar" data-id="79d2ebfe" data-element_type="widget" data-e-type="widget" data-widget_type="eael-progress-bar.default">
-				<div class="elementor-widget-container">
-					<div class="eael-progressbar-circle-container center">
-                
-            
-                <div class="eael-progressbar eael-progressbar-circle" data-layout="circle" data-count="97" data-duration="1500">
-                    <div class="eael-progressbar-circle-pie">
-                        <div class="eael-progressbar-circle-half-left eael-progressbar-circle-half"></div>
-                        <div class="eael-progressbar-circle-half-right eael-progressbar-circle-half"></div>
-                    </div>
-                    <div class="eael-progressbar-circle-inner"></div>
-                    <div class="eael-progressbar-circle-inner-content">
-                        
-                        <span class="eael-progressbar-count-wrap"><span class="eael-progressbar-count">0</span><span class="postfix">%</span></span>
-                    </div>
-                </div>
-
-                
-            </div>				</div>
+		<div class="csp-reach-grid">
+			<style>
+				.csp-reach-grid {
+					display: grid;
+					grid-template-columns: repeat(3, 1fr);
+					gap: 28px;
+					margin: 40px 0;
+					max-width: 1100px;
+					width: 100%;
+				}
+				@media(max-width: 800px) {
+					.csp-reach-grid { grid-template-columns: 1fr; gap: 20px; }
+				}
+				.csp-reach-card {
+					background: #ffffff;
+					border: 1px solid #e2e8f0;
+					border-radius: 20px;
+					padding: 36px 28px;
+					text-align: center;
+					box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+					transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+				}
+				.csp-reach-card:hover {
+					transform: translateY(-4px);
+					box-shadow: 0 16px 36px rgba(0, 174, 254, 0.12);
+					border-color: rgba(0, 174, 254, 0.35);
+				}
+				.csp-reach-ring {
+					width: 104px;
+					height: 104px;
+					margin: 0 auto 20px;
+					border-radius: 50%;
+					background: conic-gradient(#00AEFE var(--pct), #e2e8f0 0deg);
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					box-shadow: 0 6px 20px rgba(0, 174, 254, 0.15);
+				}
+				.csp-reach-ring-inner {
+					width: 86px;
+					height: 86px;
+					border-radius: 50%;
+					background: #ffffff;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-family: 'Inter', -apple-system, sans-serif;
+					font-weight: 800;
+					font-size: 1.45rem;
+					color: #0f172a;
+				}
+				.csp-reach-tag {
+					font-size: 0.75rem;
+					font-weight: 700;
+					letter-spacing: 0.14em;
+					color: #00AEFE;
+					text-transform: uppercase;
+					margin-bottom: 8px;
+				}
+				.csp-reach-desc {
+					font-size: 0.9rem;
+					color: #475569;
+					line-height: 1.55;
+					margin: 0;
+					font-weight: 500;
+				}
+			</style>
+			<div class="csp-reach-card">
+				<div class="csp-reach-ring" style="--pct: 97%;">
+					<div class="csp-reach-ring-inner">97%</div>
 				</div>
-				<div class="elementor-element elementor-element-49364f9e sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="49364f9e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">ENGAGEMENT RATE</h2>				</div>
+				<div class="csp-reach-tag">ENGAGEMENT RATE</div>
+				<p class="csp-reach-desc">Our readers spend an average of 8 minutes per article</p>
+			</div>
+			<div class="csp-reach-card">
+				<div class="csp-reach-ring" style="--pct: 78%;">
+					<div class="csp-reach-ring-inner">78%</div>
 				</div>
-				<div class="elementor-element elementor-element-2a0a48b9 sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="2a0a48b9" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">Our readers spend an average of 8 minutes per article</h2>				</div>
+				<div class="csp-reach-tag">GLOBAL REACH</div>
+				<p class="csp-reach-desc">Readers in professional and executive roles across 6 continents</p>
+			</div>
+			<div class="csp-reach-card">
+				<div class="csp-reach-ring" style="--pct: 81%;">
+					<div class="csp-reach-ring-inner">81%</div>
 				</div>
-				</div>
-		<div class="elementor-element elementor-element-67eed0e e-con-full e-flex elementor-invisible e-con e-child adv-sticky-elementor" data-id="67eed0e" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;zoomIn&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-56780fe3 elementor-widget elementor-widget-eael-progress-bar" data-id="56780fe3" data-element_type="widget" data-e-type="widget" data-widget_type="eael-progress-bar.default">
-				<div class="elementor-widget-container">
-					<div class="eael-progressbar-circle-container center">
-                
-            
-                <div class="eael-progressbar eael-progressbar-circle" data-layout="circle" data-count="78" data-duration="1500">
-                    <div class="eael-progressbar-circle-pie">
-                        <div class="eael-progressbar-circle-half-left eael-progressbar-circle-half"></div>
-                        <div class="eael-progressbar-circle-half-right eael-progressbar-circle-half"></div>
-                    </div>
-                    <div class="eael-progressbar-circle-inner"></div>
-                    <div class="eael-progressbar-circle-inner-content">
-                        
-                        <span class="eael-progressbar-count-wrap"><span class="eael-progressbar-count">0</span><span class="postfix">%</span></span>
-                    </div>
-                </div>
-
-                
-            </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-7ee8d4d3 sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="7ee8d4d3" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">GLOBAL REACH</h2>				</div>
-				</div>
-				<div class="elementor-element elementor-element-140e8970 sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="140e8970" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">Readers in professional and executive roles</h2>				</div>
-				</div>
-				</div>
-		<div class="elementor-element elementor-element-711c8c93 e-con-full e-flex elementor-invisible e-con e-child adv-sticky-elementor" data-id="711c8c93" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;zoomIn&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-44e65799 elementor-widget elementor-widget-eael-progress-bar" data-id="44e65799" data-element_type="widget" data-e-type="widget" data-widget_type="eael-progress-bar.default">
-				<div class="elementor-widget-container">
-					<div class="eael-progressbar-circle-container center">
-                
-            
-                <div class="eael-progressbar eael-progressbar-circle" data-layout="circle" data-count="81" data-duration="1500">
-                    <div class="eael-progressbar-circle-pie">
-                        <div class="eael-progressbar-circle-half-left eael-progressbar-circle-half"></div>
-                        <div class="eael-progressbar-circle-half-right eael-progressbar-circle-half"></div>
-                    </div>
-                    <div class="eael-progressbar-circle-inner"></div>
-                    <div class="eael-progressbar-circle-inner-content">
-                        
-                        <span class="eael-progressbar-count-wrap"><span class="eael-progressbar-count">0</span><span class="postfix">%</span></span>
-                    </div>
-                </div>
-
-                
-            </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-153dfa2e sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="153dfa2e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">GROWTH RATE</h2>				</div>
-				</div>
-				<div class="elementor-element elementor-element-632cf641 sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="632cf641" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">Year-over-year subscriber growth</h2>				</div>
-				</div>
-				</div>
-				</div>
+				<div class="csp-reach-tag">GROWTH RATE</div>
+				<p class="csp-reach-desc">Year-over-year subscriber and readership growth</p>
+			</div>
+		</div>
 				</div>
 				<div class="elementor-element elementor-element-180693ef elementor-widget elementor-widget-spacer" data-id="180693ef" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
 				<div class="elementor-widget-container">
