@@ -278,21 +278,26 @@ for (const page of PAGES) {
     }
   }
 
-  // Replace component include comments
+  // Replace main header & footer components
   if (wpHeaderHtml) {
-    html = html.replace(/<!--\s*INCLUDE:(header-fixes|header|wp-header)\.html\s*-->/gi, wpHeaderHtml);
+    html = html.replace(/<!--\s*INCLUDE:(header|wp-header)\.html\s*-->/gi, wpHeaderHtml);
   }
   if (wpFooterHtml) {
     html = html.replace(/<!--\s*INCLUDE:(footer|wp-footer)\.html\s*-->/gi, wpFooterHtml);
   }
 
-  // Clean out any legacy or duplicate header fix blocks and scripts
+  // Clean out any legacy or duplicated header fix blocks in raw template source
   html = html.replace(/<!-- CSP_HEADER_FIXES_START -->[\s\S]*?<!-- CSP_HEADER_FIXES_END -->\n?/g, '');
   html = html.replace(/<style id="csp-header-fixes">[\s\S]*?<\/style>\n?/g, '');
   html = html.replace(/<script id="csp-mobile-menu-script">[\s\S]*?<\/script>\n?/g, '');
 
+  // Now inject header-fixes cleanly into head once
   if (headerFixesHtml) {
-    html = html.replace('</head>', headerFixesHtml + '\n</head>');
+    if (html.includes('<!-- INCLUDE:header-fixes.html -->')) {
+      html = html.replace(/<!--\s*INCLUDE:header-fixes\.html\s*-->/gi, headerFixesHtml);
+    } else if (!html.includes('id="csp-header-fixes"')) {
+      html = html.replace('</head>', headerFixesHtml + '\n</head>');
+    }
   }
 
   // Normalize relative assets & wp navigation links to root-relative paths
