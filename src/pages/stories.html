@@ -389,6 +389,7 @@ min-width: 100px;
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1957,13 +1958,13 @@ e-page-transition,
                 <div class="eael-entry-wrapper">
                   <header class="eael-entry-header">
                     <h2 class="eael-entry-title">
-                      <a class="eael-grid-post-link" href="#" title="${post.title}">${post.title}</a>
+                      <a class="eael-grid-post-link" href="../post/${post.slug || post.id}/" title="${post.title}">${post.title}</a>
                     </h2>
                   </header>
                   <div class="eael-entry-content">
                     <div class="eael-grid-post-excerpt">
                       <p>${post.excerpt || ''}</p>
-                      <a href="#" class="eael-post-elements-readmore-btn">Read More</a>
+                      <a href="../post/${post.slug || post.id}/" class="eael-post-elements-readmore-btn">Read Story</a>
                     </div>
                   </div>
                   <div class="eael-entry-header-after style-two">
@@ -1975,13 +1976,6 @@ e-page-transition,
               </div>
             </div>
           `;
-
-          article.querySelectorAll('a').forEach(function(a){
-            a.addEventListener('click', function(e){
-              e.preventDefault();
-              cspAlert((post.content || post.excerpt || 'No detailed content available.').replace(/<[^>]*>?/gm, '') + '\n\nViews: ' + (post.views || 0), post.title);
-            });
-          });
 
           appender.appendChild(article);
         });

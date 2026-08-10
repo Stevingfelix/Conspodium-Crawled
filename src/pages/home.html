@@ -364,6 +364,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1656,7 +1657,7 @@ e-page-transition,
     <h1 class="csp-hero-title">The Digital Sovereignty Crisis:<br><em>Who Controls Africa's Data Future?</em></h1>
     <p class="csp-hero-sub">A landmark investigation into how global tech giants are shaping African digital policy — and what diaspora leaders are doing to fight back.</p>
     <div class="csp-hero-btns">
-      <a href="./stories/" class="csp-hero-btn-primary">Read More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="./post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/" class="csp-hero-btn-primary">Read More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a href="./stories/" class="csp-hero-btn-secondary">Explore All Essays</a>
     </div>
   </div>
@@ -1820,7 +1821,7 @@ e-page-transition,
                 '<h1 class="csp-hero-title">' + post.title + '</h1>' +
                 '<p class="csp-hero-sub">' + (post.excerpt || '') + '</p>' +
                 '<div class="csp-hero-btns">' +
-                  '<a href="./stories/" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
+                  '<a href="./post/' + (post.slug || post.id) + '/" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
                   '<a href="./stories/" class="csp-hero-btn-secondary">Explore All Stories</a>' +
                 '</div>' +
               '</div>';

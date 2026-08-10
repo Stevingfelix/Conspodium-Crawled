@@ -326,6 +326,12 @@
 
 
 
+
+
+
+
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1577,9 +1583,10 @@ e-page-transition,
         res.posts.forEach(function(p){
           var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
           var pubDate = p.published_at ? p.published_at.slice(0,10) : 'Recent';
+          var postLink = '../post/' + (p.slug || p.id) + '/';
           
           gridHtml += `
-            <div class="csp-card-item" onclick="openViewArticleModal(${p.id})">
+            <div class="csp-card-item" onclick="window.location.href='${postLink}'">
               <div class="csp-card-img-wrap">
                 <img src="${imgUrl}" alt="${p.title}" class="csp-card-img" />
                 <span class="csp-card-badge">${p.category_icon || '🏷️'} ${p.category_name || 'Category'}</span>
@@ -1620,13 +1627,12 @@ e-page-transition,
         var otherPosts = res.posts.filter(function(p){ return p.category_slug !== currentSlug; });
         if (otherPosts.length === 0) otherPosts = res.posts;
 
-        postsCache = postsCache.concat(otherPosts);
-
         var relHtml = '';
         otherPosts.slice(0, 4).forEach(function(p){
           var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
+          var postLink = '../post/' + (p.slug || p.id) + '/';
           relHtml += `
-            <div class="csp-card-item" onclick="openViewArticleModal(${p.id})">
+            <div class="csp-card-item" onclick="window.location.href='${postLink}'">
               <div class="csp-card-img-wrap">
                 <img src="${imgUrl}" alt="${p.title}" class="csp-card-img" />
                 <span class="csp-card-badge">${p.category_icon || '🏷️'} ${p.category_name || 'Category'}</span>

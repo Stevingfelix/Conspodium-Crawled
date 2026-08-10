@@ -88,6 +88,35 @@ if ($resource === 'categories') {
     }
 }
 
+// ── COMMENTS RESOURCE ────────────────────────────────────────────────────────
+if ($resource === 'comments') {
+    if ($method === 'GET') {
+        $postId = intval($_GET['post_id'] ?? 0);
+        $stmt = $pdo->prepare("SELECT * FROM comments WHERE post_id = ? AND status = 'approved' ORDER BY created_at DESC");
+        $stmt->execute([$postId]);
+        echo json_encode(["success" => true, "comments" => $stmt->fetchAll()]);
+        exit;
+    }
+
+    if ($method === 'POST') {
+        $postId = intval($input['post_id'] ?? 0);
+        $authorName = trim($input['author_name'] ?? 'Anonymous');
+        $authorEmail = trim($input['author_email'] ?? '');
+        $content = trim($input['content'] ?? '');
+
+        if (!$postId || !$content) {
+            echo json_encode(["success" => false, "error" => "Post ID and comment text are required"]);
+            exit;
+        }
+
+        $stmt = $pdo->prepare("INSERT INTO comments (post_id, author_name, author_email, content, status) VALUES (?, ?, ?, ?, 'approved')");
+        $stmt->execute([$postId, $authorName, $authorEmail, $content]);
+
+        echo json_encode(["success" => true, "commentId" => $pdo->lastInsertId(), "message" => "Comment posted successfully"]);
+        exit;
+    }
+}
+
 // ── POSTS RESOURCE ───────────────────────────────────────────────────────────
 if ($method === 'GET') {
     $slugOrId = $_GET['slug'] ?? $_GET['id'] ?? null;

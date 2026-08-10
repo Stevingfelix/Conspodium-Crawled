@@ -105,6 +105,17 @@ try {
             status TEXT DEFAULT 'pending',
             submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
+
+        CREATE TABLE IF NOT EXISTS comments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            post_id INTEGER NOT NULL,
+            author_name TEXT NOT NULL,
+            author_email TEXT NOT NULL,
+            content TEXT NOT NULL,
+            status TEXT DEFAULT 'approved',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+        );
     ");
 
     // Migration for existing databases

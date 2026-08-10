@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Category — Conspodium</title>
-  <meta name="description" id="page-meta-desc" content="Browse published articles by category on Conspodium Premium Diaspora Magazine.">
+  <title id="page-title">Article — Conspodium</title>
+  <meta name="description" id="page-meta-desc" content="Read full article on Conspodium Premium Diaspora Magazine.">
   <link rel="icon" href="../wp-content/uploads/2026/01/CONSPODIUM-NEW-2.png" sizes="32x32">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Merienda:wght@700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Global Stylesheet -->
   <link rel="stylesheet" href="../assets/index.css">
@@ -32,62 +35,53 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* ── CATEGORY HERO ── */
-    .csp-cat-hero {
-      position: relative;
-      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-      border-bottom: 1px solid var(--border-card);
-      padding: 60px 8% 50px 8%;
+    /* ── SINGLE POST LAYOUT ── */
+    .csp-post-sec {
+      padding: 40px 8% 80px 8%;
+      max-width: 1240px;
+      margin: 0 auto;
     }
-    .csp-cat-breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.84rem;
-      color: var(--text-sub);
-      margin-bottom: 20px;
+    .csp-post-grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 48px;
     }
-    .csp-cat-breadcrumb a {
-      color: var(--blue-accent);
-      text-decoration: none;
-      font-weight: 500;
+    @media (max-width: 960px) {
+      .csp-post-grid-layout { grid-template-columns: 1fr; }
     }
-    .csp-cat-breadcrumb a:hover {
-      text-decoration: underline;
-    }
-    .csp-cat-hero-flex {
+
+    /* ── BREADCRUMB & BACK BTN ── */
+    .csp-post-top-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 32px;
-    }
-    .csp-cat-hero-info {
-      max-width: 650px;
-    }
-    .csp-cat-hero-title {
-      font-family: 'Merriweather', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 400;
-      color: var(--text-main);
-      line-height: 1.2;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .csp-cat-hero-desc {
-      font-size: 1.05rem;
-      color: var(--text-sub);
-      line-height: 1.6;
       margin-bottom: 24px;
-    }
-    .csp-cat-hero-cta-bar {
-      display: flex;
-      align-items: center;
-      gap: 14px;
       flex-wrap: wrap;
+      gap: 12px;
     }
-    .csp-cat-count-badge {
+    .csp-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 50px;
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      transition: all 0.2s ease;
+    }
+    .csp-back-btn:hover {
+      background: var(--blue-accent);
+      color: #ffffff;
+      border-color: var(--blue-accent);
+    }
+
+    /* ── POST HEADER ── */
+    .csp-post-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -96,243 +90,232 @@
       color: var(--blue-accent);
       font-size: 0.82rem;
       font-weight: 600;
-      padding: 8px 18px;
+      padding: 6px 16px;
       border-radius: 50px;
+      margin-bottom: 16px;
+      text-decoration: none;
     }
-    .csp-cat-share-btn {
+    .csp-post-title {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(2rem, 3.8vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-main);
+      margin-bottom: 20px;
+    }
+    .csp-post-meta {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      border-y: 1px solid var(--border-card);
+      padding: 14px 0;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    /* ── FEATURED IMAGE ── */
+    .csp-post-hero-img {
+      width: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+      border: 1px solid #cbd5e1;
+      margin-bottom: 32px;
+    }
+
+    /* ── ARTICLE CONTENT ── */
+    .csp-post-body {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.03);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #1e293b;
+      margin-bottom: 40px;
+    }
+    .csp-post-body p {
+      margin-bottom: 24px;
+    }
+    .csp-post-body h2, .csp-post-body h3 {
+      font-family: 'Merriweather', serif;
+      color: #0f172a;
+      margin: 36px 0 16px 0;
+      line-height: 1.3;
+    }
+    .csp-post-body blockquote {
+      border-left: 4px solid var(--blue-accent);
+      background: rgba(0, 174, 254, 0.04);
+      padding: 20px 24px;
+      border-radius: 0 12px 12px 0;
+      font-style: italic;
+      margin: 28px 0;
+      color: #334155;
+    }
+    .csp-post-excerpt-box {
+      background: rgba(0, 174, 254, 0.05);
+      border-left: 4px solid var(--blue-accent);
+      border-radius: 12px;
+      padding: 18px 24px;
+      font-size: 1.08rem;
+      font-weight: 500;
+      color: #0f172a;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* ── SHARE BUTTONS ── */
+    .csp-share-sec {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .csp-share-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .csp-share-btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .csp-share-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
-      color: #ffffff !important;
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 8px 24px;
+      padding: 8px 16px;
       border-radius: 50px;
-      text-decoration: none !important;
-      box-shadow: 0 4px 14px rgba(0, 174, 254, 0.3);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+      transition: transform 0.2s ease;
     }
-    .csp-cat-share-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(0, 174, 254, 0.45);
+    .csp-share-btn:hover { transform: translateY(-2px); }
+    .csp-share-fb { background: #1877f2; }
+    .csp-share-tw { background: #1da1f2; }
+    .csp-share-li { background: #0a66c2; }
+    .csp-share-wa { background: #25d366; }
+
+    /* ── SIDEBAR ── */
+    .csp-sidebar-box {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+      margin-bottom: 30px;
     }
-    .csp-cat-banner-img {
-      width: 320px;
-      height: 180px;
+    .csp-sidebar-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f1f5f9;
+    }
+    .csp-rel-item {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #f1f5f9;
+      text-decoration: none;
+      color: inherit;
+    }
+    .csp-rel-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .csp-rel-thumb {
+      width: 80px;
+      height: 64px;
       object-fit: cover;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      background: #e2e8f0;
       flex-shrink: 0;
     }
-    @media(max-width: 850px) {
-      .csp-cat-hero-flex { flex-direction: column; align-items: flex-start; }
-      .csp-cat-banner-img { width: 100%; height: 200px; }
-    }
-
-    /* ── CATEGORY SWITCHER TABS ── */
-    .csp-cat-nav-wrap {
-      background: #ffffff;
-      border-bottom: 1px solid var(--border-card);
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-    }
-    .csp-cat-nav-inner {
-      padding: 14px 8%;
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      white-space: nowrap;
-      scrollbar-width: none;
-    }
-    .csp-cat-nav-inner::-webkit-scrollbar { display: none; }
-    .csp-cat-tab {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 20px;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      background: #f1f5f9;
-      text-decoration: none;
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
-    }
-    .csp-cat-tab:hover {
-      background: #e2e8f0;
-      color: var(--text-main);
-    }
-    .csp-cat-tab.active {
-      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
-      color: #ffffff;
-      box-shadow: 0 4px 14px rgba(0, 174, 254, 0.3);
-    }
-
-    /* ── ARTICLES GRID SECTION ── */
-    .csp-cat-content-sec {
-      padding: 50px 8% 60px 8%;
-      max-width: 1360px;
-      margin: 0 auto;
-    }
-    .csp-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 30px;
-    }
-
-    .csp-card-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-      cursor: pointer;
-    }
-    .csp-card-item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
-      border-color: rgba(0, 174, 254, 0.4);
-    }
-    .csp-card-img-wrap {
-      position: relative;
-      width: 100%;
-      height: 210px;
-      overflow: hidden;
-      background: #e2e8f0;
-    }
-    .csp-card-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    .csp-card-item:hover .csp-card-img {
-      transform: scale(1.05);
-    }
-    .csp-card-badge {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      background: rgba(15, 23, 42, 0.75);
-      color: #ffffff;
-      backdrop-filter: blur(6px);
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 30px;
-    }
-    .csp-card-body {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    .csp-card-meta {
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .csp-card-title {
+    .csp-rel-info h4 {
       font-family: 'Merriweather', serif;
-      font-size: 1.15rem;
+      font-size: 0.92rem;
       font-weight: 400;
-      color: var(--text-main);
+      color: #0f172a;
       line-height: 1.4;
-      margin-bottom: 12px;
+      margin: 0 0 6px 0;
       transition: color 0.2s ease;
     }
-    .csp-card-item:hover .csp-card-title {
-      color: var(--blue-accent);
-    }
-    .csp-card-excerpt {
-      font-size: 0.88rem;
+    .csp-rel-item:hover .csp-rel-info h4 { color: var(--blue-accent); }
+    .csp-rel-meta {
+      font-size: 0.75rem;
       color: var(--text-sub);
-      line-height: 1.6;
-      margin-bottom: 20px;
-      flex: 1;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .csp-card-footer {
-      border-top: 1px solid #f1f5f9;
-      padding-top: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--blue-accent);
     }
 
-    /* Empty state */
-    .csp-empty-card {
-      grid-column: 1 / -1;
+    /* ── COMMENTS SECTION ── */
+    .csp-comments-sec {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
+      border: 1px solid var(--border-card);
       border-radius: 20px;
-      padding: 60px 30px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      padding: 36px;
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.03);
     }
-
-    /* ── MODAL OVERLAY FIX ── */
-    .csp-modal-overlay {
-      position: fixed !important;
-      inset: 0 !important;
-      background: rgba(15, 23, 42, 0.65) !important;
-      backdrop-filter: blur(8px) !important;
-      -webkit-backdrop-filter: blur(8px) !important;
-      z-index: 999999 !important;
-      display: none !important;
-      align-items: center !important;
-      justify-content: center !important;
-      padding: 20px !important;
+    .csp-comments-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.35rem;
+      color: #0f172a;
+      margin-bottom: 24px;
     }
-    .csp-modal-overlay.active {
-      display: flex !important;
+    .csp-comment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 36px;
     }
-    .csp-modal {
-      background: #ffffff !important;
-      border: 1px solid #cbd5e1 !important;
-      border-radius: 24px !important;
-      padding: 28px !important;
-      width: 100% !important;
-      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2) !important;
-      transform: scale(0.95);
-      transition: transform 0.25s ease !important;
+    .csp-input-field {
+      width: 100%;
+      padding: 12px 18px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s ease;
     }
-    .csp-modal-overlay.active .csp-modal {
-      transform: scale(1);
+    .csp-input-field:focus { border-color: var(--blue-accent); }
+    .csp-comment-item {
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+    .csp-comment-author {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 0.95rem;
+    }
+    .csp-comment-date {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      margin-left: 8px;
+    }
+    .csp-comment-text {
+      font-size: 0.92rem;
+      color: #334155;
+      line-height: 1.6;
+      margin-top: 8px;
     }
   </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1393,313 +1376,269 @@ e-page-transition,
   <!-- HEADER COMPONENT -->
   <!-- INCLUDE:header-fixes.html -->
 
-  <!-- CATEGORY HERO -->
-  <section class="csp-cat-hero">
-    <div class="csp-cat-breadcrumb">
-      <a href="../">Home</a> &rsaquo; <a href="../stories/">All Stories &amp; Categories</a> &rsaquo; <span id="cat-bc-name">Category</span>
+  <!-- MAIN SINGLE POST SECTION -->
+  <main class="csp-post-sec">
+    <!-- Top Nav -->
+    <div class="csp-post-top-nav">
+      <a href="../stories/" class="csp-back-btn" id="post-back-link">&larr; Back To Stories</a>
+      <a href="../submit-story/" class="csp-cat-share-btn" style="font-size:0.8rem;padding:6px 18px;">✍️ Submit Your Story</a>
     </div>
-    <div class="csp-cat-hero-flex">
-      <div class="csp-cat-hero-info">
-        <h1 class="csp-cat-hero-title">
-          <span id="cat-hero-icon">🏷️</span>
-          <span id="cat-hero-name">Loading Category...</span>
-        </h1>
-        <p class="csp-cat-hero-desc" id="cat-hero-desc">Discover in-depth investigations, personal reflections, and diaspora stories under this category.</p>
-        <div class="csp-cat-hero-cta-bar">
-          <span class="csp-cat-count-badge" id="cat-hero-badge">📚 0 Articles Published</span>
-          <a href="../submit-story/" class="csp-cat-share-btn">✍️ Share Your Story &rarr;</a>
+
+    <div class="csp-post-grid-layout">
+      <!-- MAIN ARTICLE COLUMN -->
+      <article>
+        <a href="#" id="post-category-badge" class="csp-post-badge">🏷️ Category</a>
+        
+        <h1 class="csp-post-title" id="post-title">Loading Article Title...</h1>
+
+        <div class="csp-post-meta">
+          <span>✍️ <strong id="post-author" style="color:#0f172a;">Conspodium Editorial</strong></span>
+          <span>📅 <span id="post-date">Recent</span></span>
+          <span>⏱️ <span id="post-reading-time">5 min read</span></span>
+          <span>👁️ <span id="post-views">0 views</span></span>
         </div>
-      </div>
-      <img id="cat-hero-banner" src="" alt="Category Banner" class="csp-cat-banner-img" style="display:none;">
-    </div>
-  </section>
 
-  <!-- DYNAMIC CATEGORY FILTER SWITCHER TABS -->
-  <div class="csp-cat-nav-wrap">
-    <div class="csp-cat-nav-inner" id="csp-cat-tabs-container">
-      <a href="../stories/" class="csp-cat-tab">📚 All Stories</a>
-      <!-- Dynamic Category Tabs populate here -->
-    </div>
-  </div>
+        <img id="post-hero-image" src="" alt="Featured Article Image" class="csp-post-hero-img" style="display:none;">
 
-  <!-- MAIN ARTICLES GRID SECTION -->
-  <section class="csp-cat-content-sec">
-    <div class="csp-grid" id="cat-posts-grid">
-      <!-- Loading Skeleton -->
-      <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-sub);">
-        <div style="font-size:1.2rem;margin-bottom:8px;">⏳ Loading stories...</div>
-      </div>
-    </div>
-  </section>
+        <div id="post-excerpt-box" class="csp-post-excerpt-box" style="display:none;"></div>
 
-  <!-- RELATED / MORE STORIES SECTION -->
-  <section id="csp-related-sec" style="background:#ffffff;border-top:1px solid #e2e8f0;padding:60px 8%;margin-top:20px;">
-    <div style="max-width:1360px;margin:0 auto;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:16px;">
-        <div>
-          <h2 style="font-family:'Merriweather',serif;font-size:1.6rem;color:#0f172a;margin:0 0 6px 0;">Explore Other Diaspora Stories</h2>
-          <p style="color:#64748b;font-size:0.92rem;margin:0;">Discover recent voices, investigations, and features across all topics.</p>
+        <div id="post-content-body" class="csp-post-body">
+          <div style="text-align:center;padding:40px;color:#94a3b8;">⏳ Loading story content...</div>
         </div>
-        <a href="../stories/" class="csp-btn-sm csp-btn-secondary" style="padding:10px 24px;border-radius:50px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;">View All Stories &rarr;</a>
-      </div>
 
-      <div class="csp-grid" id="related-posts-grid">
-        <div style="grid-column:1/-1;text-align:center;padding:30px;color:#94a3b8;">Loading related stories...</div>
-      </div>
+        <!-- SHARE SECTION -->
+        <div class="csp-share-sec">
+          <div class="csp-share-title">Loved This Story? Share It</div>
+          <div class="csp-share-btns">
+            <a href="#" class="csp-share-btn csp-share-fb" id="share-fb" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="#" class="csp-share-btn csp-share-tw" id="share-tw" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+            <a href="#" class="csp-share-btn csp-share-li" id="share-li" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+            <a href="#" class="csp-share-btn csp-share-wa" id="share-wa" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+          </div>
+        </div>
+
+        <!-- COMMENTS SECTION -->
+        <section class="csp-comments-sec">
+          <h3 class="csp-comments-title">Discussion &amp; Responses</h3>
+          
+          <!-- Comment Submission Form -->
+          <form id="form-submit-comment" class="csp-comment-form">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <input type="text" id="comm-author" class="csp-input-field" placeholder="Your Name *" required>
+              <input type="email" id="comm-email" class="csp-input-field" placeholder="Your Email *" required>
+            </div>
+            <textarea id="comm-text" class="csp-input-field" rows="4" placeholder="Share your perspective on this article..." required></textarea>
+            <div>
+              <button type="submit" class="csp-btn-sm csp-btn-primary" style="padding:12px 30px;border-radius:50px;font-size:0.9rem;">Post Comment</button>
+            </div>
+          </form>
+
+          <!-- Comments Stream -->
+          <div id="comments-list-container">
+            <div style="color:#94a3b8;font-size:0.9rem;">No comments yet. Be the first to join the conversation!</div>
+          </div>
+        </section>
+      </article>
+
+      <!-- SIDEBAR COLUMN -->
+      <aside>
+        <div class="csp-sidebar-box">
+          <h3 class="csp-sidebar-title">Related Stories</h3>
+          <div id="sidebar-related-posts">
+            <div style="color:#94a3b8;font-size:0.85rem;">Loading related stories...</div>
+          </div>
+        </div>
+
+        <div class="csp-sidebar-box" style="background:linear-gradient(135deg, #050d1a 0%, #0c2040 100%);color:#ffffff;">
+          <h3 class="csp-sidebar-title" style="color:#ffffff;border-color:rgba(255,255,255,0.15);">Share Your Voice</h3>
+          <p style="font-size:0.9rem;color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:20px;">
+            Have a story, essay, or research paper on diaspora culture, tech, or policy? Publish it with Conspodium.
+          </p>
+          <a href="../submit-story/" class="csp-hero-btn-primary" style="width:100%;text-align:center;font-size:0.85rem;padding:12px 20px;">
+            Submit Your Story →
+          </a>
+        </div>
+      </aside>
     </div>
-  </section>
-
-  <!-- ARTICLE VIEW OVERVIEW MODAL -->
-  <div class="csp-modal-overlay" id="modal-view-article">
-    <div class="csp-modal" style="max-width:720px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid #e2e8f0;padding-bottom:12px;">
-        <div>
-          <span id="art-modal-eyebrow" class="csp-badge" style="background:rgba(0,174,254,0.1);color:var(--blue);border:1px solid rgba(0,174,254,0.3);margin-bottom:6px;display:inline-block;">Featured Article</span>
-          <h3 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.25rem;margin:4px 0 0 0;" id="art-modal-title">Article Title</h3>
-        </div>
-        <button style="background:none;border:none;color:#64748b;font-size:1.5rem;cursor:pointer;" data-close="modal-view-article">&times;</button>
-      </div>
-
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:0.85rem;background:#f8fafc;padding:10px 14px;border-radius:10px;">
-        <div>
-          <strong id="art-modal-author" style="color:#0f172a;">Author Name</strong>
-          <span id="art-modal-date" style="color:#64748b;margin-left:8px;">2026-02-05</span>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <span id="art-modal-category-badge" class="csp-badge" style="background:rgba(183,31,113,0.1);color:#B71F71;border:1px solid rgba(183,31,113,0.3);">Category</span>
-        </div>
-      </div>
-
-      <img id="art-modal-image" src="" alt="Article Featured Image" style="width:100%;max-height:280px;object-fit:cover;border-radius:12px;margin-bottom:16px;display:none;border:1px solid #cbd5e1;">
-
-      <div id="art-modal-excerpt" style="font-size:0.92rem;font-weight:600;color:#334155;margin-bottom:16px;line-height:1.5;background:rgba(0,174,254,0.05);padding:12px 16px;border-left:4px solid #00AEFE;border-radius:6px;"></div>
-
-      <div id="art-modal-body" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;max-height:320px;overflow-y:auto;font-size:0.9rem;line-height:1.6;color:#1e293b;margin-bottom:24px;"></div>
-
-      <div style="display:flex;gap:10px;justify-content:flex-end;">
-        <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-view-article">Close</button>
-      </div>
-    </div>
-  </div>
+  </main>
 
   <!-- FOOTER COMPONENT -->
   <!-- INCLUDE:footer.html -->
 
-  <!-- DYNAMIC CATEGORY CONTROLLER SCRIPT -->
+  <!-- SINGLE POST CONTROLLER SCRIPT -->
   <script>
   (function(){
-    var postsCache = [];
+    var currentPostId = null;
 
-    // Helper: Extract current category slug from URL path (e.g. /category/culture-heritage/ or /category/innovation)
-    function getCategorySlugFromUrl() {
+    // Helper: Extract post slug or ID from URL path (e.g. /post/we-are-the-world/ or /post/12/)
+    function getPostIdentifierFromUrl() {
       var path = window.location.pathname.replace(/\/$/, '');
       var parts = path.split('/');
-      var idx = parts.indexOf('category');
+      var idx = parts.indexOf('post');
+      if (idx === -1) idx = parts.indexOf('story');
+
       if (idx !== -1 && parts[idx + 1] && parts[idx + 1] !== 'index.html') {
         return decodeURIComponent(parts[idx + 1]);
       }
       var urlParams = new URLSearchParams(window.location.search);
-      var catParam = urlParams.get('cat') || urlParams.get('category');
-      if (catParam) return catParam;
-      
-      // If visiting /category/ directly without a slug, redirect cleanly to /stories/
-      if (path.endsWith('/category') || path.endsWith('/category/index.html')) {
-        window.location.href = getRootUrl('stories/');
-        return 'culture-heritage';
-      }
-      return 'culture-heritage';
+      return urlParams.get('slug') || urlParams.get('id') || urlParams.get('post') || 'we-are-the-world';
     }
 
-    var currentSlug = getCategorySlugFromUrl();
+    var identifier = getPostIdentifierFromUrl();
 
-    // 1. Load All Categories for Top Filter Tabs & Match Active Category Hero Info
-    fetch(getRootUrl('api/posts.php?resource=categories'))
+    // 1. Fetch Post Details
+    fetch(getRootUrl('api/posts.php?id=' + encodeURIComponent(identifier) + '&slug=' + encodeURIComponent(identifier)))
       .then(function(r){ return r.json(); })
       .then(function(res){
-        if (!res.success || !res.categories) return;
-
-        var tabsContainer = document.getElementById('csp-cat-tabs-container');
-        if (tabsContainer) {
-          var tabsHtml = '<a href="../stories/" class="csp-cat-tab">📚 All Stories</a>';
-          res.categories.forEach(function(c){
-            var isActive = (c.slug === currentSlug);
-            tabsHtml += '<a href="../category/' + c.slug + '/" class="csp-cat-tab' + (isActive ? ' active' : '') + '">' + (c.icon || '🏷️') + ' ' + c.name + '</a>';
-          });
-          tabsContainer.innerHTML = tabsHtml;
-        }
-
-        // Match current category info
-        var matchedCat = res.categories.find(function(c){ return c.slug === currentSlug; });
-        if (matchedCat) {
-          document.getElementById('page-title').textContent = matchedCat.name + ' — Conspodium Category';
-          document.getElementById('cat-bc-name').textContent = matchedCat.name;
-          document.getElementById('cat-hero-name').textContent = matchedCat.name;
-          document.getElementById('cat-hero-icon').textContent = matchedCat.icon || '🏷️';
-          if (matchedCat.description) {
-            document.getElementById('cat-hero-desc').textContent = matchedCat.description;
-          }
-          if (matchedCat.image) {
-            var banner = document.getElementById('cat-hero-banner');
-            banner.src = getAbsoluteImageUrl(matchedCat.image);
-            banner.style.display = 'block';
-          }
-        } else {
-          // Fallback title formatting from slug
-          var formattedName = currentSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-          document.getElementById('page-title').textContent = formattedName + ' — Conspodium Category';
-          document.getElementById('cat-bc-name').textContent = formattedName;
-          document.getElementById('cat-hero-name').textContent = formattedName;
-        }
-      })
-      .catch(function(err){ console.error('Error fetching categories:', err); });
-
-    // 2. Fetch Posts for Active Category
-    fetch(getRootUrl('api/posts.php?category=' + encodeURIComponent(currentSlug) + '&limit=50'))
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        var grid = document.getElementById('cat-posts-grid');
-        if (!grid) return;
-
-        if (!res.success || !res.posts || res.posts.length === 0) {
-          document.getElementById('cat-hero-badge').textContent = '📚 0 Articles Published';
-          grid.innerHTML = `
-            <div class="csp-empty-card">
-              <div style="font-size:3rem;margin-bottom:12px;">✍️</div>
-              <h3 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.4rem;margin-bottom:10px;">No Stories Published Under This Category Yet</h3>
-              <p style="color:#64748b;max-width:500px;margin:0 auto 24px auto;font-size:0.95rem;line-height:1.6;">
-                Be the first author to submit an essay, report, or opinion piece for this category!
-              </p>
-              <a href="../submit-story/" class="csp-btn-sm csp-btn-primary" style="display:inline-flex;padding:12px 28px;font-size:0.9rem;border-radius:50px;text-decoration:none;">
-                Submit Your Story →
-              </a>
-            </div>
-          `;
+        if (!res.success || !res.post) {
+          document.getElementById('post-title').textContent = 'Article Not Found';
+          document.getElementById('post-content-body').innerHTML = '<div style="text-align:center;padding:40px;color:#ef4444;">Sorry, the requested article could not be found. <br><br><a href="../stories/" style="color:#00AEFE;font-weight:600;">Explore All Stories &rarr;</a></div>';
           return;
         }
 
-        postsCache = res.posts;
-        document.getElementById('cat-hero-badge').textContent = '📚 ' + res.posts.length + ' Article' + (res.posts.length === 1 ? '' : 's') + ' Published';
-        
-        var gridHtml = '';
-        res.posts.forEach(function(p){
-          var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
-          var pubDate = p.published_at ? p.published_at.slice(0,10) : 'Recent';
-          var postLink = '../post/' + (p.slug || p.id) + '/';
-          
-          gridHtml += `
-            <div class="csp-card-item" onclick="window.location.href='${postLink}'">
-              <div class="csp-card-img-wrap">
-                <img src="${imgUrl}" alt="${p.title}" class="csp-card-img" />
-                <span class="csp-card-badge">${p.category_icon || '🏷️'} ${p.category_name || 'Category'}</span>
-              </div>
-              <div class="csp-card-body">
-                <div class="csp-card-meta">
-                  <span>✍️ ${p.author_name || 'Conspodium Editorial'}</span>
-                  <span>⏱️ ${p.reading_time || '5 min'}</span>
-                </div>
-                <h3 class="csp-card-title">${p.title}</h3>
-                <p class="csp-card-excerpt">${p.excerpt || ''}</p>
-                <div class="csp-card-footer">
-                  <span>Published ${pubDate}</span>
-                  <span>Read Article &rarr;</span>
-                </div>
-              </div>
-            </div>
-          `;
-        });
+        var p = res.post;
+        currentPostId = p.id;
 
-        grid.innerHTML = gridHtml;
+        // Meta & Title
+        document.title = p.title + ' — Conspodium';
+        document.getElementById('post-title').textContent = p.title;
+        document.getElementById('post-author').textContent = p.author_name || 'Conspodium Editorial';
+        document.getElementById('post-date').textContent = p.published_at ? p.published_at.slice(0,10) : 'Recent';
+        document.getElementById('post-reading-time').textContent = p.reading_time || '5 min read';
+        document.getElementById('post-views').textContent = (p.views || 1) + ' views';
+
+        // Category Badge
+        var catBadge = document.getElementById('post-category-badge');
+        if (catBadge) {
+          catBadge.textContent = (p.category_icon || '🏷️') + ' ' + (p.category_name || 'General');
+          if (p.category_slug) {
+            catBadge.href = getRootUrl('category/' + p.category_slug + '/');
+          }
+        }
+
+        // Hero Image
+        var heroImg = document.getElementById('post-hero-image');
+        if (p.featured_image) {
+          heroImg.src = getAbsoluteImageUrl(p.featured_image);
+          heroImg.style.display = 'block';
+        } else {
+          heroImg.style.display = 'none';
+        }
+
+        // Excerpt
+        var excBox = document.getElementById('post-excerpt-box');
+        if (p.excerpt) {
+          excBox.textContent = p.excerpt;
+          excBox.style.display = 'block';
+        } else {
+          excBox.style.display = 'none';
+        }
+
+        // Content
+        document.getElementById('post-content-body').innerHTML = p.content || p.excerpt || 'No content provided for this article.';
+
+        // Update Social Share Links
+        var postUrl = encodeURIComponent(window.location.href);
+        var postTitle = encodeURIComponent(p.title);
+        document.getElementById('share-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + postUrl;
+        document.getElementById('share-tw').href = 'https://twitter.com/intent/tweet?url=' + postUrl + '&text=' + postTitle;
+        document.getElementById('share-li').href = 'https://www.linkedin.com/shareArticle?mini=true&url=' + postUrl + '&title=' + postTitle;
+        document.getElementById('share-wa').href = 'https://api.whatsapp.com/send?text=' + postTitle + '%20' + postUrl;
+
+        // Load Comments & Related Posts
+        loadComments(p.id);
+        loadRelatedPosts(p.category_id, p.id);
       })
       .catch(function(err){
-        console.error('Error fetching category posts:', err);
-        var grid = document.getElementById('cat-posts-grid');
-        if (grid) {
-          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#ef4444;">Unable to load stories. Please try refreshing.</div>';
-        }
+        console.error('Error fetching post:', err);
+        document.getElementById('post-title').textContent = 'Error Loading Story';
       });
 
-    // 3. Fetch Related / More Stories across all categories
-    fetch(getRootUrl('api/posts.php?limit=6'))
+    // 2. Fetch Related Posts for Sidebar
+    function loadRelatedPosts(catId, currentId) {
+      var query = catId ? 'category_id=' + catId + '&limit=4' : 'limit=4';
+      fetch(getRootUrl('api/posts.php?' + query))
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          var container = document.getElementById('sidebar-related-posts');
+          if (!container || !res.posts) return;
+
+          var rels = res.posts.filter(function(item){ return item.id != currentId; });
+          if (rels.length === 0) rels = res.posts;
+
+          var relHtml = '';
+          rels.slice(0, 4).forEach(function(item){
+            var imgUrl = item.featured_image ? getAbsoluteImageUrl(item.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
+            relHtml += `
+              <a href="../post/${item.slug || item.id}/" class="csp-rel-item">
+                <img src="${imgUrl}" alt="${item.title}" class="csp-rel-thumb" />
+                <div class="csp-rel-info">
+                  <h4>${item.title}</h4>
+                  <span class="csp-rel-meta">${item.category_name || 'Story'} • ${item.reading_time || '4 min'}</span>
+                </div>
+              </a>
+            `;
+          });
+
+          container.innerHTML = relHtml || '<div style="color:#94a3b8;font-size:0.85rem;">No related stories found.</div>';
+        })
+        .catch(function(err){ console.error('Error loading related posts:', err); });
+    }
+
+    // 3. Comments Handling
+    function loadComments(postId) {
+      fetch(getRootUrl('api/posts.php?resource=comments&post_id=' + postId))
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          var container = document.getElementById('comments-list-container');
+          if (!container) return;
+
+          if (!res.comments || res.comments.length === 0) {
+            container.innerHTML = '<div style="color:#94a3b8;font-size:0.9rem;">No responses yet. Be the first to post a comment!</div>';
+            return;
+          }
+
+          var html = '';
+          res.comments.forEach(function(c){
+            html += `
+              <div class="csp-comment-item">
+                <div>
+                  <span class="csp-comment-author">💬 ${c.author_name}</span>
+                  <span class="csp-comment-date">${c.created_at ? c.created_at.slice(0,10) : 'Recent'}</span>
+                </div>
+                <div class="csp-comment-text">${c.content}</div>
+              </div>
+            `;
+          });
+          container.innerHTML = html;
+        })
+        .catch(function(err){ console.error('Error loading comments:', err); });
+    }
+
+    // Comment Form Submit Handler
+    document.getElementById('form-submit-comment').addEventListener('submit', function(e){
+      e.preventDefault();
+      if (!currentPostId) return;
+
+      var author = document.getElementById('comm-author').value;
+      var email = document.getElementById('comm-email').value;
+      var text = document.getElementById('comm-text').value;
+
+      fetch(getRootUrl('api/posts.php?resource=comments'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ post_id: currentPostId, author_name: author, author_email: email, content: text })
+      })
       .then(function(r){ return r.json(); })
       .then(function(res){
-        var relGrid = document.getElementById('related-posts-grid');
-        if (!relGrid || !res.success || !res.posts) return;
-
-        var otherPosts = res.posts.filter(function(p){ return p.category_slug !== currentSlug; });
-        if (otherPosts.length === 0) otherPosts = res.posts;
-
-        var relHtml = '';
-        otherPosts.slice(0, 4).forEach(function(p){
-          var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
-          var postLink = '../post/' + (p.slug || p.id) + '/';
-          relHtml += `
-            <div class="csp-card-item" onclick="window.location.href='${postLink}'">
-              <div class="csp-card-img-wrap">
-                <img src="${imgUrl}" alt="${p.title}" class="csp-card-img" />
-                <span class="csp-card-badge">${p.category_icon || '🏷️'} ${p.category_name || 'Category'}</span>
-              </div>
-              <div class="csp-card-body">
-                <div class="csp-card-meta">
-                  <span>✍️ ${p.author_name || 'Conspodium Editorial'}</span>
-                  <span>⏱️ ${p.reading_time || '5 min'}</span>
-                </div>
-                <h3 class="csp-card-title">${p.title}</h3>
-                <p class="csp-card-excerpt">${p.excerpt || ''}</p>
-                <div class="csp-card-footer">
-                  <span>Read Story</span>
-                  <span>Read Article &rarr;</span>
-                </div>
-              </div>
-            </div>
-          `;
-        });
-
-        relGrid.innerHTML = relHtml;
-      })
-      .catch(function(err){ console.error('Error fetching related stories:', err); });
-
-    // 4. Modal View Handler & Close Listeners
-    window.openViewArticleModal = function(id) {
-      var p = postsCache.find(function(item){ return item.id == id; });
-      if (!p) return;
-
-      document.getElementById('art-modal-title').textContent = p.title;
-      document.getElementById('art-modal-eyebrow').textContent = p.eyebrow || p.category_name || 'Featured Article';
-      document.getElementById('art-modal-author').textContent = p.author_name || 'Conspodium Editorial';
-      document.getElementById('art-modal-date').textContent = p.published_at ? p.published_at.slice(0,10) : 'Recent';
-
-      var catBadge = document.getElementById('art-modal-category-badge');
-      if (catBadge) {
-        catBadge.textContent = (p.category_icon || '🏷️') + ' ' + (p.category_name || 'General');
-      }
-
-      var imgEl = document.getElementById('art-modal-image');
-      if (p.featured_image) {
-        imgEl.src = getAbsoluteImageUrl(p.featured_image);
-        imgEl.style.display = 'block';
-      } else {
-        imgEl.style.display = 'none';
-      }
-
-      var excEl = document.getElementById('art-modal-excerpt');
-      if (p.excerpt) {
-        excEl.textContent = p.excerpt;
-        excEl.style.display = 'block';
-      } else {
-        excEl.style.display = 'none';
-      }
-
-      document.getElementById('art-modal-body').innerHTML = p.content || p.excerpt || 'No content';
-
-      var modal = document.getElementById('modal-view-article');
-      if (modal) modal.classList.add('active');
-    };
-
-    document.addEventListener('click', function(e){
-      if (e.target.closest('[data-close="modal-view-article"]') || e.target.id === 'modal-view-article') {
-        var modal = document.getElementById('modal-view-article');
-        if (modal) modal.classList.remove('active');
-      }
+        if (res.success) {
+          cspToast('Comment posted successfully!', 'success');
+          document.getElementById('comm-text').value = '';
+          loadComments(currentPostId);
+        } else {
+          cspToast('Error posting comment: ' + res.error, 'danger');
+        }
+      });
     });
   })();
   </script>

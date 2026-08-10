@@ -38,6 +38,11 @@ const PAGES = [
   { id: 'category',     out: 'category/art-entertainment/index.html' },
   { id: 'category',     out: 'category/community/index.html' },
   { id: 'category',     out: 'category/success-stories/index.html' },
+  { id: 'post',         out: 'post/index.html' },
+  { id: 'post',         out: 'we-are-the-world/index.html' },
+  { id: 'post',         out: 'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/index.html' },
+  { id: 'post',         out: 'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2/index.html' },
+  { id: 'post',         out: 'conspodium-is-all-about-community/index.html' },
 ];
 
 /** Recursively copy a directory */

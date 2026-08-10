@@ -87,6 +87,18 @@
       "dest": "/public/category/index.html"
     },
     {
+      "src": "/post",
+      "dest": "/public/post/index.html"
+    },
+    {
+      "src": "/post/(.*)",
+      "dest": "/public/post/index.html"
+    },
+    {
+      "src": "/story/(.*)",
+      "dest": "/public/post/index.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1"
     }
