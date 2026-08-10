@@ -106,7 +106,24 @@ try {
             role TEXT DEFAULT 'admin',
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
+
+        CREATE TABLE IF NOT EXISTS site_settings (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        );
     ");
+
+    // Seed default site settings if empty
+    $settingsCount = $pdo->query("SELECT COUNT(*) as count FROM site_settings")->fetch()['count'];
+    if ($settingsCount == 0) {
+        $stmtSet = $pdo->prepare("INSERT INTO site_settings (key, value) VALUES (?, ?)");
+        $stmtSet->execute(['site_name', 'Conspodium']);
+        $stmtSet->execute(['site_tagline', 'Premium Diaspora Magazine']);
+        $stmtSet->execute(['admin_email', 'admin@conspodium.com']);
+        $stmtSet->execute(['default_author', 'Conspodium Editorial']);
+        $stmtSet->execute(['posts_per_page', '6']);
+        $stmtSet->execute(['allow_submissions', '1']);
+    }
 
     // Seed default admin account if empty
     $adminCount = $pdo->query("SELECT COUNT(*) as count FROM admins")->fetch()['count'];
