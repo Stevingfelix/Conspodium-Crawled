@@ -18,6 +18,13 @@ if (session_status() === PHP_SESSION_NONE) {
     if ($isVercel) {
         @session_save_path('/tmp');
     }
+    @session_set_cookie_params([
+        'lifetime' => 86400 * 7,
+        'path' => '/',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
     session_start();
 }
 
