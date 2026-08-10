@@ -198,6 +198,20 @@ if ($method === 'POST' && $action === 'activate') {
     exit;
 }
 
+// ── DEACTIVATE POLL ─────────────────────────────────────────────────────────
+if ($method === 'POST' && $action === 'deactivate') {
+    requireAdmin();
+    $id = intval($_GET['id'] ?? $input['id'] ?? 0);
+    if ($id > 0) {
+        $pdo->prepare("UPDATE polls SET is_active = 0 WHERE id = ?")->execute([$id]);
+    } else {
+        $pdo->exec("UPDATE polls SET is_active = 0");
+    }
+
+    echo json_encode(["success" => true, "message" => "Poll deactivated and hidden from homepage"]);
+    exit;
+}
+
 // ── DELETE POLL ─────────────────────────────────────────────────────────────
 if ($method === 'DELETE' || ($method === 'POST' && $action === 'delete')) {
     requireAdmin();

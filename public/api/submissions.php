@@ -117,11 +117,26 @@ if ($method === 'POST' && $action === 'reject') {
 }
 
 // ── DELETE SUBMISSION ────────────────────────────────────────────────────────
-if ($method === 'DELETE' || ($method === 'POST' && $action === 'delete')) {
+if ($method === 'DELETE' || ($method === 'POST' && ($action === 'delete' || $action === 'bulk_delete'))) {
     requireAdmin();
-    $id = intval($_GET['id'] ?? $input['id'] ?? 0);
-    $pdo->prepare("DELETE FROM story_submissions WHERE id = ?")->execute([$id]);
-    echo json_encode(["success" => true, "message" => "Submission permanently deleted"]);
+    $idsParam = $_GET['ids'] ?? $_GET['id'] ?? $input['ids'] ?? $input['id'] ?? null;
+
+    if ($idsParam) {
+        $rawIds = is_array($idsParam) ? $idsParam : explode(',', (string)$idsParam);
+        $ids = array_values(array_filter(array_map('intval', $rawIds), function($i) { return $i > 0; }));
+
+        if (!empty($ids)) {
+            $inClause = implode(',', array_fill(0, count($ids), '?'));
+            $stmt = $pdo->prepare("DELETE FROM story_submissions WHERE id IN ($inClause)");
+            $stmt->execute($ids);
+            $count = $stmt->rowCount();
+            echo json_encode(["success" => true, "message" => $count . " submission(s) permanently deleted"]);
+            exit;
+        }
+    }
+
+    http_response_code(400);
+    echo json_encode(["success" => false, "error" => "No valid submission IDs provided"]);
     exit;
 }
 

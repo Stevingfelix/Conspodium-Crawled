@@ -431,6 +431,20 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -892,6 +906,146 @@ e-page-transition,
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
 }
+
+/* ── Global Toast Notifications & Confirmation Modals ── */
+#csp-toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 99999999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+  max-width: 400px;
+  width: calc(100% - 48px);
+}
+.csp-toast {
+  pointer-events: auto;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 14px 20px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  transform: translateX(120%);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.csp-toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+.csp-toast-icon {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+.csp-toast-success { border-left: 4px solid #10b981; }
+.csp-toast-danger { border-left: 4px solid #f43f5e; }
+.csp-toast-info { border-left: 4px solid #00AEFE; }
+
+#csp-confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99999999;
+  background: rgba(5, 13, 26, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+#csp-confirm-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.csp-confirm-modal {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  max-width: 440px;
+  width: 100%;
+  padding: 32px;
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.25);
+  transform: scale(0.92);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Inter', -apple-system, sans-serif;
+  text-align: center;
+}
+#csp-confirm-backdrop.show .csp-confirm-modal {
+  transform: scale(1);
+}
+.csp-confirm-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 0 auto 16px;
+}
+.csp-confirm-icon-danger { background: rgba(244, 63, 94, 0.12); color: #f43f5e; }
+.csp-confirm-icon-info { background: rgba(0, 174, 254, 0.12); color: #00AEFE; }
+.csp-confirm-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 10px;
+}
+.csp-confirm-desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0 0 24px;
+}
+.csp-confirm-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.csp-confirm-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+.csp-confirm-cancel {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+.csp-confirm-cancel:hover { background: #e2e8f0; }
+.csp-confirm-danger-btn {
+  background: linear-gradient(135deg, #f43f5e, #be123c);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+}
+.csp-confirm-danger-btn:hover { opacity: 0.9; }
+.csp-confirm-primary-btn {
+  background: linear-gradient(135deg, #00AEFE, #B71F71);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35);
+}
+.csp-confirm-primary-btn:hover { opacity: 0.9; }
 </style>
 
 <!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
@@ -914,6 +1068,127 @@ e-page-transition,
     var clean = targetRoute.replace(/^\.\.\//, '').replace(/^\.\//, '').replace(/^\//, '');
     return prefix + '/' + clean;
   }
+  window.getRootUrl = getRootUrl;
+
+  function getAbsoluteImageUrl(url) {
+    if (!url) return getRootUrl('wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');
+    var u = url.trim();
+    if (u.startsWith('http://') || u.startsWith('https://') || u.startsWith('data:')) return u;
+    if (u.startsWith('./')) return getRootUrl(u.slice(2));
+    if (u.startsWith('/')) return getRootUrl(u.slice(1));
+    return getRootUrl(u);
+  }
+  window.getAbsoluteImageUrl = getAbsoluteImageUrl;
+
+  // Global Toast Notifications
+  window.cspToast = function(message, type, duration) {
+    type = type || 'info';
+    duration = duration || 3500;
+
+    var container = document.getElementById('csp-toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'csp-toast-container';
+      document.body.appendChild(container);
+    }
+
+    var icons = {
+      success: '🎉',
+      danger: '🚨',
+      info: 'ℹ️'
+    };
+
+    var toast = document.createElement('div');
+    toast.className = 'csp-toast csp-toast-' + type;
+    toast.innerHTML = '<span class="csp-toast-icon">' + (icons[type] || 'ℹ️') + '</span><span>' + message + '</span>';
+    container.appendChild(toast);
+
+    setTimeout(function(){ toast.classList.add('show'); }, 10);
+
+    setTimeout(function(){
+      toast.classList.remove('show');
+      setTimeout(function(){ if (toast.parentNode) toast.parentNode.removeChild(toast); }, 350);
+    }, duration);
+  };
+
+  // Global Confirmation Modal (Promise-based)
+  window.cspConfirm = function(options) {
+    return new Promise(function(resolve) {
+      options = options || {};
+      var title = options.title || 'Confirm Action';
+      var message = options.message || 'Are you sure you want to proceed?';
+      var confirmText = options.confirmText || 'Yes, Proceed';
+      var cancelText = options.cancelText || 'Cancel';
+      var type = options.type || 'danger';
+
+      var backdrop = document.getElementById('csp-confirm-backdrop');
+      if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.id = 'csp-confirm-backdrop';
+        backdrop.innerHTML = `
+          <div class="csp-confirm-modal">
+            <div class="csp-confirm-icon-box" id="csp-confirm-icon">⚠️</div>
+            <h3 class="csp-confirm-title" id="csp-confirm-title"></h3>
+            <p class="csp-confirm-desc" id="csp-confirm-desc"></p>
+            <div class="csp-confirm-actions">
+              <button type="button" class="csp-confirm-btn csp-confirm-cancel" id="csp-confirm-btn-cancel"></button>
+              <button type="button" class="csp-confirm-btn" id="csp-confirm-btn-ok"></button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(backdrop);
+      }
+
+      var iconBox = document.getElementById('csp-confirm-icon');
+      var titleEl = document.getElementById('csp-confirm-title');
+      var descEl = document.getElementById('csp-confirm-desc');
+      var cancelBtn = document.getElementById('csp-confirm-btn-cancel');
+      var okBtn = document.getElementById('csp-confirm-btn-ok');
+
+      titleEl.textContent = title;
+      descEl.textContent = message;
+      cancelBtn.textContent = cancelText;
+      okBtn.textContent = confirmText;
+
+      if (type === 'danger') {
+        iconBox.className = 'csp-confirm-icon-box csp-confirm-icon-danger';
+        iconBox.textContent = '🗑️';
+        okBtn.className = 'csp-confirm-btn csp-confirm-danger-btn';
+      } else {
+        iconBox.className = 'csp-confirm-icon-box csp-confirm-icon-info';
+        iconBox.textContent = '💡';
+        okBtn.className = 'csp-confirm-btn csp-confirm-primary-btn';
+      }
+
+      backdrop.classList.add('show');
+
+      function cleanup(result) {
+        backdrop.classList.remove('show');
+        cancelBtn.onclick = null;
+        okBtn.onclick = null;
+        resolve(result);
+      }
+
+      cancelBtn.onclick = function() { cleanup(false); };
+      okBtn.onclick = function() { cleanup(true); };
+    });
+  };
+
+  // Global Alert Modal / Polyfill
+  window.cspAlert = function(message, title) {
+    return cspConfirm({
+      title: title || 'Notice',
+      message: message,
+      confirmText: 'OK',
+      cancelText: 'Dismiss',
+      type: 'info'
+    });
+  };
+
+  // Polyfill native alert and confirm so any unhandled native calls automatically use custom UI
+  window.alert = function(msg) {
+    window.cspToast(msg, 'info');
+  };
 
   function initLoaderAndLogo() {
     var loader = document.getElementById('csp-page-loader');
@@ -936,14 +1211,19 @@ e-page-transition,
       if (loader) loader.classList.add('loaded');
     });
 
-    // Intercept link clicks to trigger full 1.2s loader transition
+    // Intercept link clicks to trigger loader transition with safety timeout
     document.addEventListener('click', function(e) {
       var a = e.target.closest('a[href]');
       if (!a) return;
       var href = a.getAttribute('href');
       if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:') || a.getAttribute('target') === '_blank') return;
+      if (a.classList.contains('csp-tab-btn') || a.classList.contains('sub-filter-btn') || a.hasAttribute('data-sub-filter') || a.closest('#csp-login-screen') || a.closest('.csp-modal-card')) return;
       if (loader) {
         loader.classList.remove('loaded');
+        // Safety fallback: auto-dismiss loader after 2.5s if full page navigation doesn't occur
+        setTimeout(function(){
+          if (loader) loader.classList.add('loaded');
+        }, 2500);
       }
     });
 
@@ -1062,59 +1342,101 @@ e-page-transition,
 
   function initPopupAdvert() {
     if (window.location.pathname.includes('/dashboard')) return;
-    if (sessionStorage.getItem('csp_popup_ad_dismissed')) return;
 
     fetch(getRootUrl('api/settings.php'))
       .then(function(r){ return r.json(); })
       .then(function(res){
-        if (!res.success || !res.settings || res.settings.popup_ad_enabled !== '1') return;
+        if (!res.success || !res.settings) return;
 
         var s = res.settings;
-        var delaySec = (parseInt(s.popup_ad_delay) || 3) * 1000;
+        var adverts = [];
 
-        setTimeout(function(){
-          if (sessionStorage.getItem('csp_popup_ad_dismissed')) return;
+        if (s.popup_adverts_list) {
+          try { adverts = JSON.parse(s.popup_adverts_list); } catch(e){}
+        }
 
-          var adModal = document.createElement('div');
-          adModal.id = 'csp-popup-ad-modal';
-          adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.4s ease;padding:20px;';
+        // Fallback to legacy single advert if popup_adverts_list is empty
+        if ((!adverts || adverts.length === 0) && s.popup_ad_enabled === '1') {
+          adverts = [{
+            id: 'legacy',
+            enabled: true,
+            title: s.popup_ad_title || '',
+            image: s.popup_ad_image || '',
+            targetPage: 'all',
+            clickUrl: s.popup_ad_link || '#',
+            delay: parseInt(s.popup_ad_delay) || 3
+          }];
+        }
 
-          var card = document.createElement('div');
-          card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.4s ease;text-align:center;';
+        if (!adverts || adverts.length === 0) return;
 
-          var closeBtn = document.createElement('button');
-          closeBtn.innerHTML = '&times;';
-          closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+        var currentPath = window.location.pathname;
+        if (!currentPath.endsWith('/') && !currentPath.includes('.')) currentPath += '/';
 
-          function closeAd() {
-            sessionStorage.setItem('csp_popup_ad_dismissed', '1');
-            adModal.style.opacity = '0';
-            card.style.transform = 'scale(0.9)';
-            setTimeout(function(){ if(adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 400);
-          }
+        // Filter active adverts matching current page route or 'all' pages
+        var matchingAds = adverts.filter(function(ad){
+          if (!ad.enabled) return false;
+          var target = (ad.targetPage || 'all').trim();
+          if (target === 'all' || target === '*') return true;
 
-          closeBtn.addEventListener('click', closeAd);
-          adModal.addEventListener('click', function(e){ if(e.target === adModal) closeAd(); });
+          var cleanTarget = target;
+          if (!cleanTarget.endsWith('/') && !cleanTarget.includes('.')) cleanTarget += '/';
 
-          var imgHtml = s.popup_ad_image ? '<img src="' + getRootUrl(s.popup_ad_image) + '" style="width:100%;max-height:220px;object-fit:cover;" />' : '';
-          var titleHtml = s.popup_ad_title ? '<h3 style="font-family:\'Merriweather\',serif;font-size:1.25rem;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + s.popup_ad_title + '</h3>' : '';
-          var linkUrl = s.popup_ad_link ? getRootUrl(s.popup_ad_link) : '#';
+          return currentPath === cleanTarget || currentPath.endsWith(cleanTarget);
+        });
 
-          card.innerHTML = imgHtml +
-            '<div style="padding:4px 20px 24px;">' +
-              titleHtml +
-              '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
-            '</div>';
+        if (matchingAds.length === 0) return;
 
-          card.appendChild(closeBtn);
-          adModal.appendChild(card);
-          document.body.appendChild(adModal);
+        matchingAds.forEach(function(ad){
+          var dismissKey = 'csp_popup_ad_dismissed_' + (ad.id || 'ad');
+          if (sessionStorage.getItem(dismissKey)) return;
+
+          var delayMs = (parseInt(ad.delay) || 3) * 1000;
 
           setTimeout(function(){
-            adModal.style.opacity = '1';
-            card.style.transform = 'scale(1)';
-          }, 50);
-        }, delaySec);
+            if (sessionStorage.getItem(dismissKey)) return;
+
+            var adModal = document.createElement('div');
+            adModal.id = 'csp-popup-ad-modal-' + (ad.id || 'ad');
+            adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.4s ease;padding:20px;';
+
+            var card = document.createElement('div');
+            card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.4s ease;text-align:center;';
+
+            var closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '&times;';
+            closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+
+            function closeAd() {
+              sessionStorage.setItem(dismissKey, '1');
+              adModal.style.opacity = '0';
+              card.style.transform = 'scale(0.9)';
+              setTimeout(function(){ if(adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 400);
+            }
+
+            closeBtn.addEventListener('click', closeAd);
+            adModal.addEventListener('click', function(e){ if(e.target === adModal) closeAd(); });
+
+            var imgHtml = ad.image ? '<img src="' + getRootUrl(ad.image) + '" style="width:100%;max-height:220px;object-fit:cover;" />' : '';
+            var titleHtml = ad.title ? '<h3 style="font-family:\'Merriweather\',serif;font-size:1.25rem;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + ad.title + '</h3>' : '';
+            var linkUrl = ad.clickUrl ? getRootUrl(ad.clickUrl) : '#';
+
+            card.innerHTML = imgHtml +
+              '<div style="padding:4px 20px 24px;">' +
+                titleHtml +
+                '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
+              '</div>';
+
+            card.appendChild(closeBtn);
+            adModal.appendChild(card);
+            document.body.appendChild(adModal);
+
+            setTimeout(function(){
+              adModal.style.opacity = '1';
+              card.style.transform = 'scale(1)';
+            }, 50);
+          }, delayMs);
+        });
       })
       .catch(function(){});
   }
@@ -1246,7 +1568,7 @@ e-page-transition,
     <h2 style="font-family:'Merriweather',serif;font-size:1.4rem;color:#0f172a;margin-bottom:6px;">Conspodium CMS Portal</h2>
     <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:24px;">Sign in to access admin tools, publish user submissions, and manage articles.</p>
     
-    <form id="form-admin-login" style="text-align:left;">
+    <form id="form-admin-login" action="javascript:void(0);" style="text-align:left;">
       <div id="login-error-alert" style="display:none;background:rgba(230,50,50,0.15);border:1px solid rgba(230,50,50,0.3);color:#ff5555;padding:10px 14px;border-radius:12px;font-size:0.82rem;margin-bottom:16px;"></div>
       
       <div class="csp-form-group">
@@ -1257,7 +1579,7 @@ e-page-transition,
         <label class="csp-form-label">Password</label>
         <input type="password" id="login-password" class="csp-form-input" placeholder="••••••••" required value="conspodium2026">
       </div>
-      <button type="submit" class="csp-btn-sm csp-btn-primary" style="width:100%;height:46px;justify-content:center;font-size:0.9rem;margin-top:8px;">Sign In to CMS Portal →</button>
+      <button id="btn-submit-cms-login" type="submit" class="csp-btn-sm csp-btn-primary" style="width:100%;height:46px;justify-content:center;font-size:0.9rem;margin-top:8px;">Sign In to CMS Portal →</button>
     </form>
   </div>
 </div>
@@ -1336,13 +1658,15 @@ e-page-transition,
     <!-- ── TAB 2: MANAGE POSTS ── -->
     <div class="csp-tab-pane" id="tab-posts">
       <div class="csp-card">
-        <div class="csp-card-header">
+        <div class="csp-card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <span class="csp-card-header-title">📝 All Published Articles</span>
+          <button id="btn-bulk-delete-posts" class="csp-btn-sm csp-btn-danger" style="display:none;font-size:0.78rem;padding:6px 14px;">🗑️ Delete Selected (<span id="count-selected-posts">0</span>)</button>
         </div>
         <div class="csp-table-wrapper">
           <table class="csp-table">
             <thead>
               <tr>
+                <th style="width:40px;text-align:center;"><input type="checkbox" id="select-all-posts" style="cursor:pointer;" aria-label="Select all articles" /></th>
                 <th>Article</th>
                 <th>Category</th>
                 <th>Author</th>
@@ -1353,7 +1677,7 @@ e-page-transition,
               </tr>
             </thead>
             <tbody id="posts-cms-table">
-              <tr><td colspan="7">Loading articles...</td></tr>
+              <tr><td colspan="8">Loading articles...</td></tr>
             </tbody>
           </table>
         </div>
@@ -1366,6 +1690,7 @@ e-page-transition,
         <div class="csp-card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <span class="csp-card-header-title">📩 User Story Submissions</span>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <button id="btn-bulk-delete-submissions" class="csp-btn-sm csp-btn-danger" style="display:none;font-size:0.78rem;padding:6px 14px;">🗑️ Delete Selected (<span id="count-selected-submissions">0</span>)</button>
             <div class="csp-sub-filter-group" style="display:flex;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:10px;padding:3px;">
               <button class="sub-filter-btn active" data-sub-filter="all" style="background:rgba(0,174,254,0.15);border:none;color:var(--blue);font-weight:600;padding:6px 14px;border-radius:8px;font-size:0.8rem;cursor:pointer;">All</button>
               <button class="sub-filter-btn" data-sub-filter="pending" style="background:none;border:none;color:var(--text-muted);padding:6px 14px;border-radius:8px;font-size:0.8rem;cursor:pointer;">Pending</button>
@@ -1379,6 +1704,7 @@ e-page-transition,
           <table class="csp-table">
             <thead>
               <tr>
+                <th style="width:40px;text-align:center;"><input type="checkbox" id="select-all-submissions" style="cursor:pointer;" aria-label="Select all submissions" /></th>
                 <th>Author</th>
                 <th>Title &amp; Excerpt</th>
                 <th>Submitted Date</th>
@@ -1387,7 +1713,7 @@ e-page-transition,
               </tr>
             </thead>
             <tbody id="submissions-cms-table">
-              <tr><td colspan="5">Loading submissions...</td></tr>
+              <tr><td colspan="6">Loading submissions...</td></tr>
             </tbody>
           </table>
         </div>
@@ -1483,36 +1809,105 @@ e-page-transition,
 
     <!-- ── TAB 6: POPUP ADVERT ── -->
     <div class="csp-tab-pane" id="tab-advert">
-      <div class="csp-card" style="padding:24px;max-width:720px;">
-        <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:6px;">📢 Frontend Popup Advert Management</h3>
-        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;">Configure and control the modal advertisement displayed to visitors on the main website.</p>
+      <div class="csp-card" style="padding:24px;margin-bottom:24px;">
+        <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:6px;">📢 Create / Edit Popup Advert</h3>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;">Configure targeted popup advertisements to display on specific website pages or globally across all pages.</p>
 
-        <form id="form-popup-ad-settings">
-          <div class="csp-form-group" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-            <input type="checkbox" id="set-popup-enabled" style="width:20px;height:20px;accent-color:var(--blue);">
-            <label for="set-popup-enabled" style="font-size:0.88rem;color:#0f172a;font-weight:600;cursor:pointer;">Enable Frontend Popup Advert</label>
-          </div>
-          <div class="csp-form-group">
-            <label class="csp-form-label">Advert Title</label>
-            <input type="text" id="set-popup-title" class="csp-form-input" placeholder="e.g. Empowering Diaspora Communities Worldwide">
-          </div>
-          <div class="csp-form-group">
-            <label class="csp-form-label">Advert Banner Image URL</label>
-            <input type="text" id="set-popup-image" class="csp-form-input" placeholder="e.g. /wp-content/uploads/2026/01/African-Diasporans.jpg">
-          </div>
+        <form id="form-popup-ad-item">
+          <input type="hidden" id="ad-edit-id">
           <div class="csp-form-row">
             <div class="csp-form-group">
-              <label class="csp-form-label">Target Link URL</label>
-              <input type="text" id="set-popup-link" class="csp-form-input" placeholder="e.g. /submit-story/">
+              <label class="csp-form-label">Advert Headline Title *</label>
+              <input type="text" id="ad-title" class="csp-form-input" placeholder="e.g. Empowering Diaspora Communities Worldwide" required>
             </div>
             <div class="csp-form-group">
-              <label class="csp-form-label">Display Delay (Seconds)</label>
-              <input type="number" id="set-popup-delay" class="csp-form-input" min="1" max="60" value="3">
+              <label class="csp-form-label">Target Website Page *</label>
+              <select id="ad-target-page" class="csp-form-select" required>
+                <option value="all">🌐 All Pages (Global Popup)</option>
+                <option value="/">🏠 Main Homepage (/)</option>
+                <option value="/stories/">📚 Stories Page (/stories/)</option>
+                <option value="/submit-story/">✍️ Submit Story Page (/submit-story/)</option>
+                <option value="/advert/">📢 Advert Page (/advert/)</option>
+                <option value="/sponsorship/">🤝 Sponsorship Page (/sponsorship/)</option>
+                <option value="/about-us/">ℹ️ About Us Page (/about-us/)</option>
+                <option value="/contact-us/">✉️ Contact Us Page (/contact-us/)</option>
+              </select>
             </div>
           </div>
 
-          <button type="submit" class="csp-btn-sm csp-btn-primary" style="margin-top:16px;height:42px;width:100%;justify-content:center;">🎯 Save Popup Advert Settings</button>
+          <div class="csp-form-row">
+            <div class="csp-form-group">
+              <label class="csp-form-label">Banner Image File</label>
+              <input type="file" id="ad-file" class="csp-form-input" accept="image/*">
+              <input type="hidden" id="ad-image">
+              <img id="ad-preview" src="" style="width:100%;max-height:140px;object-fit:cover;border-radius:12px;margin-top:10px;display:none;border:1px solid #cbd5e1;">
+            </div>
+            <div class="csp-form-group">
+              <label class="csp-form-label">Button Click Redirect Destination *</label>
+              <select id="ad-click-type" class="csp-form-select" required>
+                <option value="inner">📄 Inner Website Page</option>
+                <option value="external">🔗 External Custom Link URL</option>
+              </select>
+
+              <!-- Inner Page Select -->
+              <div id="ad-inner-page-group" style="margin-top:10px;">
+                <label class="csp-form-label" style="font-size:0.75rem;">Select Inner Page</label>
+                <select id="ad-click-inner" class="csp-form-select">
+                  <option value="/submit-story/">✍️ Submit Story Page (/submit-story/)</option>
+                  <option value="/stories/">📚 Stories Page (/stories/)</option>
+                  <option value="/advert/">📢 Advert Page (/advert/)</option>
+                  <option value="/sponsorship/">🤝 Sponsorship Page (/sponsorship/)</option>
+                  <option value="/about-us/">ℹ️ About Us Page (/about-us/)</option>
+                  <option value="/contact-us/">✉️ Contact Us Page (/contact-us/)</option>
+                  <option value="/">🏠 Main Homepage (/)</option>
+                </select>
+              </div>
+
+              <!-- External Custom Link -->
+              <div id="ad-external-link-group" style="margin-top:10px;display:none;">
+                <label class="csp-form-label" style="font-size:0.75rem;">External Target Link URL</label>
+                <input type="text" id="ad-click-ext" class="csp-form-input" placeholder="e.g. https://advertiser-brand.com/promo">
+              </div>
+
+              <label class="csp-form-label" style="margin-top:12px;">Display Delay (Seconds)</label>
+              <input type="number" id="ad-delay" class="csp-form-input" min="1" max="60" value="3" required>
+            </div>
+          </div>
+
+          <div class="csp-form-group" style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:12px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <input type="checkbox" id="ad-enabled" style="width:20px;height:20px;accent-color:var(--blue);" checked>
+              <label for="ad-enabled" style="font-size:0.88rem;color:#0f172a;font-weight:600;cursor:pointer;">Enable &amp; Publish This Advert</label>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button type="button" id="btn-cancel-ad-edit" class="csp-btn-sm csp-btn-secondary" style="display:none;">Cancel Edit</button>
+              <button type="submit" class="csp-btn-sm csp-btn-primary" style="height:42px;padding:0 24px;">🎯 Save &amp; Publish Advert</button>
+            </div>
+          </div>
         </form>
+      </div>
+
+      <div class="csp-card">
+        <div class="csp-card-header">
+          <span class="csp-card-header-title">📋 Active &amp; Configured Adverts</span>
+        </div>
+        <div class="csp-table-wrapper">
+          <table class="csp-table">
+            <thead>
+              <tr>
+                <th>Banner</th>
+                <th>Title &amp; Target Page</th>
+                <th>Redirect URL</th>
+                <th>Delay</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adverts-cms-table">
+              <tr><td colspan="6">Loading configured adverts...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -1822,6 +2217,8 @@ e-page-transition,
     var topbarBtn = document.getElementById('btn-open-new-post');
     if (!topbarBtn) return;
 
+    topbarBtn.style.background = '';
+    topbarBtn.style.borderColor = '';
     var plusSvg = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> ';
 
     if (tabName === 'overview' || tabName === 'posts') {
@@ -1830,16 +2227,25 @@ e-page-transition,
       topbarBtn.onclick = function() { openPostModal(); };
     } else if (tabName === 'polls') {
       topbarBtn.style.display = 'inline-flex';
-      topbarBtn.innerHTML = plusSvg + 'Create Poll';
-      topbarBtn.onclick = function() {
-        var el = document.getElementById('poll-q');
-        if (el) { el.scrollIntoView({ behavior: 'smooth' }); el.focus(); }
-      };
-    } else if (tabName === 'categories') {
+      if (window.hasActivePoll) {
+        topbarBtn.style.background = '#e11d48';
+        topbarBtn.style.borderColor = '#e11d48';
+        topbarBtn.innerHTML = '⏸️ Deactivate Live Poll';
+        topbarBtn.onclick = function() {
+          if (window.activePollId) deactivatePoll(window.activePollId);
+        };
+      } else {
+        topbarBtn.innerHTML = plusSvg + 'Create Poll';
+        topbarBtn.onclick = function() {
+          var el = document.getElementById('poll-q');
+          if (el) { el.scrollIntoView({ behavior: 'smooth' }); el.focus(); }
+        };
+      }
+    } else if (tabName === 'advert') {
       topbarBtn.style.display = 'inline-flex';
-      topbarBtn.innerHTML = plusSvg + 'Add Category';
+      topbarBtn.innerHTML = plusSvg + 'Create Advert';
       topbarBtn.onclick = function() {
-        var el = document.getElementById('cat-name');
+        var el = document.getElementById('ad-title');
         if (el) { el.scrollIntoView({ behavior: 'smooth' }); el.focus(); }
       };
     } else {
@@ -1867,6 +2273,7 @@ e-page-transition,
       if (t.dataset.tab === 'posts') loadPosts();
       if (t.dataset.tab === 'polls') loadPolls();
       if (t.dataset.tab === 'categories') loadCategoriesTable();
+      if (t.dataset.tab === 'advert') loadPopupAdverts();
     });
   });
 
@@ -1886,7 +2293,7 @@ e-page-transition,
   var categoriesCache = [];
 
   function loadCategoriesSelect() {
-    fetch('/api/posts.php?resource=categories')
+    fetch(getRootUrl('api/posts.php?resource=categories'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         if(!res.success) return;
@@ -1903,7 +2310,7 @@ e-page-transition,
   }
 
   function loadOverviewData() {
-    fetch('/api/dashboard.php')
+    fetch(getRootUrl('api/dashboard.php'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         if(!res.success) return;
@@ -1930,22 +2337,38 @@ e-page-transition,
   }
 
   function loadPosts() {
-    fetch('/api/posts.php?limit=100')
+    fetch(getRootUrl('api/posts.php?limit=100'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('posts-cms-table');
         if(!tbody || !res.posts) return;
         tbody.innerHTML = '';
+        var selectAll = document.getElementById('select-all-posts');
+        if (selectAll) selectAll.checked = false;
+        updatePostsBulkDeleteState();
+
+        if (res.posts.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">No published articles found.</td></tr>';
+          return;
+        }
+
         res.posts.forEach(function(p){
           var pubDate = p.published_at ? p.published_at.slice(0,10) : 'Now';
+          var imgThumb = p.featured_image ? `<img src="${getAbsoluteImageUrl(p.featured_image)}" style="width:44px;height:34px;object-fit:cover;border-radius:6px;vertical-align:middle;margin-right:8px;border:1px solid #cbd5e1;flex-shrink:0;" />` : '';
           tbody.innerHTML += `
             <tr>
-              <td style="font-weight:600;max-width:280px;">${p.title}</td>
+              <td style="text-align:center;"><input type="checkbox" class="post-cb" data-id="${p.id}" style="cursor:pointer;" /></td>
+              <td style="font-weight:600;max-width:320px;">
+                <div style="display:flex;align-items:center;">
+                  ${imgThumb}
+                  <span>${p.title}</span>
+                </div>
+              </td>
               <td>${p.category_icon || '🏷️'} ${p.category_name || 'Unassigned'}</td>
               <td>${p.author_name}</td>
               <td>${pubDate}</td>
               <td>${(p.views || 0).toLocaleString()}</td>
-              <td>${p.is_featured ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.75rem;padding:4px 8px;white-space:nowrap;">⭐ Featured in Hero: Enabled</span>' : '<span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">Hero: Disabled</span>'}</td>
+              <td>${p.is_featured ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.75rem;padding:4px 8px;white-space:nowrap;">⭐ Hero: Enabled</span>' : '<span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">Hero: Disabled</span>'}</td>
               <td>
                 <button class="csp-btn-sm csp-btn-secondary" onclick="editPost(${p.id})">Edit</button>
                 <button class="csp-btn-sm csp-btn-danger" onclick="deletePost(${p.id})">Delete</button>
@@ -1953,7 +2376,56 @@ e-page-transition,
             </tr>
           `;
         });
+
+        tbody.querySelectorAll('.post-cb').forEach(function(cb){
+          cb.addEventListener('change', updatePostsBulkDeleteState);
+        });
       });
+  }
+
+  function updatePostsBulkDeleteState() {
+    var cbs = document.querySelectorAll('.post-cb:checked');
+    var btn = document.getElementById('btn-bulk-delete-posts');
+    var badge = document.getElementById('count-selected-posts');
+    if (btn && badge) {
+      badge.textContent = cbs.length;
+      btn.style.display = cbs.length > 0 ? 'inline-flex' : 'none';
+    }
+  }
+
+  var selectAllPosts = document.getElementById('select-all-posts');
+  if (selectAllPosts) {
+    selectAllPosts.addEventListener('change', function(){
+      var cbs = document.querySelectorAll('.post-cb');
+      cbs.forEach(function(cb){ cb.checked = selectAllPosts.checked; });
+      updatePostsBulkDeleteState();
+    });
+  }
+
+  var btnBulkDeletePosts = document.getElementById('btn-bulk-delete-posts');
+  if (btnBulkDeletePosts) {
+    btnBulkDeletePosts.addEventListener('click', async function(){
+      var cbs = document.querySelectorAll('.post-cb:checked');
+      var ids = [];
+      cbs.forEach(function(cb){ ids.push(cb.dataset.id); });
+      if (ids.length === 0) return;
+
+      var confirmed = await cspConfirm({
+        title: 'Delete Selected Articles',
+        message: 'Are you sure you want to permanently delete ' + ids.length + ' selected article(s)?',
+        confirmText: 'Delete Articles',
+        type: 'danger'
+      });
+      if (!confirmed) return;
+
+      fetch(getRootUrl('api/posts.php?ids=' + ids.join(',')), { method: 'DELETE' })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          cspToast(res.message, 'success');
+          loadPosts();
+          loadOverviewData();
+        });
+    });
   }
 
   function getAbsoluteImageUrl(url) {
@@ -2011,17 +2483,24 @@ e-page-transition,
   }
 
   window.editPost = function(id) {
-    fetch('/api/posts.php?id=' + id)
+    fetch(getRootUrl('api/posts.php?id=' + id))
       .then(function(r){ return r.json(); })
       .then(function(res){ if(res.success && res.post) openPostModal(res.post); });
   };
 
-  window.deletePost = function(id) {
-    if(!confirm('Are you sure you want to delete this article?')) return;
-    fetch('/api/posts.php?id=' + id, { method: 'DELETE' })
+  window.deletePost = async function(id) {
+    var confirmed = await cspConfirm({
+      title: 'Delete Article',
+      message: 'Are you sure you want to delete this article?',
+      confirmText: 'Delete Article',
+      type: 'danger'
+    });
+    if (!confirmed) return;
+
+    fetch(getRootUrl('api/posts.php?id=' + id), { method: 'DELETE' })
       .then(function(r){ return r.json(); })
       .then(function(res){
-        alert(res.message);
+        cspToast(res.message, 'success');
         loadPosts();
         loadOverviewData();
       });
@@ -2041,7 +2520,7 @@ e-page-transition,
     var formData = new FormData();
     formData.append('image', fileInput.files[0]);
 
-    fetch('/api/upload.php', { method: 'POST', body: formData })
+    fetch(getRootUrl('api/upload.php'), { method: 'POST', body: formData })
       .then(function(r){ return r.json(); })
       .then(function(res){
         if(res.success) {
@@ -2068,7 +2547,7 @@ e-page-transition,
     e.preventDefault();
     var id = document.getElementById('edit-post-id').value;
     var method = id ? 'PUT' : 'POST';
-    var url = id ? '/api/posts.php?id=' + id : '/api/posts.php';
+    var url = id ? getRootUrl('api/posts.php?id=' + id) : getRootUrl('api/posts.php');
 
     var richContent = quill.root.innerHTML;
 
@@ -2132,12 +2611,19 @@ e-page-transition,
 
   var emptyTrashBtn = document.getElementById('btn-empty-trash');
   if (emptyTrashBtn) {
-    emptyTrashBtn.addEventListener('click', function(){
-      if (!confirm('Are you sure you want to permanently delete all rejected submissions in the trash?')) return;
-      fetch('/api/submissions.php?action=empty_trash', { method: 'POST' })
+    emptyTrashBtn.addEventListener('click', async function(){
+      var confirmed = await cspConfirm({
+        title: 'Empty Rejected Trash',
+        message: 'Are you sure you want to permanently delete all rejected submissions in the trash?',
+        confirmText: 'Empty Trash',
+        type: 'danger'
+      });
+      if (!confirmed) return;
+
+      fetch(getRootUrl('api/submissions.php?action=empty_trash'), { method: 'POST' })
         .then(function(r){ return r.json(); })
         .then(function(res){
-          alert('🎉 ' + res.message);
+          cspToast(res.message, 'success');
           loadSubmissions();
           loadOverviewData();
         });
@@ -2146,7 +2632,7 @@ e-page-transition,
 
   // Load Submissions
   function loadSubmissions() {
-    fetch('/api/submissions.php?status=' + currentSubFilter)
+    fetch(getRootUrl('api/submissions.php?status=' + currentSubFilter))
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('submissions-cms-table');
@@ -2154,8 +2640,12 @@ e-page-transition,
         submissionsCache = res.submissions;
         tbody.innerHTML = '';
 
+        var selectAll = document.getElementById('select-all-submissions');
+        if (selectAll) selectAll.checked = false;
+        updateSubmissionsBulkDeleteState();
+
         if (res.submissions.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-muted);">No submissions found in this tab.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">No submissions found in this tab.</td></tr>';
           return;
         }
 
@@ -2165,6 +2655,7 @@ e-page-transition,
 
           tbody.innerHTML += `
             <tr>
+              <td style="text-align:center;"><input type="checkbox" class="sub-cb" data-id="${s.id}" style="cursor:pointer;" /></td>
               <td>
                 <div style="font-weight:600;">${s.author_name}</div>
                 <div style="font-size:0.75rem;color:var(--text-muted);">${s.author_email}</div>
@@ -2185,7 +2676,56 @@ e-page-transition,
             </tr>
           `;
         });
+
+        tbody.querySelectorAll('.sub-cb').forEach(function(cb){
+          cb.addEventListener('change', updateSubmissionsBulkDeleteState);
+        });
       });
+  }
+
+  function updateSubmissionsBulkDeleteState() {
+    var cbs = document.querySelectorAll('.sub-cb:checked');
+    var btn = document.getElementById('btn-bulk-delete-submissions');
+    var badge = document.getElementById('count-selected-submissions');
+    if (btn && badge) {
+      badge.textContent = cbs.length;
+      btn.style.display = cbs.length > 0 ? 'inline-flex' : 'none';
+    }
+  }
+
+  var selectAllSubs = document.getElementById('select-all-submissions');
+  if (selectAllSubs) {
+    selectAllSubs.addEventListener('change', function(){
+      var cbs = document.querySelectorAll('.sub-cb');
+      cbs.forEach(function(cb){ cb.checked = selectAllSubs.checked; });
+      updateSubmissionsBulkDeleteState();
+    });
+  }
+
+  var btnBulkDeleteSubs = document.getElementById('btn-bulk-delete-submissions');
+  if (btnBulkDeleteSubs) {
+    btnBulkDeleteSubs.addEventListener('click', async function(){
+      var cbs = document.querySelectorAll('.sub-cb:checked');
+      var ids = [];
+      cbs.forEach(function(cb){ ids.push(cb.dataset.id); });
+      if (ids.length === 0) return;
+
+      var confirmed = await cspConfirm({
+        title: 'Delete Selected Submissions',
+        message: 'Are you sure you want to permanently delete ' + ids.length + ' selected submission(s)?',
+        confirmText: 'Delete Submissions',
+        type: 'danger'
+      });
+      if (!confirmed) return;
+
+      fetch(getRootUrl('api/submissions.php?ids=' + ids.join(',')), { method: 'DELETE' })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          cspToast(res.message, 'success');
+          loadSubmissions();
+          loadOverviewData();
+        });
+    });
   }
 
   window.openViewSubmissionModal = function(id) {
@@ -2262,7 +2802,7 @@ e-page-transition,
     var catId = document.getElementById('approve-category').value;
     var img   = document.getElementById('approve-img').value;
 
-    fetch('/api/submissions.php?action=approve&id=' + subId, {
+    fetch(getRootUrl('api/submissions.php?action=approve&id=' + subId), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ categoryId: catId, featuredImage: img })
@@ -2280,21 +2820,35 @@ e-page-transition,
   });
 
   window.rejectSubmission = function(id) {
-    fetch('/api/submissions.php?action=reject&id=' + id, { method: 'POST' })
+    fetch(getRootUrl('api/submissions.php?action=reject&id=' + id), { method: 'POST' })
       .then(function(r){ return r.json(); })
       .then(function(res){ loadSubmissions(); loadOverviewData(); });
   };
 
-  window.deleteSubmission = function(id) {
-    if(!confirm('Delete submission record?')) return;
-    fetch('/api/submissions.php?id=' + id, { method: 'DELETE' })
+  window.deleteSubmission = async function(id) {
+    var confirmed = await cspConfirm({
+      title: 'Delete Story Submission',
+      message: 'Are you sure you want to delete this submission record?',
+      confirmText: 'Delete Submission',
+      type: 'danger'
+    });
+    if (!confirmed) return;
+
+    fetch(getRootUrl('api/submissions.php?id=' + id), { method: 'DELETE' })
       .then(function(r){ return r.json(); })
-      .then(function(res){ loadSubmissions(); loadOverviewData(); });
+      .then(function(res){
+        cspToast('Submission deleted', 'success');
+        loadSubmissions();
+        loadOverviewData();
+      });
   };
 
   // Polls Editor
+  window.hasActivePoll = false;
+  window.activePollId = null;
+
   function loadPolls() {
-    fetch('/api/polls.php?action=list')
+    fetch(getRootUrl('api/polls.php?action=list'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         var container = document.getElementById('polls-list-container');
@@ -2302,21 +2856,54 @@ e-page-transition,
         container.innerHTML = '';
         var activeVotes = 0;
 
+        var activePoll = res.polls.find(function(p){ return p.isActive; });
+        window.hasActivePoll = !!activePoll;
+        window.activePollId = activePoll ? activePoll.id : null;
+
+        var submitBtn = document.querySelector('#form-create-poll button[type="submit"]');
+        if (submitBtn) {
+          if (window.hasActivePoll) {
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.6';
+            submitBtn.style.cursor = 'not-allowed';
+            submitBtn.innerHTML = '🔒 Active Poll Currently Live (Deactivate Above to Create New)';
+          } else {
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            submitBtn.innerHTML = 'Create &amp; Activate Poll';
+          }
+        }
+
+        var activeNavTab = document.querySelector('.csp-nav-item.active');
+        if (activeNavTab && activeNavTab.dataset.tab === 'polls') {
+          updateTopbarActionButton('polls');
+        }
+
+        if (res.polls.length === 0) {
+          container.innerHTML = '<div style="color:var(--text-muted);padding:16px;">No polls created yet.</div>';
+          document.getElementById('stat-poll-votes').textContent = 0;
+          return;
+        }
+
         res.polls.forEach(function(p){
           if(p.isActive) activeVotes = p.totalVotes;
           var optsHtml = p.options.map(o => `
-            <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin:4px 0;color:rgba(255,255,255,0.8);">
-              <span>${o.option}</span>
+            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin:6px 0;color:#334155;padding:6px 12px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;">
+              <span style="font-weight:500;color:#0f172a;">${o.option}</span>
               <span style="color:var(--blue);font-weight:600;">${o.count} votes (${p.totalVotes > 0 ? Math.round(o.count/p.totalVotes*100):0}%)</span>
             </div>
           `).join('');
 
           container.innerHTML += `
-            <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:12px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                <div style="font-weight:600;font-size:0.95rem;color:#fff;">${p.question}</div>
-                <div>
-                  ${p.isActive ? '<span class="csp-status-badge csp-status-approved">Active Poll</span>' : `<button class="csp-btn-sm csp-btn-secondary" onclick="activatePoll(${p.id})">Set Active</button>`}
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:20px 24px;margin-bottom:16px;box-shadow:0 2px 8px rgba(15,23,42,0.03);">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+                <div style="font-weight:700;font-size:1.05rem;color:#0f172a;font-family:'Merriweather',serif;">${p.question}</div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  ${p.isActive ? `
+                    <span class="csp-status-badge csp-status-approved">Active Poll</span>
+                    <button class="csp-btn-sm csp-btn-secondary" onclick="deactivatePoll(${p.id})">Deactivate</button>
+                  ` : `<button class="csp-btn-sm csp-btn-primary" onclick="activatePoll(${p.id})">Set Active</button>`}
                   <button class="csp-btn-sm csp-btn-danger" onclick="deletePoll(${p.id})">Delete</button>
                 </div>
               </div>
@@ -2342,42 +2929,58 @@ e-page-transition,
 
   document.getElementById('form-create-poll').addEventListener('submit', function(e){
     e.preventDefault();
+    if (window.hasActivePoll) {
+      alert('An active poll is currently live. Please deactivate the active poll first using the button above before creating a new one.');
+      return;
+    }
     var q = document.getElementById('poll-q').value;
     var inputs = document.querySelectorAll('.poll-opt-input');
     var opts = [];
     inputs.forEach(function(i){ if(i.value.trim()) opts.push(i.value.trim()); });
 
-    fetch('/api/polls.php?action=create', {
+    if(opts.length < 2) { alert('Please provide at least 2 options.'); return; }
+
+    fetch(getRootUrl('api/polls.php?action=create'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question: q, options: opts, isActive: true })
+      body: JSON.stringify({ question: q, options: opts, isActive: 1 })
     })
     .then(function(r){ return r.json(); })
     .then(function(res){
       if(res.success) {
-        alert('🗳️ ' + res.message);
+        alert('🎉 ' + res.message);
         document.getElementById('form-create-poll').reset();
         loadPolls();
-      }
+      } else { alert('Error: ' + res.error); }
     });
   });
 
   window.activatePoll = function(id) {
-    fetch('/api/polls.php?action=activate&id=' + id, { method: 'POST' })
+    fetch(getRootUrl('api/polls.php?action=activate&id=' + id), { method: 'POST' })
       .then(function(r){ return r.json(); })
       .then(function(res){ loadPolls(); });
   };
 
-  window.deletePoll = function(id) {
-    if(!confirm('Delete poll?')) return;
-    fetch('/api/polls.php?id=' + id, { method: 'DELETE' })
+  window.deletePoll = async function(id) {
+    var confirmed = await cspConfirm({
+      title: 'Delete Poll',
+      message: 'Are you sure you want to delete this poll and all its vote records?',
+      confirmText: 'Delete Poll',
+      type: 'danger'
+    });
+    if (!confirmed) return;
+
+    fetch(getRootUrl('api/polls.php?id=' + id), { method: 'DELETE' })
       .then(function(r){ return r.json(); })
-      .then(function(res){ loadPolls(); });
+      .then(function(res){
+        cspToast('Poll deleted', 'success');
+        loadPolls();
+      });
   };
 
   // Categories Manager
   function loadCategoriesTable() {
-    fetch('/api/posts.php?resource=categories')
+    fetch(getRootUrl('api/posts.php?resource=categories'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('categories-cms-table');
@@ -2405,7 +3008,7 @@ e-page-transition,
     var icon = document.getElementById('cat-icon').value;
     var desc = document.getElementById('cat-desc').value;
 
-    fetch('/api/posts.php?resource=categories', {
+    fetch(getRootUrl('api/posts.php?resource=categories'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: name, icon: icon, description: desc })
@@ -2420,16 +3023,30 @@ e-page-transition,
     });
   });
 
-  window.deleteCategory = function(id) {
-    if(!confirm('Delete category?')) return;
-    fetch('/api/posts.php?resource=categories&id=' + id, { method: 'DELETE' })
+  window.deleteCategory = async function(id) {
+    var confirmed = await cspConfirm({
+      title: 'Delete Category',
+      message: 'Are you sure you want to delete this category?',
+      confirmText: 'Delete Category',
+      type: 'danger'
+    });
+    if (!confirmed) return;
+
+    fetch(getRootUrl('api/posts.php?resource=categories&id=' + id), { method: 'DELETE' })
       .then(function(r){ return r.json(); })
-      .then(function(res){ loadCategoriesTable(); loadCategoriesSelect(); });
+      .then(function(res){
+        cspToast('Category deleted', 'success');
+        loadCategoriesTable();
+        loadCategoriesSelect();
+      });
   };
 
   // Authentication & Session Guard
   function checkAuthSession() {
-    fetch('/api/auth.php?action=me')
+    var loader = document.getElementById('csp-page-loader');
+    if (loader) loader.classList.add('loaded');
+
+    fetch(getRootUrl('api/auth.php?action=me'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         var loginScreen = document.getElementById('csp-login-screen');
@@ -2452,6 +3069,7 @@ e-page-transition,
           loadPolls();
           loadCategoriesTable();
           loadSettings();
+          loadPopupAdverts();
 
           // Background auto-update every 15 seconds (subtle, no screen flicker)
           if (!window.cspAutoRefreshInterval) {
@@ -2472,105 +3090,264 @@ e-page-transition,
 
   // ── Settings API Handlers ──
   function loadSettings() {
-    fetch('/api/settings.php')
+    fetch(getRootUrl('api/settings.php'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         if (res.success && res.settings) {
           var s = res.settings;
-          if (s.site_name) document.getElementById('set-site-name').value = s.site_name;
-          if (s.site_tagline) document.getElementById('set-site-tagline').value = s.site_tagline;
-          if (s.admin_email) document.getElementById('set-admin-email').value = s.admin_email;
-          if (s.default_author) document.getElementById('set-default-author').value = s.default_author;
-          if (s.posts_per_page) document.getElementById('set-posts-per-page').value = s.posts_per_page;
-          if (s.smtp_host) document.getElementById('set-smtp-host').value = s.smtp_host;
-          if (s.smtp_port) document.getElementById('set-smtp-port').value = s.smtp_port;
-          if (s.smtp_user) document.getElementById('set-smtp-user').value = s.smtp_user;
-          if (s.smtp_pass) document.getElementById('set-smtp-pass').value = s.smtp_pass;
-          if (s.sender_email) document.getElementById('set-sender-email').value = s.sender_email;
-          if (s.sender_name) document.getElementById('set-sender-name').value = s.sender_name;
-
-          if (s.popup_ad_enabled !== undefined) document.getElementById('set-popup-enabled').checked = s.popup_ad_enabled == '1';
-          if (s.popup_ad_title) document.getElementById('set-popup-title').value = s.popup_ad_title;
-          if (s.popup_ad_image) document.getElementById('set-popup-image').value = s.popup_ad_image;
-          if (s.popup_ad_link) document.getElementById('set-popup-link').value = s.popup_ad_link;
-          if (s.popup_ad_delay) document.getElementById('set-popup-delay').value = s.popup_ad_delay;
-        }
-      });
-
-    // Populate current admin profile fields
-    fetch('/api/auth.php?action=me')
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        if (res.success && res.user) {
-          if (document.getElementById('prof-username')) document.getElementById('prof-username').value = res.user.username || '';
-          if (document.getElementById('prof-name')) document.getElementById('prof-name').value = res.user.name || '';
-          if (document.getElementById('prof-email')) document.getElementById('prof-email').value = res.user.email || '';
+          if (s.site_name && document.getElementById('set-site-name')) document.getElementById('set-site-name').value = s.site_name;
+          if (s.site_tagline && document.getElementById('set-site-tagline')) document.getElementById('set-site-tagline').value = s.site_tagline;
+          if (s.admin_email && document.getElementById('set-admin-email')) document.getElementById('set-admin-email').value = s.admin_email;
+          if (s.default_author && document.getElementById('set-default-author')) document.getElementById('set-default-author').value = s.default_author;
+          if (s.posts_per_page && document.getElementById('set-posts-per-page')) document.getElementById('set-posts-per-page').value = s.posts_per_page;
+          if (s.smtp_host && document.getElementById('set-smtp-host')) document.getElementById('set-smtp-host').value = s.smtp_host;
+          if (s.smtp_port && document.getElementById('set-smtp-port')) document.getElementById('set-smtp-port').value = s.smtp_port;
+          if (s.smtp_user && document.getElementById('set-smtp-user')) document.getElementById('set-smtp-user').value = s.smtp_user;
+          if (s.smtp_pass && document.getElementById('set-smtp-pass')) document.getElementById('set-smtp-pass').value = s.smtp_pass;
+          if (s.sender_email && document.getElementById('set-sender-email')) document.getElementById('set-sender-email').value = s.sender_email;
+          if (s.sender_name && document.getElementById('set-sender-name')) document.getElementById('set-sender-name').value = s.sender_name;
         }
       });
   }
 
-  // Save SMTP Settings Form Submit
-  var formSmtpSettings = document.getElementById('form-smtp-settings');
-  if (formSmtpSettings) {
-    formSmtpSettings.addEventListener('submit', function(e){
-      e.preventDefault();
-      var payload = {
-        settings: {
-          smtp_host: document.getElementById('set-smtp-host').value,
-          smtp_port: document.getElementById('set-smtp-port').value,
-          smtp_user: document.getElementById('set-smtp-user').value,
-          smtp_pass: document.getElementById('set-smtp-pass').value,
-          sender_email: document.getElementById('set-sender-email').value,
-          sender_name: document.getElementById('set-sender-name').value
-        }
-      };
+  // ── Multiple Popup Adverts Manager ──
+  var popupAdvertsList = [];
 
-      fetch('/api/settings.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
+  function loadPopupAdverts() {
+    fetch(getRootUrl('api/settings.php'))
       .then(function(r){ return r.json(); })
       .then(function(res){
-        if (res.success) {
-          alert('🎉 SMTP Configuration saved successfully!');
-        } else {
-          alert('Error: ' + (res.error || 'Failed to save SMTP settings'));
+        if (!res.success || !res.settings) return;
+        var s = res.settings;
+
+        if (s.popup_adverts_list) {
+          try { popupAdvertsList = JSON.parse(s.popup_adverts_list); } catch(e){ popupAdvertsList = []; }
+        } else if (s.popup_ad_title) {
+          popupAdvertsList = [{
+            id: 'ad_1',
+            title: s.popup_ad_title,
+            image: s.popup_ad_image || '',
+            targetPage: s.popup_ad_link || 'all',
+            clickUrl: s.popup_ad_link || '/submit-story/',
+            delay: parseInt(s.popup_ad_delay) || 3,
+            enabled: s.popup_ad_enabled === '1'
+          }];
         }
+
+        renderAdvertsTable();
       });
+  }
+
+  function renderAdvertsTable() {
+    var tbody = document.getElementById('adverts-cms-table');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    if (!popupAdvertsList || popupAdvertsList.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:24px;">No popup adverts created yet. Use the form above to add your first targeted advert!</td></tr>';
+      return;
+    }
+
+    popupAdvertsList.forEach(function(ad, idx){
+      var imgTag = ad.image ? '<img src="' + getAbsoluteImageUrl(ad.image) + '" style="width:60px;height:40px;object-fit:cover;border-radius:8px;" />' : '🖼️ None';
+      var targetLabel = ad.targetPage === 'all' ? '🌐 All Pages (Global)' : ad.targetPage;
+      var statusBadge = ad.enabled ? '<span class="csp-status-badge csp-status-approved">Enabled</span>' : '<span style="color:var(--text-muted);font-size:0.8rem;">Disabled</span>';
+
+      tbody.innerHTML += `
+        <tr>
+          <td>${imgTag}</td>
+          <td>
+            <div style="font-weight:600;color:#0f172a;">${ad.title}</div>
+            <div style="font-size:0.78rem;color:var(--blue);font-weight:500;">Target: ${targetLabel}</div>
+          </td>
+          <td style="font-size:0.8rem;color:var(--text-muted);max-width:180px;word-break:break-all;">${ad.clickUrl || '-'}</td>
+          <td>${ad.delay}s</td>
+          <td>${statusBadge}</td>
+          <td>
+            <button class="csp-btn-sm csp-btn-secondary" onclick="editPopupAd('${ad.id}')">Edit</button>
+            <button class="csp-btn-sm ${ad.enabled ? 'csp-btn-secondary' : 'csp-btn-primary'}" onclick="togglePopupAd('${ad.id}')">${ad.enabled ? 'Disable' : 'Enable'}</button>
+            <button class="csp-btn-sm csp-btn-danger" onclick="deletePopupAd('${ad.id}')">Delete</button>
+          </td>
+        </tr>
+      `;
     });
   }
 
-  // Save Popup Advert Settings Form Submit
-  var formPopupAdSettings = document.getElementById('form-popup-ad-settings');
-  if (formPopupAdSettings) {
-    formPopupAdSettings.addEventListener('submit', function(e){
-      e.preventDefault();
-      var payload = {
-        settings: {
-          popup_ad_enabled: document.getElementById('set-popup-enabled').checked ? '1' : '0',
-          popup_ad_title: document.getElementById('set-popup-title').value,
-          popup_ad_image: document.getElementById('set-popup-image').value,
-          popup_ad_link: document.getElementById('set-popup-link').value,
-          popup_ad_delay: document.getElementById('set-popup-delay').value
-        }
-      };
-
-      fetch('/api/settings.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        if (res.success) {
-          alert('🎉 Popup Advert settings saved successfully!');
-        } else {
-          alert('Error: ' + (res.error || 'Failed to save Popup Advert settings'));
-        }
-      });
+  function savePopupAdvertsListToServer() {
+    var payload = {
+      settings: {
+        popup_adverts_list: JSON.stringify(popupAdvertsList)
+      }
+    };
+    fetch(getRootUrl('api/settings.php'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success) {
+        alert('🎉 Popup Advert settings saved successfully!');
+        renderAdvertsTable();
+      } else {
+        alert('Error: ' + (res.error || 'Failed to save popup advert settings'));
+      }
     });
   }
+
+  // Popup Advert File Uploader
+  var adFileInput = document.getElementById('ad-file');
+  if (adFileInput) {
+    adFileInput.addEventListener('change', function(){
+      if (!adFileInput.files || !adFileInput.files[0]) return;
+      var formData = new FormData();
+      formData.append('image', adFileInput.files[0]);
+
+      fetch(getRootUrl('api/upload.php'), { method: 'POST', body: formData })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success) {
+            document.getElementById('ad-image').value = res.imageUrl;
+            var prevImg = document.getElementById('ad-preview');
+            if (prevImg) {
+              prevImg.src = getAbsoluteImageUrl(res.imageUrl);
+              prevImg.style.display = 'block';
+            }
+          } else { alert('Upload failed: ' + (res.error || 'Unknown error')); }
+        });
+    });
+  }
+
+  // Handle Inner Page vs External Link toggle
+  var adClickType = document.getElementById('ad-click-type');
+  var adInnerGroup = document.getElementById('ad-inner-page-group');
+  var adExtGroup = document.getElementById('ad-external-link-group');
+
+  if (adClickType) {
+    adClickType.addEventListener('change', function(){
+      if (adClickType.value === 'external') {
+        if (adInnerGroup) adInnerGroup.style.display = 'none';
+        if (adExtGroup) adExtGroup.style.display = 'block';
+      } else {
+        if (adInnerGroup) adInnerGroup.style.display = 'block';
+        if (adExtGroup) adExtGroup.style.display = 'none';
+      }
+    });
+  }
+
+  // Popup Advert Form Submit
+  var formAdItem = document.getElementById('form-popup-ad-item');
+  if (formAdItem) {
+    formAdItem.addEventListener('submit', function(e){
+      e.preventDefault();
+      var editId = document.getElementById('ad-edit-id').value;
+      var title  = document.getElementById('ad-title').value;
+      var target = document.getElementById('ad-target-page').value;
+      var image  = document.getElementById('ad-image').value;
+      var isExt  = document.getElementById('ad-click-type').value === 'external';
+      var clickUrl = isExt ? (document.getElementById('ad-click-ext').value || '#') : document.getElementById('ad-click-inner').value;
+      var delay  = parseInt(document.getElementById('ad-delay').value) || 3;
+      var enabled = document.getElementById('ad-enabled').checked;
+
+      if (editId) {
+        var existing = popupAdvertsList.find(function(x){ return x.id === editId; });
+        if (existing) {
+          existing.title = title;
+          existing.targetPage = target;
+          existing.image = image;
+          existing.clickUrl = clickUrl;
+          existing.delay = delay;
+          existing.enabled = enabled;
+        }
+      } else {
+        var newAd = {
+          id: 'ad_' + Date.now(),
+          title: title,
+          targetPage: target,
+          image: image,
+          clickUrl: clickUrl,
+          delay: delay,
+          enabled: enabled
+        };
+        popupAdvertsList.push(newAd);
+      }
+
+      resetAdForm();
+      savePopupAdvertsListToServer();
+    });
+  }
+
+  function resetAdForm() {
+    document.getElementById('form-popup-ad-item').reset();
+    document.getElementById('ad-edit-id').value = '';
+    document.getElementById('ad-image').value = '';
+    document.getElementById('ad-click-type').value = 'inner';
+    if (adInnerGroup) adInnerGroup.style.display = 'block';
+    if (adExtGroup) adExtGroup.style.display = 'none';
+
+    var prev = document.getElementById('ad-preview');
+    if (prev) prev.style.display = 'none';
+    var cancelBtn = document.getElementById('btn-cancel-ad-edit');
+    if (cancelBtn) cancelBtn.style.display = 'none';
+  }
+
+  var cancelAdBtn = document.getElementById('btn-cancel-ad-edit');
+  if (cancelAdBtn) cancelAdBtn.addEventListener('click', resetAdForm);
+
+  window.editPopupAd = function(id) {
+    var ad = popupAdvertsList.find(function(x){ return x.id === id; });
+    if (!ad) return;
+    document.getElementById('ad-edit-id').value = ad.id;
+    document.getElementById('ad-title').value = ad.title;
+    document.getElementById('ad-target-page').value = ad.targetPage || 'all';
+    document.getElementById('ad-image').value = ad.image || '';
+    document.getElementById('ad-delay').value = ad.delay || 3;
+    document.getElementById('ad-enabled').checked = !!ad.enabled;
+
+    var url = ad.clickUrl || '';
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      document.getElementById('ad-click-type').value = 'external';
+      if (adInnerGroup) adInnerGroup.style.display = 'none';
+      if (adExtGroup) adExtGroup.style.display = 'block';
+      document.getElementById('ad-click-ext').value = url;
+    } else {
+      document.getElementById('ad-click-type').value = 'inner';
+      if (adInnerGroup) adInnerGroup.style.display = 'block';
+      if (adExtGroup) adExtGroup.style.display = 'none';
+      document.getElementById('ad-click-inner').value = url || '/submit-story/';
+    }
+
+    var prev = document.getElementById('ad-preview');
+    if (prev && ad.image) {
+      prev.src = getAbsoluteImageUrl(ad.image);
+      prev.style.display = 'block';
+    } else if (prev) { prev.style.display = 'none'; }
+
+    var cancelBtn = document.getElementById('btn-cancel-ad-edit');
+    if (cancelBtn) cancelBtn.style.display = 'inline-block';
+    
+    document.getElementById('form-popup-ad-item').scrollIntoView({ behavior: 'smooth' });
+  };
+
+  window.togglePopupAd = function(id) {
+    var ad = popupAdvertsList.find(function(x){ return x.id === id; });
+    if (!ad) return;
+    ad.enabled = !ad.enabled;
+    savePopupAdvertsListToServer();
+  };
+
+  window.deletePopupAd = async function(id) {
+    var confirmed = await cspConfirm({
+      title: 'Delete Popup Advert',
+      message: 'Are you sure you want to delete this popup advert?',
+      confirmText: 'Delete Advert',
+      type: 'danger'
+    });
+    if (!confirmed) return;
+
+    popupAdvertsList = popupAdvertsList.filter(function(x){ return x.id !== id; });
+    savePopupAdvertsListToServer();
+  };
 
   // Save Platform Settings Form Submit
   var formSiteSettings = document.getElementById('form-site-settings');
@@ -2588,7 +3365,7 @@ e-page-transition,
         }
       };
 
-      fetch('/api/settings.php', {
+      fetch(getRootUrl('api/settings.php'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -2617,7 +3394,7 @@ e-page-transition,
         newPassword: document.getElementById('prof-new-pass').value
       };
 
-      fetch('/api/auth.php?action=update_profile', {
+      fetch(getRootUrl('api/auth.php?action=update_profile'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -2642,44 +3419,75 @@ e-page-transition,
   }
 
   // Admin Login Handler
-  var formLogin = document.getElementById('form-admin-login');
-  if (formLogin) {
-    formLogin.addEventListener('submit', function(e){
-      e.preventDefault();
-      var u = document.getElementById('login-username').value;
-      var p = document.getElementById('login-password').value;
-      var errAlert = document.getElementById('login-error-alert');
+  function handleAdminLogin(e) {
+    if (e) e.preventDefault();
+    var uInput = document.getElementById('login-username');
+    var pInput = document.getElementById('login-password');
+    var u = uInput ? uInput.value.trim() : '';
+    var p = pInput ? pInput.value.trim() : '';
+    var errAlert = document.getElementById('login-error-alert');
+    var submitBtn = document.getElementById('btn-submit-cms-login');
 
-      fetch('/api/auth.php?action=login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: u, password: p })
-      })
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        if (res.success) {
-          if (errAlert) errAlert.style.display = 'none';
-          checkAuthSession();
-        } else {
-          if (errAlert) {
-            errAlert.textContent = res.error || 'Invalid credentials';
-            errAlert.style.display = 'block';
-          }
+    if (!u || !p) {
+      if (errAlert) {
+        errAlert.textContent = 'Please enter both username and password.';
+        errAlert.style.display = 'block';
+      }
+      return;
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing in...';
+    }
+
+    fetch(getRootUrl('api/auth.php?action=login'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: u, password: p })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success) {
+        if (errAlert) errAlert.style.display = 'none';
+        if (submitBtn) submitBtn.textContent = '🎉 Success!';
+        var loginScreen = document.getElementById('csp-login-screen');
+        if (loginScreen) loginScreen.style.display = 'none';
+        var loader = document.getElementById('csp-page-loader');
+        if (loader) loader.classList.add('loaded');
+        checkAuthSession();
+      } else {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Sign In to CMS Portal →';
         }
-      })
-      .catch(function(err){
         if (errAlert) {
-          errAlert.textContent = 'Server connection error';
+          errAlert.textContent = res.error || 'Invalid credentials';
           errAlert.style.display = 'block';
         }
-      });
+      }
+    })
+    .catch(function(err){
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In to CMS Portal →';
+      }
+      if (errAlert) {
+        errAlert.textContent = 'Server connection error. Please try again.';
+        errAlert.style.display = 'block';
+      }
     });
   }
+
+  var formLogin = document.getElementById('form-admin-login');
+  if (formLogin) formLogin.addEventListener('submit', handleAdminLogin);
+  var btnLogin = document.getElementById('btn-submit-cms-login');
+  if (btnLogin) btnLogin.addEventListener('click', handleAdminLogin);
 
   // Logout Handler
   document.querySelectorAll('.btn-logout-action').forEach(function(btn){
     btn.addEventListener('click', function(){
-      fetch('/api/auth.php?action=logout', { method: 'POST' })
+      fetch(getRootUrl('api/auth.php?action=logout'), { method: 'POST' })
         .then(function(){ location.reload(); });
     });
   });

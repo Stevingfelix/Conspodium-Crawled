@@ -222,6 +222,86 @@ try {
         ]);
     }
 
+    // Seed 4 crawled WordPress articles if missing
+    $crawledPosts = [
+        [
+            "title" => "From mutual aid networks to cultural organizations, discover how diaspora communities create support systems that span the globe.",
+            "slug" => "profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2",
+            "eyebrow" => "Community & Networks",
+            "excerpt" => "When my family arrived in Minneapolis from Somalia in the early 1990s, we didn't just find a new home—we found an informal safety net built by those who came before us.",
+            "content" => "<p>When my family arrived in Minneapolis from Somalia in the early 1990s, we didn't just find a new home—we found an informal safety net built by those who came before us.</p><p>From mutual aid networks to cultural organizations, diaspora communities continue to build vital support systems across the globe.</p>",
+            "category_id" => 4,
+            "author_name" => "Conspodium Editorial",
+            "author_avatar" => "CE",
+            "featured_image" => "./wp-content/uploads/2026/01/AF3-1-png-300x171.jpg",
+            "reading_time" => "6 min read",
+            "views" => 1540,
+            "is_featured" => 0,
+            "published_at" => "2026-02-05 10:00:00"
+        ],
+        [
+            "title" => "Profiles of Groundbreaking Tech Entrepreneurs From Diaspora",
+            "slug" => "profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora",
+            "eyebrow" => "Innovation & Tech",
+            "excerpt" => "The story of Silicon Valley cannot be told without highlighting the incredible impact of diaspora founders and tech innovators driving global change.",
+            "content" => "<p>The story of Silicon Valley cannot be told without highlighting the incredible impact of diaspora founders and tech innovators driving global change.</p><p>By bringing unique cross-cultural perspectives, tech founders from the African diaspora are building scalable platforms that address global challenges in fintech, agritech, and healthtech.</p>",
+            "category_id" => 2,
+            "author_name" => "Conspodium Tech",
+            "author_avatar" => "CT",
+            "featured_image" => "./wp-content/uploads/2026/01/location-1-300x210.webp",
+            "reading_time" => "5 min read",
+            "views" => 1890,
+            "is_featured" => 0,
+            "published_at" => "2026-02-05 09:00:00"
+        ],
+        [
+            "title" => "We Are The World",
+            "slug" => "we-are-the-world",
+            "eyebrow" => "Culture & Identity",
+            "excerpt" => "By Amara Okonkwo, Cultural Anthropologist. The first time I experienced global unity across diaspora cultures was during the pan-African cultural festival.",
+            "content" => "<p>By Amara Okonkwo, Cultural Anthropologist. The first time I experienced global unity across diaspora cultures was during the pan-African cultural festival.</p><p>Our shared stories, rhythms, and artistic heritage transcend geographic borders, creating a powerful collective identity for global Africans everywhere.</p>",
+            "category_id" => 1,
+            "author_name" => "Amara Okonkwo",
+            "author_avatar" => "AO",
+            "featured_image" => "./wp-content/uploads/2026/02/tourist-carrying-luggage-300x150.jpg",
+            "reading_time" => "4 min read",
+            "views" => 2100,
+            "is_featured" => 0,
+            "published_at" => "2026-02-04 12:00:00"
+        ],
+        [
+            "title" => "Visionary Entrepreneurs Leveraging Their Dual Cultural Knowledge",
+            "slug" => "conspodium-is-all-about-community",
+            "eyebrow" => "Art & Enterprise",
+            "excerpt" => "When I founded my first company at 24, connecting African artisans with European fashion houses, I realized our dual heritage is our greatest superpower.",
+            "content" => "<p>When I founded my first company at 24, connecting African artisans with European fashion houses, I realized our dual heritage is our greatest superpower.</p><p>Navigating both local traditions and international markets enables diaspora entrepreneurs to create unprecedented value and foster sustainable creative economies.</p>",
+            "category_id" => 3,
+            "author_name" => "Conspodium Editorial",
+            "author_avatar" => "CE",
+            "featured_image" => "./wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-300x200.jpg",
+            "reading_time" => "7 min read",
+            "views" => 1320,
+            "is_featured" => 0,
+            "published_at" => "2026-02-04 11:00:00"
+        ]
+    ];
+
+    $stmtCheck = $pdo->prepare("SELECT COUNT(*) as count FROM posts WHERE slug = ?");
+    $stmtInsertCrawled = $pdo->prepare("
+        INSERT INTO posts (title, slug, eyebrow, excerpt, content, category_id, author_name, author_avatar, featured_image, reading_time, views, is_featured, published_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+    foreach ($crawledPosts as $cp) {
+        $stmtCheck->execute([$cp['slug']]);
+        if ($stmtCheck->fetch()['count'] == 0) {
+            $stmtInsertCrawled->execute([
+                $cp['title'], $cp['slug'], $cp['eyebrow'], $cp['excerpt'], $cp['content'],
+                $cp['category_id'], $cp['author_name'], $cp['author_avatar'], $cp['featured_image'],
+                $cp['reading_time'], $cp['views'], $cp['is_featured'], $cp['published_at']
+            ]);
+        }
+    }
+
     // Seed active poll if empty
     $pollCount = $pdo->query("SELECT COUNT(*) as count FROM polls")->fetch()['count'];
     if ($pollCount == 0) {
