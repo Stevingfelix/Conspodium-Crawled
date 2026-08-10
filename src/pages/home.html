@@ -365,6 +365,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1595,8 +1596,9 @@ e-page-transition,
 #csp-hero{position:relative;width:100%;height:100vh;min-height:620px;max-height:920px;overflow:hidden;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;}
 .csp-hero-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:120px 8% 120px 8% !important;opacity:0;transition:opacity 1.1s cubic-bezier(0.4,0,0.2,1);pointer-events:none;}
 .csp-hero-slide.active{opacity:1;pointer-events:auto;}
-.csp-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center center;transform:scale(1.04);transition:transform 8.5s cubic-bezier(0.25,1,0.5,1);}
-.csp-hero-slide.active .csp-hero-bg{transform:scale(1.15);}
+@keyframes csp-kenburns{0%{transform:scale(1);}50%{transform:scale(1.12);}100%{transform:scale(1);}}
+.csp-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center center;transform:scale(1);transition:opacity 0.8s ease;}
+.csp-hero-slide.active .csp-hero-bg{animation:csp-kenburns 14s ease-in-out infinite alternate;}
 .csp-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,13,26,0.55) 0%,rgba(5,13,26,0.78) 45%,rgba(5,13,26,0.94) 100%);}
 .csp-hero-content{position:relative;z-index:2;max-width:760px;text-align:center;padding-bottom:16px;}
 .csp-hero-eyebrow{display:inline-flex;align-items:center;justify-content:center;text-align:center;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,rgba(0,174,254,0.35),rgba(183,31,113,0.25));border:1px solid rgba(0,174,254,0.5);border-radius:50px;padding:7px 28px !important;margin-bottom:28px !important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transform:translateY(24px);opacity:0;transition:transform 0.7s 0.2s ease,opacity 0.7s 0.2s ease;}
@@ -1713,13 +1715,9 @@ e-page-transition,
   function pad(x){ return x < 10 ? '0' + x : '' + x; }
 
   function initSlider() {
-    if (t) clearInterval(t);
-
     var slides = document.querySelectorAll('.csp-hero-slide');
     var n = slides.length;
     if (n === 0) return;
-
-    if (c >= n) c = 0;
 
     if (counterTot) counterTot.textContent = pad(n);
 
@@ -1727,14 +1725,12 @@ e-page-transition,
       dotsContainer.innerHTML = '';
       for (var i = 0; i < n; i++) {
         var dot = document.createElement('button');
-        dot.className = 'csp-hero-dot' + (i === 0 ? ' active' : '');
+        dot.className = 'csp-hero-dot' + (i === c ? ' active' : '');
         dot.dataset.to = i;
         dot.setAttribute('aria-label', 'Slide ' + (i + 1));
         dotsContainer.appendChild(dot);
       }
     }
-
-    var dots = document.querySelectorAll('.csp-hero-dot');
 
     function go(i) {
       var allSlides = document.querySelectorAll('.csp-hero-slide');
@@ -1751,10 +1747,10 @@ e-page-transition,
       if (allDots[c]) allDots[c].classList.add('active');
       if (counterCur) counterCur.textContent = pad(c + 1);
 
-      run();
+      runProgress();
     }
 
-    function run() {
+    function runProgress() {
       if (progress) {
         progress.style.transition = 'none';
         progress.style.width = '0%';
@@ -1765,37 +1761,47 @@ e-page-transition,
           });
         });
       }
-      clearInterval(t);
-      t = setInterval(function(){ go(c + 1); }, D);
     }
 
-    dots.forEach(function(x){
-      x.addEventListener('click', function(){ go(parseInt(x.dataset.to)); });
-    });
+    function startTimer() {
+      if (t) clearInterval(t);
+      t = setInterval(function(){
+        go(c + 1);
+      }, D);
+    }
+
+    if (dotsContainer) {
+      dotsContainer.onclick = function(e) {
+        var btn = e.target.closest('.csp-hero-dot');
+        if (btn && btn.dataset.to !== undefined) {
+          go(parseInt(btn.dataset.to, 10));
+          startTimer();
+        }
+      };
+    }
 
     var pv = document.getElementById('csp-hero-prev');
     var nx = document.getElementById('csp-hero-next');
-    if (pv) pv.addEventListener('click', function(){ go(c - 1); });
-    if (nx) nx.addEventListener('click', function(){ go(c + 1); });
+    if (pv) pv.onclick = function(){ go(c - 1); startTimer(); };
+    if (nx) nx.onclick = function(){ go(c + 1); startTimer(); };
 
     var h = document.getElementById('csp-hero');
-    if (h) {
-      h.addEventListener('mouseenter', function(){ clearInterval(t); });
-      h.addEventListener('mouseleave', function(){ run(); });
-    }
-
     var tx = null;
     if (h) {
       h.addEventListener('touchstart', function(ev){ tx = ev.touches[0].clientX; }, {passive:true});
       h.addEventListener('touchend', function(ev){
         if (tx === null) return;
         var dx = ev.changedTouches[0].clientX - tx;
-        if (Math.abs(dx) > 50) go(dx < 0 ? c + 1 : c - 1);
+        if (Math.abs(dx) > 50) {
+          go(dx < 0 ? c + 1 : c - 1);
+          startTimer();
+        }
         tx = null;
       }, {passive:true});
     }
 
-    run();
+    runProgress();
+    startTimer();
   }
 
   function loadFeaturedHeroArticles() {
