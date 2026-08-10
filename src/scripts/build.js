@@ -115,8 +115,14 @@ for (const page of PAGES) {
 
   if (headerFixesHtml) {
     html = html.replace('</head>', headerFixesHtml + '\n</head>');
-    await writeFile(srcFile, html, 'utf8');
   }
+
+  // Normalize relative assets & wp navigation links to root-relative paths
+  html = html.replace(/(src|href|srcset)=["']\.\.?\/(wp-content|wp-includes|assets)\//g, '$1="/$2/');
+  html = html.replace(/href=["']\.\.\/([a-zA-Z0-9_-]+\/?)["']/g, 'href="/$1"');
+  html = html.replace(/href=["']\.\/([a-zA-Z0-9_-]+\/?)["']/g, 'href="/$1"');
+  html = html.replace(/href=["']\.\/["']/g, 'href="/"');
+  html = html.replace(/href=["']\.\.\/["']/g, 'href="/"');
 
   await mkdir(dirname(outFile), { recursive: true });
   await writeFile(outFile, html, 'utf8');
