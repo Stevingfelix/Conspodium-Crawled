@@ -32,7 +32,12 @@ const PAGES = [
   { id: 'sponsorship',  out: 'sponsorship/index.html' },
   { id: 'advert',       out: 'advert/index.html' },
   { id: 'submit-story', out: 'submit-story/index.html' },
-  { id: 'dashboard',    out: 'dashboard/index.html' },
+  { id: 'category',     out: 'category/index.html' },
+  { id: 'category',     out: 'category/culture-heritage/index.html' },
+  { id: 'category',     out: 'category/innovation/index.html' },
+  { id: 'category',     out: 'category/art-entertainment/index.html' },
+  { id: 'category',     out: 'category/community/index.html' },
+  { id: 'category',     out: 'category/success-stories/index.html' },
 ];
 
 /** Recursively copy a directory */
@@ -45,8 +50,11 @@ async function copyDir(src, dest) {
 
 console.log('\n🔨 Conspodium Build\n');
 
-// Step 1 — Copy static assets and PHP API engine
+// Step 1 — Clean legacy category files and copy static assets
 process.stdout.write('  1. Copying assets and PHP API engine (src/assets & api → public)... ');
+if (existsSync(join(PUBLIC, 'category'))) {
+  await rm(join(PUBLIC, 'category'), { recursive: true, force: true });
+}
 if (existsSync(ASSETS)) {
   await copyDir(ASSETS, PUBLIC);
 }

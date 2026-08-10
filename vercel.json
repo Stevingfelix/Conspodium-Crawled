@@ -79,6 +79,14 @@
       "dest": "/public/submit-story/$1"
     },
     {
+      "src": "/category",
+      "dest": "/public/category/index.html"
+    },
+    {
+      "src": "/category/(.*)",
+      "dest": "/public/category/index.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1"
     }

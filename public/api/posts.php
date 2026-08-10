@@ -45,6 +45,7 @@ if ($resource === 'categories') {
         $name = trim($input['name'] ?? '');
         $icon = trim($input['icon'] ?? '🏷️');
         $desc = trim($input['description'] ?? '');
+        $image = trim($input['image'] ?? '');
 
         if (!$name) {
             echo json_encode(["success" => false, "error" => "Category name is required"]);
@@ -52,8 +53,8 @@ if ($resource === 'categories') {
         }
 
         $slug = slugify($name);
-        $stmt = $pdo->prepare("INSERT INTO categories (name, slug, icon, description) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$name, $slug, $icon, $desc]);
+        $stmt = $pdo->prepare("INSERT INTO categories (name, slug, icon, description, image) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$name, $slug, $icon, $desc, $image]);
 
         echo json_encode(["success" => true, "categoryId" => $pdo->lastInsertId(), "message" => "Category created successfully"]);
         exit;
@@ -65,10 +66,11 @@ if ($resource === 'categories') {
         $name = trim($input['name'] ?? '');
         $icon = trim($input['icon'] ?? '🏷️');
         $desc = trim($input['description'] ?? '');
+        $image = trim($input['image'] ?? '');
 
         $slug = slugify($name);
-        $stmt = $pdo->prepare("UPDATE categories SET name = ?, slug = ?, icon = ?, description = ? WHERE id = ?");
-        $stmt->execute([$name, $slug, $icon, $desc, $id]);
+        $stmt = $pdo->prepare("UPDATE categories SET name = ?, slug = ?, icon = ?, description = ?, image = ? WHERE id = ?");
+        $stmt->execute([$name, $slug, $icon, $desc, $image, $id]);
 
         echo json_encode(["success" => true, "message" => "Category updated successfully"]);
         exit;
@@ -77,6 +79,7 @@ if ($resource === 'categories') {
     if ($method === 'DELETE') {
         requireAdmin();
         $id = intval($_GET['id'] ?? 0);
+        $pdo->prepare("UPDATE posts SET category_id = NULL WHERE category_id = ?")->execute([$id]);
         $stmt = $pdo->prepare("DELETE FROM categories WHERE id = ?");
         $stmt->execute([$id]);
 

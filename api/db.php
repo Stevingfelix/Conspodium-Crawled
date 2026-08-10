@@ -44,7 +44,8 @@ try {
             name TEXT NOT NULL UNIQUE,
             slug TEXT NOT NULL UNIQUE,
             icon TEXT,
-            description TEXT
+            description TEXT,
+            image TEXT
         );
 
         CREATE TABLE IF NOT EXISTS posts (
@@ -109,6 +110,11 @@ try {
     // Migration for existing databases
     try {
         $pdo->exec("ALTER TABLE story_submissions ADD COLUMN category TEXT");
+    } catch (Exception $e) {
+        // Column already exists
+    }
+    try {
+        $pdo->exec("ALTER TABLE categories ADD COLUMN image TEXT");
     } catch (Exception $e) {
         // Column already exists
     }
