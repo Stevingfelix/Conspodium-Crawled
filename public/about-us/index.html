@@ -435,12 +435,15 @@ h3 span[style*="background-clip"] {
 /* Hide the sticky spacer clone that creates a blank gap at top of page */
 .elementor-sticky__spacer { display: none !important; }
 
-/* ── HEADER POSITIONING & STICKY-ON-SCROLL ───────────────────────────────── */
+/* ── HEADER POSITIONING & STICKY GLASSMORPHISM ────────────────────────────── */
 .elementor-location-header {
   position: relative !important;
   width: 100% !important;
   z-index: 99999 !important;
-  background-color: #000000 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
   top: auto !important;
   left: 0 !important;
   right: 0 !important;
@@ -449,14 +452,17 @@ h3 span[style*="background-clip"] {
 .elementor-location-header .she-header-yes {
   position: relative !important;
   width: 100% !important;
-  background-color: #000000 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
   top: auto !important;
   left: 0 !important;
   right: 0 !important;
-  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease !important;
+  transition: transform 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-/* Sticky state: applied when page is scrolled down (> 40px) */
+/* Sticky state: translucent dark glass with heavy blur when scrolled (> 40px) */
 .elementor-location-header.is-sticky,
 .elementor-location-header .she-header-yes.is-sticky {
   position: fixed !important;
@@ -465,10 +471,11 @@ h3 span[style*="background-clip"] {
   right: 0 !important;
   width: 100% !important;
   z-index: 99999 !important;
-  background-color: rgba(0, 0, 0, 0.95) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
+  background: rgba(6, 16, 34, 0.78) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
 }
 
 /* Fix logo images collapsed to height:0 by JS at crawl time */
@@ -532,38 +539,41 @@ section#csp-countdown h2.csp-cd-title {
   }
 }
 
-/* ── NAV TEXT: Homepage (white text over dark hero) ───────────────────────── */
+/* ── NAV TEXT: Normal State vs Sticky State ──────────────────────────────── */
+/* Homepage normal state: white text over dark hero */
 body.home .elementor-1969 .elementor-nav-menu--main .elementor-item {
   color: #ffffff !important;
   fill: #ffffff !important;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-}
-body.home .elementor-1969 .elementor-nav-menu--main .elementor-item:hover,
-body.home .elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active {
-  color: #00AEFE !important;
-  fill: #00AEFE !important;
-  text-shadow: none;
-}
-body.home .elementor-1969 .elementor-menu-toggle,
-body.home .elementor-1969 .elementor-menu-toggle i {
-  color: #ffffff !important;
 }
 
-/* ── NAV TEXT: Inner Pages (dark black text over white/light hero) ─────────── */
+/* Inner pages normal state (un-scrolled): dark text over light page background */
 body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item {
   color: #0f172a !important;
   fill: #0f172a !important;
-  text-shadow: none !important;
-}
-body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item:hover,
-body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active {
-  color: #00AEFE !important;
-  fill: #00AEFE !important;
-  text-shadow: none !important;
 }
 body:not(.home) .elementor-1969 .elementor-menu-toggle,
 body:not(.home) .elementor-1969 .elementor-menu-toggle i {
   color: #0f172a !important;
+}
+
+/* STICKY STATE (ALL PAGES): When scrolled down, header turns dark glass, so text turns WHITE */
+.elementor-location-header.is-sticky .elementor-nav-menu--main .elementor-item,
+.elementor-location-header.is-sticky .elementor-menu-toggle,
+.elementor-location-header.is-sticky .elementor-menu-toggle i,
+.she-header-yes.is-sticky .elementor-nav-menu--main .elementor-item,
+.she-header-yes.is-sticky .elementor-menu-toggle,
+.she-header-yes.is-sticky .elementor-menu-toggle i {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+}
+
+.elementor-1969 .elementor-nav-menu--main .elementor-item:hover,
+.elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active,
+.elementor-location-header.is-sticky .elementor-nav-menu--main .elementor-item:hover,
+.elementor-location-header.is-sticky .elementor-nav-menu--main .elementor-item.elementor-item-active {
+  color: #00AEFE !important;
+  fill: #00AEFE !important;
 }
 
 /* ── HIDE DEFAULT ELEMENTOR DROPDOWNS (REPLACED BY CSP STANDALONE MODAL) ────── */
