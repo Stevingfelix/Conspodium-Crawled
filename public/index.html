@@ -2508,29 +2508,29 @@ e-page-transition,
 
 
 <!-- CSP_SECTION_POLL_START -->
-<section id="csp-poll" style="background:#050D1A;padding:90px 0;">
+<section id="csp-poll" style="background:linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);padding:90px 0;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;">
 <style>
-#csp-poll{font-family:'Inter',-apple-system,sans-serif;color:#fff;}
+#csp-poll{font-family:'Inter',-apple-system,sans-serif;color:#0f172a;}
 .csp-poll-inner{max-width:620px;margin:0 auto;padding:0 40px;text-align:center;}
-.csp-poll-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:24px;padding:44px 40px;}
-.csp-poll-q{font-family:'Merriweather',serif;font-size:clamp(1.15rem,2.5vw,1.5rem);font-weight:400;color:#fff;line-height:1.5;margin:0 0 32px;}
+.csp-poll-card{background:#ffffff;border:1px solid #e2e8f0;border-radius:24px;padding:44px 40px;box-shadow:0 10px 30px rgba(0,0,0,0.03);}
+.csp-poll-q{font-family:'Merriweather',serif;font-size:clamp(1.15rem,2.5vw,1.5rem);font-weight:400;color:#0f172a;line-height:1.5;margin:0 0 32px;}
 .csp-poll-opts{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;text-align:left;}
-.csp-poll-opt{display:flex;align-items:center;gap:14px;padding:14px 20px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;cursor:pointer;transition:all 0.2s;user-select:none;}
+.csp-poll-opt{display:flex;align-items:center;gap:14px;padding:14px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;cursor:pointer;transition:all 0.2s;user-select:none;}
 .csp-poll-opt:hover{border-color:rgba(0,174,254,0.4);background:rgba(0,174,254,0.06);}
-.csp-poll-opt.selected{border-color:#00AEFE;background:rgba(0,174,254,0.1);}
+.csp-poll-opt.selected{border-color:#00AEFE;background:rgba(0,174,254,0.08);}
 .csp-poll-opt input[type=radio]{accent-color:#00AEFE;width:18px;height:18px;flex-shrink:0;}
-.csp-poll-opt-label{flex:1;font-size:0.9rem;color:rgba(255,255,255,0.85);}
-.csp-poll-bar-wrap{display:none;margin-top:4px;height:5px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;}
+.csp-poll-opt-label{flex:1;font-size:0.9rem;color:#334155;}
+.csp-poll-bar-wrap{display:none;margin-top:4px;height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;}
 .csp-poll-bar{height:100%;background:linear-gradient(90deg,#00AEFE,#B71F71);border-radius:3px;width:0%;transition:width 0.8s cubic-bezier(0.4,0,0.2,1);}
-.csp-poll-pct{font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;display:none;}
+.csp-poll-pct{font-size:0.75rem;color:#64748b;margin-top:4px;display:none;}
 .csp-poll-vote-btn{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#00AEFE,#B71F71);color:#fff;font-weight:600;font-size:0.9rem;padding:13px 30px;border-radius:50px;border:none;cursor:pointer;transition:opacity 0.2s,transform 0.2s;font-family:'Inter',sans-serif;}
 .csp-poll-vote-btn:hover{opacity:0.88;transform:translateY(-2px);}
 .csp-poll-vote-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
-.csp-poll-thanks{display:none;font-size:0.88rem;color:rgba(255,255,255,0.5);margin-top:16px;}
+.csp-poll-thanks{display:none;font-size:0.88rem;color:#64748b;margin-top:16px;}
 </style>
 <div class="csp-poll-inner">
   <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.15em;color:#00AEFE;text-transform:uppercase;margin:0 0 12px;">Weekly Poll</p>
-  <h2 style="font-family:'Merriweather',serif;font-size:clamp(1.5rem,2.5vw,2rem);font-weight:400;color:#fff;margin:0 0 40px;">Which topic should Conspodium <span style="font-family:'Merienda',cursive,sans-serif;font-weight:700;background:linear-gradient(110deg,#00AEFE,#B71F71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">explore next?</span></h2>
+  <h2 style="font-family:'Merriweather',serif;font-size:clamp(1.5rem,2.5vw,2rem);font-weight:400;color:#0f172a;margin:0 0 40px;">Which topic should Conspodium <span style="font-family:'Merienda',cursive,sans-serif;font-weight:700;background:linear-gradient(110deg,#00AEFE,#B71F71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">explore next?</span></h2>
   <div class="csp-poll-card">
     <p class="csp-poll-q">What is the most pressing issue facing the African diaspora today?</p>
     <div class="csp-poll-opts" id="csp-poll-opts">
@@ -2692,26 +2692,26 @@ e-page-transition,
 </section>
 <!-- CSP_SECTION_COUNTDOWN_END -->
 <!-- CSP_SECTION_TABS_START -->
-<section id="csp-tabs" style="background:#050D1A;padding:90px 0;">
+<section id="csp-tabs" style="background:#ffffff;padding:90px 0;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;">
 <style>
-#csp-tabs{font-family:'Inter',-apple-system,sans-serif;color:#fff;}
+#csp-tabs{font-family:'Inter',-apple-system,sans-serif;color:#0f172a;}
 .csp-tabs-inner{max-width:1100px;margin:0 auto;padding:0 40px;}
-.csp-tab-nav{display:flex;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:48px;overflow-x:auto;}
-.csp-tab-btn{flex-shrink:0;padding:14px 36px;font-size:0.9rem;font-weight:600;color:rgba(255,255,255,0.45);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;}
-.csp-tab-btn:hover{color:rgba(255,255,255,0.8);}
+.csp-tab-nav{display:flex;border-bottom:1px solid #e2e8f0;margin-bottom:48px;overflow-x:auto;}
+.csp-tab-btn{flex-shrink:0;padding:14px 36px;font-size:0.9rem;font-weight:600;color:#64748b;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;}
+.csp-tab-btn:hover{color:#0f172a;}
 .csp-tab-btn.active{color:#00AEFE;border-bottom-color:#00AEFE;}
 .csp-tab-panel{display:none;}
 .csp-tab-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 @media(max-width:700px){.csp-tab-panel.active{grid-template-columns:1fr;}}
-.csp-tab-item{display:flex;align-items:flex-start;gap:14px;padding:18px 20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;transition:border-color 0.2s,background 0.2s;}
-.csp-tab-item:hover{border-color:rgba(0,174,254,0.25);background:rgba(0,174,254,0.05);}
-.csp-tab-icon{flex-shrink:0;width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,rgba(0,174,254,0.15),rgba(183,31,113,0.1));display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
-.csp-tab-item-title{font-weight:600;font-size:0.9rem;color:#fff;margin-bottom:4px;}
-.csp-tab-item-sub{font-size:0.78rem;color:rgba(255,255,255,0.45);}
+.csp-tab-item{display:flex;align-items:flex-start;gap:14px;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;transition:border-color 0.2s,background 0.2s,box-shadow 0.2s;}
+.csp-tab-item:hover{border-color:rgba(0,174,254,0.4);background:#ffffff;box-shadow:0 8px 20px rgba(0,174,254,0.08);}
+.csp-tab-icon{flex-shrink:0;width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,rgba(0,174,254,0.1),rgba(183,31,113,0.08));display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.csp-tab-item-title{font-weight:600;font-size:0.9rem;color:#0f172a;margin-bottom:4px;}
+.csp-tab-item-sub{font-size:0.78rem;color:#64748b;}
 </style>
 <div class="csp-tabs-inner">
   <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.15em;color:#00AEFE;text-transform:uppercase;margin:0 0 12px;">The Conspodium Timeline</p>
-  <h2 style="font-family:'Merriweather',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:400;color:#fff;margin:0 0 40px;">Past • Present • <span style="font-family:'Merienda',cursive,sans-serif;font-weight:700;background:linear-gradient(110deg,#00AEFE,#B71F71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Upcoming</span></h2>
+  <h2 style="font-family:'Merriweather',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:400;color:#0f172a;margin:0 0 40px;">Past • Present • <span style="font-family:'Merienda',cursive,sans-serif;font-weight:700;background:linear-gradient(110deg,#00AEFE,#B71F71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Upcoming</span></h2>
   <div class="csp-tab-nav">
     <button class="csp-tab-btn active" data-tab="past">Past</button>
     <button class="csp-tab-btn" data-tab="present">Present</button>
@@ -2783,25 +2783,25 @@ e-page-transition,
 </section>
 <!-- CSP_SECTION_QUOTE_END -->
 <!-- CSP_SECTION_TRENDING_START -->
-<section id="csp-trending" style="background:#040c18;padding:70px 0 50px;">
+<section id="csp-trending" style="background:linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);padding:70px 0 50px;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;">
 <style>
-#csp-trending{font-family:'Inter',-apple-system,sans-serif;color:#fff;}
+#csp-trending{font-family:'Inter',-apple-system,sans-serif;color:#0f172a;}
 .csp-trending-inner{max-width:1200px;margin:0 auto;padding:0 40px;}
 .csp-trending-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:16px;}
 .csp-trending-tags-wrap{overflow:hidden;position:relative;}
-.csp-trending-tags-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:80px;background:linear-gradient(to left,#040c18,transparent);pointer-events:none;}
+.csp-trending-tags-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:80px;background:linear-gradient(to left,#f1f5f9,transparent);pointer-events:none;}
 .csp-trending-tags{display:flex;gap:14px;animation:csp-slide 25s linear infinite;width:max-content;}
 .csp-trending-tags:hover{animation-play-state:paused;}
 @keyframes csp-slide{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.csp-tag{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:50px;border:1px solid rgba(0,174,254,0.25);background:rgba(0,174,254,0.06);color:rgba(255,255,255,0.8);font-size:0.88rem;white-space:nowrap;cursor:pointer;transition:all 0.2s;text-decoration:none;}
-.csp-tag:hover{background:linear-gradient(135deg,rgba(0,174,254,0.18),rgba(183,31,113,0.18));border-color:rgba(0,174,254,0.5);color:#fff;transform:translateY(-2px);}
-.csp-tag-num{font-size:0.7rem;color:rgba(255,255,255,0.35);font-weight:500;}
+.csp-tag{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#334155;font-size:0.88rem;white-space:nowrap;cursor:pointer;transition:all 0.2s;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.03);}
+.csp-tag:hover{background:linear-gradient(135deg,rgba(0,174,254,0.1),rgba(183,31,113,0.1));border-color:rgba(0,174,254,0.5);color:#0f172a;transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,174,254,0.15);}
+.csp-tag-num{font-size:0.7rem;color:#64748b;font-weight:500;}
 </style>
 <div class="csp-trending-inner">
   <div class="csp-trending-header">
     <div>
       <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.15em;color:#00AEFE;text-transform:uppercase;margin:0 0 8px;">Trending Now</p>
-      <h2 style="font-family:'Merriweather',serif;font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:400;color:#fff;margin:0;">What the Community Is <span style="font-family:'Merienda',cursive,sans-serif;font-weight:700;background:linear-gradient(110deg,#00AEFE,#B71F71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Talking About</span></h2>
+      <h2 style="font-family:'Merriweather',serif;font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:400;color:#0f172a;margin:0;">What the Community Is <span style="font-family:'Merienda',cursive,sans-serif;font-weight:700;background:linear-gradient(110deg,#00AEFE,#B71F71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Talking About</span></h2>
     </div>
     <a href="/stories/" style="font-size:0.85rem;color:#00AEFE;text-decoration:none;white-space:nowrap;padding-bottom:6px;">Explore All Topics →</a>
   </div>
