@@ -50,8 +50,8 @@ process.stdout.write('  1. Copying assets and PHP API engine (src/assets & api â
 if (existsSync(ASSETS)) {
   await copyDir(ASSETS, PUBLIC);
 }
-if (existsSync(join(PUBLIC, 'api'))) {
-  await rm(join(PUBLIC, 'api'), { recursive: true, force: true });
+if (existsSync(join(ROOT, 'api'))) {
+  await copyDir(join(ROOT, 'api'), join(PUBLIC, 'api'));
 }
 if (existsSync(join(ROOT, 'install.php'))) {
   await cp(join(ROOT, 'install.php'), join(PUBLIC, 'install.php'));
