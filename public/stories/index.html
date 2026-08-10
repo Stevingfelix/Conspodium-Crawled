@@ -504,9 +504,11 @@ html, body {
 /* Hide the sticky spacer clone that creates a blank gap at top of page */
 .elementor-sticky__spacer { display: none !important; }
 
-/* ── HEADER NORMAL STATE: SIT NATURALLY AT TOP OF PAGE FLOW ──────────────── */
+/* ── HEADER NORMAL STATE: TRANSPARENT BACKGROUND (NO DARK/BLACK COLOR) ─────── */
 .elementor-location-header,
-.elementor-location-header .she-header-yes {
+.elementor-location-header .she-header-yes,
+.elementor-location-header .elementor-element-2d9e131,
+.she-header:not(.is-sticky) {
   position: relative !important;
   top: auto !important;
   left: 0 !important;
@@ -514,8 +516,8 @@ html, body {
   width: 100% !important;
   max-width: 100% !important;
   z-index: 99999 !important;
-  background-color: #061022 !important;
-  background: #061022 !important;
+  background: transparent !important;
+  background-color: transparent !important;
   box-shadow: none !important;
   border: none !important;
   margin: 0 !important;
@@ -535,7 +537,8 @@ body.home .elementor-location-header .she-header-yes {
 
 /* ── HEADER STICKY STATE: BLURRED GLASSMORPHIC COLOR BACKGROUND ON SCROLL ─── */
 .elementor-location-header.is-sticky,
-.elementor-location-header .she-header-yes.is-sticky {
+.elementor-location-header .she-header-yes.is-sticky,
+.elementor-location-header .elementor-element-2d9e131.is-sticky {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
