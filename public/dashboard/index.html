@@ -453,6 +453,7 @@
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -465,7 +466,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400..900&display=swap" rel="stylesheet">
 <style>/* conspodium-fix-preloader */
-#sl-preloader { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
+#sl-preloader, e-page-transition, .e-page-transition { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
 </style>
 <style id="csp-header-fixes">
 /* Apply Merienda font to ALL gradient colored text across all section titles and custom sections */
@@ -522,10 +523,93 @@ h3 span[style*="background-clip"] {
   text-decoration: underline !important;
 }
 
+/* ── GLOBAL FULL-WIDTH RESET (ELIMINATES SIDE GAPS ON HEADER & FOOTER) ──────── */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.elementor-location-header,
+.elementor-location-footer,
+.elementor-section-wrap,
+.elementor-1969,
+.elementor-1374,
+.elementor-element-2d9e131,
+.elementor-element-dd5bf5d,
+.elementor-element-7c02c78 {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.elementor-location-footer .e-con-inner,
+.elementor-location-footer .elementor-section-wrap,
+.elementor-location-footer > div {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
 /* Hide the sticky spacer clone that creates a blank gap at top of page */
 .elementor-sticky__spacer { display: none !important; }
-/* Ensure the real fixed header is always visible */
-.she-header-yes, .elementor-sticky { visibility: visible !important; }
+
+/* ── HEADER NORMAL STATE: TRANSPARENT BACKGROUND (NO DARK/BLACK COLOR) ─────── */
+.elementor-location-header,
+.elementor-location-header .she-header-yes,
+.elementor-location-header .elementor-element-2d9e131,
+.she-header:not(.is-sticky) {
+  position: relative !important;
+  top: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  z-index: 99999 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  transition: transform 0.3s ease, background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+/* On Homepage only, header overlays top hero banner */
+body.home .elementor-location-header,
+body.home .elementor-location-header .she-header-yes {
+  position: absolute !important;
+  top: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* ── HEADER STICKY STATE: BLURRED GLASSMORPHIC COLOR BACKGROUND ON SCROLL ─── */
+.elementor-location-header.is-sticky,
+.elementor-location-header .she-header-yes.is-sticky,
+.elementor-location-header .elementor-element-2d9e131.is-sticky {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  z-index: 99999 !important;
+  background: rgba(6, 16, 34, 0.82) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
 /* Fix logo images collapsed to height:0 by JS at crawl time */
 img.sticel-logo-shrink { height: auto !important; max-height: 80px !important; width: auto !important; opacity: 1 !important; }
 
@@ -587,38 +671,61 @@ section#csp-countdown h2.csp-cd-title {
   }
 }
 
-/* ── NAV TEXT: Homepage (white text over dark hero) ───────────────────────── */
+/* ── PUSH INNER PAGE ELEMENTS DOWN BELOW RELATIVE HEADER ──────────────────── */
+body:not(.home) .csp-post-sec {
+  padding-top: 36px !important;
+}
+body:not(.home) .csp-cat-hero {
+  padding-top: 36px !important;
+}
+
+/* ── NAV TEXT: Normal State vs Sticky State ──────────────────────────────── */
+/* Homepage normal state: white text over dark hero */
 body.home .elementor-1969 .elementor-nav-menu--main .elementor-item {
   color: #ffffff !important;
   fill: #ffffff !important;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-}
-body.home .elementor-1969 .elementor-nav-menu--main .elementor-item:hover,
-body.home .elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active {
-  color: #00AEFE !important;
-  fill: #00AEFE !important;
-  text-shadow: none;
-}
-body.home .elementor-1969 .elementor-menu-toggle,
-body.home .elementor-1969 .elementor-menu-toggle i {
-  color: #ffffff !important;
 }
 
-/* ── NAV TEXT: Inner Pages (dark black text over white/light hero) ─────────── */
-body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item {
+/* Inner pages normal state (un-scrolled): dark text over light page background */
+body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item,
+body:not(.home) .elementor-item {
   color: #0f172a !important;
   fill: #0f172a !important;
-  text-shadow: none !important;
-}
-body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item:hover,
-body:not(.home) .elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active {
-  color: #00AEFE !important;
-  fill: #00AEFE !important;
-  text-shadow: none !important;
 }
 body:not(.home) .elementor-1969 .elementor-menu-toggle,
 body:not(.home) .elementor-1969 .elementor-menu-toggle i {
   color: #0f172a !important;
+}
+
+/* STICKY STATE (ALL PAGES): When scrolled down, header turns dark glass, so text MUST BE BRIGHT WHITE */
+body .is-sticky .elementor-nav-menu--main .elementor-item,
+body .is-sticky .elementor-item,
+body .is-sticky .elementor-menu-toggle,
+body .is-sticky .elementor-menu-toggle i,
+body:not(.home) .is-sticky .elementor-nav-menu--main .elementor-item,
+body:not(.home) .is-sticky .elementor-item,
+body:not(.home) .is-sticky .elementor-menu-toggle,
+body:not(.home) .is-sticky .elementor-menu-toggle i,
+body:not(.home) .elementor-location-header.is-sticky .elementor-nav-menu--main .elementor-item,
+body:not(.home) .elementor-location-header.is-sticky .elementor-menu-toggle,
+body:not(.home) .elementor-location-header.is-sticky .elementor-menu-toggle i,
+.she-header-yes.is-sticky .elementor-nav-menu--main .elementor-item,
+.she-header-yes.is-sticky .elementor-item,
+.she-header-yes.is-sticky .elementor-menu-toggle,
+.she-header-yes.is-sticky .elementor-menu-toggle i {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+}
+
+.elementor-1969 .elementor-nav-menu--main .elementor-item:hover,
+.elementor-1969 .elementor-nav-menu--main .elementor-item.elementor-item-active,
+body .is-sticky .elementor-nav-menu--main .elementor-item:hover,
+body .is-sticky .elementor-nav-menu--main .elementor-item.elementor-item-active,
+body:not(.home) .is-sticky .elementor-item:hover,
+body:not(.home) .is-sticky .elementor-item.elementor-item-active {
+  color: #00AEFE !important;
+  fill: #00AEFE !important;
 }
 
 /* ── HIDE DEFAULT ELEMENTOR DROPDOWNS (REPLACED BY CSP STANDALONE MODAL) ────── */
@@ -1205,7 +1312,7 @@ e-page-transition,
       if (loader) {
         setTimeout(function() {
           loader.classList.add('loaded');
-        }, 1100);
+        }, 500);
       }
     }
 
@@ -1492,10 +1599,30 @@ e-page-transition,
     }, 50);
   };
 
+  function initStickyHeader() {
+    var header = document.querySelector('.elementor-location-header') || document.querySelector('.she-header-yes');
+    var container = document.querySelector('.she-header-yes');
+    if (!header) return;
+
+    function checkScroll() {
+      if (window.scrollY > 40) {
+        header.classList.add('is-sticky');
+        if (container) container.classList.add('is-sticky');
+      } else {
+        header.classList.remove('is-sticky');
+        if (container) container.classList.remove('is-sticky');
+      }
+    }
+
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    checkScroll();
+  }
+
   function start() {
     initLoaderAndLogo();
     initMobileMenu();
     initPopupAdvert();
+    initStickyHeader();
   }
 
   if (document.readyState === 'loading') {
@@ -1530,6 +1657,10 @@ e-page-transition,
   <div class="csp-nav-item" data-tab="submissions">
     <div><span class="csp-nav-item-icon">📩</span> Submissions</div>
     <span class="csp-badge" id="sidebar-pending-badge">0</span>
+  </div>
+  <div class="csp-nav-item" data-tab="contact">
+    <div><span class="csp-nav-item-icon">📬</span> Contact Messages</div>
+    <span class="csp-badge" id="sidebar-contact-badge" style="background:#f43f5e;color:#fff;display:none;">0</span>
   </div>
   <div class="csp-nav-item" data-tab="polls">
     <div><span class="csp-nav-item-icon">📊</span> Weekly Polls</div>
@@ -1728,6 +1859,40 @@ e-page-transition,
       </div>
     </div>
 
+    <!-- ── TAB 3.5: CONTACT MESSAGES ── -->
+    <div class="csp-tab-pane" id="tab-contact">
+      <div class="csp-card">
+        <div class="csp-card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <span class="csp-card-header-title">📬 Contact Us Inquiries</span>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <button id="btn-bulk-delete-contact" class="csp-btn-sm csp-btn-danger" style="display:none;font-size:0.78rem;padding:6px 14px;">🗑️ Delete Selected (<span id="count-selected-contact">0</span>)</button>
+            <div class="csp-contact-filter-group" style="display:flex;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:10px;padding:3px;">
+              <button class="contact-filter-btn active" data-contact-filter="all" style="background:rgba(0,174,254,0.15);border:none;color:var(--blue);font-weight:600;padding:6px 14px;border-radius:8px;font-size:0.8rem;cursor:pointer;">All</button>
+              <button class="contact-filter-btn" data-contact-filter="unread" style="background:none;border:none;color:var(--text-muted);padding:6px 14px;border-radius:8px;font-size:0.8rem;cursor:pointer;">Unread</button>
+              <button class="contact-filter-btn" data-contact-filter="read" style="background:none;border:none;color:var(--text-muted);padding:6px 14px;border-radius:8px;font-size:0.8rem;cursor:pointer;">Read</button>
+            </div>
+          </div>
+        </div>
+        <div class="csp-table-wrapper">
+          <table class="csp-table">
+            <thead>
+              <tr>
+                <th style="width:40px;text-align:center;"><input type="checkbox" id="select-all-contact" style="cursor:pointer;" aria-label="Select all messages" /></th>
+                <th>Sender</th>
+                <th>Subject &amp; Message</th>
+                <th>Received Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="contact-cms-table">
+              <tr><td colspan="6">Loading contact inquiries...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <!-- ── TAB 4: WEEKLY POLLS ── -->
     <div class="csp-tab-pane" id="tab-polls">
       <div class="csp-card" style="padding:24px;">
@@ -1759,36 +1924,54 @@ e-page-transition,
 
     <!-- ── TAB 5: CATEGORIES ── -->
     <div class="csp-tab-pane" id="tab-categories">
-      <div class="csp-card" style="padding:24px;">
+      <div class="csp-card" style="padding:24px;margin-bottom:24px;">
         <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:16px;">🏷️ Add New Category</h3>
-        <form id="form-create-category" style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">
-          <div style="flex:2;min-width:200px;" class="csp-form-group">
-            <label class="csp-form-label">Category Name</label>
-            <input type="text" id="cat-name" class="csp-form-input" placeholder="e.g. Biotechnology" required>
+        <form id="form-create-category">
+          <div class="csp-form-row">
+            <div class="csp-form-group">
+              <label class="csp-form-label">Category Name *</label>
+              <input type="text" id="cat-name" class="csp-form-input" placeholder="e.g. Biotechnology &amp; Science" required>
+            </div>
+            <div class="csp-form-group">
+              <label class="csp-form-label">Icon Emoji *</label>
+              <select id="cat-icon" class="csp-form-select" required>
+                <option value="🏷️">🏷️ Category</option>
+                <option value="🏛️">🏛️ Culture &amp; Heritage</option>
+                <option value="💡">💡 Innovation</option>
+                <option value="🎨">🎨 Art &amp; Entertainment</option>
+                <option value="🤝">🤝 Community</option>
+                <option value="🏆">🏆 Success Stories</option>
+                <option value="⭐">⭐ Feature</option>
+                <option value="🌍">🌍 Global</option>
+                <option value="🧬">🧬 Science &amp; Health</option>
+                <option value="📰">📰 News &amp; Policy</option>
+                <option value="💼">💼 Business &amp; Finance</option>
+                <option value="🎓">🎓 Education</option>
+                <option value="⚽">⚽ Sports</option>
+                <option value="🎵">🎵 Music &amp; Culture</option>
+                <option value="🚀">🚀 Technology</option>
+              </select>
+            </div>
           </div>
-          <div style="flex:1;min-width:140px;" class="csp-form-group">
-            <label class="csp-form-label">Icon Emoji</label>
-            <select id="cat-icon" class="csp-form-select" required>
-              <option value="🏷️">🏷️</option>
-              <option value="🏛️">🏛️</option>
-              <option value="💡">💡</option>
-              <option value="⭐">⭐</option>
-              <option value="🎨">🎨</option>
-              <option value="🌍">🌍</option>
-              <option value="🧬">🧬</option>
-              <option value="📰">📰</option>
-              <option value="💼">💼</option>
-              <option value="🎓">🎓</option>
-              <option value="⚽">⚽</option>
-              <option value="🎵">🎵</option>
-              <option value="🚀">🚀</option>
-            </select>
+
+          <div class="csp-form-group">
+            <label class="csp-form-label">Description / Summary</label>
+            <input type="text" id="cat-desc" class="csp-form-input" placeholder="Short description of articles under this category...">
           </div>
-          <div style="flex:3;min-width:260px;" class="csp-form-group">
-            <label class="csp-form-label">Description</label>
-            <input type="text" id="cat-desc" class="csp-form-input" placeholder="Short summary of this category topic...">
+
+          <div class="csp-form-row">
+            <div class="csp-form-group">
+              <label class="csp-form-label">Category Hero Banner Image</label>
+              <div style="display:flex;gap:10px;margin-bottom:8px;">
+                <input type="file" id="cat-img-file" class="csp-form-input" accept="image/*">
+                <input type="text" id="cat-img-url" class="csp-form-input" placeholder="Or paste Image URL...">
+              </div>
+              <input type="hidden" id="cat-image">
+              <img id="cat-img-preview" src="" alt="Category Banner Preview" style="width:100%;max-height:120px;object-fit:cover;border-radius:10px;display:none;border:1px solid #cbd5e1;margin-top:6px;">
+            </div>
           </div>
-          <button type="submit" class="csp-btn-sm csp-btn-primary" style="margin-bottom:18px;height:42px;">Save Category</button>
+
+          <button type="submit" class="csp-btn-sm csp-btn-primary" style="height:42px;padding:0 24px;margin-top:8px;">✨ Save Category</button>
         </form>
       </div>
 
@@ -1800,6 +1983,7 @@ e-page-transition,
           <table class="csp-table">
             <thead>
               <tr>
+                <th>Banner</th>
                 <th>Icon</th>
                 <th>Category Name</th>
                 <th>Slug</th>
@@ -1808,7 +1992,7 @@ e-page-transition,
               </tr>
             </thead>
             <tbody id="categories-cms-table">
-              <tr><td colspan="5">Loading categories...</td></tr>
+              <tr><td colspan="6">Loading categories...</td></tr>
             </tbody>
           </table>
         </div>
@@ -2187,6 +2371,28 @@ e-page-transition,
     </div>
   </div>
 </div>
+<div class="csp-modal-overlay" id="modal-view-contact">
+  <div class="csp-modal" style="max-width:640px;">
+    <div class="csp-modal-header">
+      <h3 class="csp-modal-title" id="contact-modal-subject">Inquiry Subject</h3>
+      <button class="csp-modal-close" data-close="modal-view-contact">&times;</button>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-weight:700;color:#0f172a;font-size:1.05rem;" id="contact-modal-sender">Sender Name</span>
+        <span class="csp-status-badge" id="contact-modal-status-badge">unread</span>
+      </div>
+      <div style="font-size:0.85rem;color:var(--text-muted);" id="contact-modal-email">email@example.com</div>
+      <div style="font-size:0.8rem;color:#94a3b8;margin-top:4px;" id="contact-modal-date">Date</div>
+    </div>
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;max-height:360px;overflow-y:auto;font-size:0.92rem;line-height:1.6;color:#1e293b;white-space:pre-wrap;margin-bottom:24px;" id="contact-modal-body"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-view-contact">Close</button>
+      <button type="button" class="csp-btn-sm csp-btn-danger" id="btn-contact-modal-delete">Delete Message</button>
+      <a href="#" id="btn-contact-modal-reply" class="csp-btn-sm csp-btn-primary" style="text-decoration:none;">✉️ Reply via Email</a>
+    </div>
+  </div>
+</div>
 <div class="csp-modal-overlay" id="modal-approve">
   <div class="csp-modal" style="max-width:500px;">
     <div class="csp-modal-header">
@@ -2315,6 +2521,7 @@ e-page-transition,
       loadOverviewData();
       loadSubmissions();
       if (t.dataset.tab === 'posts') loadPosts();
+      if (t.dataset.tab === 'contact') loadContactMessages();
       if (t.dataset.tab === 'polls') loadPolls();
       if (t.dataset.tab === 'categories') loadCategoriesTable();
       if (t.dataset.tab === 'advert') loadPopupAdverts();
@@ -2362,6 +2569,12 @@ e-page-transition,
         document.getElementById('stat-pending').textContent = res.stats.pendingSubmissions || 0;
         document.getElementById('stat-views').textContent = (res.stats.totalViews || 0).toLocaleString();
         document.getElementById('sidebar-pending-badge').textContent = res.stats.pendingSubmissions || 0;
+
+        var contactBadge = document.getElementById('sidebar-contact-badge');
+        if (contactBadge) {
+          contactBadge.textContent = res.stats.unreadMessages || 0;
+          contactBadge.style.display = res.stats.unreadMessages > 0 ? 'inline-block' : 'none';
+        }
 
         var topTbody = document.getElementById('overview-top-posts-table');
         if(topTbody && res.topPosts) {
@@ -2945,6 +3158,185 @@ e-page-transition,
       });
   };
 
+  // ── Contact Messages Management ──────────────────────────────────────────────
+  var currentContactFilter = 'all';
+  var contactMessagesCache = [];
+
+  document.querySelectorAll('.contact-filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.contact-filter-btn').forEach(function(b){
+        b.style.background = 'none';
+        b.style.color = 'var(--text-muted)';
+        b.style.fontWeight = 'normal';
+        b.classList.remove('active');
+      });
+      btn.style.background = 'rgba(0,174,254,0.15)';
+      btn.style.color = 'var(--blue)';
+      btn.style.fontWeight = '600';
+      btn.classList.add('active');
+      currentContactFilter = btn.dataset.contactFilter;
+      loadContactMessages();
+    });
+  });
+
+  function loadContactMessages() {
+    fetch(getRootUrl('api/contact.php?status=' + currentContactFilter))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        var tbody = document.getElementById('contact-cms-table');
+        if (!tbody || !res.messages) return;
+        contactMessagesCache = res.messages;
+        tbody.innerHTML = '';
+
+        var selectAll = document.getElementById('select-all-contact');
+        if (selectAll) selectAll.checked = false;
+        updateContactBulkDeleteState();
+
+        if (res.messages.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">No contact inquiries found.</td></tr>';
+          return;
+        }
+
+        res.messages.forEach(function(m){
+          var createdDate = m.created_at ? m.created_at.slice(0, 16).replace('T', ' ') : 'Just now';
+          var fullName = ((m.first_name || '') + ' ' + (m.last_name || '')).trim() || m.email;
+
+          var statusBadge = m.status === 'unread'
+            ? '<span class="csp-status-badge csp-status-pending">unread</span>'
+            : '<span class="csp-status-badge csp-status-approved">read</span>';
+
+          var msgExcerpt = m.message ? (m.message.slice(0, 85) + (m.message.length > 85 ? '...' : '')) : '';
+
+          tbody.innerHTML += `
+            <tr style="${m.status === 'unread' ? 'font-weight: 600; background: rgba(0, 174, 254, 0.04);' : ''}">
+              <td style="text-align:center;"><input type="checkbox" class="contact-cb" data-id="${m.id}" style="cursor:pointer;" /></td>
+              <td>
+                <div style="font-weight:700;color:#0f172a;">${fullName}</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">${m.email}</div>
+              </td>
+              <td style="cursor:pointer;" onclick="openViewContactModal(${m.id})">
+                <div style="color:var(--blue);font-weight:600;">${m.subject || 'General Enquiry'}</div>
+                <div style="font-size:0.85rem;color:#475569;font-weight:normal;">${msgExcerpt}</div>
+              </td>
+              <td style="font-size:0.85rem;white-space:nowrap;">${createdDate}</td>
+              <td>${statusBadge}</td>
+              <td style="white-space:nowrap;">
+                <button class="csp-btn-sm csp-btn-secondary" onclick="openViewContactModal(${m.id})" style="margin-right:4px;">👁️ Read</button>
+                <button class="csp-btn-sm csp-btn-danger" onclick="deleteContact(${m.id})">Delete</button>
+              </td>
+            </tr>
+          `;
+        });
+
+        tbody.querySelectorAll('.contact-cb').forEach(function(cb){
+          cb.addEventListener('change', updateContactBulkDeleteState);
+        });
+      });
+  }
+
+  function updateContactBulkDeleteState() {
+    var cbs = document.querySelectorAll('.contact-cb:checked');
+    var btn = document.getElementById('btn-bulk-delete-contact');
+    var badge = document.getElementById('count-selected-contact');
+    if (btn && badge) {
+      badge.textContent = cbs.length;
+      btn.style.display = cbs.length > 0 ? 'inline-flex' : 'none';
+    }
+  }
+
+  var selectAllContact = document.getElementById('select-all-contact');
+  if (selectAllContact) {
+    selectAllContact.addEventListener('change', function(){
+      var cbs = document.querySelectorAll('.contact-cb');
+      cbs.forEach(function(cb){ cb.checked = selectAllContact.checked; });
+      updateContactBulkDeleteState();
+    });
+  }
+
+  var btnBulkDeleteContact = document.getElementById('btn-bulk-delete-contact');
+  if (btnBulkDeleteContact) {
+    btnBulkDeleteContact.addEventListener('click', async function(){
+      var cbs = document.querySelectorAll('.contact-cb:checked');
+      var ids = [];
+      cbs.forEach(function(cb){ ids.push(cb.dataset.id); });
+      if (ids.length === 0) return;
+
+      var confirmed = await cspConfirm({
+        title: 'Delete Selected Messages',
+        message: 'Are you sure you want to permanently delete ' + ids.length + ' selected message(s)?',
+        confirmText: 'Delete Messages',
+        type: 'danger'
+      });
+      if (!confirmed) return;
+
+      fetch(getRootUrl('api/contact.php?ids=' + ids.join(',')), { method: 'DELETE' })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          cspToast(res.message, 'success');
+          loadContactMessages();
+          loadOverviewData();
+        });
+    });
+  }
+
+  window.openViewContactModal = function(id) {
+    var m = contactMessagesCache.find(function(item){ return item.id == id; });
+    if (!m) return;
+
+    var fullName = ((m.first_name || '') + ' ' + (m.last_name || '')).trim() || m.email;
+
+    document.getElementById('contact-modal-subject').textContent = m.subject || 'General Enquiry';
+    document.getElementById('contact-modal-sender').textContent = fullName;
+    document.getElementById('contact-modal-email').textContent = 'Email: ' + m.email;
+    document.getElementById('contact-modal-date').textContent = 'Date Received: ' + (m.created_at || 'Recently');
+    document.getElementById('contact-modal-body').textContent = m.message;
+
+    var badge = document.getElementById('contact-modal-status-badge');
+    badge.textContent = m.status;
+    badge.className = 'csp-status-badge ' + (m.status === 'read' ? 'csp-status-approved' : 'csp-status-pending');
+
+    var replyBtn = document.getElementById('btn-contact-modal-reply');
+    if (replyBtn) {
+      replyBtn.href = 'mailto:' + m.email + '?subject=' + encodeURIComponent('Re: ' + (m.subject || 'Conspodium Inquiry'));
+    }
+
+    var delBtn = document.getElementById('btn-contact-modal-delete');
+    if (delBtn) {
+      delBtn.onclick = function() {
+        closeModal('modal-view-contact');
+        deleteContact(m.id);
+      };
+    }
+
+    if (m.status === 'unread') {
+      fetch(getRootUrl('api/contact.php?action=mark_read&id=' + m.id), { method: 'POST' })
+        .then(function(){
+          m.status = 'read';
+          loadOverviewData();
+        });
+    }
+
+    openModal('modal-view-contact');
+  };
+
+  window.deleteContact = async function(id) {
+    var confirmed = await cspConfirm({
+      title: 'Delete Message',
+      message: 'Are you sure you want to delete this contact message?',
+      confirmText: 'Delete Message',
+      type: 'danger'
+    });
+    if (!confirmed) return;
+
+    fetch(getRootUrl('api/contact.php?id=' + id), { method: 'DELETE' })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        cspToast(res.message, 'success');
+        loadContactMessages();
+        loadOverviewData();
+      });
+  };
+
   // Polls Editor
   window.hasActivePoll = false;
   window.activePollId = null;
@@ -3081,6 +3473,40 @@ e-page-transition,
   };
 
   // Categories Manager
+  var catImgFile = document.getElementById('cat-img-file');
+  var catImgUrl = document.getElementById('cat-img-url');
+  var catImgPreview = document.getElementById('cat-img-preview');
+  var catImgVal = document.getElementById('cat-image');
+
+  if (catImgFile) {
+    catImgFile.addEventListener('change', function(){
+      if (catImgFile.files && catImgFile.files[0]) {
+        var formData = new FormData();
+        formData.append('image', catImgFile.files[0]);
+        fetch(getRootUrl('api/upload.php'), { method: 'POST', body: formData })
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (res.success && res.url) {
+              catImgVal.value = res.url;
+              catImgPreview.src = getAbsoluteImageUrl(res.url);
+              catImgPreview.style.display = 'block';
+              cspToast('Category banner image uploaded!', 'success');
+            }
+          });
+      }
+    });
+  }
+
+  if (catImgUrl) {
+    catImgUrl.addEventListener('input', function(){
+      if (catImgUrl.value.trim()) {
+        catImgVal.value = catImgUrl.value.trim();
+        catImgPreview.src = getAbsoluteImageUrl(catImgUrl.value.trim());
+        catImgPreview.style.display = 'block';
+      }
+    });
+  }
+
   function loadCategoriesTable() {
     fetch(getRootUrl('api/posts.php?resource=categories'))
       .then(function(r){ return r.json(); })
@@ -3089,11 +3515,13 @@ e-page-transition,
         if(!tbody || !res.categories) return;
         tbody.innerHTML = '';
         res.categories.forEach(function(c){
+          var imgThumb = c.image ? `<img src="${getAbsoluteImageUrl(c.image)}" style="width:48px;height:32px;object-fit:cover;border-radius:6px;border:1px solid #cbd5e1;" />` : '<span style="font-size:0.75rem;color:var(--text-muted);">None</span>';
           tbody.innerHTML += `
             <tr>
-              <td style="font-size:1.2rem;">${c.icon}</td>
+              <td>${imgThumb}</td>
+              <td style="font-size:1.2rem;">${c.icon || '🏷️'}</td>
               <td style="font-weight:600;">${c.name}</td>
-              <td style="color:var(--text-muted);">${c.slug}</td>
+              <td style="color:var(--text-muted);font-family:monospace;font-size:0.85rem;">/category/${c.slug}/</td>
               <td style="color:var(--blue);font-weight:600;">${c.post_count || 0} posts</td>
               <td>
                 <button class="csp-btn-sm csp-btn-danger" onclick="deleteCategory(${c.id})">Delete</button>
@@ -3109,18 +3537,24 @@ e-page-transition,
     var name = document.getElementById('cat-name').value;
     var icon = document.getElementById('cat-icon').value;
     var desc = document.getElementById('cat-desc').value;
+    var image = catImgVal ? catImgVal.value : '';
 
     fetch(getRootUrl('api/posts.php?resource=categories'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name, icon: icon, description: desc })
+      body: JSON.stringify({ name: name, icon: icon, description: desc, image: image })
     })
     .then(function(r){ return r.json(); })
     .then(function(res){
       if(res.success) {
         document.getElementById('form-create-category').reset();
+        if (catImgPreview) catImgPreview.style.display = 'none';
+        if (catImgVal) catImgVal.value = '';
+        cspToast('🎉 Category saved successfully!', 'success');
         loadCategoriesTable();
         loadCategoriesSelect();
+      } else {
+        cspToast('Error: ' + res.error, 'danger');
       }
     });
   });

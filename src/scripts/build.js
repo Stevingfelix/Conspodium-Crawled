@@ -38,6 +38,7 @@ const PAGES = [
   { id: 'category',     out: 'category/art-entertainment/index.html' },
   { id: 'category',     out: 'category/community/index.html' },
   { id: 'category',     out: 'category/success-stories/index.html' },
+  { id: 'dashboard',    out: 'dashboard/index.html' },
   { id: 'post',         out: 'post/index.html' },
   { id: 'post',         out: 'we-are-the-world/index.html' },
   { id: 'post',         out: 'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/index.html' },
