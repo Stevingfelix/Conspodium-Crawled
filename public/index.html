@@ -356,6 +356,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 
 
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1703,48 +1704,6 @@ e-page-transition,
 
   function pad(x){ return x < 10 ? '0' + x : '' + x; }
 
-  // Fetch articles marked with is_featured=1 from API and prepend to Hero Slider
-  fetch('/api/posts.php?featured=1')
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      if (res.success && res.posts && res.posts.length > 0) {
-        var existingSlides = Array.from(document.querySelectorAll('.csp-hero-slide'));
-        existingSlides.forEach(function(s){ s.classList.remove('active'); });
-
-        res.posts.reverse().forEach(function(post, index){
-          var imgUrl = post.featured_image || './wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
-          if (imgUrl.startsWith('./')) imgUrl = '/' + imgUrl.slice(2);
-          if (!imgUrl.startsWith('/') && !imgUrl.startsWith('http')) imgUrl = '/' + imgUrl;
-
-          var slideDiv = document.createElement('div');
-          slideDiv.className = 'csp-hero-slide' + (index === 0 ? ' active' : '');
-          slideDiv.dataset.slide = index;
-
-          var eyebrowText = post.eyebrow || post.category_name || 'Featured Article';
-
-          slideDiv.innerHTML =
-            '<div class="csp-hero-bg" style="background-image:url(\'' + imgUrl + '\');"></div>' +
-            '<div class="csp-hero-overlay"></div>' +
-            '<div class="csp-hero-content">' +
-              '<div class="csp-hero-eyebrow">⭐ ' + eyebrowText + '</div>' +
-              '<h1 class="csp-hero-title">' + post.title + '</h1>' +
-              '<p class="csp-hero-sub">' + (post.excerpt || '') + '</p>' +
-              '<div class="csp-hero-btns">' +
-                '<a href="./stories/" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
-                '<a href="./stories/" class="csp-hero-btn-secondary">Explore All Stories</a>' +
-              '</div>' +
-            '</div>';
-
-          heroContainer.insertBefore(slideDiv, heroContainer.firstChild);
-        });
-
-        initSlider();
-      } else {
-        initSlider();
-      }
-    })
-    .catch(function(){ initSlider(); });
-
   function initSlider() {
     var slides = document.querySelectorAll('.csp-hero-slide');
     var n = slides.length;
@@ -1819,6 +1778,8 @@ e-page-transition,
 
     run();
   }
+
+  initSlider();
 })();
 </script>
 <style id="csp-hide-old-hero">
@@ -1894,25 +1855,37 @@ e-page-transition,
 <div class="csp-ticker-wrap">
   <div class="csp-ticker-label"><span class="csp-ticker-dot"></span>LIVE</div>
   <div class="csp-ticker-track-wrap">
-    <div class="csp-ticker-track">
-      <span class="csp-ticker-item"><b>NEW:</b> Essay published on Global Governance &amp; Democracy</span>
+    <div class="csp-ticker-track" id="csp-ticker-track">
+      <span class="csp-ticker-item"><b>LATEST STORY:</b> <a href="./stories/" style="color:inherit;text-decoration:none;">Empowering Diaspora Communities Through Innovation &amp; Heritage</a></span>
       <span class="csp-ticker-item"><b>UPCOMING:</b> Professor Amara Diallo joins Conspodium next month</span>
-      <span class="csp-ticker-item"><b>NOW OPEN:</b> Registration for the next diaspora symposium</span>
-      <span class="csp-ticker-item"><b>PUBLISHED:</b> New podcast episode — African Futures in a Digital World</span>
+      <span class="csp-ticker-item"><b>WEEKLY POLL:</b> <a href="#csp-poll" style="color:inherit;text-decoration:none;">Vote on this week's community prompt</a></span>
       <span class="csp-ticker-item"><b>FEATURE:</b> Exclusive interview with Dr. Ngozi Eze on biotechnology</span>
-      <span class="csp-ticker-item"><b>POLL:</b> Vote on the next Conspodium topic — closes Sunday</span>
-      <span class="csp-ticker-item"><b>COMMUNITY:</b> 2,000+ readers now part of the Conspodium circle</span>
-      <span class="csp-ticker-item"><b>NEW:</b> Essay published on Global Governance &amp; Democracy</span>
-      <span class="csp-ticker-item"><b>UPCOMING:</b> Professor Amara Diallo joins Conspodium next month</span>
-      <span class="csp-ticker-item"><b>NOW OPEN:</b> Registration for the next diaspora symposium</span>
-      <span class="csp-ticker-item"><b>PUBLISHED:</b> New podcast episode — African Futures in a Digital World</span>
-      <span class="csp-ticker-item"><b>FEATURE:</b> Exclusive interview with Dr. Ngozi Eze on biotechnology</span>
-      <span class="csp-ticker-item"><b>POLL:</b> Vote on the next Conspodium topic — closes Sunday</span>
-      <span class="csp-ticker-item"><b>COMMUNITY:</b> 2,000+ readers now part of the Conspodium circle</span>
+      <span class="csp-ticker-item"><b>COMMUNITY:</b> Over 10,000+ diaspora voices connected worldwide</span>
     </div>
   </div>
 </div>
-</section>
+<script>
+(function(){
+  var track = document.getElementById('csp-ticker-track');
+  if (!track) return;
+
+  fetch(getRootUrl('api/posts.php?limit=6'))
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (!res.success || !res.posts || res.posts.length === 0) return;
+      var items = [];
+      res.posts.forEach(function(p){
+        items.push('<span class="csp-ticker-item"><b>LATEST STORY:</b> <a href="./stories/" style="color:inherit;text-decoration:none;">' + p.title + '</a></span>');
+      });
+      items.push('<span class="csp-ticker-item"><b>WEEKLY POLL:</b> <a href="#csp-poll" style="color:inherit;text-decoration:none;">Vote on this week\'s community prompt</a></span>');
+      items.push('<span class="csp-ticker-item"><b>COMMUNITY:</b> Over 10,000+ diaspora voices connected worldwide</span>');
+
+      var html = items.join('') + items.join('');
+      track.innerHTML = html;
+    })
+    .catch(function(err){ console.error('Error fetching dynamic ticker items:', err); });
+})();
+</script>
 <!-- CSP_SECTION_TICKER_END -->
 <div class="elementor-element elementor-element-4d857de7 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="4d857de7" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 					<div class="e-con-inner">
