@@ -348,6 +348,12 @@
 
 
 
+
+
+
+
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1503,12 +1509,19 @@ e-page-transition,
   <!-- DYNAMIC CATEGORY CONTROLLER SCRIPT -->
   <script>
   (function(){
+    // Immediate Guard: Prevent landing on /category/stories/ or nested /category/post/
+    var path = window.location.pathname;
+    if (path.indexOf('/category/stories') !== -1 || path.indexOf('/category/post') !== -1 || path.indexOf('/category/story') !== -1 || path.indexOf('/category/submit-story') !== -1) {
+      window.location.replace(getRootUrl('stories/'));
+      return;
+    }
+
     var postsCache = [];
 
     // Helper: Extract current category slug from URL path (e.g. /category/culture-heritage/ or /category/innovation)
     function getCategorySlugFromUrl() {
-      var path = window.location.pathname.replace(/\/$/, '');
-      var parts = path.split('/');
+      var cleanPath = window.location.pathname.replace(/\/$/, '');
+      var parts = cleanPath.split('/');
       var idx = parts.indexOf('category');
       var slug = null;
 
@@ -1521,7 +1534,7 @@ e-page-transition,
 
       // If invalid slug or path is nested /category/post/..., redirect to /stories/
       if (!slug || slug === 'post' || slug === 'story' || slug === 'stories' || slug === 'submit-story') {
-        window.location.href = getRootUrl('stories/');
+        window.location.replace(getRootUrl('stories/'));
         return 'culture-heritage';
       }
       return slug;
