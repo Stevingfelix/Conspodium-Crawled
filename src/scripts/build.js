@@ -75,9 +75,15 @@ if (existsSync(join(ROOT, 'installation-guide.html'))) {
 await mkdir(join(PUBLIC, 'uploads'), { recursive: true });
 console.log('✓');
 
-// Step 2 — Load shared CSS fix component
+// Step 2 — Load shared components (header, footer, header-fixes)
 const headerFixesHtml = existsSync(join(SRC, 'components/header-fixes.html'))
   ? await readFile(join(SRC, 'components/header-fixes.html'), 'utf8')
+  : '';
+const wpHeaderHtml = existsSync(join(SRC, 'components/wp-header.html'))
+  ? await readFile(join(SRC, 'components/wp-header.html'), 'utf8')
+  : '';
+const wpFooterHtml = existsSync(join(SRC, 'components/wp-footer.html'))
+  ? await readFile(join(SRC, 'components/wp-footer.html'), 'utf8')
   : '';
 
 // Step 3 — Process and write pages
@@ -93,6 +99,14 @@ for (const page of PAGES) {
   }
 
   let html = await readFile(srcFile, 'utf8');
+
+  // Replace component include comments
+  if (wpHeaderHtml) {
+    html = html.replace(/<!--\s*INCLUDE:(header-fixes|header|wp-header)\.html\s*-->/gi, wpHeaderHtml);
+  }
+  if (wpFooterHtml) {
+    html = html.replace(/<!--\s*INCLUDE:(footer|wp-footer)\.html\s*-->/gi, wpFooterHtml);
+  }
 
   // Clean out any legacy or duplicate header fix blocks and scripts
   html = html.replace(/<!-- CSP_HEADER_FIXES_START -->[\s\S]*?<!-- CSP_HEADER_FIXES_END -->\n?/g, '');
