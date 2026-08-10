@@ -3076,15 +3076,16 @@ e-page-transition,
 				</div>
 		
 <!-- CSP_SECTION_STATS_START -->
-<section id="csp-stats" style="background:linear-gradient(135deg,rgba(0,174,254,0.06) 0%,rgba(183,31,113,0.06) 100%);border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);padding:70px 0;">
+<section id="csp-stats" style="background:linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;padding:70px 0;">
 <style>
-#csp-stats{font-family:'Inter',-apple-system,sans-serif;color:#fff;}
+#csp-stats{font-family:'Inter',-apple-system,sans-serif;color:#0f172a;}
 .csp-stats-inner{max-width:1100px;margin:0 auto;padding:0 40px;}
 .csp-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center;}
 @media(max-width:700px){.csp-stats-grid{grid-template-columns:repeat(2,1fr);}}
-.csp-stat-item{padding:24px 16px;}
-.csp-stat-num{font-size:clamp(2.2rem,4vw,3rem);font-weight:700;background:linear-gradient(135deg,#00AEFE,#B71F71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:10px;}
-.csp-stat-label{font-size:0.88rem;color:#0f172a;font-weight:600;}
+.csp-stat-item{padding:24px 16px;background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.03);transition:transform 0.2s,box-shadow 0.2s;}
+.csp-stat-item:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,174,254,0.12);border-color:rgba(0,174,254,0.3);}
+.csp-stat-num{font-size:clamp(2.2rem,4vw,3rem);font-weight:800;background:linear-gradient(135deg,#00AEFE,#B71F71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:10px;}
+.csp-stat-label{font-size:0.88rem;color:#475569;font-weight:600;}
 </style>
 <div class="csp-stats-inner">
   <div class="csp-stats-grid">
