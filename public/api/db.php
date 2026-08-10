@@ -116,6 +116,17 @@ try {
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
         );
+
+        CREATE TABLE IF NOT EXISTS contact_messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            first_name TEXT,
+            last_name TEXT,
+            email TEXT NOT NULL,
+            subject TEXT,
+            message TEXT NOT NULL,
+            status TEXT DEFAULT 'unread',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
     ");
 
     // Migration for existing databases

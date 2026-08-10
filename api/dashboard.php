@@ -19,6 +19,8 @@ try {
     $totalViews = $pdo->query("SELECT SUM(views) as count FROM posts")->fetch()['count'] ?? 0;
     $totalSubmissions = $pdo->query("SELECT COUNT(*) as count FROM story_submissions")->fetch()['count'];
     $pendingSubmissions = $pdo->query("SELECT COUNT(*) as count FROM story_submissions WHERE status = 'pending'")->fetch()['count'];
+    $totalMessages = $pdo->query("SELECT COUNT(*) as count FROM contact_messages")->fetch()['count'] ?? 0;
+    $unreadMessages = $pdo->query("SELECT COUNT(*) as count FROM contact_messages WHERE status = 'unread'")->fetch()['count'] ?? 0;
 
     $topPostsStmt = $pdo->query("
         SELECT p.id, p.title, p.slug, p.views, p.reading_time, c.name as category_name
@@ -37,16 +39,27 @@ try {
     ");
     $recentSubmissions = $recentSubmissionsStmt->fetchAll();
 
+    $recentMessagesStmt = $pdo->query("
+        SELECT id, first_name, last_name, email, subject, status, created_at
+        FROM contact_messages
+        ORDER BY created_at DESC
+        LIMIT 5
+    ");
+    $recentMessages = $recentMessagesStmt->fetchAll();
+
     echo json_encode([
         "success" => true,
         "stats" => [
             "totalPosts" => intval($totalPosts),
             "totalViews" => intval($totalViews),
             "totalSubmissions" => intval($totalSubmissions),
-            "pendingSubmissions" => intval($pendingSubmissions)
+            "pendingSubmissions" => intval($pendingSubmissions),
+            "totalMessages" => intval($totalMessages),
+            "unreadMessages" => intval($unreadMessages)
         ],
         "topPosts" => $topPosts,
-        "recentSubmissions" => $recentSubmissions
+        "recentSubmissions" => $recentSubmissions,
+        "recentMessages" => $recentMessages
     ]);
 } catch (Exception $e) {
     http_response_code(500);
