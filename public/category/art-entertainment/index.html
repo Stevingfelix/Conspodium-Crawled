@@ -53,7 +53,7 @@
       position: relative;
       background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
       border-bottom: 1px solid var(--border-card);
-      padding: 130px 8% 50px 8%;
+      padding: 36px 8% 50px 8%;
     }
     .csp-cat-breadcrumb {
       display: flex;
@@ -482,24 +482,33 @@ html, body {
 /* Hide the sticky spacer clone that creates a blank gap at top of page */
 .elementor-sticky__spacer { display: none !important; }
 
-/* ── HEADER NORMAL STATE: TRANSPARENT OVERLAY AT TOP OF PAGE (Y = 0) ─────── */
+/* ── HEADER NORMAL STATE: SIT NATURALLY AT TOP OF PAGE FLOW ──────────────── */
 .elementor-location-header,
 .elementor-location-header .she-header-yes {
-  position: absolute !important;
-  top: 0 !important;
+  position: relative !important;
+  top: auto !important;
   left: 0 !important;
   right: 0 !important;
   width: 100% !important;
   max-width: 100% !important;
   z-index: 99999 !important;
-  background: transparent !important;
-  background-color: transparent !important;
+  background-color: #061022 !important;
+  background: #061022 !important;
   box-shadow: none !important;
   border: none !important;
   margin: 0 !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
-  transition: background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease !important;
+  transition: transform 0.3s ease, background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+/* On Homepage only, header overlays top hero banner */
+body.home .elementor-location-header,
+body.home .elementor-location-header .she-header-yes {
+  position: absolute !important;
+  top: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 /* ── HEADER STICKY STATE: BLURRED GLASSMORPHIC COLOR BACKGROUND ON SCROLL ─── */
@@ -512,11 +521,11 @@ html, body {
   width: 100% !important;
   max-width: 100% !important;
   z-index: 99999 !important;
-  background: rgba(6, 16, 34, 0.78) !important;
+  background: rgba(6, 16, 34, 0.82) !important;
   backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* Fix logo images collapsed to height:0 by JS at crawl time */
@@ -580,19 +589,12 @@ section#csp-countdown h2.csp-cd-title {
   }
 }
 
-/* ── PUSH INNER PAGE ELEMENTS DOWN BELOW ABSOLUTE HEADER ──────────────────── */
+/* ── PUSH INNER PAGE ELEMENTS DOWN BELOW RELATIVE HEADER ──────────────────── */
 body:not(.home) .csp-post-sec {
-  padding-top: 130px !important;
+  padding-top: 36px !important;
 }
 body:not(.home) .csp-cat-hero {
-  padding-top: 130px !important;
-}
-body:not(.home) .elementor-location-header + div,
-body:not(.home) .elementor-location-header + section,
-body:not(.home) .elementor-location-header + main,
-body:not(.home) .elementor-section:first-of-type,
-body:not(.home) .e-con.e-parent:first-of-type {
-  padding-top: 120px !important;
+  padding-top: 36px !important;
 }
 
 /* ── NAV TEXT: Normal State vs Sticky State ──────────────────────────────── */
