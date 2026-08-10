@@ -341,6 +341,12 @@
 
 
 
+
+
+
+
+
+
 <!-- CSP_HEADER_FIXES_START -->
 <!--
   src/components/header-fixes.html
@@ -1404,7 +1410,7 @@ e-page-transition,
   <!-- CATEGORY HERO -->
   <section class="csp-cat-hero">
     <div class="csp-cat-breadcrumb">
-      <a href="../">Home</a> &rsaquo; <a href="../stories/">All Stories &amp; Categories</a> &rsaquo; <span id="cat-bc-name">Category</span>
+      <a href="/">Home</a> &rsaquo; <a href="/stories/">All Stories &amp; Categories</a> &rsaquo; <span id="cat-bc-name">Category</span>
     </div>
     <div class="csp-cat-hero-flex">
       <div class="csp-cat-hero-info">
@@ -1415,7 +1421,7 @@ e-page-transition,
         <p class="csp-cat-hero-desc" id="cat-hero-desc">Discover in-depth investigations, personal reflections, and diaspora stories under this category.</p>
         <div class="csp-cat-hero-cta-bar">
           <span class="csp-cat-count-badge" id="cat-hero-badge">📚 0 Articles Published</span>
-          <a href="../submit-story/" class="csp-cat-share-btn">✍️ Share Your Story &rarr;</a>
+          <a href="/submit-story/" class="csp-cat-share-btn">✍️ Share Your Story &rarr;</a>
         </div>
       </div>
       <img id="cat-hero-banner" src="" alt="Category Banner" class="csp-cat-banner-img" style="display:none;">
@@ -1425,7 +1431,7 @@ e-page-transition,
   <!-- DYNAMIC CATEGORY FILTER SWITCHER TABS -->
   <div class="csp-cat-nav-wrap">
     <div class="csp-cat-nav-inner" id="csp-cat-tabs-container">
-      <a href="../stories/" class="csp-cat-tab">📚 All Stories</a>
+      <a href="/stories/" class="csp-cat-tab">📚 All Stories</a>
       <!-- Dynamic Category Tabs populate here -->
     </div>
   </div>
@@ -1448,7 +1454,7 @@ e-page-transition,
           <h2 style="font-family:'Merriweather',serif;font-size:1.6rem;color:#0f172a;margin:0 0 6px 0;">Explore Other Diaspora Stories</h2>
           <p style="color:#64748b;font-size:0.92rem;margin:0;">Discover recent voices, investigations, and features across all topics.</p>
         </div>
-        <a href="../stories/" class="csp-btn-sm csp-btn-secondary" style="padding:10px 24px;border-radius:50px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;">View All Stories &rarr;</a>
+        <a href="/stories/" class="csp-btn-sm csp-btn-secondary" style="padding:10px 24px;border-radius:50px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;">View All Stories &rarr;</a>
       </div>
 
       <div class="csp-grid" id="related-posts-grid">
@@ -1503,19 +1509,21 @@ e-page-transition,
       var path = window.location.pathname.replace(/\/$/, '');
       var parts = path.split('/');
       var idx = parts.indexOf('category');
+      var slug = null;
+
       if (idx !== -1 && parts[idx + 1] && parts[idx + 1] !== 'index.html') {
-        return decodeURIComponent(parts[idx + 1]);
+        slug = decodeURIComponent(parts[idx + 1]);
+      } else {
+        var urlParams = new URLSearchParams(window.location.search);
+        slug = urlParams.get('cat') || urlParams.get('category');
       }
-      var urlParams = new URLSearchParams(window.location.search);
-      var catParam = urlParams.get('cat') || urlParams.get('category');
-      if (catParam) return catParam;
-      
-      // If visiting /category/ directly without a slug, redirect cleanly to /stories/
-      if (path.endsWith('/category') || path.endsWith('/category/index.html')) {
+
+      // If invalid slug or path is nested /category/post/..., redirect to /stories/
+      if (!slug || slug === 'post' || slug === 'story' || slug === 'stories' || slug === 'submit-story') {
         window.location.href = getRootUrl('stories/');
         return 'culture-heritage';
       }
-      return 'culture-heritage';
+      return slug;
     }
 
     var currentSlug = getCategorySlugFromUrl();
@@ -1528,10 +1536,11 @@ e-page-transition,
 
         var tabsContainer = document.getElementById('csp-cat-tabs-container');
         if (tabsContainer) {
-          var tabsHtml = '<a href="../stories/" class="csp-cat-tab">📚 All Stories</a>';
+          var tabsHtml = '<a href="' + getRootUrl('stories/') + '" class="csp-cat-tab">📚 All Stories</a>';
           res.categories.forEach(function(c){
             var isActive = (c.slug === currentSlug);
-            tabsHtml += '<a href="../category/' + c.slug + '/" class="csp-cat-tab' + (isActive ? ' active' : '') + '">' + (c.icon || '🏷️') + ' ' + c.name + '</a>';
+            var catUrl = getRootUrl('category/' + c.slug + '/');
+            tabsHtml += '<a href="' + catUrl + '" class="csp-cat-tab' + (isActive ? ' active' : '') + '">' + (c.icon || '🏷️') + ' ' + c.name + '</a>';
           });
           tabsContainer.innerHTML = tabsHtml;
         }
@@ -1539,6 +1548,7 @@ e-page-transition,
         // Match current category info
         var matchedCat = res.categories.find(function(c){ return c.slug === currentSlug; });
         if (matchedCat) {
+          document.title = matchedCat.name + ' — Conspodium Category';
           document.getElementById('page-title').textContent = matchedCat.name + ' — Conspodium Category';
           document.getElementById('cat-bc-name').textContent = matchedCat.name;
           document.getElementById('cat-hero-name').textContent = matchedCat.name;
@@ -1554,6 +1564,7 @@ e-page-transition,
         } else {
           // Fallback title formatting from slug
           var formattedName = currentSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+          document.title = formattedName + ' — Conspodium Category';
           document.getElementById('page-title').textContent = formattedName + ' — Conspodium Category';
           document.getElementById('cat-bc-name').textContent = formattedName;
           document.getElementById('cat-hero-name').textContent = formattedName;
@@ -1577,7 +1588,7 @@ e-page-transition,
               <p style="color:#64748b;max-width:500px;margin:0 auto 24px auto;font-size:0.95rem;line-height:1.6;">
                 Be the first author to submit an essay, report, or opinion piece for this category!
               </p>
-              <a href="../submit-story/" class="csp-btn-sm csp-btn-primary" style="display:inline-flex;padding:12px 28px;font-size:0.9rem;border-radius:50px;text-decoration:none;">
+              <a href="${getRootUrl('submit-story/')}" class="csp-btn-sm csp-btn-primary" style="display:inline-flex;padding:12px 28px;font-size:0.9rem;border-radius:50px;text-decoration:none;">
                 Submit Your Story →
               </a>
             </div>
@@ -1592,7 +1603,7 @@ e-page-transition,
         res.posts.forEach(function(p){
           var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
           var pubDate = p.published_at ? p.published_at.slice(0,10) : 'Recent';
-          var postLink = '../post/' + (p.slug || p.id) + '/';
+          var postLink = getRootUrl('post/' + (p.slug || p.id) + '/');
           
           gridHtml += `
             <div class="csp-card-item" onclick="window.location.href='${postLink}'">
@@ -1639,7 +1650,7 @@ e-page-transition,
         var relHtml = '';
         otherPosts.slice(0, 4).forEach(function(p){
           var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
-          var postLink = '../post/' + (p.slug || p.id) + '/';
+          var postLink = getRootUrl('post/' + (p.slug || p.id) + '/');
           relHtml += `
             <div class="csp-card-item" onclick="window.location.href='${postLink}'">
               <div class="csp-card-img-wrap">
