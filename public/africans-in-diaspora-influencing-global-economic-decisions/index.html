@@ -2611,11 +2611,20 @@ form#fluentform_2 .ff-btn-submit {
 	</div>
 </div>
 
-  <!-- MAIN SINGLE POST SECTION -->
-  <main class="csp-post-sec">
-    <!-- GLASSMORPHIC CATEGORY NAV BAR WITH AUTO-SCROLL -->
+    <!-- Top Nav with Back to Stories link -->
+    <div class="csp-post-top-nav" style="margin-bottom:16px;display:flex;align-items:center;justify-space-between;">
+      <a href="/stories/" class="csp-back-btn" id="post-back-link" style="display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:50px;background:#ffffff;border:1px solid #cbd5e1;color:#475569;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s ease;">&larr; Back To Stories</a>
+    </div>
+
+    <!-- GLASSMORPHIC CATEGORY NAV BAR WITH PRE-RENDERED PILLS -->
     <div class="csp-cat-nav-wrap" style="position:sticky;top:85px;z-index:99;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:10px 16px;border-radius:50px;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:28px;width:100%;max-width:100%;box-sizing:border-box;">
       <div class="csp-cat-nav-inner" id="csp-cat-tabs-container" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;align-items:center;width:100%;-webkit-overflow-scrolling:touch;">
+        <a href="/stories/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">📚 All Stories</a>
+        <a href="/category/culture-heritage/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🏛️ Culture &amp; Heritage</a>
+        <a href="/category/innovation/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">💡 Innovation &amp; Tech</a>
+        <a href="/category/art-entertainment/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🎨 Art &amp; Entertainment</a>
+        <a href="/category/community/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">👥 Community</a>
+        <a href="/category/success-stories/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🌟 Success Stories</a>
       </div>
     </div>
 
@@ -3076,7 +3085,7 @@ form#fluentform_2 .ff-btn-submit {
               if (!cRes.success || !cRes.categories) return;
               var tabsContainer = document.getElementById('csp-cat-tabs-container');
               if (tabsContainer) {
-                var tabsHtml = '';
+                var tabsHtml = '<a href="' + (window.getRootUrl ? window.getRootUrl('stories/') : '/stories/') + '" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">📚 All Stories</a>';
                 cRes.categories.forEach(function(cat){
                   var isActive = (cat.slug === p.category_slug || (p.category_name && cat.name.toLowerCase() === p.category_name.toLowerCase()));
                   var catUrl = window.getRootUrl ? window.getRootUrl('category/' + cat.slug + '/') : '/category/' + cat.slug + '/';
