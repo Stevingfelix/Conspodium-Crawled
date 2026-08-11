@@ -772,6 +772,7 @@
     start();
   }
 })();
+</script>
 </head>
 <body class="wp-custom-logo wp-embed-responsive wp-theme-twentytwentyfour ehf-template-twentytwentyfour ehf-stylesheet-twentytwentyfour jkit-color-scheme elementor-default elementor-template-full-width elementor-kit-9 sticky-menu yes-is-sticky" data-elementor-device-mode="desktop">
 
@@ -1072,9 +1073,71 @@
     container.innerHTML = html;
   };
 
+  window.fetchPostDetails = function() {
+    var pathParts = window.location.pathname.split('/').filter(Boolean);
+    var urlParams = new URLSearchParams(window.location.search);
+    var slug = urlParams.get('slug') || urlParams.get('id');
+
+    if (!slug && pathParts.length > 0) {
+      var lastPart = pathParts[pathParts.length - 1];
+      if (lastPart !== 'post' && lastPart !== 'index.html' && lastPart !== 'public') {
+        slug = lastPart;
+      }
+    }
+
+    if (!slug) slug = 'we-are-the-world';
+
+    var titleEl = document.getElementById('post-title');
+    if (titleEl && titleEl.textContent.trim() !== 'Loading Article Title...' && titleEl.textContent.trim() !== '') {
+      return;
+    }
+
+    var apiEndpoint = (window.getRootUrl ? window.getRootUrl('api/posts.php?slug=' + encodeURIComponent(slug)) : '/api/posts.php?slug=' + encodeURIComponent(slug));
+    fetch(apiEndpoint)
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.post) {
+          var p = res.post;
+          if (document.getElementById('page-title')) document.title = p.title + ' — Conspodium';
+          if (titleEl) titleEl.textContent = p.title;
+          if (document.getElementById('post-author')) document.getElementById('post-author').textContent = p.author_name || 'Conspodium Editorial';
+          if (document.getElementById('post-date')) document.getElementById('post-date').textContent = p.published_at || p.created_at || 'Recent';
+          if (document.getElementById('post-reading-time')) document.getElementById('post-reading-time').textContent = p.reading_time || '5 min read';
+          if (document.getElementById('post-views')) document.getElementById('post-views').textContent = (p.views || 0) + ' views';
+
+          var badge = document.getElementById('post-category-badge');
+          if (badge && p.category_name) {
+            badge.textContent = (p.category_icon || '🏷️') + ' ' + p.category_name;
+            if (p.category_slug) badge.href = (window.getRootUrl ? window.getRootUrl('category/' + p.category_slug + '/') : '/category/' + p.category_slug + '/');
+          }
+
+          var heroImg = document.getElementById('post-hero-image');
+          if (heroImg && p.featured_image) {
+            heroImg.src = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(p.featured_image) : p.featured_image;
+            heroImg.style.display = 'block';
+          }
+
+          var excerptBox = document.getElementById('post-excerpt-box');
+          if (excerptBox && p.excerpt) {
+            excerptBox.innerHTML = p.excerpt;
+            excerptBox.style.display = 'block';
+          }
+
+          var contentBody = document.getElementById('post-content-body');
+          if (contentBody && p.content) {
+            contentBody.innerHTML = p.content;
+          }
+        }
+      })
+      .catch(function(){});
+  };
+
   (function(){
     // Check Admin Authentication Status
     window.checkAdminStatus();
+
+    // Fetch dynamic post details if needed
+    window.fetchPostDetails();
 
     // Initial Render of Comments
     if (document.readyState === 'loading') {

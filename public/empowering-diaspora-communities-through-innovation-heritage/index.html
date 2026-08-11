@@ -209,22 +209,44 @@ a.elementor-button[href*="submit-story"] *,
   fill: #ffffff !important;
 }
 
-/* ── ABOUT CONSPODIUM BUTTON LEFT ALIGNMENT FIX ────────────────────── */
-.elementor-element-170b1e1a,
-.elementor-element-170b1e1a .elementor-widget-container,
-.elementor-element-170b1e1a .ekit-wid-con,
-.elementor-element-170b1e1a .ekit-btn-wraper {
-  text-align: left !important;
-  display: flex !important;
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
-  margin-left: 0 !important;
+/* ── ABOUT CONSPODIUM BUTTON LEFT ALIGNMENT (DESKTOP) & CENTER (MOBILE) ── */
+@media (min-width: 768px) {
+  .elementor-element-170b1e1a,
+  .elementor-element-170b1e1a .elementor-widget-container,
+  .elementor-element-170b1e1a .ekit-wid-con,
+  .elementor-element-170b1e1a .ekit-btn-wraper {
+    text-align: left !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    margin-left: 0 !important;
+  }
+  .elementor-element-170b1e1a .elementskit-btn {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    justify-content: flex-start !important;
+  }
 }
-.elementor-element-170b1e1a .elementskit-btn {
-  margin-left: 0 !important;
-  margin-right: auto !important;
-  justify-content: flex-start !important;
+@media (max-width: 767px) {
+  .elementor-element-170b1e1a,
+  .elementor-element-170b1e1a .elementor-widget-container,
+  .elementor-element-170b1e1a .ekit-wid-con,
+  .elementor-element-170b1e1a .ekit-btn-wraper {
+    text-align: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+  }
+  .elementor-element-170b1e1a .elementskit-btn {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center !important;
+  }
 }
+
 
 /* On Homepage only, header overlays top hero banner */
 body.home .elementor-location-header:not(.is-sticky),
@@ -560,13 +582,6 @@ button[type="submit"],
   border-radius: 50px !important;
 }
 
-/* Ensure ElementsKit buttons (e.g. Read More in About section) match hero button width & sizing and center align */
-.elementor-element-170b1e1a,
-.elementor-element-170b1e1a .elementor-widget-container,
-.elementor-element-170b1e1a .ekit-wid-con,
-.elementor-element-170b1e1a .ekit-btn-wraper {
-  text-align: center !important;
-}
 
 .elementskit-btn,
 .elementor-element-170b1e1a .elementskit-btn,
@@ -1131,9 +1146,129 @@ e-page-transition,
 
         if (!adverts || adverts.length === 0) return;
 
-        var currentPath = window.location.pathname;
-        if (!currentPath.endsWith('/') && !currentPath.includes('.')) currentPath += '/';
+        // Filter active adverts matching current page route or 'all' pages
+        var matchingAds = adverts.filter(function(ad){
+          if (!ad.enabled) return false;
+          var target = (ad.targetPage || 'all').trim();
+          if (target === 'all' || target === '*') return true;
 
+          var cleanTarget = target;
+          if (!cleanTarget.endsWith('/') && !cleanTarget.includes('.')) cleanTarget += '/';
+
+          return currentPath === cleanTarget || currentPath.endsWith(cleanTarget);
+        });
+
+        if (matchingAds.length === 0) return;
+
+        matchingAds.forEach(function(ad){
+          var dismissKey = 'csp_popup_ad_dismissed_' + (ad.id || 'ad');
+          if (sessionStorage.getItem(dismissKey)) return;
+
+          var delayMs = (parseInt(ad.delay) || 3) * 1000;
+
+          setTimeout(function(){
+            if (sessionStorage.getItem(dismissKey)) return;
+
+            var adModal = document.createElement('div');
+            adModal.id = 'csp-popup-ad-modal-' + (ad.id || 'ad');
+            adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.4s ease;padding:20px;';
+
+            var card = document.createElement('div');
+            card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.4s ease;text-align:center;';
+
+            var closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '&times;';
+            closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+
+            function closeAd() {
+              sessionStorage.setItem(dismissKey, '1');
+              adModal.style.opacity = '0';
+              card.style.transform = 'scale(0.9)';
+              setTimeout(function(){ if(adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 400);
+            }
+
+            closeBtn.addEventListener('click', closeAd);
+            adModal.addEventListener('click', function(e){ if(e.target === adModal) closeAd(); });
+
+            var imgHtml = ad.image ? '<img src="' + getRootUrl(ad.image) + '" style="width:100%;max-height:220px;object-fit:cover;" />' : '';
+            var titleHtml = ad.title ? '<h3 style="font-family:\'Merriweather\',serif;font-size:1.25rem;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + ad.title + '</h3>' : '';
+            var linkUrl = ad.clickUrl ? getRootUrl(ad.clickUrl) : '#';
+
+            card.innerHTML = imgHtml +
+              '<div style="padding:4px 20px 24px;">' +
+                titleHtml +
+                '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
+              '</div>';
+
+            card.appendChild(closeBtn);
+            adModal.appendChild(card);
+            document.body.appendChild(adModal);
+
+            setTimeout(function(){
+              adModal.style.opacity = '1';
+              card.style.transform = 'scale(1)';
+            }, 50);
+          }, delayMs);
+        });
+      })
+      .catch(function(){});
+  }
+
+  window.showSuccessModal = function(title, message) {
+    var oldModal = document.getElementById('csp-global-success-modal');
+    if (oldModal && oldModal.parentNode) oldModal.parentNode.removeChild(oldModal);
+
+    var modal = document.createElement('div');
+    modal.id = 'csp-global-success-modal';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:999999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity 0.35s ease;padding:20px;';
+
+    var card = document.createElement('div');
+    card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;padding:32px 24px;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.35s ease;text-align:center;';
+
+    var closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.style.cssText = 'position:absolute;top:14px;right:14px;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+
+    function closeModal() {
+      modal.style.opacity = '0';
+      card.style.transform = 'scale(0.9)';
+      setTimeout(function(){ if (modal.parentNode) modal.parentNode.removeChild(modal); }, 350);
+    }
+
+    card.innerHTML = 
+      '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(0,174,254,0.2),rgba(183,31,113,0.2));border:1px solid rgba(0,174,254,0.4);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;">🎉</div>' +
+      '<h3 style="font-family:\'Merriweather\',serif;font-size:1.3rem;color:#ffffff;margin-bottom:10px;line-height:1.3;">' + (title || 'Submission Successful!') + '</h3>' +
+      '<p style="font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.6;margin-bottom:24px;">' + (message || 'Thank you! Your information has been received.') + '</p>' +
+      '<button id="csp-success-modal-btn" style="padding:12px 32px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border:none;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Got It →</button>';
+
+    card.appendChild(closeBtn);
+    modal.appendChild(card);
+    document.body.appendChild(modal);
+
+    var btn = card.querySelector('#csp-success-modal-btn');
+    if (btn) btn.addEventListener('click', closeModal);
+
+    setTimeout(function(){
+      modal.style.opacity = '1';
+      card.style.transform = 'scale(1)';
+    }, 50);
+  };
+
+  function start() {
+    initLoaderAndLogo();
+    initMobileMenu();
+    initPopupAdvert();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+})();
+</script>
+
+<style>
 /* ── GLOBAL MICRO-INTERACTIONS & READ PROGRESS BAR STYLING ────────────── */
 #csp-scroll-progress {
   position: fixed;
@@ -1734,6 +1869,548 @@ e-page-transition,
     }
   </style>
 
+</head>
+<body class="wp-custom-logo wp-embed-responsive wp-theme-twentytwentyfour ehf-template-twentytwentyfour ehf-stylesheet-twentytwentyfour jkit-color-scheme elementor-default elementor-template-full-width elementor-kit-9 sticky-menu yes-is-sticky" data-elementor-device-mode="desktop">
+
+  <!-- HEADER COMPONENT -->
+  <div data-elementor-type="header" data-elementor-id="1969" class="elementor elementor-1969 elementor-location-header">
+	<div class="elementor-section-wrap">
+		<div class="elementor-element elementor-element-2d9e131 e-con-full she-header-yes e-flex e-con e-parent adv-sticky-elementor elementor-sticky e-lazyloaded yes-is-sticky she-header" data-id="2d9e131" data-element_type="container" data-e-type="container">
+			<div class="elementor-element elementor-element-f22f163 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="f22f163" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-738d6a4 elementor-widget__width-initial elementor-hidden-mobile elementor-widget elementor-widget-image" data-id="738d6a4" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+					<div class="elementor-widget-container">
+						<a href="/">
+							<img fetchpriority="high" width="1024" height="315" src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990 sticel-logo-shrink" alt="Conspodium Logo" decoding="async" srcset="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png 1024w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-300x92.png 300w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-768x236.png 768w" sizes="(max-width: 1024px) 100vw, 1024px" data-original-height="68">
+						</a>
+					</div>
+				</div>
+				<div class="elementor-element elementor-element-2d4f26f elementor-hidden-desktop elementor-hidden-tablet elementor-widget elementor-widget-image" data-id="2d4f26f" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+					<div class="elementor-widget-container">
+						<a href="/">
+							<img width="1000" height="1000" src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-2.png" class="attachment-large size-large wp-image-989 sticel-logo-shrink" alt="Conspodium Mobile Logo" decoding="async" srcset="/wp-content/uploads/2026/01/CONSPODIUM-NEW-2.png 1000w" sizes="(max-width: 1000px) 100vw, 1000px" data-original-height="68" style="height: auto;">
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="elementor-element elementor-element-adf27cc e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="adf27cc" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-c6b6140 elementor-nav-menu__align-center elementor-nav-menu--stretch sticky-nav-menu-prefixstyle elementor-hidden-tablet elementor-hidden-mobile elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="c6b6140" data-element_type="widget" data-e-type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i class=\&quot;fas fa-caret-down\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
+					<div class="elementor-widget-container">
+						<nav migration_allowed="1" migrated="0" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-slide">
+							<ul id="menu-1-c6b6140" class="elementor-nav-menu">
+								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-6 current_page_item menu-item-2085"><a href="/" aria-current="page" class="elementor-item">Home</a></li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2087"><a href="/about-us/" class="elementor-item">About Us</a></li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2089"><a href="/contact-us/" class="elementor-item">Contact Us</a></li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2086"><a href="/stories/" class="elementor-item">Stories</a></li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2090"><a href="/sponsorship/" class="elementor-item">Sponsorship</a></li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2088"><a href="/advert/" class="elementor-item">Advert</a></li>
+							</ul>
+						</nav>
+						<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
+							<i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--open jki jki-menu-7-light"></i><i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close eicon-close"></i>
+							<span class="elementor-screen-only">Menu</span>
+						</div>
+					</div>
+				</div>
+				<div class="elementor-element elementor-element-27c23fa elementor-nav-menu__align-center elementor-nav-menu--stretch sticky-nav-menu-prefixstyle elementor-hidden-desktop elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="27c23fa" data-element_type="widget" data-e-type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i class=\&quot;fas fa-caret-down\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
+					<div class="elementor-widget-container">
+						<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
+							<i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--open jki jki-menu-7-light"></i><i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close eicon-close"></i>
+							<span class="elementor-screen-only">Menu</span>
+						</div>
+					</div>
+				</div>
+				<div class="elementor-element elementor-element-36265fd elementor-align-right sticky-button-prefixstyle elementor-widget-mobile__width-initial elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-button" data-id="36265fd" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
+					<div class="elementor-widget-container">
+						<div class="elementor-button-wrapper">
+							<a class="elementor-button elementor-button-link elementor-size-sm" href="/submit-story/">
+								<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-icon">
+										<i aria-hidden="true" class="jki jki-long-arrow-alt-right-solid"></i>
+									</span>
+									<span class="elementor-button-text">Submit Story</span>
+								</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+  <!-- MAIN SINGLE POST SECTION -->
+  <main class="csp-post-sec">
+    <!-- Top Nav -->
+    <div class="csp-post-top-nav">
+      <a href="/stories/" class="csp-back-btn" id="post-back-link">&larr; Back To Stories</a>
+    </div>
+
+    <div class="csp-post-grid-layout">
+      <!-- MAIN ARTICLE COLUMN -->
+      <article>
+        <a href="/category/culture-heritage/" id="post-category-badge" class="csp-post-badge">🏛️ Culture & Heritage</a>
+        
+        <h1 class="csp-post-title" id="post-title">Empowering Diaspora Communities Through Innovation & Heritage</h1>
+
+        <div class="csp-post-meta">
+          <span>✍️ <strong id="post-author" style="color:#0f172a;">Steving Felix</strong></span>
+          <span>📅 <span id="post-date">2026-08-01</span></span>
+          <span>⏱️ <span id="post-reading-time">6 min read</span></span>
+          <span>👁️ <span id="post-views">1420 views</span></span>
+        </div>
+
+        <img id="post-hero-image" src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Empowering Diaspora Communities Through Innovation & Heritage" class="csp-post-hero-img" style="display:block;">
+
+        <div id="post-excerpt-box" class="csp-post-excerpt-box" style="display:block;">Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.</div>
+
+        <div id="post-content-body" class="csp-post-body">
+      <p>Across Africa and its global diaspora, leaders in technology, finance, and arts are building bridges for sustainable economic growth and cultural exchange.</p>
+      <p>Through diaspora summits, bilateral investment funds, and cross-border tech incubator networks, pan-African innovators are turning shared history into actionable global impact.</p>
+    </div>
+        </div>
+
+        <!-- SHARE SECTION -->
+        <div class="csp-share-sec">
+          <div class="csp-share-title">Loved This Story? Share &amp; Listen</div>
+          <div class="csp-share-btns">
+            <button id="post-audio-btn" class="csp-share-btn" style="background:linear-gradient(135deg,#00AEFE,#B71F71);cursor:pointer;border:none;" onclick="if(window.playArticleAudio){ var t=document.getElementById('post-title')?document.getElementById('post-title').textContent:'Story'; var c=document.getElementById('post-content-body')?document.getElementById('post-content-body').textContent:''; window.playArticleAudio(t, c); }"><i class="fas fa-headphones"></i> Listen (Audio)</button>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fconspodium.com%2Fempowering-diaspora-communities-through-innovation-heritage%2F" class="csp-share-btn csp-share-fb" id="share-fb" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fconspodium.com%2Fempowering-diaspora-communities-through-innovation-heritage%2F&text=Empowering%20Diaspora%20Communities%20Through%20Innovation%20%26%20Heritage" class="csp-share-btn csp-share-tw" id="share-tw" target="_blank" rel="noopener"><i class="fab fa-twitter"></i> Twitter</a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fconspodium.com%2Fempowering-diaspora-communities-through-innovation-heritage%2F&title=Empowering%20Diaspora%20Communities%20Through%20Innovation%20%26%20Heritage" class="csp-share-btn csp-share-li" id="share-li" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+            <a href="https://api.whatsapp.com/send?text=Empowering%20Diaspora%20Communities%20Through%20Innovation%20%26%20Heritage%20https%3A%2F%2Fconspodium.com%2Fempowering-diaspora-communities-through-innovation-heritage%2F" class="csp-share-btn csp-share-wa" id="share-wa" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <button id="share-copy-btn" class="csp-share-btn" style="background:#475569;cursor:pointer;border:none;" onclick="navigator.clipboard.writeText(window.location.href); if(window.cspToast) window.cspToast('Article link copied to clipboard!', 'success');"><i class="fas fa-link"></i> Copy Link</button>
+          </div>
+        </div>
+
+        <!-- COMMENTS SECTION -->
+        <section class="csp-comments-sec">
+          <h3 class="csp-comments-title">Discussion &amp; Responses</h3>
+          
+          <!-- Comment Submission Form -->
+          <form id="form-submit-comment" class="csp-comment-form" onsubmit="return window.handleCommentSubmit(event);">
+            <div class="csp-comment-form-row">
+              <input type="text" id="comm-author" class="csp-input-field" placeholder="Your Name *" required>
+              <input type="email" id="comm-email" class="csp-input-field" placeholder="Your Email *" required>
+            </div>
+            <textarea id="comm-text" class="csp-input-field" rows="4" placeholder="Share your perspective on this article..." required></textarea>
+            <div>
+              <button type="submit" class="csp-btn-sm csp-btn-primary" style="padding:12px 30px;border-radius:50px;font-size:0.9rem;">Post Comment</button>
+            </div>
+          </form>
+
+          <!-- Comments Stream -->
+          <div id="comments-list-container">
+            <div style="color:#94a3b8;font-size:0.9rem;">No comments yet. Be the first to join the conversation!</div>
+          </div>
+        </section>
+      </article>
+
+      <!-- SIDEBAR COLUMN -->
+      <aside>
+        <div class="csp-sidebar-box">
+          <h3 class="csp-sidebar-title">Related Stories</h3>
+          <div id="sidebar-related-posts">
+          <a href="/post/africans-in-diaspora-influencing-global-economic-decisions/" class="csp-rel-item">
+            <img src="/wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Africans in Diaspora Influencing Global Economic Decisions" class="csp-rel-thumb" />
+            <div class="csp-rel-info">
+              <h4>Africans in Diaspora Influencing Global Economic Decisions</h4>
+              <span class="csp-rel-meta">Innovation • 6 min read</span>
+            </div>
+          </a>
+        
+          <a href="/post/creatives-shaping-representing-global-african-culture/" class="csp-rel-item">
+            <img src="/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Creatives Are Shaping & Representing Global African Culture" class="csp-rel-thumb" />
+            <div class="csp-rel-info">
+              <h4>Creatives Are Shaping & Representing Global African Culture</h4>
+              <span class="csp-rel-meta">Art & Entertainment • 10 min read</span>
+            </div>
+          </a>
+        
+          <a href="/post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2/" class="csp-rel-item">
+            <img src="/wp-content/uploads/2026/01/AF3-1-png-300x171.jpg" alt="From mutual aid networks to cultural organizations, discover how diaspora communities create support systems that span the globe." class="csp-rel-thumb" />
+            <div class="csp-rel-info">
+              <h4>From mutual aid networks to cultural organizations, discover how diaspora communities create support systems that span the globe.</h4>
+              <span class="csp-rel-meta">Success Stories • 5 min read</span>
+            </div>
+          </a>
+        </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- FOOTER COMPONENT -->
+  <div data-elementor-type="footer" data-elementor-id="1374" class="elementor elementor-1374 elementor-location-footer">
+					<div class="elementor-section-wrap">
+						<div class="elementor-element elementor-element-dd5bf5d e-flex e-con-boxed e-con e-parent adv-sticky-elementor" data-id="dd5bf5d" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-920f34a e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="920f34a" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+				<div class="elementor-element elementor-element-68518ef elementor-widget elementor-widget-image" data-id="68518ef" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img width="1024" height="315" src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990" alt="" decoding="async" srcset="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png 1024w, ./wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-300x92.png 300w, ./wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-768x236.png 768w" sizes="(max-width: 1024px) 100vw, 1024px">															</div>
+				</div>
+				<div class="elementor-element elementor-element-5dd035e sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="5dd035e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Amplifying diaspora voices and connecting communities through premium storytelling since 2019.</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-5d447be sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="5d447be" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">© 2026 Conspodium Magazine. All rights reserved.</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-2063cab elementor-widget elementor-widget-sky-social-icons" data-id="2063cab" data-element_type="widget" data-e-type="widget" data-widget_type="sky-social-icons.default">
+				<div class="elementor-widget-container">
+							<div class="sky-social-icons sa-d-inline-flex sa-align-items-center sa-justify-content-center">
+							<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-8988145 elementor-social-icon-facebook-f" href="https://web.facebook.com/profile.php?id=61582814130083" target="_blank">
+					<i class="fab fa-facebook-f"></i>				</a>
+											<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-3055492 elementor-social-icon-instagram" href="https://www.instagram.com/conspodium/" target="_blank">
+					<i class="fab fa-instagram"></i>				</a>
+											<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-d6a5c0a elementor-social-icon-linkedin" href="http://emai" target="_blank">
+					<i class="fab fa-linkedin"></i>				</a>
+											<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-b1ebbc0 elementor-social-icon-youtube" target="_blank">
+					<i class="fab fa-youtube"></i>				</a>
+									</div>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-ef39660 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="ef39660" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+				<div class="elementor-element elementor-element-d923509 elementor-widget elementor-widget-text-editor" data-id="d923509" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p><strong>Magazine</strong></p><p><span style="font-size: 14px;">Current Issue</span></p><p><span style="font-size: 14px;">Archive </span></p><p><span style="font-size: 14px;"> Submit Story </span></p><p><span style="font-size: 14px;"> Editorial Guidelines </span></p>								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-bc4ef16 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="bc4ef16" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+				<div class="elementor-element elementor-element-04eb7b0 elementor-widget elementor-widget-text-editor" data-id="04eb7b0" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p><strong>Company</strong></p><p><span style="font-size: 14px;"><a href="/about-us" target="_blank" rel="noopener">About Us</a></span></p><p><span style="font-size: 14px;">Teams</span></p><p><span style="font-size: 14px;"> Careers </span></p><p><span style="font-size: 14px;">Press</span></p>								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-71ce8ac e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="71ce8ac" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+				<div class="elementor-element elementor-element-36d8ba6 elementor-widget elementor-widget-text-editor" data-id="36d8ba6" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p><strong>Community</strong></p><p><span style="font-size: 14px;">Events</span></p><p><span style="font-size: 14px;">Archive </span></p><p><span style="font-size: 14px;"> Submit Story </span></p><p><span style="font-size: 14px;"> Editorial Guidelines </span></p>								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-651f63e e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="651f63e" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+				<div class="elementor-element elementor-element-657dbed elementor-widget elementor-widget-text-editor" data-id="657dbed" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p><strong>Support</strong></p><p><span style="font-size: 14px;">Contact</span></p><p><span style="font-size: 14px;">FAQ</span></p><p><span style="font-size: 14px;">Advertise</span></p>								</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-7c02c78 e-flex e-con-boxed e-con e-parent adv-sticky-elementor" data-id="7c02c78" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+					<div class="e-con-inner">
+				<div class="elementor-element elementor-element-9a52650 elementor-widget elementor-widget-text-editor" data-id="9a52650" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>Web design by <a href="https://wa.link/vvj7yi"><span style="text-decoration: underline;">247kraft</span></a></p>								</div>
+				</div>
+					</div>
+				</div>
+							</div>
+				</div>
+
+  <!-- SINGLE POST CONTROLLER SCRIPT -->
+  <script>
+  window.isAdminLoggedIn = false;
+
+  // Bulletproof Embedded Toast Notification
+  window.cspToast = window.cspToast || function(message, type, duration) {
+    type = type || 'info';
+    duration = duration || 3500;
+
+    var container = document.getElementById('csp-toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'csp-toast-container';
+      document.body.appendChild(container);
+    }
+
+    var icons = { success: '🎉', danger: '🚨', info: 'ℹ️' };
+
+    var toast = document.createElement('div');
+    toast.className = 'csp-toast csp-toast-' + type;
+    toast.innerHTML = '<span class="csp-toast-icon">' + (icons[type] || 'ℹ️') + '</span><span>' + message + '</span>';
+    container.appendChild(toast);
+
+    setTimeout(function(){ toast.classList.add('show'); }, 10);
+    setTimeout(function(){
+      toast.classList.remove('show');
+      setTimeout(function(){ if (toast.parentNode) toast.parentNode.removeChild(toast); }, 350);
+    }, duration);
+  };
+
+  // Bulletproof Embedded Confirmation Modal
+  window.cspConfirm = window.cspConfirm || function(options) {
+    return new Promise(function(resolve) {
+      options = options || {};
+      var title = options.title || 'Confirm Action';
+      var message = options.message || 'Are you sure you want to proceed?';
+      var confirmText = options.confirmText || 'Yes, Delete';
+      var cancelText = options.cancelText || 'Cancel';
+      var type = options.type || 'danger';
+
+      var backdrop = document.getElementById('csp-confirm-backdrop');
+      if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.id = 'csp-confirm-backdrop';
+        backdrop.innerHTML = `
+          <div class="csp-confirm-modal">
+            <div class="csp-confirm-icon-box ${type === 'danger' ? 'csp-confirm-icon-danger' : 'csp-confirm-icon-info'}">${type === 'danger' ? '🗑️' : '💡'}</div>
+            <h3 class="csp-confirm-title">${title}</h3>
+            <p class="csp-confirm-desc">${message}</p>
+            <div class="csp-confirm-actions">
+              <button type="button" class="csp-confirm-btn csp-confirm-cancel" id="csp-confirm-btn-cancel">${cancelText}</button>
+              <button type="button" class="csp-confirm-btn ${type === 'danger' ? 'csp-confirm-danger-btn' : 'csp-confirm-primary-btn'}" id="csp-confirm-btn-ok">${confirmText}</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(backdrop);
+      }
+
+      var cancelBtn = document.getElementById('csp-confirm-btn-cancel');
+      var okBtn = document.getElementById('csp-confirm-btn-ok');
+
+      backdrop.classList.add('show');
+
+      function cleanup(result) {
+        backdrop.classList.remove('show');
+        cancelBtn.onclick = null;
+        okBtn.onclick = null;
+        resolve(result);
+      }
+
+      cancelBtn.onclick = function() { cleanup(false); };
+      okBtn.onclick = function() { cleanup(true); };
+    });
+  };
+
+  // Check Admin Authentication Status
+  window.checkAdminStatus = function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('admin') === 'true' || urlParams.get('admin') === '1' || sessionStorage.getItem('csp_admin') === 'true' || localStorage.getItem('csp_admin') === 'true') {
+      window.isAdminLoggedIn = true;
+      if (window.renderCommentsStream) window.renderCommentsStream();
+    }
+
+    var authUrl = window.getRootUrl ? window.getRootUrl('api/auth.php?action=me') : '/api/auth.php?action=me';
+    fetch(authUrl)
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.user) {
+          window.isAdminLoggedIn = true;
+          sessionStorage.setItem('csp_admin', 'true');
+          if (window.renderCommentsStream) window.renderCommentsStream();
+        }
+      })
+      .catch(function(){});
+  };
+
+  // Global Comment Submit Handler (Guarantees zero-reload, input reset & localStorage saving)
+  window.handleCommentSubmit = function(e) {
+    if (e) {
+      e.preventDefault();
+      if (e.stopPropagation) e.stopPropagation();
+    }
+
+    var authorInput = document.getElementById('comm-author');
+    var emailInput = document.getElementById('comm-email');
+    var textInput = document.getElementById('comm-text');
+
+    var author = (authorInput && authorInput.value.trim()) ? authorInput.value.trim() : 'Anonymous Reader';
+    var text = textInput ? textInput.value.trim() : '';
+
+    if (!text) return false;
+
+    var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
+    var savedComments = [];
+    try { savedComments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
+
+    var newComment = {
+      id: Date.now(),
+      author: author,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      text: text
+    };
+
+    savedComments.unshift(newComment);
+    try { localStorage.setItem(pageKey, JSON.stringify(savedComments)); } catch(err){}
+
+    if (window.renderCommentsStream) window.renderCommentsStream();
+
+    // Clear ALL Form Fields
+    if (authorInput) authorInput.value = '';
+    if (emailInput) emailInput.value = '';
+    if (textInput) textInput.value = '';
+
+    // Show Modern UI Toast Notification
+    window.cspToast('Comment posted successfully!', 'success');
+
+    // Background API Sync
+    var postSlugOrId = window.location.pathname.replace(/\/$/, '').split('/').pop() || 'we-are-the-world';
+    var postApiUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=comments') : '/api/posts.php?resource=comments';
+    fetch(postApiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ post_id: postSlugOrId, author_name: author, author_email: emailInput ? emailInput.value : '', content: text })
+    }).catch(function(){});
+
+    return false;
+  };
+
+  // Admin Delete Comment Action
+  window.deleteComment = function(commentId, index) {
+    window.cspConfirm({
+      title: 'Delete Comment',
+      message: 'Are you sure you want to delete this comment? This action cannot be undone.',
+      confirmText: 'Yes, Delete',
+      cancelText: 'Cancel',
+      type: 'danger'
+    }).then(function(confirmed){
+      if (!confirmed) return;
+
+      var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
+      var savedComments = [];
+      try { savedComments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
+
+      if (typeof index === 'number' && index >= 0 && index < savedComments.length) {
+        savedComments.splice(index, 1);
+        try { localStorage.setItem(pageKey, JSON.stringify(savedComments)); } catch(err){}
+      }
+
+      // Sync Delete with MySQL Database
+      if (commentId) {
+        var deleteUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=comments&id=' + commentId) : '/api/posts.php?resource=comments&id=' + commentId;
+        fetch(deleteUrl, { method: 'DELETE' }).catch(function(){});
+      }
+
+      if (window.renderCommentsStream) window.renderCommentsStream();
+      window.cspToast('Comment deleted successfully!', 'danger');
+    });
+  };
+
+  window.renderCommentsStream = function() {
+    var container = document.getElementById('comments-list-container');
+    if (!container) return;
+
+    var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
+    var savedComments = [];
+    try { savedComments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
+
+    if (savedComments.length === 0) {
+      container.innerHTML = '<div style="color:#94a3b8;font-size:0.9rem;">No comments yet. Be the first to join the conversation!</div>';
+      return;
+    }
+
+    var html = '';
+    savedComments.forEach(function(c, idx) {
+      var deleteBtn = window.isAdminLoggedIn 
+        ? `<button type="button" onclick="window.deleteComment('${c.id || ''}', ${idx})" style="background:#fff0f3;color:#e11d48;border:1px solid #fecdd3;padding:4px 12px;border-radius:6px;font-size:0.75rem;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:4px;" title="Admin Delete Comment"><i class="fas fa-trash"></i> Delete</button>`
+        : '';
+
+      html += `
+        <div class="csp-comment-item" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span class="csp-comment-author" style="font-weight:700;color:#0f172a;font-size:0.92rem;">💬 ${c.author}</span>
+              <span class="csp-comment-date" style="font-size:0.8rem;color:#64748b;">${c.date}</span>
+            </div>
+            ${deleteBtn}
+          </div>
+          <div class="csp-comment-text" style="color:#334155;font-size:0.95rem;line-height:1.5;">${c.text}</div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  };
+
+  window.fetchPostDetails = function() {
+    var pathParts = window.location.pathname.split('/').filter(Boolean);
+    var urlParams = new URLSearchParams(window.location.search);
+    var slug = urlParams.get('slug') || urlParams.get('id');
+
+    if (!slug && pathParts.length > 0) {
+      var lastPart = pathParts[pathParts.length - 1];
+      if (lastPart !== 'post' && lastPart !== 'index.html' && lastPart !== 'public') {
+        slug = lastPart;
+      }
+    }
+
+    if (!slug) slug = 'we-are-the-world';
+
+    var titleEl = document.getElementById('post-title');
+    if (titleEl && titleEl.textContent.trim() !== 'Loading Article Title...' && titleEl.textContent.trim() !== '') {
+      return;
+    }
+
+    var apiEndpoint = (window.getRootUrl ? window.getRootUrl('api/posts.php?slug=' + encodeURIComponent(slug)) : '/api/posts.php?slug=' + encodeURIComponent(slug));
+    fetch(apiEndpoint)
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.post) {
+          var p = res.post;
+          if (document.getElementById('page-title')) document.title = p.title + ' — Conspodium';
+          if (titleEl) titleEl.textContent = p.title;
+          if (document.getElementById('post-author')) document.getElementById('post-author').textContent = p.author_name || 'Conspodium Editorial';
+          if (document.getElementById('post-date')) document.getElementById('post-date').textContent = p.published_at || p.created_at || 'Recent';
+          if (document.getElementById('post-reading-time')) document.getElementById('post-reading-time').textContent = p.reading_time || '5 min read';
+          if (document.getElementById('post-views')) document.getElementById('post-views').textContent = (p.views || 0) + ' views';
+
+          var badge = document.getElementById('post-category-badge');
+          if (badge && p.category_name) {
+            badge.textContent = (p.category_icon || '🏷️') + ' ' + p.category_name;
+            if (p.category_slug) badge.href = (window.getRootUrl ? window.getRootUrl('category/' + p.category_slug + '/') : '/category/' + p.category_slug + '/');
+          }
+
+          var heroImg = document.getElementById('post-hero-image');
+          if (heroImg && p.featured_image) {
+            heroImg.src = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(p.featured_image) : p.featured_image;
+            heroImg.style.display = 'block';
+          }
+
+          var excerptBox = document.getElementById('post-excerpt-box');
+          if (excerptBox && p.excerpt) {
+            excerptBox.innerHTML = p.excerpt;
+            excerptBox.style.display = 'block';
+          }
+
+          var contentBody = document.getElementById('post-content-body');
+          if (contentBody && p.content) {
+            contentBody.innerHTML = p.content;
+          }
+        }
+      })
+      .catch(function(){});
+  };
+
+  (function(){
+    // Check Admin Authentication Status
+    window.checkAdminStatus();
+
+    // Fetch dynamic post details if needed
+    window.fetchPostDetails();
+
+    // Initial Render of Comments
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', window.renderCommentsStream);
+    } else {
+      window.renderCommentsStream();
+    }
+
+    // Sync Share Links with Current Location
+    var pUrl = encodeURIComponent(window.location.href);
+    var pTitle = encodeURIComponent(document.title || 'Conspodium Story');
+    var fb = document.getElementById('share-fb');
+    var tw = document.getElementById('share-tw');
+    var li = document.getElementById('share-li');
+    var wa = document.getElementById('share-wa');
+
+    if (fb) fb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + pUrl;
+    if (tw) tw.href = 'https://twitter.com/intent/tweet?url=' + pUrl + '&text=' + pTitle;
+    if (li) li.href = 'https://www.linkedin.com/shareArticle?mini=true&url=' + pUrl + '&title=' + pTitle;
+    if (wa) wa.href = 'https://api.whatsapp.com/send?text=' + pTitle + '%20' + pUrl;
+  })();
+  </script>
 
 </body>
 </html>
