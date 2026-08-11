@@ -755,13 +755,17 @@ p.csp-preheadline {
   line-height: 1.3 !important;
 }
 
-.eael-dual-header,
+.sticky-heading-prefixstyle + .elementor-widget-eael-dual-color-header,
+.sticky-heading-prefixstyle + .elementor-widget,
+.sticky-heading-prefixstyle + div,
 .elementor-widget-eael-dual-color-header,
-.elementor-widget-eael-dual-color-header .elementor-widget-container {
+.elementor-widget-eael-dual-color-header .elementor-widget-container,
+.eael-dual-header {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
 
+.eael-dual-header .title,
 .eael-dual-header .title.eael-dch-title,
 .csp-section-title,
 .elementor-widget-heading:not(.sticky-heading-prefixstyle) .elementor-heading-title {
@@ -770,6 +774,15 @@ p.csp-preheadline {
   line-height: 1.25 !important;
   font-weight: 400 !important;
   margin-top: 2px !important;
+  margin-bottom: 4px !important;
+  padding-top: 0 !important;
+}
+
+.eael-dual-header .subtext,
+.eael-dual-header .subtext p,
+.csp-section-sub {
+  margin-top: 4px !important;
+  margin-bottom: 0 !important;
   padding-top: 0 !important;
 }
 
