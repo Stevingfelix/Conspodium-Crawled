@@ -349,21 +349,40 @@ section#csp-countdown h2.csp-cd-title {
   }
 }
 
-/* ── ABOUT CONSPODIUM BLOB SHAPE MOBILE CENTERING ─────────────────────── */
+/* ── ABOUT CONSPODIUM BLOB SHAPE MOBILE CENTERING & VISIBILITY FIX ─────── */
 @media (max-width: 767px) {
-  .elementor-element-d43fa17,
-  .elementor-element-c9eb748,
-  #uc_blob_shapes_elementor_c9eb748_justification {
+  .elementor-element-d43fa17 {
+    width: 100% !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    width: 100% !important;
+    margin: 24px auto !important;
   }
-  #uc_blob_shapes_elementor_c9eb748_size {
-    margin-left: auto !important;
-    margin-right: auto !important;
+  .elementor-element-c9eb748 {
+    width: 100% !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+  }
+  #uc_blob_shapes_elementor_c9eb748_justification {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+  }
+  #uc_blob_shapes_elementor_c9eb748_size,
+  .elementor-element-c9eb748 .ue_blob_inside {
+    width: 100% !important;
+    max-width: 360px !important;
+    min-height: 280px !important;
+    margin: 0 auto !important;
+  }
+  #uc_blob_shapes_elementor_c9eb748 {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 280px !important;
+    display: block !important;
+    aspect-ratio: 1 / 1 !important;
   }
 }
 
