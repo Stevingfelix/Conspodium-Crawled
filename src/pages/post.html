@@ -781,15 +781,9 @@
 
   <!-- MAIN SINGLE POST SECTION -->
   <main class="csp-post-sec">
-    <!-- Top Nav -->
-    <div class="csp-post-top-nav">
-      <a href="/stories/" class="csp-back-btn" id="post-back-link">&larr; Back To Stories</a>
-    </div>
-
-    <!-- GLASSMORPHIC CATEGORY FILTER BAR WITH AUTO-SCROLL -->
-    <div class="csp-cat-nav-wrap" style="position:sticky;top:85px;z-index:99;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:14px 24px;border-radius:50px;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:28px;">
-      <div class="csp-cat-nav-inner" id="csp-cat-tabs-container" style="display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;align-items:center;">
-        <a href="/stories/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">📚 All Stories</a>
+    <!-- GLASSMORPHIC CATEGORY NAV BAR WITH AUTO-SCROLL -->
+    <div class="csp-cat-nav-wrap" style="position:sticky;top:85px;z-index:99;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:10px 16px;border-radius:50px;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:28px;width:100%;max-width:100%;box-sizing:border-box;">
+      <div class="csp-cat-nav-inner" id="csp-cat-tabs-container" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;align-items:center;width:100%;-webkit-overflow-scrolling:touch;">
       </div>
     </div>
 
@@ -1167,7 +1161,7 @@
               if (!cRes.success || !cRes.categories) return;
               var tabsContainer = document.getElementById('csp-cat-tabs-container');
               if (tabsContainer) {
-                var tabsHtml = '<a href="' + (window.getRootUrl ? window.getRootUrl('stories/') : '/stories/') + '" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">📚 All Stories</a>';
+                var tabsHtml = '';
                 cRes.categories.forEach(function(cat){
                   var isActive = (cat.slug === p.category_slug || (p.category_name && cat.name.toLowerCase() === p.category_name.toLowerCase()));
                   var catUrl = window.getRootUrl ? window.getRootUrl('category/' + cat.slug + '/') : '/category/' + cat.slug + '/';
