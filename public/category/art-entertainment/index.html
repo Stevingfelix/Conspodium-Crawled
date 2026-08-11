@@ -1682,6 +1682,73 @@ form#fluentform_2 .ff-btn-submit {
   width: 0%;
   transition: width 0.1s linear;
 }
+
+/* ── FULL MOBILE RESPONSIVENESS & ZERO OVERFLOW FIXES ─────────────────── */
+@media (max-width: 992px) {
+  .csp-stories-hero-spotlight {
+    padding: 24px !important;
+    border-radius: 20px !important;
+    margin-bottom: 24px !important;
+  }
+  .csp-stories-hero-spotlight > div {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .csp-stories-hero-spotlight img {
+    height: 220px !important;
+  }
+  .csp-cat-layout-flex {
+    flex-direction: column !important;
+    padding: 0 16px !important;
+    gap: 24px !important;
+  }
+  .csp-magazine-sidebar {
+    width: 100% !important;
+    position: static !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden !important;
+  }
+  .csp-cat-nav-wrap {
+    padding: 10px 14px !important;
+    border-radius: 30px !important;
+    margin-bottom: 24px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .csp-cat-nav-inner {
+    gap: 6px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100% !important;
+  }
+  .csp-cat-pill, .csp-cat-tab {
+    padding: 8px 16px !important;
+    font-size: 0.78rem !important;
+    white-space: nowrap !important;
+  }
+  .eael-post-grid, .csp-about-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .csp-post-grid-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .csp-publisher-card {
+    padding: 24px !important;
+    border-radius: 20px !important;
+  }
+  .csp-about-stats-sec {
+    padding: 30px 16px !important;
+  }
+  .csp-modal-card {
+    max-width: 92vw !important;
+    padding: 24px 18px !important;
+  }
+}
 </style>
 
 <!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
