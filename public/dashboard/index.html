@@ -3473,7 +3473,7 @@ form#fluentform_2 .ff-btn-submit {
   }
 
   function loadOverviewData() {
-    fetch(getRootUrl('api/dashboard.php'))
+    fetch(getRootUrl('api/dashboard.php'), { headers: { 'X-Admin-Token': 'conspodium_admin_session_token' } })
       .then(function(r){ return r.json(); })
       .then(function(res){
         if(!res.success) return;
@@ -3855,7 +3855,7 @@ form#fluentform_2 .ff-btn-submit {
 
   // Load Submissions
   function loadSubmissions() {
-    fetch(getRootUrl('api/submissions.php?status=' + currentSubFilter))
+    fetch(getRootUrl('api/submissions.php?status=' + currentSubFilter), { headers: { 'X-Admin-Token': 'conspodium_admin_session_token' } })
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('submissions-cms-table');
@@ -4092,7 +4092,7 @@ form#fluentform_2 .ff-btn-submit {
   });
 
   function loadContactMessages() {
-    fetch(getRootUrl('api/contact.php?status=' + currentContactFilter))
+    fetch(getRootUrl('api/contact.php?status=' + currentContactFilter), { headers: { 'X-Admin-Token': 'conspodium_admin_session_token' } })
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('contact-cms-table');
@@ -4285,7 +4285,7 @@ form#fluentform_2 .ff-btn-submit {
   window.activePollId = null;
 
   function loadPolls() {
-    fetch(getRootUrl('api/polls.php?action=list'))
+    fetch(getRootUrl('api/polls.php?action=list'), { headers: { 'X-Admin-Token': 'conspodium_admin_session_token' } })
       .then(function(r){ return r.json(); })
       .then(function(res){
         var container = document.getElementById('polls-list-container');

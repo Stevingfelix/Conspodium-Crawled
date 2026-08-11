@@ -377,6 +377,76 @@ try {
         for ($i = 0; $i < 160; $i++) $stmtVote->execute([$pollId, 3, "seed-$i"]);
     }
 
+    // Seed initial story submissions if empty
+    $subCount = $pdo->query("SELECT COUNT(*) as count FROM story_submissions")->fetch()['count'];
+    if ($subCount == 0) {
+        $stmtSub = $pdo->prepare("INSERT INTO story_submissions (author_name, author_email, author_bio, category, title, content, status, submitted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmtSub->execute([
+            "Olamide Bakare",
+            "olamide.bakare@diaspora.org",
+            "Cultural preservation researcher based in London.",
+            "Culture & Heritage",
+            "Preserving Yoruba Cultural Heritage & Language in Modern London",
+            "How third-generation African British families are creating Saturday language academies and cultural storytelling circles to keep ancestral heritage alive.",
+            "pending",
+            date('Y-m-d H:i:s', strtotime('-1 days'))
+        ]);
+        $stmtSub->execute([
+            "Chidi Nnamdi",
+            "chidi@pantech.io",
+            "Tech founder bridging African developers with US startups.",
+            "Innovation",
+            "Pan-African Tech Incubators: Connecting Silicon Valley & Lagos",
+            "Exploring the rise of remote-first engineering hubs that enable Nigerian software engineers to build global products while living in Lagos and Abuja.",
+            "pending",
+            date('Y-m-d H:i:s', strtotime('-2 days'))
+        ]);
+        $stmtSub->execute([
+            "Fatou Sow",
+            "fatou.sow@cuisineafrique.fr",
+            "Culinary artist and restaurant owner in Paris.",
+            "Art & Entertainment",
+            "Diaspora Culinary Renaissance: West African Gastronomy in Paris",
+            "How West African chefs in France are blending traditional ingredients with modern gastronomy to elevate African fine dining on world stages.",
+            "pending",
+            date('Y-m-d H:i:s', strtotime('-3 days'))
+        ]);
+        $stmtSub->execute([
+            "Kwame Mensah",
+            "kwame.m@torontovoices.ca",
+            "Writer and documentary filmmaker based in Toronto.",
+            "Community",
+            "Reflections on Dual Identity: Growing Up Between Ghana & Canada",
+            "A personal essay on navigating multicultural identity, homecomings, and belonging across two continents.",
+            "pending",
+            date('Y-m-d H:i:s', strtotime('-4 days'))
+        ]);
+    }
+
+    // Seed initial contact messages if empty
+    $msgCount = $pdo->query("SELECT COUNT(*) as count FROM contact_messages")->fetch()['count'];
+    if ($msgCount == 0) {
+        $stmtMsg = $pdo->prepare("INSERT INTO contact_messages (first_name, last_name, email, subject, message, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmtMsg->execute([
+            "Amina",
+            "Kone",
+            "amina.kone@globaldiaspora.org",
+            "Partnership Proposal: Pan-African Leadership Summit 2026",
+            "Hello Conspodium Editorial Team, We would love to explore a media partnership for our upcoming global leadership summit in October.",
+            "unread",
+            date('Y-m-d H:i:s', strtotime('-2 hours'))
+        ]);
+        $stmtMsg->execute([
+            "David",
+            "Okonkwo",
+            "david@techdiaspora.com",
+            "Advertising Inquiry: Digital Banner Placements",
+            "Hi there, We are interested in booking digital banner placements on your homepage and Innovation category section. Please send your media kit.",
+            "unread",
+            date('Y-m-d H:i:s', strtotime('-1 day'))
+        ]);
+    }
+
 } catch (PDOException $e) {
     die(json_encode(["success" => false, "error" => "Database Connection Failed: " . $e->getMessage()]));
 }

@@ -83,9 +83,13 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
         
         $_SESSION['admin_user'] = $userData;
 
+        $tokenSecret = "conspodium_cms_secret_token_key";
+        $token = md5($tokenSecret . '_' . $admin['id'] . '_' . $admin['username']);
+
         echo json_encode([
             "success" => true,
             "user" => $userData,
+            "token" => $token,
             "message" => "Welcome back, " . $admin['name'] . "!"
         ]);
     } else {
