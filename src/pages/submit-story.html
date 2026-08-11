@@ -1439,26 +1439,169 @@ e-page-transition,
 				<div class="elementor-element elementor-element-5cda32f5 eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="5cda32f5" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
 				<div class="elementor-widget-container">
 								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-ad87566">Submit Your</span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient"> Story</span> </h2>					<span class="subtext"><p>Every story matters. Share your experiences with our global community.</p></span>
+				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-ad87566">Submit Your</span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient"> Story</span> </h2>					<span class="subtext"><p>Share your perspective with 50,000+ global readers in 3 guided steps.</p></span>
 							</div>
 
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-6c7699af eael-fluentform-form-button-custom elementor-widget elementor-widget-eael-fluentform" data-id="6c7699af" data-element_type="widget" data-e-type="widget" data-widget_type="eael-fluentform.default">
-				<div class="elementor-widget-container">
-					        <div class="eael-contact-form eael-fluent-form-wrapper clearfix eael-custom-radio-checkbox eael-contact-form-align-default">
+				
+        <!-- CSP 3-STEP WIZARD CONTAINER -->
+        <div id="csp-wizard-wrapper" style="max-width:800px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:28px;padding:40px;box-shadow:0 20px 50px rgba(0,0,0,0.05);">
+          <!-- Step Progress Indicator -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;position:relative;" id="csp-wizard-steps-nav">
+            <div style="position:absolute;top:20px;left:40px;right:40px;height:3px;background:#e2e8f0;z-index:1;"></div>
+            <div id="csp-wizard-progress-bar" style="position:absolute;top:20px;left:40px;width:0%;height:3px;background:linear-gradient(90deg,#00AEFE,#B71F71);z-index:1;transition:width 0.3s ease;"></div>
 
+            <!-- Step 1 Badge -->
+            <div class="csp-wiz-step active" id="wiz-step-pill-1" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="csp-wiz-num" style="width:42px;height:42px;border-radius:50%;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,174,254,0.4);">1</div>
+              <span style="font-size:0.8rem;font-weight:700;color:#00AEFE;">1. Contributor Info</span>
+            </div>
+
+            <!-- Step 2 Badge -->
+            <div class="csp-wiz-step" id="wiz-step-pill-2" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="csp-wiz-num" style="width:42px;height:42px;border-radius:50%;background:#f1f5f9;color:#64748b;font-weight:700;display:flex;align-items:center;justify-content:center;border:1px solid #cbd5e1;">2</div>
+              <span style="font-size:0.8rem;font-weight:600;color:#64748b;">2. Story Content</span>
+            </div>
+
+            <!-- Step 3 Badge -->
+            <div class="csp-wiz-step" id="wiz-step-pill-3" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="csp-wiz-num" style="width:42px;height:42px;border-radius:50%;background:#f1f5f9;color:#64748b;font-weight:700;display:flex;align-items:center;justify-content:center;border:1px solid #cbd5e1;">3</div>
+              <span style="font-size:0.8rem;font-weight:600;color:#64748b;">3. Media &amp; Submit</span>
+            </div>
+          </div>
+
+          <!-- Wizard Form Container -->
+          <form id="fluentform_4" style="display:flex;flex-direction:column;gap:24px;">
             
-            <div class="fluentform ff-default fluentform_wrapper_4 ffs_default_wrap"><form data-form_id="4" id="fluentform_4" class="frm-fluent-form fluent_form_4 ff-el-form-top ff_form_instance_4_1 ffs_default ff-form-loaded" data-form_instance="ff_form_instance_4_1" method="POST"><fieldset style="border: none!important;margin: 0!important;padding: 0!important;background-color: transparent!important;box-shadow: none!important;outline: none!important; min-inline-size: 100%;">
-                    <legend class="ff_screen_reader_title" style="display: block; margin: 0!important;padding: 0!important;height: 0!important;text-indent: -999999px;width: 0!important;overflow:hidden;">Submit Story Form</legend><input type="hidden" name="__fluent_form_embded_post_id" value="1061"><input type="hidden" id="_fluentform_4_fluentformnonce" name="_fluentform_4_fluentformnonce" value="eb90e7a626"><input type="hidden" name="_wp_http_referer" value="/submit-story/"><div data-type="name-element" data-name="names" class=" ff-field_container ff-name-field-wrapper"><div class="ff-t-container"><div class="ff-t-cell "><div class="ff-el-group"><div class="ff-el-input--label asterisk-right"><label for="ff_4_names_first_name_" id="label_ff_4_names_first_name_">First Name</label></div><div class="ff-el-input--content"><input type="text" name="names[first_name]" id="ff_4_names_first_name_" class="ff-el-form-control" placeholder="First Name" aria-invalid="false" aria-required="false"></div></div></div><div class="ff-t-cell "><div class="ff-el-group"><div class="ff-el-input--label asterisk-right"><label for="ff_4_names_last_name_" id="label_ff_4_names_last_name_">Last Name</label></div><div class="ff-el-input--content"><input type="text" name="names[last_name]" id="ff_4_names_last_name_" class="ff-el-form-control" placeholder="Last Name" aria-invalid="false" aria-required="false"></div></div></div></div></div><div class="ff-el-group"><div class="ff-el-input--label ff-el-is-required asterisk-right"><label for="ff_4_email" id="label_ff_4_email" aria-label="Email">Email</label></div><div class="ff-el-input--content"><input type="email" name="email" id="ff_4_email" class="ff-el-form-control" placeholder="Email Address" data-name="email" aria-invalid="false" aria-required="true"></div></div><div class="ff-el-group"><div class="ff-el-input--label ff-el-is-required asterisk-right"><label for="ff_4_subject" id="label_ff_4_subject" aria-label="Story Title">Story Title</label></div><div class="ff-el-input--content"><input type="text" name="subject" class="ff-el-form-control" placeholder="Your Story Title" data-name="subject" id="ff_4_subject" aria-invalid="false" aria-required="true"></div></div><div class="ff-el-group"><div class="ff-el-input--label asterisk-right"><label for="ff_4_dropdown" id="label_ff_4_dropdown" aria-label="Category">Category</label></div><div class="ff-el-input--content"><select name="dropdown" id="ff_4_dropdown" class="ff-el-form-control" data-name="dropdown" data-calc_value="0" aria-invalid="false" aria-required="false" aria-labelledby="label_ff_4_dropdown"><option value="">Select A Category</option><option value="Culture &amp; Heritage">Culture &amp; Heritage</option><option value="Success Stories">Success Stories</option><option value="Innovation">Innovation</option><option value="Art &amp; Entertainment">Art &amp; Entertainment</option><option value="Community">Community</option></select></div></div><div class="ff-el-group"><div class="ff-el-input--label ff-el-is-required asterisk-right"><label for="ff_4_message" id="label_ff_4_message" aria-label="Your Story">Your Story</label></div><div class="ff-el-input--content"><textarea aria-required="true" aria-labelledby="label_ff_4_message" name="message" id="ff_4_message" class="ff-el-form-control" placeholder="Share Your Story Here" rows="8" cols="2" data-name="message"></textarea></div></div><div class="ff-el-group ff-text-left ff_submit_btn_wrapper"><button type="submit" class="ff-btn ff-btn-submit ff-btn-md ff_btn_style" aria-label="Submit Story">Submit Story</button></div></fieldset></form><div id="fluentform_4_errors" class="ff-errors-in-stack ff_form_instance_4_1 ff-form-loading_errors ff_form_instance_4_1_errors"></div></div>
+            <!-- STEP 1 PANEL -->
+            <div id="wiz-panel-1" class="csp-wiz-panel" style="display:block;">
+              <h3 style="font-family:'Merriweather',serif;font-size:1.25rem;color:#0f172a;margin-bottom:6px;">Tell Us About Yourself</h3>
+              <p style="font-size:0.88rem;color:#64748b;margin-bottom:24px;">How should we credit you in our global publication?</p>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                <div>
+                  <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">First Name *</label>
+                  <input type="text" name="names[first_name]" id="ff_4_names_first_name_" placeholder="e.g. Amara" required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;" />
+                </div>
+                <div>
+                  <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">Last Name *</label>
+                  <input type="text" name="names[last_name]" id="ff_4_names_last_name_" placeholder="e.g. Diallo" required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;" />
+                </div>
+              </div>
+
+              <div style="margin-bottom:24px;">
+                <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">Email Address *</label>
+                <input type="email" name="email" id="ff_4_email" placeholder="you@example.com" required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;" />
+              </div>
+
+              <div style="display:flex;justify-content:flex-end;">
+                <button type="button" onclick="goToWizStep(2)" style="padding:12px 32px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-size:0.9rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Next Step: Story Details &rarr;</button>
+              </div>
+            </div>
+
+            <!-- STEP 2 PANEL -->
+            <div id="wiz-panel-2" class="csp-wiz-panel" style="display:none;">
+              <h3 style="font-family:'Merriweather',serif;font-size:1.25rem;color:#0f172a;margin-bottom:6px;">Draft Your Story</h3>
+              <p style="font-size:0.88rem;color:#64748b;margin-bottom:24px;">Give your article a compelling title and select a category.</p>
+
+              <div style="margin-bottom:16px;">
+                <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">Story Title *</label>
+                <input type="text" name="subject" id="ff_4_subject" placeholder="Enter headline..." required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;" />
+              </div>
+
+              <div style="margin-bottom:16px;">
+                <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">Primary Category *</label>
+                <select name="dropdown" id="ff_4_dropdown" required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;background:#ffffff;">
+                  <option value="">Select Category...</option>
+                  <option value="Culture &amp; Heritage">🏛️ Culture &amp; Heritage</option>
+                  <option value="Innovation">💡 Innovation &amp; Tech</option>
+                  <option value="Art &amp; Entertainment">🎨 Art &amp; Entertainment</option>
+                  <option value="Community">👥 Community</option>
+                  <option value="Success Stories">🌟 Success Stories</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom:24px;">
+                <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">Full Story Content *</label>
+                <textarea name="message" id="ff_4_message" rows="8" placeholder="Share your experience, insights, or story narrative in full..." required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;font-family:inherit;"></textarea>
+              </div>
+
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <button type="button" onclick="goToWizStep(1)" style="padding:12px 24px;border-radius:50px;border:1px solid #cbd5e1;background:#f8fafc;color:#475569;font-size:0.88rem;font-weight:600;cursor:pointer;">&larr; Back</button>
+                <button type="button" onclick="goToWizStep(3)" style="padding:12px 32px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-size:0.9rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Next Step: Cover Photo &rarr;</button>
+              </div>
+            </div>
+
+            <!-- STEP 3 PANEL -->
+            <div id="wiz-panel-3" class="csp-wiz-panel" style="display:none;">
+              <h3 style="font-family:'Merriweather',serif;font-size:1.25rem;color:#0f172a;margin-bottom:6px;">Cover Photo &amp; Submission</h3>
+              <p style="font-size:0.88rem;color:#64748b;margin-bottom:24px;">Optional featured cover image and editorial agreement.</p>
+
+              <!-- Upload Drag Drop Simulation -->
+              <div style="border:2px dashed #cbd5e1;border-radius:16px;padding:32px;text-align:center;background:#f8fafc;margin-bottom:20px;cursor:pointer;" onclick="if(window.cspToast) window.cspToast('Cover image selected for story background.', 'info');">
+                <div style="font-size:2rem;margin-bottom:8px;">📸</div>
+                <div style="font-size:0.9rem;font-weight:600;color:#334155;">Click to upload optional cover photograph</div>
+                <div style="font-size:0.78rem;color:#94a3b8;margin-top:4px;">Supported: JPG, PNG, WEBP (Max 5MB)</div>
+              </div>
+
+              <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:24px;">
+                <input type="checkbox" id="wiz-agree" required style="margin-top:3px;" />
+                <label for="wiz-agree" style="font-size:0.85rem;color:#475569;line-height:1.4;">I confirm this story is my original work and give Conspodium permission to publish it for our global readership.</label>
+              </div>
+
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <button type="button" onclick="goToWizStep(2)" style="padding:12px 24px;border-radius:50px;border:1px solid #cbd5e1;background:#f8fafc;color:#475569;font-size:0.88rem;font-weight:600;cursor:pointer;">&larr; Back</button>
+                <button type="submit" style="padding:14px 40px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-size:0.95rem;font-weight:700;cursor:pointer;box-shadow:0 8px 25px rgba(0,174,254,0.45);">🚀 Publish &amp; Submit Story Now</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
 <script>
+function goToWizStep(stepNum) {
+  var p1 = document.getElementById('wiz-panel-1');
+  var p2 = document.getElementById('wiz-panel-2');
+  var p3 = document.getElementById('wiz-panel-3');
+  var bar = document.getElementById('csp-wizard-progress-bar');
+
+  var pill1 = document.getElementById('wiz-step-pill-1');
+  var pill2 = document.getElementById('wiz-step-pill-2');
+  var pill3 = document.getElementById('wiz-step-pill-3');
+
+  if (!p1 || !p2 || !p3) return;
+
+  p1.style.display = 'none';
+  p2.style.display = 'none';
+  p3.style.display = 'none';
+
+  if (stepNum === 1) {
+    p1.style.display = 'block';
+    if(bar) bar.style.width = '0%';
+    if(pill1) pill1.querySelector('.csp-wiz-num').style.background = 'linear-gradient(110deg,#00AEFE,#B71F71)';
+    if(pill2) pill2.querySelector('.csp-wiz-num').style.background = '#f1f5f9';
+    if(pill3) pill3.querySelector('.csp-wiz-num').style.background = '#f1f5f9';
+  } else if (stepNum === 2) {
+    p2.style.display = 'block';
+    if(bar) bar.style.width = '50%';
+    if(pill1) pill1.querySelector('.csp-wiz-num').style.background = '#10b981';
+    if(pill2) pill2.querySelector('.csp-wiz-num').style.background = 'linear-gradient(110deg,#00AEFE,#B71F71)';
+    if(pill3) pill3.querySelector('.csp-wiz-num').style.background = '#f1f5f9';
+  } else if (stepNum === 3) {
+    p3.style.display = 'block';
+    if(bar) bar.style.width = '100%';
+    if(pill1) pill1.querySelector('.csp-wiz-num').style.background = '#10b981';
+    if(pill2) pill2.querySelector('.csp-wiz-num').style.background = '#10b981';
+    if(pill3) pill3.querySelector('.csp-wiz-num').style.background = 'linear-gradient(110deg,#00AEFE,#B71F71)';
+  }
+}
+
 (function(){
   var form = document.getElementById('fluentform_4');
   if (!form) return;
   form.addEventListener('submit', function(e){
     e.preventDefault();
     e.stopPropagation();
-    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
 
     var firstName = form.querySelector('[name="names[first_name]"]')?.value || '';
     var lastName  = form.querySelector('[name="names[last_name]"]')?.value || '';
@@ -1490,11 +1633,12 @@ e-page-transition,
       if (btn) { btn.disabled = false; btn.textContent = origText; }
       if (res.success) {
         if (window.showSuccessModal) {
-          window.showSuccessModal('Story Submitted Successfully!', res.message || 'Thank you! Your story has been submitted and is pending editorial review.');
+          window.showSuccessModal('Story Submitted Successfully! 🎉', res.message || 'Thank you! Your story has been submitted and is pending editorial review.');
         } else {
           cspToast(res.message || 'Story submitted successfully!', 'success');
         }
         form.reset();
+        goToWizStep(1);
       } else {
         cspToast(res.error || 'Failed to submit story.', 'danger');
       }

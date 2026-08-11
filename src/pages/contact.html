@@ -1464,11 +1464,9 @@ e-page-transition,
 					<div class="ekit-wid-con"><div class="ekit-heading elementskit-section-title-wraper text_center   ekit_heading_tablet-   ekit_heading_mobile-"><h2 class="ekit-heading--title elementskit-section-title ">How Can We Help?</h2></div></div>				</div>
 				</div>
 		<div class="elementor-element elementor-element-1ca8cfa5 e-con-full e-grid e-con e-child adv-sticky-elementor" data-id="1ca8cfa5" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-78bc4fb1 ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="78bc4fb1" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
+				<div class="elementor-element elementor-element-78bc4fb1 ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="78bc4fb1" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default" style="cursor:pointer;" onclick="if(window.setContactSubject) window.setContactSubject('General Enquiry');">
 				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
+					<div class="ekit-wid-con">
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
@@ -1484,11 +1482,9 @@ e-page-transition,
                 </div>
         </div>				</div>
 				</div>
-				<div class="elementor-element elementor-element-c65338f ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="c65338f" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
+				<div class="elementor-element elementor-element-c65338f ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="c65338f" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default" style="cursor:pointer;" onclick="if(window.setContactSubject) window.setContactSubject('Partnership Proposal');">
 				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
+					<div class="ekit-wid-con">
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
@@ -1504,11 +1500,9 @@ e-page-transition,
                 </div>
         </div>				</div>
 				</div>
-				<div class="elementor-element elementor-element-cc937ea ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="cc937ea" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
+				<div class="elementor-element elementor-element-cc937ea ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="cc937ea" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default" style="cursor:pointer;" onclick="if(window.setContactSubject) window.setContactSubject('Editorial Pitch');">
 				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
+					<div class="ekit-wid-con">
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
@@ -1524,11 +1518,9 @@ e-page-transition,
                 </div>
         </div>				</div>
 				</div>
-				<div class="elementor-element elementor-element-7078a6d ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="7078a6d" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
+				<div class="elementor-element elementor-element-7078a6d ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="7078a6d" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default" style="cursor:pointer;" onclick="if(window.setContactSubject) window.setContactSubject('Advertising Enquiry');">
 				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
+					<div class="ekit-wid-con">
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
@@ -1570,6 +1562,16 @@ e-page-transition,
   function initContactForm() {
     var form = document.getElementById('fluentform_1');
     if (!form) return;
+
+    window.setContactSubject = function(subjectText) {
+      var subjectEl = document.getElementById('ff_1_subject');
+      if (subjectEl) {
+        subjectEl.value = subjectText;
+        subjectEl.focus();
+        subjectEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (window.cspToast) window.cspToast('Subject updated to: ' + subjectText, 'info');
+      }
+    };
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();

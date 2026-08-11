@@ -1407,6 +1407,149 @@ e-page-transition,
   box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35);
 }
 .csp-confirm-primary-btn:hover { opacity: 0.9; }
+
+/* ── 2-COLUMN MAGAZINE SIDEBAR & GRID LAYOUT ───────────────────────────── */
+.csp-cat-layout-flex {
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.csp-cat-main-col {
+  flex: 1;
+  min-width: 0;
+}
+.csp-magazine-sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+@media (max-width: 1024px) {
+  .csp-cat-layout-flex {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+  .csp-magazine-sidebar {
+    width: 100%;
+    position: static;
+  }
+}
+.csp-sidebar-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+.csp-sidebar-newsletter {
+  background: linear-gradient(145deg, #0f172a, #1e293b);
+  border: 1px solid rgba(0, 174, 254, 0.3);
+  color: #ffffff;
+}
+.csp-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.csp-sidebar-icon {
+  font-size: 1.2rem;
+}
+.csp-sidebar-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+.csp-sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.csp-sidebar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  padding: 8px 0;
+  border-bottom: 1px dashed #e2e8f0;
+  transition: transform 0.2s ease;
+}
+.csp-sidebar-item:last-child {
+  border-bottom: none;
+}
+.csp-sidebar-item:hover {
+  transform: translateX(4px);
+}
+.csp-rank-num {
+  font-family: 'Merienda', cursive, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #00AEFE;
+  flex-shrink: 0;
+  line-height: 1;
+  width: 24px;
+}
+.csp-sidebar-item-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.35;
+  margin-bottom: 3px;
+}
+.csp-sidebar-item-meta {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+.csp-poll-prompt {
+  font-size: 0.88rem;
+  color: #334155;
+  line-height: 1.5;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+.csp-poll-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.csp-poll-opt-btn {
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.csp-poll-opt-btn:hover {
+  background: rgba(0, 174, 254, 0.08);
+  border-color: #00AEFE;
+  color: #0f172a;
+}
+
+/* ── READING PROGRESS BAR ─────────────────────────────────────────────── */
+#csp-reading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00AEFE 0%, #B71F71 100%);
+  z-index: 99999999;
+  width: 0%;
+  transition: width 0.1s linear;
+}
 </style>
 
 <!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
@@ -2582,248 +2725,215 @@ e-page-transition,
 				</div>
 					</div>
 				</div>
-		<div class="elementor-element elementor-element-3c78a4ac e-con-full e-flex e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="3c78a4ac" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-		<div class="elementor-element elementor-element-1c13b964 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="1c13b964" data-element_type="container" data-e-type="container" id="latest-stories" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-		<div class="elementor-element elementor-element-7d2d155e e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="7d2d155e" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-		<div class="elementor-element elementor-element-577a4eb7 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="577a4eb7" data-element_type="container" data-e-type="container" id="latest-stories" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-1eb1c6d eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="1eb1c6d" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
-				<div class="elementor-widget-container">
-								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-ad87566">Our Latest</span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">Stories</span> </h2>					<span class="subtext"><p>Read about similar experiences like yours from other Africans in the diaspora</p></span>
-							</div>
+		<div class="elementor-element elementor-element-3c78a4ac e-con-full e-flex e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="3c78a4ac" data-element_type="container" data-e-type="container" id="latest-stories" style="padding: 20px 0 60px;">
+		  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px;">
 
-						</div>
-				</div>
-				<div class="elementor-element elementor-element-0b52a18 elementor-grid-eael-col-4 elementor-grid-tablet-eael-col-2 elementor-grid-mobile-eael-col-1 elementor-widget elementor-widget-eael-post-grid" data-id="0b52a18" data-element_type="widget" data-e-type="widget" data-settings="{&quot;eael_post_grid_columns&quot;:&quot;eael-col-4&quot;,&quot;eael_post_grid_columns_tablet&quot;:&quot;eael-col-2&quot;,&quot;eael_post_grid_columns_mobile&quot;:&quot;eael-col-1&quot;}" data-widget_type="eael-post-grid.default">
-				<div class="elementor-widget-container">
-					<div id="eael-post-grid-0b52a18" class="eael-post-grid-container">
-            <div class="eael-post-grid eael-post-appender eael-post-appender-0b52a18 eael-post-grid-style-two" data-layout-mode="grid">
-              <!-- Initial Static Fallback Article 1 -->
-              <article class="eael-grid-post eael-post-grid-column category-culture-heritage">
-                <div class="eael-grid-post-holder">
-                  <div class="eael-grid-post-holder-inner">
-                    <div class="eael-entry-media">
-                      <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
-                      <div class="eael-entry-thumbnail">
-                        <img loading="lazy" width="300" height="200" src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Empowering Diaspora Communities" style="width:100%;height:200px;object-fit:cover;border-radius:12px;">
-                      </div>
-                    </div>
-                    <div class="eael-entry-wrapper">
-                      <header class="eael-entry-header">
-                        <h2 class="eael-entry-title">
-                          <a class="eael-grid-post-link" href="../post/empowering-diaspora-communities-through-innovation-heritage/">Empowering Diaspora Communities Through Innovation &amp; Heritage</a>
-                        </h2>
-                      </header>
-                      <div class="eael-entry-content">
-                        <div class="eael-grid-post-excerpt">
-                          <p>Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.</p>
-                          <a href="../post/empowering-diaspora-communities-through-innovation-heritage/" class="eael-post-elements-readmore-btn">Read Story</a>
-                        </div>
-                      </div>
-                      <div class="eael-entry-header-after style-two">
-                        <div class="eael-entry-meta">
-                          <span class="eael-meta-posted-on"><i class="far fa-clock"></i> 6 min read · Steving Felix</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Initial Static Fallback Article 2 -->
-              <article class="eael-grid-post eael-post-grid-column category-innovation">
-                <div class="eael-grid-post-holder">
-                  <div class="eael-grid-post-holder-inner">
-                    <div class="eael-entry-media">
-                      <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
-                      <div class="eael-entry-thumbnail">
-                        <img loading="lazy" width="300" height="200" src="/wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Africans in Diaspora Influencing Global Economic Decisions" style="width:100%;height:200px;object-fit:cover;border-radius:12px;">
-                      </div>
-                    </div>
-                    <div class="eael-entry-wrapper">
-                      <header class="eael-entry-header">
-                        <h2 class="eael-entry-title">
-                          <a class="eael-grid-post-link" href="../post/africans-in-diaspora-influencing-global-economic-decisions/">Africans in Diaspora Influencing Global Economic Decisions</a>
-                        </h2>
-                      </header>
-                      <div class="eael-entry-content">
-                        <div class="eael-grid-post-excerpt">
-                          <p>How African diaspora founders, venture capitalists, and policy advisors are driving bilateral trade and technology investments in Africa.</p>
-                          <a href="../post/africans-in-diaspora-influencing-global-economic-decisions/" class="eael-post-elements-readmore-btn">Read Story</a>
-                        </div>
-                      </div>
-                      <div class="eael-entry-header-after style-two">
-                        <div class="eael-entry-meta">
-                          <span class="eael-meta-posted-on"><i class="far fa-clock"></i> 6 min read · Prof. Amara Diallo</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Initial Static Fallback Article 3 -->
-              <article class="eael-grid-post eael-post-grid-column category-art-entertainment">
-                <div class="eael-grid-post-holder">
-                  <div class="eael-grid-post-holder-inner">
-                    <div class="eael-entry-media">
-                      <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
-                      <div class="eael-entry-thumbnail">
-                        <img loading="lazy" width="300" height="200" src="/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Creatives Are Shaping & Representing Global African Culture" style="width:100%;height:200px;object-fit:cover;border-radius:12px;">
-                      </div>
-                    </div>
-                    <div class="eael-entry-wrapper">
-                      <header class="eael-entry-header">
-                        <h2 class="eael-entry-title">
-                          <a class="eael-grid-post-link" href="../post/creatives-shaping-representing-global-african-culture/">Creatives Are Shaping &amp; Representing Global African Culture</a>
-                        </h2>
-                      </header>
-                      <div class="eael-entry-content">
-                        <div class="eael-grid-post-excerpt">
-                          <p>From visual arts exhibitions in San Francisco to Afrobeats on global stages, African artists are redefining modern creative expression.</p>
-                          <a href="../post/creatives-shaping-representing-global-african-culture/" class="eael-post-elements-readmore-btn">Read Story</a>
-                        </div>
-                      </div>
-                      <div class="eael-entry-header-after style-two">
-                        <div class="eael-entry-meta">
-                          <span class="eael-meta-posted-on"><i class="far fa-clock"></i> 10 min read · Dr. Ngozi Eze</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Initial Static Fallback Article 4 (Original Crawled WP Post 2424) -->
-              <article class="eael-grid-post eael-post-grid-column category-success-stories">
-                <div class="eael-grid-post-holder">
-                  <div class="eael-grid-post-holder-inner">
-                    <div class="eael-entry-media">
-                      <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
-                      <div class="eael-entry-thumbnail">
-                        <img loading="lazy" width="300" height="200" src="/wp-content/uploads/2026/01/AF3-1-png-300x171.jpg" alt="Mutual Aid Networks" style="width:100%;height:200px;object-fit:cover;border-radius:12px;">
-                      </div>
-                    </div>
-                    <div class="eael-entry-wrapper">
-                      <header class="eael-entry-header">
-                        <h2 class="eael-entry-title">
-                          <a class="eael-grid-post-link" href="../post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2/">From mutual aid networks to cultural organizations, discover how diaspora communities create support systems that span the globe.</a>
-                        </h2>
-                      </header>
-                      <div class="eael-entry-content">
-                        <div class="eael-grid-post-excerpt">
-                          <p>When my family arrived in Minneapolis from Somalia in the early 1990s, we didn't just find a new home—we found an informal safety net built by those who came before us.</p>
-                          <a href="../post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2/" class="eael-post-elements-readmore-btn">Read Story</a>
-                        </div>
-                      </div>
-                      <div class="eael-entry-header-after style-two">
-                        <div class="eael-entry-meta">
-                          <span class="eael-meta-posted-on"><i class="far fa-clock"></i> February 5, 2026 · Conspodium Editorial</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Initial Static Fallback Article 5 (Original Crawled WP Post 2421) -->
-              <article class="eael-grid-post eael-post-grid-column category-innovation">
-                <div class="eael-grid-post-holder">
-                  <div class="eael-grid-post-holder-inner">
-                    <div class="eael-entry-media">
-                      <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
-                      <div class="eael-entry-thumbnail">
-                        <img loading="lazy" width="300" height="200" src="/wp-content/uploads/2026/01/location-1-300x210.webp" alt="Profiles of Groundbreaking Tech Entrepreneurs" style="width:100%;height:200px;object-fit:cover;border-radius:12px;">
-                      </div>
-                    </div>
-                    <div class="eael-entry-wrapper">
-                      <header class="eael-entry-header">
-                        <h2 class="eael-entry-title">
-                          <a class="eael-grid-post-link" href="../post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/">Profiles of Groundbreaking Tech Entrepreneurs From Diaspora</a>
-                        </h2>
-                      </header>
-                      <div class="eael-entry-content">
-                        <div class="eael-grid-post-excerpt">
-                          <p>The story of Silicon Valley cannot be told without highlighting the incredible impact of diaspora founders and tech innovators driving global change.</p>
-                          <a href="../post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/" class="eael-post-elements-readmore-btn">Read Story</a>
-                        </div>
-                      </div>
-                      <div class="eael-entry-header-after style-two">
-                        <div class="eael-entry-meta">
-                          <span class="eael-meta-posted-on"><i class="far fa-clock"></i> February 5, 2026 · Conspodium Tech</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Initial Static Fallback Article 6 (Original Crawled WP Post 2203) -->
-              <article class="eael-grid-post eael-post-grid-column category-community">
-                <div class="eael-grid-post-holder">
-                  <div class="eael-grid-post-holder-inner">
-                    <div class="eael-entry-media">
-                      <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
-                      <div class="eael-entry-thumbnail">
-                        <img loading="lazy" width="300" height="200" src="/wp-content/uploads/2026/02/tourist-carrying-luggage-300x150.jpg" alt="We Are The World" style="width:100%;height:200px;object-fit:cover;border-radius:12px;">
-                      </div>
-                    </div>
-                    <div class="eael-entry-wrapper">
-                      <header class="eael-entry-header">
-                        <h2 class="eael-entry-title">
-                          <a class="eael-grid-post-link" href="../post/we-are-the-world/">We Are The World</a>
-                        </h2>
-                      </header>
-                      <div class="eael-entry-content">
-                        <div class="eael-grid-post-excerpt">
-                          <p>By Amara Okonkwo, Cultural Anthropologist. The first time I experienced global unity across diaspora cultures was during the pan-African cultural festival.</p>
-                          <a href="../post/we-are-the-world/" class="eael-post-elements-readmore-btn">Read Story</a>
-                        </div>
-                      </div>
-                      <div class="eael-entry-header-after style-two">
-                        <div class="eael-entry-meta">
-                          <span class="eael-meta-posted-on"><i class="far fa-clock"></i> February 4, 2026 · Amara Okonkwo</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Initial Static Fallback Article 7 (Original Crawled WP Post 2197) -->
-              <article class="eael-grid-post eael-post-grid-column category-community">
-                <div class="eael-grid-post-holder">
-                  <div class="eael-grid-post-holder-inner">
-                    <div class="eael-entry-media">
-                      <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
-                      <div class="eael-entry-thumbnail">
-                        <img loading="lazy" width="300" height="200" src="/wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-300x200.jpg" alt="Visionary Entrepreneurs" style="width:100%;height:200px;object-fit:cover;border-radius:12px;">
-                      </div>
-                    </div>
-                    <div class="eael-entry-wrapper">
-                      <header class="eael-entry-header">
-                        <h2 class="eael-entry-title">
-                          <a class="eael-grid-post-link" href="../post/conspodium-is-all-about-community/">Visionary Entrepreneurs Leveraging Their Dual Cultural Knowledge</a>
-                        </h2>
-                      </header>
-                      <div class="eael-entry-content">
-                        <div class="eael-grid-post-excerpt">
-                          <p>When I founded my first company at 24, connecting African artisans with European fashion houses, I realized our dual heritage is our greatest superpower.</p>
-                          <a href="../post/conspodium-is-all-about-community/" class="eael-post-elements-readmore-btn">Read Story</a>
-                        </div>
-                      </div>
-                      <div class="eael-entry-header-after style-two">
-                        <div class="eael-entry-meta">
-                          <span class="eael-meta-posted-on"><i class="far fa-clock"></i> February 4, 2026 · Conspodium Editorial</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
+        <!-- 1. MAGAZINE FEATURED SPOTLIGHT HERO BANNER -->
+        <section class="csp-stories-hero-spotlight" style="position:relative;background:linear-gradient(135deg,#061022 0%,#0f172a 100%);border-radius:28px;padding:48px;margin-bottom:40px;border:1px solid rgba(0,174,254,0.35);overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.5);">
+          <div style="position:absolute;top:-60px;right:-60px;width:350px;height:350px;background:radial-gradient(circle,rgba(0,174,254,0.25) 0%,rgba(0,0,0,0) 70%);border-radius:50%;pointer-events:none;"></div>
+          <div style="position:relative;z-index:2;display:grid;grid-template-columns:1.2fr 0.8fr;gap:40px;align-items:center;">
+            <div>
+              <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:50px;background:rgba(0,174,254,0.15);border:1px solid rgba(0,174,254,0.4);color:#00AEFE;font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:18px;">
+                🔥 FEATURED SPOTLIGHT STORY
+              </div>
+              <h1 style="font-family:'Merriweather',serif;font-size:clamp(1.8rem,3.2vw,2.5rem);color:#ffffff;line-height:1.25;margin:0 0 16px;">
+                Empowering Diaspora Communities Through Innovation &amp; Heritage
+              </h1>
+              <p style="font-size:0.98rem;color:rgba(255,255,255,0.8);line-height:1.65;margin:0 0 24px;">
+                Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.
+              </p>
+              <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+                <a href="../post/empowering-diaspora-communities-through-innovation-heritage/" style="display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:50px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-family:'Merriweather',serif;font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 8px 24px rgba(0,174,254,0.4);">
+                  Read Full Feature &rarr;
+                </a>
+                <span style="color:rgba(255,255,255,0.7);font-size:0.85rem;font-weight:500;">⏱️ 6 min read · By Steving Felix</span>
+              </div>
             </div>
-            <div class="clearfix"></div>
-            <div id="csp-stories-pagination" class="csp-pagination-container"></div>
+            <div style="position:relative;border-radius:20px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);">
+              <img src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Featured Story" style="width:100%;height:320px;object-fit:cover;display:block;" />
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. GLASSMORPHIC CATEGORY FILTER BAR -->
+        <div class="csp-cat-nav-wrap" style="position:sticky;top:85px;z-index:99;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:14px 24px;border-radius:50px;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:40px;">
+          <div class="csp-cat-nav-inner" id="csp-stories-filter-pills" style="display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;align-items:center;">
+            <button type="button" class="csp-cat-pill active" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('all', this);" style="padding:10px 22px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">📚 All Stories</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('culture-heritage', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">🏛️ Culture &amp; Heritage</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('innovation', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">💡 Innovation &amp; Tech</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('art-entertainment', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">🎨 Art &amp; Entertainment</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('community', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">👥 Community</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('success-stories', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">🌟 Success Stories</button>
+          </div>
+        </div>
+
+        <!-- 3. 2-COLUMN FLEX CONTAINER (72% Main Article Grid + 28% Sticky Magazine Sidebar) -->
+        <div class="csp-cat-layout-flex" style="padding:0;">
+          <!-- Left Main Article Grid Column -->
+          <div class="csp-cat-main-col">
+            <div id="eael-post-grid-0b52a18" class="eael-post-grid-container">
+              <div class="eael-post-grid eael-post-appender eael-post-appender-0b52a18 eael-post-grid-style-two" data-layout-mode="grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;">
+                <!-- Article 1 -->
+                <article class="eael-grid-post eael-post-grid-column category-culture-heritage" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s ease;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
+                  <div class="eael-grid-post-holder">
+                    <div class="eael-grid-post-holder-inner">
+                      <div class="eael-entry-media" style="overflow:hidden;height:200px;">
+                        <img loading="lazy" src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Empowering Diaspora Communities" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='none'">
+                      </div>
+                      <div class="eael-entry-wrapper" style="padding:20px;">
+                        <span style="font-size:0.72rem;font-weight:700;color:#00AEFE;letter-spacing:0.08em;text-transform:uppercase;">🏛️ Culture &amp; Heritage</span>
+                        <h3 class="eael-entry-title" style="margin:8px 0 10px;font-family:'Merriweather',serif;font-size:1.1rem;line-height:1.35;">
+                          <a href="../post/empowering-diaspora-communities-through-innovation-heritage/" style="color:#0f172a;text-decoration:none;">Empowering Diaspora Communities Through Innovation &amp; Heritage</a>
+                        </h3>
+                        <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin-bottom:16px;">Exploring how pan-African leaders, creators, and innovators are shaping global economic policies.</p>
+                        <div style="font-size:0.78rem;color:#94a3b8;font-weight:500;display:flex;justify-content:space-between;border-top:1px solid #f1f5f9;padding-top:12px;">
+                          <span>⏱️ 6 min read</span>
+                          <span>Steving Felix</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="eael-grid-post eael-post-grid-column category-innovation" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s ease;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
+                  <div class="eael-grid-post-holder">
+                    <div class="eael-grid-post-holder-inner">
+                      <div class="eael-entry-media" style="overflow:hidden;height:200px;">
+                        <img loading="lazy" src="/wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Africans in Diaspora Influencing Global Economic Decisions" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='none'">
+                      </div>
+                      <div class="eael-entry-wrapper" style="padding:20px;">
+                        <span style="font-size:0.72rem;font-weight:700;color:#B71F71;letter-spacing:0.08em;text-transform:uppercase;">💡 Innovation &amp; Tech</span>
+                        <h3 class="eael-entry-title" style="margin:8px 0 10px;font-family:'Merriweather',serif;font-size:1.1rem;line-height:1.35;">
+                          <a href="../post/africans-in-diaspora-influencing-global-economic-decisions/" style="color:#0f172a;text-decoration:none;">Africans in Diaspora Influencing Global Economic Decisions</a>
+                        </h3>
+                        <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin-bottom:16px;">How African diaspora founders, venture capitalists, and policy advisors are driving bilateral trade.</p>
+                        <div style="font-size:0.78rem;color:#94a3b8;font-weight:500;display:flex;justify-content:space-between;border-top:1px solid #f1f5f9;padding-top:12px;">
+                          <span>⏱️ 6 min read</span>
+                          <span>Prof. Amara Diallo</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="eael-grid-post eael-post-grid-column category-art-entertainment" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s ease;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
+                  <div class="eael-grid-post-holder">
+                    <div class="eael-grid-post-holder-inner">
+                      <div class="eael-entry-media" style="overflow:hidden;height:200px;">
+                        <img loading="lazy" src="/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Creatives Are Shaping Culture" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='none'">
+                      </div>
+                      <div class="eael-entry-wrapper" style="padding:20px;">
+                        <span style="font-size:0.72rem;font-weight:700;color:#00AEFE;letter-spacing:0.08em;text-transform:uppercase;">🎨 Art &amp; Entertainment</span>
+                        <h3 class="eael-entry-title" style="margin:8px 0 10px;font-family:'Merriweather',serif;font-size:1.1rem;line-height:1.35;">
+                          <a href="../post/creatives-shaping-representing-global-african-culture/" style="color:#0f172a;text-decoration:none;">Creatives Are Shaping &amp; Representing Global African Culture</a>
+                        </h3>
+                        <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin-bottom:16px;">From visual arts exhibitions to Afrobeats on global stages, African artists are redefining expression.</p>
+                        <div style="font-size:0.78rem;color:#94a3b8;font-weight:500;display:flex;justify-content:space-between;border-top:1px solid #f1f5f9;padding-top:12px;">
+                          <span>⏱️ 10 min read</span>
+                          <span>Dr. Ngozi Eze</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="eael-grid-post eael-post-grid-column category-success-stories" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s ease;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
+                  <div class="eael-grid-post-holder">
+                    <div class="eael-grid-post-holder-inner">
+                      <div class="eael-entry-media" style="overflow:hidden;height:200px;">
+                        <img loading="lazy" src="/wp-content/uploads/2026/01/AF3-1-png-300x171.jpg" alt="Mutual Aid Networks" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='none'">
+                      </div>
+                      <div class="eael-entry-wrapper" style="padding:20px;">
+                        <span style="font-size:0.72rem;font-weight:700;color:#10b981;letter-spacing:0.08em;text-transform:uppercase;">🌟 Success Stories</span>
+                        <h3 class="eael-entry-title" style="margin:8px 0 10px;font-family:'Merriweather',serif;font-size:1.1rem;line-height:1.35;">
+                          <a href="../post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2/" style="color:#0f172a;text-decoration:none;">From mutual aid networks to cultural organizations spanning the globe.</a>
+                        </h3>
+                        <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin-bottom:16px;">Discover how diaspora communities create resilient support systems across generations.</p>
+                        <div style="font-size:0.78rem;color:#94a3b8;font-weight:500;display:flex;justify-content:space-between;border-top:1px solid #f1f5f9;padding-top:12px;">
+                          <span>⏱️ 5 min read</span>
+                          <span>Editorial Team</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Sticky Magazine Sidebar Column -->
+          <aside class="csp-magazine-sidebar">
+            <!-- Top Read Essays Card -->
+            <div class="csp-sidebar-card">
+              <div class="csp-sidebar-header">
+                <span class="csp-sidebar-icon">🔥</span>
+                <h3 class="csp-sidebar-title">Top Read Essays</h3>
+              </div>
+              <div class="csp-sidebar-list">
+                <a href="../post/empowering-diaspora-communities-through-innovation-heritage/" class="csp-sidebar-item">
+                  <span class="csp-rank-num">01</span>
+                  <div>
+                    <div class="csp-sidebar-item-title">Empowering Diaspora Communities Through Innovation</div>
+                    <div class="csp-sidebar-item-meta">8,400 reads · 6 min</div>
+                  </div>
+                </a>
+                <a href="../post/africans-in-diaspora-influencing-global-economic-decisions/" class="csp-sidebar-item">
+                  <span class="csp-rank-num">02</span>
+                  <div>
+                    <div class="csp-sidebar-item-title">Africans in Diaspora Influencing Global Economic Decisions</div>
+                    <div class="csp-sidebar-item-meta">5,200 reads · 8 min</div>
+                  </div>
+                </a>
+                <a href="../post/creatives-shaping-representing-global-african-culture/" class="csp-sidebar-item">
+                  <span class="csp-rank-num">03</span>
+                  <div>
+                    <div class="csp-sidebar-item-title">Creatives Are Shaping &amp; Representing Global African Culture</div>
+                    <div class="csp-sidebar-item-meta">3,420 reads · 5 min</div>
+                  </div>
+                </a>
+                <a href="../post/we-are-the-world/" class="csp-sidebar-item">
+                  <span class="csp-rank-num">04</span>
+                  <div>
+                    <div class="csp-sidebar-item-title">We Are The World — Cultural Anthropologist Perspective</div>
+                    <div class="csp-sidebar-item-meta">11,000 reads · 10 min</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Weekly Prompt Poll -->
+            <div class="csp-sidebar-card csp-sidebar-poll">
+              <div class="csp-sidebar-header">
+                <span class="csp-sidebar-icon">🗳️</span>
+                <h3 class="csp-sidebar-title">Weekly Prompt</h3>
+              </div>
+              <p class="csp-poll-prompt">"Which area of diaspora innovation requires the most urgent investment in 2026?"</p>
+              <div class="csp-poll-options">
+                <button type="button" class="csp-poll-opt-btn" onclick="if(window.cspToast) window.cspToast('Vote recorded! 42% voted Tech Infrastructure', 'success');">⚡ Tech &amp; AI Infrastructure</button>
+                <button type="button" class="csp-poll-opt-btn" onclick="if(window.cspToast) window.cspToast('Vote recorded! 35% voted Cultural Preservation', 'success');">🏛️ Cultural Heritage &amp; Arts</button>
+                <button type="button" class="csp-poll-opt-btn" onclick="if(window.cspToast) window.cspToast('Vote recorded! 23% voted Venture Capital', 'success');">💼 Diaspora Capital &amp; Trade</button>
+              </div>
+            </div>
+
+            <!-- Executive Briefing Newsletter VIP Card -->
+            <div class="csp-sidebar-card csp-sidebar-newsletter">
+              <div class="csp-sidebar-header">
+                <span class="csp-sidebar-icon">📬</span>
+                <h3 class="csp-sidebar-title" style="color:#fff;">Executive Briefing</h3>
+              </div>
+              <p style="font-size:0.85rem;color:rgba(255,255,255,0.75);margin-bottom:16px;line-height:1.5;">Join 50,000+ diaspora leaders receiving our curated weekly digest.</p>
+              <form onsubmit="event.preventDefault(); if(window.cspToast) window.cspToast('Thank you for subscribing to Conspodium Executive Briefing!', 'success'); this.reset();" style="display:flex;flex-direction:column;gap:10px;">
+                <input type="email" placeholder="Enter email address..." required style="padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff;font-size:0.85rem;" />
+                <button type="submit" style="padding:10px 16px;border-radius:10px;border:none;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer;">Subscribe Free →</button>
+              </form>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
 <style id="csp-stories-pagination-style">
 .csp-pagination-container {
   display: flex;

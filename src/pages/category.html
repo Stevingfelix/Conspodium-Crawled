@@ -1464,12 +1464,85 @@ e-page-transition,
   </div>
 
   <!-- MAIN ARTICLES GRID SECTION -->
-  <section class="csp-cat-content-sec">
-    <div class="csp-grid" id="cat-posts-grid">
-      <!-- Loading Skeleton -->
-      <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-sub);">
-        <div style="font-size:1.2rem;margin-bottom:8px;">⏳ Loading stories...</div>
+  <section class="csp-cat-content-sec" style="padding: 40px 0;">
+    <div class="csp-cat-layout-flex">
+      <!-- Main Articles Column -->
+      <div class="csp-cat-main-col">
+        <div class="csp-grid" id="cat-posts-grid">
+          <!-- Loading Skeleton -->
+          <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-sub);">
+            <div style="font-size:1.2rem;margin-bottom:8px;">⏳ Loading stories...</div>
+          </div>
+        </div>
       </div>
+
+      <!-- Sticky Magazine Sidebar -->
+      <aside class="csp-magazine-sidebar">
+        <!-- Widget 1: Top Rated Essays -->
+        <div class="csp-sidebar-card">
+          <div class="csp-sidebar-header">
+            <span class="csp-sidebar-icon">🔥</span>
+            <h3 class="csp-sidebar-title">Top Read Essays</h3>
+          </div>
+          <div class="csp-sidebar-list">
+            <a href="../post/empowering-diaspora-communities-through-innovation-heritage/" class="csp-sidebar-item">
+              <span class="csp-rank-num">01</span>
+              <div>
+                <div class="csp-sidebar-item-title">Empowering Diaspora Communities Through Innovation</div>
+                <div class="csp-sidebar-item-meta">8,400 reads · 6 min</div>
+              </div>
+            </a>
+            <a href="../post/africans-in-diaspora-influencing-global-economic-decisions/" class="csp-sidebar-item">
+              <span class="csp-rank-num">02</span>
+              <div>
+                <div class="csp-sidebar-item-title">Africans in Diaspora Influencing Global Economic Decisions</div>
+                <div class="csp-sidebar-item-meta">5,200 reads · 8 min</div>
+              </div>
+            </a>
+            <a href="../post/creatives-shaping-representing-global-african-culture/" class="csp-sidebar-item">
+              <span class="csp-rank-num">03</span>
+              <div>
+                <div class="csp-sidebar-item-title">Creatives Are Shaping &amp; Representing Global African Culture</div>
+                <div class="csp-sidebar-item-meta">3,420 reads · 5 min</div>
+              </div>
+            </a>
+            <a href="../post/we-are-the-world/" class="csp-sidebar-item">
+              <span class="csp-rank-num">04</span>
+              <div>
+                <div class="csp-sidebar-item-title">We Are The World — Cultural Anthropologist Perspective</div>
+                <div class="csp-sidebar-item-meta">11,000 reads · 10 min</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Widget 2: Weekly Community Poll -->
+        <div class="csp-sidebar-card csp-sidebar-poll">
+          <div class="csp-sidebar-header">
+            <span class="csp-sidebar-icon">🗳️</span>
+            <h3 class="csp-sidebar-title">Weekly Prompt</h3>
+          </div>
+          <p class="csp-poll-prompt">"Which area of diaspora innovation requires the most urgent investment in 2026?"</p>
+          <div class="csp-poll-options">
+            <button type="button" class="csp-poll-opt-btn" onclick="if(window.cspToast) window.cspToast('Vote recorded! 42% voted Tech Infrastructure', 'success');">⚡ Tech &amp; AI Infrastructure</button>
+            <button type="button" class="csp-poll-opt-btn" onclick="if(window.cspToast) window.cspToast('Vote recorded! 35% voted Cultural Preservation', 'success');">🏛️ Cultural Heritage &amp; Arts</button>
+            <button type="button" class="csp-poll-opt-btn" onclick="if(window.cspToast) window.cspToast('Vote recorded! 23% voted Venture Capital', 'success');">💼 Diaspora Capital &amp; Trade</button>
+          </div>
+        </div>
+
+        <!-- Widget 3: VIP Newsletter Signup -->
+        <div class="csp-sidebar-card csp-sidebar-newsletter">
+          <div class="csp-sidebar-header">
+            <span class="csp-sidebar-icon">📬</span>
+            <h3 class="csp-sidebar-title" style="color:#fff;">Executive Briefing</h3>
+          </div>
+          <p style="font-size:0.85rem;color:rgba(255,255,255,0.75);margin-bottom:16px;line-height:1.5;">Join 50,000+ diaspora leaders receiving our curated weekly digest.</p>
+          <form onsubmit="event.preventDefault(); if(window.cspToast) window.cspToast('Thank you for subscribing to Conspodium Executive Briefing!', 'success'); this.reset();" style="display:flex;flex-direction:column;gap:10px;">
+            <input type="email" placeholder="Enter email address..." required style="padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff;font-size:0.85rem;" />
+            <button type="submit" style="padding:10px 16px;border-radius:10px;border:none;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer;">Subscribe Free →</button>
+          </form>
+        </div>
+      </aside>
     </div>
   </section>
 

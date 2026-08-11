@@ -1383,6 +1383,149 @@ e-page-transition,
   box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35);
 }
 .csp-confirm-primary-btn:hover { opacity: 0.9; }
+
+/* ── 2-COLUMN MAGAZINE SIDEBAR & GRID LAYOUT ───────────────────────────── */
+.csp-cat-layout-flex {
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.csp-cat-main-col {
+  flex: 1;
+  min-width: 0;
+}
+.csp-magazine-sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+@media (max-width: 1024px) {
+  .csp-cat-layout-flex {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+  .csp-magazine-sidebar {
+    width: 100%;
+    position: static;
+  }
+}
+.csp-sidebar-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+.csp-sidebar-newsletter {
+  background: linear-gradient(145deg, #0f172a, #1e293b);
+  border: 1px solid rgba(0, 174, 254, 0.3);
+  color: #ffffff;
+}
+.csp-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.csp-sidebar-icon {
+  font-size: 1.2rem;
+}
+.csp-sidebar-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+.csp-sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.csp-sidebar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  padding: 8px 0;
+  border-bottom: 1px dashed #e2e8f0;
+  transition: transform 0.2s ease;
+}
+.csp-sidebar-item:last-child {
+  border-bottom: none;
+}
+.csp-sidebar-item:hover {
+  transform: translateX(4px);
+}
+.csp-rank-num {
+  font-family: 'Merienda', cursive, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #00AEFE;
+  flex-shrink: 0;
+  line-height: 1;
+  width: 24px;
+}
+.csp-sidebar-item-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.35;
+  margin-bottom: 3px;
+}
+.csp-sidebar-item-meta {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+.csp-poll-prompt {
+  font-size: 0.88rem;
+  color: #334155;
+  line-height: 1.5;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+.csp-poll-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.csp-poll-opt-btn {
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.csp-poll-opt-btn:hover {
+  background: rgba(0, 174, 254, 0.08);
+  border-color: #00AEFE;
+  color: #0f172a;
+}
+
+/* ── READING PROGRESS BAR ─────────────────────────────────────────────── */
+#csp-reading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00AEFE 0%, #B71F71 100%);
+  z-index: 99999999;
+  width: 0%;
+  transition: width 0.1s linear;
+}
 </style>
 
 <!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
@@ -2264,11 +2407,9 @@ e-page-transition,
 					<div class="ekit-wid-con"><div class="ekit-heading elementskit-section-title-wraper text_center   ekit_heading_tablet-   ekit_heading_mobile-"><h2 class="ekit-heading--title elementskit-section-title ">How Can We Help?</h2></div></div>				</div>
 				</div>
 		<div class="elementor-element elementor-element-1ca8cfa5 e-con-full e-grid e-con e-child adv-sticky-elementor" data-id="1ca8cfa5" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-78bc4fb1 ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="78bc4fb1" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
+				<div class="elementor-element elementor-element-78bc4fb1 ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="78bc4fb1" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default" style="cursor:pointer;" onclick="if(window.setContactSubject) window.setContactSubject('General Enquiry');">
 				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
+					<div class="ekit-wid-con">
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
@@ -2284,11 +2425,9 @@ e-page-transition,
                 </div>
         </div>				</div>
 				</div>
-				<div class="elementor-element elementor-element-c65338f ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="c65338f" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
+				<div class="elementor-element elementor-element-c65338f ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="c65338f" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default" style="cursor:pointer;" onclick="if(window.setContactSubject) window.setContactSubject('Partnership Proposal');">
 				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
+					<div class="ekit-wid-con">
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
@@ -2304,11 +2443,9 @@ e-page-transition,
                 </div>
         </div>				</div>
 				</div>
-				<div class="elementor-element elementor-element-cc937ea ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="cc937ea" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
+				<div class="elementor-element elementor-element-cc937ea ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="cc937ea" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default" style="cursor:pointer;" onclick="if(window.setContactSubject) window.setContactSubject('Editorial Pitch');">
 				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
+					<div class="ekit-wid-con">
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
@@ -2324,11 +2461,9 @@ e-page-transition,
                 </div>
         </div>				</div>
 				</div>
-				<div class="elementor-element elementor-element-7078a6d ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="7078a6d" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
+				<div class="elementor-element elementor-element-7078a6d ekit-equal-height-enable elementor-widget-mobile__width-initial elementor-widget elementor-widget-elementskit-icon-box" data-id="7078a6d" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default" style="cursor:pointer;" onclick="if(window.setContactSubject) window.setContactSubject('Advertising Enquiry');">
 				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
+					<div class="ekit-wid-con">
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
@@ -2370,6 +2505,16 @@ e-page-transition,
   function initContactForm() {
     var form = document.getElementById('fluentform_1');
     if (!form) return;
+
+    window.setContactSubject = function(subjectText) {
+      var subjectEl = document.getElementById('ff_1_subject');
+      if (subjectEl) {
+        subjectEl.value = subjectText;
+        subjectEl.focus();
+        subjectEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (window.cspToast) window.cspToast('Subject updated to: ' + subjectText, 'info');
+      }
+    };
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();

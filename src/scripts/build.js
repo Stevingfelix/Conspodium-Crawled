@@ -249,7 +249,9 @@ for (const page of PAGES) {
       html = html.replace(/<a href="#" id="post-category-badge" class="csp-post-badge">[\s\S]*?<\/a>/i, `<a href="/category/${pData.category_slug}/" id="post-category-badge" class="csp-post-badge">${pData.category_icon} ${pData.category_name}</a>`);
       html = html.replace(/<img id="post-hero-image"[\s\S]*?>/i, `<img id="post-hero-image" src="${pData.featured_image}" alt="${pData.title}" class="csp-post-hero-img" style="display:block;">`);
       html = html.replace(/<div id="post-excerpt-box" class="csp-post-excerpt-box" style="display:none;"><\/div>/i, `<div id="post-excerpt-box" class="csp-post-excerpt-box" style="display:block;">${pData.excerpt}</div>`);
-      html = html.replace(/<div id="post-content-body" class="csp-post-body">[\s\S]*?<\/div>/i, `<div id="post-content-body" class="csp-post-body">${pData.content}</div>`);
+      html = html.replace(/<div id="post-content-body" class="csp-post-body">[\s\S]*?<!-- CSP_POST_BODY_END -->/i, `<div id="post-content-body" class="csp-post-body">${pData.content}</div><!-- CSP_POST_BODY_END -->`);
+      html = html.replace(/<h4 style="[\s\S]*?" id="post-author-card-name">[\s\S]*?<\/h4>/i, `<h4 style="font-family:'Merriweather',serif;font-size:1.15rem;font-weight:700;color:#0f172a;margin:0 0 6px;" id="post-author-card-name">${pData.author_name}</h4>`);
+      html = html.replace(/<span id="post-author-avatar-initial">[\s\S]*?<\/span>/i, `<span id="post-author-avatar-initial">${pData.author_name.charAt(0)}</span>`);
 
       // Pre-render Sidebar Related Stories
       const otherKeys = Object.keys(POST_DATA).filter(k => k !== slug).slice(0, 3);

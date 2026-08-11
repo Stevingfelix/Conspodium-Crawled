@@ -805,13 +805,31 @@
         <div id="post-excerpt-box" class="csp-post-excerpt-box" style="display:none;"></div>
 
         <div id="post-content-body" class="csp-post-body">
-          <div class="csp-skeleton" style="height:24px;width:90%;margin-bottom:16px;"></div>
-          <div class="csp-skeleton" style="height:20px;width:100%;margin-bottom:12px;"></div>
-          <div class="csp-skeleton" style="height:20px;width:95%;margin-bottom:12px;"></div>
-          <div class="csp-skeleton" style="height:20px;width:85%;margin-bottom:24px;"></div>
-          <div class="csp-skeleton" style="height:200px;width:100%;margin-bottom:24px;border-radius:16px;"></div>
-          <div class="csp-skeleton" style="height:20px;width:98%;margin-bottom:12px;"></div>
-          <div class="csp-skeleton" style="height:20px;width:92%;margin-bottom:12px;"></div>
+          <div id="post-skeleton-wrapper">
+            <div class="csp-skeleton" style="height:24px;width:90%;margin-bottom:16px;"></div>
+            <div class="csp-skeleton" style="height:20px;width:100%;margin-bottom:12px;"></div>
+            <div class="csp-skeleton" style="height:20px;width:95%;margin-bottom:12px;"></div>
+            <div class="csp-skeleton" style="height:20px;width:85%;margin-bottom:24px;"></div>
+            <div class="csp-skeleton" style="height:200px;width:100%;margin-bottom:24px;border-radius:16px;"></div>
+            <div class="csp-skeleton" style="height:20px;width:98%;margin-bottom:12px;"></div>
+          </div>
+        </div>
+        <!-- CSP_POST_BODY_END -->
+
+        <!-- AUTHOR SPOTLIGHT CARD -->
+        <div class="csp-author-spotlight-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:24px;margin:32px 0;display:flex;gap:20px;align-items:center;box-shadow:0 6px 20px rgba(0,0,0,0.03);">
+          <div style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#00AEFE,#B71F71);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Merienda',cursive;font-size:1.5rem;font-weight:700;flex-shrink:0;">
+            <span id="post-author-avatar-initial">C</span>
+          </div>
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;color:#00AEFE;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Written By</div>
+            <h4 style="font-family:'Merriweather',serif;font-size:1.15rem;font-weight:700;color:#0f172a;margin:0 0 6px;" id="post-author-card-name">Conspodium Editorial</h4>
+            <p style="font-size:0.88rem;color:#64748b;line-height:1.5;margin:0 0 10px;" id="post-author-card-bio">Contributor &amp; Researcher documenting African diaspora narratives, technology trends, and cultural heritage across global communities.</p>
+            <div style="display:flex;gap:12px;font-size:0.82rem;font-weight:600;">
+              <a href="../stories/" style="color:#00AEFE;text-decoration:none;">View All Articles &rarr;</a>
+              <a href="../submit-story/" style="color:#B71F71;text-decoration:none;">Submit a Story &rarr;</a>
+            </div>
+          </div>
         </div>
 
         <!-- SHARE SECTION -->
@@ -1164,6 +1182,20 @@
     if (tw) tw.href = 'https://twitter.com/intent/tweet?url=' + pUrl + '&text=' + pTitle;
     if (li) li.href = 'https://www.linkedin.com/shareArticle?mini=true&url=' + pUrl + '&title=' + pTitle;
     if (wa) wa.href = 'https://api.whatsapp.com/send?text=' + pTitle + '%20' + pUrl;
+
+    // Scroll Reading Progress Bar Controller
+    window.addEventListener('scroll', function() {
+      var bar = document.getElementById('csp-reading-bar');
+      if (!bar) {
+        bar = document.createElement('div');
+        bar.id = 'csp-reading-bar';
+        document.body.appendChild(bar);
+      }
+      var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      bar.style.width = scrolled + '%';
+    });
   })();
   </script>
 
