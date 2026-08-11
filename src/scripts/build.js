@@ -246,12 +246,32 @@ for (const page of PAGES) {
       html = html.replace(/<span id="post-date">[\s\S]*?<\/span>/i, `<span id="post-date">${pData.published_at}</span>`);
       html = html.replace(/<span id="post-reading-time">[\s\S]*?<\/span>/i, `<span id="post-reading-time">${pData.reading_time}</span>`);
       html = html.replace(/<span id="post-views">[\s\S]*?<\/span>/i, `<span id="post-views">${pData.views} views</span>`);
-      html = html.replace(/<a href="#" id="post-category-badge" class="csp-post-badge">[\s\S]*?<\/a>/i, `<a href="/category/${pData.category_slug}/" id="post-category-badge" class="csp-post-badge">${pData.category_icon} ${pData.category_name}</a>`);
       html = html.replace(/<img id="post-hero-image"[\s\S]*?>/i, `<img id="post-hero-image" src="${pData.featured_image}" alt="${pData.title}" class="csp-post-hero-img" style="display:block;">`);
       html = html.replace(/<div id="post-excerpt-box" class="csp-post-excerpt-box" style="display:none;"><\/div>/i, `<div id="post-excerpt-box" class="csp-post-excerpt-box" style="display:block;">${pData.excerpt}</div>`);
       html = html.replace(/<div id="post-content-body" class="csp-post-body">[\s\S]*?<!-- CSP_POST_BODY_END -->/i, `<div id="post-content-body" class="csp-post-body">${pData.content}</div><!-- CSP_POST_BODY_END -->`);
       html = html.replace(/<h4 style="[\s\S]*?" id="post-author-card-name">[\s\S]*?<\/h4>/i, `<h4 style="font-family:'Merriweather',serif;font-size:1.15rem;font-weight:700;color:#0f172a;margin:0 0 6px;" id="post-author-card-name">${pData.author_name}</h4>`);
       html = html.replace(/<span id="post-author-avatar-initial">[\s\S]*?<\/span>/i, `<span id="post-author-avatar-initial">${pData.author_name.charAt(0)}</span>`);
+
+      // Pre-render Category Pills Bar with post's active category pre-highlighted
+      const categoriesList = [
+        { name: 'All Stories', slug: 'stories', icon: '📚', url: '/stories/' },
+        { name: 'Culture & Heritage', slug: 'culture-heritage', icon: '🏛️', url: '/category/culture-heritage/' },
+        { name: 'Innovation & Tech', slug: 'innovation', icon: '💡', url: '/category/innovation/' },
+        { name: 'Art & Entertainment', slug: 'art-entertainment', icon: '🎨', url: '/category/art-entertainment/' },
+        { name: 'Community', slug: 'community', icon: '👥', url: '/category/community/' },
+        { name: 'Success Stories', slug: 'success-stories', icon: '🌟', url: '/category/success-stories/' }
+      ];
+
+      let catTabsHtml = '';
+      categoriesList.forEach(cat => {
+        const isActive = (cat.slug === pData.category_slug);
+        const styleAttr = isActive 
+          ? 'padding:10px 22px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;'
+          : 'padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;';
+        catTabsHtml += `<a href="${cat.url}" class="csp-cat-tab${isActive ? ' active' : ''}" style="${styleAttr}">${cat.icon} ${cat.name}</a>\n        `;
+      });
+
+      html = html.replace(/<div class="csp-cat-nav-inner" id="csp-cat-tabs-container"[\s\S]*?<\/div>/i, `<div class="csp-cat-nav-inner" id="csp-cat-tabs-container" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;align-items:center;width:100%;-webkit-overflow-scrolling:touch;">\n        ${catTabsHtml}</div>`);
 
       // Pre-render Sidebar Related Stories
       const otherKeys = Object.keys(POST_DATA).filter(k => k !== slug).slice(0, 3);

@@ -1166,7 +1166,7 @@
               if (tabsContainer) {
                 var tabsHtml = '<a href="' + (window.getRootUrl ? window.getRootUrl('stories/') : '/stories/') + '" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">📚 All Stories</a>';
                 cRes.categories.forEach(function(cat){
-                  var isActive = (cat.slug === p.category_slug || (p.category_name && cat.name.toLowerCase() === p.category_name.toLowerCase()));
+                  var isActive = (cat.slug === p.category_slug || (p.category_slug && cat.slug.indexOf(p.category_slug) !== -1) || (p.category_name && cat.name.toLowerCase().trim() === p.category_name.toLowerCase().trim()));
                   var catUrl = window.getRootUrl ? window.getRootUrl('category/' + cat.slug + '/') : '/category/' + cat.slug + '/';
                   var styleAttr = isActive 
                     ? 'padding:10px 22px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;'
