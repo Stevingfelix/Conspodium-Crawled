@@ -285,8 +285,18 @@ section#csp-countdown h2.csp-cd-title {
   }
 }
 
-/* ── HAMBURGER FIX: push burger to far right edge of header (mobile only) ───── */
-@media (max-width: 767px) {
+/* ── HAMBURGER FIX: PERMANENT SINGLE BURGER RULE (PREVENTS DUPLICATE BURGERS ON RESIZE) ── */
+.elementor-element-c6b6140 .elementor-menu-toggle {
+  display: none !important;
+}
+
+@media (min-width: 1025px) {
+  .elementor-element-27c23fa {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1024px) {
   .elementor-element-27c23fa {
     flex: 1 !important;
     display: flex !important;
@@ -297,10 +307,12 @@ section#csp-countdown h2.csp-cd-title {
   }
   .elementor-element-27c23fa .elementor-menu-toggle,
   .elementor-element-27c23fa .elementor-nav-menu-toggle {
+    display: flex !important;
     margin-left: auto !important;
     margin-right: 0 !important;
   }
 }
+
 
 /* ── PUSH INNER PAGE ELEMENTS DOWN BELOW RELATIVE HEADER ──────────────────── */
 body:not(.home) .csp-post-sec {
