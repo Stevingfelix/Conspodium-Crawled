@@ -141,13 +141,19 @@ if ($method === 'DELETE' || ($method === 'POST' && ($action === 'delete' || $act
 }
 
 if ($method === 'POST') {
-    $name = trim($input['name'] ?? '');
-    $email = trim($input['email'] ?? '');
-    $bio = trim($input['bio'] ?? '');
-    $title = trim($input['title'] ?? '');
-    $category = trim($input['category'] ?? '');
-    $content = trim($input['content'] ?? '');
-    $attachmentUrl = trim($input['attachmentUrl'] ?? '');
+    if (!csp_check_rate_limit('submit_story', 3, 300)) {
+        http_response_code(429);
+        echo json_encode(["success" => false, "error" => "Submission rate limit exceeded. Please wait 5 minutes before submitting another story."]);
+        exit;
+    }
+
+    $name = csp_sanitize($input['name'] ?? '');
+    $email = filter_var(trim($input['email'] ?? ''), FILTER_VALIDATE_EMAIL) ? trim($input['email']) : '';
+    $bio = csp_sanitize($input['bio'] ?? '');
+    $title = csp_sanitize($input['title'] ?? '');
+    $category = csp_sanitize($input['category'] ?? '');
+    $content = csp_sanitize($input['content'] ?? '');
+    $attachmentUrl = csp_sanitize($input['attachmentUrl'] ?? '');
 
     if (!$name || !$email || !$title || !$content) {
         http_response_code(400);

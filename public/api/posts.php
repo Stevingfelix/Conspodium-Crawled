@@ -107,10 +107,16 @@ if ($resource === 'comments') {
     }
 
     if ($method === 'POST') {
+        if (!csp_check_rate_limit('post_comment', 5, 120)) {
+            http_response_code(429);
+            echo json_encode(["success" => false, "error" => "Comment posting rate limit exceeded. Please wait 2 minutes."]);
+            exit;
+        }
+
         $postIdentifier = trim($input['post_id'] ?? $input['slug'] ?? '');
-        $authorName = trim($input['author_name'] ?? 'Anonymous');
-        $authorEmail = trim($input['author_email'] ?? '');
-        $content = trim($input['content'] ?? '');
+        $authorName = csp_sanitize($input['author_name'] ?? 'Anonymous');
+        $authorEmail = filter_var(trim($input['author_email'] ?? ''), FILTER_VALIDATE_EMAIL) ? trim($input['author_email']) : '';
+        $content = csp_sanitize($input['content'] ?? '');
 
         if (!$postIdentifier || !$content) {
             echo json_encode(["success" => false, "error" => "Post ID or slug and comment text are required"]);

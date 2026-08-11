@@ -302,16 +302,47 @@ section#csp-countdown h2.csp-cd-title {
     display: flex !important;
     justify-content: flex-end !important;
     align-items: center !important;
-    padding-right: 0 !important;
+    padding-right: 16px !important;
     margin-left: 0 !important;
   }
   .elementor-element-27c23fa .elementor-menu-toggle,
   .elementor-element-27c23fa .elementor-nav-menu-toggle {
     display: flex !important;
     margin-left: auto !important;
-    margin-right: 0 !important;
+    margin-right: 8px !important;
   }
 }
+
+/* ── ABOUT CONSPODIUM BLOB SHAPE MOBILE CENTERING ─────────────────────── */
+@media (max-width: 767px) {
+  .elementor-element-d43fa17,
+  .elementor-element-c9eb748,
+  #uc_blob_shapes_elementor_c9eb748_justification {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+  }
+  #uc_blob_shapes_elementor_c9eb748_size {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+/* ── GLASSMORPHIC SKELETON PULSE LOADERS ───────────────────────────────── */
+.csp-skeleton {
+  background: linear-gradient(90deg, rgba(226, 232, 240, 0.4) 25%, rgba(0, 174, 254, 0.15) 50%, rgba(226, 232, 240, 0.4) 75%) !important;
+  background-size: 200% 100% !important;
+  animation: csp-skeleton-pulse 1.5s infinite ease-in-out !important;
+  border-radius: 8px !important;
+}
+@keyframes csp-skeleton-pulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 
 
 /* ── PUSH INNER PAGE ELEMENTS DOWN BELOW RELATIVE HEADER ──────────────────── */
@@ -994,11 +1025,24 @@ e-page-transition,
       }
     });
 
-    // Normalize all menu item links in header nav & footer to prevent 404s
+    // Normalize all menu item links in header nav & footer to prevent 404s and highlight active link
+    var currentPath = window.location.pathname;
+    if (!currentPath.endsWith('/') && !currentPath.includes('.')) currentPath += '/';
+
     document.querySelectorAll('.elementor-nav-menu a, .elementor-location-footer a').forEach(function(a) {
       var href = a.getAttribute('href');
       if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) {
-        a.setAttribute('href', getRootUrl(href));
+        var normHref = getRootUrl(href);
+        a.setAttribute('href', normHref);
+
+        var cleanHref = normHref;
+        if (!cleanHref.endsWith('/') && !cleanHref.includes('.')) cleanHref += '/';
+
+        if (currentPath === cleanHref || (cleanHref !== '/' && cleanHref !== getRootUrl('/') && currentPath.endsWith(cleanHref))) {
+          a.classList.add('active-link');
+          var li = a.closest('li');
+          if (li) li.classList.add('current-menu-item', 'active-menu-item');
+        }
       }
     });
   }

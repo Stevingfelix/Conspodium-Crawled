@@ -53,7 +53,13 @@ if ($method === 'GET' && ($action === 'me' || empty($action))) {
 
 // ── ADMIN LOGIN ─────────────────────────────────────────────────────────────
 if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($input['username'])))) {
-    $username = trim($input['username'] ?? '');
+    if (!csp_check_rate_limit('admin_login', 5, 60)) {
+        http_response_code(429);
+        echo json_encode(["success" => false, "error" => "Too many failed login attempts. Please wait 60 seconds."]);
+        exit;
+    }
+
+    $username = csp_sanitize($input['username'] ?? '');
     $password = trim($input['password'] ?? '');
 
     if (!$username || !$password) {

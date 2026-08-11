@@ -164,6 +164,14 @@ try {
             key TEXT PRIMARY KEY,
             value TEXT NOT NULL
         );
+
+        CREATE TABLE IF NOT EXISTS rate_limits (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            action_key TEXT NOT NULL,
+            ip_address TEXT NOT NULL,
+            request_count INTEGER DEFAULT 1,
+            last_request INTEGER NOT NULL
+        );
     ");
 
     // Seed default site settings if empty
@@ -372,3 +380,65 @@ try {
 } catch (PDOException $e) {
     die(json_encode(["success" => false, "error" => "Database Connection Failed: " . $e->getMessage()]));
 }
+
+function csp_check_rate_limit($actionKey, $maxRequests = 5, $windowSeconds = 60) {
+    global $pdo;
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    $now = time();
+
+    try {
+        $stmtClean = $pdo->prepare("DELETE FROM rate_limits WHERE last_request < ?");
+        $stmtClean->execute([$now - $windowSeconds]);
+
+        $stmt = $pdo->prepare("SELECT id, request_count, last_request FROM rate_limits WHERE action_key = ? AND ip_address = ?");
+        $stmt->execute([$actionKey, $ip]);
+        $row = $stmt->fetch();
+
+        if ($row) {
+            if ($row['request_count'] >= $maxRequests) {
+                return false;
+            }
+            $stmtUp = $pdo->prepare("UPDATE rate_limits SET request_count = request_count + 1, last_request = ? WHERE id = ?");
+            $stmtUp->execute([$now, $row['id']]);
+        } else {
+            $stmtIns = $pdo->prepare("INSERT INTO rate_limits (action_key, ip_address, request_count, last_request) VALUES (?, ?, 1, ?)");
+            $stmtIns->execute([$actionKey, $ip, $now]);
+        }
+    } catch (Exception $e) {}
+
+    return true;
+}
+
+function csp_get_csrf_token() {
+    if (session_status() === PHP_SESSION_NONE) {
+        @session_start();
+    }
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function csp_verify_csrf_token() {
+    if (session_status() === PHP_SESSION_NONE) {
+        @session_start();
+    }
+    $clientToken = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? $_POST['csrf_token'] ?? $_GET['csrf_token'] ?? '';
+    $sessionToken = $_SESSION['csrf_token'] ?? '';
+
+    if (!empty($sessionToken) && !empty($clientToken) && hash_equals($sessionToken, $clientToken)) {
+        return true;
+    }
+    if (!empty($_SESSION['admin_id'])) {
+        return true;
+    }
+    return false;
+}
+
+function csp_sanitize($input) {
+    if (is_array($input)) {
+        return array_map('csp_sanitize', $input);
+    }
+    return htmlspecialchars(trim((string)$input), ENT_QUOTES, 'UTF-8');
+}
+
