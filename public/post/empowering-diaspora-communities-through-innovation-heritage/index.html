@@ -2633,8 +2633,6 @@ form#fluentform_2 .ff-btn-submit {
     <div class="csp-post-grid-layout">
       <!-- MAIN ARTICLE COLUMN -->
       <article>
-        <a href="/category/culture-heritage/" id="post-category-badge" class="csp-post-badge">🏛️ Culture & Heritage</a>
-        
         <h1 class="csp-post-title" id="post-title">Empowering Diaspora Communities Through Innovation & Heritage</h1>
 
         <div class="csp-post-meta">
@@ -3055,12 +3053,6 @@ form#fluentform_2 .ff-btn-submit {
           if (document.getElementById('post-date')) document.getElementById('post-date').textContent = p.published_at || p.created_at || 'Recent';
           if (document.getElementById('post-reading-time')) document.getElementById('post-reading-time').textContent = p.reading_time || '5 min read';
           if (document.getElementById('post-views')) document.getElementById('post-views').textContent = (p.views || 0) + ' views';
-
-          var badge = document.getElementById('post-category-badge');
-          if (badge && p.category_name) {
-            badge.textContent = (p.category_icon || '🏷️') + ' ' + p.category_name;
-            if (p.category_slug) badge.href = (window.getRootUrl ? window.getRootUrl('category/' + p.category_slug + '/') : '/category/' + p.category_slug + '/');
-          }
 
           var heroImg = document.getElementById('post-hero-image');
           if (heroImg && p.featured_image) {
