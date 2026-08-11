@@ -1705,34 +1705,94 @@ form#fluentform_2 .ff-btn-submit {
   transition: width 0.1s linear;
 }
 
+/* ── STORIES PAGE RESPONSIVE CLEANUP ── */
+.csp-stories-container-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.csp-stories-hero-spotlight {
+  position: relative;
+  background: linear-gradient(135deg, #061022 0%, #0f172a 100%);
+  border-radius: 28px;
+  padding: 44px;
+  margin-bottom: 40px;
+  border: 1px solid rgba(0, 174, 254, 0.35);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  box-sizing: border-box;
+}
+.csp-stories-hero-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 36px;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+.csp-stories-post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* ── FULL MOBILE RESPONSIVENESS & ZERO OVERFLOW FIXES ─────────────────── */
 @media (max-width: 992px) {
+  .csp-stories-container-inner {
+    padding: 0 16px !important;
+  }
   .csp-stories-hero-spotlight {
-    padding: 24px !important;
+    padding: 24px 20px !important;
     border-radius: 20px !important;
     margin-bottom: 24px !important;
   }
-  .csp-stories-hero-spotlight > div {
+  .csp-stories-hero-grid {
     grid-template-columns: 1fr !important;
-    gap: 24px !important;
+    gap: 20px !important;
   }
-  .csp-stories-hero-spotlight img {
-    height: 220px !important;
+  .csp-stories-hero-grid img {
+    height: 200px !important;
   }
   .csp-cat-layout-flex {
     flex-direction: column !important;
-    padding: 0 16px !important;
+    padding: 0 !important;
     gap: 24px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .csp-cat-main-col {
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .csp-magazine-sidebar {
     width: 100% !important;
     position: static !important;
+    box-sizing: border-box !important;
+  }
+  .csp-sidebar-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
 
 @media (max-width: 768px) {
   html, body {
     overflow-x: hidden !important;
+  }
+  .csp-stories-post-grid, .eael-post-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .eael-grid-post, .csp-sidebar-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .csp-cat-nav-wrap {
     padding: 10px 14px !important;
@@ -1752,12 +1812,6 @@ form#fluentform_2 .ff-btn-submit {
     padding: 8px 16px !important;
     font-size: 0.78rem !important;
     white-space: nowrap !important;
-  }
-  .eael-post-grid, .csp-about-stats-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .csp-post-grid-layout {
-    grid-template-columns: 1fr !important;
   }
   .csp-publisher-card {
     padding: 24px !important;
@@ -2947,38 +3001,38 @@ form#fluentform_2 .ff-btn-submit {
 					</div>
 				</div>
 		<div class="elementor-element elementor-element-3c78a4ac e-con-full e-flex e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="3c78a4ac" data-element_type="container" data-e-type="container" id="latest-stories" style="padding: 20px 0 60px;">
-		  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px;">
+		  <div class="csp-stories-container-inner">
 
         <!-- 1. MAGAZINE FEATURED SPOTLIGHT HERO BANNER -->
-        <section class="csp-stories-hero-spotlight" style="position:relative;background:linear-gradient(135deg,#061022 0%,#0f172a 100%);border-radius:28px;padding:48px;margin-bottom:40px;border:1px solid rgba(0,174,254,0.35);overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.5);">
+        <section class="csp-stories-hero-spotlight">
           <div style="position:absolute;top:-60px;right:-60px;width:350px;height:350px;background:radial-gradient(circle,rgba(0,174,254,0.25) 0%,rgba(0,0,0,0) 70%);border-radius:50%;pointer-events:none;"></div>
-          <div style="position:relative;z-index:2;display:grid;grid-template-columns:1.2fr 0.8fr;gap:40px;align-items:center;">
+          <div class="csp-stories-hero-grid">
             <div>
               <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:50px;background:rgba(0,174,254,0.15);border:1px solid rgba(0,174,254,0.4);color:#00AEFE;font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:18px;">
                 🔥 FEATURED SPOTLIGHT STORY
               </div>
-              <h1 style="font-family:'Merriweather',serif;font-size:clamp(1.8rem,3.2vw,2.5rem);color:#ffffff;line-height:1.25;margin:0 0 16px;">
+              <h1 style="font-family:'Merriweather',serif;font-size:clamp(1.5rem,3.2vw,2.5rem);color:#ffffff;line-height:1.25;margin:0 0 16px;">
                 Empowering Diaspora Communities Through Innovation &amp; Heritage
               </h1>
-              <p style="font-size:0.98rem;color:rgba(255,255,255,0.8);line-height:1.65;margin:0 0 24px;">
+              <p style="font-size:0.95rem;color:rgba(255,255,255,0.8);line-height:1.6;margin:0 0 24px;">
                 Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.
               </p>
-              <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
-                <a href="../post/empowering-diaspora-communities-through-innovation-heritage/" style="display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:50px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-family:'Merriweather',serif;font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 8px 24px rgba(0,174,254,0.4);">
+              <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                <a href="../post/empowering-diaspora-communities-through-innovation-heritage/" style="display:inline-flex;align-items:center;gap:10px;padding:12px 28px;border-radius:50px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-family:'Merriweather',serif;font-weight:600;font-size:0.88rem;text-decoration:none;box-shadow:0 8px 24px rgba(0,174,254,0.4);">
                   Read Full Feature &rarr;
                 </a>
-                <span style="color:rgba(255,255,255,0.7);font-size:0.85rem;font-weight:500;">⏱️ 6 min read · By Steving Felix</span>
+                <span style="color:rgba(255,255,255,0.7);font-size:0.82rem;font-weight:500;">⏱️ 6 min read · By Steving Felix</span>
               </div>
             </div>
             <div style="position:relative;border-radius:20px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);">
-              <img src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Featured Story" style="width:100%;height:320px;object-fit:cover;display:block;" />
+              <img src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Featured Story" style="width:100%;height:100%;max-height:300px;object-fit:cover;display:block;" />
             </div>
           </div>
         </section>
 
         <!-- 2. GLASSMORPHIC CATEGORY FILTER BAR -->
-        <div class="csp-cat-nav-wrap" style="position:sticky;top:85px;z-index:99;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:14px 24px;border-radius:50px;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:40px;">
-          <div class="csp-cat-nav-inner" id="csp-stories-filter-pills" style="display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;align-items:center;">
+        <div class="csp-cat-nav-wrap">
+          <div class="csp-cat-nav-inner" id="csp-stories-filter-pills">
             <button type="button" class="csp-cat-pill active" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('all', this);" style="padding:10px 22px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">📚 All Stories</button>
             <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('culture-heritage', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">🏛️ Culture &amp; Heritage</button>
             <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('innovation', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">💡 Innovation &amp; Tech</button>
@@ -2993,7 +3047,7 @@ form#fluentform_2 .ff-btn-submit {
           <!-- Left Main Article Grid Column -->
           <div class="csp-cat-main-col">
             <div id="eael-post-grid-0b52a18" class="eael-post-grid-container">
-              <div class="eael-post-grid eael-post-appender eael-post-appender-0b52a18 eael-post-grid-style-two" data-layout-mode="grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;">
+              <div class="eael-post-grid eael-post-appender eael-post-appender-0b52a18 eael-post-grid-style-two csp-stories-post-grid" data-layout-mode="grid">
                 <!-- Article 1 -->
                 <article class="eael-grid-post eael-post-grid-column category-culture-heritage" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s ease;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
                   <div class="eael-grid-post-holder">
