@@ -141,139 +141,68 @@ html, body {
 /* Hide the sticky spacer clone that creates a blank gap at top of page */
 .elementor-sticky__spacer { display: none !important; }
 
-/* ── HEADER NORMAL STATE: 100% TRANSPARENT (NO BACKGROUND COLOR, NO BLUR) ─────── */
-.elementor-location-header:not(.is-sticky),
-.she-header:not(.is-sticky),
-.elementor-location-header .elementor-element-2d9e131:not(.is-sticky),
-.elementor-location-header .elementor-container:not(.is-sticky) {
-  background: transparent !important;
-  background-color: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-.elementor-location-header:not(.is-sticky),
-.elementor-location-header .she-header-yes:not(.is-sticky),
-.elementor-location-header .elementor-element-2d9e131:not(.is-sticky) {
-  position: relative !important;
-  top: auto !important;
+/* ── UNIVERSAL STICKY HEADER FOR ALL PAGES (DESKTOP & MOBILE) ─── */
+.elementor-location-header,
+.she-header-yes,
+.elementor-element-2d9e131,
+.she-header {
+  position: sticky !important;
+  top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   width: 100% !important;
   max-width: 100% !important;
-  z-index: 99999 !important;
+  z-index: 999999 !important;
   margin: 0 !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  transition: transform 0.3s ease, background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease !important;
+  box-sizing: border-box !important;
+  transition: background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease !important;
 }
 
-/* ── HEADER CTA BUTTON ("Submit Story"): BEAUTIFUL GRADIENT BUTTON ─────────── */
-.elementor-element-36265fd .elementor-button,
-a.elementor-button[href*="submit-story"],
-.elementor-location-header a.elementor-button {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-  background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
-  color: #ffffff !important;
-  font-family: 'Merriweather', Georgia, serif !important;
-  font-weight: 600 !important;
-  font-size: 14px !important;
-  line-height: 1.2 !important;
-  padding: 12px 26px !important;
-  border-radius: 50px !important;
-  border: none !important;
-  box-shadow: 0 4px 18px rgba(0, 174, 254, 0.35) !important;
-  text-decoration: none !important;
-  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease !important;
+/* ── INNER PAGES (body:not(.home)): Sticky Header Background & Text Colors ─── */
+body:not(.home) .elementor-location-header,
+body:not(.home) .she-header-yes,
+body:not(.home) .elementor-element-2d9e131 {
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
 }
 
-.elementor-element-36265fd .elementor-button:hover,
-a.elementor-button[href*="submit-story"]:hover,
-.elementor-location-header a.elementor-button:hover {
-  background: linear-gradient(110deg, #B71F71 0%, #00AEFE 100%) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(0, 174, 254, 0.5) !important;
-  filter: brightness(1.08) !important;
-  color: #ffffff !important;
+/* Inner pages scrolled sticky state */
+body:not(.home) .elementor-location-header.is-sticky,
+body:not(.home) .she-header-yes.is-sticky,
+body:not(.home) .elementor-element-2d9e131.is-sticky {
+  background: rgba(6, 16, 34, 0.92) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
 }
 
-.elementor-element-36265fd .elementor-button *,
-a.elementor-button[href*="submit-story"] *,
-.elementor-location-header a.elementor-button * {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-}
-
-/* ── ABOUT CONSPODIUM BUTTON LEFT ALIGNMENT (DESKTOP) & CENTER (MOBILE) ── */
-@media (min-width: 768px) {
-  .elementor-element-170b1e1a,
-  .elementor-element-170b1e1a .elementor-widget-container,
-  .elementor-element-170b1e1a .ekit-wid-con,
-  .elementor-element-170b1e1a .ekit-btn-wraper {
-    text-align: left !important;
-    display: flex !important;
-    justify-content: flex-start !important;
-    align-items: flex-start !important;
-    margin-left: 0 !important;
-  }
-  .elementor-element-170b1e1a .elementskit-btn {
-    margin-left: 0 !important;
-    margin-right: auto !important;
-    justify-content: flex-start !important;
-  }
-}
-@media (max-width: 767px) {
-  .elementor-element-170b1e1a,
-  .elementor-element-170b1e1a .elementor-widget-container,
-  .elementor-element-170b1e1a .ekit-wid-con,
-  .elementor-element-170b1e1a .ekit-btn-wraper {
-    text-align: center !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    width: 100% !important;
-  }
-  .elementor-element-170b1e1a .elementskit-btn {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    justify-content: center !important;
-  }
-}
-
-
-/* On Homepage only, header overlays top hero banner */
+/* ── HOMEPAGE ONLY (body.home): Transparent on top, Dark Glass on scroll ─── */
 body.home .elementor-location-header:not(.is-sticky),
-body.home .elementor-location-header .she-header-yes:not(.is-sticky) {
+body.home .she-header-yes:not(.is-sticky),
+body.home .elementor-element-2d9e131:not(.is-sticky) {
   position: absolute !important;
   top: 0 !important;
   background: transparent !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
 }
 
-/* ── HEADER STICKY STATE: BLURRED GLASSMORPHIC COLOR BACKGROUND ON SCROLL ─── */
-.elementor-location-header.is-sticky,
-.elementor-location-header .she-header-yes.is-sticky,
-.elementor-location-header .elementor-element-2d9e131.is-sticky {
+body.home .elementor-location-header.is-sticky,
+body.home .she-header-yes.is-sticky,
+body.home .elementor-element-2d9e131.is-sticky {
   position: fixed !important;
   top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  z-index: 99999 !important;
-  background: rgba(6, 16, 34, 0.82) !important;
+  background: rgba(6, 16, 34, 0.92) !important;
   backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
 }
 
@@ -2207,12 +2136,38 @@ form#fluentform_2 .ff-btn-submit {
     });
   }
 
+  // 4.5 Dynamic Sticky Header Scroll Toggler
+  function initStickyHeader() {
+    var headers = document.querySelectorAll('.elementor-location-header, .she-header, .elementor-element-2d9e131');
+    if (!headers.length) return;
+
+    function handleHeaderScroll() {
+      var isScrolled = window.scrollY > 15;
+      headers.forEach(function(h) {
+        if (isScrolled) {
+          h.classList.add('is-sticky');
+        } else {
+          h.classList.remove('is-sticky');
+        }
+      });
+      if (isScrolled) {
+        document.body.classList.add('header-is-sticky');
+      } else {
+        document.body.classList.remove('header-is-sticky');
+      }
+    }
+
+    window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+    handleHeaderScroll();
+  }
+
   // 5. Initialise All Features
   function startEnhancements() {
     initScrollProgress();
     initAudioPlayer();
     initLiveSearchModal();
     initBackToTop();
+    initStickyHeader();
   }
 
   if (document.readyState === 'loading') {
