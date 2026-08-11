@@ -726,7 +726,18 @@ section#csp-countdown h2.csp-cd-title {
   }
 }
 
-/* ── UNIFIED SECTION PREHEADLINE & MAIN HEADLINE TYPOGRAPHY ───────────── */
+/* ── UNIFIED SECTION PREHEADLINE & MAIN HEADLINE TYPOGRAPHY & GAP TIGHTENING ── */
+.sticky-heading-prefixstyle,
+.elementor-element.sticky-heading-prefixstyle,
+.elementor-widget-heading.sticky-heading-prefixstyle {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+.elementor-widget-heading.sticky-heading-prefixstyle .elementor-widget-container,
+.sticky-heading-prefixstyle .elementor-widget-container {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
 .sticky-heading-prefixstyle .elementor-heading-title,
 .csp-section-label,
 .elementor-widget-heading.sticky-heading-prefixstyle .elementor-heading-title,
@@ -737,8 +748,18 @@ p.csp-preheadline {
   letter-spacing: 0.15em !important;
   text-transform: uppercase !important;
   color: #00AEFE !important;
-  margin-bottom: 8px !important;
+  margin-top: 0 !important;
+  margin-bottom: 2px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   line-height: 1.3 !important;
+}
+
+.eael-dual-header,
+.elementor-widget-eael-dual-color-header,
+.elementor-widget-eael-dual-color-header .elementor-widget-container {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 .eael-dual-header .title.eael-dch-title,
@@ -748,6 +769,8 @@ p.csp-preheadline {
   font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
   line-height: 1.25 !important;
   font-weight: 400 !important;
+  margin-top: 2px !important;
+  padding-top: 0 !important;
 }
 
 /* ── MOBILE ALIGNMENT FIX: CENTER ALL SECTION PREHEADLINES & HEADLINES ── */
