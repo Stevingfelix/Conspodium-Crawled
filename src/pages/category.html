@@ -1650,6 +1650,16 @@ e-page-transition,
             tabsHtml += '<a href="' + catUrl + '" class="csp-cat-tab' + (isActive ? ' active' : '') + '">' + (c.icon || '🏷️') + ' ' + c.name + '</a>';
           });
           tabsContainer.innerHTML = tabsHtml;
+
+          setTimeout(function() {
+            var activeTab = tabsContainer.querySelector('.active');
+            if (activeTab && tabsContainer) {
+              tabsContainer.scrollTo({
+                left: activeTab.offsetLeft - (tabsContainer.offsetWidth / 2) + (activeTab.offsetWidth / 2),
+                behavior: 'smooth'
+              });
+            }
+          }, 150);
         }
 
         // Match current category info

@@ -2497,6 +2497,13 @@ form#fluentform_2 .ff-btn-submit {
       <a href="/stories/" class="csp-back-btn" id="post-back-link">&larr; Back To Stories</a>
     </div>
 
+    <!-- GLASSMORPHIC CATEGORY FILTER BAR WITH AUTO-SCROLL -->
+    <div class="csp-cat-nav-wrap" style="position:sticky;top:85px;z-index:99;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:14px 24px;border-radius:50px;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:28px;">
+      <div class="csp-cat-nav-inner" id="csp-cat-tabs-container" style="display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;align-items:center;">
+        <a href="/stories/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">📚 All Stories</a>
+      </div>
+    </div>
+
     <div class="csp-post-grid-layout">
       <!-- MAIN ARTICLE COLUMN -->
       <article>
@@ -2615,7 +2622,7 @@ form#fluentform_2 .ff-btn-submit {
 		<div class="elementor-element elementor-element-920f34a e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="920f34a" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 				<div class="elementor-element elementor-element-68518ef elementor-widget elementor-widget-image" data-id="68518ef" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
-															<img width="1024" height="315" src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990" alt="" decoding="async" srcset="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png 1024w, ./wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-300x92.png 300w, ./wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-768x236.png 768w" sizes="(max-width: 1024px) 100vw, 1024px">															</div>
+															<img width="1024" height="315" src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990" alt="Conspodium Logo" decoding="async" srcset="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png 1024w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-300x92.png 300w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-768x236.png 768w" sizes="(max-width: 1024px) 100vw, 1024px">															</div>
 				</div>
 				<div class="elementor-element elementor-element-5dd035e sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="5dd035e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
@@ -2945,6 +2952,37 @@ form#fluentform_2 .ff-btn-submit {
           if (contentBody && p.content) {
             contentBody.innerHTML = p.content;
           }
+
+          // Populate Category Pills & Auto-Scroll to Active Category
+          var catApiUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=categories') : '/api/posts.php?resource=categories';
+          fetch(catApiUrl)
+            .then(function(r){ return r.json(); })
+            .then(function(cRes){
+              if (!cRes.success || !cRes.categories) return;
+              var tabsContainer = document.getElementById('csp-cat-tabs-container');
+              if (tabsContainer) {
+                var tabsHtml = '<a href="' + (window.getRootUrl ? window.getRootUrl('stories/') : '/stories/') + '" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">📚 All Stories</a>';
+                cRes.categories.forEach(function(cat){
+                  var isActive = (cat.slug === p.category_slug || (p.category_name && cat.name.toLowerCase() === p.category_name.toLowerCase()));
+                  var catUrl = window.getRootUrl ? window.getRootUrl('category/' + cat.slug + '/') : '/category/' + cat.slug + '/';
+                  var styleAttr = isActive 
+                    ? 'padding:10px 22px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;'
+                    : 'padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;';
+                  tabsHtml += '<a href="' + catUrl + '" class="csp-cat-tab' + (isActive ? ' active' : '') + '" style="' + styleAttr + '">' + (cat.icon || '🏷️') + ' ' + cat.name + '</a>';
+                });
+                tabsContainer.innerHTML = tabsHtml;
+
+                setTimeout(function() {
+                  var activeTab = tabsContainer.querySelector('.active');
+                  if (activeTab && tabsContainer) {
+                    tabsContainer.scrollTo({
+                      left: activeTab.offsetLeft - (tabsContainer.offsetWidth / 2) + (activeTab.offsetWidth / 2),
+                      behavior: 'smooth'
+                    });
+                  }
+                }, 150);
+              }
+            }).catch(function(){});
         }
       })
       .catch(function(){});
