@@ -2597,9 +2597,10 @@ e-page-transition,
 .csp-trending-tags{display:flex;gap:14px;animation:csp-slide 25s linear infinite;width:max-content;}
 .csp-trending-tags:hover{animation-play-state:paused;}
 @keyframes csp-slide{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.csp-tag{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#334155;font-size:0.88rem;white-space:nowrap;cursor:pointer;transition:all 0.2s;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.03);}
-.csp-tag:hover{background:linear-gradient(135deg,rgba(0,174,254,0.1),rgba(183,31,113,0.1));border-color:rgba(0,174,254,0.5);color:#0f172a;transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,174,254,0.15);}
-.csp-tag-num{font-size:0.7rem;color:#64748b;font-weight:500;}
+.csp-tag{display:inline-flex !important;align-items:center !important;gap:10px !important;padding:8px 20px !important;height:44px !important;max-width:340px !important;border-radius:50px !important;border:1px solid #cbd5e1 !important;background:#ffffff !important;color:#334155 !important;font-size:0.85rem !important;font-weight:500 !important;white-space:nowrap !important;cursor:pointer !important;transition:all 0.2s !important;text-decoration:none !important;box-shadow:0 4px 12px rgba(0,0,0,0.03) !important;box-sizing:border-box !important;flex-shrink:0 !important;}
+.csp-tag:hover{background:linear-gradient(135deg,rgba(0,174,254,0.1),rgba(183,31,113,0.1)) !important;border-color:rgba(0,174,254,0.5) !important;color:#0f172a !important;transform:translateY(-2px) !important;box-shadow:0 6px 18px rgba(0,174,254,0.15) !important;}
+.csp-tag .csp-tag-text{overflow:hidden !important;text-overflow:ellipsis !important;white-space:nowrap !important;max-width:180px !important;display:inline-block !important;vertical-align:middle !important;font-size:0.85rem !important;line-height:1.2 !important;}
+.csp-tag-num{font-size:0.72rem !important;color:#64748b !important;font-weight:600 !important;background:rgba(0,174,254,0.08) !important;padding:3px 8px !important;border-radius:20px !important;flex-shrink:0 !important;}
 </style>
 <div class="csp-trending-inner">
   <div class="csp-trending-header">
@@ -2611,22 +2612,22 @@ e-page-transition,
   </div>
   <div class="csp-trending-tags-wrap">
     <div class="csp-trending-tags" id="csp-trending-tags-container">
-      <a href="./post/empowering-diaspora-communities-through-innovation-heritage/" class="csp-tag"><span>🌍</span> Empowering Diaspora Communities <span class="csp-tag-num">1,204 reads</span></a>
-      <a href="./post/africans-in-diaspora-influencing-global-economic-decisions/" class="csp-tag"><span>💼</span> Global Economic Influence <span class="csp-tag-num">987 reads</span></a>
-      <a href="./post/creatives-shaping-representing-global-african-culture/" class="csp-tag"><span>🎨</span> Global African Culture <span class="csp-tag-num">1,891 reads</span></a>
-      <a href="./post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/" class="csp-tag"><span>💡</span> Tech Entrepreneurs <span class="csp-tag-num">1,420 reads</span></a>
-      <a href="./post/we-are-the-world/" class="csp-tag"><span>🌐</span> We Are The World <span class="csp-tag-num">2,100 reads</span></a>
-      <a href="./post/conspodium-is-all-about-community/" class="csp-tag"><span>🤝</span> Community Building <span class="csp-tag-num">834 reads</span></a>
-      <a href="./category/culture-heritage/" class="csp-tag"><span>🏛️</span> Culture &amp; Heritage <span class="csp-tag-num">Category</span></a>
-      <a href="./category/innovation/" class="csp-tag"><span>⚡</span> Innovation <span class="csp-tag-num">Category</span></a>
-      <a href="./post/empowering-diaspora-communities-through-innovation-heritage/" class="csp-tag"><span>🌍</span> Empowering Diaspora Communities <span class="csp-tag-num">1,204 reads</span></a>
-      <a href="./post/africans-in-diaspora-influencing-global-economic-decisions/" class="csp-tag"><span>💼</span> Global Economic Influence <span class="csp-tag-num">987 reads</span></a>
-      <a href="./post/creatives-shaping-representing-global-african-culture/" class="csp-tag"><span>🎨</span> Global African Culture <span class="csp-tag-num">1,891 reads</span></a>
-      <a href="./post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/" class="csp-tag"><span>💡</span> Tech Entrepreneurs <span class="csp-tag-num">1,420 reads</span></a>
-      <a href="./post/we-are-the-world/" class="csp-tag"><span>🌐</span> We Are The World <span class="csp-tag-num">2,100 reads</span></a>
-      <a href="./post/conspodium-is-all-about-community/" class="csp-tag"><span>🤝</span> Community Building <span class="csp-tag-num">834 reads</span></a>
-      <a href="./category/culture-heritage/" class="csp-tag"><span>🏛️</span> Culture &amp; Heritage <span class="csp-tag-num">Category</span></a>
-      <a href="./category/innovation/" class="csp-tag"><span>⚡</span> Innovation <span class="csp-tag-num">Category</span></a>
+      <a href="./post/empowering-diaspora-communities-through-innovation-heritage/" class="csp-tag"><span>🌍</span> <span class="csp-tag-text">Empowering Diaspora</span> <span class="csp-tag-num">1,204 reads</span></a>
+      <a href="./post/africans-in-diaspora-influencing-global-economic-decisions/" class="csp-tag"><span>💼</span> <span class="csp-tag-text">Global Economic Influence</span> <span class="csp-tag-num">987 reads</span></a>
+      <a href="./post/creatives-shaping-representing-global-african-culture/" class="csp-tag"><span>🎨</span> <span class="csp-tag-text">Global African Culture</span> <span class="csp-tag-num">1,891 reads</span></a>
+      <a href="./post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/" class="csp-tag"><span>💡</span> <span class="csp-tag-text">Tech Entrepreneurs</span> <span class="csp-tag-num">1,420 reads</span></a>
+      <a href="./post/we-are-the-world/" class="csp-tag"><span>🌐</span> <span class="csp-tag-text">We Are The World</span> <span class="csp-tag-num">2,100 reads</span></a>
+      <a href="./post/conspodium-is-all-about-community/" class="csp-tag"><span>🤝</span> <span class="csp-tag-text">Community Building</span> <span class="csp-tag-num">834 reads</span></a>
+      <a href="./category/culture-heritage/" class="csp-tag"><span>🏛️</span> <span class="csp-tag-text">Culture &amp; Heritage</span> <span class="csp-tag-num">Category</span></a>
+      <a href="./category/innovation/" class="csp-tag"><span>⚡</span> <span class="csp-tag-text">Innovation</span> <span class="csp-tag-num">Category</span></a>
+      <a href="./post/empowering-diaspora-communities-through-innovation-heritage/" class="csp-tag"><span>🌍</span> <span class="csp-tag-text">Empowering Diaspora</span> <span class="csp-tag-num">1,204 reads</span></a>
+      <a href="./post/africans-in-diaspora-influencing-global-economic-decisions/" class="csp-tag"><span>💼</span> <span class="csp-tag-text">Global Economic Influence</span> <span class="csp-tag-num">987 reads</span></a>
+      <a href="./post/creatives-shaping-representing-global-african-culture/" class="csp-tag"><span>🎨</span> <span class="csp-tag-text">Global African Culture</span> <span class="csp-tag-num">1,891 reads</span></a>
+      <a href="./post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/" class="csp-tag"><span>💡</span> <span class="csp-tag-text">Tech Entrepreneurs</span> <span class="csp-tag-num">1,420 reads</span></a>
+      <a href="./post/we-are-the-world/" class="csp-tag"><span>🌐</span> <span class="csp-tag-text">We Are The World</span> <span class="csp-tag-num">2,100 reads</span></a>
+      <a href="./post/conspodium-is-all-about-community/" class="csp-tag"><span>🤝</span> <span class="csp-tag-text">Community Building</span> <span class="csp-tag-num">834 reads</span></a>
+      <a href="./category/culture-heritage/" class="csp-tag"><span>🏛️</span> <span class="csp-tag-text">Culture &amp; Heritage</span> <span class="csp-tag-num">Category</span></a>
+      <a href="./category/innovation/" class="csp-tag"><span>⚡</span> <span class="csp-tag-text">Innovation</span> <span class="csp-tag-num">Category</span></a>
     </div>
   </div>
 </div>
@@ -2646,12 +2647,17 @@ e-page-transition,
         res.posts.forEach(function(post, idx){
           var link = window.getRootUrl ? window.getRootUrl('post/' + post.slug + '/') : './post/' + post.slug + '/';
           var emoji = emojis[idx % emojis.length];
+          var rawTitle = (post.title || '').trim();
+          var displayTitle = rawTitle.length > 32 ? rawTitle.substring(0, 30) + '...' : rawTitle;
           var reads = (post.views || (idx + 1) * 340) + ' reads';
-          tagsHtml += '<a href="' + link + '" class="csp-tag"><span>' + emoji + '</span> ' + post.title + ' <span class="csp-tag-num">' + reads + '</span></a>';
+          tagsHtml += '<a href="' + link + '" class="csp-tag"><span>' + emoji + '</span> <span class="csp-tag-text">' + displayTitle + '</span> <span class="csp-tag-num">' + reads + '</span></a>';
         });
 
-        // Duplicate for smooth continuous marquee infinite scroll
+        // Reset animation before innerHTML update for continuous scroll
+        container.style.animation = 'none';
         container.innerHTML = tagsHtml + tagsHtml;
+        void container.offsetWidth;
+        container.style.animation = '';
       })
       .catch(function(err){ console.error('Trending fetch error:', err); });
   }
