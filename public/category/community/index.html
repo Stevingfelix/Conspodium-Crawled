@@ -503,17 +503,20 @@ html, body {
 body:not(.home) .elementor-location-header,
 body:not(.home) .she-header-yes,
 body:not(.home) .elementor-element-2d9e131 {
-  background: rgba(255, 255, 255, 0.94) !important;
-  backdrop-filter: blur(16px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-  border-bottom: 1px solid #e2e8f0 !important;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 /* Inner pages scrolled sticky state */
 body:not(.home) .elementor-location-header.is-sticky,
 body:not(.home) .she-header-yes.is-sticky,
 body:not(.home) .elementor-element-2d9e131.is-sticky {
+  position: fixed !important;
+  top: 0 !important;
   background: rgba(6, 16, 34, 0.92) !important;
   backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
@@ -821,8 +824,8 @@ p.csp-preheadline {
   .elementor-element-170b1e1a .elementor-widget-container,
   .elementor-element-170b1e1a .ekit-wid-con,
   .elementor-element-170b1e1a .ekit-btn-wraper {
-    display: flex !important;
-    justify-content: center !important;
+    display: block !important;
+    text-align: center !important;
     width: 100% !important;
   }
 }
@@ -843,10 +846,16 @@ p.csp-preheadline {
 
 /* ── PUSH INNER PAGE ELEMENTS DOWN BELOW RELATIVE HEADER ──────────────────── */
 body:not(.home) .csp-post-sec {
-  padding-top: 36px !important;
+  padding-top: 130px !important;
 }
 body:not(.home) .csp-cat-hero {
-  padding-top: 36px !important;
+  padding-top: 130px !important;
+}
+
+/* ── ENTIRE POST CARD CLICKABLE ── */
+.eael-grid-post,
+.csp-card-item {
+  cursor: pointer !important;
 }
 
 /* ── NAV TEXT: Normal State vs Sticky State ──────────────────────────────── */
@@ -1675,8 +1684,30 @@ form#fluentform_2 .ff-btn-submit {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
   }
+  .csp-stories-hero-grid > div {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  .csp-stories-hero-grid > div > div:first-child {
+    display: inline-flex !important;
+    max-width: max-content !important;
+    height: auto !important;
+    white-space: nowrap !important;
+    font-size: 0.65rem !important;
+    border-radius: 50px !important;
+  }
+  .csp-stories-hero-spotlight h1 {
+    font-size: 1.5rem !important;
+    word-wrap: break-word !important;
+  }
   .csp-stories-hero-grid img {
     height: 200px !important;
+  }
+  
+  /* ── Fix Home Page Blob Bleeding into Counter on Mobile ── */
+  #uc_blob_shapes_elementor_8997264_justification,
+  .elementor-element-8997264 {
+    margin-bottom: 60px !important;
   }
   .csp-cat-layout-flex {
     flex-direction: column !important;
@@ -2521,6 +2552,17 @@ form#fluentform_2 .ff-btn-submit {
     initBackToTop();
     initStickyHeader();
   }
+
+  // 6. Global Post Card Click Handler
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('.eael-grid-post, .csp-card-item');
+    if (card && !e.target.closest('a') && !e.target.closest('button')) {
+      var link = card.querySelector('a');
+      if (link && link.href) {
+        window.location.href = link.href;
+      }
+    }
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', startEnhancements);

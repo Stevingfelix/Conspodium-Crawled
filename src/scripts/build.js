@@ -236,8 +236,9 @@ for (const page of PAGES) {
   // Pre-render post content into static HTML if page is a post
   if (page.id === 'post') {
     const parts = page.out.split('/').filter(p => p !== 'index.html' && p !== 'post' && p !== '');
-    const slug = parts.length ? parts[parts.length - 1] : 'we-are-the-world';
-    const pData = POST_DATA[slug] || POST_DATA['we-are-the-world'];
+    const isFallback = parts.length === 0;
+    const slug = isFallback ? null : parts[parts.length - 1];
+    const pData = isFallback ? null : (POST_DATA[slug] || null);
 
     if (pData) {
       html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${pData.title} — Conspodium</title>`);

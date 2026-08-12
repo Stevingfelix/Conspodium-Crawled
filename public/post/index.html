@@ -162,17 +162,20 @@ html, body {
 body:not(.home) .elementor-location-header,
 body:not(.home) .she-header-yes,
 body:not(.home) .elementor-element-2d9e131 {
-  background: rgba(255, 255, 255, 0.94) !important;
-  backdrop-filter: blur(16px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-  border-bottom: 1px solid #e2e8f0 !important;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 /* Inner pages scrolled sticky state */
 body:not(.home) .elementor-location-header.is-sticky,
 body:not(.home) .she-header-yes.is-sticky,
 body:not(.home) .elementor-element-2d9e131.is-sticky {
+  position: fixed !important;
+  top: 0 !important;
   background: rgba(6, 16, 34, 0.92) !important;
   backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
@@ -480,8 +483,8 @@ p.csp-preheadline {
   .elementor-element-170b1e1a .elementor-widget-container,
   .elementor-element-170b1e1a .ekit-wid-con,
   .elementor-element-170b1e1a .ekit-btn-wraper {
-    display: flex !important;
-    justify-content: center !important;
+    display: block !important;
+    text-align: center !important;
     width: 100% !important;
   }
 }
@@ -502,10 +505,16 @@ p.csp-preheadline {
 
 /* ── PUSH INNER PAGE ELEMENTS DOWN BELOW RELATIVE HEADER ──────────────────── */
 body:not(.home) .csp-post-sec {
-  padding-top: 36px !important;
+  padding-top: 130px !important;
 }
 body:not(.home) .csp-cat-hero {
-  padding-top: 36px !important;
+  padding-top: 130px !important;
+}
+
+/* ── ENTIRE POST CARD CLICKABLE ── */
+.eael-grid-post,
+.csp-card-item {
+  cursor: pointer !important;
 }
 
 /* ── NAV TEXT: Normal State vs Sticky State ──────────────────────────────── */
@@ -1334,8 +1343,30 @@ form#fluentform_2 .ff-btn-submit {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
   }
+  .csp-stories-hero-grid > div {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  .csp-stories-hero-grid > div > div:first-child {
+    display: inline-flex !important;
+    max-width: max-content !important;
+    height: auto !important;
+    white-space: nowrap !important;
+    font-size: 0.65rem !important;
+    border-radius: 50px !important;
+  }
+  .csp-stories-hero-spotlight h1 {
+    font-size: 1.5rem !important;
+    word-wrap: break-word !important;
+  }
   .csp-stories-hero-grid img {
     height: 200px !important;
+  }
+  
+  /* ── Fix Home Page Blob Bleeding into Counter on Mobile ── */
+  #uc_blob_shapes_elementor_8997264_justification,
+  .elementor-element-8997264 {
+    margin-bottom: 60px !important;
   }
   .csp-cat-layout-flex {
     flex-direction: column !important;
@@ -2181,6 +2212,17 @@ form#fluentform_2 .ff-btn-submit {
     initStickyHeader();
   }
 
+  // 6. Global Post Card Click Handler
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('.eael-grid-post, .csp-card-item');
+    if (card && !e.target.closest('a') && !e.target.closest('button')) {
+      var link = card.querySelector('a');
+      if (link && link.href) {
+        window.location.href = link.href;
+      }
+    }
+  });
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', startEnhancements);
   } else {
@@ -2588,43 +2630,50 @@ form#fluentform_2 .ff-btn-submit {
     <div class="csp-cat-nav-wrap" style="position:sticky;top:85px;z-index:99;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:10px 16px;border-radius:50px;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:28px;width:100%;max-width:100%;box-sizing:border-box;">
       <div class="csp-cat-nav-inner" id="csp-cat-tabs-container" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;align-items:center;width:100%;-webkit-overflow-scrolling:touch;">
         <a href="/stories/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">📚 All Stories</a>
-        <a href="/category/culture-heritage/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🏛️ Culture & Heritage</a>
-        <a href="/category/innovation/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">💡 Innovation & Tech</a>
-        <a href="/category/art-entertainment/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🎨 Art & Entertainment</a>
-        <a href="/category/community/" class="csp-cat-tab active" style="padding:10px 22px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">👥 Community</a>
+        <a href="/category/culture-heritage/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🏛️ Culture &amp; Heritage</a>
+        <a href="/category/innovation/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">💡 Innovation &amp; Tech</a>
+        <a href="/category/art-entertainment/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🎨 Art &amp; Entertainment</a>
+        <a href="/category/community/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">👥 Community</a>
         <a href="/category/success-stories/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🌟 Success Stories</a>
-        </div>
+      </div>
     </div>
 
     <div class="csp-post-grid-layout">
       <!-- MAIN ARTICLE COLUMN -->
       <article>
-        <h1 class="csp-post-title" id="post-title">We Are The World</h1>
+        <h1 class="csp-post-title" id="post-title">Loading Article Title...</h1>
 
         <div class="csp-post-meta">
-          <span>✍️ <strong id="post-author" style="color:#0f172a;">Amara Okonkwo</strong></span>
-          <span>📅 <span id="post-date">February 4, 2026</span></span>
-          <span>⏱️ <span id="post-reading-time">8 min read</span></span>
-          <span>👁️ <span id="post-views">2100 views</span></span>
+          <span>✍️ <strong id="post-author" style="color:#0f172a;">Conspodium Editorial</strong></span>
+          <span>📅 <span id="post-date">Recent</span></span>
+          <span>⏱️ <span id="post-reading-time">5 min read</span></span>
+          <span>👁️ <span id="post-views">0 views</span></span>
         </div>
 
-        <img id="post-hero-image" src="/wp-content/uploads/2026/02/tourist-carrying-luggage-300x150.jpg" alt="We Are The World" class="csp-post-hero-img" style="display:block;">
+        <img id="post-hero-image" src="" alt="Featured Article Image" class="csp-post-hero-img" style="display:none;">
 
-        <div id="post-excerpt-box" class="csp-post-excerpt-box" style="display:block;">By Amara Okonkwo, Cultural Anthropologist. The first time I experienced global unity across diaspora cultures was during the pan-African cultural festival.</div>
+        <div id="post-excerpt-box" class="csp-post-excerpt-box" style="display:none;"></div>
 
         <div id="post-content-body" class="csp-post-body">
-      <p>By Amara Okonkwo, Cultural Anthropologist. The first time I experienced global unity across diaspora cultures was during the pan-African cultural festival. Across language barriers and geographical distance, shared heritage binds diverse diaspora communities together.</p>
-      <p>Exploring themes of identity, movement, and belonging, this landmark series documents the personal and collective journeys of global Africans across four continents.</p>
-    </div><!-- CSP_POST_BODY_END -->
+          <div id="post-skeleton-wrapper">
+            <div class="csp-skeleton" style="height:24px;width:90%;margin-bottom:16px;"></div>
+            <div class="csp-skeleton" style="height:20px;width:100%;margin-bottom:12px;"></div>
+            <div class="csp-skeleton" style="height:20px;width:95%;margin-bottom:12px;"></div>
+            <div class="csp-skeleton" style="height:20px;width:85%;margin-bottom:24px;"></div>
+            <div class="csp-skeleton" style="height:200px;width:100%;margin-bottom:24px;border-radius:16px;"></div>
+            <div class="csp-skeleton" style="height:20px;width:98%;margin-bottom:12px;"></div>
+          </div>
+        </div>
+        <!-- CSP_POST_BODY_END -->
 
         <!-- AUTHOR SPOTLIGHT CARD -->
         <div class="csp-author-spotlight-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:24px;margin:32px 0;display:flex;gap:20px;align-items:center;box-shadow:0 6px 20px rgba(0,0,0,0.03);">
           <div style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#00AEFE,#B71F71);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Merienda',cursive;font-size:1.5rem;font-weight:700;flex-shrink:0;">
-            <span id="post-author-avatar-initial">A</span>
+            <span id="post-author-avatar-initial">C</span>
           </div>
           <div>
             <div style="font-size:0.75rem;font-weight:700;color:#00AEFE;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Written By</div>
-            <h4 style="font-family:'Merriweather',serif;font-size:1.15rem;font-weight:700;color:#0f172a;margin:0 0 6px;" id="post-author-card-name">Amara Okonkwo</h4>
+            <h4 style="font-family:'Merriweather',serif;font-size:1.15rem;font-weight:700;color:#0f172a;margin:0 0 6px;" id="post-author-card-name">Conspodium Editorial</h4>
             <p style="font-size:0.88rem;color:#64748b;line-height:1.5;margin:0 0 10px;" id="post-author-card-bio">Contributor &amp; Researcher documenting African diaspora narratives, technology trends, and cultural heritage across global communities.</p>
             <div style="display:flex;gap:12px;font-size:0.82rem;font-weight:600;">
               <a href="/stories/" style="color:#00AEFE;text-decoration:none;">View All Articles &rarr;</a>
@@ -2638,10 +2687,10 @@ form#fluentform_2 .ff-btn-submit {
           <div class="csp-share-title">Loved This Story? Share &amp; Listen</div>
           <div class="csp-share-btns">
             <button id="post-audio-btn" class="csp-share-btn" style="background:linear-gradient(135deg,#00AEFE,#B71F71);cursor:pointer;border:none;" onclick="if(window.playArticleAudio){ var t=document.getElementById('post-title')?document.getElementById('post-title').textContent:'Story'; var c=document.getElementById('post-content-body')?document.getElementById('post-content-body').textContent:''; window.playArticleAudio(t, c); }"><i class="fas fa-headphones"></i> Listen (Audio)</button>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fconspodium.com%2Fpost%2F" class="csp-share-btn csp-share-fb" id="share-fb" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i> Facebook</a>
-            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fconspodium.com%2Fpost%2F&text=We%20Are%20The%20World" class="csp-share-btn csp-share-tw" id="share-tw" target="_blank" rel="noopener"><i class="fab fa-twitter"></i> Twitter</a>
-            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fconspodium.com%2Fpost%2F&title=We%20Are%20The%20World" class="csp-share-btn csp-share-li" id="share-li" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-            <a href="https://api.whatsapp.com/send?text=We%20Are%20The%20World%20https%3A%2F%2Fconspodium.com%2Fpost%2F" class="csp-share-btn csp-share-wa" id="share-wa" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="#" class="csp-share-btn csp-share-fb" id="share-fb" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="#" class="csp-share-btn csp-share-tw" id="share-tw" target="_blank" rel="noopener"><i class="fab fa-twitter"></i> Twitter</a>
+            <a href="#" class="csp-share-btn csp-share-li" id="share-li" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+            <a href="#" class="csp-share-btn csp-share-wa" id="share-wa" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             <button id="share-copy-btn" class="csp-share-btn" style="background:#475569;cursor:pointer;border:none;" onclick="navigator.clipboard.writeText(window.location.href); if(window.cspToast) window.cspToast('Article link copied to clipboard!', 'success');"><i class="fas fa-link"></i> Copy Link</button>
           </div>
         </div>
@@ -2674,30 +2723,7 @@ form#fluentform_2 .ff-btn-submit {
         <div class="csp-sidebar-box">
           <h3 class="csp-sidebar-title">Related Stories</h3>
           <div id="sidebar-related-posts">
-          <a href="/post/empowering-diaspora-communities-through-innovation-heritage/" class="csp-rel-item">
-            <img src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Empowering Diaspora Communities Through Innovation & Heritage" class="csp-rel-thumb" />
-            <div class="csp-rel-info">
-              <h4>Empowering Diaspora Communities Through Innovation & Heritage</h4>
-              <span class="csp-rel-meta">Culture & Heritage • 6 min read</span>
-            </div>
-          </a>
-        
-          <a href="/post/africans-in-diaspora-influencing-global-economic-decisions/" class="csp-rel-item">
-            <img src="/wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Africans in Diaspora Influencing Global Economic Decisions" class="csp-rel-thumb" />
-            <div class="csp-rel-info">
-              <h4>Africans in Diaspora Influencing Global Economic Decisions</h4>
-              <span class="csp-rel-meta">Innovation • 6 min read</span>
-            </div>
-          </a>
-        
-          <a href="/post/creatives-shaping-representing-global-african-culture/" class="csp-rel-item">
-            <img src="/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Creatives Are Shaping & Representing Global African Culture" class="csp-rel-thumb" />
-            <div class="csp-rel-info">
-              <h4>Creatives Are Shaping & Representing Global African Culture</h4>
-              <span class="csp-rel-meta">Art & Entertainment • 10 min read</span>
-            </div>
-          </a>
-        </div>
+            <div style="color:#94a3b8;font-size:0.85rem;">Loading related stories...</div>
           </div>
         </div>
       </aside>
