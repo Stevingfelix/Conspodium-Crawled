@@ -166,21 +166,14 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
         </style>
         <meta name="generator" content="Elementor 4.1.4; features: additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-swap">
 			<style>
-				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
-				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload) * {
-					background-image: none !important;
+				/* Fix Vercel CDN initial load issue: Prevent Elementor lazyload CSS from stripping background images */
+				.e-con.e-parent {
+					background-image: inherit !important;
 				}
-				@media screen and (max-height: 1024px) {
-					.e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload),
-					.e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload) * {
-						background-image: none !important;
-					}
-				}
-				@media screen and (max-height: 640px) {
-					.e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload),
-					.e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload) * {
-						background-image: none !important;
-					}
+				.e-con.e-parent:not(.e-lazyloaded),
+				.e-con.e-parent:not(.e-lazyloaded) * {
+					opacity: 1 !important;
+					visibility: visible !important;
 				}
 			</style>
 			<style class="wp-fonts-local">
@@ -2987,7 +2980,7 @@ e-page-transition,
     <div class="csp-watch-grid">
       <!-- Video 1 -->
       <div class="csp-vcard" onclick="openCspVideoModalByIdx(0)">
-        <video src="./videos/video-1.mp4" preload="metadata" muted loop playsinline class="csp-vcard-video" onloadedmetadata="this.currentTime=0.5;"></video>
+        <video src="./videos/video-1.mp4" preload="auto" muted loop playsinline class="csp-vcard-video" onloadedmetadata="this.currentTime=0.1;"></video>
         <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
         <div class="csp-vcard-play">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:3px;"><path d="M8 5v14l11-7z" fill="#ffffff"/></svg>
@@ -2997,7 +2990,7 @@ e-page-transition,
 
       <!-- Video 2 -->
       <div class="csp-vcard" onclick="openCspVideoModalByIdx(1)">
-        <video src="./videos/video-2.mp4" preload="metadata" muted loop playsinline class="csp-vcard-video" onloadedmetadata="this.currentTime=0.5;"></video>
+        <video src="./videos/video-2.mp4" preload="auto" muted loop playsinline class="csp-vcard-video" onloadedmetadata="this.currentTime=0.1;"></video>
         <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
         <div class="csp-vcard-play">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:3px;"><path d="M8 5v14l11-7z" fill="#ffffff"/></svg>
@@ -3007,7 +3000,7 @@ e-page-transition,
 
       <!-- Video 3 -->
       <div class="csp-vcard" onclick="openCspVideoModalByIdx(2)">
-        <video src="./videos/video-3.mp4" preload="metadata" muted loop playsinline class="csp-vcard-video" onloadedmetadata="this.currentTime=0.5;"></video>
+        <video src="./videos/video-3.mp4" preload="auto" muted loop playsinline class="csp-vcard-video" onloadedmetadata="this.currentTime=0.1;"></video>
         <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
         <div class="csp-vcard-play">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:3px;"><path d="M8 5v14l11-7z" fill="#ffffff"/></svg>
@@ -4403,6 +4396,32 @@ var thickboxL10n = {"next":"Next >","prev":"< Prev","image":"Image","of":"of","c
     });
     patchAllLogos();
   });
+})();
+
+/* Instant Hydration Script to fix Vercel CDN initial load image and video rendering */
+(function() {
+  function forceInstantMediaHydration() {
+    // 1. Instantly mark all Elementor containers as loaded
+    document.querySelectorAll('.e-con.e-parent').forEach(function(el) {
+      el.classList.add('e-lazyloaded');
+    });
+    // 2. Preload and force video preview background frames
+    document.querySelectorAll('.csp-vcard-video').forEach(function(vid) {
+      if (vid.readyState >= 1) {
+        vid.currentTime = 0.1;
+      } else {
+        vid.load();
+        vid.addEventListener('loadeddata', function() { vid.currentTime = 0.1; }, { once: true });
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', forceInstantMediaHydration);
+  } else {
+    forceInstantMediaHydration();
+  }
+  window.addEventListener('load', forceInstantMediaHydration);
 })();
 </script>
 </body></html>
