@@ -3851,14 +3851,13 @@ form#fluentform_2 .ff-btn-submit {
 })();</script>
 </section>
 <!-- CSP_SECTION_TRENDING_END -->
-
 <!-- CSP_SECTION_WATCH_START -->
-<section id="csp-watch" style="background:#09152b;padding:85px 0;border-top:1px solid rgba(0,174,254,0.2);border-bottom:1px solid rgba(0,174,254,0.2);">
+<section id="csp-watch" style="background:#09152b;padding:85px 0;border-top:1px solid rgba(0,174,254,0.2);border-bottom:1px solid rgba(0,174,254,0.2);position:relative;">
   <style>
     .csp-watch-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
     }
     @media (max-width: 900px) {
       .csp-watch-grid {
@@ -3870,7 +3869,341 @@ form#fluentform_2 .ff-btn-submit {
         grid-template-columns: 1fr !important;
       }
     }
+
+    /* Square Card Container System */
+    .csp-vcard {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 1/1 !important;
+      background: #040914;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+    .csp-vcard:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 174, 254, 0.65);
+      box-shadow: 0 20px 45px rgba(0, 174, 254, 0.3), 0 0 35px rgba(183, 31, 113, 0.2);
+    }
+    .csp-vcard-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+      pointer-events: none;
+    }
+    .csp-vcard:hover .csp-vcard-video {
+      transform: scale(1.08);
+      opacity: 0.9;
+    }
+
+    /* Dead-Centered Circular Play Button */
+    .csp-vcard-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00AEFE, #B71F71);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0, 174, 254, 0.5);
+      border: 2.5px solid rgba(255, 255, 255, 0.4);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+      z-index: 3;
+      outline: none !important;
+      border-style: solid !important;
+    }
+    .csp-vcard:hover .csp-vcard-play {
+      transform: translate(-50%, -50%) scale(1.15) !important;
+      box-shadow: 0 0 35px rgba(0, 174, 254, 0.85), 0 0 55px rgba(183, 31, 113, 0.6);
+      border-color: #ffffff;
+    }
+
+    /* Centered Glassmorphic Video Player Modal Popup */
+    #csp-video-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 99999999;
+      background: rgba(9, 21, 43, 0.68) !important;
+      -webkit-backdrop-filter: blur(18px) !important;
+      backdrop-filter: blur(18px) !important;
+      display: flex !important;
+      align-items: center !important; /* Dead centered vertically */
+      justify-content: center !important; /* Dead centered horizontally */
+      padding: 20px !important;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #csp-video-modal.active {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
+    /* 3D Flip & Slide Down Close Animation */
+    @keyframes mac3DFlipSlideDown {
+      0% {
+        transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
+        opacity: 1;
+        filter: blur(0px);
+      }
+      30% {
+        transform: perspective(1000px) rotateX(14deg) translateY(-15px) scale(0.97);
+        opacity: 0.95;
+        filter: blur(0px);
+      }
+      100% {
+        transform: perspective(1000px) rotateX(32deg) translateY(500px) scale(0.72);
+        opacity: 0;
+        filter: blur(12px);
+      }
+    }
+
+    #csp-video-modal.closing .csp-video-player-modal-container {
+      animation: mac3DFlipSlideDown 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+      transform-origin: center center !important;
+    }
+    #csp-video-modal.closing {
+      opacity: 0 !important;
+      transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    #csp-video-modal .csp-video-player-modal-container {
+      width: 90vw !important;
+      max-width: 1040px !important;
+      min-width: 280px !important;
+      box-sizing: border-box !important;
+      background: #061024 !important;
+      border: 1px solid rgba(0, 174, 254, 0.4) !important;
+      border-radius: 24px !important;
+      overflow: hidden !important;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65), 0 0 60px rgba(0, 174, 254, 0.25) !important;
+      transform: scale(0.92);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex !important;
+      flex-direction: column !important;
+      margin: auto !important;
+    }
+    #csp-video-modal.active .csp-video-player-modal-container {
+      transform: scale(1) !important;
+    }
+
+    /* Centered Header Top Bar with Prominent Large Title */
+    .csp-modal-topbar {
+      position: relative;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 22px 32px !important;
+      background: #040a18 !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+      text-align: center !important;
+      min-height: 84px !important;
+    }
+    .csp-modal-title-wrap {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 4px !important;
+      padding: 0 50px !important;
+    }
+    .csp-modal-badge {
+      font-size: 0.72rem !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.16em !important;
+      color: #00AEFE !important;
+      text-transform: uppercase !important;
+      background: rgba(0, 174, 254, 0.14) !important;
+      padding: 3px 14px !important;
+      border-radius: 20px !important;
+      border: 1px solid rgba(0, 174, 254, 0.35) !important;
+    }
+    .csp-modal-title {
+      font-family: 'Merriweather', serif !important;
+      font-size: clamp(1.2rem, 2vw, 1.48rem) !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+      margin: 4px 0 0 0 !important;
+      line-height: 1.25 !important;
+    }
+    .csp-modal-close {
+      position: absolute !important;
+      right: 24px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      color: #ffffff !important;
+      width: 40px !important;
+      height: 40px !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      font-size: 1.25rem !important;
+      transition: all 0.25s ease !important;
+      z-index: 10 !important;
+    }
+    .csp-modal-close:hover {
+      background: #B71F71 !important;
+      border-color: #B71F71 !important;
+      transform: translateY(-50%) scale(1.1) !important;
+    }
+
+    /* Video Screen Viewport */
+    .csp-modal-video-wrap {
+      position: relative !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      background: #000000 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      aspect-ratio: 16/9 !important;
+      max-height: 52vh !important;
+    }
+    .csp-modal-video-wrap video {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: 52vh !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
+
+    /* Custom 2-Row Media Player Controls Bar (Mobile & Desktop UX) */
+    .csp-custom-controls {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      padding: 16px 24px !important;
+      background: #040a18 !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+    }
+    
+    /* Top Row: Full Width Progress Scrubber & Timestamp */
+    .csp-scrubber-row {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 14px !important;
+    }
+    
+    /* Bottom Row: Control Buttons Grouped Left & Right */
+    .csp-buttons-row {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 10px !important;
+    }
+    .csp-btn-group-left {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+    }
+    .csp-btn-group-right {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+    }
+
+    .csp-ctrl-btn {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      color: #00AEFE !important;
+      height: 42px !important;
+      padding: 0 16px !important;
+      border-radius: 21px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      cursor: pointer !important;
+      font-size: 0.82rem !important;
+      font-weight: 600 !important;
+      transition: all 0.25s ease !important;
+      flex-shrink: 0 !important;
+      box-sizing: border-box !important;
+      white-space: nowrap !important;
+    }
+    .csp-ctrl-btn-square {
+      width: 42px !important;
+      padding: 0 !important;
+      border-radius: 50% !important;
+    }
+    .csp-ctrl-btn:hover {
+      background: linear-gradient(135deg, #00AEFE, #B71F71) !important;
+      border-color: transparent !important;
+      color: #ffffff !important;
+      transform: scale(1.06) !important;
+      box-shadow: 0 0 18px rgba(0, 174, 254, 0.6) !important;
+    }
+    .csp-scrubber-bar {
+      flex: 1 !important;
+      height: 7px !important;
+      border-radius: 4px !important;
+      background: rgba(255, 255, 255, 0.2) !important;
+      appearance: none !important;
+      outline: none !important;
+      cursor: pointer !important;
+      transition: height 0.15s ease !important;
+      min-width: 60px !important;
+    }
+    .csp-scrubber-bar:hover {
+      height: 9px !important;
+    }
+    .csp-scrubber-bar::-webkit-slider-thumb {
+      appearance: none !important;
+      width: 15px !important;
+      height: 15px !important;
+      border-radius: 50% !important;
+      background: linear-gradient(135deg, #00AEFE, #B71F71) !important;
+      cursor: pointer !important;
+      box-shadow: 0 0 12px rgba(0, 174, 254, 0.9) !important;
+      border: 2px solid #ffffff !important;
+    }
+    .csp-time-text {
+      font-family: monospace !important;
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+      min-width: 85px !important;
+      text-align: center !important;
+    }
+
+    @media (max-width: 600px) {
+      .csp-ctrl-btn span.csp-btn-label {
+        display: none !important;
+      }
+      .csp-ctrl-btn {
+        padding: 0 10px !important;
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 50% !important;
+      }
+      .csp-ctrl-btn-square {
+        width: 38px !important;
+        height: 38px !important;
+      }
+    }
   </style>
+
   <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
     <div style="max-width:650px;margin:0 auto 48px;text-align:center;">
       <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.15em;color:#00AEFE;text-transform:uppercase;margin:0 0 10px;">Watch</p>
@@ -3880,40 +4213,276 @@ form#fluentform_2 .ff-btn-submit {
 
     <div class="csp-watch-grid">
       <!-- Video 1 -->
-      <div style="position:relative;border-radius:18px;overflow:hidden;aspect-ratio:9/13;background:linear-gradient(160deg,#0b1c3a,#040914);box-shadow:0 12px 30px rgba(0,0,0,0.4);cursor:pointer;border:1px solid rgba(255,255,255,0.1);">
-        <img src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Video 1" style="width:100%;height:100%;object-fit:cover;opacity:0.65;" />
-        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 8px;border-radius:6px;">0:42</span>
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#00AEFE,#B71F71);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,174,254,0.5);"><span style="color:#fff;font-size:1.1rem;margin-left:3px;">▶</span></div>
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 16px;background:linear-gradient(to top,rgba(5,13,26,0.95),transparent);color:#ffffff;font-size:0.88rem;font-weight:600;line-height:1.35;">Scholar Intro: Prof. Jane Doe</div>
+      <div class="csp-vcard" onclick="openCspVideoModalByIdx(0)">
+        <video src="./videos/video-1.mp4" preload="metadata" muted loop playsinline class="csp-vcard-video" onloadedmetadata="this.currentTime=0.5;"></video>
+        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
+        <div class="csp-vcard-play">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:3px;"><path d="M8 5v14l11-7z" fill="#ffffff"/></svg>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 16px;background:linear-gradient(to top,rgba(5,13,26,0.95),transparent);color:#ffffff;font-size:0.9rem;font-weight:600;line-height:1.35;z-index:2;">Scholar Intro: Prof. Jane Doe</div>
       </div>
 
       <!-- Video 2 -->
-      <div style="position:relative;border-radius:18px;overflow:hidden;aspect-ratio:9/13;background:linear-gradient(160deg,#0b1c3a,#040914);box-shadow:0 12px 30px rgba(0,0,0,0.4);cursor:pointer;border:1px solid rgba(255,255,255,0.1);">
-        <img src="/wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Video 2" style="width:100%;height:100%;object-fit:cover;opacity:0.65;" />
-        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 8px;border-radius:6px;">1:15</span>
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#00AEFE,#B71F71);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,174,254,0.5);"><span style="color:#fff;font-size:1.1rem;margin-left:3px;">▶</span></div>
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 16px;background:linear-gradient(to top,rgba(5,13,26,0.95),transparent);color:#ffffff;font-size:0.88rem;font-weight:600;line-height:1.35;">Essay Summary: Climate Justice</div>
+      <div class="csp-vcard" onclick="openCspVideoModalByIdx(1)">
+        <video src="./videos/video-2.mp4" preload="metadata" muted loop playsinline class="csp-vcard-video" onloadedmetadata="this.currentTime=0.5;"></video>
+        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
+        <div class="csp-vcard-play">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:3px;"><path d="M8 5v14l11-7z" fill="#ffffff"/></svg>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 16px;background:linear-gradient(to top,rgba(5,13,26,0.95),transparent);color:#ffffff;font-size:0.9rem;font-weight:600;line-height:1.35;z-index:2;">Essay Summary: Climate Justice &amp; Policy</div>
       </div>
 
       <!-- Video 3 -->
-      <div style="position:relative;border-radius:18px;overflow:hidden;aspect-ratio:9/13;background:linear-gradient(160deg,#0b1c3a,#040914);box-shadow:0 12px 30px rgba(0,0,0,0.4);cursor:pointer;border:1px solid rgba(255,255,255,0.1);">
-        <img src="/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Video 3" style="width:100%;height:100%;object-fit:cover;opacity:0.65;" />
-        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 8px;border-radius:6px;">0:58</span>
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#00AEFE,#B71F71);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,174,254,0.5);"><span style="color:#fff;font-size:1.1rem;margin-left:3px;">▶</span></div>
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 16px;background:linear-gradient(to top,rgba(5,13,26,0.95),transparent);color:#ffffff;font-size:0.88rem;font-weight:600;line-height:1.35;">Behind the Scenes: Symposium Prep</div>
+      <div class="csp-vcard" onclick="openCspVideoModalByIdx(2)">
+        <video src="./videos/video-3.mp4" preload="metadata" muted loop playsinline class="csp-vcard-video" onloadedmetadata="this.currentTime=0.5;"></video>
+        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
+        <div class="csp-vcard-play">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:3px;"><path d="M8 5v14l11-7z" fill="#ffffff"/></svg>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 16px;background:linear-gradient(to top,rgba(5,13,26,0.95),transparent);color:#ffffff;font-size:0.9rem;font-weight:600;line-height:1.35;z-index:2;">Behind the Scenes: Symposium Prep</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Widescreen Video Modal Popup with Next/Prev Clip Controls & 3D Flip Animation -->
+<div id="csp-video-modal">
+  <div class="csp-video-player-modal-container" id="csp-modal-card-el">
+    
+    <!-- Centered Header Top Bar -->
+    <div class="csp-modal-topbar">
+      <div class="csp-modal-title-wrap">
+        <span class="csp-modal-badge">Now Playing</span>
+        <h3 class="csp-modal-title" id="csp-modal-video-title">Scholar Video Highlight</h3>
+      </div>
+      <button class="csp-modal-close" onclick="closeCspVideoModal()" title="Close (Esc)">&times;</button>
+    </div>
+    
+    <!-- Video Player Screen -->
+    <div class="csp-modal-video-wrap">
+      <video id="csp-modal-video" playsinline></video>
+    </div>
+
+    <!-- Custom 2-Row Media Controls Bar -->
+    <div class="csp-custom-controls">
+      
+      <!-- Top Row: Progress Scrubber Bar & Time Display -->
+      <div class="csp-scrubber-row">
+        <input type="range" class="csp-scrubber-bar" id="csp-scrubber" min="0" max="100" value="0" step="0.1" oninput="seekCspModalVideo(this.value)">
+        <span class="csp-time-text" id="csp-time-display">0:00 / 0:08</span>
       </div>
 
-      <!-- Video 4 -->
-      <div style="position:relative;border-radius:18px;overflow:hidden;aspect-ratio:9/13;background:linear-gradient(160deg,#0b1c3a,#040914);box-shadow:0 12px 30px rgba(0,0,0,0.4);cursor:pointer;border:1px solid rgba(255,255,255,0.1);">
-        <img src="/wp-content/uploads/2026/01/AF3-1-png-300x171.jpg" alt="Video 4" style="width:100%;height:100%;object-fit:cover;opacity:0.65;" />
-        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 8px;border-radius:6px;">1:30</span>
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#00AEFE,#B71F71);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,174,254,0.5);"><span style="color:#fff;font-size:1.1rem;margin-left:3px;">▶</span></div>
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 16px;background:linear-gradient(to top,rgba(5,13,26,0.95),transparent);color:#ffffff;font-size:0.88rem;font-weight:600;line-height:1.35;">Event Announcement: Sept. Roundtable</div>
+      <!-- Bottom Row: Controls Grouped Left & Right -->
+      <div class="csp-buttons-row">
+        <div class="csp-btn-group-left">
+          <!-- Prev Clip Button -->
+          <button class="csp-ctrl-btn" onclick="prevCspClip()" title="Previous Clip">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:block;"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" fill="currentColor"/></svg>
+            <span class="csp-btn-label">Prev Clip</span>
+          </button>
+
+          <!-- Play / Pause Button -->
+          <button class="csp-ctrl-btn csp-ctrl-btn-square" id="csp-btn-play" onclick="toggleCspModalPlay()" title="Play / Pause">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:2px;"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          </button>
+
+          <!-- Next Clip Button -->
+          <button class="csp-ctrl-btn" onclick="nextCspClip()" title="Next Clip">
+            <span class="csp-btn-label">Next Clip</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:block;"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" fill="currentColor"/></svg>
+          </button>
+        </div>
+
+        <div class="csp-btn-group-right">
+          <!-- Mute Button -->
+          <button class="csp-ctrl-btn csp-ctrl-btn-square" id="csp-btn-mute" onclick="toggleCspModalMute()" title="Mute / Unmute">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="display:block;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="currentColor"/></svg>
+          </button>
+          
+          <!-- Fullscreen Button -->
+          <button class="csp-ctrl-btn csp-ctrl-btn-square" id="csp-btn-fs" onclick="toggleCspModalFullscreen()" title="Full Screen">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="display:block;"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" fill="currentColor"/></svg>
+          </button>
+        </div>
       </div>
+
     </div>
 
   </div>
-</section>
+</div>
+
+<script>
+var CSP_CLIPS = [
+  { src: './videos/video-1.mp4', title: 'Scholar Intro: Prof. Jane Doe' },
+  { src: './videos/video-2.mp4', title: 'Essay Summary: Climate Justice & Policy' },
+  { src: './videos/video-3.mp4', title: 'Behind the Scenes: Symposium Prep' }
+];
+var currentClipIdx = 0;
+
+var SVG_PLAY = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:2px;"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
+var SVG_PAUSE = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="display:block;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/></svg>';
+var SVG_VOL_ON = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="display:block;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="currentColor"/></svg>';
+var SVG_VOL_OFF = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="display:block;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z" fill="currentColor"/></svg>';
+
+function openCspVideoModalByIdx(idx) {
+  currentClipIdx = idx;
+  var clip = CSP_CLIPS[idx];
+  if (clip) openCspVideoModal(clip.src, clip.title);
+}
+
+function prevCspClip() {
+  currentClipIdx = (currentClipIdx - 1 + CSP_CLIPS.length) % CSP_CLIPS.length;
+  openCspVideoModalByIdx(currentClipIdx);
+}
+
+function nextCspClip() {
+  currentClipIdx = (currentClipIdx + 1) % CSP_CLIPS.length;
+  openCspVideoModalByIdx(currentClipIdx);
+}
+
+function openCspVideoModal(src, title) {
+  var modal = document.getElementById('csp-video-modal');
+  var video = document.getElementById('csp-modal-video');
+  var titleEl = document.getElementById('csp-modal-video-title');
+  var playBtn = document.getElementById('csp-btn-play');
+
+  if (!modal || !video) return;
+
+  modal.classList.remove('closing');
+  if (titleEl) titleEl.textContent = title || 'Video Highlight';
+  video.src = src;
+  modal.classList.add('active');
+  
+  // Body scroll lock
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+
+  video.play().then(function(){
+    if (playBtn) playBtn.innerHTML = SVG_PAUSE;
+  }).catch(function(e){
+    if (playBtn) playBtn.innerHTML = SVG_PLAY;
+  });
+}
+
+function closeCspVideoModal() {
+  var modal = document.getElementById('csp-video-modal');
+  var video = document.getElementById('csp-modal-video');
+  var playBtn = document.getElementById('csp-btn-play');
+
+  if (!modal || !video) return;
+
+  // Trigger True Macbook Genie Minimize Animation
+  modal.classList.add('closing');
+
+  setTimeout(function(){
+    video.pause();
+    video.currentTime = 0;
+    video.src = '';
+    if (playBtn) playBtn.innerHTML = SVG_PLAY;
+    modal.classList.remove('active');
+    modal.classList.remove('closing');
+    
+    // Restore scroll
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+  }, 440);
+}
+
+function toggleCspModalPlay() {
+  var video = document.getElementById('csp-modal-video');
+  var playBtn = document.getElementById('csp-btn-play');
+  if (!video) return;
+
+  if (video.paused) {
+    video.play();
+    if (playBtn) playBtn.innerHTML = SVG_PAUSE;
+  } else {
+    video.pause();
+    if (playBtn) playBtn.innerHTML = SVG_PLAY;
+  }
+}
+
+function toggleCspModalMute() {
+  var video = document.getElementById('csp-modal-video');
+  var muteBtn = document.getElementById('csp-btn-mute');
+  if (!video) return;
+
+  video.muted = !video.muted;
+  if (muteBtn) muteBtn.innerHTML = video.muted ? SVG_VOL_OFF : SVG_VOL_ON;
+}
+
+function toggleCspModalFullscreen() {
+  var video = document.getElementById('csp-modal-video');
+  if (!video) return;
+
+  if (video.requestFullscreen) {
+    video.requestFullscreen();
+  } else if (video.webkitRequestFullscreen) {
+    video.webkitRequestFullscreen();
+  }
+}
+
+function seekCspModalVideo(val) {
+  var video = document.getElementById('csp-modal-video');
+  if (!video || !video.duration) return;
+  video.currentTime = (val / 100) * video.duration;
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  var video = document.getElementById('csp-modal-video');
+  var scrubber = document.getElementById('csp-scrubber');
+  var timeDisplay = document.getElementById('csp-time-display');
+  var modal = document.getElementById('csp-video-modal');
+
+  if (video) {
+    video.addEventListener('timeupdate', function(){
+      if (!video.duration) return;
+      var pct = (video.currentTime / video.duration) * 100;
+      if (scrubber) scrubber.value = pct;
+
+      var curM = Math.floor(video.currentTime / 60);
+      var curS = Math.floor(video.currentTime % 60);
+      var durM = Math.floor(video.duration / 60);
+      var durS = Math.floor(video.duration % 60);
+
+      var curStr = curM + ':' + (curS < 10 ? '0' : '') + curS;
+      var durStr = durM + ':' + (durS < 10 ? '0' : '') + durS;
+      if (timeDisplay) timeDisplay.textContent = curStr + ' / ' + durStr;
+    });
+
+    video.addEventListener('ended', function(){
+      // Automatically play next clip on end
+      nextCspClip();
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener('click', function(e){
+      if (e.target === modal) {
+        closeCspVideoModal();
+      }
+    });
+    
+    modal.addEventListener('wheel', function(e){
+      if (modal.classList.contains('active')) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+    
+    modal.addEventListener('touchmove', function(e){
+      if (modal.classList.contains('active')) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  }
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') {
+      closeCspVideoModal();
+    }
+  });
+});
+</script>
 <!-- CSP_SECTION_WATCH_END -->
 <div class="elementor-element elementor-element-4f7bfe8e e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="4f7bfe8e" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 					<div class="e-con-inner">
