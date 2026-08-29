@@ -1895,17 +1895,7 @@ form#fluentform_2 .ff-btn-submit {
 <style>
 /* ── GLOBAL MICRO-INTERACTIONS & READ PROGRESS BAR STYLING ────────────── */
 #csp-scroll-progress {
-  position: fixed;
-  bottom: 0;
-  top: auto;
-  left: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #00AEFE 0%, #B71F71 100%);
-  z-index: 9999999;
-  width: 0%;
-  transition: width 0.1s linear;
-  box-shadow: 0 -2px 10px rgba(0, 174, 254, 0.6);
-  pointer-events: none;
+  display: none !important;
 }
 
 /* Image Hover Scale Animation */
@@ -2275,17 +2265,40 @@ form#fluentform_2 .ff-btn-submit {
 
     /* ── SINGLE POST LAYOUT ── */
     .csp-post-sec {
-      padding: 36px 8% 80px 8%;
-      max-width: 1240px;
+      padding: 24px 3% 80px 3%;
+      max-width: 1320px;
       margin: 0 auto;
+    }
+    @media (max-width: 600px) {
+      .csp-post-sec {
+        padding: 16px 12px 60px 12px;
+      }
     }
     .csp-post-grid-layout {
       display: grid;
       grid-template-columns: 1fr 340px;
-      gap: 48px;
+      gap: 40px;
     }
     @media (max-width: 960px) {
       .csp-post-grid-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Category Pill Container spanning wide across post */
+    .csp-cat-nav-wrap {
+      position: sticky !important;
+      top: 85px !important;
+      z-index: 99 !important;
+      background: rgba(255, 255, 255, 0.94) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      padding: 10px 18px !important;
+      border-radius: 50px !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+      margin: 0 0 28px 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
     }
 
     /* ── BREADCRUMB & BACK BTN ── */
@@ -2293,7 +2306,7 @@ form#fluentform_2 .ff-btn-submit {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
       gap: 12px;
     }
@@ -2501,13 +2514,21 @@ form#fluentform_2 .ff-btn-submit {
       color: var(--text-sub);
     }
 
-    /* ── COMMENTS SECTION ── */
+    /* ── COMMENTS SECTION & FORM (RESPONSIVE NO-BLEED) ── */
     .csp-comments-sec {
       background: #ffffff;
       border: 1px solid var(--border-card);
       border-radius: 20px;
-      padding: 36px;
+      padding: 32px 28px;
       box-shadow: 0 4px 24px rgba(15, 23, 42, 0.03);
+      width: 100% !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+    }
+    @media (max-width: 600px) {
+      .csp-comments-sec {
+        padding: 24px 16px;
+      }
     }
     .csp-comments-title {
       font-family: 'Merriweather', serif;
@@ -2518,20 +2539,39 @@ form#fluentform_2 .ff-btn-submit {
     .csp-comment-form {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       margin-bottom: 36px;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .csp-comment-form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    @media (min-width: 640px) {
+      .csp-comment-form-row {
+        flex-direction: row;
+        gap: 14px;
+      }
     }
     .csp-input-field {
-      width: 100%;
-      padding: 12px 18px;
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.92rem;
-      outline: none;
-      transition: border-color 0.2s ease;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      padding: 12px 16px !important;
+      border: 1px solid #cbd5e1 !important;
+      border-radius: 12px !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 0.92rem !important;
+      outline: none !important;
+      transition: border-color 0.2s ease !important;
+      background: #ffffff !important;
+      color: #0f172a !important;
     }
-    .csp-input-field:focus { border-color: var(--blue-accent); }
+    .csp-input-field:focus { border-color: var(--blue-accent) !important; }
     .csp-comment-item {
       border-bottom: 1px solid #f1f5f9;
       padding-bottom: 20px;
@@ -3099,6 +3139,88 @@ form#fluentform_2 .ff-btn-submit {
       .catch(function(){});
   };
 
+  window.loadRelatedStories = function(currentSlug) {
+    var container = document.getElementById('sidebar-related-posts');
+    if (!container) return;
+
+    var defaultRelated = [
+      {
+        title: 'Profiles of Groundbreaking Tech Entrepreneurs from Diaspora',
+        slug: 'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora',
+        category: 'Innovation',
+        date: 'Feb 5, 2026',
+        image: './wp-content/uploads/2026/01/location-1-300x210.webp'
+      },
+      {
+        title: 'Empowering Diaspora Communities Through Innovation & Heritage',
+        slug: 'empowering-diaspora-communities-through-innovation-heritage',
+        category: 'Culture',
+        date: 'Feb 5, 2026',
+        image: './wp-content/uploads/2026/01/AF3-1-png-300x171.jpg'
+      },
+      {
+        title: 'Africans in Diaspora Influencing Global Economic Decisions',
+        slug: 'africans-in-diaspora-influencing-global-economic-decisions',
+        category: 'Success Stories',
+        date: 'Feb 4, 2026',
+        image: './wp-content/uploads/2026/02/tourist-carrying-luggage-300x150.jpg'
+      },
+      {
+        title: 'Creatives Shaping & Representing Global African Culture',
+        slug: 'creatives-shaping-representing-global-african-culture',
+        category: 'Art & Entertainment',
+        date: 'Feb 3, 2026',
+        image: './wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg'
+      }
+    ];
+
+    function renderList(posts) {
+      var pathParts = window.location.pathname.split('/').filter(Boolean);
+      var pageSlug = currentSlug || (pathParts.length > 0 ? pathParts[pathParts.length - 1] : '');
+
+      var filtered = posts.filter(function(p) {
+        return p.slug !== pageSlug && !window.location.pathname.includes(p.slug);
+      });
+
+      if (filtered.length === 0) filtered = defaultRelated.filter(function(p){ return p.slug !== pageSlug; });
+
+      var itemsToRender = filtered.slice(0, 3);
+
+      var html = '';
+      itemsToRender.forEach(function(post) {
+        var postUrl = window.getRootUrl ? window.getRootUrl('post/' + post.slug + '/') : '../post/' + post.slug + '/';
+        var imgUrl = post.featured_image || post.image;
+        if (window.getAbsoluteImageUrl) imgUrl = window.getAbsoluteImageUrl(imgUrl);
+
+        html += `
+          <a href="${postUrl}" class="csp-rel-item" style="display:flex;gap:14px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #f1f5f9;text-decoration:none;color:inherit;align-items:center;">
+            <img src="${imgUrl}" alt="${post.title}" class="csp-rel-thumb" style="width:76px;height:60px;object-fit:cover;border-radius:10px;flex-shrink:0;background:#e2e8f0;" />
+            <div class="csp-rel-info" style="flex:1;">
+              <div style="font-size:0.72rem;font-weight:700;color:#00AEFE;text-transform:uppercase;margin-bottom:2px;">${post.category_name || post.category || 'Story'}</div>
+              <h4 style="font-family:'Merriweather',serif;font-size:0.88rem;font-weight:600;color:#0f172a;line-height:1.35;margin:0 0 4px 0;">${post.title}</h4>
+              <div class="csp-rel-meta" style="font-size:0.75rem;color:#64748b;">${post.published_at || post.date || 'Recent'}</div>
+            </div>
+          </a>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    var apiUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?limit=6') : '/api/posts.php?limit=6';
+    fetch(apiUrl)
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        if (res.success && res.posts && res.posts.length > 0) {
+          renderList(res.posts);
+        } else {
+          renderList(defaultRelated);
+        }
+      })
+      .catch(function() {
+        renderList(defaultRelated);
+      });
+  };
+
   (function(){
     // Check Admin Authentication Status
     window.checkAdminStatus();
@@ -3106,11 +3228,18 @@ form#fluentform_2 .ff-btn-submit {
     // Fetch dynamic post details if needed
     window.fetchPostDetails();
 
+    // Render Related Stories
+    window.loadRelatedStories();
+
     // Initial Render of Comments
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', window.renderCommentsStream);
+      document.addEventListener('DOMContentLoaded', function() {
+        window.renderCommentsStream();
+        window.loadRelatedStories();
+      });
     } else {
       window.renderCommentsStream();
+      window.loadRelatedStories();
     }
 
     // Sync Share Links with Current Location
@@ -3126,12 +3255,13 @@ form#fluentform_2 .ff-btn-submit {
     if (li) li.href = 'https://www.linkedin.com/shareArticle?mini=true&url=' + pUrl + '&title=' + pTitle;
     if (wa) wa.href = 'https://api.whatsapp.com/send?text=' + pTitle + '%20' + pUrl;
 
-    // Scroll Reading Progress Bar Controller
+    // Scroll Reading Progress Bar Controller (Strictly Bottom of Screen)
     window.addEventListener('scroll', function() {
       var bar = document.getElementById('csp-reading-bar');
       if (!bar) {
         bar = document.createElement('div');
         bar.id = 'csp-reading-bar';
+        bar.style.cssText = 'position:fixed;bottom:0;top:auto;left:0;height:4px;background:linear-gradient(90deg,#00AEFE 0%,#B71F71 100%);z-index:9999999;width:0%;transition:width 0.1s linear;box-shadow:0 -2px 10px rgba(0,174,254,0.6);pointer-events:none;';
         document.body.appendChild(bar);
       }
       var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
