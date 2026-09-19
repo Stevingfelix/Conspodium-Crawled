@@ -2,10 +2,10 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/*.php",
+      "src": "api/index.php",
       "use": "vercel-php@0.7.3",
       "config": {
-        "includeFiles": ["data/conspodium.db", "data/**"]
+        "includeFiles": ["api/**", "data/conspodium.db", "data/**"]
       }
     },
     {
@@ -15,12 +15,8 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)\\.php",
-      "dest": "/api/$1.php"
-    },
-    {
       "src": "/api/(.*)",
-      "dest": "/api/$1.php"
+      "dest": "/api/index.php"
     },
     {
       "src": "/dashboard",
