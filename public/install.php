@@ -9,15 +9,12 @@ $pdoSqliteOk  = extension_loaded('pdo_sqlite');
 $dataDir      = file_exists(__DIR__ . '/../data') ? __DIR__ . '/../data' : __DIR__ . '/data';
 $uploadsDir   = file_exists(__DIR__ . '/../uploads') ? __DIR__ . '/../uploads' : __DIR__ . '/uploads';
 $lockFile     = $dataDir . '/install.lock';
-$isInstalled  = file_exists($lockFile);
+$forceReinstall = isset($_GET['reinstall']) || isset($_GET['force']);
 
-// If already installed, block access completely and return 404 Not Found
-if ($isInstalled) {
-    http_response_code(404);
-    header("HTTP/1.1 404 Not Found");
-    echo '<!DOCTYPE html><html lang="en"><head><title>404 Not Found</title><style>body{background:#030814;color:#f0f4f8;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;}h1{font-size:3rem;margin-bottom:10px;color:#00aefe;}p{color:#8a99ad;}a{color:#00aefe;text-decoration:none;}</style></head><body><div><h1>404</h1><p>The requested URL was not found on this server.</p><p><a href="/">Return to Homepage &rarr;</a></p></div></body></html>';
-    exit;
+if ($forceReinstall && file_exists($lockFile)) {
+    @unlink($lockFile);
 }
+$isInstalled  = file_exists($lockFile);
 
 if (!file_exists($dataDir)) @mkdir($dataDir, 0777, true);
 if (!file_exists($uploadsDir)) @mkdir($uploadsDir, 0777, true);
@@ -350,9 +347,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isInstalled && $allChecksPassed) 
       <strong>🎉 Conspodium is already installed & ready!</strong><br>
       For security reasons, the installer has been locked (`data/install.lock`).
     </div>
-    <div class="action-links">
-      <a href="./" class="action-btn btn-secondary">🌐 View Homepage</a>
-      <a href="./dashboard/" class="action-btn btn-primary">🔑 Admin CMS Portal →</a>
+    <div class="action-links" style="flex-direction:column;gap:10px;">
+      <div style="display:flex;gap:14px;">
+        <a href="./" class="action-btn btn-secondary">🌐 View Homepage</a>
+        <a href="./dashboard/" class="action-btn btn-primary">🔑 Admin CMS Portal →</a>
+      </div>
+      <a href="./install.php?reinstall=1" class="action-btn btn-secondary" style="font-size:0.8rem;color:#8a99ad;" onclick="return confirm('Are you sure you want to unlock and re-run the installation wizard?')">🔄 Re-run Installation Wizard</a>
     </div>
   <?php else: ?>
 
