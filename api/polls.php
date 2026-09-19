@@ -53,9 +53,11 @@ if ($method === 'GET' && ($action === 'active' || empty($action))) {
         $results[] = ["option" => $optText, "index" => $idx, "count" => $count, "percentage" => $pct];
     }
 
-    $checkIp = $pdo->prepare("SELECT 1 FROM poll_votes WHERE poll_id = ? AND voter_ip = ?");
+    $checkIp = $pdo->prepare("SELECT option_index FROM poll_votes WHERE poll_id = ? AND voter_ip = ? ORDER BY id DESC LIMIT 1");
     $checkIp->execute([$poll['id'], $userIp]);
-    $hasVoted = (bool) $checkIp->fetch();
+    $userVoteRow = $checkIp->fetch();
+    $hasVoted = (bool) $userVoteRow;
+    $userVotedIndex = $userVoteRow ? intval($userVoteRow['option_index']) : null;
 
     echo json_encode([
         "success" => true,
@@ -64,7 +66,8 @@ if ($method === 'GET' && ($action === 'active' || empty($action))) {
             "question" => $poll['question'],
             "options" => $results,
             "totalVotes" => $totalVotes,
-            "userHasVoted" => $hasVoted
+            "userHasVoted" => $hasVoted,
+            "userVotedIndex" => $userVotedIndex
         ]
     ]);
     exit;
@@ -163,18 +166,19 @@ if ($method === 'POST' && ($action === 'vote' || isset($input['optionIndex']))) 
             "question" => $poll['question'],
             "options" => $results,
             "totalVotes" => $totalVotes,
-            "userHasVoted" => true
+            "userHasVoted" => true,
+            "userVotedIndex" => $optionIndex
         ]
     ]);
     exit;
 }
 
-// ── CREATE POLL ─────────────────────────────────────────────────────────────
-if ($method === 'POST' && ($action === 'create' || !empty($input['question']))) {
+// ── CREATE / UPDATE POLL (SINGLE POLL SET ENFORCED) ─────────────────────────
+if ($method === 'POST' && ($action === 'create' || $action === 'save' || !empty($input['question']))) {
     requireAdmin();
     $question = trim($input['question'] ?? '');
     $options = $input['options'] ?? [];
-    $isActive = !empty($input['isActive']) ? 1 : 0;
+    $isActive = 1;
 
     if (!$question || !is_array($options) || count($options) < 2) {
         http_response_code(400);
@@ -182,14 +186,24 @@ if ($method === 'POST' && ($action === 'create' || !empty($input['question']))) 
         exit;
     }
 
-    if ($isActive) {
-        $pdo->exec("UPDATE polls SET is_active = 0");
+    $existing = $pdo->query("SELECT id FROM polls ORDER BY id DESC LIMIT 1")->fetch();
+
+    if ($existing) {
+        $targetId = intval($existing['id']);
+        $stmt = $pdo->prepare("UPDATE polls SET question = ?, options_json = ?, is_active = 1 WHERE id = ?");
+        $stmt->execute([$question, json_encode($options), $targetId]);
+
+        // Clear previous votes if resetting or updating poll question
+        if (!empty($input['resetVotes'])) {
+            $pdo->prepare("DELETE FROM poll_votes WHERE poll_id = ?")->execute([$targetId]);
+        }
+
+        echo json_encode(["success" => true, "pollId" => $targetId, "message" => "Weekly poll updated successfully"]);
+    } else {
+        $stmt = $pdo->prepare("INSERT INTO polls (question, options_json, is_active) VALUES (?, ?, 1)");
+        $stmt->execute([$question, json_encode($options)]);
+        echo json_encode(["success" => true, "pollId" => $pdo->lastInsertId(), "message" => "Weekly poll created successfully"]);
     }
-
-    $stmt = $pdo->prepare("INSERT INTO polls (question, options_json, is_active) VALUES (?, ?, ?)");
-    $stmt->execute([$question, json_encode($options), $isActive]);
-
-    echo json_encode(["success" => true, "pollId" => $pdo->lastInsertId(), "message" => "Weekly poll created successfully"]);
     exit;
 }
 

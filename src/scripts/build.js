@@ -38,6 +38,8 @@ const PAGES = [
   { id: 'category',     out: 'category/art-entertainment/index.html' },
   { id: 'category',     out: 'category/community/index.html' },
   { id: 'category',     out: 'category/success-stories/index.html' },
+  { id: 'forum',        out: 'forum/index.html' },
+  { id: 'forum-thread', out: 'forum/thread/index.html' },
   { id: 'dashboard',    out: 'dashboard/index.html' },
   { id: 'post',         out: 'post/index.html' },
   { id: 'post',         out: 'post/we-are-the-world/index.html' },

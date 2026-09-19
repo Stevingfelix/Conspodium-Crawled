@@ -1445,120 +1445,443 @@ e-page-transition,
 						</div>
 				</div>
 				
-        <!-- CSP 3-STEP WIZARD CONTAINER -->
-        <div id="csp-wizard-wrapper" style="max-width:800px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:28px;padding:40px;box-shadow:0 20px 50px rgba(0,0,0,0.05);">
-          <!-- Step Progress Indicator -->
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;position:relative;" id="csp-wizard-steps-nav">
-            <div style="position:absolute;top:20px;left:40px;right:40px;height:3px;background:#e2e8f0;z-index:1;"></div>
-            <div id="csp-wizard-progress-bar" style="position:absolute;top:20px;left:40px;width:0%;height:3px;background:linear-gradient(90deg,#00AEFE,#B71F71);z-index:1;transition:width 0.3s ease;"></div>
+        <!-- CSP 2-COLUMN SPLIT HERO & 3-STEP WIZARD CONTAINER -->
+        <style>
+          #csp-wizard-wrapper input::placeholder,
+          #csp-wizard-wrapper textarea::placeholder {
+            color: #94a3b8 !important;
+            opacity: 1 !important;
+          }
+          #csp-wizard-wrapper input,
+          #csp-wizard-wrapper textarea {
+            color: #0f172a !important;
+          }
+          #csp-wizard-wrapper select {
+            color: #94a3b8 !important;
+          }
+          #csp-wizard-wrapper select.has-value,
+          #csp-wizard-wrapper select:valid {
+            color: #0f172a !important;
+          }
+          #csp-wizard-wrapper select option {
+            color: #0f172a;
+          }
+          #csp-wizard-wrapper select option[disabled] {
+            color: #94a3b8;
+          }
+          .csp-wiz-panel {
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+          }
+          @media (max-width: 900px) {
+            #csp-wizard-split-hero {
+              grid-template-columns: 1fr !important;
+            }
+            #csp-wizard-hero-left {
+              min-height: 420px !important;
+            }
+          }
+        </style>
 
-            <!-- Step 1 Badge -->
-            <div class="csp-wiz-step active" id="wiz-step-pill-1" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;">
-              <div class="csp-wiz-num" style="width:42px;height:42px;border-radius:50%;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,174,254,0.4);">1</div>
-              <span style="font-size:0.8rem;font-weight:700;color:#00AEFE;">1. Contributor Info</span>
-            </div>
+        <!-- 2-COLUMN SPLIT HERO -->
+        <div id="csp-wizard-split-hero" style="max-width:1160px;margin:0 auto 60px;display:grid;grid-template-columns:42% 54%;gap:4%;align-items:stretch;">
+          
+          <!-- LEFT COLUMN: EDITORIAL STOCK PHOTO + ANIMATED GLASSMORPHISM TESTIMONIAL CAROUSEL -->
+          <div id="csp-wizard-hero-left" style="position:relative;border-radius:28px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.08);display:flex;flex-direction:column;justify-content:flex-end;height:100%;min-height:500px;background:url('../uploads/editorial_writer_hero.png') center/cover no-repeat;box-sizing:border-box;">
+            <!-- Dark gradient overlay -->
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,0.15) 0%,rgba(15,23,42,0.85) 100%);"></div>
 
-            <!-- Step 2 Badge -->
-            <div class="csp-wiz-step" id="wiz-step-pill-2" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;">
-              <div class="csp-wiz-num" style="width:42px;height:42px;border-radius:50%;background:#f1f5f9;color:#64748b;font-weight:700;display:flex;align-items:center;justify-content:center;border:1px solid #cbd5e1;">2</div>
-              <span style="font-size:0.8rem;font-weight:600;color:#64748b;">2. Story Content</span>
-            </div>
+            <!-- Floating Glassmorphism Animated Testimonial Overlay -->
+            <div style="position:relative;z-index:2;padding:24px;background:rgba(255,255,255,0.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.25);margin:20px;border-radius:20px;color:#ffffff;height:240px;min-height:240px;max-height:240px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;">
+              
+              <!-- Carousel Slides Container -->
+              <div id="csp-hero-testimonial-slides" style="position:relative;height:135px;min-height:135px;max-height:135px;overflow:hidden;">
+                
+                <!-- Slide 1 -->
+                <div class="csp-hero-slide" style="opacity:1;display:block;transition:opacity 0.4s ease;position:absolute;inset:0;">
+                  <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                    <img src="../uploads/author_avatar_kemi.png" alt="Dr. Kemi Adebayo" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #00AEFE;" />
+                    <div>
+                      <div style="font-size:0.92rem;font-weight:700;color:#ffffff;">Dr. Kemi Adebayo</div>
+                      <div style="font-size:0.75rem;color:#cbd5e1;">Tech Founder &amp; Researcher • London, UK</div>
+                    </div>
+                  </div>
+                  <p style="font-size:0.84rem;line-height:1.5;color:#f1f5f9;font-style:italic;margin:0;">
+                    "Publishing my story on Conspodium connected me with over 20,000 diaspora leaders across London &amp; New York. The editorial experience was world-class."
+                  </p>
+                </div>
 
-            <!-- Step 3 Badge -->
-            <div class="csp-wiz-step" id="wiz-step-pill-3" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;">
-              <div class="csp-wiz-num" style="width:42px;height:42px;border-radius:50%;background:#f1f5f9;color:#64748b;font-weight:700;display:flex;align-items:center;justify-content:center;border:1px solid #cbd5e1;">3</div>
-              <span style="font-size:0.8rem;font-weight:600;color:#64748b;">3. Media &amp; Submit</span>
+                <!-- Slide 2 -->
+                <div class="csp-hero-slide" style="opacity:0;display:none;transition:opacity 0.4s ease;position:absolute;inset:0;">
+                  <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                    <img src="../uploads/author_avatar_marcus.png" alt="Marcus Vance" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #00AEFE;" />
+                    <div>
+                      <div style="font-size:0.92rem;font-weight:700;color:#ffffff;">Marcus Vance</div>
+                      <div style="font-size:0.75rem;color:#cbd5e1;">Venture Partner • Atlanta, USA</div>
+                    </div>
+                  </div>
+                  <p style="font-size:0.84rem;line-height:1.5;color:#f1f5f9;font-style:italic;margin:0;">
+                    "Sharing my journey as a diaspora founder unlocked key investment partnerships in Nairobi and Lagos. Incredible community reach!"
+                  </p>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="csp-hero-slide" style="opacity:0;display:none;transition:opacity 0.4s ease;position:absolute;inset:0;">
+                  <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                    <img src="../uploads/author_avatar_amina.png" alt="Amina Diallo" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #00AEFE;" />
+                    <div>
+                      <div style="font-size:0.92rem;font-weight:700;color:#ffffff;">Amina Diallo</div>
+                      <div style="font-size:0.75rem;color:#cbd5e1;">Creative Director • Paris, France</div>
+                    </div>
+                  </div>
+                  <p style="font-size:0.84rem;line-height:1.5;color:#f1f5f9;font-style:italic;margin:0;">
+                    "As a creative director in Paris, finding an authentic platform was tough until I joined Conspodium. My feature received thousands of shares."
+                  </p>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="csp-hero-slide" style="opacity:0;display:none;transition:opacity 0.4s ease;position:absolute;inset:0;">
+                  <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                    <img src="../uploads/author_avatar_tunde.png" alt="Tunde Olanrewaju" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #00AEFE;" />
+                    <div>
+                      <div style="font-size:0.92rem;font-weight:700;color:#ffffff;">Tunde Olanrewaju</div>
+                      <div style="font-size:0.75rem;color:#cbd5e1;">Policy Analyst • Toronto, Canada</div>
+                    </div>
+                  </div>
+                  <p style="font-size:0.84rem;line-height:1.5;color:#f1f5f9;font-style:italic;margin:0;">
+                    "Conspodium gave my research on Diaspora Economic Policy a prominent global voice. The team made submission seamless and empowering."
+                  </p>
+                </div>
+              </div>
+
+              <!-- Carousel Controls & Stats -->
+              <div>
+                <!-- Dot Indicators -->
+                <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:12px 0 10px;" id="csp-hero-carousel-dots">
+                  <span onclick="setHeroSlide(0)" style="width:20px;height:4px;border-radius:10px;background:#00AEFE;cursor:pointer;transition:all 0.3s ease;"></span>
+                  <span onclick="setHeroSlide(1)" style="width:6px;height:4px;border-radius:10px;background:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s ease;"></span>
+                  <span onclick="setHeroSlide(2)" style="width:6px;height:4px;border-radius:10px;background:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s ease;"></span>
+                  <span onclick="setHeroSlide(3)" style="width:6px;height:4px;border-radius:10px;background:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s ease;"></span>
+                </div>
+
+                <!-- Stats Bar -->
+                <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.2);padding-top:10px;font-size:0.75rem;font-weight:600;color:#e2e8f0;">
+                  <span>🌐 50,000+ Readers</span>
+                  <span>✍️ 120+ Authors</span>
+                  <span>🌍 40+ Countries</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Wizard Form Container -->
-          <form id="fluentform_4" style="display:flex;flex-direction:column;gap:24px;">
+          <!-- RIGHT COLUMN: 3-STEP WIZARD CONTAINER -->
+          <div id="csp-wizard-wrapper" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:28px;padding:36px 32px;box-shadow:0 20px 50px rgba(0,0,0,0.05);box-sizing:border-box;">
             
-            <!-- STEP 1 PANEL -->
-            <div id="wiz-panel-1" class="csp-wiz-panel" style="display:block;">
-              <h3 style="font-family:'Merriweather',serif;font-size:1.25rem;color:#0f172a;margin-bottom:6px;">Tell Us About Yourself</h3>
-              <p style="font-size:0.88rem;color:#64748b;margin-bottom:24px;">How should we credit you in our global publication?</p>
+            <!-- Step Progress Indicator -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;position:relative;" id="csp-wizard-steps-nav">
+              <div style="position:absolute;top:18px;left:30px;right:30px;height:3px;background:#e2e8f0;z-index:1;"></div>
+              <div id="csp-wizard-progress-bar" style="position:absolute;top:18px;left:30px;width:0%;height:3px;background:linear-gradient(90deg,#00AEFE,#B71F71);z-index:1;transition:width 0.3s ease;"></div>
 
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+              <!-- Step 1 Badge -->
+              <div class="csp-wiz-step active" id="wiz-step-pill-1" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;">
+                <div class="csp-wiz-num" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,174,254,0.4);font-size:0.9rem;">1</div>
+                <span style="font-size:0.78rem;font-weight:700;color:#00AEFE;">1. Contributor Info</span>
+              </div>
+
+              <!-- Step 2 Badge -->
+              <div class="csp-wiz-step" id="wiz-step-pill-2" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;">
+                <div class="csp-wiz-num" style="width:38px;height:38px;border-radius:50%;background:#f1f5f9;color:#64748b;font-weight:700;display:flex;align-items:center;justify-content:center;border:1px solid #cbd5e1;font-size:0.9rem;">2</div>
+                <span style="font-size:0.78rem;font-weight:600;color:#64748b;">2. Story Content</span>
+              </div>
+
+              <!-- Step 3 Badge -->
+              <div class="csp-wiz-step" id="wiz-step-pill-3" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;">
+                <div class="csp-wiz-num" style="width:38px;height:38px;border-radius:50%;background:#f1f5f9;color:#64748b;font-weight:700;display:flex;align-items:center;justify-content:center;border:1px solid #cbd5e1;font-size:0.9rem;">3</div>
+                <span style="font-size:0.78rem;font-weight:600;color:#64748b;">3. Media &amp; Submit</span>
+              </div>
+            </div>
+
+            <!-- Wizard Form Container -->
+            <form id="fluentform_4" style="margin:0;">
+              
+              <!-- STEP 1 PANEL -->
+              <div id="wiz-panel-1" class="csp-wiz-panel" style="display:flex;">
                 <div>
-                  <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">First Name *</label>
-                  <input type="text" name="names[first_name]" id="ff_4_names_first_name_" placeholder="e.g. Amara" required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;" />
+                  <h3 style="font-family:'Merriweather',serif;font-size:1.25rem;color:#0f172a;margin-bottom:4px;">Tell Us About Yourself</h3>
+                  <p style="font-size:0.85rem;color:#64748b;margin-bottom:20px;">How should we credit you in our global publication?</p>
+
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+                    <div>
+                      <label style="display:block;font-size:0.82rem;font-weight:600;color:#334155;margin-bottom:5px;">First Name *</label>
+                      <input type="text" name="names[first_name]" id="ff_4_names_first_name_" placeholder="e.g. Amara" required style="width:100%;padding:11px 14px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.88rem;" />
+                    </div>
+                    <div>
+                      <label style="display:block;font-size:0.82rem;font-weight:600;color:#334155;margin-bottom:5px;">Last Name *</label>
+                      <input type="text" name="names[last_name]" id="ff_4_names_last_name_" placeholder="e.g. Diallo" required style="width:100%;padding:11px 14px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.88rem;" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style="display:block;font-size:0.82rem;font-weight:600;color:#334155;margin-bottom:5px;">Email Address *</label>
+                    <input type="email" name="email" id="ff_4_email" placeholder="you@example.com" required style="width:100%;padding:11px 14px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.88rem;" />
+                  </div>
                 </div>
+
+                <!-- Action Button directly beneath input fields -->
+                <div style="display:flex;justify-content:center;align-items:center;margin-top:24px;">
+                  <button type="button" onclick="goToWizStep(2)" style="padding:12px 36px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-size:0.9rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);display:inline-flex;align-items:center;gap:8px;">
+                    Next Step: Story Details
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- STEP 2 PANEL -->
+              <div id="wiz-panel-2" class="csp-wiz-panel" style="display:none;">
                 <div>
-                  <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">Last Name *</label>
-                  <input type="text" name="names[last_name]" id="ff_4_names_last_name_" placeholder="e.g. Diallo" required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;" />
+                  <h3 style="font-family:'Merriweather',serif;font-size:1.25rem;color:#0f172a;margin-bottom:4px;">Draft Your Story</h3>
+                  <p style="font-size:0.85rem;color:#64748b;margin-bottom:16px;">Give your article a compelling title and select a category.</p>
+
+                  <div style="margin-bottom:12px;">
+                    <label style="display:block;font-size:0.82rem;font-weight:600;color:#334155;margin-bottom:4px;">Story Title *</label>
+                    <input type="text" name="subject" id="ff_4_subject" placeholder="Enter headline..." required style="width:100%;padding:10px 14px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.88rem;" />
+                  </div>
+
+                  <div style="margin-bottom:12px;">
+                    <label style="display:block;font-size:0.82rem;font-weight:600;color:#334155;margin-bottom:4px;">Primary Category *</label>
+                    <select name="dropdown" id="ff_4_dropdown" required style="width:100%;padding:10px 14px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.88rem;background:#ffffff;" onchange="this.style.color = this.value ? '#0f172a' : '#94a3b8';">
+                      <option value="" disabled selected hidden>Select Category...</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style="display:block;font-size:0.82rem;font-weight:600;color:#334155;margin-bottom:4px;">Full Story Content *</label>
+                    <textarea name="message" id="ff_4_message" rows="4" placeholder="Share your experience, insights, or story narrative in full..." required style="width:100%;padding:10px 14px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.88rem;font-family:inherit;resize:none;height:95px;"></textarea>
+                  </div>
+                </div>
+
+                <!-- Action Buttons directly beneath inputs -->
+                <div style="display:flex;justify-content:center;align-items:center;gap:12px;margin-top:24px;">
+                  <button type="button" onclick="goToWizStep(1)" style="padding:11px 24px;border-radius:50px;border:1px solid #cbd5e1;background:#f8fafc;color:#475569;font-size:0.85rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                  </button>
+                  <button type="button" onclick="goToWizStep(3)" style="padding:11px 28px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-size:0.88rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);display:inline-flex;align-items:center;gap:8px;">
+                    Next Step: Cover Photo
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
                 </div>
               </div>
 
-              <div style="margin-bottom:24px;">
-                <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">Email Address *</label>
-                <input type="email" name="email" id="ff_4_email" placeholder="you@example.com" required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;" />
+              <!-- STEP 3 PANEL -->
+              <div id="wiz-panel-3" class="csp-wiz-panel" style="display:none;">
+                <div>
+                  <h3 style="font-family:'Merriweather',serif;font-size:1.25rem;color:#0f172a;margin-bottom:4px;">Cover Photo &amp; Submission</h3>
+                  <p style="font-size:0.85rem;color:#64748b;margin-bottom:16px;">Optional featured cover image and editorial agreement.</p>
+
+                  <!-- Hidden Real File Input -->
+                  <input type="file" id="wiz-cover-file" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none;" />
+
+                  <!-- Upload Drag Drop Area -->
+                  <div id="wiz-upload-dropzone" style="border:2px dashed #cbd5e1;border-radius:16px;padding:16px 14px;text-align:center;background:#f8fafc;margin-bottom:16px;cursor:pointer;transition:all 0.2s ease;" onclick="document.getElementById('wiz-cover-file').click();">
+                    <div id="wiz-upload-idle">
+                      <div style="width:38px;height:38px;border-radius:50%;background:#e0f2fe;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;">
+                        <!-- Flat Camera SVG -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                          <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                      </div>
+                      <div style="font-size:0.85rem;font-weight:600;color:#334155;" id="wiz-upload-title">Click to upload cover photograph</div>
+                      <div style="font-size:0.72rem;color:#94a3b8;margin-top:2px;">Supported: JPG, PNG, WEBP (Max 5MB)</div>
+                    </div>
+
+                    <!-- Uploaded Image Preview Box -->
+                    <div id="wiz-upload-success" style="display:none;align-items:center;justify-content:center;gap:12px;padding:4px;">
+                      <img id="wiz-preview-img" src="" alt="Cover preview" style="width:64px;height:48px;object-fit:cover;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);" />
+                      <div style="text-align:left;">
+                        <div style="font-size:0.82rem;font-weight:700;color:#10b981;display:flex;align-items:center;gap:5px;">
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                          Cover Image Ready!
+                        </div>
+                        <div style="font-size:0.72rem;color:#64748b;margin-top:2px;">Click to change selected photograph</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="display:flex;align-items:flex-start;gap:8px;">
+                    <input type="checkbox" id="wiz-agree" required style="margin-top:3px;accent-color:#00AEFE;" />
+                    <label for="wiz-agree" style="font-size:0.82rem;color:#475569;line-height:1.4;">I confirm this story is my original work and give Conspodium permission to publish it for our global readership.</label>
+                  </div>
+                </div>
+
+                <!-- Action Buttons directly beneath inputs -->
+                <div style="display:flex;justify-content:center;align-items:center;gap:12px;margin-top:24px;">
+                  <button type="button" onclick="goToWizStep(2)" style="padding:11px 24px;border-radius:50px;border:1px solid #cbd5e1;background:#f8fafc;color:#475569;font-size:0.85rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                  </button>
+                  <button type="submit" style="padding:12px 30px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 8px 25px rgba(0,174,254,0.45);display:inline-flex;align-items:center;gap:8px;">
+                    <!-- Flat Paper Plane SVG -->
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="22" y1="2" x2="11" y2="13"></line>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    Publish &amp; Submit Story Now
+                  </button>
+                </div>
               </div>
-
-              <div style="display:flex;justify-content:flex-end;">
-                <button type="button" onclick="goToWizStep(2)" style="padding:12px 32px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-size:0.9rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Next Step: Story Details &rarr;</button>
-              </div>
-            </div>
-
-            <!-- STEP 2 PANEL -->
-            <div id="wiz-panel-2" class="csp-wiz-panel" style="display:none;">
-              <h3 style="font-family:'Merriweather',serif;font-size:1.25rem;color:#0f172a;margin-bottom:6px;">Draft Your Story</h3>
-              <p style="font-size:0.88rem;color:#64748b;margin-bottom:24px;">Give your article a compelling title and select a category.</p>
-
-              <div style="margin-bottom:16px;">
-                <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">Story Title *</label>
-                <input type="text" name="subject" id="ff_4_subject" placeholder="Enter headline..." required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;" />
-              </div>
-
-              <div style="margin-bottom:16px;">
-                <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">Primary Category *</label>
-                <select name="dropdown" id="ff_4_dropdown" required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;background:#ffffff;">
-                  <option value="">Select Category...</option>
-                  <option value="Culture &amp; Heritage">🏛️ Culture &amp; Heritage</option>
-                  <option value="Innovation">💡 Innovation &amp; Tech</option>
-                  <option value="Art &amp; Entertainment">🎨 Art &amp; Entertainment</option>
-                  <option value="Community">👥 Community</option>
-                  <option value="Success Stories">🌟 Success Stories</option>
-                </select>
-              </div>
-
-              <div style="margin-bottom:24px;">
-                <label style="display:block;font-size:0.85rem;font-weight:600;color:#334155;margin-bottom:6px;">Full Story Content *</label>
-                <textarea name="message" id="ff_4_message" rows="8" placeholder="Share your experience, insights, or story narrative in full..." required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid #cbd5e1;font-size:0.9rem;font-family:inherit;"></textarea>
-              </div>
-
-              <div style="display:flex;justify-content:space-between;align-items:center;">
-                <button type="button" onclick="goToWizStep(1)" style="padding:12px 24px;border-radius:50px;border:1px solid #cbd5e1;background:#f8fafc;color:#475569;font-size:0.88rem;font-weight:600;cursor:pointer;">&larr; Back</button>
-                <button type="button" onclick="goToWizStep(3)" style="padding:12px 32px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#fff;font-size:0.9rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Next Step: Cover Photo &rarr;</button>
-              </div>
-            </div>
-
-            <!-- STEP 3 PANEL -->
-            <div id="wiz-panel-3" class="csp-wiz-panel" style="display:none;">
-              <h3 style="font-family:'Merriweather',serif;font-size:1.25rem;color:#0f172a;margin-bottom:6px;">Cover Photo &amp; Submission</h3>
-              <p style="font-size:0.88rem;color:#64748b;margin-bottom:24px;">Optional featured cover image and editorial agreement.</p>
-
-              <!-- Upload Drag Drop Simulation -->
-              <div style="border:2px dashed #cbd5e1;border-radius:16px;padding:32px;text-align:center;background:#f8fafc;margin-bottom:20px;cursor:pointer;" onclick="if(window.cspToast) window.cspToast('Cover image selected for story background.', 'info');">
-                <div style="font-size:2rem;margin-bottom:8px;">📸</div>
-                <div style="font-size:0.9rem;font-weight:600;color:#334155;">Click to upload optional cover photograph</div>
-                <div style="font-size:0.78rem;color:#94a3b8;margin-top:4px;">Supported: JPG, PNG, WEBP (Max 5MB)</div>
-              </div>
-
-              <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:24px;">
-                <input type="checkbox" id="wiz-agree" required style="margin-top:3px;" />
-                <label for="wiz-agree" style="font-size:0.85rem;color:#475569;line-height:1.4;">I confirm this story is my original work and give Conspodium permission to publish it for our global readership.</label>
-              </div>
-
-              <div style="display:flex;justify-content:space-between;align-items:center;">
-                <button type="button" onclick="goToWizStep(2)" style="padding:12px 24px;border-radius:50px;border:1px solid #cbd5e1;background:#f8fafc;color:#475569;font-size:0.88rem;font-weight:600;cursor:pointer;">&larr; Back</button>
-                <button type="submit" style="padding:14px 40px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-size:0.95rem;font-weight:700;cursor:pointer;box-shadow:0 8px 25px rgba(0,174,254,0.45);">🚀 Publish &amp; Submit Story Now</button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
 
 <script>
+// Animated Hero Testimonial Carousel Script
+(function(){
+  var currentHeroSlide = 0;
+  var heroTimer = null;
+
+  window.setHeroSlide = function(index) {
+    var slides = document.querySelectorAll('.csp-hero-slide');
+    var dots = document.querySelectorAll('#csp-hero-carousel-dots span');
+    if (!slides.length) return;
+
+    currentHeroSlide = (index + slides.length) % slides.length;
+
+    slides.forEach(function(s, i) {
+      if (i === currentHeroSlide) {
+        s.style.display = 'block';
+        setTimeout(function(){ s.style.opacity = '1'; }, 20);
+      } else {
+        s.style.opacity = '0';
+        setTimeout(function(){ if(i !== currentHeroSlide) s.style.display = 'none'; }, 400);
+      }
+    });
+
+    dots.forEach(function(d, i) {
+      if (i === currentHeroSlide) {
+        d.style.width = '20px';
+        d.style.background = '#00AEFE';
+      } else {
+        d.style.width = '6px';
+        d.style.background = 'rgba(255,255,255,0.4)';
+      }
+    });
+  };
+
+  function startHeroCarousel() {
+    if (heroTimer) clearInterval(heroTimer);
+    heroTimer = setInterval(function(){
+      setHeroSlide(currentHeroSlide + 1);
+    }, 4500);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    setHeroSlide(0);
+    startHeroCarousel();
+  });
+})();
+</script>
+
+        <!-- CSP 3-CARD CONTRIBUTOR TESTIMONIAL SHOWCASE -->
+        <div id="csp-contributor-showcase" style="max-width:1160px;margin:0 auto 80px;padding:0 20px;">
+          <div style="text-align:center;margin-bottom:40px;">
+            <span style="font-size:0.8rem;font-weight:700;color:#00AEFE;letter-spacing:1px;text-transform:uppercase;">Global Diaspora Voices</span>
+            <h2 style="font-family:'Merriweather',serif;font-size:1.8rem;color:#0f172a;margin-top:6px;">Why Share Your Story With Conspodium?</h2>
+            <p style="font-size:0.95rem;color:#64748b;max-width:600px;margin:8px auto 0;">Hear from global authors and creators who reached thousands of readers through our platform.</p>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:28px;">
+            <!-- Card 1 -->
+            <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+              <div>
+                <div style="display:flex;align-items:center;gap:4px;color:#f59e0b;font-size:1rem;margin-bottom:14px;">★★★★★</div>
+                <p style="font-size:0.9rem;line-height:1.6;color:#334155;font-style:italic;margin-bottom:20px;">"Conspodium gave my analysis on African Tech Investment a global stage. The reach across North America and Europe exceeded my expectations."</p>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;border-top:1px solid #f1f5f9;padding-top:16px;">
+                <img src="../uploads/author_avatar_kemi.png" alt="Dr. Kemi Adebayo" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" />
+                <div>
+                  <div style="font-size:0.9rem;font-weight:700;color:#0f172a;">Dr. Kemi Adebayo</div>
+                  <div style="font-size:0.78rem;color:#64748b;">Tech Founder • London, UK</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+              <div>
+                <div style="display:flex;align-items:center;gap:4px;color:#f59e0b;font-size:1rem;margin-bottom:14px;">★★★★★</div>
+                <p style="font-size:0.9rem;line-height:1.6;color:#334155;font-style:italic;margin-bottom:20px;">"Publishing my personal journey as a diaspora founder unlocked key investment partnerships in Nairobi and Lagos. Incredible community!"</p>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;border-top:1px solid #f1f5f9;padding-top:16px;">
+                <img src="../uploads/author_avatar_marcus.png" alt="Marcus Vance" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" />
+                <div>
+                  <div style="font-size:0.9rem;font-weight:700;color:#0f172a;">Marcus Vance</div>
+                  <div style="font-size:0.78rem;color:#64748b;">VC Partner • Atlanta, USA</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+              <div>
+                <div style="display:flex;align-items:center;gap:4px;color:#f59e0b;font-size:1rem;margin-bottom:14px;">★★★★★</div>
+                <p style="font-size:0.9rem;line-height:1.6;color:#334155;font-style:italic;margin-bottom:20px;">"As a creative director in Paris, finding an authentic platform was tough until I joined Conspodium. My feature received thousands of shares."</p>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;border-top:1px solid #f1f5f9;padding-top:16px;">
+                <img src="../uploads/author_avatar_amina.png" alt="Amina Diallo" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" />
+                <div>
+                  <div style="font-size:0.9rem;font-weight:700;color:#0f172a;">Amina Diallo</div>
+                  <div style="font-size:0.78rem;color:#64748b;">Creative Director • Paris, France</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Editorial Guarantee Banner -->
+          <div style="margin-top:36px;background:linear-gradient(110deg,#0f172a 0%,#1e293b 100%);border-radius:20px;padding:24px 32px;color:#ffffff;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div style="width:44px;height:44px;border-radius:50%;background:rgba(0,174,254,0.15);display:flex;align-items:center;justify-content:center;color:#00AEFE;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <div style="font-size:0.95rem;font-weight:700;color:#ffffff;">Editorial Excellence Guarantee</div>
+                <div style="font-size:0.8rem;color:#94a3b8;">Every submission is reviewed within 48 hours by our senior editors before global publication.</div>
+              </div>
+            </div>
+            <div style="font-size:0.85rem;font-weight:600;color:#00AEFE;background:rgba(0,174,254,0.1);padding:8px 18px;border-radius:50px;border:1px solid rgba(0,174,254,0.3);">
+              100% Free Author Syndication
+            </div>
+          </div>
+        </div>
+
+<script>
+window.uploadedCoverUrl = '';
+
+function loadSubmitCategories() {
+  var sel = document.getElementById('ff_4_dropdown');
+  if (!sel) return;
+  fetch(getRootUrl('api/categories.php'))
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+      if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        var html = '<option value="" disabled selected hidden>Select Category...</option>';
+        res.data.forEach(function(cat) {
+          var name = cat.name || cat.title || '';
+          if (name) {
+            html += '<option value="' + name.replace(/"/g, '&quot;') + '">' + name + '</option>';
+          }
+        });
+        sel.innerHTML = html;
+        sel.style.color = '#94a3b8';
+      }
+    })
+    .catch(function(err) {
+      console.warn('Could not load categories dynamically:', err);
+    });
+}
+
 function goToWizStep(stepNum) {
   var p1 = document.getElementById('wiz-panel-1');
   var p2 = document.getElementById('wiz-panel-2');
@@ -1576,27 +1899,121 @@ function goToWizStep(stepNum) {
   p3.style.display = 'none';
 
   if (stepNum === 1) {
-    p1.style.display = 'block';
+    p1.style.display = 'flex';
     if(bar) bar.style.width = '0%';
-    if(pill1) pill1.querySelector('.csp-wiz-num').style.background = 'linear-gradient(110deg,#00AEFE,#B71F71)';
-    if(pill2) pill2.querySelector('.csp-wiz-num').style.background = '#f1f5f9';
-    if(pill3) pill3.querySelector('.csp-wiz-num').style.background = '#f1f5f9';
+    
+    if(pill1) {
+      var num1 = pill1.querySelector('.csp-wiz-num');
+      var lbl1 = pill1.querySelector('span');
+      if(num1) { num1.style.background = 'linear-gradient(110deg,#00AEFE,#B71F71)'; num1.style.color = '#ffffff'; num1.innerHTML = '1'; }
+      if(lbl1) { lbl1.style.color = '#00AEFE'; lbl1.style.fontWeight = '700'; }
+    }
+    if(pill2) {
+      var num2 = pill2.querySelector('.csp-wiz-num');
+      var lbl2 = pill2.querySelector('span');
+      if(num2) { num2.style.background = '#f1f5f9'; num2.style.color = '#64748b'; num2.innerHTML = '2'; }
+      if(lbl2) { lbl2.style.color = '#64748b'; lbl2.style.fontWeight = '600'; }
+    }
+    if(pill3) {
+      var num3 = pill3.querySelector('.csp-wiz-num');
+      var lbl3 = pill3.querySelector('span');
+      if(num3) { num3.style.background = '#f1f5f9'; num3.style.color = '#64748b'; num3.innerHTML = '3'; }
+      if(lbl3) { lbl3.style.color = '#64748b'; lbl3.style.fontWeight = '600'; }
+    }
   } else if (stepNum === 2) {
-    p2.style.display = 'block';
+    p2.style.display = 'flex';
     if(bar) bar.style.width = '50%';
-    if(pill1) pill1.querySelector('.csp-wiz-num').style.background = '#10b981';
-    if(pill2) pill2.querySelector('.csp-wiz-num').style.background = 'linear-gradient(110deg,#00AEFE,#B71F71)';
-    if(pill3) pill3.querySelector('.csp-wiz-num').style.background = '#f1f5f9';
+
+    if(pill1) {
+      var num1 = pill1.querySelector('.csp-wiz-num');
+      var lbl1 = pill1.querySelector('span');
+      if(num1) { num1.style.background = '#10b981'; num1.style.color = '#ffffff'; num1.innerHTML = '✓'; }
+      if(lbl1) { lbl1.style.color = '#10b981'; lbl1.style.fontWeight = '600'; }
+    }
+    if(pill2) {
+      var num2 = pill2.querySelector('.csp-wiz-num');
+      var lbl2 = pill2.querySelector('span');
+      if(num2) { num2.style.background = 'linear-gradient(110deg,#00AEFE,#B71F71)'; num2.style.color = '#ffffff'; num2.innerHTML = '2'; }
+      if(lbl2) { lbl2.style.color = '#00AEFE'; lbl2.style.fontWeight = '700'; }
+    }
+    if(pill3) {
+      var num3 = pill3.querySelector('.csp-wiz-num');
+      var lbl3 = pill3.querySelector('span');
+      if(num3) { num3.style.background = '#f1f5f9'; num3.style.color = '#64748b'; num3.innerHTML = '3'; }
+      if(lbl3) { lbl3.style.color = '#64748b'; lbl3.style.fontWeight = '600'; }
+    }
   } else if (stepNum === 3) {
-    p3.style.display = 'block';
+    p3.style.display = 'flex';
     if(bar) bar.style.width = '100%';
-    if(pill1) pill1.querySelector('.csp-wiz-num').style.background = '#10b981';
-    if(pill2) pill2.querySelector('.csp-wiz-num').style.background = '#10b981';
-    if(pill3) pill3.querySelector('.csp-wiz-num').style.background = 'linear-gradient(110deg,#00AEFE,#B71F71)';
+
+    if(pill1) {
+      var num1 = pill1.querySelector('.csp-wiz-num');
+      var lbl1 = pill1.querySelector('span');
+      if(num1) { num1.style.background = '#10b981'; num1.style.color = '#ffffff'; num1.innerHTML = '✓'; }
+      if(lbl1) { lbl1.style.color = '#10b981'; lbl1.style.fontWeight = '600'; }
+    }
+    if(pill2) {
+      var num2 = pill2.querySelector('.csp-wiz-num');
+      var lbl2 = pill2.querySelector('span');
+      if(num2) { num2.style.background = '#10b981'; num2.style.color = '#ffffff'; num2.innerHTML = '✓'; }
+      if(lbl2) { lbl2.style.color = '#10b981'; lbl2.style.fontWeight = '600'; }
+    }
+    if(pill3) {
+      var num3 = pill3.querySelector('.csp-wiz-num');
+      var lbl3 = pill3.querySelector('span');
+      if(num3) { num3.style.background = 'linear-gradient(110deg,#00AEFE,#B71F71)'; num3.style.color = '#ffffff'; num3.innerHTML = '3'; }
+      if(lbl3) { lbl3.style.color = '#00AEFE'; lbl3.style.fontWeight = '700'; }
+    }
   }
 }
 
 (function(){
+  // Load categories from database
+  document.addEventListener('DOMContentLoaded', loadSubmitCategories);
+
+  // Handle Cover File Upload
+  var fileInput = document.getElementById('wiz-cover-file');
+  if (fileInput) {
+    fileInput.addEventListener('change', function() {
+      if (!fileInput.files || !fileInput.files[0]) return;
+      var file = fileInput.files[0];
+
+      var idleBox = document.getElementById('wiz-upload-idle');
+      var titleText = document.getElementById('wiz-upload-title');
+      var successBox = document.getElementById('wiz-upload-success');
+      var previewImg = document.getElementById('wiz-preview-img');
+
+      if (titleText) titleText.textContent = 'Uploading ' + file.name + '...';
+
+      var formData = new FormData();
+      formData.append('image', file);
+
+      fetch(getRootUrl('api/upload.php'), {
+        method: 'POST',
+        body: formData
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        if (res.success && res.image_url) {
+          window.uploadedCoverUrl = res.image_url;
+          if (previewImg) previewImg.src = res.image_url;
+          if (idleBox) idleBox.style.display = 'none';
+          if (successBox) successBox.style.display = 'flex';
+          if (window.cspToast) window.cspToast('Cover image uploaded successfully!', 'success');
+        } else {
+          if (titleText) titleText.textContent = 'Click to upload cover photograph';
+          if (window.cspToast) window.cspToast(res.error || 'Upload failed.', 'danger');
+        }
+      })
+      .catch(function(err) {
+        console.error('File upload error:', err);
+        if (titleText) titleText.textContent = 'Click to upload cover photograph';
+        if (window.cspToast) window.cspToast('File upload failed. Please try again.', 'danger');
+      });
+    });
+  }
+
+  // Handle Form Submission
   var form = document.getElementById('fluentform_4');
   if (!form) return;
   form.addEventListener('submit', function(e){
@@ -1611,8 +2028,8 @@ function goToWizStep(stepNum) {
     var content   = form.querySelector('[name="message"]')?.value || '';
 
     var btn = form.querySelector('button[type="submit"]');
-    var origText = btn ? btn.textContent : 'Submit Story';
-    if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+    var origHTML = btn ? btn.innerHTML : 'Publish &amp; Submit Story Now';
+    if (btn) { btn.disabled = true; btn.innerHTML = 'Submitting...'; }
 
     var apiUrl = getRootUrl('api/submissions.php');
 
@@ -1625,28 +2042,34 @@ function goToWizStep(stepNum) {
         category: category,
         bio: '',
         title: title,
-        content: content
+        content: content,
+        attachmentUrl: window.uploadedCoverUrl || ''
       })
     })
     .then(function(r){ return r.json(); })
     .then(function(res){
-      if (btn) { btn.disabled = false; btn.textContent = origText; }
+      if (btn) { btn.disabled = false; btn.innerHTML = origHTML; }
       if (res.success) {
         if (window.showSuccessModal) {
           window.showSuccessModal('Story Submitted Successfully! 🎉', res.message || 'Thank you! Your story has been submitted and is pending editorial review.');
-        } else {
+        } else if (window.cspToast) {
           cspToast(res.message || 'Story submitted successfully!', 'success');
         }
         form.reset();
+        window.uploadedCoverUrl = '';
+        var idleBox = document.getElementById('wiz-upload-idle');
+        var successBox = document.getElementById('wiz-upload-success');
+        if (idleBox) idleBox.style.display = 'block';
+        if (successBox) successBox.style.display = 'none';
         goToWizStep(1);
       } else {
-        cspToast(res.error || 'Failed to submit story.', 'danger');
+        if (window.cspToast) cspToast(res.error || 'Failed to submit story.', 'danger');
       }
     })
     .catch(function(err){
-      if (btn) { btn.disabled = false; btn.textContent = origText; }
+      if (btn) { btn.disabled = false; btn.innerHTML = origHTML; }
       console.error('Submission error:', err);
-      cspToast('Error submitting story. Please try again.', 'danger');
+      if (window.cspToast) cspToast('Error submitting story. Please try again.', 'danger');
     });
   });
 })();

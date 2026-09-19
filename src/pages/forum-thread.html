@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="thread-page-title">Discussion Topic — Conspodium Forum</title>
+  <meta name="description" content="Read full community discussion topic and replies on Conspodium Forum.">
+  <link rel="icon" href="/wp-content/uploads/2026/01/CONSPODIUM-NEW-2.png" sizes="32x32">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Merienda:wght@700&display=swap" rel="stylesheet">
+  
+  <!-- Elementor & Header/Footer Stylesheets -->
+  <link rel="stylesheet" id="dashicons-css" href="/wp-includes/css/dashicons.min._ver_6_8_7.css" media="all">
+  <link rel="stylesheet" id="hfe-widgets-style-css" href="/wp-content/plugins/header-footer-elementor/inc/widgets-css/frontend._ver_2_9_2.css" media="all">
+  <link rel="stylesheet" id="hfe-style-css" href="/wp-content/plugins/header-footer-elementor/assets/css/header-footer-elementor._ver_2_9_2.css" media="all">
+  <link rel="stylesheet" id="elementor-frontend-css" href="/wp-content/plugins/elementor/assets/css/frontend.min._ver_4_1_4.css" media="all">
+  <link rel="stylesheet" id="eael-general-css" href="/wp-content/plugins/essential-addons-for-elementor-lite/assets/front-end/css/view/general.min._ver_6_7_0.css" media="all">
+  <link rel="stylesheet" id="elementor-icons-css" href="/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min._ver_5_50_0.css" media="all">
+  <link rel="stylesheet" id="elementor-post-9-css" href="/wp-content/uploads/elementor/css/post-9._ver_1786118447.css" media="all">
+  <link rel="stylesheet" id="elementor-pro-css" href="/wp-content/plugins/elementor-pro/assets/css/frontend.min._ver_3_10_1.css" media="all">
+  <link rel="stylesheet" id="she-header-style-css" href="/wp-content/plugins/sticky-header-effects-for-elementor/assets/css/she-header-style._ver_2_1_6.css" media="all">
+  <link rel="stylesheet" id="elementor-post-1969-css" href="/wp-content/uploads/elementor/css/post-1969._ver_1786118447.css" media="all">
+  <link rel="stylesheet" id="hfe-nav-menu-widget-css" href="/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min._ver_3_26_0.css" media="all">
+  <link rel="stylesheet" id="ekit-widget-styles-css" href="/wp-content/plugins/elementskit-lite/widgets/init/assets/css/widget-styles._ver_3_10_02.css" media="all">
+
+  <link rel="stylesheet" id="elementor-post-1374-css" href="/wp-content/uploads/elementor/css/post-1374._ver_1786118447.css" media="all">
+  <link rel="stylesheet" href="/assets/index.css">
+
+  <!-- INCLUDE:header-fixes.html -->
+
+  <style>
+    :root {
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --border-card: #e2e8f0;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --blue-accent: #00AEFE;
+      --pink-accent: #B71F71;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .csp-thread-sec {
+      padding: 130px 4% 80px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+      .csp-thread-sec { padding: 100px 16px 50px; }
+      .csp-thread-main-card { padding: 20px 16px !important; border-radius: 18px !important; }
+      .csp-thread-heading { font-size: 1.5rem !important; }
+    }
+
+    .csp-reply-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .csp-reply-form-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    .csp-thread-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 36px;
+    }
+    @media (max-width: 900px) {
+      .csp-thread-layout { grid-template-columns: 1fr; gap: 24px; }
+    }
+
+    /* Main Card Styling */
+    .csp-thread-main-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: 0 4px 24px rgba(15,23,42,0.03);
+      margin-bottom: 28px;
+    }
+
+    .csp-thread-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #00AEFE;
+      background: rgba(0,174,254,0.08);
+      border: 1px solid rgba(0,174,254,0.25);
+      border-radius: 50px;
+      padding: 5px 14px;
+      margin-bottom: 16px;
+    }
+
+    .csp-thread-heading {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .csp-thread-meta-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 24px;
+      font-size: 0.88rem;
+      color: #64748b;
+    }
+
+    .csp-author-avatar-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00AEFE, #B71F71);
+      color: #ffffff;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .csp-thread-body-text {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #334155;
+      white-space: pre-wrap;
+      margin-bottom: 32px;
+    }
+
+    /* Replies Section */
+    .csp-replies-heading {
+      font-family: 'Merriweather', serif;
+      font-size: 1.3rem;
+      color: #0f172a;
+      margin-bottom: 20px;
+      padding-top: 24px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .csp-reply-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 14px !important;
+      margin-bottom: 8px !important;
+    }
+    .csp-reply-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .csp-reply-author {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 0.92rem;
+    }
+    .csp-reply-date {
+      font-size: 0.78rem;
+      color: #64748b;
+    }
+    .csp-reply-content {
+      font-size: 0.95rem;
+      color: #334155;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    /* Input & Form Styling */
+    .csp-input {
+      width: 100%; background: #ffffff; border: 1px solid #cbd5e1;
+      border-radius: 12px; padding: 12px 16px; color: #0f172a; font-size: 0.92rem; margin-bottom: 14px;
+      font-family: 'Inter', sans-serif;
+      box-sizing: border-box !important;
+    }
+    .csp-input:focus { outline: none; border-color: #00AEFE; box-shadow: 0 0 0 3px rgba(0,174,254,0.15); }
+
+    .csp-btn-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 50px;
+      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
+      color: #fff; text-decoration: none; font-weight: 600;
+      border: none; cursor: pointer; box-shadow: 0 6px 20px rgba(0,174,254,0.3);
+      transition: transform 0.2s, opacity 0.2s;
+      box-sizing: border-box !important;
+      max-width: 100%;
+    }
+    .csp-btn-pill:hover { transform: translateY(-2px); opacity: 0.95; }
+
+    .csp-back-forum-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 50px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+      transition: all 0.2s ease;
+    }
+    .csp-back-forum-btn:hover {
+      background: #f8fafc;
+      border-color: #00AEFE;
+      color: #00AEFE;
+      transform: translateX(-3px);
+      box-shadow: 0 4px 14px rgba(0, 174, 254, 0.15);
+    }
+
+    /* Sidebar Cards */
+    .csp-sidebar-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(15,23,42,0.03);
+      box-sizing: border-box !important;
+      overflow: hidden;
+    }
+    .csp-sidebar-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.1rem;
+      color: #0f172a;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #00AEFE;
+    }
+    .csp-rel-topic-item {
+      display: block;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .csp-rel-topic-item:last-child { border-bottom: none; }
+    .csp-rel-topic-item:hover { opacity: 0.85; }
+    .csp-rel-topic-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #0f172a;
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+    .csp-rel-topic-meta {
+      font-size: 0.78rem;
+      color: #64748b;
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Skeleton Loader Styles */
+    @keyframes csp-shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .csp-skeleton-pulse {
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%) !important;
+      background-size: 200% 100% !important;
+      animation: csp-shimmer 1.5s infinite linear !important;
+      border-radius: 8px !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- INCLUDE:wp-header.html -->
+
+  <main class="csp-thread-sec">
+    <!-- Breadcrumb & Top Right Navigation -->
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+      <div style="font-size:0.85rem;color:#64748b;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <a href="/" style="color:#64748b;text-decoration:none;">Home</a> <span>/</span> 
+        <a href="/forum/" style="color:#64748b;text-decoration:none;">Discussion Forum</a> <span>/</span> 
+        <a href="/forum/" id="breadcrumb-cat" style="color:#64748b;text-decoration:none;">General Discussion</a> <span>/</span>
+        <strong id="breadcrumb-title" style="color:#00AEFE;font-weight:600;">Thread Title</strong>
+      </div>
+      <a href="/forum/" class="csp-back-forum-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to All Forums
+      </a>
+    </div>
+
+    <div class="csp-thread-layout">
+      
+      <!-- Main Content Column -->
+      <div>
+        <div class="csp-thread-main-card">
+          <span class="csp-thread-badge" id="th-category-badge">General Discussion</span>
+          <div id="th-title-container">
+            <h1 class="csp-thread-heading" id="th-title"><div class="csp-skeleton-pulse" style="width:80%;height:32px;border-radius:8px;"></div></h1>
+          </div>
+          
+          <div class="csp-thread-meta-bar">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="csp-author-avatar-badge" id="th-author-avatar">C</div>
+              <div>
+                <strong id="th-author-name" style="color:#0f172a;display:block;">Author Name</strong>
+                <span id="th-created-date" style="font-size:0.8rem;color:#64748b;">Date</span>
+              </div>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:16px;font-weight:500;">
+              <span>👁️ <span id="th-views-count">0</span> Views</span>
+              <span style="color:#00AEFE;font-weight:600;">💬 <span id="th-replies-count">0</span> Replies</span>
+            </div>
+          </div>
+
+          <div class="csp-thread-body-text" id="th-content-body">
+            <div class="csp-skeleton-pulse" style="width:100%;height:18px;margin-bottom:10px;border-radius:4px;"></div>
+            <div class="csp-skeleton-pulse" style="width:95%;height:18px;margin-bottom:10px;border-radius:4px;"></div>
+            <div class="csp-skeleton-pulse" style="width:90%;height:18px;margin-bottom:10px;border-radius:4px;"></div>
+            <div class="csp-skeleton-pulse" style="width:60%;height:18px;margin-bottom:20px;border-radius:4px;"></div>
+          </div>
+
+          <!-- Replies Section -->
+          <h2 class="csp-replies-heading">Discussion Replies (<span id="th-replies-heading-count">0</span>)</h2>
+          <div id="thread-replies-list">
+            <div class="csp-reply-card">
+              <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+                <div class="csp-skeleton-pulse" style="width:120px;height:16px;border-radius:6px;"></div>
+                <div class="csp-skeleton-pulse" style="width:80px;height:14px;border-radius:4px;"></div>
+              </div>
+              <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:6px;border-radius:4px;"></div>
+              <div class="csp-skeleton-pulse" style="width:70%;height:14px;border-radius:4px;"></div>
+            </div>
+            <div class="csp-reply-card">
+              <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+                <div class="csp-skeleton-pulse" style="width:100px;height:16px;border-radius:6px;"></div>
+                <div class="csp-skeleton-pulse" style="width:80px;height:14px;border-radius:4px;"></div>
+              </div>
+              <div class="csp-skeleton-pulse" style="width:95%;height:14px;margin-bottom:6px;border-radius:4px;"></div>
+              <div class="csp-skeleton-pulse" style="width:50%;height:14px;border-radius:4px;"></div>
+            </div>
+          </div>
+
+          <!-- Reply Form -->
+          <form id="form-thread-reply" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:20px;padding:24px;margin-top:32px;">
+            <h3 style="font-family:'Merriweather',serif;font-size:1.1rem;color:#0f172a;margin-bottom:14px;">Join the Conversation</h3>
+            
+            <div id="reply-to-badge" style="display:none;background:#e0f2fe;color:#0369a1;padding:6px 14px;border-radius:20px;font-size:0.8rem;font-weight:600;margin-bottom:12px;align-items:center;justify-content:space-between;width:fit-content;">
+              <span>Replying to <strong id="reply-to-name">@User</strong></span>
+              <button type="button" onclick="cancelReplyTo()" style="background:none;border:none;color:#0369a1;font-weight:bold;cursor:pointer;margin-left:10px;">✖</button>
+            </div>
+
+            <div class="csp-reply-form-grid">
+              <input type="text" id="rp-name" class="csp-input" placeholder="Your Name *" required>
+              <input type="email" id="rp-email" class="csp-input" placeholder="Your Email *" required>
+            </div>
+            <textarea id="rp-content" class="csp-input" rows="4" placeholder="Write your reply or contribution..." required></textarea>
+            <button type="submit" class="csp-btn-pill">Post Reply →</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Sidebar Column -->
+      <div>
+        <div class="csp-sidebar-card">
+          <h3 class="csp-sidebar-title">Related Forum Topics</h3>
+          <div id="related-threads-list">
+            <div style="padding:10px 0;border-bottom:1px solid #f1f5f9;">
+              <div class="csp-skeleton-pulse" style="width:85%;height:16px;margin-bottom:8px;border-radius:4px;"></div>
+              <div class="csp-skeleton-pulse" style="width:50%;height:12px;border-radius:4px;"></div>
+            </div>
+            <div style="padding:10px 0;border-bottom:1px solid #f1f5f9;">
+              <div class="csp-skeleton-pulse" style="width:90%;height:16px;margin-bottom:8px;border-radius:4px;"></div>
+              <div class="csp-skeleton-pulse" style="width:45%;height:12px;border-radius:4px;"></div>
+            </div>
+            <div style="padding:10px 0;">
+              <div class="csp-skeleton-pulse" style="width:75%;height:16px;margin-bottom:8px;border-radius:4px;"></div>
+              <div class="csp-skeleton-pulse" style="width:55%;height:12px;border-radius:4px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="csp-sidebar-card" style="background:linear-gradient(135deg, #0f172a, #1e293b);color:#ffffff;border:none;">
+          <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#ffffff;margin-bottom:10px;">Have a Question or Topic?</h3>
+          <p style="font-size:0.88rem;color:#cbd5e1;line-height:1.55;margin-bottom:20px;">Start a new discussion thread and engage with scholars, creators, and community members across the global diaspora.</p>
+          <a href="/forum/" class="csp-btn-pill" style="width:100%;justify-content:center;text-decoration:none;">💬 Return to Forum</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+<!-- INCLUDE:wp-footer.html -->
+
+  <script>
+    (function(){
+      var urlParams = new URLSearchParams(window.location.search);
+      var threadId = urlParams.get('id') || 1;
+      var currentParentId = null;
+
+      window.setReplyParent = function(parentId, authorName) {
+        currentParentId = parentId;
+        document.getElementById('reply-to-name').textContent = '@' + authorName;
+        document.getElementById('reply-to-badge').style.display = 'inline-flex';
+        document.getElementById('form-thread-reply').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('rp-content').focus();
+      };
+
+      window.cancelReplyTo = function() {
+        currentParentId = null;
+        document.getElementById('reply-to-badge').style.display = 'none';
+      };
+
+      window.toggleInlineReplyForm = function(parentId, authorName) {
+        document.querySelectorAll('.csp-inline-reply-box').forEach(function(el) {
+          el.style.display = 'none';
+        });
+
+        var box = document.getElementById('inline-reply-box-' + parentId);
+        if (box) {
+          box.style.display = 'block';
+          if (window.syncCommenterSessionUI) window.syncCommenterSessionUI();
+          var textInput = document.getElementById('inline-text-' + parentId);
+          if (textInput) textInput.focus();
+        }
+      };
+
+      window.hideInlineReplyForm = function(parentId) {
+        var box = document.getElementById('inline-reply-box-' + parentId);
+        if (box) box.style.display = 'none';
+      };
+
+      window.submitInlineReply = function(parentId) {
+        var session = window.getCommenterSession ? window.getCommenterSession() : null;
+        var nameInput = document.getElementById('inline-name-' + parentId);
+        var emailInput = document.getElementById('inline-email-' + parentId);
+        var textInput = document.getElementById('inline-text-' + parentId);
+
+        var authorName = session ? session.name : (nameInput ? nameInput.value.trim() : '');
+        var authorEmail = session ? session.email : (emailInput ? emailInput.value.trim() : '');
+        var content = textInput ? textInput.value.trim() : '';
+
+        if (!authorName || !authorEmail || !content) {
+          if (window.cspToast) window.cspToast('Please fill in all reply fields.', 'danger');
+          else alert('Please fill in all reply fields.');
+          return;
+        }
+
+        var payload = {
+          thread_id: threadId,
+          parent_id: parentId,
+          author_name: authorName,
+          author_email: authorEmail,
+          content: content
+        };
+
+        fetch('/api/forum.php?action=create_reply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success) {
+            if (window.saveCommenterSession) window.saveCommenterSession(authorName, authorEmail);
+            hideInlineReplyForm(parentId);
+            if (window.cspToast) window.cspToast('Reply posted successfully!', 'success');
+            loadThreadDetail();
+          } else {
+            if (window.cspToast) window.cspToast(res.error || 'Failed to post reply', 'danger');
+            else alert(res.error || 'Failed to post reply');
+          }
+        });
+      };
+
+      window.likeComment = function(btn) {
+        if (btn.classList.contains('liked')) {
+          btn.classList.remove('liked');
+          btn.style.color = '#65676b';
+          btn.textContent = 'Like';
+        } else {
+          btn.classList.add('liked');
+          btn.style.color = '#1877f2';
+          btn.innerHTML = '👍 Liked';
+        }
+      };
+
+      function renderReplyTree(replies) {
+        if (!replies || replies.length === 0) {
+          return '<div style="color:#65676b;font-size:0.9rem;padding:12px 0;">No replies yet. Be the first to share your thoughts below!</div>';
+        }
+
+        var byId = {};
+        var byParent = {};
+
+        replies.forEach(function(r) { byId[r.id] = r; });
+        replies.forEach(function(r) {
+          if (r.parent_id && byId[r.parent_id]) {
+            if (!byParent[r.parent_id]) byParent[r.parent_id] = [];
+            byParent[r.parent_id].push(r);
+          }
+        });
+
+        var topLevel = replies.filter(function(r) {
+          return !r.parent_id || !byId[r.parent_id];
+        });
+
+        function renderNodes(nodeList, depth) {
+          var html = '';
+          nodeList.forEach(function(rp) {
+            var isChild = depth > 0;
+            var parentAuthor = rp.parent_id && byId[rp.parent_id] ? byId[rp.parent_id].author_name : '';
+            var children = byParent[rp.id] || [];
+            var safeAuthor = (rp.author_name || 'User').replace(/'/g, "\\'");
+            var dateStr = rp.created_at ? rp.created_at.slice(0, 16) : '';
+            var initial = (rp.author_name || 'U').charAt(0).toUpperCase();
+
+            html += `
+              <div class="fb-comment-item" style="display:flex;gap:8px;margin-bottom:10px;align-items:flex-start;">
+                <div style="width:${isChild ? '28px' : '36px'};height:${isChild ? '28px' : '36px'};border-radius:50%;background:linear-gradient(135deg,#00AEFE,#B71F71);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:${isChild ? '0.78rem' : '0.95rem'};flex-shrink:0;margin-top:2px;">
+                  ${initial}
+                </div>
+
+                <div style="flex:1;max-width:100%;overflow:hidden;">
+                  <!-- Facebook Grey Comment Bubble -->
+                  <div style="background:#f0f2f5;border-radius:18px;padding:8px 14px;display:inline-block;max-width:100%;box-sizing:border-box;text-align:left;">
+                    <div style="font-weight:700;font-size:0.85rem;color:#050505;margin:0 0 2px 0;line-height:1.2;text-align:left;display:flex;align-items:center;gap:4px;">
+                      <span>${rp.author_name}</span>
+                    </div>
+                    <div style="font-size:0.88rem;color:#050505;line-height:1.35;text-align:left;white-space:pre-wrap;word-break:break-word;">${parentAuthor ? `<span style="font-weight:600;color:#00AEFE;margin-right:4px;">@${parentAuthor}</span>` : ''}${(rp.content || '').trim()}</div>
+                  </div>
+
+                  <!-- Facebook Action Bar (Like · Reply · Date) -->
+                  <div style="display:flex;align-items:center;gap:12px;margin-top:2px;margin-left:8px;font-size:0.75rem;font-weight:700;color:#65676b;">
+                    <button type="button" onclick="likeComment(this)" style="background:none;border:none;color:#65676b;font-weight:700;font-size:0.75rem;cursor:pointer;padding:0;">Like</button>
+                    <button type="button" onclick="toggleInlineReplyForm(${rp.id}, '${safeAuthor}')" style="background:none;border:none;color:#65676b;font-weight:700;font-size:0.75rem;cursor:pointer;padding:0;">Reply</button>
+                    <span style="font-weight:400;color:#8a8d91;">${dateStr}</span>
+                  </div>
+
+                  <!-- INLINE FB NESTED REPLY FORM -->
+                  <div id="inline-reply-box-${rp.id}" class="csp-inline-reply-box" style="display:none;margin-top:8px;padding:10px 14px;background:#f0f2f5;border-radius:16px;">
+                    <div style="font-size:0.75rem;font-weight:600;color:#00AEFE;margin-bottom:6px;">Replying to @${rp.author_name}</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+                      <input type="text" id="inline-name-${rp.id}" class="csp-input" style="margin-bottom:0;padding:6px 12px;font-size:0.82rem;border-radius:20px;background:#fff;border:1px solid #ccd0d5;" placeholder="Your Name *" required>
+                      <input type="email" id="inline-email-${rp.id}" class="csp-input" style="margin-bottom:0;padding:6px 12px;font-size:0.82rem;border-radius:20px;background:#fff;border:1px solid #ccd0d5;" placeholder="Your Email *" required>
+                    </div>
+                    <textarea id="inline-text-${rp.id}" class="csp-input" rows="2" style="margin-bottom:6px;padding:8px 12px;font-size:0.82rem;border-radius:14px;background:#fff;border:1px solid #ccd0d5;" placeholder="Write a reply..." required></textarea>
+                    <div style="display:flex;gap:6px;justify-content:flex-end;">
+                      <button type="button" onclick="hideInlineReplyForm(${rp.id})" style="padding:4px 14px;border-radius:20px;background:#e4e6eb;color:#050505;border:none;font-weight:600;font-size:0.75rem;cursor:pointer;">Cancel</button>
+                      <button type="button" onclick="submitInlineReply(${rp.id})" style="padding:4px 16px;border-radius:20px;background:#00AEFE;color:#fff;border:none;font-weight:600;font-size:0.75rem;cursor:pointer;">Post</button>
+                    </div>
+                  </div>
+
+                  ${children.length > 0 ? `
+                    <div class="csp-nested-replies-list" style="margin-top:8px;padding-left:10px;border-left:2px solid #e4e6eb;display:flex;flex-direction:column;gap:6px;">
+                      ${renderNodes(children, depth + 1)}
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `;
+          });
+          return html;
+        }
+
+        return renderNodes(topLevel, 0);
+      }
+
+      function loadThreadDetail() {
+        fetch('/api/forum.php?action=thread&id=' + threadId)
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (!res.success || !res.data || !res.data.thread) {
+              document.getElementById('th-title').textContent = 'Thread Not Found';
+              document.getElementById('th-content-body').textContent = 'The requested discussion topic does not exist or has been removed.';
+              return;
+            }
+
+            var t = res.data.thread;
+            var replies = res.data.replies || [];
+
+            document.getElementById('thread-page-title').textContent = t.title + ' — Conspodium Forum';
+            document.getElementById('breadcrumb-cat').textContent = t.category;
+            document.getElementById('breadcrumb-title').textContent = t.title;
+            document.getElementById('th-category-badge').textContent = (t.is_pinned ? '📌 Pinned • ' : '') + t.category;
+            document.getElementById('th-title').textContent = t.title;
+            document.getElementById('th-author-name').textContent = t.author_name;
+            document.getElementById('th-author-avatar').textContent = t.author_name ? t.author_name.charAt(0).toUpperCase() : 'C';
+            document.getElementById('th-created-date').textContent = t.created_at ? t.created_at.slice(0,16) : 'Recently';
+            document.getElementById('th-views-count').textContent = t.views || 0;
+            document.getElementById('th-replies-count').textContent = replies.length;
+            document.getElementById('th-replies-heading-count').textContent = replies.length;
+            document.getElementById('th-content-body').textContent = t.content;
+
+            // Render Threaded Replies nested inside parent cards
+            var rContainer = document.getElementById('thread-replies-list');
+            rContainer.innerHTML = renderReplyTree(replies);
+          });
+      }
+
+      function loadRelatedTopics() {
+        fetch('/api/forum.php?action=threads&category=All')
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (!res.success || !res.data) return;
+            var container = document.getElementById('related-threads-list');
+            var others = res.data.filter(function(t){ return String(t.id) !== String(threadId); }).slice(0, 4);
+
+            if (others.length === 0) {
+              container.innerHTML = '<p style="color:#64748b;font-size:0.85rem;">No other topics available right now.</p>';
+              return;
+            }
+
+            container.innerHTML = '';
+            others.forEach(function(t){
+              container.innerHTML += `
+                <a href="/forum/thread/?id=${t.id}" class="csp-rel-topic-item">
+                  <div class="csp-rel-topic-title">${t.title}</div>
+                  <div class="csp-rel-topic-meta">
+                    <span style="color:#00AEFE;">${t.category}</span>
+                    <span>💬 ${t.reply_count || 0} Replies</span>
+                  </div>
+                </a>
+              `;
+            });
+          });
+      }
+
+      // Reply Form Submit
+      document.getElementById('form-thread-reply').onsubmit = function(e){
+        e.preventDefault();
+        var session = window.getCommenterSession ? window.getCommenterSession() : null;
+        var authorName = session ? session.name : document.getElementById('rp-name').value.trim();
+        var authorEmail = session ? session.email : document.getElementById('rp-email').value.trim();
+        var content = document.getElementById('rp-content').value.trim();
+
+        if (!authorName || !authorEmail || !content) {
+          if (window.cspToast) window.cspToast('Please fill in all fields.', 'danger');
+          else alert('Please fill in all fields.');
+          return;
+        }
+
+        var payload = {
+          thread_id: threadId,
+          parent_id: currentParentId,
+          author_name: authorName,
+          author_email: authorEmail,
+          content: content
+        };
+
+        fetch('/api/forum.php?action=create_reply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success) {
+            if (window.saveCommenterSession) window.saveCommenterSession(authorName, authorEmail);
+            cancelReplyTo();
+            document.getElementById('rp-content').value = '';
+            if (window.cspToast) window.cspToast('Reply posted successfully!', 'success');
+            loadThreadDetail();
+          } else { alert(res.error || 'Failed to post reply'); }
+        });
+      };
+
+      loadThreadDetail();
+      loadRelatedTopics();
+      if (window.syncCommenterSessionUI) window.syncCommenterSessionUI();
+    })();
+  </script>
+</body>
+</html>

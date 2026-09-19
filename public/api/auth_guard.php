@@ -6,6 +6,10 @@ $isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERC
             !empty($_ENV['NOW_REGION']) || !empty($_SERVER['NOW_REGION']) ||
             strpos(__DIR__, '/var/task') !== false || file_exists('/var/task');
 
+$isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+           (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+           (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
+
 if (session_status() === PHP_SESSION_NONE) {
     if ($isVercel) {
         @session_save_path('/tmp');
@@ -13,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
     @session_set_cookie_params([
         'lifetime' => 86400 * 7,
         'path' => '/',
-        'secure' => true,
+        'secure' => $isHttps,
         'httponly' => true,
         'samesite' => 'Lax'
     ]);
@@ -28,8 +32,6 @@ function requireAdmin() {
 
     // 2. Check Admin Auth Token Header / Query Param
     $tokenSecret = "conspodium_cms_secret_token_key";
-    $expectedToken = md5($tokenSecret . '_1_admin');
-
     $clientToken = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
     if (empty($clientToken) && !empty($_SERVER['HTTP_AUTHORIZATION'])) {
         if (preg_match('/Bearer\s+(\S+)/i', $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
@@ -37,8 +39,21 @@ function requireAdmin() {
         }
     }
 
-    if (!empty($clientToken) && (hash_equals($expectedToken, $clientToken) || $clientToken === 'conspodium_admin_session_token')) {
-        return;
+    if (!empty($clientToken)) {
+        if ($clientToken === 'conspodium_admin_session_token') {
+            return;
+        }
+        global $pdo;
+        if (isset($pdo)) {
+            $stmt = $pdo->query("SELECT id, username FROM admins");
+            $admins = $stmt->fetchAll();
+            foreach ($admins as $admin) {
+                $expectedToken = md5($tokenSecret . '_' . $admin['id'] . '_' . $admin['username']);
+                if (hash_equals($expectedToken, $clientToken)) {
+                    return;
+                }
+            }
+        }
     }
 
     // 3. Serverless Vercel Environment Read-Only Safety Fallback for GET requests

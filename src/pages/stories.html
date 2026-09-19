@@ -2037,6 +2037,17 @@ e-page-transition,
   cursor: not-allowed;
   transform: none;
 }
+/* Skeleton Loader Styles */
+@keyframes csp-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.csp-skeleton-pulse {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%) !important;
+  background-size: 200% 100% !important;
+  animation: csp-shimmer 1.5s infinite linear !important;
+  border-radius: 8px !important;
+}
 </style>
 <script>
 (function(){
@@ -2050,6 +2061,32 @@ e-page-transition,
   function loadStoriesPage(page) {
     currentPage = page;
     var offset = (page - 1) * perPage;
+
+    if (appender) {
+      var skelHtml = '';
+      for (var i = 0; i < 4; i++) {
+        skelHtml += `
+          <article class="eael-grid-post eael-post-grid-column" style="background:#ffffff;border:none!important;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);pointer-events:none;">
+            <div class="eael-grid-post-holder">
+              <div class="eael-grid-post-holder-inner">
+                <div class="csp-skeleton-pulse" style="height:200px;width:100%;"></div>
+                <div style="padding:20px;">
+                  <div class="csp-skeleton-pulse" style="width:50%;height:14px;margin-bottom:10px;border-radius:4px;"></div>
+                  <div class="csp-skeleton-pulse" style="width:85%;height:22px;margin-bottom:10px;border-radius:6px;"></div>
+                  <div class="csp-skeleton-pulse" style="width:95%;height:14px;margin-bottom:6px;border-radius:4px;"></div>
+                  <div class="csp-skeleton-pulse" style="width:60%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
+                  <div style="display:flex;justify-content:space-between;border-top:1px solid #f1f5f9;padding-top:12px;">
+                    <div class="csp-skeleton-pulse" style="width:80px;height:14px;border-radius:4px;"></div>
+                    <div class="csp-skeleton-pulse" style="width:70px;height:14px;border-radius:4px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+      appender.innerHTML = skelHtml;
+    }
 
     fetch(getRootUrl('api/posts.php?limit=' + perPage + '&offset=' + offset))
       .then(function(r){ return r.json(); })

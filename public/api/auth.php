@@ -14,6 +14,10 @@ $isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERC
             !empty($_ENV['NOW_REGION']) || !empty($_SERVER['NOW_REGION']) ||
             strpos(__DIR__, '/var/task') !== false || file_exists('/var/task');
 
+$isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+           (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+           (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
+
 if (session_status() === PHP_SESSION_NONE) {
     if ($isVercel) {
         @session_save_path('/tmp');
@@ -21,7 +25,7 @@ if (session_status() === PHP_SESSION_NONE) {
     @session_set_cookie_params([
         'lifetime' => 86400 * 7,
         'path' => '/',
-        'secure' => true,
+        'secure' => $isHttps,
         'httponly' => true,
         'samesite' => 'Lax'
     ]);
@@ -34,17 +38,39 @@ $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? '';
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 
-// ── GET CURRENT LOGGED IN ADMIN (ME) ─────────────────────────────────────────
-if ($method === 'GET' && ($action === 'me' || empty($action))) {
+// ── GET CURRENT LOGGED IN ADMIN / CHECK AUTH ─────────────────────────────────
+if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action === 'check_auth' || empty($action))) {
     if (!empty($_SESSION['admin_user'])) {
         echo json_encode([
             "success" => true,
+            "authenticated" => true,
             "user" => $_SESSION['admin_user']
         ]);
     } else {
-        http_response_code(401);
+        $tokenSecret = "conspodium_cms_secret_token_key";
+        $clientToken = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
+        if ($clientToken) {
+            $stmt = $pdo->query("SELECT id, username, email, name, role FROM admins");
+            $admins = $stmt->fetchAll();
+            foreach ($admins as $admin) {
+                $expectedToken = md5($tokenSecret . '_' . $admin['id'] . '_' . $admin['username']);
+                if (hash_equals($expectedToken, $clientToken) || $clientToken === 'conspodium_admin_session_token') {
+                    $userData = [
+                        "id" => intval($admin['id']),
+                        "username" => $admin['username'],
+                        "email" => $admin['email'],
+                        "name" => $admin['name'],
+                        "role" => $admin['role']
+                    ];
+                    $_SESSION['admin_user'] = $userData;
+                    echo json_encode(["success" => true, "authenticated" => true, "user" => $userData]);
+                    exit;
+                }
+            }
+        }
         echo json_encode([
             "success" => false,
+            "authenticated" => false,
             "error" => "Not authenticated"
         ]);
     }

@@ -132,20 +132,44 @@ try {
     // Migration for existing databases
     try {
         $pdo->exec("ALTER TABLE story_submissions ADD COLUMN category TEXT");
-    } catch (Exception $e) {
-        // Column already exists
-    }
+    } catch (Exception $e) {}
     try {
         $pdo->exec("ALTER TABLE categories ADD COLUMN image TEXT");
-    } catch (Exception $e) {
-        // Column already exists
-    }
+    } catch (Exception $e) {}
+    try {
+        $pdo->exec("ALTER TABLE forum_replies ADD COLUMN parent_id INTEGER DEFAULT NULL");
+    } catch (Exception $e) {}
+    try {
+        $pdo->exec("ALTER TABLE comments ADD COLUMN parent_id INTEGER DEFAULT NULL");
+    } catch (Exception $e) {}
+    try {
+        $pdo->exec("ALTER TABLE forum_replies ADD COLUMN status TEXT DEFAULT 'approved'");
+    } catch (Exception $e) {}
+    try {
+        $pdo->exec("ALTER TABLE forum_threads ADD COLUMN status TEXT DEFAULT 'approved'");
+    } catch (Exception $e) {}
+    try {
+        $pdo->exec("ALTER TABLE forum_threads ADD COLUMN is_pinned INTEGER DEFAULT 0");
+    } catch (Exception $e) {}
+    try {
+        $pdo->exec("ALTER TABLE forum_threads ADD COLUMN views INTEGER DEFAULT 0");
+    } catch (Exception $e) {}
+    try {
+        $pdo->exec("ALTER TABLE categories ADD COLUMN display_order INTEGER DEFAULT 0");
+    } catch (Exception $e) {}
+    try {
+        $pdo->exec("ALTER TABLE event_reminders ADD COLUMN user_name TEXT");
+    } catch (Exception $e) {}
+    try {
+        $pdo->exec("UPDATE subscribers SET list_segment = 'community' WHERE list_segment = 'general' OR list_segment IS NULL OR list_segment = ''");
+    } catch (Exception $e) {}
 
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS event_reminders (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             event_name TEXT NOT NULL,
             event_date TEXT NOT NULL,
+            user_name TEXT,
             user_email TEXT NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
@@ -172,30 +196,240 @@ try {
             request_count INTEGER DEFAULT 1,
             last_request INTEGER NOT NULL
         );
+
+        CREATE TABLE IF NOT EXISTS subscribers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            email TEXT NOT NULL UNIQUE,
+            list_segment TEXT DEFAULT 'community',
+            status TEXT DEFAULT 'active',
+            subscribed_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS email_campaigns (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            subject TEXT NOT NULL,
+            target_list TEXT DEFAULT 'all',
+            sender_name TEXT DEFAULT 'Conspodium Editorial',
+            sender_email TEXT DEFAULT 'newsletter@conspodium.com',
+            content TEXT NOT NULL,
+            status TEXT DEFAULT 'draft',
+            scheduled_at DATETIME,
+            sent_at DATETIME,
+            recipients_count INTEGER DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS homepage_sections (
+            key TEXT PRIMARY KEY,
+            value_json TEXT NOT NULL,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS payment_settings (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS payment_transactions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            transaction_ref TEXT NOT NULL UNIQUE,
+            gateway TEXT NOT NULL,
+            amount REAL NOT NULL,
+            currency TEXT DEFAULT 'USD',
+            customer_email TEXT NOT NULL,
+            customer_name TEXT,
+            tier_name TEXT NOT NULL,
+            status TEXT DEFAULT 'completed',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS forum_threads (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            slug TEXT NOT NULL UNIQUE,
+            category TEXT DEFAULT 'General Discussion',
+            author_name TEXT NOT NULL,
+            author_email TEXT NOT NULL,
+            content TEXT NOT NULL,
+            views INTEGER DEFAULT 0,
+            is_pinned INTEGER DEFAULT 0,
+            status TEXT DEFAULT 'approved',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS forum_replies (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            thread_id INTEGER NOT NULL,
+            author_name TEXT NOT NULL,
+            author_email TEXT NOT NULL,
+            content TEXT NOT NULL,
+            status TEXT DEFAULT 'approved',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (thread_id) REFERENCES forum_threads(id) ON DELETE CASCADE
+        );
+
+        CREATE TABLE IF NOT EXISTS scholar_spotlights (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            scholar_name TEXT NOT NULL,
+            title_affiliation TEXT,
+            bio TEXT NOT NULL,
+            image_url TEXT,
+            research_field TEXT,
+            profile_link TEXT,
+            display_order INTEGER DEFAULT 0,
+            is_active INTEGER DEFAULT 1,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS live_discussions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            topic TEXT NOT NULL,
+            speaker_name TEXT NOT NULL,
+            speaker_role TEXT,
+            speaker_avatar TEXT,
+            discussion_date DATETIME NOT NULL,
+            zoom_link TEXT,
+            ics_summary TEXT,
+            is_active INTEGER DEFAULT 1,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS featured_interviews (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT DEFAULT 'In Conversation With',
+            interviewee_name TEXT NOT NULL,
+            interviewee_role TEXT,
+            quote TEXT NOT NULL,
+            photo TEXT,
+            video_url TEXT,
+            is_active INTEGER DEFAULT 1,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
     ");
 
-    // Seed default site settings if empty
-    $settingsCount = $pdo->query("SELECT COUNT(*) as count FROM site_settings")->fetch()['count'];
-    if ($settingsCount == 0) {
-        $stmtSet = $pdo->prepare("INSERT INTO site_settings (key, value) VALUES (?, ?)");
-        $stmtSet->execute(['site_name', 'Conspodium']);
-        $stmtSet->execute(['site_tagline', 'Premium Diaspora Magazine']);
-        $stmtSet->execute(['admin_email', 'admin@conspodium.com']);
-        $stmtSet->execute(['default_author', 'Conspodium Editorial']);
-        $stmtSet->execute(['posts_per_page', '6']);
-        $stmtSet->execute(['allow_submissions', '1']);
-        $stmtSet->execute(['smtp_host', 'smtp.gmail.com']);
-        $stmtSet->execute(['smtp_port', '587']);
-        $stmtSet->execute(['smtp_user', '']);
-        $stmtSet->execute(['smtp_pass', '']);
-        $stmtSet->execute(['sender_email', 'noreply@conspodium.com']);
-        $stmtSet->execute(['sender_name', 'Conspodium Alerts']);
-        $stmtSet->execute(['popup_ad_enabled', '0']);
-        $stmtSet->execute(['popup_ad_title', 'Empowering Diaspora Communities Worldwide']);
-        $stmtSet->execute(['popup_ad_image', './wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg']);
-        $stmtSet->execute(['popup_ad_link', '/submit-story/']);
-        $stmtSet->execute(['popup_ad_delay', '3']);
+    // Seed/Update category images
+    try {
+        $stmtCatCheck = $pdo->prepare("SELECT COUNT(*) as cnt FROM categories WHERE slug = ?");
+        $stmtCatIns = $pdo->prepare("INSERT INTO categories (name, slug, icon, description, image) VALUES (?, ?, ?, ?, ?)");
+        $stmtCatUp = $pdo->prepare("UPDATE categories SET image = ?, icon = ?, description = ? WHERE slug = ?");
+        
+        $categoriesConfig = [
+            ['Culture & Heritage', 'culture-heritage', '🏛️', 'Heritage, traditions, and the African spirit abroad.', '/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg'],
+            ['Innovation', 'innovation', '💡', 'Africans in Diaspora influencing economic decisions worldwide.', '/wp-content/uploads/2026/01/location-1-300x210.webp'],
+            ['Art & Entertainment', 'art-entertainment', '🎨', 'Creatives are shaping and representing global culture.', '/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg'],
+            ['Community', 'community', '👥', 'Stories connecting Africans in Diaspora across the globe.', '/wp-content/uploads/2026/01/AF3-1-png-300x171.jpg'],
+            ['Success Stories', 'success-stories', '🌟', 'Growth, Success, leadership, and diaspora impact.', '/wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-300x200.jpg'],
+            ['African Diaspora Matters', 'african-diaspora-matters', '🌍', 'Crucial issues, policy debates, and global diaspora developments.', '/uploads/cat_diaspora_matters.png'],
+            ['Diaspora Insights & Analysis', 'diaspora-insights-analysis', '📊', 'In-depth research, economic reports, and diaspora market analysis.', '/uploads/cat_diaspora_insights.png']
+        ];
+
+        foreach ($categoriesConfig as $cat) {
+            $stmtCatCheck->execute([$cat[1]]);
+            if ($stmtCatCheck->fetch()['cnt'] == 0) {
+                $stmtCatIns->execute([$cat[0], $cat[1], $cat[2], $cat[3], $cat[4]]);
+            } else {
+                $stmtCatUp->execute([$cat[4], $cat[2], $cat[3], $cat[1]]);
+            }
+        }
+    } catch (Exception $e) {}
+
+    // Seed 3 Scholar Spotlight cards with authentic scholar assets
+    try {
+        $schCnt = $pdo->query("SELECT COUNT(*) as count FROM scholar_spotlights")->fetch()['count'];
+        $checkOld = $pdo->query("SELECT COUNT(*) as cnt FROM scholar_spotlights WHERE scholar_name LIKE '%Kemi Adebayo%' OR scholar_name LIKE '%Chukwuma Oji%'")->fetch()['cnt'];
+        if ($schCnt < 3 || $checkOld > 0) {
+            $pdo->exec("DELETE FROM scholar_spotlights");
+            $stmtSch = $pdo->prepare("INSERT INTO scholar_spotlights (scholar_name, title_affiliation, bio, image_url, research_field, profile_link, display_order) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            
+            $stmtSch->execute([
+                "Prof. Amara Diallo",
+                "London School of Economics",
+                "\"Democracy, Digital Sovereignty & the African Voice in Global Governance\"",
+                "/wp-content/uploads/2026/08/scholar-amara-diallo.png",
+                "Democracy & Digital Sovereignty",
+                "/post/empowering-diaspora-communities-through-innovation-heritage/",
+                1
+            ]);
+            $stmtSch->execute([
+                "Dr. Ngozi Eze",
+                "MIT Media Lab",
+                "\"Biotechnology and the Future of African Health Systems — Who Controls the Science?\"",
+                "/wp-content/uploads/2026/08/scholar-ngozi-eze.png",
+                "Biotechnology & Health Systems",
+                "/post/we-are-the-world/",
+                2
+            ]);
+            $stmtSch->execute([
+                "Prof. Kwame Osei",
+                "University of Ghana / Oxford",
+                "\"African Intellectual Heritage and the Decolonisation of Academic Thought\"",
+                "/wp-content/uploads/2026/08/scholar-kwame-osei.png",
+                "African Intellectual Heritage",
+                "/post/creatives-shaping-representing-global-african-culture/",
+                3
+            ]);
+        }
+    } catch (Exception $e) {}
+
+    // Seed default homepage sections if empty (DO NOTHING on conflict so admin edits are preserved)
+    $stmtHomeSecInit = $pdo->prepare("INSERT INTO homepage_sections (key, value_json, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) ON CONFLICT(key) DO NOTHING");
+
+    $interviewData = [
+        "title" => "In Conversation With",
+        "interviewee_name" => "Professor John Smith",
+        "interviewee_role" => "Chair of International Diaspora Relations",
+        "quote" => "\"Why Democracy Needs Better Conversations Across Borders\"",
+        "photo" => "/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg",
+        "video_url" => "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    ];
+    $stmtHomeSecInit->execute(['featured_interview', json_encode($interviewData)]);
+
+    // Seed/Update active live discussion
+    $liveCnt = $pdo->query("SELECT COUNT(*) as count FROM live_discussions")->fetch()['count'];
+    if ($liveCnt == 0) {
+        $stmtLive = $pdo->prepare("INSERT INTO live_discussions (topic, speaker_name, speaker_role, speaker_avatar, discussion_date, zoom_link, ics_summary) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmtLive->execute([
+            "The Future of African Democracy",
+            "Prof. Amara Diallo & Panel",
+            "London School of Economics",
+            "/uploads/live_speaker_avatar.png",
+            "2026-10-15 18:00:00",
+            "https://zoom.us/j/conspodium-live",
+            "Conspodium Next Live Discussion: The Future of African Democracy"
+        ]);
+    } else {
+        $pdo->exec("UPDATE live_discussions SET speaker_avatar = '/uploads/live_speaker_avatar.png' WHERE speaker_avatar IS NULL OR speaker_avatar = '' OR speaker_avatar LIKE '%African-Diasporans%'");
     }
+
+    // Seed/Update active featured interview
+    $intCnt = $pdo->query("SELECT COUNT(*) as count FROM featured_interviews")->fetch()['count'];
+    if ($intCnt == 0) {
+        $stmtInt = $pdo->prepare("INSERT INTO featured_interviews (title, interviewee_name, interviewee_role, quote, photo, video_url) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmtInt->execute([
+            "In Conversation With",
+            "Professor John Smith",
+            "Chair of International Diaspora Relations",
+            "\"Why Democracy Needs Better Conversations Across Borders\"",
+            "/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg",
+            "https://www.youtube.com/embed/dQw4w9WgXcQ"
+        ]);
+    }
+
+    // Seed default payment settings (Sandbox Test Keys ready out of the box)
+    try {
+        $stmtPayInit = $pdo->prepare("INSERT INTO payment_settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO NOTHING");
+        $stmtPayInit->execute(['paystack_public_key', 'pk_test_conspodium_sandbox_demo']);
+        $stmtPayInit->execute(['paystack_enabled', '1']);
+        $stmtPayInit->execute(['stripe_public_key', 'pk_test_conspodium_stripe_demo']);
+        $stmtPayInit->execute(['stripe_enabled', '1']);
+        $stmtPayInit->execute(['default_gateway', 'paystack']);
+    } catch (Exception $e) {}
+
+    // Seed default featured stories & trending IDs IF not already set by admin
+    $stmtHomeSecInit->execute(['featured_stories_ids', json_encode([1, 2, 3, 5])]);
+    $stmtHomeSecInit->execute(['trending_ids', json_encode([6, 5, 4, 1, 7, 3])]);
+    $stmtHomeSecInit->execute(['homepage_category_ids', json_encode([1, 2, 3])]);
 
     // Seed default admin account if empty
     $adminCount = $pdo->query("SELECT COUNT(*) as count FROM admins")->fetch()['count'];
@@ -375,6 +609,15 @@ try {
         for ($i = 0; $i < 210; $i++) $stmtVote->execute([$pollId, 1, "seed-$i"]);
         for ($i = 0; $i < 285; $i++) $stmtVote->execute([$pollId, 2, "seed-$i"]);
         for ($i = 0; $i < 160; $i++) $stmtVote->execute([$pollId, 3, "seed-$i"]);
+    } else {
+        // Enforce single active poll set: clean up duplicate polls
+        $pollsList = $pdo->query("SELECT id, is_active FROM polls ORDER BY is_active DESC, id DESC")->fetchAll();
+        if (count($pollsList) > 1) {
+            $keepId = $pollsList[0]['id'];
+            $pdo->prepare("DELETE FROM poll_votes WHERE poll_id != ?")->execute([$keepId]);
+            $pdo->prepare("DELETE FROM polls WHERE id != ?")->execute([$keepId]);
+            $pdo->prepare("UPDATE polls SET is_active = 1 WHERE id = ?")->execute([$keepId]);
+        }
     }
 
     // Seed initial story submissions if empty
@@ -509,6 +752,6 @@ function csp_sanitize($input) {
     if (is_array($input)) {
         return array_map('csp_sanitize', $input);
     }
-    return htmlspecialchars(trim((string)$input), ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars_decode(trim(strip_tags((string)$input)), ENT_QUOTES);
 }
 

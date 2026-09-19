@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Forum — Conspodium Magazine</title>
+  <meta name="description" content="Join discussions, connect with African diaspora leaders, exchange ideas, and explore stories on the Conspodium Community Forum.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merienda:wght@700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" id="dashicons-css" href="/wp-includes/css/dashicons.min._ver_6_8_7.css" media="all">
+  <link rel="stylesheet" id="hfe-widgets-style-css" href="/wp-content/plugins/header-footer-elementor/inc/widgets-css/frontend._ver_2_9_2.css" media="all">
+  <link rel="stylesheet" id="hfe-style-css" href="/wp-content/plugins/header-footer-elementor/assets/css/header-footer-elementor._ver_2_9_2.css" media="all">
+  <link rel="stylesheet" id="elementor-frontend-css" href="/wp-content/plugins/elementor/assets/css/frontend.min._ver_4_1_4.css" media="all">
+  <link rel="stylesheet" id="eael-general-css" href="/wp-content/plugins/essential-addons-for-elementor-lite/assets/front-end/css/view/general.min._ver_6_7_0.css" media="all">
+  <link rel="stylesheet" id="elementor-icons-css" href="/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min._ver_5_50_0.css" media="all">
+  <link rel="stylesheet" id="elementor-post-9-css" href="/wp-content/uploads/elementor/css/post-9._ver_1786118447.css" media="all">
+  <link rel="stylesheet" id="elementor-pro-css" href="/wp-content/plugins/elementor-pro/assets/css/frontend.min._ver_3_10_1.css" media="all">
+  <link rel="stylesheet" id="she-header-style-css" href="/wp-content/plugins/sticky-header-effects-for-elementor/assets/css/she-header-style._ver_2_1_6.css" media="all">
+  <link rel="stylesheet" id="elementor-post-1969-css" href="/wp-content/uploads/elementor/css/post-1969._ver_1786118447.css" media="all">
+  <link rel="stylesheet" id="hfe-nav-menu-widget-css" href="/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min._ver_3_26_0.css" media="all">
+  <link rel="stylesheet" id="ekit-widget-styles-css" href="/wp-content/plugins/elementskit-lite/widgets/init/assets/css/widget-styles._ver_3_10_02.css" media="all">
+  <link rel="stylesheet" id="elementor-post-1374-css" href="/wp-content/uploads/elementor/css/post-1374._ver_1786118447.css" media="all">
+  <link rel="stylesheet" href="/assets/index.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .csp-forum-hero {
+      position: relative;
+      background: linear-gradient(180deg, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.65) 100%), url('/uploads/forum_hero_banner.png') center/cover no-repeat;
+      padding: 100px 24px 70px;
+      text-align: center;
+      color: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: inset 0 -10px 30px rgba(0,0,0,0.3);
+    }
+    .csp-forum-title {
+      font-family: 'Merienda', cursive, sans-serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: #ffffff;
+      margin-bottom: 14px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .csp-forum-subtitle {
+      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+      color: #f1f5f9;
+      max-width: 680px;
+      margin: 0 auto 32px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    @media (max-width: 768px) {
+      .csp-forum-hero { padding: 90px 16px 45px !important; }
+      .csp-forum-container { padding: 24px 16px 60px !important; }
+      .csp-thread-card { padding: 18px 14px !important; border-radius: 16px !important; }
+      .csp-thread-title { font-size: 1.08rem !important; }
+      .csp-thread-header { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+      .csp-modal-card { padding: 20px 16px !important; border-radius: 18px !important; }
+      .csp-modal-form-grid { grid-template-columns: 1fr !important; }
+    }
+    .csp-modal-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .csp-btn-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; border-radius: 50px;
+      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
+      color: #fff; text-decoration: none; font-weight: 600;
+      border: none; cursor: pointer; box-shadow: 0 6px 20px rgba(0,174,254,0.4);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .csp-btn-pill:hover { transform: translateY(-2px); opacity: 0.95; }
+
+    .csp-forum-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+    /* ── Sleek Category Slider Wrapper ── */
+    .csp-cat-slider-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 28px;
+      width: 100%;
+    }
+
+    .csp-forum-filters {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 6px 4px;
+      margin: 0;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+    }
+    .csp-forum-filters::-webkit-scrollbar {
+      display: none; /* Chrome/Safari/Brave */
+    }
+
+    .csp-filter-chip {
+      padding: 9px 20px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      flex-shrink: 0;
+    }
+    .csp-filter-chip.active, .csp-filter-chip:hover {
+      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
+      border-color: transparent;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(0,174,254,0.3);
+    }
+
+    /* Slider Arrow Buttons */
+    .csp-slider-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 10;
+      line-height: 1;
+      margin: 0 4px;
+    }
+    .csp-slider-arrow:hover:not(.disabled) {
+      background: #ffffff;
+      color: #00AEFE;
+      border-color: #00AEFE;
+      transform: scale(1.08);
+      box-shadow: 0 6px 20px rgba(0, 174, 254, 0.25);
+    }
+    .csp-slider-arrow:active:not(.disabled) {
+      transform: scale(0.95);
+    }
+    .csp-slider-arrow.disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      box-shadow: none;
+      border-color: #e2e8f0;
+      background: #f8fafc;
+      color: #94a3b8;
+    }
+
+    .csp-thread-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 20px rgba(15,23,42,0.03);
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .csp-thread-card:hover {
+      border-color: #00AEFE;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,174,254,0.1);
+    }
+    .csp-thread-header {
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px;
+    }
+    .csp-thread-title {
+      font-family: 'Merriweather', serif; font-size: 1.2rem; color: #0f172a; text-decoration: none;
+    }
+    .csp-thread-meta {
+      font-size: 0.82rem; color: #64748b; display: flex; gap: 16px; align-items: center; margin-top: 10px;
+    }
+
+    /* Thread Modal */
+    .csp-modal-overlay {
+      position: fixed; inset: 0; z-index: 10000; background: rgba(15,23,42,0.65);
+      backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 20px;
+    }
+    .csp-modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .csp-modal-card {
+      background: #ffffff; border: 1px solid #e2e8f0; border-radius: 24px;
+      max-width: 680px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 32px;
+      box-shadow: 0 24px 70px rgba(15,23,42,0.18); color: #0f172a;
+    }
+    .csp-input {
+      width: 100%; background: #ffffff; border: 1px solid #cbd5e1;
+      border-radius: 12px; padding: 12px 16px; color: #0f172a; font-size: 0.92rem; margin-bottom: 14px;
+    }
+    .csp-input:focus { outline: none; border-color: #00AEFE; box-shadow: 0 0 0 3px rgba(0,174,254,0.15); }
+
+    /* Skeleton Loader Styles */
+    @keyframes csp-shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .csp-skeleton-pulse {
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%) !important;
+      background-size: 200% 100% !important;
+      animation: csp-shimmer 1.5s infinite linear !important;
+      border-radius: 8px !important;
+    }
+  </style>
+</head>
+<body class="forum-page">
+
+<!-- INCLUDE:wp-header.html -->
+
+  <section class="csp-forum-hero">
+    <h1 class="csp-forum-title">Community Discussion Forum</h1>
+    <p class="csp-forum-subtitle">Share ideas, ask questions, debate diaspora policies, and build connections across the global African diaspora network.</p>
+    <button class="csp-btn-pill" id="btn-open-thread-modal">💬 Start a New Discussion Thread</button>
+  </section>
+
+  <div class="csp-forum-container">
+    <div class="csp-cat-slider-container">
+      <button type="button" class="csp-slider-arrow left disabled" id="cat-slide-left" aria-label="Scroll categories left">
+        <i class="dashicons dashicons-arrow-left-alt2" style="font-size:1.1rem;margin-top:1px;"></i>
+      </button>
+
+      <div class="csp-forum-filters" id="forum-category-filters">
+        <button class="csp-filter-chip active" data-cat="All">All Discussions</button>
+        <button class="csp-filter-chip" data-cat="African Diaspora Matters">African Diaspora Matters</button>
+        <button class="csp-filter-chip" data-cat="Diaspora Insights & Analysis">Diaspora Insights</button>
+        <button class="csp-filter-chip" data-cat="Culture & Heritage">Culture &amp; Heritage</button>
+        <button class="csp-filter-chip" data-cat="Innovation">Innovation</button>
+        <button class="csp-filter-chip" data-cat="Art & Entertainment">Art &amp; Entertainment</button>
+        <button class="csp-filter-chip" data-cat="Community">Community</button>
+      </div>
+
+      <button type="button" class="csp-slider-arrow right" id="cat-slide-right" aria-label="Scroll categories right">
+        <i class="dashicons dashicons-arrow-right-alt2" style="font-size:1.1rem;margin-top:1px;"></i>
+      </button>
+    </div>
+
+    <div id="forum-threads-list">
+      <!-- Pre-rendered skeleton thread cards -->
+      <div class="csp-thread-card" style="pointer-events:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div class="csp-skeleton-pulse" style="width:130px;height:16px;border-radius:50px;"></div>
+          <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
+        </div>
+        <div class="csp-skeleton-pulse" style="width:75%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
+        <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
+        <div class="csp-skeleton-pulse" style="width:60%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div class="csp-skeleton-pulse" style="width:110px;height:14px;border-radius:4px;"></div>
+          <div class="csp-skeleton-pulse" style="width:80px;height:14px;border-radius:4px;"></div>
+          <div class="csp-skeleton-pulse" style="width:70px;height:14px;border-radius:4px;"></div>
+        </div>
+      </div>
+      <div class="csp-thread-card" style="pointer-events:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div class="csp-skeleton-pulse" style="width:110px;height:16px;border-radius:50px;"></div>
+          <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
+        </div>
+        <div class="csp-skeleton-pulse" style="width:82%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
+        <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
+        <div class="csp-skeleton-pulse" style="width:55%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div class="csp-skeleton-pulse" style="width:100px;height:14px;border-radius:4px;"></div>
+          <div class="csp-skeleton-pulse" style="width:75px;height:14px;border-radius:4px;"></div>
+          <div class="csp-skeleton-pulse" style="width:70px;height:14px;border-radius:4px;"></div>
+        </div>
+      </div>
+      <div class="csp-thread-card" style="pointer-events:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div class="csp-skeleton-pulse" style="width:140px;height:16px;border-radius:50px;"></div>
+          <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
+        </div>
+        <div class="csp-skeleton-pulse" style="width:68%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
+        <div class="csp-skeleton-pulse" style="width:95%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
+        <div class="csp-skeleton-pulse" style="width:50%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div class="csp-skeleton-pulse" style="width:120px;height:14px;border-radius:4px;"></div>
+          <div class="csp-skeleton-pulse" style="width:80px;height:14px;border-radius:4px;"></div>
+          <div class="csp-skeleton-pulse" style="width:65px;height:14px;border-radius:4px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Thread Modal -->
+  <div class="csp-modal-overlay" id="modal-create-thread">
+    <div class="csp-modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <h3 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.3rem;">Start a Discussion Thread</h3>
+        <button id="btn-close-create-thread" style="background:none;border:none;color:#64748b;font-size:1.5rem;cursor:pointer;">&times;</button>
+      </div>
+
+      <form id="form-new-thread">
+        <input type="text" id="th-title" class="csp-input" placeholder="Topic Title / Question *" required>
+        
+        <select id="th-category" class="csp-input" required style="color:#0f172a;background:#ffffff;">
+          <option value="General Discussion">General Discussion</option>
+          <option value="African Diaspora Matters">African Diaspora Matters</option>
+          <option value="Diaspora Insights & Analysis">Diaspora Insights &amp; Analysis</option>
+          <option value="Culture & Heritage">Culture &amp; Heritage</option>
+          <option value="Innovation">Innovation</option>
+          <option value="Art & Entertainment">Art &amp; Entertainment</option>
+          <option value="Community">Community</option>
+        </select>
+
+        <div class="csp-modal-form-grid">
+          <input type="text" id="th-name" class="csp-input" placeholder="Your Name *" required>
+          <input type="email" id="th-email" class="csp-input" placeholder="Your Email *" required>
+        </div>
+
+        <textarea id="th-content" class="csp-input" rows="5" placeholder="Share details, context, or questions..." required></textarea>
+
+        <button type="submit" class="csp-btn-pill" style="width:100%;justify-content:center;height:48px;">Post Topic to Forum →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Thread & Replies Modal -->
+  <div class="csp-modal-overlay" id="modal-view-thread">
+    <div class="csp-modal-card" style="max-width:760px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+        <div>
+          <span id="v-thread-cat" style="display:inline-block;padding:4px 12px;border-radius:50px;font-size:0.75rem;background:rgba(0,174,254,0.12);color:#00AEFE;font-weight:600;margin-bottom:8px;">General</span>
+          <h2 id="v-thread-title" style="font-family:'Merriweather',serif;font-size:1.4rem;color:#0f172a;">Thread Title</h2>
+        </div>
+        <button id="btn-close-view-thread" style="background:none;border:none;color:#64748b;font-size:1.5rem;cursor:pointer;">&times;</button>
+      </div>
+
+      <div style="font-size:0.85rem;color:#64748b;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;">
+        Posted by <strong id="v-thread-author" style="color:#0f172a;">Author Name</strong> on <span id="v-thread-date">Date</span>
+      </div>
+
+      <div id="v-thread-body" style="font-size:0.95rem;line-height:1.7;color:#334155;margin-bottom:24px;white-space:pre-wrap;"></div>
+
+      <h3 style="font-size:1.1rem;font-family:'Merriweather',serif;color:#0f172a;margin-bottom:16px;border-top:1px solid #e2e8f0;padding-top:20px;">Discussion Replies</h3>
+      
+      <div id="v-thread-replies" style="margin-bottom:24px;max-height:260px;overflow-y:auto;"></div>
+
+      <!-- Reply Form -->
+      <form id="form-post-reply" style="border-top:1px solid #e2e8f0;padding-top:16px;">
+        <h4 style="font-size:0.9rem;color:#0f172a;margin-bottom:12px;">Add Your Reply</h4>
+        <div class="csp-modal-form-grid">
+          <input type="text" id="rp-name" class="csp-input" placeholder="Your Name *" required>
+          <input type="email" id="rp-email" class="csp-input" placeholder="Your Email *" required>
+        </div>
+        <textarea id="rp-content" class="csp-input" rows="3" placeholder="Write your reply..." required></textarea>
+        <button type="submit" class="csp-btn-pill" style="height:40px;padding:0 20px;font-size:0.88rem;">Post Reply</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var activeCat = 'All';
+      var currentThreadId = null;
+
+      function initCategorySliderControls() {
+        var leftBtn = document.getElementById('cat-slide-left');
+        var rightBtn = document.getElementById('cat-slide-right');
+        var filters = document.getElementById('forum-category-filters');
+        if (!leftBtn || !rightBtn || !filters) return;
+
+        function updateArrowState() {
+          var scrollLeft = Math.ceil(filters.scrollLeft);
+          var maxScroll = Math.floor(filters.scrollWidth - filters.clientWidth);
+
+          if (scrollLeft <= 5) {
+            leftBtn.classList.add('disabled');
+          } else {
+            leftBtn.classList.remove('disabled');
+          }
+
+          if (scrollLeft >= maxScroll - 5) {
+            rightBtn.classList.add('disabled');
+          } else {
+            rightBtn.classList.remove('disabled');
+          }
+        }
+
+        leftBtn.onclick = function() {
+          filters.scrollBy({ left: -280, behavior: 'smooth' });
+        };
+
+        rightBtn.onclick = function() {
+          filters.scrollBy({ left: 280, behavior: 'smooth' });
+        };
+
+        filters.onscroll = updateArrowState;
+        window.addEventListener('resize', updateArrowState);
+        window.updateCatSliderArrows = updateArrowState;
+        setTimeout(updateArrowState, 200);
+      }
+
+      function loadCategories() {
+        fetch('/api/categories.php')
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (!res.success || !res.data) return;
+            var filterContainer = document.getElementById('forum-category-filters');
+            var selectElement = document.getElementById('th-category');
+
+            filterContainer.innerHTML = '<button class="csp-filter-chip active" data-cat="All">All Discussions</button><button class="csp-filter-chip" data-cat="General Discussion">💬 General Discussion</button>';
+            selectElement.innerHTML = '<option value="General Discussion">General Discussion</option>';
+
+            res.data.forEach(function(c){
+              filterContainer.innerHTML += '<button class="csp-filter-chip" data-cat="' + c.name + '">' + (c.icon || '🏷️') + ' ' + c.name + '</button>';
+              selectElement.innerHTML += '<option value="' + c.name + '">' + c.name + '</option>';
+            });
+
+            // Re-bind click handlers
+            filterContainer.querySelectorAll('.csp-filter-chip').forEach(function(chip){
+              chip.addEventListener('click', function(){
+                filterContainer.querySelectorAll('.csp-filter-chip').forEach(function(c){ c.classList.remove('active'); });
+                chip.classList.add('active');
+                activeCat = chip.dataset.cat;
+                chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                loadThreads();
+              });
+            });
+
+            if (window.updateCatSliderArrows) {
+              setTimeout(window.updateCatSliderArrows, 200);
+            }
+          });
+      }
+
+      function loadThreads() {
+        var container = document.getElementById('forum-threads-list');
+        if (container) {
+          container.innerHTML = `
+            <div class="csp-thread-card" style="pointer-events:none;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <div class="csp-skeleton-pulse" style="width:130px;height:16px;border-radius:50px;"></div>
+                <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
+              </div>
+              <div class="csp-skeleton-pulse" style="width:75%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
+              <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
+              <div class="csp-skeleton-pulse" style="width:60%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
+              <div style="display:flex;gap:16px;align-items:center;">
+                <div class="csp-skeleton-pulse" style="width:110px;height:14px;border-radius:4px;"></div>
+                <div class="csp-skeleton-pulse" style="width:80px;height:14px;border-radius:4px;"></div>
+                <div class="csp-skeleton-pulse" style="width:70px;height:14px;border-radius:4px;"></div>
+              </div>
+            </div>
+            <div class="csp-thread-card" style="pointer-events:none;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <div class="csp-skeleton-pulse" style="width:110px;height:16px;border-radius:50px;"></div>
+                <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
+              </div>
+              <div class="csp-skeleton-pulse" style="width:82%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
+              <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
+              <div class="csp-skeleton-pulse" style="width:55%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
+              <div style="display:flex;gap:16px;align-items:center;">
+                <div class="csp-skeleton-pulse" style="width:100px;height:14px;border-radius:4px;"></div>
+                <div class="csp-skeleton-pulse" style="width:75px;height:14px;border-radius:4px;"></div>
+                <div class="csp-skeleton-pulse" style="width:70px;height:14px;border-radius:4px;"></div>
+              </div>
+            </div>
+          `;
+        }
+
+        fetch('/api/forum.php?action=threads&category=' + encodeURIComponent(activeCat))
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (!container) return;
+            if (!res.success || !res.data || res.data.length === 0) {
+              container.innerHTML = '<div class="csp-thread-card" style="text-align:center;color:#0f172a;font-weight:600;padding:48px 24px;"><p style="font-size:1.1rem;color:#0f172a;margin-bottom:8px;">No discussion topics found in this category.</p><p style="font-size:0.9rem;color:#64748b;font-weight:normal;">Be the first to start a conversation with the community!</p></div>';
+              return;
+            }
+
+            container.innerHTML = '';
+            res.data.forEach(function(t){
+              container.innerHTML += `
+                <a href="/forum/thread/?id=${t.id}" class="csp-thread-card" style="text-decoration:none;display:block;">
+                  <div class="csp-thread-header">
+                    <div>
+                      <span style="font-size:0.75rem;color:#00AEFE;font-weight:600;margin-bottom:4px;display:inline-block;">${t.is_pinned ? '📌 Pinned • ' : ''}${t.category}</span>
+                      <h3 class="csp-thread-title">${t.title}</h3>
+                    </div>
+                    <span style="font-size:0.85rem;background:rgba(0,174,254,0.12);color:#00AEFE;padding:4px 14px;border-radius:50px;white-space:nowrap;font-weight:600;">💬 ${t.reply_count || 0} Replies</span>
+                  </div>
+                  <p style="font-size:0.9rem;color:#334155;margin-top:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.6;">${t.content}</p>
+                  <div class="csp-thread-meta">
+                    <span style="color:#0f172a;font-weight:500;">By ${t.author_name}</span>
+                    <span>👁️ ${t.views || 0} Views</span>
+                    <span>${t.created_at ? t.created_at.slice(0,10) : 'Recently'}</span>
+                  </div>
+                </a>
+              `;
+            });
+          });
+      }
+
+      window.viewThread = function(id) {
+        currentThreadId = id;
+        fetch('/api/forum.php?action=thread&id=' + id)
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (!res.success || !res.data) return;
+            var t = res.data.thread;
+            var replies = res.data.replies || [];
+
+            document.getElementById('v-thread-title').textContent = t.title;
+            document.getElementById('v-thread-cat').textContent = t.category;
+            document.getElementById('v-thread-author').textContent = t.author_name;
+            document.getElementById('v-thread-date').textContent = t.created_at ? t.created_at.slice(0,16) : 'Recently';
+            document.getElementById('v-thread-body').textContent = t.content;
+
+            var rContainer = document.getElementById('v-thread-replies');
+            if (replies.length === 0) {
+              rContainer.innerHTML = '<p style="color:#64748b;font-size:0.88rem;padding:12px;background:#f8fafc;border-radius:10px;text-align:center;">No replies yet. Start the conversation below!</p>';
+            } else {
+              rContainer.innerHTML = '';
+              replies.forEach(function(rp){
+                rContainer.innerHTML += `
+                  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin-bottom:12px;">
+                    <div style="font-size:0.82rem;color:#00AEFE;font-weight:600;margin-bottom:6px;">${rp.author_name} <span style="color:#64748b;font-weight:normal;margin-left:8px;">${rp.created_at ? rp.created_at.slice(0,16) : ''}</span></div>
+                    <div style="font-size:0.92rem;color:#0f172a;line-height:1.6;">${rp.content}</div>
+                  </div>
+                `;
+              });
+            }
+
+            document.getElementById('modal-view-thread').classList.add('active');
+          });
+      };
+
+      // Modal Triggers
+      document.getElementById('btn-open-thread-modal').onclick = function(){ document.getElementById('modal-create-thread').classList.add('active'); };
+      document.getElementById('btn-close-create-thread').onclick = function(){ document.getElementById('modal-create-thread').classList.remove('active'); };
+      document.getElementById('btn-close-view-thread').onclick = function(){ document.getElementById('modal-view-thread').classList.remove('active'); };
+
+      // Submit Thread Form
+      document.getElementById('form-new-thread').onsubmit = function(e){
+        e.preventDefault();
+        var payload = {
+          title: document.getElementById('th-title').value,
+          category: document.getElementById('th-category').value,
+          author_name: document.getElementById('th-name').value,
+          author_email: document.getElementById('th-email').value,
+          content: document.getElementById('th-content').value
+        };
+
+        fetch('/api/forum.php?action=create_thread', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success) {
+            alert('🎉 Discussion topic posted successfully!');
+            document.getElementById('form-new-thread').reset();
+            document.getElementById('modal-create-thread').classList.remove('active');
+            if (res.thread_id) {
+              window.location.href = '/forum/thread/?id=' + res.thread_id;
+            } else {
+              loadThreads();
+            }
+          } else { alert(res.error || 'Failed to create topic'); }
+        });
+      };
+
+      // Submit Reply Form
+      document.getElementById('form-post-reply').onsubmit = function(e){
+        e.preventDefault();
+        if (!currentThreadId) return;
+        var payload = {
+          thread_id: currentThreadId,
+          author_name: document.getElementById('rp-name').value,
+          author_email: document.getElementById('rp-email').value,
+          content: document.getElementById('rp-content').value
+        };
+
+        fetch('/api/forum.php?action=create_reply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success) {
+            document.getElementById('form-post-reply').reset();
+            viewThread(currentThreadId);
+          } else { alert(res.error || 'Failed to post reply'); }
+        });
+      };
+
+      initCategorySliderControls();
+      loadCategories();
+      loadThreads();
+    })();
+  </script>
+</body>
+</html>

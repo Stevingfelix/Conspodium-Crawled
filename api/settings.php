@@ -14,6 +14,10 @@ $isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERC
             !empty($_ENV['NOW_REGION']) || !empty($_SERVER['NOW_REGION']) ||
             strpos(__DIR__, '/var/task') !== false || file_exists('/var/task');
 
+$isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+           (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+           (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
+
 if (session_status() === PHP_SESSION_NONE) {
     if ($isVercel) {
         @session_save_path('/tmp');
@@ -21,7 +25,7 @@ if (session_status() === PHP_SESSION_NONE) {
     @session_set_cookie_params([
         'lifetime' => 86400 * 7,
         'path' => '/',
-        'secure' => true,
+        'secure' => $isHttps,
         'httponly' => true,
         'samesite' => 'Lax'
     ]);

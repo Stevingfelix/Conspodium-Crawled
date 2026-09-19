@@ -383,6 +383,18 @@
       line-height: 1.6;
       margin-top: 8px;
     }
+
+    /* Skeleton Loader Styles */
+    @keyframes csp-shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .csp-skeleton-pulse {
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%) !important;
+      background-size: 200% 100% !important;
+      animation: csp-shimmer 1.5s infinite linear !important;
+      border-radius: 8px !important;
+    }
   </style>
 
 <script id="csp-mobile-menu-script">
@@ -814,6 +826,7 @@
     initLoaderAndLogo();
     initMobileMenu();
     initPopupAdvert();
+    if (window.syncCommenterSessionUI) window.syncCommenterSessionUI();
   }
 
   if (document.readyState === 'loading') {
@@ -911,6 +924,10 @@
           
           <!-- Comment Submission Form -->
           <form id="form-submit-comment" class="csp-comment-form" onsubmit="return window.handleCommentSubmit(event);">
+            <div id="comment-reply-to-badge" style="display:none;background:#e0f2fe;color:#0369a1;padding:6px 14px;border-radius:20px;font-size:0.8rem;font-weight:600;margin-bottom:12px;align-items:center;justify-content:space-between;width:fit-content;">
+              <span>Replying to <strong id="comment-reply-to-name">@User</strong></span>
+              <button type="button" onclick="window.cancelCommentReplyTo()" style="background:none;border:none;color:#0369a1;font-weight:bold;cursor:pointer;margin-left:10px;">✖</button>
+            </div>
             <div class="csp-comment-form-row">
               <input type="text" id="comm-author" class="csp-input-field" placeholder="Your Name *" required>
               <input type="email" id="comm-email" class="csp-input-field" placeholder="Your Email *" required>
@@ -933,7 +950,30 @@
         <div class="csp-sidebar-box">
           <h3 class="csp-sidebar-title">Related Stories</h3>
           <div id="sidebar-related-posts">
-            <div style="color:#94a3b8;font-size:0.85rem;">Loading related stories...</div>
+            <div style="display:flex;gap:14px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #f1f5f9;align-items:center;">
+              <div class="csp-skeleton-pulse" style="width:76px;height:60px;border-radius:10px;flex-shrink:0;"></div>
+              <div style="flex:1;">
+                <div class="csp-skeleton-pulse" style="width:50%;height:12px;margin-bottom:6px;border-radius:4px;"></div>
+                <div class="csp-skeleton-pulse" style="width:90%;height:16px;margin-bottom:6px;border-radius:4px;"></div>
+                <div class="csp-skeleton-pulse" style="width:40%;height:12px;border-radius:4px;"></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #f1f5f9;align-items:center;">
+              <div class="csp-skeleton-pulse" style="width:76px;height:60px;border-radius:10px;flex-shrink:0;"></div>
+              <div style="flex:1;">
+                <div class="csp-skeleton-pulse" style="width:45%;height:12px;margin-bottom:6px;border-radius:4px;"></div>
+                <div class="csp-skeleton-pulse" style="width:85%;height:16px;margin-bottom:6px;border-radius:4px;"></div>
+                <div class="csp-skeleton-pulse" style="width:45%;height:12px;border-radius:4px;"></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:center;">
+              <div class="csp-skeleton-pulse" style="width:76px;height:60px;border-radius:10px;flex-shrink:0;"></div>
+              <div style="flex:1;">
+                <div class="csp-skeleton-pulse" style="width:60%;height:12px;margin-bottom:6px;border-radius:4px;"></div>
+                <div class="csp-skeleton-pulse" style="width:75%;height:16px;margin-bottom:6px;border-radius:4px;"></div>
+                <div class="csp-skeleton-pulse" style="width:35%;height:12px;border-radius:4px;"></div>
+              </div>
+            </div>
           </div>
         </div>
       </aside>
@@ -946,6 +986,25 @@
   <!-- SINGLE POST CONTROLLER SCRIPT -->
   <script>
   window.isAdminLoggedIn = false;
+  window.currentCommentParentId = null;
+
+  window.setCommentReplyParent = function(parentId, authorName) {
+    window.currentCommentParentId = parentId;
+    var nameEl = document.getElementById('comment-reply-to-name');
+    var badgeEl = document.getElementById('comment-reply-to-badge');
+    var textEl = document.getElementById('comm-text');
+    var formEl = document.getElementById('form-submit-comment');
+    if (nameEl) nameEl.textContent = '@' + authorName;
+    if (badgeEl) badgeEl.style.display = 'inline-flex';
+    if (formEl) formEl.scrollIntoView({ behavior: 'smooth' });
+    if (textEl) textEl.focus();
+  };
+
+  window.cancelCommentReplyTo = function() {
+    window.currentCommentParentId = null;
+    var badgeEl = document.getElementById('comment-reply-to-badge');
+    if (badgeEl) badgeEl.style.display = 'none';
+  };
 
   // Bulletproof Embedded Toast Notification
   window.cspToast = window.cspToast || function(message, type, duration) {
@@ -1039,54 +1098,184 @@
       .catch(function(){});
   };
 
-  // Global Comment Submit Handler (Guarantees zero-reload, input reset & localStorage saving)
+  // ── COMMENTER SESSION IDENTITY LOCK SYSTEM ──
+  window.getCommenterSession = function() {
+    try {
+      var name = localStorage.getItem('csp_commenter_name') || '';
+      var email = localStorage.getItem('csp_commenter_email') || '';
+      if (name) return { name: name, email: email };
+    } catch(e) {}
+    return null;
+  };
+
+  window.saveCommenterSession = function(name, email) {
+    if (!name) return;
+    try {
+      localStorage.setItem('csp_commenter_name', name.trim());
+      if (email) localStorage.setItem('csp_commenter_email', email.trim());
+      document.cookie = "csp_user_comment_author=" + encodeURIComponent(name.trim()) + "; max-age=31536000; path=/";
+      if (email) document.cookie = "csp_user_comment_email=" + encodeURIComponent(email.trim()) + "; max-age=31536000; path=/";
+    } catch(e) {}
+    window.syncCommenterSessionUI();
+  };
+
+  window.cspClearCommenterSession = function() {
+    try {
+      localStorage.removeItem('csp_commenter_name');
+      localStorage.removeItem('csp_commenter_email');
+      document.cookie = "csp_user_comment_author=; max-age=0; path=/";
+      document.cookie = "csp_user_comment_email=; max-age=0; path=/";
+    } catch(e) {}
+    window.syncCommenterSessionUI(true);
+    if (window.cspToast) window.cspToast('Identity session reset. You can now enter a new name.', 'info');
+  };
+
+  window.syncCommenterSessionUI = function(cleared) {
+    var session = window.getCommenterSession();
+    var authorInputs = document.querySelectorAll('#comm-author, #rp-name');
+    var emailInputs = document.querySelectorAll('#comm-email, #rp-email');
+    var forms = document.querySelectorAll('.csp-comment-form, #form-thread-reply');
+
+    authorInputs.forEach(function(inp) {
+      if (session && !cleared) {
+        inp.value = session.name;
+        inp.readOnly = true;
+        inp.style.background = '#f1f5f9';
+        inp.style.color = '#475569';
+        inp.style.cursor = 'not-allowed';
+      } else {
+        if (cleared) inp.value = '';
+        inp.readOnly = false;
+        inp.style.background = '#ffffff';
+        inp.style.color = '#0f172a';
+        inp.style.cursor = 'text';
+      }
+    });
+
+    emailInputs.forEach(function(inp) {
+      if (session && !cleared) {
+        inp.value = session.email;
+        inp.readOnly = true;
+        inp.style.background = '#f1f5f9';
+        inp.style.color = '#475569';
+        inp.style.cursor = 'not-allowed';
+      } else {
+        if (cleared) inp.value = '';
+        inp.readOnly = false;
+        inp.style.background = '#ffffff';
+        inp.style.color = '#0f172a';
+        inp.style.cursor = 'text';
+      }
+    });
+
+    forms.forEach(function(formEl) {
+      var existingBadge = formEl.querySelector('.csp-session-lock-badge');
+      if (session && !cleared) {
+        if (!existingBadge) {
+          existingBadge = document.createElement('div');
+          existingBadge.className = 'csp-session-lock-badge';
+          existingBadge.style.cssText = 'background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:8px 14px;font-size:0.82rem;color:#0369a1;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;font-weight:500;';
+          formEl.insertBefore(existingBadge, formEl.firstChild);
+        }
+        existingBadge.innerHTML = '<span>🔒 Commenting as <strong>' + session.name + '</strong>' + (session.email ? ' (' + session.email + ')' : '') + '</span>' +
+          '<button type="button" onclick="window.cspClearCommenterSession()" style="background:none;border:none;color:#00AEFE;font-weight:600;font-size:0.78rem;cursor:pointer;text-decoration:underline;">Switch</button>';
+      } else {
+        if (existingBadge && existingBadge.parentNode) {
+          existingBadge.parentNode.removeChild(existingBadge);
+        }
+      }
+    });
+
+    document.querySelectorAll('.csp-article-inline-reply-box, .csp-inline-reply-box').forEach(function(box) {
+      var nameInp = box.querySelector('input[type="text"]');
+      var emailInp = box.querySelector('input[type="email"]');
+      if (nameInp && emailInp) {
+        if (session && !cleared) {
+          nameInp.value = session.name;
+          nameInp.readOnly = true;
+          nameInp.style.background = '#e2e8f0';
+          nameInp.style.cursor = 'not-allowed';
+          emailInp.value = session.email;
+          emailInp.readOnly = true;
+          emailInp.style.background = '#e2e8f0';
+          emailInp.style.cursor = 'not-allowed';
+        } else {
+          if (cleared) { nameInp.value = ''; emailInp.value = ''; }
+          nameInp.readOnly = false;
+          nameInp.style.background = '#fff';
+          nameInp.style.cursor = 'text';
+          emailInp.readOnly = false;
+          emailInp.style.background = '#fff';
+          emailInp.style.cursor = 'text';
+        }
+      }
+    });
+  };
+
+  // Global Comment Submit Handler (Guarantees zero-reload, input reset & API sync)
   window.handleCommentSubmit = function(e) {
     if (e) {
       e.preventDefault();
       if (e.stopPropagation) e.stopPropagation();
     }
 
+    var session = window.getCommenterSession();
     var authorInput = document.getElementById('comm-author');
     var emailInput = document.getElementById('comm-email');
     var textInput = document.getElementById('comm-text');
 
-    var author = (authorInput && authorInput.value.trim()) ? authorInput.value.trim() : 'Anonymous Reader';
+    var author = session ? session.name : ((authorInput && authorInput.value.trim()) ? authorInput.value.trim() : 'Anonymous Reader');
+    var email = session ? session.email : (emailInput ? emailInput.value.trim() : '');
     var text = textInput ? textInput.value.trim() : '';
 
     if (!text) return false;
 
-    var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
-    var savedComments = [];
-    try { savedComments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
-
-    var newComment = {
-      id: Date.now(),
-      author: author,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      text: text
-    };
-
-    savedComments.unshift(newComment);
-    try { localStorage.setItem(pageKey, JSON.stringify(savedComments)); } catch(err){}
-
-    if (window.renderCommentsStream) window.renderCommentsStream();
-
-    // Clear ALL Form Fields
-    if (authorInput) authorInput.value = '';
-    if (emailInput) emailInput.value = '';
-    if (textInput) textInput.value = '';
-
-    // Show Modern UI Toast Notification
-    window.cspToast('Comment posted successfully!', 'success');
-
-    // Background API Sync
     var postSlugOrId = window.location.pathname.replace(/\/$/, '').split('/').pop() || 'we-are-the-world';
     var postApiUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=comments') : '/api/posts.php?resource=comments';
+
+    var payload = {
+      post_id: postSlugOrId,
+      parent_id: window.currentCommentParentId,
+      author_name: author,
+      author_email: email,
+      content: text
+    };
+
     fetch(postApiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ post_id: postSlugOrId, author_name: author, author_email: emailInput ? emailInput.value : '', content: text })
-    }).catch(function(){});
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success) {
+        window.saveCommenterSession(author, email);
+        window.cancelCommentReplyTo();
+        if (textInput) textInput.value = '';
+        window.cspToast('Comment posted successfully!', 'success');
+        window.renderCommentsStream();
+      } else {
+        window.cspToast(res.error || 'Failed to post comment', 'danger');
+      }
+    })
+    .catch(function(){
+      var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
+      var savedComments = [];
+      try { savedComments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
+      savedComments.unshift({
+        id: Date.now(),
+        parent_id: window.currentCommentParentId,
+        author_name: author,
+        created_at: new Date().toISOString(),
+        content: text
+      });
+      try { localStorage.setItem(pageKey, JSON.stringify(savedComments)); } catch(err){}
+      window.saveCommenterSession(author, email);
+      window.cancelCommentReplyTo();
+      if (textInput) textInput.value = '';
+      window.cspToast('Comment saved locally!', 'success');
+      window.renderCommentsStream();
+    });
 
     return false;
   };
@@ -1122,39 +1311,196 @@
     });
   };
 
+  window.toggleArticleInlineReplyForm = function(parentId, authorName) {
+    document.querySelectorAll('.csp-article-inline-reply-box').forEach(function(el) {
+      el.style.display = 'none';
+    });
+
+    var box = document.getElementById('article-inline-reply-box-' + parentId);
+    if (box) {
+      box.style.display = 'block';
+      window.syncCommenterSessionUI();
+      var textInput = document.getElementById('art-inline-text-' + parentId);
+      if (textInput) textInput.focus();
+    }
+  };
+
+  window.hideArticleInlineReplyForm = function(parentId) {
+    var box = document.getElementById('article-inline-reply-box-' + parentId);
+    if (box) box.style.display = 'none';
+  };
+
+  window.submitArticleInlineReply = function(parentId) {
+    var session = window.getCommenterSession();
+    var nameInput = document.getElementById('art-inline-name-' + parentId);
+    var emailInput = document.getElementById('art-inline-email-' + parentId);
+    var textInput = document.getElementById('art-inline-text-' + parentId);
+
+    var authorName = session ? session.name : (nameInput ? nameInput.value.trim() : '');
+    var authorEmail = session ? session.email : (emailInput ? emailInput.value.trim() : '');
+    var content = textInput ? textInput.value.trim() : '';
+
+    if (!authorName || !content) {
+      if (window.cspToast) window.cspToast('Please fill in your name and comment.', 'danger');
+      else alert('Please fill in your name and comment.');
+      return;
+    }
+
+    var postSlugOrId = window.location.pathname.replace(/\/$/, '').split('/').pop() || 'we-are-the-world';
+    var postApiUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=comments') : '/api/posts.php?resource=comments';
+
+    var payload = {
+      post_id: postSlugOrId,
+      parent_id: parentId,
+      author_name: authorName,
+      author_email: authorEmail,
+      content: content
+    };
+
+    fetch(postApiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success) {
+        window.saveCommenterSession(authorName, authorEmail);
+        hideArticleInlineReplyForm(parentId);
+        window.cspToast('Reply posted successfully!', 'success');
+        window.renderCommentsStream();
+      } else {
+        window.cspToast(res.error || 'Failed to post reply', 'danger');
+      }
+    })
+    .catch(function(){
+      window.cspToast('Failed to post comment', 'danger');
+    });
+  };
+
+  window.likeComment = function(btn) {
+    if (btn.classList.contains('liked')) {
+      btn.classList.remove('liked');
+      btn.style.color = '#65676b';
+      btn.textContent = 'Like';
+    } else {
+      btn.classList.add('liked');
+      btn.style.color = '#1877f2';
+      btn.innerHTML = '👍 Liked';
+    }
+  };
+
+  window.renderCommentTree = function(comments) {
+    if (!comments || comments.length === 0) {
+      return '<div style="color:#65676b;font-size:0.9rem;padding:12px 0;">No comments yet. Be the first to join the conversation!</div>';
+    }
+
+    var byId = {};
+    var byParent = {};
+
+    comments.forEach(function(c) { byId[c.id] = c; });
+    comments.forEach(function(c) {
+      if (c.parent_id && byId[c.parent_id]) {
+        if (!byParent[c.parent_id]) byParent[c.parent_id] = [];
+        byParent[c.parent_id].push(c);
+      }
+    });
+
+    var topLevel = comments.filter(function(c) {
+      return !c.parent_id || !byId[c.parent_id];
+    });
+
+    function renderNodes(nodeList, depth) {
+      var html = '';
+      nodeList.forEach(function(c) {
+        var isChild = depth > 0;
+        var parentAuthor = c.parent_id && byId[c.parent_id] ? (byId[c.parent_id].author_name || byId[c.parent_id].author) : '';
+        var children = byParent[c.id] || [];
+        var authorName = c.author_name || c.author || 'Anonymous Reader';
+        var safeAuthor = authorName.replace(/'/g, "\\'");
+        var dateStr = c.created_at ? c.created_at.slice(0, 10) : (c.date || 'Recent');
+        var textStr = c.content || c.text || '';
+        var initial = authorName.charAt(0).toUpperCase();
+
+        var deleteBtn = window.isAdminLoggedIn 
+          ? `<button type="button" onclick="window.deleteComment('${c.id || ''}')" style="background:none;color:#e11d48;border:none;font-size:0.75rem;cursor:pointer;font-weight:600;padding:0;margin-left:6px;" title="Admin Delete"><i class="fas fa-trash"></i> Delete</button>`
+          : '';
+
+        html += `
+          <div class="fb-comment-item" style="display:flex;gap:8px;margin-bottom:10px;align-items:flex-start;">
+            <div style="width:${isChild ? '28px' : '36px'};height:${isChild ? '28px' : '36px'};border-radius:50%;background:linear-gradient(135deg,#00AEFE,#B71F71);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:${isChild ? '0.78rem' : '0.95rem'};flex-shrink:0;margin-top:2px;">
+              ${initial}
+            </div>
+
+            <div style="flex:1;max-width:100%;overflow:hidden;">
+              <!-- Facebook Grey Comment Bubble -->
+              <div style="background:#f0f2f5;border-radius:18px;padding:8px 14px;display:inline-block;max-width:100%;box-sizing:border-box;text-align:left;">
+                <div style="font-weight:700;font-size:0.85rem;color:#050505;margin:0 0 2px 0;line-height:1.2;text-align:left;display:flex;align-items:center;gap:4px;">
+                  <span>${authorName}</span>
+                  ${deleteBtn}
+                </div>
+                <div style="font-size:0.88rem;color:#050505;line-height:1.35;text-align:left;white-space:pre-wrap;word-break:break-word;">${parentAuthor ? `<span style="font-weight:600;color:#00AEFE;margin-right:4px;">@${parentAuthor}</span>` : ''}${(textStr || '').trim()}</div>
+              </div>
+
+              <!-- Facebook Action Bar (Like · Reply · Date) -->
+              <div style="display:flex;align-items:center;gap:12px;margin-top:2px;margin-left:8px;font-size:0.75rem;font-weight:700;color:#65676b;">
+                <button type="button" onclick="window.likeComment(this)" style="background:none;border:none;color:#65676b;font-weight:700;font-size:0.75rem;cursor:pointer;padding:0;">Like</button>
+                <button type="button" onclick="window.toggleArticleInlineReplyForm(${c.id}, '${safeAuthor}')" style="background:none;border:none;color:#65676b;font-weight:700;font-size:0.75rem;cursor:pointer;padding:0;">Reply</button>
+                <span style="font-weight:400;color:#8a8d91;">${dateStr}</span>
+              </div>
+
+              <!-- INLINE FB NESTED REPLY FORM -->
+              <div id="article-inline-reply-box-${c.id}" class="csp-article-inline-reply-box" style="display:none;margin-top:8px;padding:10px 14px;background:#f0f2f5;border-radius:16px;">
+                <div style="font-size:0.75rem;font-weight:600;color:#00AEFE;margin-bottom:6px;">Replying to @${authorName}</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+                  <input type="text" id="art-inline-name-${c.id}" class="csp-input-field" style="margin-bottom:0;padding:6px 12px;font-size:0.82rem;border-radius:20px;background:#fff;border:1px solid #ccd0d5;" placeholder="Your Name *" required>
+                  <input type="email" id="art-inline-email-${c.id}" class="csp-input-field" style="margin-bottom:0;padding:6px 12px;font-size:0.82rem;border-radius:20px;background:#fff;border:1px solid #ccd0d5;" placeholder="Your Email *" required>
+                </div>
+                <textarea id="art-inline-text-${c.id}" class="csp-input-field" rows="2" style="margin-bottom:6px;padding:8px 12px;font-size:0.82rem;border-radius:14px;background:#fff;border:1px solid #ccd0d5;" placeholder="Write a reply..." required></textarea>
+                <div style="display:flex;gap:6px;justify-content:flex-end;">
+                  <button type="button" onclick="window.hideArticleInlineReplyForm(${c.id})" style="padding:4px 14px;border-radius:20px;background:#e4e6eb;color:#050505;border:none;font-weight:600;font-size:0.75rem;cursor:pointer;">Cancel</button>
+                  <button type="button" onclick="window.submitArticleInlineReply(${c.id})" style="padding:4px 16px;border-radius:20px;background:#00AEFE;color:#fff;border:none;font-weight:600;font-size:0.75rem;cursor:pointer;">Post</button>
+                </div>
+              </div>
+
+              ${children.length > 0 ? `
+                <div class="csp-nested-replies-list" style="margin-top:8px;padding-left:10px;border-left:2px solid #e4e6eb;display:flex;flex-direction:column;gap:6px;">
+                  ${renderNodes(children, depth + 1)}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      });
+      return html;
+    }
+
+    return renderNodes(topLevel, 0);
+  };
+
   window.renderCommentsStream = function() {
     var container = document.getElementById('comments-list-container');
     if (!container) return;
 
-    var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
-    var savedComments = [];
-    try { savedComments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
+    var postSlugOrId = window.location.pathname.replace(/\/$/, '').split('/').pop() || 'we-are-the-world';
+    var commentsUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=comments&post_id=' + postSlugOrId) : '/api/posts.php?resource=comments&post_id=' + postSlugOrId;
 
-    if (savedComments.length === 0) {
-      container.innerHTML = '<div style="color:#94a3b8;font-size:0.9rem;">No comments yet. Be the first to join the conversation!</div>';
-      return;
-    }
-
-    var html = '';
-    savedComments.forEach(function(c, idx) {
-      var deleteBtn = window.isAdminLoggedIn 
-        ? `<button type="button" onclick="window.deleteComment('${c.id || ''}', ${idx})" style="background:#fff0f3;color:#e11d48;border:1px solid #fecdd3;padding:4px 12px;border-radius:6px;font-size:0.75rem;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:4px;" title="Admin Delete Comment"><i class="fas fa-trash"></i> Delete</button>`
-        : '';
-
-      html += `
-        <div class="csp-comment-item" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <span class="csp-comment-author" style="font-weight:700;color:#0f172a;font-size:0.92rem;">💬 ${c.author}</span>
-              <span class="csp-comment-date" style="font-size:0.8rem;color:#64748b;">${c.date}</span>
-            </div>
-            ${deleteBtn}
-          </div>
-          <div class="csp-comment-text" style="color:#334155;font-size:0.95rem;line-height:1.5;">${c.text}</div>
-        </div>
-      `;
-    });
-    container.innerHTML = html;
+    fetch(commentsUrl)
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        var comments = (res.success && res.comments) ? res.comments : [];
+        if (comments.length === 0) {
+          var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
+          try { comments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
+        }
+        container.innerHTML = window.renderCommentTree(comments);
+      })
+      .catch(function(){
+        var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
+        var comments = [];
+        try { comments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
+        container.innerHTML = window.renderCommentTree(comments);
+      });
   };
 
   window.fetchPostDetails = function() {

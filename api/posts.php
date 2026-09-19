@@ -113,6 +113,7 @@ if ($resource === 'comments') {
             exit;
         }
 
+        $parentId = !empty($input['parent_id']) ? intval($input['parent_id']) : null;
         $postIdentifier = trim($input['post_id'] ?? $input['slug'] ?? '');
         $authorName = csp_sanitize($input['author_name'] ?? 'Anonymous');
         $authorEmail = filter_var(trim($input['author_email'] ?? ''), FILTER_VALIDATE_EMAIL) ? trim($input['author_email']) : '';
@@ -131,10 +132,41 @@ if ($resource === 'comments') {
             if ($foundP) $realPostId = intval($foundP['id']);
         }
 
-        $stmt = $pdo->prepare("INSERT INTO comments (post_id, author_name, author_email, content, status) VALUES (?, ?, ?, ?, 'approved')");
-        $stmt->execute([$realPostId, $authorName, $authorEmail, $content]);
+        // Enforce cookie-level commenter session lock if set
+        if (!empty($_COOKIE['csp_user_comment_author'])) {
+            $authorName = csp_sanitize($_COOKIE['csp_user_comment_author']);
+        }
+        if (!empty($_COOKIE['csp_user_comment_email'])) {
+            $authorEmail = trim($_COOKIE['csp_user_comment_email']);
+        }
 
-        echo json_encode(["success" => true, "commentId" => $pdo->lastInsertId(), "message" => "Comment posted successfully"]);
+        $stmt = $pdo->prepare("INSERT INTO comments (post_id, parent_id, author_name, author_email, content, status) VALUES (?, ?, ?, ?, ?, 'approved')");
+        $stmt->execute([$realPostId, $parentId, $authorName, $authorEmail, $content]);
+        $newCommentId = $pdo->lastInsertId();
+
+        // Lock identity into long-lived HTTP cookie
+        @setcookie('csp_user_comment_author', $authorName, time() + 31536000, '/');
+        if ($authorEmail) {
+            @setcookie('csp_user_comment_email', $authorEmail, time() + 31536000, '/');
+        }
+
+        // Trigger email notification if replying to a parent comment author
+        if ($parentId > 0) {
+            try {
+                $stmtParent = $pdo->prepare("SELECT author_name, author_email FROM comments WHERE id = ?");
+                $stmtParent->execute([$parentId]);
+                $parentComment = $stmtParent->fetch();
+                if ($parentComment && filter_var($parentComment['author_email'], FILTER_VALIDATE_EMAIL)) {
+                    $pEmail = $parentComment['author_email'];
+                    $pName = $parentComment['author_name'];
+                    $subject = "New reply to your comment on Conspodium";
+                    $msgBody = "Hello " . $pName . ",\n\n" . $authorName . " replied to your comment on Conspodium:\n\n\"" . $content . "\"\n\nVisit Conspodium to view the conversation.";
+                    @mail($pEmail, $subject, $msgBody, "From: no-reply@conspodium.com\r\nContent-Type: text/plain; charset=UTF-8");
+                }
+            } catch (Exception $ex) {}
+        }
+
+        echo json_encode(["success" => true, "commentId" => $newCommentId, "message" => "Comment posted successfully"]);
         exit;
     }
 }

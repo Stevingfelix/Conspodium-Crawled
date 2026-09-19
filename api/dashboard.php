@@ -22,6 +22,14 @@ try {
     $totalMessages = $pdo->query("SELECT COUNT(*) as count FROM contact_messages")->fetch()['count'] ?? 0;
     $unreadMessages = $pdo->query("SELECT COUNT(*) as count FROM contact_messages WHERE status = 'unread'")->fetch()['count'] ?? 0;
 
+    $activePollRow = $pdo->query("SELECT id FROM polls WHERE is_active = 1 LIMIT 1")->fetch();
+    $totalPollVotes = 0;
+    if ($activePollRow) {
+        $totalPollVotes = $pdo->query("SELECT COUNT(*) as count FROM poll_votes WHERE poll_id = " . intval($activePollRow['id']))->fetch()['count'] ?? 0;
+    } else {
+        $totalPollVotes = $pdo->query("SELECT COUNT(*) as count FROM poll_votes")->fetch()['count'] ?? 0;
+    }
+
     $topPostsStmt = $pdo->query("
         SELECT p.id, p.title, p.slug, p.views, p.reading_time, c.name as category_name
         FROM posts p
@@ -55,7 +63,8 @@ try {
             "totalSubmissions" => intval($totalSubmissions),
             "pendingSubmissions" => intval($pendingSubmissions),
             "totalMessages" => intval($totalMessages),
-            "unreadMessages" => intval($unreadMessages)
+            "unreadMessages" => intval($unreadMessages),
+            "totalPollVotes" => intval($totalPollVotes)
         ],
         "topPosts" => $topPosts,
         "recentSubmissions" => $recentSubmissions,
