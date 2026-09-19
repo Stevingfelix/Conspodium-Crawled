@@ -3282,7 +3282,7 @@ e-page-transition,
   }
 
   function loadOverviewData() {
-    var token = localStorage.getItem('conspodium_admin_token') || 'conspodium_admin_session_token';
+    var token = localStorage.getItem('conspodium_admin_token') || '';
     fetch(getRootUrl('api/dashboard.php'), { headers: { 'X-Admin-Token': token } })
       .then(function(r){ return r.json(); })
       .then(function(res){
@@ -3666,7 +3666,7 @@ e-page-transition,
 
   // Load Submissions
   function loadSubmissions() {
-    fetch(getRootUrl('api/submissions.php?status=' + currentSubFilter), { headers: { 'X-Admin-Token': 'conspodium_admin_session_token' } })
+    fetch(getRootUrl('api/submissions.php?status=' + currentSubFilter), { headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' } })
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('submissions-cms-table');
@@ -3922,7 +3922,7 @@ e-page-transition,
   });
 
   function loadContactMessages() {
-    fetch(getRootUrl('api/contact.php?status=' + currentContactFilter), { headers: { 'X-Admin-Token': 'conspodium_admin_session_token' } })
+    fetch(getRootUrl('api/contact.php?status=' + currentContactFilter), { headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' } })
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('contact-cms-table');
@@ -4181,7 +4181,7 @@ e-page-transition,
   };
 
   function loadPolls() {
-    var token = localStorage.getItem('conspodium_admin_token') || 'conspodium_admin_session_token';
+    var token = localStorage.getItem('conspodium_admin_token') || '';
     fetch(getRootUrl('api/polls.php?action=list'), { headers: { 'X-Admin-Token': token } })
       .then(function(r){ return r.json(); })
       .then(function(res){
@@ -4561,7 +4561,7 @@ e-page-transition,
     var loader = document.getElementById('csp-page-loader');
     if (loader) loader.classList.add('loaded');
 
-    var token = localStorage.getItem('conspodium_admin_token') || 'conspodium_admin_session_token';
+    var token = localStorage.getItem('conspodium_admin_token') || '';
     var headers = token ? { 'X-Admin-Token': token } : {};
 
     fetch(getRootUrl('api/auth.php?action=me'), { headers: headers })
@@ -6529,7 +6529,7 @@ e-page-transition,
   }
 
   function saveHomepageSection(key, data, callback) {
-    var adminToken = localStorage.getItem('conspodium_admin_token') || 'conspodium_admin_session_token';
+    var adminToken = localStorage.getItem('conspodium_admin_token') || '';
     fetch(getRootUrl('api/homepage.php'), {
       method: 'POST',
       headers: {

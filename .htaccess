@@ -5,19 +5,22 @@ DirectoryIndex index.html index.php
     RewriteEngine On
     RewriteBase /
 
-    # Route root request to public/ if needed
+    # 1. NEVER REWRITE EXISTING FILES OR DIRECTORIES (CSS, JS, Images, Fonts)
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # 2. Route root request to public/index.html if needed
     RewriteCond %{REQUEST_URI} ^/$
     RewriteRule ^$ public/index.html [L]
 
-    # If public directory exists and request is not inside public/, route to public/
+    # 3. If public directory exists as a subfolder and request is not inside public/, route to public/
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
     RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
     RewriteRule ^(.*)$ public/$1 [L]
 
-    # Clean URL routing for sub-pages and API
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
+    # 4. Clean URL routing for sub-pages and API
     RewriteRule ^dashboard/?$ public/dashboard/index.html [L]
     RewriteRule ^dashboard/(.*)$ public/dashboard/$1 [L]
     RewriteRule ^stories/?$ public/stories/index.html [L]

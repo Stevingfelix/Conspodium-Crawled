@@ -40,9 +40,6 @@ function requireAdmin() {
     }
 
     if (!empty($clientToken)) {
-        if ($clientToken === 'conspodium_admin_session_token') {
-            return;
-        }
         global $pdo;
         if (isset($pdo)) {
             $stmt = $pdo->query("SELECT id, username FROM admins");

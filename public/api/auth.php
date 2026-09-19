@@ -54,7 +54,7 @@ if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action ===
             $admins = $stmt->fetchAll();
             foreach ($admins as $admin) {
                 $expectedToken = md5($tokenSecret . '_' . $admin['id'] . '_' . $admin['username']);
-                if (hash_equals($expectedToken, $clientToken) || $clientToken === 'conspodium_admin_session_token') {
+                if (hash_equals($expectedToken, $clientToken)) {
                     $userData = [
                         "id" => intval($admin['id']),
                         "username" => $admin['username'],
