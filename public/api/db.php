@@ -8,21 +8,24 @@ $isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERC
 
 if ($isVercel) {
     $dbPath = '/tmp/conspodium.db';
-    if (!file_exists($dbPath) || @filesize($dbPath) < 1000) {
-        $possibleSeedPaths = [
-            __DIR__ . '/../data/conspodium.db',
-            __DIR__ . '/data/conspodium.db',
-            __DIR__ . '/../../data/conspodium.db',
-            '/var/task/data/conspodium.db',
-            '/var/task/conspodium.db',
-            dirname(__DIR__) . '/data/conspodium.db'
-        ];
-        foreach ($possibleSeedPaths as $candidate) {
-            if (file_exists($candidate) && @filesize($candidate) >= 1000) {
-                @copy($candidate, $dbPath);
-                break;
-            }
+    $possibleSeedPaths = [
+        __DIR__ . '/conspodium.db',
+        __DIR__ . '/../data/conspodium.db',
+        __DIR__ . '/data/conspodium.db',
+        '/var/task/api/conspodium.db',
+        '/var/task/data/conspodium.db',
+        '/var/task/conspodium.db',
+        dirname(__DIR__) . '/data/conspodium.db'
+    ];
+    $bestSeed = null;
+    foreach ($possibleSeedPaths as $candidate) {
+        if (file_exists($candidate) && @filesize($candidate) > 10000) {
+            $bestSeed = $candidate;
+            break;
         }
+    }
+    if ($bestSeed && (!file_exists($dbPath) || @filesize($dbPath) < @filesize($bestSeed))) {
+        @copy($bestSeed, $dbPath);
     }
 } else {
     $dbDir = file_exists(__DIR__ . '/../../data') ? __DIR__ . '/../../data' : __DIR__ . '/../data';

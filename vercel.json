@@ -5,7 +5,7 @@
       "src": "api/index.php",
       "use": "vercel-php@0.7.3",
       "config": {
-        "includeFiles": ["api/**", "data/conspodium.db", "data/**"]
+        "includeFiles": ["api/**", "api/conspodium.db", "data/conspodium.db", "data/**"]
       }
     },
     {
