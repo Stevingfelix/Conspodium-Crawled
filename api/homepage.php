@@ -1,11 +1,15 @@
 <?php
 // api/homepage.php - Dynamic Homepage Content & Layout API
+error_reporting(0);
+ini_set('display_errors', '0');
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-CSRF-Token");
 header("Content-Type: application/json");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+if ($method === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
@@ -13,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once __DIR__ . '/db.php';
 
 $action = $_GET['action'] ?? $_POST['action'] ?? 'get_all';
-$method = $_SERVER['REQUEST_METHOD'];
 
 // PUBLIC EVENT REGISTRATION (SAVED TO DATABASE event_reminders & subscribers)
 if ($action === 'register_event') {

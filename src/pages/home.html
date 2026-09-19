@@ -19163,13 +19163,20 @@
         // Fetch live database content via getRootUrl with cache buster
         var url = window.getRootUrl ? window.getRootUrl('api/homepage.php?action=get_all&_t=' + Date.now()) : './api/homepage.php?action=get_all&_t=' + Date.now();
         fetch(url)
-          .then(function (r) { return r.json(); })
-          .then(function (res) {
-            if (!res.success || !res.data) return;
-            try {
-              localStorage.setItem('csp_homepage_cache', JSON.stringify(res.data));
-            } catch (e) { }
-            renderHomepageContent(res.data);
+          .then(function (r) { return r.text(); })
+          .then(function (rawText) {
+            var jsonStart = rawText.indexOf('{');
+            var jsonEnd = rawText.lastIndexOf('}');
+            if (jsonStart !== -1 && jsonEnd !== -1) {
+              var cleanJson = rawText.substring(jsonStart, jsonEnd + 1);
+              var res = JSON.parse(cleanJson);
+              if (res.success && res.data) {
+                try {
+                  localStorage.setItem('csp_homepage_cache', JSON.stringify(res.data));
+                } catch (e) { }
+                renderHomepageContent(res.data);
+              }
+            }
           })
           .catch(function (err) {
             console.error('Failed to fetch homepage data:', err);
