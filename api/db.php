@@ -24,8 +24,13 @@ if ($isVercel) {
             break;
         }
     }
-    if ($bestSeed && (!file_exists($dbPath) || @filesize($dbPath) < @filesize($bestSeed))) {
-        @copy($bestSeed, $dbPath);
+    if ($bestSeed) {
+        $needCopy = !file_exists($dbPath) ||
+                    @filesize($dbPath) < @filesize($bestSeed) ||
+                    @filemtime($bestSeed) > @filemtime($dbPath);
+        if ($needCopy) {
+            @copy($bestSeed, $dbPath);
+        }
     }
 } else {
     $dbDir = file_exists(__DIR__ . '/../../data') ? __DIR__ . '/../../data' : __DIR__ . '/../data';

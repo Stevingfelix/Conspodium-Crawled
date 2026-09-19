@@ -20891,29 +20891,24 @@
 
         // B2. Scholar Spotlights
         if (d.scholars && d.scholars.length > 0) {
-          var scholarCards = document.querySelectorAll('#csp-scholars .csp-scholar-card');
-          scholarCards.forEach(function (card, idx) {
-            if (d.scholars[idx]) {
-              var sch = d.scholars[idx];
-
-              var nameEl = card.querySelector('.csp-scholar-name');
-              if (nameEl && sch.scholar_name) nameEl.textContent = sch.scholar_name;
-
-              var uniEl = card.querySelector('.csp-scholar-uni');
-              if (uniEl && sch.title_affiliation) uniEl.textContent = sch.title_affiliation;
-
-              var topicEl = card.querySelector('.csp-scholar-topic');
-              if (topicEl && sch.bio) topicEl.textContent = '"' + sch.bio + '"';
-
-              var imgEl = card.querySelector('.csp-scholar-avatar img');
-              if (imgEl && sch.image_url) imgEl.src = sch.image_url;
-
-              if (sch.research_field) {
-                var tagEl = card.querySelector('.csp-scholar-coming');
-                if (tagEl) tagEl.textContent = sch.research_field;
-              }
-            }
-          });
+          var scholarGrid = document.querySelector('#csp-scholars .csp-scholars-grid');
+          if (scholarGrid) {
+            scholarGrid.innerHTML = '';
+            d.scholars.forEach(function (sch) {
+              var schImg = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(sch.image_url) : (sch.image_url || './wp-content/uploads/2026/08/scholar-amara-diallo.png');
+              var schLink = window.getRootUrl ? window.getRootUrl(sch.profile_link || 'stories/') : (sch.profile_link || './stories/');
+              scholarGrid.innerHTML += `
+                <div class="csp-scholar-card">
+                  <div class="csp-scholar-avatar"><img src="${schImg}" alt="${sch.scholar_name}"></div>
+                  <span class="csp-scholar-coming">${sch.research_field || 'Spotlight'}</span>
+                  <div class="csp-scholar-name">${sch.scholar_name}</div>
+                  <div class="csp-scholar-uni">${sch.title_affiliation || ''}</div>
+                  <div class="csp-scholar-topic">"${sch.bio || ''}"</div>
+                  <a href="${schLink}" class="csp-scholar-btn"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Read Article</a>
+                </div>
+              `;
+            });
+          }
         }
 
         // B3. Featured Interview Section
@@ -20922,11 +20917,16 @@
           var fiNameEl = document.getElementById('csp-interviewee-name');
           if (fiNameEl && fi.interviewee_name) fiNameEl.textContent = fi.interviewee_name;
 
+          var fiRoleEl = document.getElementById('csp-interviewee-role');
+          if (fiRoleEl && fi.interviewee_role) fiRoleEl.textContent = fi.interviewee_role;
+
           var fiQuoteEl = document.getElementById('csp-interview-quote');
           if (fiQuoteEl && fi.quote) fiQuoteEl.textContent = fi.quote;
 
           var fiPhotoEl = document.getElementById('csp-interview-photo');
-          if (fiPhotoEl && fi.photo) fiPhotoEl.src = fi.photo;
+          if (fiPhotoEl && fi.photo) {
+            fiPhotoEl.src = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(fi.photo) : fi.photo;
+          }
         }
 
         // B4. Featured Stories ("Voices That Inspire")
@@ -21022,7 +21022,7 @@
       }
 
       function loadHomepageDynamicContent() {
-        // Instant render from LocalStorage cache
+        // Fast initial render from LocalStorage cache
         try {
           var cached = localStorage.getItem('csp_homepage_cache');
           if (cached) {
@@ -21030,8 +21030,9 @@
           }
         } catch (e) { }
 
-        // Background revalidation fetch
-        fetch('/api/homepage.php?action=get_all')
+        // Fetch live database content via getRootUrl with cache buster
+        var url = window.getRootUrl ? window.getRootUrl('api/homepage.php?action=get_all&_t=' + Date.now()) : './api/homepage.php?action=get_all&_t=' + Date.now();
+        fetch(url)
           .then(function (r) { return r.json(); })
           .then(function (res) {
             if (!res.success || !res.data) return;
@@ -21039,6 +21040,9 @@
               localStorage.setItem('csp_homepage_cache', JSON.stringify(res.data));
             } catch (e) { }
             renderHomepageContent(res.data);
+          })
+          .catch(function (err) {
+            console.error('Failed to fetch homepage data:', err);
           });
       }
 
