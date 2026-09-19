@@ -337,5 +337,13 @@ for (const page of PAGES) {
   console.log(`     ✓  ${page.id.padEnd(16)} → public/${page.out}`);
 }
 
+// Step 4 — Pre-render homepage dynamic database sections into public/index.html
+import { execSync } from 'node:child_process';
+try {
+  execSync('php src/scripts/prerender_homepage.php', { cwd: ROOT, stdio: 'inherit' });
+} catch (err) {
+  console.warn('  ⚠ Pre-render warning:', err.message);
+}
+
 console.log('\n✅ Build complete → public/');
 console.log('   Run: npm start  →  http://localhost:8080\n');
