@@ -1,26 +1,34 @@
 # Conspodium Shared Hosting Apache / LiteSpeed Configuration (.htaccess)
-DirectoryIndex index.html index.php
+Options -Indexes +FollowSymLinks
+DirectoryIndex index.html index.php install.php
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
-    # 1. NEVER REWRITE EXISTING FILES OR DIRECTORIES (CSS, JS, Images, Fonts)
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
+    # 1. Direct pass-through for existing files (CSS, JS, Images, Fonts, PHP scripts)
+    RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
 
-    # 2. Route root request to public/index.html if needed
+    # 2. Allow API scripts, uploads, and install wizard directly
+    RewriteCond %{REQUEST_URI} ^/(install\.php|api/|uploads/|wp-content/) [NC]
+    RewriteRule ^ - [L]
+
+    # 3. Handle Root URL
     RewriteCond %{REQUEST_URI} ^/$
+    RewriteCond %{DOCUMENT_ROOT}/index.html -f
+    RewriteRule ^$ index.html [L]
+
+    RewriteCond %{REQUEST_URI} ^/$
+    RewriteCond %{DOCUMENT_ROOT}/public/index.html -f
     RewriteRule ^$ public/index.html [L]
 
-    # 3. If public directory exists as a subfolder and request is not inside public/, route to public/
+    # 4. Routing if public/ directory exists in subfolder setup
     RewriteCond %{REQUEST_URI} !^/public/
-    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
-    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
     RewriteRule ^(.*)$ public/$1 [L]
 
-    # 4. Clean URL routing for sub-pages and API
+    # 5. Clean URL Rewrites for Subpages (Subfolder setup)
     RewriteRule ^dashboard/?$ public/dashboard/index.html [L]
     RewriteRule ^dashboard/(.*)$ public/dashboard/$1 [L]
     RewriteRule ^stories/?$ public/stories/index.html [L]
@@ -34,11 +42,25 @@ DirectoryIndex index.html index.php
     RewriteRule ^story/(.*)$ public/post/index.html [L]
     RewriteRule ^forum/?$ public/forum/index.html [L]
     RewriteRule ^forum/thread/(.*)$ public/forum/thread/index.html [L]
+
+    # 6. Direct setup fallback (if public contents uploaded directly into root)
+    RewriteRule ^dashboard/?$ dashboard/index.html [L]
+    RewriteRule ^stories/?$ stories/index.html [L]
+    RewriteRule ^about-us/?$ about-us/index.html [L]
+    RewriteRule ^contact-us/?$ contact-us/index.html [L]
+    RewriteRule ^sponsorship/?$ sponsorship/index.html [L]
+    RewriteRule ^advert/?$ advert/index.html [L]
+    RewriteRule ^submit-story/?$ submit-story/index.html [L]
+    RewriteRule ^category/(.*)$ category/index.html [L]
+    RewriteRule ^post/(.*)$ post/index.html [L]
+    RewriteRule ^story/(.*)$ post/index.html [L]
+    RewriteRule ^forum/?$ forum/index.html [L]
+    RewriteRule ^forum/thread/(.*)$ forum/thread/index.html [L]
 </IfModule>
 
-# Protect database file from HTTP downloads
+# Protect SQLite database files and sensitive configs from HTTP download
 <IfModule mod_authz_core.c>
-    <FilesMatch "\.(db|lock)$">
+    <FilesMatch "\.(db|lock|sqlite)$">
         Require all denied
     </FilesMatch>
 </IfModule>

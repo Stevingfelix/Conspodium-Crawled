@@ -1,16 +1,16 @@
 # Conspodium Public Directory Apache / LiteSpeed Configuration (.htaccess)
+Options -Indexes +FollowSymLinks
 DirectoryIndex index.html index.php
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
-    # NEVER REWRITE EXISTING FILES OR DIRECTORIES (CSS, JS, Images)
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
+    # 1. Direct pass-through ONLY for existing files (NOT directories)
+    RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
 
-    # Clean URLs for dashboard, stories, about-us, etc.
+    # 2. Clean URLs for subpages
     RewriteRule ^dashboard/?$ dashboard/index.html [L]
     RewriteRule ^dashboard/(.*)$ dashboard/$1 [L]
     RewriteRule ^stories/?$ stories/index.html [L]

@@ -100,9 +100,9 @@ if ($method === 'GET' && $action === 'get_featured_interview') {
         if (!$featuredInterview) {
             $featuredInterview = [
                 'title' => 'In Conversation With',
-                'interviewee_name' => 'Professor John Smith',
-                'interviewee_role' => 'Chair of International Diaspora Relations',
-                'quote' => '"Why Democracy Needs Better Conversations Across Borders"',
+                'interviewee_name' => 'Featured Diaspora Scholar',
+                'interviewee_role' => 'Global African Studies & Research',
+                'quote' => '"Empowering communities through critical dialogue and scholarship"',
                 'photo' => '/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg',
                 'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ'
             ];
@@ -218,9 +218,9 @@ if ($method === 'GET' && ($action === 'get_all' || $action === 'frontend')) {
         if (!$featuredInterview) {
             $featuredInterview = [
                 'title' => 'In Conversation With',
-                'interviewee_name' => 'Professor John Smith',
-                'interviewee_role' => 'Chair of International Diaspora Relations',
-                'quote' => '"Why Democracy Needs Better Conversations Across Borders"',
+                'interviewee_name' => 'Featured Diaspora Scholar',
+                'interviewee_role' => 'Global African Studies & Research',
+                'quote' => '"Empowering communities through critical dialogue and scholarship"',
                 'photo' => '/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg',
                 'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ'
             ];

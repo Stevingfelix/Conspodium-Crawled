@@ -448,8 +448,6 @@ try {
             ""
         ]);
     }
-        ]);
-    }
 
     // Seed default payment settings (Sandbox Test Keys ready out of the box)
     try {
