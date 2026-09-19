@@ -334,12 +334,10 @@ try {
         }
     } catch (Exception $e) {}
 
-    // Seed 3 Scholar Spotlight cards with authentic scholar assets
+    // Seed 3 Scholar Spotlight cards ONLY if table is completely empty
     try {
         $schCnt = $pdo->query("SELECT COUNT(*) as count FROM scholar_spotlights")->fetch()['count'];
-        $checkOld = $pdo->query("SELECT COUNT(*) as cnt FROM scholar_spotlights WHERE scholar_name LIKE '%Kemi Adebayo%' OR scholar_name LIKE '%Chukwuma Oji%'")->fetch()['cnt'];
-        if ($schCnt < 3 || $checkOld > 0) {
-            $pdo->exec("DELETE FROM scholar_spotlights");
+        if ($schCnt == 0) {
             $stmtSch = $pdo->prepare("INSERT INTO scholar_spotlights (scholar_name, title_affiliation, bio, image_url, research_field, profile_link, display_order) VALUES (?, ?, ?, ?, ?, ?, ?)");
             
             $stmtSch->execute([

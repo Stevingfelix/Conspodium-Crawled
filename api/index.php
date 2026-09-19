@@ -30,7 +30,7 @@ if (empty($endpoint) || $endpoint === 'index') {
 $targetFile = __DIR__ . '/' . $endpoint . '.php';
 
 if (file_exists($targetFile) && $endpoint !== 'index') {
-    require_once $targetFile;
+    require $targetFile;
 } else {
     header("Content-Type: application/json");
     http_response_code(404);

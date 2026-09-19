@@ -74,27 +74,39 @@ $extMap = [
 ];
 $ext = $extMap[$mimeType] ?? 'jpg';
 
-$isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERCEL']);
+$isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERCEL']) || file_exists('/var/task');
+
+$fileName = 'upload_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
 
 if ($isVercel) {
-    $uploadDirPublic = '/tmp/uploads';
-    $uploadDirSrc = '/tmp/uploads';
-} else {
-    // Determine path whether called from /api or /public/api
-    $normalizedDir = str_replace('\\', '/', __DIR__);
-    if (basename(dirname($normalizedDir)) === 'public' || strpos($normalizedDir, '/public/api') !== false) {
-        $uploadDirPublic = dirname($normalizedDir) . '/uploads';
-        $uploadDirSrc = dirname(dirname($normalizedDir)) . '/src/assets/uploads';
-    } else {
-        $uploadDirPublic = $normalizedDir . '/../public/uploads';
-        $uploadDirSrc = $normalizedDir . '/../src/assets/uploads';
+    $fileData = file_get_contents($file['tmp_name']);
+    if ($fileData !== false) {
+        $dataUri = 'data:' . $mimeType . ';base64,' . base64_encode($fileData);
+        echo json_encode([
+            "success" => true,
+            "message" => "Image uploaded successfully!",
+            "imageUrl" => $dataUri,
+            "image_url" => $dataUri,
+            "url" => $dataUri,
+            "file_name" => $fileName
+        ]);
+        exit();
     }
+}
+
+// Local Server Environment File Saving
+$normalizedDir = str_replace('\\', '/', __DIR__);
+if (basename(dirname($normalizedDir)) === 'public' || strpos($normalizedDir, '/public/api') !== false) {
+    $uploadDirPublic = dirname($normalizedDir) . '/uploads';
+    $uploadDirSrc = dirname(dirname($normalizedDir)) . '/src/assets/uploads';
+} else {
+    $uploadDirPublic = $normalizedDir . '/../public/uploads';
+    $uploadDirSrc = $normalizedDir . '/../src/assets/uploads';
 }
 
 if (!file_exists($uploadDirPublic)) @mkdir($uploadDirPublic, 0777, true);
 if (!file_exists($uploadDirSrc)) @mkdir($uploadDirSrc, 0777, true);
 
-$fileName = 'upload_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
 $targetPublic = $uploadDirPublic . '/' . $fileName;
 $targetSrc = $uploadDirSrc . '/' . $fileName;
 
@@ -105,7 +117,9 @@ if (move_uploaded_file($file['tmp_name'], $targetPublic)) {
     echo json_encode([
         "success" => true,
         "message" => "Image uploaded successfully!",
+        "imageUrl" => $fileUrl,
         "image_url" => $fileUrl,
+        "url" => $fileUrl,
         "file_name" => $fileName
     ]);
 } else {
