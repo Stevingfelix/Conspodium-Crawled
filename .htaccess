@@ -1,0 +1,41 @@
+# Conspodium Shared Hosting Apache / LiteSpeed Configuration (.htaccess)
+DirectoryIndex index.html index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Route root request to public/ if needed
+    RewriteCond %{REQUEST_URI} ^/$
+    RewriteRule ^$ public/index.html [L]
+
+    # If public directory exists and request is not inside public/, route to public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Clean URL routing for sub-pages and API
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^dashboard/?$ public/dashboard/index.html [L]
+    RewriteRule ^dashboard/(.*)$ public/dashboard/$1 [L]
+    RewriteRule ^stories/?$ public/stories/index.html [L]
+    RewriteRule ^about-us/?$ public/about-us/index.html [L]
+    RewriteRule ^contact-us/?$ public/contact-us/index.html [L]
+    RewriteRule ^sponsorship/?$ public/sponsorship/index.html [L]
+    RewriteRule ^advert/?$ public/advert/index.html [L]
+    RewriteRule ^submit-story/?$ public/submit-story/index.html [L]
+    RewriteRule ^category/(.*)$ public/category/index.html [L]
+    RewriteRule ^post/(.*)$ public/post/index.html [L]
+    RewriteRule ^story/(.*)$ public/post/index.html [L]
+    RewriteRule ^forum/?$ public/forum/index.html [L]
+    RewriteRule ^forum/thread/(.*)$ public/forum/thread/index.html [L]
+</IfModule>
+
+# Protect database file from HTTP downloads
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(db|lock)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>

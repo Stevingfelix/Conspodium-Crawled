@@ -371,26 +371,26 @@ try {
         }
     } catch (Exception $e) {}
 
-    // Seed 3 Scholar Spotlight cards ONLY if table is completely empty
+    // Seed 3 Scholar Spotlight cards if missing or empty
     try {
         $schCnt = $pdo->query("SELECT COUNT(*) as count FROM scholar_spotlights")->fetch()['count'];
         if ($schCnt == 0) {
-            $stmtSch = $pdo->prepare("INSERT INTO scholar_spotlights (scholar_name, title_affiliation, bio, image_url, research_field, profile_link, display_order) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmtSch = $pdo->prepare("INSERT INTO scholar_spotlights (scholar_name, title_affiliation, bio, image_url, research_field, profile_link, display_order, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, 1)");
             
             $stmtSch->execute([
-                "Prof. Amara Diallo",
-                "London School of Economics",
-                "\"Democracy, Digital Sovereignty & the African Voice in Global Governance\"",
-                "/wp-content/uploads/2026/08/scholar-amara-diallo.png",
-                "Democracy & Digital Sovereignty",
+                "Prof. Amara Diallo Jr",
+                "American School of Economics",
+                "\"Democracy, Digital Sovereignty & the African Voice in Global Governance...\"",
+                "/uploads/upload_1789726789_a3866bad.webp",
+                "Democracy Sovereignty",
                 "/post/empowering-diaspora-communities-through-innovation-heritage/",
                 1
             ]);
             $stmtSch->execute([
-                "Dr. Ngozi Eze",
+                "Mrs Margaret Benson",
                 "MIT Media Lab",
                 "\"Biotechnology and the Future of African Health Systems — Who Controls the Science?\"",
-                "/wp-content/uploads/2026/08/scholar-ngozi-eze.png",
+                "/uploads/upload_1789741903_83d9f9e0.jpg",
                 "Biotechnology & Health Systems",
                 "/post/we-are-the-world/",
                 2
@@ -407,16 +407,16 @@ try {
         }
     } catch (Exception $e) {}
 
-    // Seed default homepage sections if empty (DO NOTHING on conflict so admin edits are preserved)
-    $stmtHomeSecInit = $pdo->prepare("INSERT INTO homepage_sections (key, value_json, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) ON CONFLICT(key) DO NOTHING");
+    // Seed default homepage sections if empty
+    $stmtHomeSecInit = $pdo->prepare("INSERT INTO homepage_sections (`key`, value_json, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) ON CONFLICT(`key`) DO NOTHING");
 
     $interviewData = [
         "title" => "In Conversation With",
-        "interviewee_name" => "Professor John Smith",
-        "interviewee_role" => "Chair of International Diaspora Relations",
-        "quote" => "\"Why Democracy Needs Better Conversations Across Borders\"",
-        "photo" => "/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg",
-        "video_url" => "https://www.youtube.com/embed/dQw4w9WgXcQ"
+        "interviewee_name" => "Prof. Amara Diallo & The Panel",
+        "interviewee_role" => "Cultural Historian",
+        "quote" => "Building Bridges Across Nations",
+        "photo" => "/uploads/upload_1789745044_214929bc.jpg",
+        "video_url" => ""
     ];
     $stmtHomeSecInit->execute(['featured_interview', json_encode($interviewData)]);
 
@@ -428,13 +428,11 @@ try {
             "The Future of African Democracy",
             "Prof. Amara Diallo & Panel",
             "London School of Economics",
-            "/uploads/live_speaker_avatar.png",
+            "/uploads/upload_1789742036_15826c02.jpg",
             "2026-10-15 18:00:00",
             "https://zoom.us/j/conspodium-live",
             "Conspodium Next Live Discussion: The Future of African Democracy"
         ]);
-    } else {
-        $pdo->exec("UPDATE live_discussions SET speaker_avatar = '/uploads/live_speaker_avatar.png' WHERE speaker_avatar IS NULL OR speaker_avatar = '' OR speaker_avatar LIKE '%African-Diasporans%'");
     }
 
     // Seed/Update active featured interview
@@ -443,11 +441,13 @@ try {
         $stmtInt = $pdo->prepare("INSERT INTO featured_interviews (title, interviewee_name, interviewee_role, quote, photo, video_url) VALUES (?, ?, ?, ?, ?, ?)");
         $stmtInt->execute([
             "In Conversation With",
-            "Professor John Smith",
-            "Chair of International Diaspora Relations",
-            "\"Why Democracy Needs Better Conversations Across Borders\"",
-            "/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg",
-            "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            "Prof. Amara Diallo & The Panel",
+            "Cultural Historian",
+            "Building Bridges Across Nations",
+            "/uploads/upload_1789745044_214929bc.jpg",
+            ""
+        ]);
+    }
         ]);
     }
 

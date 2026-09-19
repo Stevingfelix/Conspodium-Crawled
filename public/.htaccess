@@ -1,0 +1,24 @@
+# Conspodium Public Directory Apache / LiteSpeed Configuration (.htaccess)
+DirectoryIndex index.html index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Clean URLs for dashboard, stories, about-us, etc.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^dashboard/?$ dashboard/index.html [L]
+    RewriteRule ^dashboard/(.*)$ dashboard/$1 [L]
+    RewriteRule ^stories/?$ stories/index.html [L]
+    RewriteRule ^about-us/?$ about-us/index.html [L]
+    RewriteRule ^contact-us/?$ contact-us/index.html [L]
+    RewriteRule ^sponsorship/?$ sponsorship/index.html [L]
+    RewriteRule ^advert/?$ advert/index.html [L]
+    RewriteRule ^submit-story/?$ submit-story/index.html [L]
+    RewriteRule ^category/(.*)$ category/index.html [L]
+    RewriteRule ^post/(.*)$ post/index.html [L]
+    RewriteRule ^story/(.*)$ post/index.html [L]
+    RewriteRule ^forum/?$ forum/index.html [L]
+    RewriteRule ^forum/thread/(.*)$ forum/thread/index.html [L]
+</IfModule>
