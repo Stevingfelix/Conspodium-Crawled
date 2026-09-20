@@ -23,7 +23,7 @@ const SRC       = join(ROOT, 'src');
 const ASSETS    = join(SRC, 'assets');
 const PUBLIC    = join(ROOT, 'public');
 
-// Page destination map
+// 12 Core Clean Page Templates (Dynamic URL routing handles all article/category slugs)
 const PAGES = [
   { id: 'home',         out: 'index.html' },
   { id: 'about',        out: 'about-us/index.html' },
@@ -33,29 +33,10 @@ const PAGES = [
   { id: 'advert',       out: 'advert/index.html' },
   { id: 'submit-story', out: 'submit-story/index.html' },
   { id: 'category',     out: 'category/index.html' },
-  { id: 'category',     out: 'category/culture-heritage/index.html' },
-  { id: 'category',     out: 'category/innovation/index.html' },
-  { id: 'category',     out: 'category/art-entertainment/index.html' },
-  { id: 'category',     out: 'category/community/index.html' },
-  { id: 'category',     out: 'category/success-stories/index.html' },
   { id: 'forum',        out: 'forum/index.html' },
   { id: 'forum-thread', out: 'forum/thread/index.html' },
   { id: 'dashboard',    out: 'dashboard/index.html' },
-  { id: 'post',         out: 'post/index.html' },
-  { id: 'post',         out: 'post/we-are-the-world/index.html' },
-  { id: 'post',         out: 'post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/index.html' },
-  { id: 'post',         out: 'post/profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2/index.html' },
-  { id: 'post',         out: 'post/conspodium-is-all-about-community/index.html' },
-  { id: 'post',         out: 'post/empowering-diaspora-communities-through-innovation-heritage/index.html' },
-  { id: 'post',         out: 'post/africans-in-diaspora-influencing-global-economic-decisions/index.html' },
-  { id: 'post',         out: 'post/creatives-shaping-representing-global-african-culture/index.html' },
-  { id: 'post',         out: 'we-are-the-world/index.html' },
-  { id: 'post',         out: 'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora/index.html' },
-  { id: 'post',         out: 'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2/index.html' },
-  { id: 'post',         out: 'conspodium-is-all-about-community/index.html' },
-  { id: 'post',         out: 'empowering-diaspora-communities-through-innovation-heritage/index.html' },
-  { id: 'post',         out: 'africans-in-diaspora-influencing-global-economic-decisions/index.html' },
-  { id: 'post',         out: 'creatives-shaping-representing-global-african-culture/index.html' },
+  { id: 'post',         out: 'post/index.html' }
 ];
 
 /** Recursively copy a directory */
