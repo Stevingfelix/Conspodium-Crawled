@@ -39,8 +39,10 @@ if ($action === 'register_event') {
         $stmt->execute([$eventName, $eventDate, $displayName, $email]);
 
         // Also save to subscribers
-        $stmtSub = $pdo->prepare("INSERT INTO subscribers (name, email, list_segment) VALUES (?, ?, 'live_discussion') ON CONFLICT(email) DO UPDATE SET name = excluded.name, list_segment = 'live_discussion'");
-        $stmtSub->execute([$displayName, $email]);
+        try {
+            $stmtSub = $pdo->prepare("INSERT OR REPLACE INTO subscribers (name, email, list_segment) VALUES (?, ?, 'live_discussion')");
+            $stmtSub->execute([$displayName, $email]);
+        } catch (Exception $e) {}
 
         $countStmt = $pdo->query("SELECT COUNT(*) as count FROM event_reminders");
         $totalRegistered = $countStmt->fetch()['count'];
@@ -469,8 +471,13 @@ if ($method === 'POST') {
 
     if (!empty($key) && $data !== null) {
         try {
-            $stmt = $pdo->prepare("INSERT INTO homepage_sections (key, value_json, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) ON CONFLICT(key) DO UPDATE SET value_json = excluded.value_json, updated_at = CURRENT_TIMESTAMP");
-            $stmt->execute([$key, json_encode($data)]);
+            // Try update first, then insert if not found
+            $stmtUpd = $pdo->prepare("UPDATE homepage_sections SET value_json = ?, updated_at = CURRENT_TIMESTAMP WHERE \"key\" = ?");
+            $stmtUpd->execute([json_encode($data), $key]);
+            if ($stmtUpd->rowCount() === 0) {
+                $stmtIns = $pdo->prepare("INSERT INTO homepage_sections (\"key\", value_json, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)");
+                $stmtIns->execute([$key, json_encode($data)]);
+            }
 
             echo json_encode(["success" => true, "message" => "Homepage settings saved successfully."]);
         } catch (Exception $e) {

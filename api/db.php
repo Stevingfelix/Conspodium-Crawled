@@ -414,7 +414,7 @@ try {
     } catch (Exception $e) {}
 
     // Seed default homepage sections if empty
-    $stmtHomeSecInit = $pdo->prepare("INSERT INTO homepage_sections (`key`, value_json, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) ON CONFLICT(`key`) DO NOTHING");
+    $stmtHomeSecInit = $pdo->prepare("INSERT OR IGNORE INTO homepage_sections (\"key\", value_json, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)");
 
     $interviewData = [
         "title" => "In Conversation With",
@@ -457,7 +457,7 @@ try {
 
     // Seed default payment settings (Sandbox Test Keys ready out of the box)
     try {
-        $stmtPayInit = $pdo->prepare("INSERT INTO payment_settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO NOTHING");
+        $stmtPayInit = $pdo->prepare("INSERT OR IGNORE INTO payment_settings (key, value) VALUES (?, ?)");
         $stmtPayInit->execute(['paystack_public_key', 'pk_test_conspodium_sandbox_demo']);
         $stmtPayInit->execute(['paystack_enabled', '1']);
         $stmtPayInit->execute(['stripe_public_key', 'pk_test_conspodium_stripe_demo']);

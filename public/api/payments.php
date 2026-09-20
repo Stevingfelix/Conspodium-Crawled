@@ -62,8 +62,10 @@ if ($action === 'record_transaction') {
         $stmt->execute([$ref, $gateway, $amount, $currency, $email, $name, $tier]);
 
         // Auto-subscribe customer to 'sponsors' list segment
-        $stmtSub = $pdo->prepare("INSERT INTO subscribers (name, email, list_segment, status) VALUES (?, ?, 'sponsors', 'active') ON CONFLICT(email) DO UPDATE SET list_segment = 'sponsors', status = 'active'");
-        $stmtSub->execute([$name, $email]);
+        try {
+            $stmtSub = $pdo->prepare("INSERT OR REPLACE INTO subscribers (name, email, list_segment, status) VALUES (?, ?, 'sponsors', 'active')");
+            $stmtSub->execute([$name, $email]);
+        } catch (Exception $e) {}
 
         echo json_encode([
             "success" => true,
@@ -99,7 +101,10 @@ if ($action === 'save_settings') {
     $input = json_decode(file_get_contents("php://input"), true) ?: $_POST;
     
     try {
-        $stmt = $pdo->prepare("INSERT INTO payment_settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value");
+        // Update existing, insert if new
+        $stmtCheck = $pdo->prepare("SELECT COUNT(*) as cnt FROM payment_settings WHERE key = ?");
+        $stmtUpdate = $pdo->prepare("UPDATE payment_settings SET value = ? WHERE key = ?");
+        $stmtInsert = $pdo->prepare("INSERT INTO payment_settings (key, value) VALUES (?, ?)");
         
         $allowedKeys = [
             'paystack_public_key', 'paystack_secret_key', 'paystack_enabled',
@@ -108,7 +113,13 @@ if ($action === 'save_settings') {
 
         foreach ($allowedKeys as $k) {
             if (isset($input[$k])) {
-                $stmt->execute([$k, (string)$input[$k]]);
+                $stmtCheck->execute([$k]);
+                $exists = $stmtCheck->fetch()['cnt'] > 0;
+                if ($exists) {
+                    $stmtUpdate->execute([(string)$input[$k], $k]);
+                } else {
+                    $stmtInsert->execute([$k, (string)$input[$k]]);
+                }
             }
         }
 

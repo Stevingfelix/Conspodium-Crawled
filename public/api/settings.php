@@ -64,14 +64,19 @@ if ($method === 'POST') {
 
     // Update key-value settings if provided
     if (!empty($input['settings']) && is_array($input['settings'])) {
-        $stmtSet = $pdo->prepare("
-            INSERT INTO site_settings (key, value)
-            VALUES (?, ?)
-            ON CONFLICT(key) DO UPDATE SET value = excluded.value
-        ");
+        // Update existing, insert if new (compatible with all SQLite versions)
+        $stmtCheck = $pdo->prepare("SELECT COUNT(*) as cnt FROM site_settings WHERE key = ?");
+        $stmtUpdate = $pdo->prepare("UPDATE site_settings SET value = ? WHERE key = ?");
+        $stmtInsert = $pdo->prepare("INSERT INTO site_settings (key, value) VALUES (?, ?)");
 
         foreach ($input['settings'] as $key => $val) {
-            $stmtSet->execute([strval($key), strval($val)]);
+            $stmtCheck->execute([strval($key)]);
+            $exists = $stmtCheck->fetch()['cnt'] > 0;
+            if ($exists) {
+                $stmtUpdate->execute([strval($val), strval($key)]);
+            } else {
+                $stmtInsert->execute([strval($key), strval($val)]);
+            }
             $updatedKeys++;
         }
     }

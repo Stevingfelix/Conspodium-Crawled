@@ -541,7 +541,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isInstalled && $allChecksPassed) 
             if ($dbType === 'mysql') {
                 $stmtAdmin = $pdo->prepare("INSERT INTO admins (username, email, password_hash, name, role) VALUES (?, ?, ?, ?, 'admin') ON DUPLICATE KEY UPDATE password_hash = VALUES(password_hash), name = VALUES(name)");
             } else {
-                $stmtAdmin = $pdo->prepare("INSERT INTO admins (username, email, password_hash, name, role) VALUES (?, ?, ?, ?, 'admin') ON CONFLICT(username) DO UPDATE SET password_hash = excluded.password_hash, name = excluded.name");
+                $stmtAdmin = $pdo->prepare("INSERT OR REPLACE INTO admins (username, email, password_hash, name, role) VALUES (?, ?, ?, ?, 'admin')");
             }
             $stmtAdmin->execute([$adminUser, $adminEmail, $hashedPassword, $adminName]);
 
