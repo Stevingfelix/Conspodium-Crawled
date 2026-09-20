@@ -40,6 +40,26 @@ $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 
 // ── GET CURRENT LOGGED IN ADMIN / CHECK AUTH ─────────────────────────────────
 if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action === 'check_auth' || empty($action))) {
+    $clientToken = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
+    
+    if ($clientToken) {
+        $stmt = $pdo->prepare("SELECT id, username, email, name, role, session_token FROM admins WHERE session_token = ?");
+        $stmt->execute([$clientToken]);
+        $admin = $stmt->fetch();
+        if ($admin && !empty($admin['session_token']) && hash_equals($admin['session_token'], $clientToken)) {
+            $userData = [
+                "id" => intval($admin['id']),
+                "username" => $admin['username'],
+                "email" => $admin['email'],
+                "name" => $admin['name'],
+                "role" => $admin['role']
+            ];
+            $_SESSION['admin_user'] = $userData;
+            echo json_encode(["success" => true, "authenticated" => true, "user" => $userData]);
+            exit;
+        }
+    }
+
     if (!empty($_SESSION['admin_user'])) {
         echo json_encode([
             "success" => true,
@@ -47,27 +67,6 @@ if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action ===
             "user" => $_SESSION['admin_user']
         ]);
     } else {
-        $tokenSecret = "conspodium_cms_secret_token_key";
-        $clientToken = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
-        if ($clientToken) {
-            $stmt = $pdo->query("SELECT id, username, email, name, role FROM admins");
-            $admins = $stmt->fetchAll();
-            foreach ($admins as $admin) {
-                $expectedToken = md5($tokenSecret . '_' . $admin['id'] . '_' . $admin['username']);
-                if (hash_equals($expectedToken, $clientToken)) {
-                    $userData = [
-                        "id" => intval($admin['id']),
-                        "username" => $admin['username'],
-                        "email" => $admin['email'],
-                        "name" => $admin['name'],
-                        "role" => $admin['role']
-                    ];
-                    $_SESSION['admin_user'] = $userData;
-                    echo json_encode(["success" => true, "authenticated" => true, "user" => $userData]);
-                    exit;
-                }
-            }
-        }
         echo json_encode([
             "success" => false,
             "authenticated" => false,
@@ -99,6 +98,13 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
     $admin = $stmt->fetch();
 
     if ($admin && password_verify($password, $admin['password_hash'])) {
+        $token = bin2hex(random_bytes(32));
+        
+        try {
+            $upToken = $pdo->prepare("UPDATE admins SET session_token = ? WHERE id = ?");
+            $upToken->execute([$token, $admin['id']]);
+        } catch (Exception $e) {}
+
         $userData = [
             "id" => intval($admin['id']),
             "username" => $admin['username'],
@@ -108,9 +114,7 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
         ];
         
         $_SESSION['admin_user'] = $userData;
-
-        $tokenSecret = "conspodium_cms_secret_token_key";
-        $token = md5($tokenSecret . '_' . $admin['id'] . '_' . $admin['username']);
+        $_SESSION['admin_session_token'] = $token;
 
         echo json_encode([
             "success" => true,
@@ -126,9 +130,24 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
 }
 
 // ── ADMIN LOGOUT ────────────────────────────────────────────────────────────
-if ($method === 'POST' && $action === 'logout') {
-    unset($_SESSION['admin_user']);
+if ($method === 'POST' && ($action === 'logout' || $action === 'signout')) {
+    if (!empty($_SESSION['admin_user']['id'])) {
+        try {
+            $upToken = $pdo->prepare("UPDATE admins SET session_token = NULL WHERE id = ?");
+            $upToken->execute([$_SESSION['admin_user']['id']]);
+        } catch (Exception $e) {}
+    }
+
+    $_SESSION = [];
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
     session_destroy();
+
     echo json_encode(["success" => true, "message" => "Logged out successfully"]);
     exit;
 }

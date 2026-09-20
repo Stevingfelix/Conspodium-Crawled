@@ -4607,10 +4607,12 @@ e-page-transition,
             }, 15000);
           }
         } else {
+          localStorage.removeItem('conspodium_admin_token');
           if (loginScreen) loginScreen.style.display = 'flex';
         }
       })
       .catch(function(){
+        localStorage.removeItem('conspodium_admin_token');
         var loginScreen = document.getElementById('csp-login-screen');
         if (loginScreen) loginScreen.style.display = 'flex';
       });
@@ -5120,8 +5122,14 @@ e-page-transition,
   // Logout Handler
   document.querySelectorAll('.btn-logout-action').forEach(function(btn){
     btn.addEventListener('click', function(){
+      localStorage.removeItem('conspodium_admin_token');
+      sessionStorage.clear();
       fetch(getRootUrl('api/auth.php?action=logout'), { method: 'POST' })
-        .then(function(){ location.reload(); });
+        .then(function(){
+          var loginScreen = document.getElementById('csp-login-screen');
+          if (loginScreen) loginScreen.style.display = 'flex';
+          location.reload();
+        });
     });
   });
 

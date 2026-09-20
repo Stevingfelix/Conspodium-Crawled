@@ -218,8 +218,14 @@ try {
             password_hash TEXT NOT NULL,
             name TEXT NOT NULL,
             role TEXT DEFAULT 'admin',
+            session_token TEXT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
+    ");
+
+    try { $pdo->exec("ALTER TABLE admins ADD COLUMN session_token TEXT NULL"); } catch (Exception $e) {}
+
+    $pdo->exec("
 
         CREATE TABLE IF NOT EXISTS site_settings (
             key TEXT PRIMARY KEY,

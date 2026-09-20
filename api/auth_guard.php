@@ -31,7 +31,6 @@ function requireAdmin() {
     }
 
     // 2. Check Admin Auth Token Header / Query Param
-    $tokenSecret = "conspodium_cms_secret_token_key";
     $clientToken = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
     if (empty($clientToken) && !empty($_SERVER['HTTP_AUTHORIZATION'])) {
         if (preg_match('/Bearer\s+(\S+)/i', $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
@@ -42,28 +41,19 @@ function requireAdmin() {
     if (!empty($clientToken)) {
         global $pdo;
         if (isset($pdo)) {
-            $stmt = $pdo->query("SELECT id, username FROM admins");
-            $admins = $stmt->fetchAll();
-            foreach ($admins as $admin) {
-                $expectedToken = md5($tokenSecret . '_' . $admin['id'] . '_' . $admin['username']);
-                if (hash_equals($expectedToken, $clientToken)) {
-                    return;
-                }
+            $stmt = $pdo->prepare("SELECT id, username, email, name, role FROM admins WHERE session_token = ?");
+            $stmt->execute([$clientToken]);
+            $admin = $stmt->fetch();
+            if ($admin && !empty($admin['id'])) {
+                $_SESSION['admin_user'] = [
+                    "id" => intval($admin['id']),
+                    "username" => $admin['username'],
+                    "email" => $admin['email'],
+                    "name" => $admin['name'],
+                    "role" => $admin['role']
+                ];
+                return;
             }
-        }
-    }
-
-    // 3. Serverless Vercel Environment Read-Only Safety Fallback for GET requests
-    $isVercel = getenv('VERCEL') || !empty($_ENV['VERCEL']) || !empty($_SERVER['VERCEL']) ||
-                !empty($_ENV['VERCEL_ENV']) || !empty($_SERVER['VERCEL_ENV']) ||
-                !empty($_ENV['NOW_REGION']) || !empty($_SERVER['NOW_REGION']) ||
-                strpos(__DIR__, '/var/task') !== false || file_exists('/var/task');
-
-    if ($isVercel && $_SERVER['REQUEST_METHOD'] === 'GET') {
-        $referer = $_SERVER['HTTP_REFERER'] ?? '';
-        $uri = $_SERVER['REQUEST_URI'] ?? '';
-        if (strpos($referer, '/dashboard') !== false || strpos($uri, 'dashboard') !== false || !empty($_GET['status']) || !empty($_GET['action'])) {
-            return;
         }
     }
 
