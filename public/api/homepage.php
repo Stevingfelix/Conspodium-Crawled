@@ -128,16 +128,36 @@ if ($method === 'GET' && ($action === 'get_all' || $action === 'frontend')) {
         // 2. Scholar Spotlights
         $stmtScholars = $pdo->query("SELECT * FROM scholar_spotlights WHERE is_active = 1 ORDER BY display_order ASC, id DESC");
         $scholars = $stmtScholars->fetchAll();
-        if (empty($scholars) && isset($sections['scholar_spotlight'])) {
-            $scholars = [[
-                'id' => 1,
-                'scholar_name' => $sections['scholar_spotlight']['scholar_name'] ?? 'Dr. Kemi Adebayo',
-                'title_affiliation' => $sections['scholar_spotlight']['scholar_title'] ?? 'Senior Research Fellow',
-                'bio' => $sections['scholar_spotlight']['bio'] ?? 'Leading research on diaspora economic impact.',
-                'image_url' => $sections['scholar_spotlight']['photo'] ?? './wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg',
-                'research_field' => 'Economics & Heritage',
-                'profile_link' => '#'
-            ]];
+        if (empty($scholars)) {
+            $scholars = [
+                [
+                    'id' => 1,
+                    'scholar_name' => 'Prof. Amara Diallo',
+                    'title_affiliation' => 'London School of Economics',
+                    'bio' => 'Pioneering democratic reforms and economic governance across West Africa.',
+                    'image_url' => '/uploads/live_speaker_avatar.png',
+                    'research_field' => 'Governance & Democracy',
+                    'profile_link' => 'stories/'
+                ],
+                [
+                    'id' => 2,
+                    'scholar_name' => 'Dr. Kemi Adebayo',
+                    'title_affiliation' => 'Senior Research Fellow, Oxford',
+                    'bio' => 'Leading research on diaspora economic impact and sustainable investments.',
+                    'image_url' => '/uploads/author_avatar_kemi.png',
+                    'research_field' => 'Economics & Heritage',
+                    'profile_link' => 'stories/'
+                ],
+                [
+                    'id' => 3,
+                    'scholar_name' => 'Dr. Marcus Vance',
+                    'title_affiliation' => 'Harvard Innovation Lab',
+                    'bio' => 'Fostering tech ecosystems and venture investment in African startups.',
+                    'image_url' => '/uploads/author_avatar_marcus.png',
+                    'research_field' => 'Innovation & Tech',
+                    'profile_link' => 'stories/'
+                ]
+            ];
         }
 
         // 3. Featured Stories ("Voices That Inspire")
@@ -160,6 +180,54 @@ if ($method === 'GET' && ($action === 'get_all' || $action === 'frontend')) {
                 $featuredStories = $stmtFeat->fetchAll();
             }
         }
+        if (empty($featuredStories)) {
+            $featuredStories = [
+                [
+                    'id' => 1,
+                    'title' => 'Voices That Inspire: African Leaders in Global Tech',
+                    'slug' => 'voices-that-inspire-african-leaders-in-global-tech',
+                    'excerpt' => 'Exploring how African innovators and scholars in the diaspora are revolutionizing technology and economic policy.',
+                    'category_name' => 'Innovation',
+                    'category_slug' => 'innovation',
+                    'featured_image' => '/uploads/cat_diaspora_matters.png',
+                    'author_name' => 'Conspodium Editorial',
+                    'views' => 1842
+                ],
+                [
+                    'id' => 2,
+                    'title' => 'Preserving Cultural Heritage in Digital Spaces',
+                    'slug' => 'preserving-cultural-heritage-in-digital-spaces',
+                    'excerpt' => 'How digital archiving and community initiatives are safeguarding traditions for upcoming generations.',
+                    'category_name' => 'Community',
+                    'category_slug' => 'community',
+                    'featured_image' => '/uploads/cat_diaspora_insights.png',
+                    'author_name' => 'Dr. Kemi Adebayo',
+                    'views' => 1420
+                ],
+                [
+                    'id' => 3,
+                    'title' => 'Economic Resilience: Diaspora Remittances & Investment',
+                    'slug' => 'economic-resilience-diaspora-remittances-investment',
+                    'excerpt' => 'Analyzing the structural impact of diaspora capital flows on local infrastructure and education.',
+                    'category_name' => 'African Diaspora Matters',
+                    'category_slug' => 'african-diaspora-matters',
+                    'featured_image' => '/uploads/cat_diaspora_matters.png',
+                    'author_name' => 'Prof. Kwame Mensah',
+                    'views' => 2105
+                ],
+                [
+                    'id' => 4,
+                    'title' => 'African Scholarship & Contemporary Thought',
+                    'slug' => 'african-scholarship-contemporary-thought',
+                    'excerpt' => 'High-level dialogue on shaping policy, ethics, and global academic frameworks.',
+                    'category_name' => 'Scholars Spotlight',
+                    'category_slug' => 'scholars-spotlight',
+                    'featured_image' => '/uploads/editorial_writer_hero.png',
+                    'author_name' => 'Editorial Team',
+                    'views' => 980
+                ]
+            ];
+        }
 
         // 4. Trending Now
         $trendingIds = $sections['trending_ids'] ?? [];
@@ -176,6 +244,14 @@ if ($method === 'GET' && ($action === 'get_all' || $action === 'frontend')) {
         } else {
             $stmtTrend = $pdo->query("SELECT p.*, c.name as category_name, c.slug as category_slug FROM posts p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.views DESC LIMIT 6");
             $trendingPosts = $stmtTrend->fetchAll();
+        }
+        if (empty($trendingPosts)) {
+            $trendingPosts = [
+                ['id' => 1, 'title' => 'Voices That Inspire in Tech', 'slug' => 'voices-that-inspire-african-leaders-in-global-tech', 'views' => 1842],
+                ['id' => 2, 'title' => 'Preserving Cultural Heritage', 'slug' => 'preserving-cultural-heritage-in-digital-spaces', 'views' => 1420],
+                ['id' => 3, 'title' => 'Diaspora Remittances & Investment', 'slug' => 'economic-resilience-diaspora-remittances-investment', 'views' => 2105],
+                ['id' => 4, 'title' => 'African Scholarship Today', 'slug' => 'african-scholarship-contemporary-thought', 'views' => 980]
+            ];
         }
 
         // 5. Next Live Discussion
@@ -210,6 +286,34 @@ if ($method === 'GET' && ($action === 'get_all' || $action === 'frontend')) {
         } else {
             $stmtCats = $pdo->query("SELECT c.*, COUNT(p.id) as post_count FROM categories c LEFT JOIN posts p ON c.id = p.category_id GROUP BY c.id ORDER BY c.display_order ASC, c.id ASC LIMIT 6");
             $homepageCategories = $stmtCats->fetchAll();
+        }
+        if (empty($homepageCategories)) {
+            $homepageCategories = [
+                [
+                    'id' => 1,
+                    'name' => 'Innovation',
+                    'slug' => 'innovation',
+                    'description' => 'Tech, entrepreneurship, and digital transformation across Africa and the diaspora.',
+                    'image' => '/uploads/cat_diaspora_matters.png',
+                    'post_count' => 12
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Community',
+                    'slug' => 'community',
+                    'description' => 'Spotlighting grassroots efforts, civic engagement, and social cohesion.',
+                    'image' => '/uploads/cat_diaspora_insights.png',
+                    'post_count' => 8
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'African Diaspora Matters',
+                    'slug' => 'african-diaspora-matters',
+                    'description' => 'Empowering global African voices, policy discussions, and cultural exchanges.',
+                    'image' => '/uploads/cat_diaspora_matters.png',
+                    'post_count' => 15
+                ]
+            ];
         }
 
         // 7. Featured Interview
