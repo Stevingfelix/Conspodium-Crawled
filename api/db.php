@@ -729,6 +729,35 @@ try {
         ]);
     }
 
+    // Seed initial forum threads if empty
+    $forumCount = $pdo->query("SELECT COUNT(*) as count FROM forum_threads")->fetch()['count'];
+    if ($forumCount == 0) {
+        $stmtForum = $pdo->prepare("INSERT INTO forum_threads (title, slug, category, author_name, author_email, content, views, is_pinned, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmtForum->execute([
+            "Diaspora Investment Funds: Opportunities & Risk Management",
+            "diaspora-investment-funds-opportunities-risk-management",
+            "Innovation",
+            "Tunde Bakare",
+            "tunde.bakare@investdiaspora.org",
+            "How are members of the African diaspora structuring investment syndicates and managing cross-border currency risks when investing in African startups and real estate projects?",
+            42,
+            1,
+            "approved",
+            date('Y-m-d H:i:s', strtotime('-1 days'))
+        ]);
+        $threadId = $pdo->lastInsertId();
+
+        $stmtReply = $pdo->prepare("INSERT INTO forum_replies (thread_id, author_name, author_email, content, status, created_at) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmtReply->execute([
+            $threadId,
+            "Grace Mensah",
+            "grace.m@diasporafinance.co.uk",
+            "Great topic! We've seen significant traction using dollar-denominated fund structures paired with local custodian banks in West Africa.",
+            "approved",
+            date('Y-m-d H:i:s', strtotime('-18 hours'))
+        ]);
+    }
+
 } catch (PDOException $e) {
     die(json_encode(["success" => false, "error" => "Database Connection Failed: " . $e->getMessage()]));
 }

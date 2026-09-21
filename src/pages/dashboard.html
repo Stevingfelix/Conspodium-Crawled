@@ -3671,6 +3671,13 @@ e-page-transition,
       .then(function(res){
         var tbody = document.getElementById('submissions-cms-table');
         if(!tbody) return;
+        // If unauthorized, force re-login
+        if (!res.success && res.error && res.error.indexOf('Unauthorized') !== -1) {
+          localStorage.removeItem('conspodium_admin_token');
+          var ls = document.getElementById('csp-login-screen');
+          if (ls) ls.style.display = 'flex';
+          return;
+        }
         if (!res.success || !res.submissions) {
           tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">No submissions found in this tab.</td></tr>';
           return;
@@ -3926,7 +3933,18 @@ e-page-transition,
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('contact-cms-table');
-        if (!tbody || !res.messages) return;
+        if (!tbody) return;
+        // If unauthorized, force re-login
+        if (!res.success && res.error && res.error.indexOf('Unauthorized') !== -1) {
+          localStorage.removeItem('conspodium_admin_token');
+          var ls = document.getElementById('csp-login-screen');
+          if (ls) ls.style.display = 'flex';
+          return;
+        }
+        if (!res.messages) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">No contact inquiries found.</td></tr>';
+          return;
+        }
         contactMessagesCache = res.messages;
         tbody.innerHTML = '';
 
@@ -4815,7 +4833,10 @@ e-page-transition,
     };
     fetch(getRootUrl('api/settings.php'), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
+      },
       body: JSON.stringify(payload)
     })
     .then(function(r){ return r.json(); })
@@ -5001,7 +5022,10 @@ e-page-transition,
 
       fetch(getRootUrl('api/settings.php'), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
+        },
         body: JSON.stringify(payload)
       })
       .then(function(r){ return r.json(); })
@@ -5155,7 +5179,9 @@ e-page-transition,
     var segment = document.getElementById('filter-sub-segment') ? document.getElementById('filter-sub-segment').value : 'all';
     var search = document.getElementById('search-subscribers') ? document.getElementById('search-subscribers').value : '';
 
-    fetch(getRootUrl('api/newsletter.php?action=subscribers&segment=' + encodeURIComponent(segment) + '&search=' + encodeURIComponent(search)))
+    fetch(getRootUrl('api/newsletter.php?action=subscribers&segment=' + encodeURIComponent(segment) + '&search=' + encodeURIComponent(search)), {
+      headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' }
+    })
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('subscribers-table-body');
@@ -5216,7 +5242,9 @@ e-page-transition,
 
   // Load Campaigns Archive
   function loadCampaigns() {
-    fetch(getRootUrl('api/newsletter.php?action=campaigns'))
+    fetch(getRootUrl('api/newsletter.php?action=campaigns'), {
+      headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' }
+    })
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('campaigns-archive-table');
@@ -5279,7 +5307,10 @@ e-page-transition,
 
       fetch(getRootUrl('api/newsletter.php?action=send_campaign'), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
+        },
         body: JSON.stringify(payload)
       })
       .then(function(r){ return r.json(); })
@@ -5297,7 +5328,9 @@ e-page-transition,
 
   // 3. Comments Moderation Handler
   function loadComments() {
-    fetch(getRootUrl('api/posts.php?resource=comments&all=1'))
+    fetch(getRootUrl('api/posts.php?resource=comments&all=1'), {
+      headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' }
+    })
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('comments-moderation-table');
@@ -5373,7 +5406,9 @@ e-page-transition,
 
   // 4. Forum Moderation Handler
   function loadForumThreads() {
-    fetch(getRootUrl('api/forum.php?action=admin_list'))
+    fetch(getRootUrl('api/forum.php?action=admin_list'), {
+      headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' }
+    })
       .then(function(r){ return r.json(); })
       .then(function(res){
         var tbody = document.getElementById('forum-moderation-table');
@@ -5413,7 +5448,10 @@ e-page-transition,
   window.moderateForum = function(type, id, op) {
     fetch(getRootUrl('api/forum.php?action=moderate'), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
+      },
       body: JSON.stringify({ type: type, id: id, op: op })
     })
     .then(function(r){ return r.json(); })
@@ -6676,7 +6714,10 @@ e-page-transition,
         };
         fetch(getRootUrl('api/settings.php'), {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
+          },
           body: JSON.stringify(payload)
         })
         .then(function(r){ return r.json(); })
@@ -6722,7 +6763,10 @@ e-page-transition,
         };
         fetch(getRootUrl('api/settings.php'), {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
+          },
           body: JSON.stringify(payload)
         })
         .then(function(r){ return r.json(); })
