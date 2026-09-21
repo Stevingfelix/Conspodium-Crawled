@@ -850,14 +850,16 @@
     </div>
 
     <!-- GLASSMORPHIC CATEGORY NAV BAR WITH PRE-RENDERED PILLS -->
-    <div class="csp-cat-nav-wrap" style="position:sticky;top:85px;z-index:99;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:10px 16px;border-radius:50px;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:28px;width:100%;max-width:100%;box-sizing:border-box;">
-      <div class="csp-cat-nav-inner" id="csp-cat-tabs-container" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;align-items:center;width:100%;-webkit-overflow-scrolling:touch;">
-        <a href="/stories/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">📚 All Stories</a>
-        <a href="/category/culture-heritage/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🏛️ Culture &amp; Heritage</a>
-        <a href="/category/innovation/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">💡 Innovation &amp; Tech</a>
-        <a href="/category/art-entertainment/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🎨 Art &amp; Entertainment</a>
-        <a href="/category/community/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">👥 Community</a>
-        <a href="/category/success-stories/" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">🌟 Success Stories</a>
+    <div class="csp-cat-nav-wrap" style="position:sticky;top:85px;z-index:99;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:8px 16px;border-radius:50px;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:28px;width:100%;max-width:100%;box-sizing:border-box;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+      <div class="csp-cat-nav-inner" id="csp-cat-tabs-container" style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;align-items:center;justify-content:center;width:max-content;min-width:100%;-webkit-overflow-scrolling:touch;">
+        <a href="/stories/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">📚 All Stories</a>
+        <a href="/category/culture-heritage/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">🏛️ Culture &amp; Heritage</a>
+        <a href="/category/innovation/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">💡 Innovation &amp; Tech</a>
+        <a href="/category/art-entertainment/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">🎨 Art &amp; Entertainment</a>
+        <a href="/category/community/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">👥 Community</a>
+        <a href="/category/success-stories/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">🌟 Success Stories</a>
+        <a href="/category/african-diaspora-matters/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">🌍 African Diaspora Matters</a>
+        <a href="/category/diaspora-insights-analysis/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">📊 Diaspora Insights &amp; Analysis</a>
       </div>
     </div>
 
@@ -1515,14 +1517,11 @@
       }
     }
 
-    if (!slug) slug = 'we-are-the-world';
+    if (!slug) slug = 'empowering-diaspora-communities-through-innovation-heritage';
 
     var titleEl = document.getElementById('post-title');
-    if (titleEl && titleEl.textContent.trim() !== 'Loading Article Title...' && titleEl.textContent.trim() !== '') {
-      return;
-    }
-
     var apiEndpoint = (window.getRootUrl ? window.getRootUrl('api/posts.php?slug=' + encodeURIComponent(slug)) : '/api/posts.php?slug=' + encodeURIComponent(slug));
+    
     fetch(apiEndpoint)
       .then(function(r){ return r.json(); })
       .then(function(res){
@@ -1550,6 +1549,9 @@
           var contentBody = document.getElementById('post-content-body');
           if (contentBody && p.content) {
             contentBody.innerHTML = p.content;
+          } else if (contentBody) {
+            var skel = document.getElementById('post-skeleton-wrapper');
+            if (skel && skel.parentNode) skel.parentNode.removeChild(skel);
           }
 
           // Populate Category Pills & Auto-Scroll to Active Category
@@ -1560,13 +1562,13 @@
               if (!cRes.success || !cRes.categories) return;
               var tabsContainer = document.getElementById('csp-cat-tabs-container');
               if (tabsContainer) {
-                var tabsHtml = '<a href="' + (window.getRootUrl ? window.getRootUrl('stories/') : '/stories/') + '" class="csp-cat-tab" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;">📚 All Stories</a>';
+                var tabsHtml = '<a href="' + (window.getRootUrl ? window.getRootUrl('stories/') : '/stories/') + '" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">📚 All Stories</a>';
                 cRes.categories.forEach(function(cat){
                   var isActive = (cat.slug === p.category_slug || (p.category_slug && cat.slug.indexOf(p.category_slug) !== -1) || (p.category_name && cat.name.toLowerCase().trim() === p.category_name.toLowerCase().trim()));
                   var catUrl = window.getRootUrl ? window.getRootUrl('category/' + cat.slug + '/') : '/category/' + cat.slug + '/';
                   var styleAttr = isActive 
-                    ? 'padding:10px 22px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;'
-                    : 'padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;';
+                    ? 'padding:6px 14px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;'
+                    : 'padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;';
                   tabsHtml += '<a href="' + catUrl + '" class="csp-cat-tab' + (isActive ? ' active' : '') + '" style="' + styleAttr + '">' + (cat.icon || '🏷️') + ' ' + cat.name + '</a>';
                 });
                 tabsContainer.innerHTML = tabsHtml;
@@ -1584,7 +1586,10 @@
             }).catch(function(){});
         }
       })
-      .catch(function(){});
+      .catch(function(){
+        var skel = document.getElementById('post-skeleton-wrapper');
+        if (skel && skel.parentNode) skel.parentNode.removeChild(skel);
+      });
   };
 
   window.loadRelatedStories = function(currentSlug) {

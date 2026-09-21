@@ -286,7 +286,7 @@ if ($method === 'GET' && ($action === 'get_all' || $action === 'frontend')) {
                 }
             }
         } else {
-            $stmtCats = $pdo->query("SELECT c.*, COUNT(p.id) as post_count FROM categories c LEFT JOIN posts p ON c.id = p.category_id GROUP BY c.id ORDER BY c.display_order ASC, c.id ASC LIMIT 6");
+            $stmtCats = $pdo->query("SELECT c.*, COUNT(p.id) as post_count FROM categories c LEFT JOIN posts p ON c.id = p.category_id GROUP BY c.id ORDER BY c.display_order ASC, c.id ASC");
             $homepageCategories = $stmtCats->fetchAll();
         }
         if (empty($homepageCategories)) {

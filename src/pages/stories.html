@@ -1608,7 +1608,7 @@ e-page-transition,
 
 						</div>
 				</div>
-		<div class="elementor-element elementor-element-68d4a41e e-con-full e-grid e-con e-child adv-sticky-elementor" data-id="68d4a41e" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+		<div class="elementor-element elementor-element-68d4a41e e-con-full e-grid e-con e-child adv-sticky-elementor" id="csp-stories-discover-categories" data-id="68d4a41e" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:24px;width:100%;margin-bottom:40px;">
 				<div class="elementor-element elementor-element-bec54a4 ekit-equal-height-enable elementor-widget elementor-widget-elementskit-image-box" data-id="bec54a4" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-image-box.default">
 				<div class="elementor-widget-container">
 					<div class="ekit-wid-con">
@@ -1813,14 +1813,16 @@ e-page-transition,
         </section>
 
         <!-- 2. GLASSMORPHIC CATEGORY FILTER BAR -->
-        <div class="csp-cat-nav-wrap">
-          <div class="csp-cat-nav-inner" id="csp-stories-filter-pills">
-            <button type="button" class="csp-cat-pill active" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('all', this);" style="padding:10px 22px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">📚 All Stories</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('culture-heritage', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">🏛️ Culture &amp; Heritage</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('innovation', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">💡 Innovation &amp; Tech</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('art-entertainment', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">🎨 Art &amp; Entertainment</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('community', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">👥 Community</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('success-stories', this);" style="padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;">🌟 Success Stories</button>
+        <div class="csp-cat-nav-wrap" style="margin-bottom:24px;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+          <div class="csp-cat-nav-inner" id="csp-stories-filter-pills" style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:nowrap;width:max-content;min-width:100%;padding:4px 0;">
+            <button type="button" class="csp-cat-pill active" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('all', this);" style="padding:6px 14px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">📚 All Stories</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('culture-heritage', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">🏛️ Culture &amp; Heritage</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('innovation', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">💡 Innovation &amp; Tech</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('art-entertainment', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">🎨 Art &amp; Entertainment</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('community', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">👥 Community</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('success-stories', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">🌟 Success Stories</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('african-diaspora-matters', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">🌍 African Diaspora Matters</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('diaspora-insights-analysis', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">📊 Diaspora Insights &amp; Analysis</button>
           </div>
         </div>
 
@@ -1989,6 +1991,7 @@ e-page-transition,
             </div>
           </aside>
         </div>
+        <div id="csp-stories-pagination" class="csp-pagination-container"></div>
       </div>
     </div>
 <style id="csp-stories-pagination-style">
@@ -2053,14 +2056,111 @@ e-page-transition,
 (function(){
   var appender = document.querySelector('.eael-post-appender');
   var paginationContainer = document.getElementById('csp-stories-pagination');
-  if (!appender || !paginationContainer) return;
+  var pillContainer = document.getElementById('csp-stories-filter-pills');
+  if (!appender) return;
+
+  if (!paginationContainer) {
+    paginationContainer = document.createElement('div');
+    paginationContainer.id = 'csp-stories-pagination';
+    paginationContainer.className = 'csp-pagination-container';
+    appender.parentNode.appendChild(paginationContainer);
+  }
 
   var currentPage = 1;
   var perPage = 12;
+  var currentCategory = 'all';
 
+  // 1. Fetch & Render Dynamic Category Pills & Discover By Category Grid
+  var discoverContainer = document.getElementById('csp-stories-discover-categories');
+  fetch(getRootUrl('api/posts.php?resource=categories'))
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (!res.success || !res.categories) return;
+
+      // Render Category Filter Pills
+      if (pillContainer) {
+        var pillsHtml = `<button type="button" class="csp-cat-pill active" onclick="window.filterStoriesCategory('all', this);" style="padding:6px 14px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">📚 All Stories</button>`;
+        res.categories.forEach(function(cat){
+          pillsHtml += `<button type="button" class="csp-cat-pill" onclick="window.filterStoriesCategory('${cat.slug}', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">${cat.icon || '🏷️'} ${cat.name}</button>`;
+        });
+        pillContainer.innerHTML = pillsHtml;
+      }
+
+      // Render Discover By Category Section Cards
+      if (discoverContainer) {
+        var cardsHtml = '';
+        res.categories.forEach(function(cat){
+          var catImg = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(cat.image) : (cat.image || '../wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg');
+          var catUrl = window.getRootUrl ? window.getRootUrl('category/' + cat.slug + '/') : '../category/' + cat.slug + '/';
+          
+          cardsHtml += `
+            <div class="elementor-element ekit-equal-height-enable elementor-widget elementor-widget-elementskit-image-box" style="width:100%;">
+              <div class="elementor-widget-container" style="height:100%;">
+                <div class="ekit-wid-con" style="height:100%;">
+                  <div class="elementskit-info-image-box ekit-image-box text-left hover_from_center hover-border-bottom" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.03);">
+                    <div class="elementskit-box-header image-box-img-left" style="height:180px;overflow:hidden;position:relative;">
+                      <img width="1536" height="864" src="${catImg}" class="attachment-full size-full" alt="${cat.name}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+                    </div>
+                    <div class="elementskit-box-body ekit-image-box-body" style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
+                      <div class="elementskit-box-content ekit-image-box-body-inner">
+                        <h3 class="elementskit-info-box-title" style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin-bottom:8px;">
+                          ${cat.name}
+                        </h3>
+                        <div class="elementskit-box-style-content" style="font-size:0.85rem;color:#64748b;line-height:1.5;">
+                          ${cat.description || ''}
+                        </div>
+                      </div>
+                      <div class="elementskit-box-footer" style="margin-top:16px;">
+                        <div class="box-footer">
+                          <div class="btn-wraper">
+                            <a href="${catUrl}" class="elementskit-btn whitespace--normal" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">
+                              Explore &rarr;
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        discoverContainer.innerHTML = cardsHtml;
+      }
+    })
+    .catch(function(err){ console.error('Error loading categories:', err); });
+
+  // 2. Global Category Filter Handler
+  window.filterStoriesCategory = function(catSlug, btnEl) {
+    currentCategory = catSlug || 'all';
+    currentPage = 1;
+
+    if (pillContainer) {
+      var allPills = pillContainer.querySelectorAll('.csp-cat-pill');
+      allPills.forEach(function(p){
+        p.classList.remove('active');
+        p.style.background = '#ffffff';
+        p.style.color = '#475569';
+        p.style.border = '1px solid #cbd5e1';
+      });
+    }
+
+    if (btnEl) {
+      btnEl.classList.add('active');
+      btnEl.style.background = 'linear-gradient(110deg,#00AEFE 0%,#B71F71 100%)';
+      btnEl.style.color = '#ffffff';
+      btnEl.style.border = 'none';
+    }
+
+    loadStoriesPage(1);
+  };
+
+  // 3. Load Stories Page with API Integration
   function loadStoriesPage(page) {
     currentPage = page;
-    var offset = (page - 1) * perPage;
+    var activePerPage = (currentCategory !== 'all') ? 6 : 12;
+    var offset = (page - 1) * activePerPage;
 
     if (appender) {
       var skelHtml = '';
@@ -2088,10 +2188,25 @@ e-page-transition,
       appender.innerHTML = skelHtml;
     }
 
-    fetch(getRootUrl('api/posts.php?limit=' + perPage + '&offset=' + offset))
+    var apiUrl = 'api/posts.php?limit=' + activePerPage + '&offset=' + offset;
+    if (currentCategory && currentCategory !== 'all') {
+      apiUrl += '&category=' + encodeURIComponent(currentCategory);
+    }
+
+    fetch(getRootUrl(apiUrl))
       .then(function(r){ return r.json(); })
       .then(function(res){
-        if (!res.success || !res.posts || !res.posts.length) return;
+        if (!res.success || !res.posts || !res.posts.length) {
+          appender.innerHTML = `
+            <div style="grid-column:1/-1;text-align:center;padding:60px 20px;background:#fff;border-radius:20px;border:1px solid #e2e8f0;">
+              <div style="font-size:2.8rem;margin-bottom:12px;">📚</div>
+              <h3 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.3rem;margin-bottom:8px;">No Stories Found</h3>
+              <p style="color:#64748b;font-size:0.9rem;">No published articles matched the selected category.</p>
+            </div>
+          `;
+          paginationContainer.innerHTML = '';
+          return;
+        }
 
         appender.innerHTML = '';
 
@@ -2106,27 +2221,28 @@ e-page-transition,
           article.innerHTML = `
             <div class="eael-grid-post-holder">
               <div class="eael-grid-post-holder-inner">
-                <div class="eael-entry-media">
+                <div class="eael-entry-media" style="overflow:hidden;height:200px;">
                   <div class="eael-entry-overlay fade-in"><i class="fas fa-long-arrow-alt-right"></i></div>
                   <div class="eael-entry-thumbnail">
                     <img loading="lazy" width="300" height="200" src="${imgUrl}" alt="${post.title}" style="width:100%;height:200px;object-fit:cover;border-radius:12px;">
                   </div>
                 </div>
-                <div class="eael-entry-wrapper">
-                  <header class="eael-entry-header">
-                    <h2 class="eael-entry-title">
-                      <a class="eael-grid-post-link" href="${postLink}" title="${post.title}">${post.title}</a>
+                <div class="eael-entry-wrapper" style="padding:20px;">
+                  <span style="font-size:0.72rem;font-weight:700;color:#00AEFE;letter-spacing:0.08em;text-transform:uppercase;">${post.category_icon || '🏷️'} ${post.category_name || 'General'}</span>
+                  <header class="eael-entry-header" style="margin-top:6px;">
+                    <h2 class="eael-entry-title" style="font-family:'Merriweather',serif;font-size:1.08rem;line-height:1.35;">
+                      <a class="eael-grid-post-link" href="${postLink}" title="${post.title}" style="color:#0f172a;text-decoration:none;">${post.title}</a>
                     </h2>
                   </header>
-                  <div class="eael-entry-content">
+                  <div class="eael-entry-content" style="margin-top:8px;">
                     <div class="eael-grid-post-excerpt">
-                      <p>${post.excerpt || ''}</p>
-                      <a href="${postLink}" class="eael-post-elements-readmore-btn">Read Story</a>
+                      <p style="font-size:0.85rem;color:#64748b;line-height:1.5;">${post.excerpt || ''}</p>
+                      <a href="${postLink}" class="eael-post-elements-readmore-btn" style="margin-top:10px;display:inline-block;font-size:0.82rem;font-weight:600;color:#00AEFE;text-decoration:none;">Read Story →</a>
                     </div>
                   </div>
-                  <div class="eael-entry-header-after style-two">
+                  <div class="eael-entry-header-after style-two" style="border-top:1px solid #f1f5f9;padding-top:10px;margin-top:12px;">
                     <div class="eael-entry-meta">
-                      <span class="eael-meta-posted-on"><i class="far fa-clock"></i> ${post.reading_time || '5 min read'} · ${post.author_name || 'Conspodium'}</span>
+                      <span class="eael-meta-posted-on" style="font-size:0.78rem;color:#94a3b8;"><i class="far fa-clock"></i> ${post.reading_time || '5 min read'} · ${post.author_name || 'Conspodium'}</span>
                     </div>
                   </div>
                 </div>
@@ -2144,7 +2260,11 @@ e-page-transition,
 
   function renderPaginationControls(totalItems) {
     paginationContainer.innerHTML = '';
-    var totalPages = Math.ceil(totalItems / perPage);
+    // Hide pagination if category has less than 6 total items
+    if (totalItems < 6) return;
+
+    var activePerPage = (currentCategory !== 'all') ? 6 : 12;
+    var totalPages = Math.ceil(totalItems / activePerPage);
     if (totalPages <= 1) return;
 
     // Previous Button

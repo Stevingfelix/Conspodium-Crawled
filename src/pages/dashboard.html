@@ -1997,6 +1997,10 @@ e-page-transition,
             </tbody>
           </table>
         </div>
+        <div id="posts-pagination-bar" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px;font-size:0.85rem;color:var(--text-muted);background:#fafafa;border-bottom-left-radius:16px;border-bottom-right-radius:16px;">
+          <div id="posts-pagination-info">Showing 0 of 0 articles</div>
+          <div id="posts-pagination-buttons" style="display:flex;gap:6px;align-items:center;"></div>
+        </div>
       </div>
     </div>
 
@@ -3066,6 +3070,26 @@ e-page-transition,
       <button type="button" class="csp-btn-sm csp-btn-danger" id="btn-art-modal-delete">🗑️ Delete Article</button>
       <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-art-modal-edit">✏️ Edit Article</button>
     </div>
+</div>
+
+<!-- ── MODAL: ARTICLE COMMENTS MODAL ── -->
+<div class="csp-modal-overlay" id="modal-article-comments">
+  <div class="csp-modal" style="max-width:740px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:12px;">
+      <div>
+        <span class="csp-badge" style="background:rgba(0,174,254,0.1);color:var(--blue);border:1px solid rgba(0,174,254,0.3);margin-bottom:4px;display:inline-block;">Article Reader Comments</span>
+        <h3 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.15rem;margin:4px 0 0 0;" id="art-comments-modal-title">Article Title</h3>
+      </div>
+      <button style="background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;" data-close="modal-article-comments">&times;</button>
+    </div>
+
+    <div id="art-comments-modal-list" style="max-height:420px;overflow-y:auto;padding-right:6px;">
+      <p style="text-align:center;color:var(--text-muted);padding:24px;">Loading comments...</p>
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;border-top:1px solid #e2e8f0;padding-top:14px;">
+      <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-article-comments">Close</button>
+    </div>
   </div>
 </div>
 
@@ -3368,52 +3392,170 @@ e-page-transition,
     openModal('modal-view-article');
   };
 
-  function loadPosts() {
-    fetch(getRootUrl('api/posts.php?limit=100'))
+  var currentPostsPage = 1;
+  var postsPerPage = 7;
+
+  function renderPostsPage(page) {
+    var tbody = document.getElementById('posts-cms-table');
+    var info = document.getElementById('posts-pagination-info');
+    var btns = document.getElementById('posts-pagination-buttons');
+    if (!tbody || !postsCache) return;
+
+    var total = postsCache.length;
+    var totalPages = Math.ceil(total / postsPerPage) || 1;
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    currentPostsPage = page;
+
+    var startIdx = (page - 1) * postsPerPage;
+    var endIdx = Math.min(startIdx + postsPerPage, total);
+    var pagePosts = postsCache.slice(startIdx, endIdx);
+
+    tbody.innerHTML = '';
+    var selectAll = document.getElementById('select-all-posts');
+    if (selectAll) selectAll.checked = false;
+    updatePostsBulkDeleteState();
+
+    if (total === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">No published articles found.</td></tr>';
+      if (info) info.textContent = 'Showing 0 of 0 articles';
+      if (btns) btns.innerHTML = '';
+      return;
+    }
+
+    pagePosts.forEach(function(p){
+      var pubDate = p.published_at ? p.published_at.slice(0,10) : 'Now';
+      var imgThumb = p.featured_image ? `<img src="${getAbsoluteImageUrl(p.featured_image)}" style="width:44px;height:34px;object-fit:cover;border-radius:6px;vertical-align:middle;margin-right:8px;border:1px solid #cbd5e1;flex-shrink:0;" />` : '';
+      tbody.innerHTML += `
+        <tr>
+          <td style="text-align:center;"><input type="checkbox" class="post-cb" data-id="${p.id}" style="cursor:pointer;" /></td>
+          <td style="font-weight:600;max-width:320px;cursor:pointer;" onclick="openViewArticleModal(${p.id})">
+            <div style="display:flex;align-items:center;">
+              ${imgThumb}
+              <span style="color:var(--blue);" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${p.title}</span>
+            </div>
+          </td>
+          <td>${p.category_icon || '🏷️'} ${p.category_name || 'Unassigned'}</td>
+          <td>${p.author_name}</td>
+          <td>${pubDate}</td>
+          <td>${(p.views || 0).toLocaleString()}</td>
+          <td>${p.is_featured ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.75rem;padding:4px 8px;white-space:nowrap;">⭐ Hero: Enabled</span>' : '<span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">Hero: Disabled</span>'}</td>
+          <td>
+            <button class="csp-btn-sm csp-btn-secondary" onclick="openViewArticleModal(${p.id})" style="margin-right:4px;">👁️ View</button>
+            <button class="csp-btn-sm csp-btn-secondary" onclick="openArticleCommentsModal(${p.id}, '${p.title.replace(/'/g, "\\\'")}')" style="margin-right:4px;">💬 Comments</button>
+            <button class="csp-btn-sm csp-btn-secondary" onclick="editPost(${p.id})" style="margin-right:4px;">Edit</button>
+            <button class="csp-btn-sm csp-btn-danger" onclick="deletePost(${p.id})">Delete</button>
+          </td>
+        </tr>
+      `;
+    });
+
+  window.openArticleCommentsModal = function(postId, postTitle) {
+    var titleEl = document.getElementById('art-comments-modal-title');
+    var listEl = document.getElementById('art-comments-modal-list');
+    if (titleEl) titleEl.textContent = postTitle || ('Article #' + postId);
+    if (listEl) listEl.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:24px;">Loading comments...</p>';
+
+    openModal('modal-article-comments');
+
+    fetch(getRootUrl('api/posts.php?resource=comments&post_id=' + postId))
       .then(function(r){ return r.json(); })
       .then(function(res){
-        var tbody = document.getElementById('posts-cms-table');
-        if(!tbody || !res.posts) return;
-        postsCache = res.posts;
-        tbody.innerHTML = '';
-        var selectAll = document.getElementById('select-all-posts');
-        if (selectAll) selectAll.checked = false;
-        updatePostsBulkDeleteState();
-
-        if (res.posts.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">No published articles found.</td></tr>';
+        if (!listEl) return;
+        var comments = (res.success && res.comments) ? res.comments : [];
+        if (comments.length === 0) {
+          listEl.innerHTML = `
+            <div style="text-align:center;padding:40px 20px;background:#f8fafc;border-radius:14px;border:1px dashed #cbd5e1;margin:10px 0;">
+              <div style="font-size:2.2rem;margin-bottom:8px;">💬</div>
+              <h4 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.05rem;margin-bottom:4px;">No comments on this article yet</h4>
+              <p style="color:#64748b;font-size:0.85rem;margin:0;">Be the first to comment or share this article with your audience!</p>
+            </div>
+          `;
           return;
         }
 
-        res.posts.forEach(function(p){
-          var pubDate = p.published_at ? p.published_at.slice(0,10) : 'Now';
-          var imgThumb = p.featured_image ? `<img src="${getAbsoluteImageUrl(p.featured_image)}" style="width:44px;height:34px;object-fit:cover;border-radius:6px;vertical-align:middle;margin-right:8px;border:1px solid #cbd5e1;flex-shrink:0;" />` : '';
-          tbody.innerHTML += `
-            <tr>
-              <td style="text-align:center;"><input type="checkbox" class="post-cb" data-id="${p.id}" style="cursor:pointer;" /></td>
-              <td style="font-weight:600;max-width:320px;cursor:pointer;" onclick="openViewArticleModal(${p.id})">
-                <div style="display:flex;align-items:center;">
-                  ${imgThumb}
-                  <span style="color:var(--blue);" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${p.title}</span>
+        var html = '';
+        comments.forEach(function(c){
+          var statusBadge = c.status === 'approved' 
+            ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.75rem;">Approved</span>' 
+            : '<span class="csp-status-badge csp-status-pending" style="font-size:0.75rem;">Pending Approval</span>';
+          var parentBadge = c.parent_id ? `<span style="font-size:0.75rem;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:10px;">↳ Reply to #${c.parent_id}</span>` : '';
+          
+          html += `
+            <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <div>
+                  <strong style="color:#0f172a;font-size:0.92rem;">${c.author_name}</strong>
+                  <span style="color:#64748b;font-size:0.8rem;margin-left:6px;">(${c.author_email || 'No email'})</span>
+                  ${parentBadge}
                 </div>
-              </td>
-              <td>${p.category_icon || '🏷️'} ${p.category_name || 'Unassigned'}</td>
-              <td>${p.author_name}</td>
-              <td>${pubDate}</td>
-              <td>${(p.views || 0).toLocaleString()}</td>
-              <td>${p.is_featured ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.75rem;padding:4px 8px;white-space:nowrap;">⭐ Hero: Enabled</span>' : '<span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">Hero: Disabled</span>'}</td>
-              <td>
-                <button class="csp-btn-sm csp-btn-secondary" onclick="openViewArticleModal(${p.id})" style="margin-right:4px;">👁️ View</button>
-                <button class="csp-btn-sm csp-btn-secondary" onclick="editPost(${p.id})" style="margin-right:4px;">Edit</button>
-                <button class="csp-btn-sm csp-btn-danger" onclick="deletePost(${p.id})">Delete</button>
-              </td>
-            </tr>
+                <div>${statusBadge}</div>
+              </div>
+              <p style="font-size:0.88rem;color:#334155;line-height:1.5;margin:0 0 10px;background:#f8fafc;padding:10px 12px;border-radius:8px;white-space:pre-wrap;">${c.content}</p>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:#94a3b8;">
+                <span>📅 ${c.created_at ? c.created_at.slice(0,16) : 'Recent'}</span>
+                <div style="display:flex;gap:6px;">
+                  ${c.status !== 'approved' ? `<button type="button" class="csp-btn-sm csp-btn-primary" onclick="moderateComment(${c.id}, 'approved'); setTimeout(function(){ openArticleCommentsModal(${postId}, '${postTitle.replace(/'/g, "\\\'")}'); }, 400);" style="padding:4px 10px;font-size:0.75rem;">Approve</button>` : ''}
+                  <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="adminReplyToArticleComment(${postId}, ${c.id}, '${c.author_name.replace(/'/g, "\\\'")}'); setTimeout(function(){ openArticleCommentsModal(${postId}, '${postTitle.replace(/'/g, "\\\'")}'); }, 400);" style="padding:4px 10px;font-size:0.75rem;">💬 Reply</button>
+                  <button type="button" class="csp-btn-sm csp-btn-danger" onclick="moderateComment(${c.id}, 'delete'); setTimeout(function(){ openArticleCommentsModal(${postId}, '${postTitle.replace(/'/g, "\\\'")}'); }, 400);" style="padding:4px 10px;font-size:0.75rem;">Delete</button>
+                </div>
+              </div>
+            </div>
           `;
         });
+        listEl.innerHTML = html;
+      })
+      .catch(function(err){
+        if (listEl) listEl.innerHTML = '<p style="color:#ef4444;text-align:center;padding:16px;">Failed to load comments for this article.</p>';
+      });
+  };
 
-        tbody.querySelectorAll('.post-cb').forEach(function(cb){
-          cb.addEventListener('change', updatePostsBulkDeleteState);
-        });
+    tbody.querySelectorAll('.post-cb').forEach(function(cb){
+      cb.addEventListener('change', updatePostsBulkDeleteState);
+    });
+
+    if (info) info.textContent = `Showing ${startIdx + 1}–${endIdx} of ${total} articles (Page ${page} of ${totalPages})`;
+
+    if (btns) {
+      btns.innerHTML = '';
+      var prevBtn = document.createElement('button');
+      prevBtn.className = 'csp-btn-sm csp-btn-secondary';
+      prevBtn.textContent = '← Previous';
+      prevBtn.disabled = (page <= 1);
+      prevBtn.style.opacity = (page <= 1) ? '0.5' : '1';
+      prevBtn.style.cursor = (page <= 1) ? 'not-allowed' : 'pointer';
+      prevBtn.onclick = function() { renderPostsPage(page - 1); };
+      btns.appendChild(prevBtn);
+
+      for (var i = 1; i <= totalPages; i++) {
+        (function(pNum){
+          var pBtn = document.createElement('button');
+          pBtn.className = 'csp-btn-sm ' + (pNum === page ? 'csp-btn-primary' : 'csp-btn-secondary');
+          pBtn.textContent = pNum;
+          pBtn.style.padding = '4px 10px';
+          pBtn.onclick = function() { renderPostsPage(pNum); };
+          btns.appendChild(pBtn);
+        })(i);
+      }
+
+      var nextBtn = document.createElement('button');
+      nextBtn.className = 'csp-btn-sm csp-btn-secondary';
+      nextBtn.textContent = 'Next →';
+      nextBtn.disabled = (page >= totalPages);
+      nextBtn.style.opacity = (page >= totalPages) ? '0.5' : '1';
+      nextBtn.style.cursor = (page >= totalPages) ? 'not-allowed' : 'pointer';
+      nextBtn.onclick = function() { renderPostsPage(page + 1); };
+      btns.appendChild(nextBtn);
+    }
+  }
+
+  function loadPosts() {
+    fetch(getRootUrl('api/posts.php?limit=200'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if(!res.posts) return;
+        postsCache = res.posts;
+        renderPostsPage(currentPostsPage || 1);
       });
   }
 
@@ -5116,7 +5258,29 @@ e-page-transition,
         if (loginScreen) loginScreen.style.display = 'none';
         var loader = document.getElementById('csp-page-loader');
         if (loader) loader.classList.add('loaded');
-        checkAuthSession();
+
+        if (res.user) {
+          var nameEl = document.getElementById('admin-sidebar-name');
+          var avatarEl = document.getElementById('admin-sidebar-avatar');
+          if (nameEl) nameEl.textContent = res.user.name;
+          if (avatarEl) {
+            var parts = res.user.name.split(' ');
+            avatarEl.textContent = ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || 'AD';
+          }
+        }
+
+        // Immediately populate admin UI
+        loadCategoriesSelect();
+        loadOverviewData();
+        loadPosts();
+        loadSubmissions();
+        loadPolls();
+        loadHomepagePoll();
+        loadScholars();
+        loadCategoriesManager();
+        loadSettings();
+        loadHomepageSections();
+        loadPopupAdverts();
       } else {
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -5352,7 +5516,9 @@ e-page-transition,
                 ${parentBadge}
               </td>
               <td style="max-width:300px;font-size:0.86rem;color:#334155;">${c.content}</td>
-              <td><span style="font-size:0.8rem;color:var(--blue);font-weight:600;">Post #${c.post_id}</span></td>
+              <td>
+                <span style="font-size:0.82rem;color:var(--blue);font-weight:600;">${c.post_title ? c.post_title : 'Article #' + c.post_id}</span>
+              </td>
               <td>${statusBadge}</td>
               <td style="font-size:0.8rem;color:var(--text-muted);">${c.created_at ? c.created_at.slice(0,10) : 'Recently'}</td>
               <td>

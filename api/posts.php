@@ -91,6 +91,18 @@ if ($resource === 'categories') {
 // ── COMMENTS RESOURCE ────────────────────────────────────────────────────────
 if ($resource === 'comments') {
     if ($method === 'GET') {
+        $all = !empty($_GET['all']);
+        if ($all) {
+            $stmt = $pdo->query("
+                SELECT cm.*, p.title as post_title, p.slug as post_slug
+                FROM comments cm
+                LEFT JOIN posts p ON cm.post_id = p.id
+                ORDER BY cm.created_at DESC
+            ");
+            echo json_encode(["success" => true, "comments" => $stmt->fetchAll()]);
+            exit;
+        }
+
         $postIdentifier = trim($_GET['post_id'] ?? $_GET['slug'] ?? '');
         $realPostId = is_numeric($postIdentifier) ? intval($postIdentifier) : 0;
         if (!$realPostId && $postIdentifier) {
@@ -107,6 +119,13 @@ if ($resource === 'comments') {
     }
 
     if ($method === 'POST') {
+        $honeypot = trim($input['website_url'] ?? $input['hp'] ?? '');
+        if (!empty($honeypot)) {
+            // Spam bot trapped
+            echo json_encode(["success" => true, "commentId" => 0, "message" => "Comment submitted"]);
+            exit;
+        }
+
         if (!csp_check_rate_limit('post_comment', 5, 120)) {
             http_response_code(429);
             echo json_encode(["success" => false, "error" => "Comment posting rate limit exceeded. Please wait 2 minutes."]);
@@ -118,6 +137,7 @@ if ($resource === 'comments') {
         $authorName = csp_sanitize($input['author_name'] ?? 'Anonymous');
         $authorEmail = filter_var(trim($input['author_email'] ?? ''), FILTER_VALIDATE_EMAIL) ? trim($input['author_email']) : '';
         $content = csp_sanitize($input['content'] ?? '');
+        $status = !empty($input['status']) ? csp_sanitize($input['status']) : 'approved';
 
         if (!$postIdentifier || !$content) {
             echo json_encode(["success" => false, "error" => "Post ID or slug and comment text are required"]);
@@ -140,8 +160,8 @@ if ($resource === 'comments') {
             $authorEmail = trim($_COOKIE['csp_user_comment_email']);
         }
 
-        $stmt = $pdo->prepare("INSERT INTO comments (post_id, parent_id, author_name, author_email, content, status) VALUES (?, ?, ?, ?, ?, 'approved')");
-        $stmt->execute([$realPostId, $parentId, $authorName, $authorEmail, $content]);
+        $stmt = $pdo->prepare("INSERT INTO comments (post_id, parent_id, author_name, author_email, content, status) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$realPostId, $parentId, $authorName, $authorEmail, $content, $status]);
         $newCommentId = $pdo->lastInsertId();
 
         // Lock identity into long-lived HTTP cookie
@@ -166,7 +186,42 @@ if ($resource === 'comments') {
             } catch (Exception $ex) {}
         }
 
+        // Admin Email Notification
+        try {
+            $adminEmail = "admin@conspodium.com";
+            $subject = "New Comment on Conspodium Article #" . $realPostId;
+            $msgBody = "New comment posted by " . $authorName . " (" . $authorEmail . "):\n\n\"" . $content . "\"\n\nModerate in Dashboard: " . (getenv('APP_URL') ?: 'http://localhost:8080') . "/dashboard/";
+            @mail($adminEmail, $subject, $msgBody, "From: no-reply@conspodium.com\r\nContent-Type: text/plain; charset=UTF-8");
+        } catch (Exception $ex) {}
+
         echo json_encode(["success" => true, "commentId" => $newCommentId, "message" => "Comment posted successfully"]);
+        exit;
+    }
+
+    if ($method === 'PUT') {
+        $id = intval($_GET['id'] ?? $input['id'] ?? 0);
+        $status = csp_sanitize($_GET['status'] ?? $input['status'] ?? 'approved');
+        if ($id > 0) {
+            $stmt = $pdo->prepare("UPDATE comments SET status = ? WHERE id = ?");
+            $stmt->execute([$status, $id]);
+            echo json_encode(["success" => true, "message" => "Comment status updated to " . $status]);
+            exit;
+        }
+        http_response_code(400);
+        echo json_encode(["success" => false, "error" => "Comment ID required"]);
+        exit;
+    }
+
+    if ($method === 'DELETE') {
+        $id = intval($_GET['id'] ?? $input['id'] ?? 0);
+        if ($id > 0) {
+            $stmt = $pdo->prepare("DELETE FROM comments WHERE id = ?");
+            $stmt->execute([$id]);
+            echo json_encode(["success" => true, "message" => "Comment deleted successfully"]);
+            exit;
+        }
+        http_response_code(400);
+        echo json_encode(["success" => false, "error" => "Comment ID required"]);
         exit;
     }
 }
@@ -247,9 +302,37 @@ if ($method === 'GET') {
     $stmt->execute($params);
     $posts = $stmt->fetchAll();
 
-    $total = $pdo->query("SELECT COUNT(*) as count FROM posts")->fetch()['count'];
+    // Calculate total count matching active filters
+    $countSql = "
+        SELECT COUNT(*) as count
+        FROM posts p
+        LEFT JOIN categories c ON p.category_id = c.id
+        WHERE 1=1
+    ";
+    $countParams = [];
 
-    echo json_encode(["success" => true, "posts" => $posts, "total" => intval($total), "limit" => $limit, "offset" => $offset]);
+    if ($category) {
+        $countSql .= " AND (c.slug = ? OR c.name LIKE ?)";
+        $countParams[] = $category;
+        $countParams[] = "%$category%";
+    }
+
+    if ($search) {
+        $countSql .= " AND (p.title LIKE ? OR p.excerpt LIKE ? OR p.content LIKE ?)";
+        $countParams[] = "%$search%";
+        $countParams[] = "%$search%";
+        $countParams[] = "%$search%";
+    }
+
+    if ($featured === '1' || $featured === 'true') {
+        $countSql .= " AND p.is_featured = 1";
+    }
+
+    $countStmt = $pdo->prepare($countSql);
+    $countStmt->execute($countParams);
+    $total = intval($countStmt->fetch()['count']);
+
+    echo json_encode(["success" => true, "posts" => $posts, "total" => $total, "limit" => $limit, "offset" => $offset]);
     exit;
 }
 

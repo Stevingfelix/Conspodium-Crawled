@@ -195,10 +195,27 @@
       max-width: 1360px;
       margin: 0 auto;
     }
+    .csp-cat-layout-flex {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .csp-cat-main-col {
+      width: 100%;
+    }
     .csp-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 1200px) {
+      .csp-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 850px) {
+      .csp-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 550px) {
+      .csp-grid { grid-template-columns: 1fr; }
     }
 
     .csp-card-item {
@@ -1454,7 +1471,6 @@ e-page-transition,
     <div class="csp-cat-hero-flex">
       <div class="csp-cat-hero-info">
         <h1 class="csp-cat-hero-title">
-          <span id="cat-hero-icon">🏷️</span>
           <span id="cat-hero-name">Loading Category...</span>
         </h1>
         <p class="csp-cat-hero-desc" id="cat-hero-desc">Discover in-depth investigations, personal reflections, and diaspora stories under this category.</p>
@@ -1730,7 +1746,6 @@ e-page-transition,
           document.getElementById('page-title').textContent = matchedCat.name + ' — Conspodium Category';
           document.getElementById('cat-bc-name').textContent = matchedCat.name;
           document.getElementById('cat-hero-name').textContent = matchedCat.name;
-          document.getElementById('cat-hero-icon').textContent = matchedCat.icon || '🏷️';
           if (matchedCat.description) {
             document.getElementById('cat-hero-desc').textContent = matchedCat.description;
           }
