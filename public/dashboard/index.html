@@ -5761,70 +5761,94 @@
   }
 
   window.openViewSubmissionModal = function(id) {
-    var s = submissionsCache.find(function(item){ return item.id == id; });
-    if (!s) return;
-
-    document.getElementById('sub-modal-title').textContent = s.title;
-    document.getElementById('sub-modal-author').textContent = s.author_name;
-    document.getElementById('sub-modal-email').textContent = '(' + s.author_email + ')';
-
-    var catBadge = document.getElementById('sub-modal-category-badge');
-    if (catBadge) {
-      catBadge.textContent = s.category || 'General';
-    }
-
-    var badge = document.getElementById('sub-modal-status-badge');
-    badge.textContent = s.status;
-    badge.className = 'csp-status-badge ' + (s.status === 'approved' ? 'csp-status-approved' : (s.status === 'rejected' ? 'csp-status-rejected' : 'csp-status-pending'));
-
-    var bioEl = document.getElementById('sub-modal-bio');
-    if (s.author_bio && !s.author_bio.startsWith('Category:')) {
-      bioEl.textContent = 'Bio: ' + s.author_bio;
-      bioEl.style.display = 'block';
-    } else {
-      bioEl.style.display = 'none';
-    }
-
-    var attEl = document.getElementById('sub-modal-attachment');
-    if (s.attachment_url) {
-      var fullAttUrl = getAbsoluteImageUrl(s.attachment_url);
-      var isImg = /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(s.attachment_url) || s.attachment_url.includes('/uploads/');
-      
-      var html = '<div style="margin-top:14px;padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;">';
-      html += '<div style="font-weight:700;font-size:0.85rem;color:#334155;margin-bottom:8px;display:flex;align-items:center;gap:6px;">🖼️ Submission Attachment / Image:</div>';
-      
-      if (isImg) {
-        html += '<div style="margin-bottom:10px;"><a href="' + fullAttUrl + '" target="_blank" title="Click to view high-resolution image"><img src="' + fullAttUrl + '" alt="Submission Attachment" style="width:100%;max-height:260px;object-fit:cover;border-radius:12px;border:1px solid #cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,0.06);display:block;cursor:pointer;" /></a></div>';
+    try {
+      var s = submissionsCache.find(function(item){ return item.id == id; });
+      if (!s) {
+        cspToast('Submission details not found in cache. Refreshing...', 'warning');
+        loadSubmissions();
+        return;
       }
-      
-      html += '<a href="' + fullAttUrl + '" target="_blank" style="color:var(--blue);text-decoration:underline;font-size:0.82rem;word-break:break-all;display:inline-flex;align-items:center;gap:6px;">🔗 Direct Attachment Link (' + s.attachment_url + ')</a>';
-      html += '</div>';
-      
-      attEl.innerHTML = html;
-      attEl.style.display = 'block';
-    } else {
-      attEl.style.display = 'none';
+
+      var titleEl = document.getElementById('sub-modal-title');
+      if (titleEl) titleEl.textContent = s.title || 'Untitled Submission';
+
+      var authorEl = document.getElementById('sub-modal-author');
+      if (authorEl) authorEl.textContent = s.author_name || 'Anonymous Author';
+
+      var emailEl = document.getElementById('sub-modal-email');
+      if (emailEl) emailEl.textContent = s.author_email ? '(' + s.author_email + ')' : '';
+
+      var catBadge = document.getElementById('sub-modal-category-badge');
+      if (catBadge) {
+        catBadge.textContent = s.category || 'General';
+      }
+
+      var badge = document.getElementById('sub-modal-status-badge');
+      if (badge) {
+        var status = s.status || 'pending';
+        badge.textContent = status;
+        badge.className = 'csp-status-badge ' + (status === 'approved' ? 'csp-status-approved' : (status === 'rejected' ? 'csp-status-rejected' : 'csp-status-pending'));
+      }
+
+      var bioEl = document.getElementById('sub-modal-bio');
+      if (bioEl) {
+        var bioStr = (typeof s.author_bio === 'string') ? s.author_bio.trim() : '';
+        if (bioStr && !bioStr.startsWith('Category:')) {
+          bioEl.textContent = 'Bio: ' + bioStr;
+          bioEl.style.display = 'block';
+        } else {
+          bioEl.style.display = 'none';
+        }
+      }
+
+      var attEl = document.getElementById('sub-modal-attachment');
+      if (attEl) {
+        var attUrl = (typeof s.attachment_url === 'string') ? s.attachment_url.trim() : '';
+        if (attUrl) {
+          var fullAttUrl = getAbsoluteImageUrl(attUrl);
+          var isImg = /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(attUrl) || attUrl.includes('/uploads/');
+          
+          var html = '<div style="margin-top:14px;padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;">';
+          html += '<div style="font-weight:700;font-size:0.85rem;color:#334155;margin-bottom:8px;display:flex;align-items:center;gap:6px;">🖼️ Submission Attachment / Image:</div>';
+          
+          if (isImg) {
+            html += '<div style="margin-bottom:10px;"><a href="' + fullAttUrl + '" target="_blank" title="Click to view high-resolution image"><img src="' + fullAttUrl + '" alt="Submission Attachment" style="width:100%;max-height:260px;object-fit:cover;border-radius:12px;border:1px solid #cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,0.06);display:block;cursor:pointer;" /></a></div>';
+          }
+          
+          html += '<a href="' + fullAttUrl + '" target="_blank" style="color:var(--blue);text-decoration:underline;font-size:0.82rem;word-break:break-all;display:inline-flex;align-items:center;gap:6px;">🔗 Direct Attachment Link (' + attUrl + ')</a>';
+          html += '</div>';
+          
+          attEl.innerHTML = html;
+          attEl.style.display = 'block';
+        } else {
+          attEl.style.display = 'none';
+        }
+      }
+
+      var bodyEl = document.getElementById('sub-modal-body');
+      if (bodyEl) bodyEl.textContent = s.content || 'No submission content provided.';
+
+      var btnApprove = document.getElementById('btn-sub-modal-approve');
+      var btnReject = document.getElementById('btn-sub-modal-reject');
+
+      if (btnApprove) {
+        btnApprove.onclick = function() {
+          closeModal('modal-view-submission');
+          openApproveModal(s.id, s.category);
+        };
+      }
+      if (btnReject) {
+        btnReject.onclick = function() {
+          closeModal('modal-view-submission');
+          rejectSubmission(s.id);
+        };
+      }
+
+      openModal('modal-view-submission');
+    } catch (err) {
+      console.error('Error in openViewSubmissionModal:', err);
+      cspToast('Unable to preview submission. Please try again.', 'danger');
     }
-
-    document.getElementById('sub-modal-body').textContent = s.content;
-
-    var btnApprove = document.getElementById('btn-sub-modal-approve');
-    var btnReject = document.getElementById('btn-sub-modal-reject');
-
-    if (btnApprove) {
-      btnApprove.onclick = function() {
-        closeModal('modal-view-submission');
-        openApproveModal(s.id, s.category);
-      };
-    }
-    if (btnReject) {
-      btnReject.onclick = function() {
-        closeModal('modal-view-submission');
-        rejectSubmission(s.id);
-      };
-    }
-
-    openModal('modal-view-submission');
   };
 
   window.openApproveModal = function(subId, userCat) {
