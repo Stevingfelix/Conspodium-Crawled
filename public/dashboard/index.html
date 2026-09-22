@@ -5680,7 +5680,7 @@
     } else {
       postsCache = allPostsRawCache;
     }
-    renderPostsPage(1);
+    renderPostsPage(targetPage || currentPostsPage || 1);
   }
 
   window.publishDraftPost = function(id) {
@@ -5693,7 +5693,7 @@
     .then(function(res){
       if (res.success) {
         cspToast('🚀 Draft published live on Conspodium!', 'success');
-        loadPosts();
+        loadPosts(true);
         loadOverviewData();
       } else {
         cspToast('Failed to publish draft: ' + res.error, 'danger');
@@ -5705,6 +5705,8 @@
   var postsPerPage = 7;
 
   function renderPostsPage(page) {
+    page = page || currentPostsPage || 1;
+    currentPostsPage = page;
     var tbody = document.getElementById('posts-cms-table');
     var info = document.getElementById('posts-pagination-info');
     var btns = document.getElementById('posts-pagination-buttons');
