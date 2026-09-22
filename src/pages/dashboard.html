@@ -3058,16 +3058,29 @@ e-page-transition,
 
 <!-- ── MODAL: POST EDITOR ── -->
 <div class="csp-modal-overlay" id="modal-post">
-  <div class="csp-modal">
+  <div class="csp-modal" style="max-width:740px;">
     <div class="csp-modal-header">
       <h3 class="csp-modal-title" id="modal-post-title">Create New Article</h3>
       <button class="csp-modal-close" data-close="modal-post">&times;</button>
     </div>
     <form id="form-post-editor">
       <input type="hidden" id="edit-post-id">
+      
+      <!-- Top Section: Metadata Controls -->
       <div class="csp-form-group">
         <label class="csp-form-label">Article Title *</label>
         <input type="text" id="post-title" class="csp-form-input" placeholder="Enter post title..." required>
+      </div>
+
+      <div class="csp-form-row">
+        <div class="csp-form-group">
+          <label class="csp-form-label">Author Name</label>
+          <input type="text" id="post-author" class="csp-form-input" placeholder="e.g. Hon. (Dr) Olubunmi Tunji-Ojo">
+        </div>
+        <div class="csp-form-group">
+          <label class="csp-form-label">Reading Time</label>
+          <input type="text" id="post-reading-time" class="csp-form-input" placeholder="e.g. 5 min read">
+        </div>
       </div>
 
       <div class="csp-form-row">
@@ -3083,25 +3096,14 @@ e-page-transition,
         </div>
       </div>
 
-      <div class="csp-form-group">
-        <label class="csp-form-label">Excerpt / Summary *</label>
-        <textarea id="post-excerpt" class="csp-form-textarea" rows="2" placeholder="Brief summary of the article..." required></textarea>
-      </div>
-
-      <div class="csp-form-group">
-        <label class="csp-form-label">Article Content * <span style="font-size:0.75rem;color:var(--text-muted);font-weight:normal;margin-left:4px;">(WYSIWYG Rich Text Formatting)</span></label>
-        <div id="post-content-editor" style="min-height:200px;"></div>
-        <input type="hidden" id="post-content">
-      </div>
-
       <div class="csp-form-row">
         <div class="csp-form-group">
-          <label class="csp-form-label">Author Name</label>
-          <input type="text" id="post-author" class="csp-form-input" placeholder="e.g. Dr. Ngozi Eze">
+          <label class="csp-form-label">Publication Date</label>
+          <input type="datetime-local" id="post-pub-date" class="csp-form-input">
         </div>
-        <div class="csp-form-group">
-          <label class="csp-form-label">Reading Time</label>
-          <input type="text" id="post-reading-time" class="csp-form-input" placeholder="e.g. 7 min read">
+        <div class="csp-form-group" style="display:flex;align-items:center;gap:10px;margin-top:24px;">
+          <input type="checkbox" id="post-is-featured" style="width:20px;height:20px;accent-color:var(--blue);">
+          <label for="post-is-featured" style="font-size:0.88rem;color:#0f172a;cursor:pointer;font-weight:600;">⭐ Feature in Hero Slider</label>
         </div>
       </div>
 
@@ -3114,15 +3116,15 @@ e-page-transition,
         <img id="post-img-preview" class="csp-img-preview" alt="Preview">
       </div>
 
-      <div class="csp-form-row">
-        <div class="csp-form-group">
-          <label class="csp-form-label">Publication Date</label>
-          <input type="datetime-local" id="post-pub-date" class="csp-form-input">
-        </div>
-        <div class="csp-form-group" style="display:flex;align-items:center;gap:10px;margin-top:24px;">
-          <input type="checkbox" id="post-is-featured" style="width:20px;height:20px;accent-color:var(--blue);">
-          <label for="post-is-featured" style="font-size:0.88rem;color:#0f172a;cursor:pointer;">Feature in Hero Slider</label>
-        </div>
+      <div class="csp-form-group">
+        <label class="csp-form-label">Excerpt / Summary *</label>
+        <textarea id="post-excerpt" class="csp-form-textarea" rows="2" placeholder="Brief summary of the article..." required></textarea>
+      </div>
+
+      <div class="csp-form-group">
+        <label class="csp-form-label">Article Content * <span style="font-size:0.75rem;color:var(--text-muted);font-weight:normal;margin-left:4px;">(WYSIWYG Rich Text Formatting)</span></label>
+        <div id="post-content-editor" style="min-height:220px;"></div>
+        <input type="hidden" id="post-content">
       </div>
 
       <div style="text-align:right;margin-top:24px;">
