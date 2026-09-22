@@ -53,6 +53,24 @@
     .ql-snow.ql-toolbar button:hover .ql-fill,
     .ql-snow .ql-toolbar button:hover .ql-fill { fill: var(--blue) !important; }
 
+    /* Explicit Article Content Typography & Spacing Rules */
+    #art-modal-body p, .csp-post-body p, .ql-editor p {
+      margin-bottom: 1.25rem !important;
+      line-height: 1.8 !important;
+      font-size: 1.02rem !important;
+      color: #334155 !important;
+      display: block !important;
+    }
+    #art-modal-body h3, .csp-post-body h3, .ql-editor h3 {
+      margin-top: 1.75rem !important;
+      margin-bottom: 0.75rem !important;
+      font-family: 'Merriweather', serif !important;
+      color: #0f172a !important;
+      font-weight: 700 !important;
+      font-size: 1.2rem !important;
+      line-height: 1.4 !important;
+    }
+
     body {
       font-family: 'Inter', -apple-system, sans-serif;
       background: var(--bg-deep);
@@ -4899,8 +4917,8 @@
 
       <div class="csp-form-row">
         <div class="csp-form-group">
-          <label class="csp-form-label">Eyebrow Badge</label>
-          <input type="text" id="post-eyebrow" class="csp-form-input" placeholder="e.g. Featured Essay">
+          <label class="csp-form-label">Article Sub-Tag / Badge</label>
+          <input type="text" id="post-eyebrow" class="csp-form-input" placeholder="e.g. Featured Story, Policy Analysis">
         </div>
         <div class="csp-form-group">
           <label class="csp-form-label">Category *</label>
@@ -4921,13 +4939,52 @@
         </div>
       </div>
 
-      <div class="csp-form-group">
-        <label class="csp-form-label">Featured Image</label>
-        <div style="display:flex;gap:10px;margin-bottom:8px;">
-          <input type="file" id="post-img-file" class="csp-form-input" accept="image/*">
-          <input type="text" id="post-img-url" class="csp-form-input" placeholder="Or paste Image URL...">
+      <!-- Featured Image Section with Attached Image Status Card & Remove Button -->
+      <div class="csp-form-group" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <label class="csp-form-label" style="margin:0;font-weight:700;color:#0f172a;display:flex;align-items:center;gap:6px;">
+            📷 Featured Image
+          </label>
+          <span id="post-img-status-badge" class="csp-badge" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:0.78rem;font-weight:600;padding:4px 10px;border-radius:20px;display:none;">
+            Attached
+          </span>
         </div>
-        <img id="post-img-preview" class="csp-img-preview" alt="Preview">
+
+        <!-- STATE A: Attached Image Banner Card (Shown when image exists) -->
+        <div id="post-img-attached-card" style="display:none;background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+            <img id="post-img-preview" src="" alt="Preview" style="width:110px;height:70px;object-fit:cover;border-radius:8px;border:1px solid #cbd5e1;flex-shrink:0;background:#f1f5f9;">
+            <div style="flex-grow:1;min-width:160px;">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+                <span style="background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;font-size:0.75rem;font-weight:700;padding:2px 8px;border-radius:12px;">✓ Image Attached</span>
+              </div>
+              <div id="post-img-filename" style="font-size:0.84rem;color:#334155;font-weight:600;word-break:break-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px;">image.jpg</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-shrink:0;">
+              <button type="button" id="btn-remove-post-img" class="csp-btn-sm" style="background:#fef2f2;color:#dc2626;border:1px solid #fecaca;font-weight:600;font-size:0.8rem;padding:7px 12px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;">
+                🗑️ Remove Attached Image
+              </button>
+              <button type="button" id="btn-replace-post-img" class="csp-btn-sm" style="background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-weight:600;font-size:0.8rem;padding:7px 12px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;">
+                ✏️ Replace / Upload New
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATE B: Input Controls Container (Shown when uploading/replacing or no image attached) -->
+        <div id="post-img-input-container" style="display:block;">
+          <div style="display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:200px;">
+              <label style="font-size:0.78rem;color:#64748b;font-weight:600;display:block;margin-bottom:4px;">Choose Image File from Computer</label>
+              <input type="file" id="post-img-file" class="csp-form-input" accept="image/*" style="padding:6px 10px;background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;width:100%;">
+            </div>
+            <div style="flex:1;min-width:200px;">
+              <label style="font-size:0.78rem;color:#64748b;font-weight:600;display:block;margin-bottom:4px;">Or Paste Direct Image URL</label>
+              <input type="text" id="post-img-url" class="csp-form-input" placeholder="e.g. /wp-content/uploads/..." style="background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;">
+            </div>
+          </div>
+          <span style="font-size:0.75rem;color:#64748b;">Supported formats: JPG, PNG, WEBP, GIF. Max upload size: 10MB.</span>
+        </div>
       </div>
 
       <div class="csp-form-group">
@@ -5970,32 +6027,85 @@
       .replace(/\\"/g, '"')
       .replace(/\\'/g, "'");
 
+    // Decode HTML entities safely
+    try {
+      var txt = document.createElement('textarea');
+      txt.innerHTML = cleaned;
+      cleaned = txt.value;
+    } catch(e){}
+
     if (!/<[a-z][\s\S]*>/i.test(cleaned)) {
       var paragraphs = cleaned.split(/\n\s*\n/);
       cleaned = paragraphs.map(function(p){
-        return '<p>' + p.trim().replace(/\n/g, '<br>') + '</p>';
+        return '<p style="margin-bottom:1.25rem;line-height:1.8;color:#334155;font-size:1.02rem;">' + p.trim().replace(/\n/g, '<br>') + '</p>';
       }).join('');
     }
     return cleaned;
   }
 
+  function updateImageUIState(imageUrl) {
+    var attachedCard = document.getElementById('post-img-attached-card');
+    var inputContainer = document.getElementById('post-img-input-container');
+    var imgPreview = document.getElementById('post-img-preview');
+    var filenameEl = document.getElementById('post-img-filename');
+    var urlInput = document.getElementById('post-img-url');
+    var statusBadge = document.getElementById('post-img-status-badge');
+
+    if (imageUrl && imageUrl.trim()) {
+      var cleanUrl = imageUrl.trim();
+      var absoluteUrl = getAbsoluteImageUrl(cleanUrl);
+      if (imgPreview) {
+        imgPreview.src = absoluteUrl;
+        imgPreview.style.display = 'block';
+      }
+      var fName = cleanUrl.split('/').pop() || 'image.jpg';
+      if (filenameEl) filenameEl.textContent = fName;
+      if (attachedCard) attachedCard.style.display = 'block';
+      if (inputContainer) inputContainer.style.display = 'none';
+      if (urlInput) urlInput.value = cleanUrl;
+      if (statusBadge) {
+        statusBadge.textContent = '✓ Attached';
+        statusBadge.style.display = 'inline-block';
+      }
+    } else {
+      if (imgPreview) {
+        imgPreview.src = '';
+        imgPreview.style.display = 'none';
+      }
+      if (filenameEl) filenameEl.textContent = '';
+      if (attachedCard) attachedCard.style.display = 'none';
+      if (inputContainer) inputContainer.style.display = 'block';
+      if (urlInput) urlInput.value = '';
+      if (statusBadge) statusBadge.style.display = 'none';
+    }
+  }
+
+  // Bind Remove Attached Image button
+  document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'btn-remove-post-img') {
+      updateImageUIState('');
+      var fileIn = document.getElementById('post-img-file');
+      if (fileIn) fileIn.value = '';
+    } else if (e.target && e.target.id === 'btn-replace-post-img') {
+      var inputContainer = document.getElementById('post-img-input-container');
+      if (inputContainer) inputContainer.style.display = 'block';
+    }
+  });
+
   function openPostModal(post) {
     document.getElementById('form-post-editor').reset();
     document.getElementById('edit-post-id').value = '';
-    var imgPreview = document.getElementById('post-img-preview');
-    imgPreview.style.display = 'none';
 
     if(post) {
       document.getElementById('modal-post-title').textContent = 'Edit Article';
       document.getElementById('edit-post-id').value = post.id;
-      document.getElementById('post-title').value = post.title;
+      document.getElementById('post-title').value = post.title || '';
       document.getElementById('post-eyebrow').value = post.eyebrow || '';
       document.getElementById('post-excerpt').value = post.excerpt || '';
       quill.root.innerHTML = cleanRawEscapedContent(post.content || '');
       document.getElementById('post-category').value = post.category_id || '';
       document.getElementById('post-author').value = post.author_name || '';
       document.getElementById('post-reading-time').value = post.reading_time || '';
-      document.getElementById('post-img-url').value = post.featured_image || '';
       document.getElementById('post-is-featured').checked = !!post.is_featured;
 
       if (post.published_at) {
@@ -6005,14 +6115,12 @@
         document.getElementById('post-pub-date').value = '';
       }
 
-      if(post.featured_image) {
-        imgPreview.src = getAbsoluteImageUrl(post.featured_image);
-        imgPreview.style.display = 'block';
-      }
+      updateImageUIState(post.featured_image || '');
     } else {
       document.getElementById('modal-post-title').textContent = 'Create New Article';
       quill.root.innerHTML = '';
       document.getElementById('post-pub-date').value = new Date().toISOString().substring(0, 16);
+      updateImageUIState('');
     }
     openModal('modal-post');
   }
@@ -6044,38 +6152,41 @@
   // Image Upload Handler
   var fileInput = document.getElementById('post-img-file');
   var urlInput  = document.getElementById('post-img-url');
-  var imgPreview = document.getElementById('post-img-preview');
 
-  imgPreview.onerror = function() {
-    imgPreview.style.display = 'none';
-  };
+  if (fileInput) {
+    fileInput.addEventListener('change', function(){
+      if(!fileInput.files || !fileInput.files[0]) return;
+      var formData = new FormData();
+      formData.append('image', fileInput.files[0]);
 
-  fileInput.addEventListener('change', function(){
-    if(!fileInput.files || !fileInput.files[0]) return;
-    var formData = new FormData();
-    formData.append('image', fileInput.files[0]);
+      fetch(getRootUrl('api/upload.php'), { method: 'POST', body: formData })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if(res.success) {
+            updateImageUIState(res.imageUrl);
+          } else {
+            alert('Upload failed: ' + res.error);
+          }
+        });
+    });
+  }
 
-    fetch(getRootUrl('api/upload.php'), { method: 'POST', body: formData })
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        if(res.success) {
-          urlInput.value = res.imageUrl;
-          imgPreview.src = getAbsoluteImageUrl(res.imageUrl);
+  if (urlInput) {
+    urlInput.addEventListener('input', function(){
+      if(urlInput.value.trim()) {
+        var cleanVal = urlInput.value.trim();
+        var imgPreview = document.getElementById('post-img-preview');
+        if (imgPreview) {
+          imgPreview.src = getAbsoluteImageUrl(cleanVal);
           imgPreview.style.display = 'block';
-        } else {
-          alert('Upload failed: ' + res.error);
         }
-      });
-  });
-
-  urlInput.addEventListener('input', function(){
-    if(urlInput.value.trim()) {
-      imgPreview.src = getAbsoluteImageUrl(urlInput.value);
-      imgPreview.style.display = 'block';
-    } else {
-      imgPreview.style.display = 'none';
-    }
-  });
+        var filenameEl = document.getElementById('post-img-filename');
+        if (filenameEl) filenameEl.textContent = cleanVal.split('/').pop() || 'image.jpg';
+        var attachedCard = document.getElementById('post-img-attached-card');
+        if (attachedCard) attachedCard.style.display = 'block';
+      }
+    });
+  }
 
   // Save Post Form Submit
   document.getElementById('form-post-editor').addEventListener('submit', function(e){
