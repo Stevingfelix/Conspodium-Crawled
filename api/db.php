@@ -99,6 +99,7 @@ try {
             reading_time TEXT DEFAULT '5 min read',
             views INTEGER DEFAULT 0,
             is_featured INTEGER DEFAULT 0,
+            status TEXT DEFAULT 'published',
             published_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
         );
@@ -164,9 +165,18 @@ try {
             status TEXT DEFAULT 'unread',
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
+
+        CREATE TABLE IF NOT EXISTS settings (
+            key TEXT PRIMARY KEY,
+            value TEXT,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
     ");
 
     // Migration for existing databases
+    try {
+        $pdo->exec("ALTER TABLE posts ADD COLUMN status TEXT DEFAULT 'published'");
+    } catch (Exception $e) {}
     try {
         $pdo->exec("ALTER TABLE story_submissions ADD COLUMN category TEXT");
     } catch (Exception $e) {}

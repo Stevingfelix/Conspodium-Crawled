@@ -49,12 +49,38 @@ if (($method === 'DELETE' || $method === 'POST') && $action === 'empty_trash') {
     exit;
 }
 
-// ── APPROVE SUBMISSION (ADMIN ONLY) ──────────────────────────────────────────
+// ── APPROVE SUBMISSION (STATUS UPDATE ONLY) ──────────────────────────────────
 if ($method === 'POST' && $action === 'approve') {
     requireAdmin();
     $id = intval($_GET['id'] ?? $input['id'] ?? 0);
+    $subStmt = $pdo->prepare("SELECT * FROM story_submissions WHERE id = ?");
+    $subStmt->execute([$id]);
+    $sub = $subStmt->fetch();
+
+    if (!$sub) {
+        http_response_code(404);
+        echo json_encode(["success" => false, "error" => "Submission not found"]);
+        exit;
+    }
+
+    $pdo->prepare("UPDATE story_submissions SET status = 'approved' WHERE id = ?")->execute([$id]);
+    echo json_encode([
+        "success" => true,
+        "message" => "Submission accepted and marked as approved!"
+    ]);
+    exit;
+}
+
+// ── PUBLISH / DRAFT APPROVED SUBMISSION AS STORY ARTICLE ───────────────────────
+if ($method === 'POST' && $action === 'publish_story') {
+    requireAdmin();
+    $id = intval($_GET['id'] ?? $input['id'] ?? 0);
     $categoryId = intval($input['categoryId'] ?? 1);
-    $featuredImage = trim($input['featuredImage'] ?? './wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');
+    $featuredImage = trim($input['featuredImage'] ?? '');
+    $publishStatus = trim($input['publishStatus'] ?? 'published');
+    if (!in_array($publishStatus, ['published', 'draft'])) {
+        $publishStatus = 'published';
+    }
 
     $subStmt = $pdo->prepare("SELECT * FROM story_submissions WHERE id = ?");
     $subStmt->execute([$id]);
@@ -66,7 +92,28 @@ if ($method === 'POST' && $action === 'approve') {
         exit;
     }
 
-    $slug = slugify($sub['title']);
+    $title = csp_sanitize(trim($input['title'] ?? $sub['title']));
+    if (empty($title)) $title = $sub['title'];
+
+    $rawContent = trim($input['content'] ?? $sub['content']);
+    if (empty($rawContent)) $rawContent = $sub['content'];
+
+    $excerpt = csp_sanitize(trim($input['excerpt'] ?? ''));
+    if (empty($excerpt)) {
+        $excerpt = substr(strip_tags($rawContent), 0, 160) . '...';
+    }
+
+    $eyebrow = csp_sanitize(trim($input['eyebrow'] ?? 'Community Voice'));
+    if (empty($eyebrow)) $eyebrow = 'Community Voice';
+
+    if (empty($featuredImage) && !empty($sub['attachment_url'])) {
+        $featuredImage = $sub['attachment_url'];
+    }
+    if (empty($featuredImage)) {
+        $featuredImage = '/wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
+    }
+
+    $slug = slugify($title);
     $checkSlug = $pdo->prepare("SELECT id FROM posts WHERE slug = ?");
     $checkSlug->execute([$slug]);
     if ($checkSlug->fetch()) {
@@ -77,32 +124,40 @@ if ($method === 'POST' && $action === 'approve') {
     $initials = strtoupper(substr($nameParts[0] ?? '', 0, 1) . substr($nameParts[1] ?? '', 0, 1));
     if (!$initials) $initials = 'CP';
 
-    $excerpt = substr(strip_tags($sub['content']), 0, 160) . '...';
-    $htmlContent = '<p>' . str_replace("\n\n", '</p><p>', htmlspecialchars($sub['content'])) . '</p>';
+    $htmlContent = (strpos($rawContent, '<p>') !== false) ? $rawContent : ('<p>' . str_replace("\n\n", '</p><p>', htmlspecialchars($rawContent)) . '</p>');
 
-    // Insert into posts
+    // Insert into posts table
     $postStmt = $pdo->prepare("
-        INSERT INTO posts (title, slug, eyebrow, excerpt, content, category_id, author_name, author_avatar, featured_image, reading_time, views, is_featured, published_at)
-        VALUES (?, ?, 'Community Voice', ?, ?, ?, ?, ?, ?, '6 min read', 0, 0, CURRENT_TIMESTAMP)
+        INSERT INTO posts (title, slug, eyebrow, excerpt, content, category_id, author_name, author_avatar, featured_image, reading_time, views, is_featured, status, published_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '6 min read', 0, 0, ?, CURRENT_TIMESTAMP)
     ");
     $postStmt->execute([
-        $sub['title'],
+        $title,
         $slug,
+        $eyebrow,
         $excerpt,
         $htmlContent,
         $categoryId,
         $sub['author_name'],
         $initials,
-        $featuredImage
+        $featuredImage,
+        $publishStatus
     ]);
+
+    $newPostId = $pdo->lastInsertId();
 
     // Mark submission as approved
     $pdo->prepare("UPDATE story_submissions SET status = 'approved' WHERE id = ?")->execute([$id]);
 
+    $msg = ($publishStatus === 'draft')
+        ? "Article saved as draft in the Articles section!"
+        : "Story article successfully published live on Conspodium!";
+
     echo json_encode([
         "success" => true,
-        "postId" => $pdo->lastInsertId(),
-        "message" => "Submission approved and published as a live article!"
+        "postId" => $newPostId,
+        "isDraft" => ($publishStatus === 'draft'),
+        "message" => $msg
     ]);
     exit;
 }

@@ -13715,57 +13715,64 @@
             initSlider();
           }
 
-          // Fetch the 1 featured CMS article in background & append as 5th slide (index 4)
-          function fetchFeaturedCMSArticle() {
+          // Fetch ALL featured CMS articles from DB & append them to the hero slider (preserving built-in slides)
+          function fetchFeaturedCMSArticles() {
             var endpoint = window.getRootUrl ? window.getRootUrl('api/posts.php?featured=1') : 'api/posts.php?featured=1';
             fetch(endpoint)
               .then(function (r) { return r.json(); })
               .then(function (res) {
+                // Always clean up previously appended dynamic slides
+                document.querySelectorAll('.csp-hero-slide-dynamic').forEach(function (el) { el.remove(); });
+
                 if (res.success && res.posts && res.posts.length > 0) {
-                  document.querySelectorAll('.csp-hero-slide-dynamic').forEach(function (el) { el.remove(); });
-
-                  var post = res.posts[0];
-                  var img = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(post.featured_image) : post.featured_image;
-                  var eyebrow = post.eyebrow || post.category_name || 'Featured Story';
-                  var slug = post.slug || post.id;
-                  var link = (window.getRootUrl ? window.getRootUrl('post/' + slug + '/') : './post/' + slug + '/');
-
-                  var titleParts = post.title.split(' ');
-                  var formattedTitle = post.title;
-                  if (titleParts.length > 3) {
-                    var emWord = titleParts.slice(-2).join(' ');
-                    var firstWords = titleParts.slice(0, -2).join(' ');
-                    formattedTitle = firstWords + ' <em>' + emWord + '</em>';
-                  }
-
-                  var slideDiv = document.createElement('div');
-                  slideDiv.className = 'csp-hero-slide csp-hero-slide-dynamic';
-                  slideDiv.dataset.slide = '4';
-                  slideDiv.innerHTML = `
-            <div class="csp-hero-bg" style="background-image:url('${img}');"></div>
-            <div class="csp-hero-overlay"></div>
-            <div class="csp-hero-content">
-              <div class="csp-hero-eyebrow">⭐ ${eyebrow}</div>
-              <h1 class="csp-hero-title">${formattedTitle}</h1>
-              <p class="csp-hero-sub">${post.excerpt || ''}</p>
-              <div class="csp-hero-btns">
-                <a href="${link}" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                <a href="${window.getRootUrl ? window.getRootUrl('stories/') : './stories/'}" class="csp-hero-btn-secondary">Explore All Stories</a>
-              </div>
-            </div>
-          `;
-
                   var wrapper = document.getElementById('csp-hero-slides-wrapper');
-                  if (wrapper) {
+                  if (!wrapper) return;
+
+                  var staticSlidesCount = document.querySelectorAll('.csp-hero-slide:not(.csp-hero-slide-dynamic)').length || 4;
+
+                  res.posts.forEach(function (post, idx) {
+                    var img = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(post.featured_image) : post.featured_image;
+                    var eyebrow = post.eyebrow || post.category_name || 'Featured Story';
+                    var slug = post.slug || post.id;
+                    var link = (window.getRootUrl ? window.getRootUrl('post/' + slug + '/') : './post/' + slug + '/');
+
+                    var titleParts = (post.title || '').split(' ');
+                    var formattedTitle = post.title;
+                    if (titleParts.length > 3) {
+                      var emWord = titleParts.slice(-2).join(' ');
+                      var firstWords = titleParts.slice(0, -2).join(' ');
+                      formattedTitle = firstWords + ' <em>' + emWord + '</em>';
+                    }
+
+                    var slideDiv = document.createElement('div');
+                    slideDiv.className = 'csp-hero-slide csp-hero-slide-dynamic';
+                    slideDiv.dataset.slide = staticSlidesCount + idx;
+                    slideDiv.innerHTML = `
+                      <div class="csp-hero-bg" style="background-image:url('${img}');"></div>
+                      <div class="csp-hero-overlay"></div>
+                      <div class="csp-hero-content">
+                        <div class="csp-hero-eyebrow">⭐ ${eyebrow}</div>
+                        <h1 class="csp-hero-title">${formattedTitle}</h1>
+                        <p class="csp-hero-sub">${post.excerpt || ''}</p>
+                        <div class="csp-hero-btns">
+                          <a href="${link}" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                          <a href="${window.getRootUrl ? window.getRootUrl('stories/') : './stories/'}" class="csp-hero-btn-secondary">Explore All Stories</a>
+                        </div>
+                      </div>
+                    `;
                     wrapper.appendChild(slideDiv);
-                    buildDots();
-                  }
+                  });
+
+                  // Update dots and counters to reflect built-in + dynamic CMS slides
+                  buildDots();
+                } else {
+                  buildDots();
                 }
               })
-              .catch(function () { });
+              .catch(function (err) { console.error('Error fetching featured CMS articles:', err); });
           }
 
-          fetchFeaturedCMSArticle();
+          fetchFeaturedCMSArticles();
         })();
       </script>
       <style id="csp-hide-old-hero">

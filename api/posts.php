@@ -266,6 +266,7 @@ if ($method === 'GET') {
     $category = $_GET['category'] ?? null;
     $search = $_GET['search'] ?? null;
     $featured = $_GET['featured'] ?? null;
+    $statusFilter = $_GET['status'] ?? null;
     $limit = intval($_GET['limit'] ?? 50);
     $offset = intval($_GET['offset'] ?? 0);
 
@@ -276,6 +277,17 @@ if ($method === 'GET') {
         WHERE 1=1
     ";
     $params = [];
+
+    if ($statusFilter) {
+        if ($statusFilter === 'draft') {
+            $sql .= " AND p.status = 'draft'";
+        } elseif ($statusFilter === 'published') {
+            $sql .= " AND (p.status = 'published' OR p.status IS NULL OR p.status = '')";
+        }
+    } else {
+        // Public default: only return published articles unless status=all is specified by admin
+        $sql .= " AND (p.status = 'published' OR p.status IS NULL OR p.status = '')";
+    }
 
     if ($category) {
         $sql .= " AND (c.slug = ? OR c.name LIKE ?)";
@@ -310,6 +322,16 @@ if ($method === 'GET') {
         WHERE 1=1
     ";
     $countParams = [];
+
+    if ($statusFilter) {
+        if ($statusFilter === 'draft') {
+            $countSql .= " AND p.status = 'draft'";
+        } elseif ($statusFilter === 'published') {
+            $countSql .= " AND (p.status = 'published' OR p.status IS NULL OR p.status = '')";
+        }
+    } else {
+        $countSql .= " AND (p.status = 'published' OR p.status IS NULL OR p.status = '')";
+    }
 
     if ($category) {
         $countSql .= " AND (c.slug = ? OR c.name LIKE ?)";
@@ -348,6 +370,7 @@ if ($method === 'POST') {
     $featuredImage = trim($input['featuredImage'] ?? './wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');
     $readingTime = trim($input['readingTime'] ?? '5 min read');
     $isFeatured = !empty($input['isFeatured']) ? 1 : 0;
+    $status = trim($input['status'] ?? 'published');
     $publishedAt = !empty($input['publishedAt']) ? date('Y-m-d H:i:s', strtotime($input['publishedAt'])) : date('Y-m-d H:i:s');
 
     if (!$title || !$content) {
@@ -364,16 +387,16 @@ if ($method === 'POST') {
     }
 
     $stmt = $pdo->prepare("
-        INSERT INTO posts (title, slug, eyebrow, excerpt, content, category_id, author_name, author_avatar, featured_image, reading_time, views, is_featured, published_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?)
+        INSERT INTO posts (title, slug, eyebrow, excerpt, content, category_id, author_name, author_avatar, featured_image, reading_time, views, is_featured, status, published_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?)
     ");
-    $stmt->execute([$title, $slug, $eyebrow, $excerpt, $content, $categoryId, $authorName, $authorAvatar, $featuredImage, $readingTime, $isFeatured, $publishedAt]);
+    $stmt->execute([$title, $slug, $eyebrow, $excerpt, $content, $categoryId, $authorName, $authorAvatar, $featuredImage, $readingTime, $isFeatured, $status, $publishedAt]);
 
     echo json_encode([
         "success" => true,
         "postId" => $pdo->lastInsertId(),
         "slug" => $slug,
-        "message" => "Article created successfully!"
+        "message" => ($status === 'draft') ? "Article saved as draft successfully!" : "Article published successfully!"
     ]);
     exit;
 }
@@ -397,9 +420,11 @@ if ($method === 'PUT') {
         $slug = slugify($input['title']);
     }
 
+    $status = isset($input['status']) ? trim($input['status']) : ($existing['status'] ?? 'published');
+
     $stmt = $pdo->prepare("
         UPDATE posts
-        SET title = ?, slug = ?, eyebrow = ?, excerpt = ?, content = ?, category_id = ?, author_name = ?, author_avatar = ?, featured_image = ?, reading_time = ?, is_featured = ?
+        SET title = ?, slug = ?, eyebrow = ?, excerpt = ?, content = ?, category_id = ?, author_name = ?, author_avatar = ?, featured_image = ?, reading_time = ?, is_featured = ?, status = ?
         WHERE id = ?
     ");
     $stmt->execute([
@@ -414,6 +439,7 @@ if ($method === 'PUT') {
         $input['featuredImage'] ?? $existing['featured_image'],
         $input['readingTime'] ?? $existing['reading_time'],
         isset($input['isFeatured']) ? ($input['isFeatured'] ? 1 : 0) : $existing['is_featured'],
+        $status,
         $id
     ]);
 

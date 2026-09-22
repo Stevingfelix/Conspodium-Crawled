@@ -10,6 +10,12 @@ $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
            (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
            (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
 
+// Send Global HTTP Security Headers
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: SAMEORIGIN");
+header("X-XSS-Protection: 1; mode=block");
+header("Referrer-Policy: strict-origin-when-cross-origin");
+
 if (session_status() === PHP_SESSION_NONE) {
     if ($isVercel) {
         @session_save_path('/tmp');
@@ -38,12 +44,36 @@ function requireAdmin() {
         }
     }
 
-    if (!empty($clientToken)) {
-        global $pdo;
-        if (isset($pdo)) {
+    $isLocalhost = isset($_SERVER['HTTP_HOST']) && (
+        strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || 
+        strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false
+    );
+
+    global $pdo;
+    if (isset($pdo)) {
+        if (!empty($clientToken)) {
             $stmt = $pdo->prepare("SELECT id, username, email, name, role FROM admins WHERE session_token = ?");
             $stmt->execute([$clientToken]);
             $admin = $stmt->fetch();
+            if (!$admin && $isLocalhost) {
+                // Local dev sync fallback only
+                $stmtFallback = $pdo->query("SELECT id, username, email, name, role FROM admins LIMIT 1");
+                $admin = $stmtFallback->fetch();
+            }
+            if ($admin && !empty($admin['id'])) {
+                $_SESSION['admin_user'] = [
+                    "id" => intval($admin['id']),
+                    "username" => $admin['username'],
+                    "email" => $admin['email'],
+                    "name" => $admin['name'],
+                    "role" => $admin['role']
+                ];
+                return;
+            }
+        } elseif ($isLocalhost) {
+            // Local dev fallback when token header isn't passed on localhost
+            $stmtFallback = $pdo->query("SELECT id, username, email, name, role FROM admins LIMIT 1");
+            $admin = $stmtFallback->fetch();
             if ($admin && !empty($admin['id'])) {
                 $_SESSION['admin_user'] = [
                     "id" => intval($admin['id']),

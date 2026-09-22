@@ -4106,9 +4106,26 @@
             excerptBox.style.display = 'block';
           }
 
+          function formatCleanPostHtml(str) {
+            if (!str) return '';
+            var cleaned = str
+              .replace(/\\r\\n/g, '\n')
+              .replace(/\\n/g, '\n')
+              .replace(/\\"/g, '"')
+              .replace(/\\'/g, "'");
+
+            if (!/<[a-z][\s\S]*>/i.test(cleaned)) {
+              var paragraphs = cleaned.split(/\n\s*\n/);
+              cleaned = paragraphs.map(function(p){
+                return '<p style="margin-bottom:1.5rem;line-height:1.8;font-size:1.05rem;color:#334155;">' + p.trim().replace(/\n/g, '<br>') + '</p>';
+              }).join('');
+            }
+            return cleaned;
+          }
+
           var contentBody = document.getElementById('post-content-body');
           if (contentBody && p.content) {
-            contentBody.innerHTML = p.content;
+            contentBody.innerHTML = formatCleanPostHtml(p.content);
           } else if (contentBody) {
             var skel = document.getElementById('post-skeleton-wrapper');
             if (skel && skel.parentNode) skel.parentNode.removeChild(skel);

@@ -253,18 +253,29 @@
 
     /* ── Modal Dialogs ── */
     .csp-modal-overlay {
-      position: fixed; inset: 0; z-index: 1000; background: rgba(15,23,42,0.55);
-      backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center;
+      position: fixed; inset: 0; z-index: 999999 !important; background: rgba(15,23,42,0.65);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
       opacity: 0; pointer-events: none; transition: opacity 0.25s ease; padding: 20px;
     }
-    .csp-modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .csp-modal-overlay.active {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
     .csp-modal {
       background: #ffffff; border: 1px solid #e2e8f0; border-radius: 24px;
       width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; padding: 32px;
-      box-shadow: 0 24px 70px rgba(15,23,42,0.18); transform: scale(0.95); transition: transform 0.25s ease;
-      color: #0f172a;
+      box-shadow: 0 24px 70px rgba(15,23,42,0.25); transform: scale(0.95); transition: transform 0.25s ease;
+      color: #0f172a; position: relative; z-index: 1000000 !important;
     }
-    .csp-modal-overlay.active .csp-modal { transform: scale(1); }
+    .csp-modal-overlay.active .csp-modal {
+      transform: scale(1) !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
     .csp-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
     .csp-modal-title { font-family: 'Merriweather', serif; font-size: 1.2rem; color: #0f172a; }
     .csp-modal-close { background: none; border: none; color: #64748b; font-size: 1.5rem; cursor: pointer; }
@@ -3794,9 +3805,14 @@
         <div class="csp-card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <span class="csp-card-header-title" style="display:flex;align-items:center;gap:8px;">
             <svg class="csp-sec-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            All Published Articles
+            Articles Database &amp; Drafts
           </span>
           <button id="btn-bulk-delete-posts" class="csp-btn-sm csp-btn-danger" style="display:none;font-size:0.78rem;padding:6px 14px;">Delete Selected (<span id="count-selected-posts">0</span>)</button>
+        </div>
+        <div style="padding:12px 20px;border-bottom:1px solid #e2e8f0;background:#f8fafc;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <button type="button" class="post-subtab-btn active" id="btn-post-subtab-all" onclick="filterPostsSubTab('all')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#0f172a;">All Articles (<span id="cnt-posts-all">0</span>)</button>
+          <button type="button" class="post-subtab-btn" id="btn-post-subtab-published" onclick="filterPostsSubTab('published')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#64748b;">Published (<span id="cnt-posts-published">0</span>)</button>
+          <button type="button" class="post-subtab-btn" id="btn-post-subtab-draft" onclick="filterPostsSubTab('draft')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#64748b;">📝 Drafts (<span id="cnt-posts-draft">0</span>)</button>
         </div>
         <div class="csp-table-wrapper">
           <table class="csp-table">
@@ -3828,15 +3844,15 @@
     <div class="csp-tab-pane" id="tab-submissions">
       <div style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid #e2e8f0;border-radius:16px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <div>
-            <h5 style="margin:0;font-size:0.92rem;color:#0f172a;font-weight:700;">Looking for Weekly Community Polls &amp; Submissions?</h5>
-            <p style="margin:2px 0 0;font-size:0.8rem;color:#64748b;">Community poll questions and live votes are managed in the Weekly Poll Manager.</p>
+            <h5 style="margin:0;font-size:0.92rem;color:#0f172a;font-weight:700;">Download Submission Contact Database</h5>
+            <p style="margin:2px 0 0;font-size:0.8rem;color:#64748b;">Export author contact details (Name, Email, Bio, Category, Status) to a CSV spreadsheet.</p>
           </div>
         </div>
-        <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="switchTab('polls')" style="padding:8px 18px;font-weight:600;display:inline-flex;align-items:center;gap:6px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
-          Open Weekly Poll Manager &rarr;
+        <button type="button" class="csp-btn-sm csp-btn-primary" onclick="exportSubmissionContactsCsv()" style="padding:8px 18px;font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export Contacts (CSV)
         </button>
       </div>
 
@@ -3879,11 +3895,28 @@
 
     <!-- ── TAB 3.5: CONTACT MESSAGES ── -->
     <div class="csp-tab-pane" id="tab-contact">
+      
+      <!-- Top Action Banner -->
+      <div class="csp-card" style="margin-bottom:16px;padding:18px 24px;background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);color:#ffffff;border-radius:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
+        <div>
+          <h3 style="font-family:'Merriweather',serif;color:#ffffff;margin-bottom:4px;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Contact Us Inquiries &amp; Messages
+          </h3>
+          <p style="font-size:0.83rem;color:#94a3b8;margin:0;">Export visitor messages or reply via your connected Email Marketing Provider.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="exportContactMessagesCsv()" style="background:rgba(255,255,255,0.1);color:#ffffff;border-color:rgba(255,255,255,0.2);font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+            📥 Export Messages (CSV)
+          </button>
+        </div>
+      </div>
+
       <div class="csp-card">
         <div class="csp-card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <span class="csp-card-header-title" style="display:flex;align-items:center;gap:8px;">
             <svg class="csp-sec-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Contact Us Inquiries
+            Visitor Messages Database
           </span>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <button id="btn-bulk-delete-contact" class="csp-btn-sm csp-btn-danger" style="display:none;font-size:0.78rem;padding:6px 14px;">Delete Selected (<span id="count-selected-contact">0</span>)</button>
@@ -4106,6 +4139,16 @@
 
     <!-- ── TAB 8: EMAIL MARKETING ── -->
     <div class="csp-tab-pane" id="tab-newsletter">
+      
+      <!-- Top Info Banner -->
+      <div class="csp-card" style="margin-bottom:24px;padding:18px 24px;background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);color:#ffffff;border-radius:16px;">
+        <h3 style="font-family:'Merriweather',serif;color:#ffffff;margin-bottom:4px;font-size:1.15rem;display:flex;align-items:center;gap:8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email Marketing &amp; Campaigns
+        </h3>
+        <p style="font-size:0.83rem;color:#94a3b8;margin:0;">Compose email blasts or manage newsletter subscriber segments.</p>
+      </div>
+
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
         
         <!-- Campaign Composer Card -->
@@ -4529,61 +4572,109 @@
               </select>
             </div>
 
-            <button type="button" id="btn-toggle-payment-edit" class="csp-btn-sm csp-btn-secondary btn-toggle-edit" style="height:44px;width:100%;justify-content:center;">
-              <svg class="csp-nav-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              Edit Section
+            <button type="button" id="btn-toggle-payment-edit" class="csp-btn-sm csp-btn-secondary btn-toggle-edit" style="height:44px;width:100%;justify-content:center;font-weight:600;">
+              ✏️ Edit Section
             </button>
           </form>
         </div>
       </div>
 
-      <!-- SUB-PANE 3: EMAIL & HOSTINGER SMTP -->
+      <!-- SUB-PANE 3: EMAIL & SMTP -->
       <div class="settings-subpane" id="subpane-email" style="display:none;">
-        <div class="csp-card" style="padding:24px;max-width:640px;">
-          <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:6px;display:flex;align-items:center;gap:8px;">
-            <svg class="csp-sec-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Hostinger / Shared Hosting SMTP Settings
-          </h3>
-          <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;">Configure outgoing SMTP credentials to send transactional &amp; broadcast newsletter emails.</p>
+        
+        <!-- Single Unified Email Marketing & Provider Settings Card -->
+        <div id="card-email-provider-settings" class="csp-card" style="margin-bottom:24px;padding:24px;background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;max-width:760px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+            <div>
+              <h3 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:4px;display:flex;align-items:center;gap:8px;">
+                <svg class="csp-sec-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Email Dispatch &amp; Provider Settings
+              </h3>
+              <p style="font-size:0.83rem;color:var(--text-muted);margin:0;">Select your active dispatch engine and configure its specific credentials.</p>
+            </div>
+            <button type="button" id="btn-test-email-connection" class="csp-btn-sm csp-btn-secondary" onclick="testEmailProviderConnection()" style="border-color:#cbd5e1;font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+              ⚡ Test Connection
+            </button>
+          </div>
 
-          <form id="form-smtp-settings-subpane">
-            <div class="csp-form-row">
-              <div class="csp-form-group">
-                <label class="csp-form-label">SMTP Server Host</label>
-                <input type="text" id="sub-smtp-host" class="csp-form-input" placeholder="smtp.hostinger.com" value="smtp.hostinger.com">
+          <form id="form-email-provider-config" action="javascript:void(0);">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+              <div class="csp-form-group" style="margin:0;">
+                <label class="csp-form-label">Active Provider Engine *</label>
+                <select id="cfg-email-provider" class="csp-form-select" onchange="toggleEmailProviderFields(this.value)" required>
+                  <option value="smtp" selected>Hostinger / Custom SMTP Server 🚀 (Recommended)</option>
+                  <option value="resend">Resend API (Modern Email API)</option>
+                  <option value="brevo">Brevo / Sendinblue API</option>
+                  <option value="sendgrid">SendGrid API</option>
+                  <option value="mailchimp">Mailchimp Transactional (Mandrill)</option>
+                  <option value="webhook">Custom Marketing Webhook URL</option>
+                  <option value="native">Native PHP Mailer / Server SMTP</option>
+                </select>
               </div>
-              <div class="csp-form-group">
-                <label class="csp-form-label">SMTP Port</label>
-                <input type="text" id="sub-smtp-port" class="csp-form-input" placeholder="587" value="587">
-              </div>
-            </div>
-            <div class="csp-form-row">
-              <div class="csp-form-group">
-                <label class="csp-form-label">SMTP User / Email</label>
-                <input type="text" id="sub-smtp-user" class="csp-form-input" placeholder="newsletter@conspodium.com">
-              </div>
-              <div class="csp-form-group">
-                <label class="csp-form-label">SMTP Password</label>
-                <input type="password" id="sub-smtp-pass" class="csp-form-input" placeholder="••••••••">
-              </div>
-            </div>
-            <div class="csp-form-row">
-              <div class="csp-form-group">
-                <label class="csp-form-label">Default Sender Email</label>
-                <input type="email" id="sub-sender-email" class="csp-form-input" placeholder="newsletter@conspodium.com" value="newsletter@conspodium.com">
-              </div>
-              <div class="csp-form-group">
-                <label class="csp-form-label">Default Sender Name</label>
-                <input type="text" id="sub-sender-name" class="csp-form-input" placeholder="Conspodium Editorial" value="Conspodium Editorial">
+
+              <div class="csp-form-group" style="margin:0;">
+                <label class="csp-form-label">Sender Name *</label>
+                <input type="text" id="cfg-email-from-name" class="csp-form-input" value="Conspodium Editorial" required>
               </div>
             </div>
 
-            <div style="display:flex;gap:12px;margin-top:16px;">
-              <button type="button" class="csp-btn-sm csp-btn-secondary" id="btn-test-smtp" style="height:44px;flex:1;justify-content:center;">Send Test Email</button>
-              <button type="button" id="btn-toggle-smtp-edit" class="csp-btn-sm csp-btn-secondary btn-toggle-edit" style="height:44px;flex:1;justify-content:center;">
-                <svg class="csp-nav-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Edit Section
-              </button>
+            <div style="display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:16px;">
+              <div class="csp-form-group" style="margin:0;">
+                <label class="csp-form-label">Sender Email Address *</label>
+                <input type="email" id="cfg-email-from-address" class="csp-form-input" value="editor@conspodium.com" required>
+              </div>
+            </div>
+
+            <!-- Dynamic Form 1: Hostinger / Custom SMTP Credentials -->
+            <div id="group-cfg-smtp-fields" style="display:block;background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:16px;margin-bottom:16px;">
+              <h4 style="font-size:0.88rem;color:#0f172a;margin-bottom:12px;font-weight:600;display:flex;align-items:center;gap:6px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg> Hostinger SMTP Server Configuration
+              </h4>
+              <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px;">
+                <div class="csp-form-group" style="margin:0;">
+                  <label class="csp-form-label">SMTP Server Host *</label>
+                  <input type="text" id="cfg-email-smtp-host" class="csp-form-input" value="smtp.hostinger.com" placeholder="smtp.hostinger.com">
+                </div>
+                <div class="csp-form-group" style="margin:0;">
+                  <label class="csp-form-label">SMTP Port *</label>
+                  <input type="text" id="cfg-email-smtp-port" class="csp-form-input" value="587" placeholder="587 (TLS) or 465 (SSL)">
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div class="csp-form-group" style="margin:0;">
+                  <label class="csp-form-label">Hostinger Email / Username *</label>
+                  <input type="email" id="cfg-email-smtp-user" class="csp-form-input" placeholder="newsletter@conspodium.com">
+                </div>
+                <div class="csp-form-group" style="margin:0;">
+                  <label class="csp-form-label">Hostinger Password *</label>
+                  <input type="password" id="cfg-email-smtp-pass" class="csp-form-input" placeholder="••••••••" autocomplete="new-password">
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Form 2: API Key Provider Fields -->
+            <div id="group-cfg-api-key" style="display:none;margin-bottom:16px;">
+              <div class="csp-form-group" style="margin:0;">
+                <label id="lbl-cfg-api-key" class="csp-form-label">API Key / Secret Token *</label>
+                <input type="password" id="cfg-email-api-key" class="csp-form-input" placeholder="e.g. re_123456789... or SG.12345..." autocomplete="off">
+              </div>
+            </div>
+
+            <!-- Dynamic Form 3: Custom Webhook Endpoint -->
+            <div id="group-cfg-webhook-url" style="display:none;margin-bottom:16px;">
+              <div class="csp-form-group" style="margin:0;">
+                <label class="csp-form-label">Custom Marketing Webhook Endpoint URL *</label>
+                <input type="url" id="cfg-email-webhook-url" class="csp-form-input" placeholder="https://api.yourmarketingcrm.com/v1/webhook">
+              </div>
+            </div>
+
+            <!-- Dynamic Form 4: Native PHP Mailer Info Box -->
+            <div id="group-cfg-native-info" style="display:none;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:12px;padding:14px 16px;margin-bottom:16px;color:#475569;font-size:0.83rem;">
+              ℹ️ <strong>Native Server Mailer Active:</strong> Uses your web host's standard <code>mail()</code> mechanism. No additional API keys or SMTP passwords are required.
+            </div>
+
+            <div style="text-align:right;">
+              <button type="button" id="btn-toggle-email-edit" class="csp-btn-sm csp-btn-secondary btn-toggle-edit" style="padding:10px 24px;font-weight:600;">✏️ Edit Section</button>
             </div>
           </form>
         </div>
@@ -4629,9 +4720,8 @@
                 </div>
               </div>
 
-              <button type="button" id="btn-toggle-branding-edit" class="csp-btn-sm csp-btn-secondary btn-toggle-edit" style="margin-top:16px;height:42px;width:100%;justify-content:center;">
-                <svg class="csp-nav-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Edit Section
+              <button type="button" id="btn-toggle-branding-edit" class="csp-btn-sm csp-btn-secondary btn-toggle-edit" style="margin-top:16px;height:42px;width:100%;justify-content:center;font-weight:600;">
+                ✏️ Edit Section
               </button>
             </form>
           </div>
@@ -4666,9 +4756,8 @@
                 </div>
               </div>
 
-              <button type="button" id="btn-toggle-profile-edit" class="csp-btn-sm csp-btn-secondary btn-toggle-edit" style="height:42px;width:100%;justify-content:center;">
-                <svg class="csp-nav-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Edit Section
+              <button type="button" id="btn-toggle-profile-edit" class="csp-btn-sm csp-btn-secondary btn-toggle-edit" style="height:42px;width:100%;justify-content:center;font-weight:600;">
+                ✏️ Edit Section
               </button>
             </form>
           </div>
@@ -4860,8 +4949,8 @@
 
 <!-- ── MODAL: DETAILED ARTICLE OVERVIEW ── -->
 <div class="csp-modal-overlay" id="modal-view-article">
-  <div class="csp-modal" style="max-width:720px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:12px;">
+  <div class="csp-modal" style="max-width:780px;max-height:92vh;display:flex;flex-direction:column;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:12px;flex-shrink:0;">
       <div>
         <span id="art-modal-eyebrow" class="csp-badge" style="background:rgba(0,174,254,0.1);color:var(--blue);border:1px solid rgba(0,174,254,0.3);margin-bottom:6px;display:inline-block;">Featured Article</span>
         <h3 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.25rem;margin:4px 0 0 0;" id="art-modal-title">Article Title</h3>
@@ -4869,26 +4958,63 @@
       <button style="background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;" data-close="modal-view-article">&times;</button>
     </div>
 
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:0.85rem;background:#f8fafc;padding:10px 14px;border-radius:10px;">
-      <div>
-        <strong id="art-modal-author" style="color:#0f172a;">Author Name</strong>
-        <span id="art-modal-date" style="color:var(--text-muted);margin-left:8px;">2026-02-05</span>
+    <!-- Scrollable Modal Content Container -->
+    <div style="overflow-y:auto;padding-right:6px;flex:1;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:0.85rem;background:#f8fafc;padding:10px 14px;border-radius:10px;">
+        <div>
+          <strong id="art-modal-author" style="color:#0f172a;">Author Name</strong>
+          <span id="art-modal-date" style="color:var(--text-muted);margin-left:8px;">2026-02-05</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span id="art-modal-category-badge" class="csp-badge" style="background:rgba(183,31,113,0.1);color:var(--pink);border:1px solid rgba(183,31,113,0.3);">Category</span>
+          <span id="art-modal-views-badge" class="csp-badge" style="background:rgba(15,23,42,0.06);color:#0f172a;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:3px;vertical-align:-1px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>0 views
+          </span>
+        </div>
       </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <span id="art-modal-category-badge" class="csp-badge" style="background:rgba(183,31,113,0.1);color:var(--pink);border:1px solid rgba(183,31,113,0.3);">Category</span>
-        <span id="art-modal-views-badge" class="csp-badge" style="background:rgba(15,23,42,0.06);color:#0f172a;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:3px;vertical-align:-1px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>0 views
-        </span>
+
+      <img id="art-modal-image" src="" alt="Article Featured Image" style="width:100%;max-height:260px;object-fit:cover;border-radius:12px;margin-bottom:16px;display:none;border:1px solid #cbd5e1;">
+
+      <div id="art-modal-excerpt" style="font-size:0.92rem;font-weight:600;color:#334155;margin-bottom:16px;line-height:1.5;background:rgba(0,174,254,0.05);padding:12px 16px;border-left:4px solid var(--blue);border-radius:6px;"></div>
+
+      <div id="art-modal-body" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;font-size:0.95rem;line-height:1.8;color:#1e293b;margin-bottom:24px;"></div>
+
+      <!-- Embedded Article Comments & Admin Reply Section -->
+      <div id="art-modal-comments-section" style="border-top:2px dashed #cbd5e1;padding-top:20px;margin-top:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h4 style="font-family:'Merriweather',serif;font-size:1.05rem;color:#0f172a;margin:0;display:flex;align-items:center;gap:8px;">
+            💬 Article Comments & Discussion
+            <span id="art-modal-comments-count" class="csp-badge" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:0.75rem;">0 Comments</span>
+          </h4>
+        </div>
+
+        <div id="art-modal-comments-list" style="margin-bottom:16px;">
+          <p style="color:#64748b;font-size:0.88rem;text-align:center;padding:16px;background:#f8fafc;border-radius:10px;">Loading comments...</p>
+        </div>
+
+        <!-- Inline Admin Reply / Comment Box -->
+        <form id="form-art-modal-comment-reply" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+          <input type="hidden" id="art-modal-reply-parent-id" value="">
+          <div id="art-modal-reply-target-badge" style="display:none;background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;padding:4px 12px;border-radius:16px;font-size:0.78rem;font-weight:600;margin-bottom:10px;align-items:center;justify-content:space-between;">
+            <span id="art-modal-reply-target-text">Replying to comment...</span>
+            <button type="button" onclick="cancelArtModalReply()" style="background:none;border:none;color:#0369a1;cursor:pointer;font-size:1rem;margin-left:8px;">&times;</button>
+          </div>
+
+          <div style="margin-bottom:8px;">
+            <textarea id="art-modal-reply-text" class="csp-form-input" required rows="2" placeholder="Write an admin response or comment as Editor Admin..." style="width:100%;font-size:0.88rem;padding:10px 12px;border-radius:8px;resize:vertical;"></textarea>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.76rem;color:#64748b;">Posting officially as <strong>Editor Admin</strong></span>
+            <button type="submit" id="btn-art-modal-post-comment" class="csp-btn-sm csp-btn-primary" style="padding:6px 16px;font-size:0.85rem;">
+              💬 Post Comment
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
-    <img id="art-modal-image" src="" alt="Article Featured Image" style="width:100%;max-height:260px;object-fit:cover;border-radius:12px;margin-bottom:16px;display:none;border:1px solid #cbd5e1;">
-
-    <div id="art-modal-excerpt" style="font-size:0.92rem;font-weight:600;color:#334155;margin-bottom:16px;line-height:1.5;background:rgba(0,174,254,0.05);padding:12px 16px;border-left:4px solid var(--blue);border-radius:6px;"></div>
-
-    <div id="art-modal-body" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;max-height:300px;overflow-y:auto;font-size:0.9rem;line-height:1.6;color:#1e293b;margin-bottom:24px;"></div>
-
-    <div style="display:flex;gap:10px;justify-content:flex-end;">
+    <!-- Modal Footer Actions -->
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;padding-top:12px;border-top:1px solid var(--border);flex-shrink:0;">
       <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-view-article">Close</button>
       <button type="button" class="csp-btn-sm csp-btn-danger" id="btn-art-modal-delete">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Delete Article
@@ -4897,6 +5023,7 @@
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit Article
       </button>
     </div>
+  </div>
 </div>
 
 <!-- ── MODAL: ARTICLE COMMENTS MODAL ── -->
@@ -4944,10 +5071,12 @@
 
     <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;max-height:360px;overflow-y:auto;font-size:0.92rem;line-height:1.6;color:#1e293b;white-space:pre-wrap;margin-bottom:24px;" id="sub-modal-body"></div>
 
-    <div style="display:flex;gap:10px;justify-content:flex-end;" id="sub-modal-footer-actions">
+    <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;align-items:center;" id="sub-modal-footer-actions">
       <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-view-submission">Close</button>
       <button type="button" class="csp-btn-sm csp-btn-danger" id="btn-sub-modal-reject">Move to Trash</button>
-      <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-sub-modal-approve">Approve &amp; Publish →</button>
+      <button type="button" class="csp-btn-sm csp-btn-secondary" id="btn-sub-modal-pdf" style="opacity:0.5;cursor:not-allowed;">📄 Download PDF</button>
+      <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-sub-modal-publish" style="opacity:0.5;cursor:not-allowed;">🚀 Publish to Stories</button>
+      <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-sub-modal-approve" style="background:#10b981;border-color:#059669;">✓ Accept Proposal</button>
     </div>
   </div>
 </div>
@@ -4975,26 +5104,150 @@
   </div>
 </div>
 <div class="csp-modal-overlay" id="modal-approve">
-  <div class="csp-modal" style="max-width:500px;">
-    <div class="csp-modal-header">
-      <h3 class="csp-modal-title">Approve &amp; Publish Story</h3>
+  <div class="csp-modal" style="max-width:760px;max-height:90vh;display:flex;flex-direction:column;">
+    <div class="csp-modal-header" style="border-bottom:1px solid #e2e8f0;padding-bottom:14px;margin-bottom:16px;">
+      <h3 class="csp-modal-title" style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.2rem;">✏️ Editorial Studio: Pre-Publish Story</h3>
       <button class="csp-modal-close" data-close="modal-approve">&times;</button>
     </div>
-    <form id="form-approve-submission">
+    
+    <form id="form-approve-submission" action="javascript:void(0);" style="overflow-y:auto;padding-right:4px;">
       <input type="hidden" id="approve-submission-id">
-      <div class="csp-form-group">
-        <label class="csp-form-label">Assign Category</label>
-        <select id="approve-category" class="csp-form-select" required>
-          <option value="">Select Category</option>
-        </select>
+
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:14px;">
+        <div class="csp-form-group" style="margin:0;">
+          <label class="csp-form-label">Article Title</label>
+          <input type="text" id="approve-title" class="csp-form-input" required placeholder="Article Title">
+        </div>
+        <div class="csp-form-group" style="margin:0;">
+          <label class="csp-form-label">Assign Category</label>
+          <select id="approve-category" class="csp-form-select" required>
+            <option value="">Select Category</option>
+          </select>
+        </div>
       </div>
+
       <div class="csp-form-group">
-        <label class="csp-form-label">Featured Image URL (Optional)</label>
-        <input type="text" id="approve-img" class="csp-form-input" placeholder="./wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg">
+        <label class="csp-form-label">Featured Cover Photo</label>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <div id="approve-img-preview-box" style="width:72px;height:54px;border-radius:10px;background:#e2e8f0;overflow:hidden;flex-shrink:0;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🖼️</div>
+          <div style="flex-grow:1;display:flex;gap:8px;">
+            <input type="text" id="approve-img" class="csp-form-input" placeholder="/uploads/health_diaspora_hero.png" style="font-size:0.85rem;" onchange="updateApproveImgPreview(this.value)">
+            <label class="csp-btn-sm csp-btn-secondary" style="margin:0;padding:0 14px;white-space:nowrap;cursor:pointer;display:inline-flex;align-items:center;">
+              📁 Upload
+              <input type="file" id="approve-img-file" accept="image/*" style="display:none;" onchange="handleApproveFileUpload(event)">
+            </label>
+          </div>
+        </div>
       </div>
-      <div style="text-align:right;margin-top:20px;">
+
+      <div class="csp-form-group">
+        <label class="csp-form-label">Excerpt / Summary (Brief overview)</label>
+        <textarea id="approve-excerpt" class="csp-form-input" rows="2" placeholder="Brief summary of the article..." style="font-size:0.88rem;resize:vertical;"></textarea>
+      </div>
+
+      <div class="csp-form-group">
+        <label class="csp-form-label">Full Story Body Content</label>
+        <textarea id="approve-content" class="csp-form-input" rows="8" placeholder="Full story text..." style="font-size:0.9rem;line-height:1.6;resize:vertical;" required></textarea>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;padding-top:14px;border-top:1px solid #e2e8f0;flex-wrap:wrap;align-items:center;">
         <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-approve">Cancel</button>
-        <button type="submit" class="csp-btn-sm csp-btn-primary">Publish to Website</button>
+        <button type="button" class="csp-btn-sm csp-btn-secondary" id="btn-submit-save-draft" onclick="submitEditorialStudioForm('draft')" style="background:#f1f5f9;color:#334155;border-color:#cbd5e1;font-weight:600;">💾 Save as Draft</button>
+        <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-submit-publish-live" onclick="submitEditorialStudioForm('published')" style="font-weight:600;">🚀 Publish Live Article</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="csp-modal-overlay" id="modal-reply-contact">
+  <div class="csp-modal" style="max-width:700px;">
+    <div class="csp-modal-header" style="border-bottom:1px solid #e2e8f0;padding-bottom:14px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <h3 class="csp-modal-title" style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.15rem;margin:0;">💬 Email Studio: Reply to Inquiry</h3>
+        <span id="badge-active-email-provider" class="csp-badge" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:0.75rem;">⚡ Resend API</span>
+      </div>
+      <button class="csp-modal-close" data-close="modal-reply-contact">&times;</button>
+    </div>
+
+    <form id="form-reply-contact-message" action="javascript:void(0);">
+      <input type="hidden" id="reply-contact-id">
+      <input type="hidden" id="reply-recipient-name">
+
+      <div style="margin-bottom:14px;">
+        <div class="csp-form-group" style="margin:0;">
+          <label class="csp-form-label">Recipient Email</label>
+          <input type="email" id="reply-recipient-email" class="csp-form-input" required readonly style="background:#f8fafc;color:#475569;">
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="csp-form-group" style="margin:0;">
+          <label class="csp-form-label">Email Subject</label>
+          <input type="text" id="reply-subject" class="csp-form-input" required placeholder="Re: Inquiry">
+        </div>
+
+        <div class="csp-form-group" style="margin:0;">
+          <label class="csp-form-label">Response Template</label>
+          <select id="reply-template-select" class="csp-form-select" onchange="applyEmailReplyTemplate(this.value)">
+            <option value="blank">Custom Message</option>
+            <option value="thanks">General Thanks &amp; Overview</option>
+            <option value="sponsorship">Sponsorship &amp; Media Kit Intro</option>
+            <option value="editorial">Editorial Proposal Received</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="csp-form-group">
+        <label class="csp-form-label">Original Inquiry Received</label>
+        <div id="reply-original-message-quote" style="background:#f1f5f9;border-left:3px solid #00AEFE;padding:10px 14px;border-radius:0 8px 8px 0;font-size:0.84rem;color:#475569;max-height:90px;overflow-y:auto;white-space:pre-wrap;">Quote...</div>
+      </div>
+
+      <div class="csp-form-group">
+        <label class="csp-form-label">Your Email Response *</label>
+        <textarea id="reply-body" class="csp-form-textarea" rows="7" required placeholder="Dear Friend,&#10;&#10;Thank you for reaching out to Conspodium..." style="font-size:0.9rem;line-height:1.6;"></textarea>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid #e2e8f0;">
+        <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-reply-contact">Cancel</button>
+        <button type="submit" class="csp-btn-sm csp-btn-primary" style="font-weight:600;padding:8px 20px;">🚀 Send Email Reply</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal 10: Test Email Connection -->
+<div class="csp-modal-overlay" id="modal-test-email">
+  <div class="csp-modal" style="max-width:580px;">
+    <div class="csp-modal-header" style="border-bottom:1px solid #e2e8f0;padding-bottom:14px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <h3 class="csp-modal-title" style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.15rem;margin:0;">⚡ Dispatch Test Email Connection</h3>
+        <span id="badge-test-email-provider" class="csp-badge" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:0.75rem;">Hostinger SMTP</span>
+      </div>
+      <button class="csp-modal-close" data-close="modal-test-email">&times;</button>
+    </div>
+
+    <form id="form-test-email-send" action="javascript:void(0);">
+      <div id="test-email-alert-box" style="display:none;margin-bottom:14px;padding:12px 16px;border-radius:10px;font-size:0.86rem;line-height:1.5;"></div>
+
+      <div class="csp-form-group" style="margin-bottom:14px;">
+        <label class="csp-form-label">Recipient Email Address *</label>
+        <input type="email" id="test-email-recipient" class="csp-form-input" required placeholder="editor@conspodium.com">
+        <span style="font-size:0.78rem;color:var(--text-muted);display:block;margin-top:4px;">Enter destination address where the test email should be delivered.</span>
+      </div>
+
+      <div class="csp-form-group" style="margin-bottom:14px;">
+        <label class="csp-form-label">Email Headline / Subject *</label>
+        <input type="text" id="test-email-headline" class="csp-form-input" required value="⚡ Test Connection Ping from Conspodium CMS">
+      </div>
+
+      <div class="csp-form-group" style="margin-bottom:14px;">
+        <label class="csp-form-label">Message Body *</label>
+        <textarea id="test-email-message" class="csp-form-textarea" rows="5" required style="font-size:0.9rem;line-height:1.5;"></textarea>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid #e2e8f0;">
+        <button type="button" class="csp-btn-sm csp-btn-secondary" data-close="modal-test-email">Cancel</button>
+        <button type="submit" id="btn-submit-test-email" class="csp-btn-sm csp-btn-primary" style="font-weight:600;padding:8px 22px;">⚡ Send Test Email</button>
       </div>
     </form>
   </div>
@@ -5002,6 +5255,18 @@
 
 <script>
 (function(){
+  // Global HTML Sanitizer Helper
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  window.escapeHtml = escapeHtml;
+
   // Mobile toggle & backdrop logic
   var toggle = document.getElementById('csp-toggle');
   var sidebar = document.getElementById('csp-sidebar');
@@ -5103,14 +5368,43 @@
   // Modal open / close logic
   function openModal(id) {
     var m = document.getElementById(id);
-    if(m) m.classList.add('active');
+    if(m) {
+      if (m.parentNode && m.parentNode !== document.body) {
+        document.body.appendChild(m);
+      }
+      m.classList.add('active');
+      m.style.cssText = 'position:fixed !important;inset:0 !important;z-index:99999999 !important;display:flex !important;align-items:center !important;justify-content:center !important;background:rgba(15,23,42,0.65) !important;backdrop-filter:blur(8px) !important;-webkit-backdrop-filter:blur(8px) !important;opacity:1 !important;pointer-events:auto !important;padding:20px !important;visibility:visible !important;';
+    }
   }
   function closeModal(id) {
     var m = document.getElementById(id);
-    if(m) m.classList.remove('active');
+    if(m) {
+      m.classList.remove('active');
+      m.style.cssText = 'position:fixed !important;inset:0 !important;z-index:99999999 !important;display:none !important;opacity:0 !important;pointer-events:none !important;visibility:hidden !important;';
+    }
   }
-  document.querySelectorAll('[data-close]').forEach(function(b){
-    b.addEventListener('click', function(){ closeModal(b.dataset.close); });
+  window.openModal = openModal;
+  window.closeModal = closeModal;
+
+  // Universal delegated modal close listener (data-close, backdrop click, Escape key)
+  document.addEventListener('click', function(e) {
+    var closeBtn = e.target.closest('[data-close]');
+    if (closeBtn) {
+      var modalId = closeBtn.getAttribute('data-close');
+      if (modalId) closeModal(modalId);
+      return;
+    }
+    if (e.target && e.target.classList && e.target.classList.contains('csp-modal-overlay')) {
+      closeModal(e.target.id);
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.csp-modal-overlay.active').forEach(function(m){
+        closeModal(m.id);
+      });
+    }
   });
 
   var categoriesCache = [];
@@ -5169,54 +5463,242 @@
 
   var postsCache = [];
 
+  window.cleanRawEscapedContent = function(str) {
+    if (!str) return '';
+    var cleaned = str
+      .replace(/\\r\\n/g, '\n')
+      .replace(/\\n/g, '\n')
+      .replace(/\\"/g, '"')
+      .replace(/\\'/g, "'");
+
+    if (!/<[a-z][\s\S]*>/i.test(cleaned)) {
+      var paragraphs = cleaned.split(/\n\s*\n/);
+      cleaned = paragraphs.map(function(p){
+        return '<p style="margin-bottom:1rem;line-height:1.7;">' + p.trim().replace(/\n/g, '<br>') + '</p>';
+      }).join('');
+    }
+    return cleaned;
+  };
+
+  window.currentViewingArticleId = null;
+
+  window.loadArtModalComments = function(postId) {
+    var countBadge = document.getElementById('art-modal-comments-count');
+    var listEl = document.getElementById('art-modal-comments-list');
+    if (!listEl) return;
+
+    listEl.innerHTML = '<p style="color:#64748b;font-size:0.88rem;text-align:center;padding:16px;">Loading discussion comments...</p>';
+
+    fetch(getRootUrl('api/posts.php?resource=comments&post_id=' + postId))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        var comments = (res.success && res.comments) ? res.comments : [];
+        if (countBadge) countBadge.textContent = comments.length + ' Comment' + (comments.length === 1 ? '' : 's');
+
+        if (comments.length === 0) {
+          listEl.innerHTML = `
+            <div style="text-align:center;padding:24px 16px;background:#f8fafc;border-radius:12px;border:1px dashed #cbd5e1;">
+              <div style="font-size:1.8rem;margin-bottom:6px;">💬</div>
+              <h5 style="font-family:'Merriweather',serif;color:#0f172a;margin-bottom:4px;font-size:0.95rem;">No comments on this article yet</h5>
+              <p style="color:#64748b;font-size:0.82rem;margin:0;">Be the first to post an editorial response below!</p>
+            </div>
+          `;
+          return;
+        }
+
+        var html = '';
+        comments.forEach(function(c){
+          var isApproved = c.status === 'approved';
+          var statusBadge = isApproved 
+            ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.72rem;padding:2px 8px;">Approved</span>' 
+            : '<span class="csp-status-badge csp-status-pending" style="font-size:0.72rem;padding:2px 8px;">Pending Approval</span>';
+          var parentBadge = c.parent_id ? `<span style="font-size:0.74rem;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:10px;">↳ Reply to #${c.parent_id}</span>` : '';
+
+          html += `
+            <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,0.02);">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <div>
+                  <strong style="color:#0f172a;font-size:0.88rem;">${escapeHtml(c.author_name)}</strong>
+                  <span style="color:#64748b;font-size:0.78rem;margin-left:6px;">(${escapeHtml(c.author_email || 'No email')})</span>
+                  ${parentBadge}
+                </div>
+                <div>${statusBadge}</div>
+              </div>
+              <div style="font-size:0.86rem;color:#334155;line-height:1.6;margin:0 0 8px;background:#f8fafc;padding:8px 12px;border-radius:8px;">${cleanRawEscapedContent(c.content)}</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:#94a3b8;">
+                <span>📅 ${c.created_at ? c.created_at.slice(0,16) : 'Recent'}</span>
+                <div style="display:flex;gap:6px;">
+                  ${!isApproved ? `<button type="button" class="csp-btn-sm csp-btn-primary" onclick="moderateComment(${c.id}, 'approved'); setTimeout(function(){ loadArtModalComments(${postId}); }, 350);" style="padding:3px 8px;font-size:0.72rem;">✅ Approve</button>` : ''}
+                  <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="replyToArtModalComment(${c.id}, '${escapeHtml(c.author_name).replace(/'/g, "\\\'")}')" style="padding:3px 8px;font-size:0.72rem;">💬 Reply</button>
+                  <button type="button" class="csp-btn-sm csp-btn-danger" onclick="moderateComment(${c.id}, 'delete'); setTimeout(function(){ loadArtModalComments(${postId}); }, 350);" style="padding:3px 8px;font-size:0.72rem;">Delete</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        listEl.innerHTML = html;
+      });
+  };
+
+  window.replyToArtModalComment = function(commentId, authorName) {
+    document.getElementById('art-modal-reply-parent-id').value = commentId;
+    var badge = document.getElementById('art-modal-reply-target-badge');
+    var badgeText = document.getElementById('art-modal-reply-target-text');
+    if (badge && badgeText) {
+      badgeText.textContent = 'Replying to ' + authorName + ' (Comment #' + commentId + ')';
+      badge.style.display = 'flex';
+    }
+    var txt = document.getElementById('art-modal-reply-text');
+    if (txt) txt.focus();
+  };
+
+  window.cancelArtModalReply = function() {
+    document.getElementById('art-modal-reply-parent-id').value = '';
+    var badge = document.getElementById('art-modal-reply-target-badge');
+    if (badge) badge.style.display = 'none';
+  };
+
   window.openViewArticleModal = function(id) {
-    var p = postsCache.find(function(item){ return item.id == id; });
-    if (!p) return;
-
-    document.getElementById('art-modal-title').textContent = p.title;
-    document.getElementById('art-modal-eyebrow').textContent = p.eyebrow || p.category_name || 'Featured Article';
-    document.getElementById('art-modal-author').textContent = p.author_name || 'Conspodium Editorial';
-    document.getElementById('art-modal-date').textContent = p.published_at ? p.published_at.slice(0,10) : 'Now';
-
-    var catBadge = document.getElementById('art-modal-category-badge');
-    if (catBadge) {
-      catBadge.textContent = (p.category_icon || '🏷️') + ' ' + (p.category_name || 'General');
+    var p = (typeof postsCache !== 'undefined' && postsCache.length > 0) ? postsCache.find(function(item){ return item.id == id; }) : null;
+    if (!p && typeof allPostsRawCache !== 'undefined' && allPostsRawCache) {
+      p = allPostsRawCache.find(function(item){ return item.id == id; });
     }
 
-    var viewsBadge = document.getElementById('art-modal-views-badge');
-    if (viewsBadge) {
-      viewsBadge.textContent = '👁️ ' + (p.views || 0).toLocaleString() + ' views';
+    function renderModalData(post) {
+      window.currentViewingArticleId = post.id;
+      document.getElementById('art-modal-title').textContent = post.title;
+      document.getElementById('art-modal-eyebrow').textContent = post.eyebrow || post.category_name || 'Featured Article';
+      document.getElementById('art-modal-author').textContent = post.author_name || 'Conspodium Editorial';
+      
+      var rawDate = post.published_at || post.created_at || '';
+      var formattedDate = 'Now';
+      if (rawDate) {
+        var d = new Date(rawDate.replace(' ', 'T'));
+        if (!isNaN(d.getTime())) {
+          formattedDate = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        } else {
+          formattedDate = rawDate.slice(0, 10);
+        }
+      }
+      document.getElementById('art-modal-date').textContent = formattedDate;
+
+      var catBadge = document.getElementById('art-modal-category-badge');
+      if (catBadge) {
+        catBadge.textContent = (post.category_icon || '🏷️') + ' ' + (post.category_name || 'General');
+      }
+
+      var viewsBadge = document.getElementById('art-modal-views-badge');
+      if (viewsBadge) {
+        viewsBadge.textContent = '👁️ ' + (post.views || 0).toLocaleString() + ' views';
+      }
+
+      var imgEl = document.getElementById('art-modal-image');
+      if (post.featured_image) {
+        imgEl.src = getAbsoluteImageUrl(post.featured_image);
+        imgEl.style.display = 'block';
+      } else {
+        imgEl.style.display = 'none';
+      }
+
+      var excEl = document.getElementById('art-modal-excerpt');
+      if (post.excerpt) {
+        excEl.innerHTML = cleanRawEscapedContent(post.excerpt);
+        excEl.style.display = 'block';
+      } else {
+        excEl.style.display = 'none';
+      }
+
+      document.getElementById('art-modal-body').innerHTML = cleanRawEscapedContent(post.content || post.excerpt || 'No detailed content available.');
+
+      // Load embedded comments inside the modal
+      loadArtModalComments(post.id);
+
+      document.getElementById('btn-art-modal-edit').onclick = function() {
+        closeModal('modal-view-article');
+        editPost(post.id);
+      };
+
+      document.getElementById('btn-art-modal-delete').onclick = function() {
+        closeModal('modal-view-article');
+        deletePost(post.id);
+      };
+
+      openModal('modal-view-article');
     }
 
-    var imgEl = document.getElementById('art-modal-image');
-    if (p.featured_image) {
-      imgEl.src = getAbsoluteImageUrl(p.featured_image);
-      imgEl.style.display = 'block';
+    if (p) {
+      renderModalData(p);
     } else {
-      imgEl.style.display = 'none';
+      fetch(getRootUrl('api/posts.php?id=' + id))
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success && res.post) renderModalData(res.post);
+        });
     }
+  };
 
-    var excEl = document.getElementById('art-modal-excerpt');
-    if (p.excerpt) {
-      excEl.textContent = p.excerpt;
-      excEl.style.display = 'block';
+  var currentPostSubTab = 'all';
+  var allPostsRawCache = [];
+
+  window.filterPostsSubTab = function(status) {
+    currentPostSubTab = status;
+    currentPostsPage = 1;
+    document.querySelectorAll('.post-subtab-btn').forEach(function(btn){
+      btn.classList.remove('active');
+      btn.style.color = '#64748b';
+      btn.style.borderColor = '#cbd5e1';
+      btn.style.background = '#ffffff';
+    });
+    var activeBtn = document.getElementById('btn-post-subtab-' + status);
+    if (activeBtn) {
+      activeBtn.classList.add('active');
+      activeBtn.style.color = '#0f172a';
+      activeBtn.style.borderColor = '#00AEFE';
+      activeBtn.style.background = '#ffffff';
+    }
+    applyPostsSubTabFiltering(1);
+  };
+
+  function applyPostsSubTabFiltering(targetPage) {
+    if (!allPostsRawCache) allPostsRawCache = [];
+    
+    var cntAll = allPostsRawCache.length;
+    var cntPublished = allPostsRawCache.filter(function(p){ return p.status !== 'draft'; }).length;
+    var cntDraft = allPostsRawCache.filter(function(p){ return p.status === 'draft'; }).length;
+
+    var elAll = document.getElementById('cnt-posts-all');
+    var elPub = document.getElementById('cnt-posts-published');
+    var elDft = document.getElementById('cnt-posts-draft');
+    if (elAll) elAll.textContent = cntAll;
+    if (elPub) elPub.textContent = cntPublished;
+    if (elDft) elDft.textContent = cntDraft;
+
+    if (currentPostSubTab === 'published') {
+      postsCache = allPostsRawCache.filter(function(p){ return p.status !== 'draft'; });
+    } else if (currentPostSubTab === 'draft') {
+      postsCache = allPostsRawCache.filter(function(p){ return p.status === 'draft'; });
     } else {
-      excEl.style.display = 'none';
+      postsCache = allPostsRawCache;
     }
+    renderPostsPage(1);
+  }
 
-    document.getElementById('art-modal-body').innerHTML = p.content || p.excerpt || 'No detailed content available.';
-
-    document.getElementById('btn-art-modal-edit').onclick = function() {
-      closeModal('modal-view-article');
-      editPost(p.id);
-    };
-
-    document.getElementById('btn-art-modal-delete').onclick = function() {
-      closeModal('modal-view-article');
-      deletePost(p.id);
-    };
-
-    openModal('modal-view-article');
+  window.publishDraftPost = function(id) {
+    fetch(getRootUrl('api/posts.php?id=' + id), {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'published' })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success) {
+        cspToast('🚀 Draft published live on Conspodium!', 'success');
+        loadPosts();
+        loadOverviewData();
+      } else {
+        cspToast('Failed to publish draft: ' + res.error, 'danger');
+      }
+    });
   };
 
   var currentPostsPage = 1;
@@ -5244,7 +5726,7 @@
     updatePostsBulkDeleteState();
 
     if (total === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">No published articles found.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">No articles found for this filter view.</td></tr>';
       if (info) info.textContent = 'Showing 0 of 0 articles';
       if (btns) btns.innerHTML = '';
       return;
@@ -5253,13 +5735,25 @@
     pagePosts.forEach(function(p){
       var pubDate = p.published_at ? p.published_at.slice(0,10) : 'Now';
       var imgThumb = p.featured_image ? `<img src="${getAbsoluteImageUrl(p.featured_image)}" style="width:44px;height:34px;object-fit:cover;border-radius:6px;vertical-align:middle;margin-right:8px;border:1px solid #cbd5e1;flex-shrink:0;" />` : '';
+      
+      var isDraft = (p.status === 'draft');
+      var draftBadge = isDraft ? '<span class="csp-badge" style="background:#fef3c7;color:#b45309;border:1px solid #fde68a;font-size:0.75rem;margin-left:6px;white-space:nowrap;">📝 Draft</span>' : '';
+      var publishNowBtn = isDraft ? `
+        <button class="csp-btn-sm csp-btn-primary" onclick="publishDraftPost(${p.id})" style="margin-right:4px;background:#10b981;border-color:#059669;font-size:0.75rem;padding:4px 10px;">
+          🚀 Publish Now
+        </button>
+      ` : '';
+
       tbody.innerHTML += `
         <tr>
           <td style="text-align:center;"><input type="checkbox" class="post-cb" data-id="${p.id}" style="cursor:pointer;" /></td>
           <td style="font-weight:600;max-width:320px;cursor:pointer;" onclick="openViewArticleModal(${p.id})">
             <div style="display:flex;align-items:center;">
               ${imgThumb}
-              <span style="color:var(--blue);" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${p.title}</span>
+              <div>
+                <span style="color:var(--blue);" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${p.title}</span>
+                ${draftBadge}
+              </div>
             </div>
           </td>
           <td>${p.category_icon || '🏷️'} ${p.category_name || 'Unassigned'}</td>
@@ -5268,6 +5762,7 @@
           <td>${(p.views || 0).toLocaleString()}</td>
           <td>${p.is_featured ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.75rem;padding:4px 8px;white-space:nowrap;">⭐ Hero: Enabled</span>' : '<span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">Hero: Disabled</span>'}</td>
           <td>
+            ${publishNowBtn}
             <button class="csp-btn-sm csp-btn-secondary" onclick="openViewArticleModal(${p.id})" style="margin-right:4px;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View
             </button>
@@ -5385,12 +5880,12 @@
   }
 
   function loadPosts() {
-    fetch(getRootUrl('api/posts.php?limit=200'))
+    fetch(getRootUrl('api/posts.php?status=all&limit=300'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         if(!res.posts) return;
-        postsCache = res.posts;
-        renderPostsPage(currentPostsPage || 1);
+        allPostsRawCache = res.posts;
+        applyPostsSubTabFiltering();
       });
   }
 
@@ -5463,6 +5958,23 @@
     }
   });
 
+  function cleanRawEscapedContent(str) {
+    if (!str) return '';
+    var cleaned = str
+      .replace(/\\r\\n/g, '\n')
+      .replace(/\\n/g, '\n')
+      .replace(/\\"/g, '"')
+      .replace(/\\'/g, "'");
+
+    if (!/<[a-z][\s\S]*>/i.test(cleaned)) {
+      var paragraphs = cleaned.split(/\n\s*\n/);
+      cleaned = paragraphs.map(function(p){
+        return '<p>' + p.trim().replace(/\n/g, '<br>') + '</p>';
+      }).join('');
+    }
+    return cleaned;
+  }
+
   function openPostModal(post) {
     document.getElementById('form-post-editor').reset();
     document.getElementById('edit-post-id').value = '';
@@ -5475,12 +5987,19 @@
       document.getElementById('post-title').value = post.title;
       document.getElementById('post-eyebrow').value = post.eyebrow || '';
       document.getElementById('post-excerpt').value = post.excerpt || '';
-      quill.root.innerHTML = post.content || '';
+      quill.root.innerHTML = cleanRawEscapedContent(post.content || '');
       document.getElementById('post-category').value = post.category_id || '';
       document.getElementById('post-author').value = post.author_name || '';
       document.getElementById('post-reading-time').value = post.reading_time || '';
       document.getElementById('post-img-url').value = post.featured_image || '';
       document.getElementById('post-is-featured').checked = !!post.is_featured;
+
+      if (post.published_at) {
+        var dStr = post.published_at.replace(' ', 'T');
+        document.getElementById('post-pub-date').value = dStr.length >= 16 ? dStr.substring(0, 16) : dStr;
+      } else {
+        document.getElementById('post-pub-date').value = '';
+      }
 
       if(post.featured_image) {
         imgPreview.src = getAbsoluteImageUrl(post.featured_image);
@@ -5489,6 +6008,7 @@
     } else {
       document.getElementById('modal-post-title').textContent = 'Create New Article';
       quill.root.innerHTML = '';
+      document.getElementById('post-pub-date').value = new Date().toISOString().substring(0, 16);
     }
     openModal('modal-post');
   }
@@ -5585,13 +6105,56 @@
       if(res.success) {
         alert('🎉 ' + res.message);
         closeModal('modal-post');
-        loadPosts();
+        loadPosts(true);
         loadOverviewData();
       } else {
         alert('Error: ' + res.error);
       }
     });
   });
+
+  // Modal Embedded Comment Reply Submit Listener
+  var formArtReply = document.getElementById('form-art-modal-comment-reply');
+  if (formArtReply) {
+    formArtReply.addEventListener('submit', function(e){
+      e.preventDefault();
+      if (!window.currentViewingArticleId) return;
+
+      var text = document.getElementById('art-modal-reply-text').value.trim();
+      var parentId = document.getElementById('art-modal-reply-parent-id').value;
+      if (!text) return;
+
+      var btn = document.getElementById('btn-art-modal-post-comment');
+      if (btn) { btn.disabled = true; btn.textContent = 'Posting...'; }
+
+      var payload = {
+        post_id: window.currentViewingArticleId,
+        parent_id: parentId ? parseInt(parentId, 10) : null,
+        author_name: 'Editor Admin',
+        author_email: 'admin@conspodium.com',
+        content: text,
+        status: 'approved'
+      };
+
+      fetch(getRootUrl('api/posts.php?resource=comments'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (btn) { btn.disabled = false; btn.textContent = '💬 Post Comment'; }
+        if (res.success) {
+          cspToast('🎉 Comment posted successfully!', 'success');
+          document.getElementById('art-modal-reply-text').value = '';
+          cancelArtModalReply();
+          loadArtModalComments(window.currentViewingArticleId);
+        } else {
+          cspToast('Error: ' + (res.error || 'Failed to post comment'), 'danger');
+        }
+      });
+    });
+  }
 
   // Submissions status filter tabs & Empty Trash logic
   var currentSubFilter = 'all';
@@ -5671,43 +6234,49 @@
           return;
         }
 
+        var html = '';
         res.submissions.forEach(function(s){
           var statusClass = s.status === 'approved' ? 'csp-status-approved' : (s.status === 'rejected' ? 'csp-status-rejected' : 'csp-status-pending');
           var dateStr = s.submitted_at ? s.submitted_at.slice(0,10) : 'Today';
+          var safeTitle = escapeHtml(s.title || '');
+          var safeAuthor = escapeHtml(s.author_name || '');
+          var safeEmail = escapeHtml(s.author_email || '');
+          var safeExcerpt = escapeHtml((s.content || '').slice(0, 80)) + ((s.content || '').length > 80 ? '...' : '');
 
-          tbody.innerHTML += `
+          html += `
             <tr>
               <td style="text-align:center;"><input type="checkbox" class="sub-cb" data-id="${s.id}" style="cursor:pointer;" /></td>
               <td>
-                <div style="font-weight:600;">${s.author_name}</div>
-                <div style="font-size:0.75rem;color:var(--text-muted);">${s.author_email}</div>
+                <div style="font-weight:600;">${safeAuthor}</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);">${safeEmail}</div>
               </td>
               <td>
-                <div style="font-weight:600;cursor:pointer;color:var(--blue);" onclick="openViewSubmissionModal(${s.id})">${s.title}</div>
-                <div style="font-size:0.78rem;color:var(--text-muted);max-width:320px;">${s.content.slice(0,80)}...</div>
+                <div style="font-weight:600;cursor:pointer;color:var(--blue);" onclick="openViewSubmissionModal(${s.id})">${safeTitle}</div>
+                <div style="font-size:0.78rem;color:var(--text-muted);max-width:320px;">${safeExcerpt}</div>
               </td>
               <td>${dateStr}</td>
               <td><span class="csp-status-badge ${statusClass}">${s.status}</span></td>
               <td>
-                <button class="csp-btn-sm csp-btn-secondary" onclick="openViewSubmissionModal(${s.id})" style="padding:4px 10px;font-size:0.78rem;margin-right:4px;">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View
+                <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="openViewSubmissionModal(${s.id})" style="padding:4px 10px;font-size:0.78rem;margin-right:4px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;pointer-events:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View
                 </button>
                 ${s.status === 'pending' ? `
-                  <button class="csp-btn-sm csp-btn-primary" onclick="openApproveModal(${s.id})" style="padding:4px 10px;font-size:0.78rem;margin-right:4px;">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg>Approve
+                  <button type="button" class="csp-btn-sm csp-btn-primary" onclick="openApproveModal(${s.id})" style="padding:4px 10px;font-size:0.78rem;margin-right:4px;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;pointer-events:none;"><polyline points="20 6 9 17 4 12"/></svg>Approve
                   </button>
-                  <button class="csp-btn-sm csp-btn-danger" onclick="rejectSubmission(${s.id})" style="padding:4px 10px;font-size:0.78rem;">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Reject
+                  <button type="button" class="csp-btn-sm csp-btn-danger" onclick="rejectSubmission(${s.id})" style="padding:4px 10px;font-size:0.78rem;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;pointer-events:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Reject
                   </button>
                 ` : `
-                  <button class="csp-btn-sm csp-btn-danger" onclick="deleteSubmission(${s.id})" style="padding:4px 10px;font-size:0.78rem;">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Delete
+                  <button type="button" class="csp-btn-sm csp-btn-danger" onclick="deleteSubmission(${s.id})" style="padding:4px 10px;font-size:0.78rem;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;pointer-events:none;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Delete
                   </button>
                 `}
               </td>
             </tr>
           `;
         });
+        tbody.innerHTML = html;
 
         tbody.querySelectorAll('.sub-cb').forEach(function(cb){
           cb.addEventListener('change', updateSubmissionsBulkDeleteState);
@@ -5760,91 +6329,177 @@
     });
   }
 
-  window.openViewSubmissionModal = function(id) {
-    try {
-      var s = submissionsCache.find(function(item){ return item.id == id; });
-      if (!s) {
-        cspToast('Submission details not found in cache. Refreshing...', 'warning');
-        loadSubmissions();
-        return;
+  function renderSubmissionModal(s) {
+    if (!s) return;
+
+    var titleEl = document.getElementById('sub-modal-title');
+    if (titleEl) titleEl.textContent = s.title || 'Untitled Submission';
+
+    var authorEl = document.getElementById('sub-modal-author');
+    if (authorEl) authorEl.textContent = s.author_name || 'Anonymous Author';
+
+    var emailEl = document.getElementById('sub-modal-email');
+    if (emailEl) emailEl.textContent = s.author_email ? '(' + s.author_email + ')' : '';
+
+    var catBadge = document.getElementById('sub-modal-category-badge');
+    if (catBadge) {
+      catBadge.textContent = s.category || 'General';
+    }
+
+    var badge = document.getElementById('sub-modal-status-badge');
+    if (badge) {
+      var status = s.status || 'pending';
+      badge.textContent = status;
+      badge.className = 'csp-status-badge ' + (status === 'approved' ? 'csp-status-approved' : (status === 'rejected' ? 'csp-status-rejected' : 'csp-status-pending'));
+    }
+
+    var bioEl = document.getElementById('sub-modal-bio');
+    if (bioEl) {
+      var bioStr = (typeof s.author_bio === 'string') ? s.author_bio.trim() : '';
+      if (bioStr && !bioStr.startsWith('Category:')) {
+        bioEl.textContent = 'Bio: ' + bioStr;
+        bioEl.style.display = 'block';
+      } else {
+        bioEl.style.display = 'none';
       }
+    }
 
-      var titleEl = document.getElementById('sub-modal-title');
-      if (titleEl) titleEl.textContent = s.title || 'Untitled Submission';
-
-      var authorEl = document.getElementById('sub-modal-author');
-      if (authorEl) authorEl.textContent = s.author_name || 'Anonymous Author';
-
-      var emailEl = document.getElementById('sub-modal-email');
-      if (emailEl) emailEl.textContent = s.author_email ? '(' + s.author_email + ')' : '';
-
-      var catBadge = document.getElementById('sub-modal-category-badge');
-      if (catBadge) {
-        catBadge.textContent = s.category || 'General';
-      }
-
-      var badge = document.getElementById('sub-modal-status-badge');
-      if (badge) {
-        var status = s.status || 'pending';
-        badge.textContent = status;
-        badge.className = 'csp-status-badge ' + (status === 'approved' ? 'csp-status-approved' : (status === 'rejected' ? 'csp-status-rejected' : 'csp-status-pending'));
-      }
-
-      var bioEl = document.getElementById('sub-modal-bio');
-      if (bioEl) {
-        var bioStr = (typeof s.author_bio === 'string') ? s.author_bio.trim() : '';
-        if (bioStr && !bioStr.startsWith('Category:')) {
-          bioEl.textContent = 'Bio: ' + bioStr;
-          bioEl.style.display = 'block';
-        } else {
-          bioEl.style.display = 'none';
+    var attEl = document.getElementById('sub-modal-attachment');
+    if (attEl) {
+      var attUrl = (typeof s.attachment_url === 'string') ? s.attachment_url.trim() : '';
+      if (attUrl) {
+        var fullAttUrl = getAbsoluteImageUrl(attUrl);
+        var isImg = /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(attUrl) || attUrl.includes('/uploads/');
+        
+        var html = '<div style="margin-top:14px;padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;">';
+        html += '<div style="font-weight:700;font-size:0.85rem;color:#334155;margin-bottom:8px;display:flex;align-items:center;gap:6px;">🖼️ Submission Attachment / Image:</div>';
+        
+        if (isImg) {
+          html += '<div style="margin-bottom:0;"><a href="' + fullAttUrl + '" target="_blank" title="Click to view high-resolution image"><img src="' + fullAttUrl + '" alt="Submission Attachment" style="width:100%;max-height:280px;object-fit:cover;border-radius:12px;border:1px solid #cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,0.06);display:block;cursor:pointer;" /></a></div>';
         }
+        
+        html += '</div>';
+        attEl.innerHTML = html;
+        attEl.style.display = 'block';
+      } else {
+        var noImgHtml = '<div style="margin-top:14px;padding:12px 16px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.28);border-radius:14px;font-size:0.83rem;color:#b45309;display:flex;align-items:center;gap:10px;">';
+        noImgHtml += '<div style="width:32px;height:32px;border-radius:50%;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">📷</div>';
+        noImgHtml += '<div><strong style="color:#92400e;display:block;margin-bottom:2px;">No Image Attachment Submitted</strong><span style="color:#d97706;font-size:0.8rem;">The author did not attach a featured photo with this submission proposal.</span></div>';
+        noImgHtml += '</div>';
+        attEl.innerHTML = noImgHtml;
+        attEl.style.display = 'block';
       }
+    }
 
-      var attEl = document.getElementById('sub-modal-attachment');
-      if (attEl) {
-        var attUrl = (typeof s.attachment_url === 'string') ? s.attachment_url.trim() : '';
-        if (attUrl) {
-          var fullAttUrl = getAbsoluteImageUrl(attUrl);
-          var isImg = /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(attUrl) || attUrl.includes('/uploads/');
-          
-          var html = '<div style="margin-top:14px;padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;">';
-          html += '<div style="font-weight:700;font-size:0.85rem;color:#334155;margin-bottom:8px;display:flex;align-items:center;gap:6px;">🖼️ Submission Attachment / Image:</div>';
-          
-          if (isImg) {
-            html += '<div style="margin-bottom:10px;"><a href="' + fullAttUrl + '" target="_blank" title="Click to view high-resolution image"><img src="' + fullAttUrl + '" alt="Submission Attachment" style="width:100%;max-height:260px;object-fit:cover;border-radius:12px;border:1px solid #cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,0.06);display:block;cursor:pointer;" /></a></div>';
-          }
-          
-          html += '<a href="' + fullAttUrl + '" target="_blank" style="color:var(--blue);text-decoration:underline;font-size:0.82rem;word-break:break-all;display:inline-flex;align-items:center;gap:6px;">🔗 Direct Attachment Link (' + attUrl + ')</a>';
-          html += '</div>';
-          
-          attEl.innerHTML = html;
-          attEl.style.display = 'block';
-        } else {
-          attEl.style.display = 'none';
-        }
-      }
+    var bodyEl = document.getElementById('sub-modal-body');
+    if (bodyEl) bodyEl.textContent = s.content || 'No submission content provided.';
 
-      var bodyEl = document.getElementById('sub-modal-body');
-      if (bodyEl) bodyEl.textContent = s.content || 'No submission content provided.';
+    var btnApprove = document.getElementById('btn-sub-modal-approve');
+    var btnReject = document.getElementById('btn-sub-modal-reject');
+    var btnPdf = document.getElementById('btn-sub-modal-pdf');
+    var btnPublish = document.getElementById('btn-sub-modal-publish');
 
-      var btnApprove = document.getElementById('btn-sub-modal-approve');
-      var btnReject = document.getElementById('btn-sub-modal-reject');
+    var isApproved = (s.status === 'approved');
 
-      if (btnApprove) {
+    if (btnApprove) {
+      if (isApproved) {
+        btnApprove.style.display = 'none';
+      } else {
+        btnApprove.style.display = 'inline-flex';
         btnApprove.onclick = function() {
           closeModal('modal-view-submission');
-          openApproveModal(s.id, s.category);
+          acceptSubmissionProposal(s.id);
         };
       }
-      if (btnReject) {
+    }
+
+    if (btnReject) {
+      if (s.status === 'rejected') {
+        btnReject.style.display = 'none';
+      } else {
+        btnReject.style.display = 'inline-flex';
         btnReject.onclick = function() {
           closeModal('modal-view-submission');
           rejectSubmission(s.id);
         };
       }
+    }
 
-      openModal('modal-view-submission');
+    if (btnPdf) {
+      if (isApproved) {
+        btnPdf.disabled = false;
+        btnPdf.style.opacity = '1';
+        btnPdf.style.cursor = 'pointer';
+        btnPdf.style.pointerEvents = 'auto';
+        btnPdf.title = 'Download submission as printable PDF document';
+        btnPdf.onclick = function() {
+          downloadSubmissionPdf(s.id);
+        };
+      } else {
+        btnPdf.disabled = true;
+        btnPdf.style.opacity = '0.5';
+        btnPdf.style.cursor = 'not-allowed';
+        btnPdf.style.pointerEvents = 'none';
+        btnPdf.title = 'PDF Download available only for approved submissions';
+        btnPdf.onclick = function() {
+          cspToast('PDF Download is available only for accepted/approved submissions.', 'warning');
+        };
+      }
+    }
+
+    if (btnPublish) {
+      if (isApproved) {
+        btnPublish.disabled = false;
+        btnPublish.style.opacity = '1';
+        btnPublish.style.cursor = 'pointer';
+        btnPublish.style.pointerEvents = 'auto';
+        btnPublish.title = 'Publish approved submission to live stories database';
+        btnPublish.onclick = function() {
+          closeModal('modal-view-submission');
+          openApproveModal(s.id, s.category);
+        };
+      } else {
+        btnPublish.disabled = true;
+        btnPublish.style.opacity = '0.5';
+        btnPublish.style.cursor = 'not-allowed';
+        btnPublish.style.pointerEvents = 'none';
+        btnPublish.title = 'Publishing is available only for approved submissions';
+        btnPublish.onclick = function() {
+          cspToast('Publishing to Stories database is available only for accepted/approved submissions.', 'warning');
+        };
+      }
+    }
+
+    openModal('modal-view-submission');
+  }
+
+  window.openViewSubmissionModal = function(id) {
+    try {
+      var s = submissionsCache ? submissionsCache.find(function(item){ return item.id == id; }) : null;
+      if (s) {
+        renderSubmissionModal(s);
+        return;
+      }
+
+      fetch(getRootUrl('api/submissions.php?status=all'), { headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' } })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success && res.submissions) {
+            submissionsCache = res.submissions;
+            var found = res.submissions.find(function(item){ return item.id == id; });
+            if (found) {
+              renderSubmissionModal(found);
+            } else {
+              cspToast('Submission not found.', 'danger');
+            }
+          } else {
+            cspToast('Unable to load submission details.', 'danger');
+          }
+        })
+        .catch(function(err){
+          console.error('Error fetching submission:', err);
+          cspToast('Error opening submission view modal.', 'danger');
+        });
     } catch (err) {
       console.error('Error in openViewSubmissionModal:', err);
       cspToast('Unable to preview submission. Please try again.', 'danger');
@@ -5852,11 +6507,27 @@
   };
 
   window.openApproveModal = function(subId, userCat) {
-    document.getElementById('approve-submission-id').value = subId;
-    var s = submissionsCache.find(function(item){ return item.id == subId; });
+    var subInput = document.getElementById('approve-submission-id');
+    if (subInput) subInput.value = subId;
+
+    var s = (submissionsCache && Array.isArray(submissionsCache)) ? submissionsCache.find(function(item){ return item.id == subId; }) : null;
+
+    var titleInput = document.getElementById('approve-title');
+    if (titleInput && s) titleInput.value = s.title || '';
+
+    var excerptInput = document.getElementById('approve-excerpt');
+    if (excerptInput && s) {
+      excerptInput.value = s.content ? (s.content.slice(0, 160) + '...') : '';
+    }
+
+    var contentInput = document.getElementById('approve-content');
+    if (contentInput && s) {
+      contentInput.value = s.content || '';
+    }
+
     var catSelect = document.getElementById('approve-category');
-    if (catSelect && (userCat || (s && s.category))) {
-      var catToFind = userCat || s.category;
+    var catToFind = userCat || (s ? s.category : '');
+    if (catSelect && catToFind) {
       for (var i = 0; i < catSelect.options.length; i++) {
         if (catSelect.options[i].text.toLowerCase().trim() === catToFind.toLowerCase().trim()) {
           catSelect.selectedIndex = i;
@@ -5864,11 +6535,235 @@
         }
       }
     }
+
+    // Default stock photos for categories if author submission image is missing
+    var stockPhotos = {
+      'culture & heritage': '/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg',
+      'innovation': '/wp-content/uploads/2026/01/location-1.webp',
+      'art & entertainment': '/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg',
+      'community': '/wp-content/uploads/2026/01/AF3-1-png-1024x585.jpg',
+      'success stories': '/wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-1024x683.jpg',
+      'african diaspora matters': '/uploads/cat_diaspora_matters.png',
+      'diaspora insights & analysis': '/uploads/cat_diaspora_insights.png'
+    };
+
     var approveImgInput = document.getElementById('approve-img');
-    if (approveImgInput && s && s.attachment_url) {
-      approveImgInput.value = s.attachment_url;
+    var chosenImg = (s && s.attachment_url) ? s.attachment_url : '';
+    if (!chosenImg && catToFind) {
+      chosenImg = stockPhotos[catToFind.toLowerCase().trim()] || '/wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
     }
+    if (!chosenImg) {
+      chosenImg = '/wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
+    }
+
+    if (approveImgInput) approveImgInput.value = chosenImg;
+    updateApproveImgPreview(chosenImg);
+
     openModal('modal-approve');
+  };
+
+  window.updateApproveImgPreview = function(url) {
+    var box = document.getElementById('approve-img-preview-box');
+    if (!box) return;
+    var trimmed = (typeof url === 'string') ? url.trim() : '';
+    if (trimmed) {
+      var full = getAbsoluteImageUrl(trimmed);
+      box.innerHTML = '<img src="' + full + '" style="width:100%;height:100%;object-fit:cover;" />';
+    } else {
+      box.innerHTML = '🖼️';
+    }
+  };
+
+  window.handleApproveFileUpload = function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+
+    var formData = new FormData();
+    formData.append('image', file);
+
+    fetch(getRootUrl('api/upload.php'), {
+      method: 'POST',
+      body: formData
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success && res.url) {
+        document.getElementById('approve-img').value = res.url;
+        updateApproveImgPreview(res.url);
+        cspToast('Image uploaded successfully!', 'success');
+      } else {
+        cspToast(res.error || 'Failed to upload image', 'danger');
+      }
+    })
+    .catch(function(err){
+      console.error('File upload error:', err);
+      cspToast('Error uploading cover file.', 'danger');
+    });
+  };
+
+  window.submitEditorialStudioForm = function(publishStatus) {
+    var subId = document.getElementById('approve-submission-id').value;
+    var title = document.getElementById('approve-title').value.trim();
+    var catId = document.getElementById('approve-category').value;
+    var img   = document.getElementById('approve-img').value.trim();
+    var excerpt = document.getElementById('approve-excerpt').value.trim();
+    var content = document.getElementById('approve-content').value.trim();
+
+    if (!title || !content) {
+      cspToast('Title and content are required.', 'warning');
+      return;
+    }
+
+    fetch(getRootUrl('api/submissions.php?action=publish_story&id=' + subId), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: title,
+        categoryId: catId,
+        featuredImage: img,
+        excerpt: excerpt,
+        content: content,
+        publishStatus: publishStatus
+      })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success) {
+        cspToast((publishStatus === 'draft' ? '📝 ' : '🎉 ') + res.message, 'success');
+        closeModal('modal-approve');
+        loadSubmissions();
+        loadPosts();
+        loadOverviewData();
+      } else {
+        cspToast('Error: ' + res.error, 'danger');
+      }
+    })
+    .catch(function(err){
+      console.error('Studio submit error:', err);
+      cspToast('Error processing story publication.', 'danger');
+    });
+  };
+
+  window.acceptSubmissionProposal = function(id) {
+    fetch(getRootUrl('api/submissions.php?action=approve&id=' + id), { method: 'POST' })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success) {
+          cspToast('✓ ' + res.message, 'success');
+          loadSubmissions();
+          loadOverviewData();
+        } else {
+          cspToast('Error approving proposal: ' + res.error, 'danger');
+        }
+      })
+      .catch(function(err){
+        console.error('Error accepting submission proposal:', err);
+        cspToast('Unable to accept submission proposal.', 'danger');
+      });
+  };
+
+  window.downloadSubmissionPdf = function(id) {
+    var s = (submissionsCache && Array.isArray(submissionsCache)) ? submissionsCache.find(function(item){ return item.id == id; }) : null;
+    if (!s) {
+      cspToast('Submission record not found for PDF export.', 'danger');
+      return;
+    }
+
+    var printWin = window.open('', '_blank', 'width=850,height=950');
+    if (!printWin) {
+      cspToast('Please allow popup windows to download/print PDF.', 'warning');
+      return;
+    }
+
+    var fullAttUrl = s.attachment_url ? getAbsoluteImageUrl(s.attachment_url) : '';
+    var isImg = fullAttUrl && (/\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(fullAttUrl) || fullAttUrl.includes('/uploads/'));
+
+    var html = '<!DOCTYPE html><html><head><title>' + (s.title || 'Submission') + ' - Conspodium PDF Archive</title>';
+    html += '<style>';
+    html += '@media print { @page { margin: 15mm; size: A4; } }';
+    html += 'body { font-family: "Georgia", "Times New Roman", serif; color: #0f172a; line-height: 1.75; padding: 40px; max-width: 760px; margin: 0 auto; background: #fff; }';
+    html += '.header { border-bottom: 2px solid #00AEFE; padding-bottom: 16px; margin-bottom: 28px; display: flex; justify-content: space-between; align-items: center; }';
+    html += '.brand { font-size: 1.6rem; font-weight: bold; color: #00AEFE; letter-spacing: -0.5px; font-family: sans-serif; }';
+    html += '.doc-type { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px; color: #64748b; font-family: sans-serif; font-weight: 600; }';
+    html += 'h1 { font-size: 1.85rem; margin: 0 0 16px 0; color: #0f172a; font-family: "Merriweather", serif; line-height: 1.3; }';
+    html += '.meta { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin-bottom: 28px; font-family: sans-serif; font-size: 0.88rem; color: #334155; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }';
+    html += '.img-box { margin-bottom: 28px; text-align: center; }';
+    html += '.img-box img { max-width: 100%; max-height: 340px; border-radius: 12px; border: 1px solid #cbd5e1; object-fit: cover; }';
+    html += '.content { font-size: 1.02rem; color: #1e293b; white-space: pre-wrap; font-family: "Georgia", serif; line-height: 1.85; }';
+    html += '.footer { margin-top: 48px; border-top: 1px solid #e2e8f0; padding-top: 18px; font-family: sans-serif; font-size: 0.78rem; color: #94a3b8; text-align: center; }';
+    html += '</style></head><body>';
+
+    html += '<div class="header">';
+    html += '  <div class="brand">Conspodium Editorial Archives</div>';
+    html += '  <div class="doc-type">Official Story Submission PDF</div>';
+    html += '</div>';
+
+    html += '<h1>' + (s.title || 'Untitled Story Proposal') + '</h1>';
+
+    html += '<div class="meta">';
+    html += '  <div><strong>Author:</strong> ' + (s.author_name || 'Anonymous') + '</div>';
+    html += '  <div><strong>Category:</strong> ' + (s.category || 'General') + '</div>';
+    html += '  <div><strong>Author Email:</strong> ' + (s.author_email || 'N/A') + '</div>';
+    html += '  <div><strong>Submission Date:</strong> ' + (s.submitted_at || 'Recently') + '</div>';
+    if (s.author_bio) {
+      html += '  <div style="grid-column: 1 / -1;"><strong>Author Bio:</strong> ' + s.author_bio + '</div>';
+    }
+    html += '</div>';
+
+    if (isImg) {
+      html += '<div class="img-box"><img src="' + fullAttUrl + '" alt="Submission Cover" /></div>';
+    }
+
+    html += '<div class="content">' + (s.content || 'No content provided.') + '</div>';
+
+    html += '<div class="footer">Generated via Conspodium Editorial CMS &bull; https://conspodium.com</div>';
+
+    html += '<script>window.onload = function(){ window.print(); setTimeout(function(){ window.close(); }, 800); };<\/script>';
+    html += '</body></html>';
+
+    printWin.document.open();
+    printWin.document.write(html);
+    printWin.document.close();
+  };
+
+  window.exportSubmissionContactsCsv = function() {
+    fetch(getRootUrl('api/submissions.php?status=all'), { headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' } })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (!res.success || !res.submissions || res.submissions.length === 0) {
+          cspToast('No submission contacts available to export.', 'warning');
+          return;
+        }
+
+        var headers = ['ID', 'Author Name', 'Author Email', 'Author Bio', 'Category', 'Status', 'Submission Date'];
+        var rows = [headers];
+
+        res.submissions.forEach(function(s){
+          rows.push([
+            s.id,
+            '"' + (s.author_name || '').replace(/"/g, '""') + '"',
+            '"' + (s.author_email || '').replace(/"/g, '""') + '"',
+            '"' + (s.author_bio || '').replace(/"/g, '""') + '"',
+            '"' + (s.category || '').replace(/"/g, '""') + '"',
+            '"' + (s.status || '').replace(/"/g, '""') + '"',
+            '"' + (s.submitted_at || '').replace(/"/g, '""') + '"'
+          ]);
+        });
+
+        var csvContent = 'data:text/csv;charset=utf-8,' + rows.map(function(e){ return e.join(','); }).join('\n');
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'conspodium_submission_contacts_' + new Date().toISOString().slice(0,10) + '.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        cspToast('Downloaded ' + res.submissions.length + ' author contact record(s) to CSV!', 'success');
+      })
+      .catch(function(err){
+        console.error('CSV Export Error:', err);
+        cspToast('Failed to export submission contacts.', 'danger');
+      });
   };
 
   document.getElementById('form-approve-submission').addEventListener('submit', function(e){
@@ -5877,7 +6772,7 @@
     var catId = document.getElementById('approve-category').value;
     var img   = document.getElementById('approve-img').value;
 
-    fetch(getRootUrl('api/submissions.php?action=approve&id=' + subId), {
+    fetch(getRootUrl('api/submissions.php?action=publish_story&id=' + subId), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ categoryId: catId, featuredImage: img })
@@ -5885,12 +6780,12 @@
     .then(function(r){ return r.json(); })
     .then(function(res){
       if(res.success) {
-        alert('🎉 ' + res.message);
+        cspToast('🎉 ' + res.message, 'success');
         closeModal('modal-approve');
         loadSubmissions();
         loadPosts();
         loadOverviewData();
-      } else { alert('Error: ' + res.error); }
+      } else { cspToast('Error: ' + res.error, 'danger'); }
     });
   });
 
@@ -5971,35 +6866,42 @@
         res.messages.forEach(function(m){
           var createdDate = m.created_at ? m.created_at.slice(0, 16).replace('T', ' ') : 'Just now';
           var fullName = ((m.first_name || '') + ' ' + (m.last_name || '')).trim() || m.email;
+          var isUnread = (m.status === 'unread');
+          var isReplied = (m.status === 'replied');
 
-          var statusBadge = m.status === 'unread'
-            ? '<span class="csp-status-badge csp-status-pending">unread</span>'
-            : '<span class="csp-status-badge csp-status-approved">read</span>';
+          var statusBadge = isReplied
+            ? '<span class="csp-status-badge csp-status-approved" style="background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;">✓ Replied</span>'
+            : (isUnread
+                ? '<span class="csp-status-badge csp-status-pending">unread</span>'
+                : '<span class="csp-status-badge csp-status-approved">read</span>');
 
           var msgExcerpt = m.message ? (m.message.slice(0, 85) + (m.message.length > 85 ? '...' : '')) : '';
 
           tbody.innerHTML += `
-            <tr style="${m.status === 'unread' ? 'font-weight: 600; background: rgba(0, 174, 254, 0.04);' : ''}">
+            <tr style="${isUnread ? 'background: rgba(0, 174, 254, 0.04);' : ''}">
               <td style="text-align:center;"><input type="checkbox" class="contact-cb" data-id="${m.id}" style="cursor:pointer;" /></td>
               <td>
-                <div style="font-weight:700;color:#0f172a;">${fullName}</div>
+                <div style="font-weight:${isUnread ? '700' : '400'};color:${isUnread ? '#0f172a' : '#475569'};">${fullName}</div>
                 <div style="font-size:0.8rem;color:var(--text-muted);">${m.email}</div>
               </td>
               <td style="cursor:pointer;" onclick="openViewContactModal(${m.id})">
-                <div style="color:var(--blue);font-weight:600;">${m.subject || 'General Enquiry'}</div>
-                <div style="font-size:0.85rem;color:#475569;font-weight:normal;">${msgExcerpt}</div>
+                <div style="color:${isUnread ? 'var(--blue)' : '#334155'};font-weight:${isUnread ? '700' : '400'};">${m.subject || 'General Enquiry'}</div>
+                <div style="font-size:0.85rem;color:#64748b;font-weight:normal;">${msgExcerpt}</div>
               </td>
-              <td style="font-size:0.85rem;white-space:nowrap;">${createdDate}</td>
+              <td style="font-size:0.85rem;white-space:nowrap;color:#64748b;">${createdDate}</td>
               <td>${statusBadge}</td>
               <td style="white-space:nowrap;">
+                <button class="csp-btn-sm csp-btn-primary" onclick="openReplyContactModal(${m.id})" style="margin-right:4px;padding:4px 10px;font-size:0.75rem;">
+                  💬 Reply
+                </button>
                 <button class="csp-btn-sm csp-btn-secondary" onclick="openViewContactModal(${m.id})" style="margin-right:4px;">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Read
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;pointer-events:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View
                 </button>
                 <button class="csp-btn-sm csp-btn-secondary" onclick="toggleContactStatus(${m.id})" style="margin-right:4px;">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>${m.status === 'unread' ? 'Mark Read' : 'Mark Unread'}
+                  ${m.status === 'unread' ? 'Mark Read' : 'Mark Unread'}
                 </button>
                 <button class="csp-btn-sm csp-btn-danger" onclick="deleteContact(${m.id})">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Delete
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:-1px;pointer-events:none;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Delete
                 </button>
               </td>
             </tr>
@@ -6070,21 +6972,30 @@
       });
   };
 
-  window.openViewContactModal = function(id) {
-    var m = contactMessagesCache.find(function(item){ return item.id == id; });
+  function renderContactModal(m) {
     if (!m) return;
+    var fullName = ((m.first_name || '') + ' ' + (m.last_name || '')).trim() || m.email || 'Anonymous';
 
-    var fullName = ((m.first_name || '') + ' ' + (m.last_name || '')).trim() || m.email;
+    var subjEl = document.getElementById('contact-modal-subject');
+    if (subjEl) subjEl.textContent = m.subject || 'General Enquiry';
 
-    document.getElementById('contact-modal-subject').textContent = m.subject || 'General Enquiry';
-    document.getElementById('contact-modal-sender').textContent = fullName;
-    document.getElementById('contact-modal-email').textContent = 'Email: ' + m.email;
-    document.getElementById('contact-modal-date').textContent = 'Date Received: ' + (m.created_at || 'Recently');
-    document.getElementById('contact-modal-body').textContent = m.message;
+    var senderEl = document.getElementById('contact-modal-sender');
+    if (senderEl) senderEl.textContent = fullName;
+
+    var emailEl = document.getElementById('contact-modal-email');
+    if (emailEl) emailEl.textContent = 'Email: ' + (m.email || 'N/A');
+
+    var dateEl = document.getElementById('contact-modal-date');
+    if (dateEl) dateEl.textContent = 'Date Received: ' + (m.created_at ? m.created_at.slice(0, 16).replace('T', ' ') : 'Recently');
+
+    var bodyEl = document.getElementById('contact-modal-body');
+    if (bodyEl) bodyEl.textContent = m.message || 'No message text provided.';
 
     var badge = document.getElementById('contact-modal-status-badge');
-    badge.textContent = m.status;
-    badge.className = 'csp-status-badge ' + (m.status === 'read' ? 'csp-status-approved' : 'csp-status-pending');
+    if (badge) {
+      badge.textContent = m.status || 'unread';
+      badge.className = 'csp-status-badge ' + (m.status === 'read' ? 'csp-status-approved' : (m.status === 'replied' ? 'csp-status-approved' : 'csp-status-pending'));
+    }
 
     var toggleBtn = document.getElementById('btn-contact-modal-toggle-status');
     if (toggleBtn) {
@@ -6104,7 +7015,13 @@
 
     var replyBtn = document.getElementById('btn-contact-modal-reply');
     if (replyBtn) {
-      replyBtn.href = 'mailto:' + m.email + '?subject=' + encodeURIComponent('Re: ' + (m.subject || 'Conspodium Inquiry'));
+      replyBtn.removeAttribute('href');
+      replyBtn.style.cursor = 'pointer';
+      replyBtn.onclick = function(e) {
+        e.preventDefault();
+        closeModal('modal-view-contact');
+        openReplyContactModal(m.id);
+      };
     }
 
     var delBtn = document.getElementById('btn-contact-modal-delete');
@@ -6125,6 +7042,34 @@
     }
 
     openModal('modal-view-contact');
+  }
+
+  window.openViewContactModal = function(id) {
+    var m = (contactMessagesCache && Array.isArray(contactMessagesCache)) ? contactMessagesCache.find(function(item){ return item.id == id; }) : null;
+    if (m) {
+      renderContactModal(m);
+      return;
+    }
+
+    fetch(getRootUrl('api/contact.php'), { headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' } })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.messages) {
+          contactMessagesCache = res.messages;
+          var found = res.messages.find(function(item){ return item.id == id; });
+          if (found) {
+            renderContactModal(found);
+          } else {
+            cspToast('Contact message not found.', 'danger');
+          }
+        } else {
+          cspToast('Unable to load message details.', 'danger');
+        }
+      })
+      .catch(function(err){
+        console.error('Error opening contact message modal:', err);
+        cspToast('Error opening contact modal.', 'danger');
+      });
   };
 
   window.deleteContact = async function(id) {
@@ -6143,6 +7088,414 @@
         loadContactMessages();
         loadOverviewData();
       });
+  };
+
+  // ── CONTACT MESSAGES CSV EXPORTER ──────────────────────────────────────────
+  window.exportContactMessagesCsv = function() {
+    fetch(getRootUrl('api/contact.php'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        var messages = (res.success && res.messages) ? res.messages : [];
+        if (messages.length === 0) {
+          cspToast('No contact messages to export.', 'warning');
+          return;
+        }
+
+        var csvRows = [];
+        csvRows.push(['Message ID', 'First Name', 'Last Name', 'Full Name', 'Email', 'Subject', 'Message', 'Status', 'Submitted Date']);
+
+        messages.forEach(function(m){
+          var fullName = ((m.first_name || '') + ' ' + (m.last_name || '')).trim() || m.email;
+          var cleanMsg = (m.message || '').replace(/"/g, '""').replace(/\n/g, ' ');
+          csvRows.push([
+            m.id,
+            '"' + (m.first_name || '').replace(/"/g, '""') + '"',
+            '"' + (m.last_name || '').replace(/"/g, '""') + '"',
+            '"' + fullName.replace(/"/g, '""') + '"',
+            '"' + (m.email || '').replace(/"/g, '""') + '"',
+            '"' + (m.subject || '').replace(/"/g, '""') + '"',
+            '"' + cleanMsg + '"',
+            '"' + (m.status || 'unread') + '"',
+            '"' + (m.created_at || '') + '"'
+          ]);
+        });
+
+        var csvString = csvRows.map(function(e){ return e.join(','); }).join('\n');
+        var blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        var dateStr = new Date().toISOString().slice(0, 10);
+        link.href = url;
+        link.download = 'conspodium_contact_messages_' + dateStr + '.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        cspToast('✓ Exported ' + messages.length + ' contact messages to CSV!', 'success');
+      })
+      .catch(function(err){
+        console.error('CSV export error:', err);
+        cspToast('Failed to export contact messages CSV.', 'danger');
+      });
+  };
+
+  // ── PLUGGABLE EMAIL MARKETING ENGINE ───────────────────────────────────────
+  var activeEmailConfigCache = null;
+
+  window.openEmailProviderSettings = function() {
+    switchDashboardTab('settings');
+    var emailSubtabBtn = document.querySelector('.settings-subtab-btn[data-subtab="email"]');
+    if (emailSubtabBtn) emailSubtabBtn.click();
+    setTimeout(function(){
+      var card = document.getElementById('card-email-provider-settings');
+      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+  };
+
+  window.loadEmailServiceConfig = function() {
+    fetch(getRootUrl('api/email_service.php?action=get_config'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.config) {
+          activeEmailConfigCache = res.config;
+          var cfgProv = document.getElementById('cfg-email-provider');
+          var cfgName = document.getElementById('cfg-email-from-name');
+          var cfgAddr = document.getElementById('cfg-email-from-address');
+          var cfgKey  = document.getElementById('cfg-email-api-key');
+          var cfgUrl  = document.getElementById('cfg-email-webhook-url');
+          var cfgHost = document.getElementById('cfg-email-smtp-host');
+          var cfgPort = document.getElementById('cfg-email-smtp-port');
+          var cfgUser = document.getElementById('cfg-email-smtp-user');
+
+          if (cfgProv) cfgProv.value = res.config.provider || 'smtp';
+          if (cfgName) cfgName.value = res.config.fromName || 'Conspodium Editorial';
+          if (cfgAddr) cfgAddr.value = res.config.fromAddress || 'editor@conspodium.com';
+          if (cfgKey)  cfgKey.value  = res.config.apiKey || '';
+          if (cfgUrl)  cfgUrl.value  = res.config.webhookUrl || '';
+          if (cfgHost) cfgHost.value = res.config.smtpHost || 'smtp.hostinger.com';
+          if (cfgPort) cfgPort.value = res.config.smtpPort || '587';
+          if (cfgUser) cfgUser.value = res.config.smtpUser || '';
+
+          toggleEmailProviderFields(res.config.provider || 'smtp');
+          updateActiveProviderBadge(res.config.provider || 'smtp');
+        }
+      });
+  };
+
+  window.toggleEmailProviderFields = function(provider) {
+    var keyGroup   = document.getElementById('group-cfg-api-key');
+    var keyLabel   = document.getElementById('lbl-cfg-api-key');
+    var keyInput   = document.getElementById('cfg-email-api-key');
+    var urlGroup   = document.getElementById('group-cfg-webhook-url');
+    var smtpGroup  = document.getElementById('group-cfg-smtp-fields');
+    var nativeInfo = document.getElementById('group-cfg-native-info');
+    var testBtn    = document.getElementById('btn-test-email-connection');
+
+    if (keyGroup)   keyGroup.style.display   = 'none';
+    if (urlGroup)   urlGroup.style.display   = 'none';
+    if (smtpGroup)  smtpGroup.style.display  = 'none';
+    if (nativeInfo) nativeInfo.style.display = 'none';
+
+    var keyConfigs = {
+      'resend': { label: 'Resend API Key (re_...) *', placeholder: 're_123456789...' },
+      'brevo': { label: 'Brevo / Sendinblue v3 API Key *', placeholder: 'xkeysib-1234567...' },
+      'sendgrid': { label: 'SendGrid API Key (SG....) *', placeholder: 'SG.1234567...' },
+      'mailchimp': { label: 'Mailchimp Mandrill API Key *', placeholder: 'mandrill_12345...' }
+    };
+
+    if (provider === 'smtp' || provider === 'hostinger') {
+      if (smtpGroup) smtpGroup.style.display = 'block';
+    } else if (provider === 'webhook') {
+      if (urlGroup) urlGroup.style.display = 'block';
+    } else if (provider === 'native') {
+      if (nativeInfo) nativeInfo.style.display = 'block';
+    } else if (keyConfigs[provider]) {
+      if (keyGroup) keyGroup.style.display = 'block';
+      if (keyLabel) keyLabel.textContent = keyConfigs[provider].label;
+      if (keyInput) keyInput.placeholder = keyConfigs[provider].placeholder;
+    }
+
+    if (testBtn) {
+      if (provider === 'native') {
+        testBtn.style.opacity = '0.4';
+        testBtn.style.pointerEvents = 'none';
+        testBtn.setAttribute('disabled', 'disabled');
+      } else {
+        testBtn.style.opacity = '1';
+        testBtn.style.pointerEvents = 'auto';
+        testBtn.removeAttribute('disabled');
+      }
+    }
+  };
+
+  function updateActiveProviderBadge(provider) {
+    var badge = document.getElementById('badge-active-email-provider');
+    if (!badge) return;
+    var providerMap = {
+      'native': '✉️ Native PHP Server Mailer',
+      'smtp': '🚀 Hostinger SMTP Server',
+      'hostinger': '🚀 Hostinger SMTP Server',
+      'resend': '⚡ Resend API',
+      'brevo': '🚀 Brevo API',
+      'sendgrid': '📬 SendGrid API',
+      'mailchimp': '🐵 Mailchimp Mandrill API',
+      'webhook': '🔗 Custom Webhook API'
+    };
+    badge.textContent = providerMap[provider] || '✉️ PHP Mailer';
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(function(){
+      var formEmailConfig = document.getElementById('form-email-provider-config');
+      if (formEmailConfig) {
+        formEmailConfig.addEventListener('submit', function(e){
+          e.preventDefault();
+          var provider = document.getElementById('cfg-email-provider').value;
+          var fromName = document.getElementById('cfg-email-from-name').value.trim();
+          var fromAddr = document.getElementById('cfg-email-from-address').value.trim();
+          var apiKey   = document.getElementById('cfg-email-api-key').value.trim();
+          var webhook  = document.getElementById('cfg-email-webhook-url').value.trim();
+          var smtpHost = document.getElementById('cfg-email-smtp-host') ? document.getElementById('cfg-email-smtp-host').value.trim() : '';
+          var smtpPort = document.getElementById('cfg-email-smtp-port') ? document.getElementById('cfg-email-smtp-port').value.trim() : '';
+          var smtpUser = document.getElementById('cfg-email-smtp-user') ? document.getElementById('cfg-email-smtp-user').value.trim() : '';
+          var smtpPass = document.getElementById('cfg-email-smtp-pass') ? document.getElementById('cfg-email-smtp-pass').value.trim() : '';
+
+          fetch(getRootUrl('api/email_service.php?action=save_config'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              provider: provider,
+              fromName: fromName,
+              fromAddress: fromAddr,
+              apiKey: apiKey,
+              webhookUrl: webhook,
+              smtpHost: smtpHost,
+              smtpPort: smtpPort,
+              smtpUser: smtpUser,
+              smtpPass: smtpPass
+            })
+          })
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (res.success) {
+              cspToast('🎉 Email provider settings saved!', 'success');
+              loadEmailServiceConfig();
+            } else {
+              cspToast('Error saving settings: ' + res.error, 'danger');
+            }
+          });
+        });
+      }
+
+      var formReplyContact = document.getElementById('form-reply-contact-message');
+      if (formReplyContact) {
+        formReplyContact.addEventListener('submit', function(e){
+          e.preventDefault();
+          var contactId = document.getElementById('reply-contact-id').value;
+          var recEmail  = document.getElementById('reply-recipient-email').value;
+          var recName   = document.getElementById('reply-recipient-name').value;
+          var subject   = document.getElementById('reply-subject').value.trim();
+          var body      = document.getElementById('reply-body').value.trim();
+
+          if (!recEmail || !body) {
+            cspToast('Recipient email and message content are required.', 'warning');
+            return;
+          }
+
+          cspToast('✉️ Dispatched email reply...', 'info');
+
+          fetch(getRootUrl('api/email_service.php?action=send_reply'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contactId: contactId,
+              recipientEmail: recEmail,
+              recipientName: recName,
+              subject: subject,
+              body: body
+            })
+          })
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (res.success) {
+              cspToast('🎉 ' + res.message, 'success');
+              closeModal('modal-reply-contact');
+              loadContactMessages();
+              loadOverviewData();
+            } else {
+              cspToast('Failed to send email: ' + res.error, 'danger');
+            }
+          })
+          .catch(function(err){
+            console.error('Email send error:', err);
+            cspToast('Error sending email reply.', 'danger');
+          });
+        });
+      }
+
+      var formTestMail = document.getElementById('form-test-email-send');
+      if (formTestMail) {
+        formTestMail.addEventListener('submit', function(e){
+          e.preventDefault();
+          var btnSubmit = document.getElementById('btn-submit-test-email');
+          var alertBox  = document.getElementById('test-email-alert-box');
+          var origText  = btnSubmit ? btnSubmit.textContent : '⚡ Send Test Email';
+          if (btnSubmit) { btnSubmit.disabled = true; btnSubmit.textContent = '⚡ Sending...'; }
+          if (alertBox)  { alertBox.style.display = 'none'; alertBox.innerHTML = ''; }
+
+          var recipient = document.getElementById('test-email-recipient').value.trim();
+          var subject   = document.getElementById('test-email-headline').value.trim();
+          var body      = document.getElementById('test-email-message').value.trim();
+
+          var provider = document.getElementById('cfg-email-provider') ? document.getElementById('cfg-email-provider').value : 'smtp';
+          var fromName = document.getElementById('cfg-email-from-name') ? document.getElementById('cfg-email-from-name').value.trim() : 'Conspodium Editorial';
+          var fromAddr = document.getElementById('cfg-email-from-address') ? document.getElementById('cfg-email-from-address').value.trim() : 'editor@conspodium.com';
+          var apiKey   = document.getElementById('cfg-email-api-key') ? document.getElementById('cfg-email-api-key').value.trim() : '';
+          var webhook  = document.getElementById('cfg-email-webhook-url') ? document.getElementById('cfg-email-webhook-url').value.trim() : '';
+          var smtpHost = document.getElementById('cfg-email-smtp-host') ? document.getElementById('cfg-email-smtp-host').value.trim() : '';
+          var smtpPort = document.getElementById('cfg-email-smtp-port') ? document.getElementById('cfg-email-smtp-port').value.trim() : '';
+          var smtpUser = document.getElementById('cfg-email-smtp-user') ? document.getElementById('cfg-email-smtp-user').value.trim() : '';
+          var smtpPass = document.getElementById('cfg-email-smtp-pass') ? document.getElementById('cfg-email-smtp-pass').value.trim() : '';
+
+          var payload = {
+            recipientEmail: recipient,
+            subject: subject,
+            body: body,
+            provider: provider,
+            fromName: fromName,
+            fromAddress: fromAddr,
+            apiKey: apiKey,
+            webhookUrl: webhook,
+            smtpHost: smtpHost,
+            smtpPort: smtpPort,
+            smtpUser: smtpUser,
+            smtpPass: smtpPass
+          };
+
+          var controller = new AbortController();
+          var timeoutId = setTimeout(function(){ controller.abort(); }, 10000);
+
+          fetch(getRootUrl('api/email_service.php?action=test_connection'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
+          })
+          .then(function(r){ clearTimeout(timeoutId); return r.json(); })
+          .then(function(res){
+            if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = origText; }
+            if (res.success) {
+              if (alertBox) {
+                alertBox.style.display = 'block';
+                alertBox.style.background = '#f0fdf4';
+                alertBox.style.color = '#15803d';
+                alertBox.style.border = '1px solid #bbf7d0';
+                alertBox.innerHTML = '🎉 <strong>Success!</strong> ' + (res.message || 'Test email dispatched successfully.');
+              }
+              cspToast(res.message || '🎉 Test email dispatched successfully to ' + recipient + '!', 'success');
+              setTimeout(function(){ closeModal('modal-test-email'); }, 1800);
+            } else {
+              var errMsg = '❌ ' + (res.error || 'Test connection failed.');
+              if (alertBox) {
+                alertBox.style.display = 'block';
+                alertBox.style.background = '#fef2f2';
+                alertBox.style.color = '#b91c1c';
+                alertBox.style.border = '1px solid #fecaca';
+                alertBox.innerHTML = '<strong>Connection Error:</strong> ' + escapeHtml(res.error || 'Unknown error');
+              }
+              cspToast('❌ Test Connection Failed: ' + (res.error || 'Unknown error'), 'danger');
+            }
+          })
+          .catch(function(err){
+            clearTimeout(timeoutId);
+            if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = origText; }
+            var errMsg = (err.name === 'AbortError')
+              ? 'Connection timed out after 10 seconds. Please check your Hostinger SMTP credentials (Host, Port, Email, Password).'
+              : ('Error sending test email: ' + (err.message || 'Unknown error'));
+            
+            if (alertBox) {
+              alertBox.style.display = 'block';
+              alertBox.style.background = '#fef2f2';
+              alertBox.style.color = '#b91c1c';
+              alertBox.style.border = '1px solid #fecaca';
+              alertBox.innerHTML = '<strong>Connection Error:</strong> ' + escapeHtml(errMsg);
+            }
+            cspToast('❌ ' + errMsg, 'danger');
+          });
+        });
+      }
+
+      loadEmailServiceConfig();
+    }, 500);
+  });
+
+  window.testEmailProviderConnection = function() {
+    var alertBox = document.getElementById('test-email-alert-box');
+    if (alertBox) { alertBox.style.display = 'none'; alertBox.innerHTML = ''; }
+
+    var provider = (document.getElementById('cfg-email-provider') ? document.getElementById('cfg-email-provider').value : 'smtp') || 'smtp';
+    var fromAddress = (document.getElementById('cfg-email-from-address') ? document.getElementById('cfg-email-from-address').value : '') || 'editor@conspodium.com';
+    
+    var badge = document.getElementById('badge-test-email-provider');
+    var providerNames = {
+      'smtp': 'Hostinger SMTP',
+      'hostinger': 'Hostinger SMTP',
+      'resend': 'Resend API',
+      'brevo': 'Brevo API',
+      'sendgrid': 'SendGrid API',
+      'mailchimp': 'Mailchimp Mandrill',
+      'webhook': 'Custom Webhook',
+      'native': 'Native Server Mailer'
+    };
+    var provLabel = providerNames[provider] || provider.toUpperCase();
+    if (badge) badge.textContent = provLabel;
+
+    document.getElementById('test-email-recipient').value = fromAddress;
+    document.getElementById('test-email-headline').value = '⚡ Connection Test Ping (' + provLabel + ')';
+    document.getElementById('test-email-message').value = 'Hello!\n\nThis is a test message from your Conspodium Admin Dashboard testing connection to ' + provLabel + ' email provider.\n\nAll systems operational!';
+
+    openModal('modal-test-email');
+  };
+
+  window.openReplyContactModal = function(id) {
+    var m = (contactMessagesCache && Array.isArray(contactMessagesCache)) ? contactMessagesCache.find(function(item){ return item.id == id; }) : null;
+    if (!m) return;
+
+    var fullName = ((m.first_name || '') + ' ' + (m.last_name || '')).trim() || m.email || 'Valued Contact';
+
+    document.getElementById('reply-contact-id').value = m.id;
+    document.getElementById('reply-recipient-name').value = fullName;
+    document.getElementById('reply-recipient-email').value = m.email || '';
+    document.getElementById('reply-subject').value = 'Re: ' + (m.subject || 'Conspodium Inquiry');
+    document.getElementById('reply-original-message-quote').textContent = '"' + (m.message || 'No message content') + '"';
+    document.getElementById('reply-body').value = 'Dear ' + (m.first_name || fullName) + ',\n\nThank you for reaching out to Conspodium.\n\nBest regards,\nConspodium Editorial Team';
+    document.getElementById('reply-template-select').value = 'blank';
+
+    if (activeEmailConfigCache) {
+      updateActiveProviderBadge(activeEmailConfigCache.provider);
+    } else {
+      loadEmailServiceConfig();
+    }
+
+    openModal('modal-reply-contact');
+  };
+
+  window.applyEmailReplyTemplate = function(templateKey) {
+    var recName = document.getElementById('reply-recipient-name').value || 'Friend';
+    var firstName = recName.split(' ')[0] || recName;
+    var bodyInput = document.getElementById('reply-body');
+    var tagSelect = document.getElementById('reply-campaign-tag');
+    if (!bodyInput) return;
+
+    if (templateKey === 'thanks') {
+      bodyInput.value = 'Dear ' + firstName + ',\n\nThank you for contacting Conspodium! We have received your inquiry regarding your recent message.\n\nOur team is reviewing your request and will get back to you with full details shortly.\n\nWarm regards,\nConspodium Editorial Team';
+      if (tagSelect) tagSelect.value = 'General Support';
+    } else if (templateKey === 'sponsorship') {
+      bodyInput.value = 'Dear ' + firstName + ',\n\nThank you for your interest in partnering with Conspodium as a sponsor!\n\nWe connect global African diaspora voices with impactful stories, summits, and business initiatives. Attached and linked below is our latest Media & Sponsorship Deck.\n\nLet us know a convenient time for a quick 15-minute call to discuss your objectives.\n\nWarm regards,\nConspodium Sponsorship & Partnerships Team';
+      if (tagSelect) tagSelect.value = 'Sponsorship Lead';
+    } else if (templateKey === 'editorial') {
+      bodyInput.value = 'Dear ' + firstName + ',\n\nThank you for submitting your proposal/story to Conspodium!\n\nOur editorial team has logged your submission and will review the manuscript for alignment with our upcoming publishing schedule.\n\nWe appreciate your contribution to global diaspora journalism.\n\nWarm regards,\nConspodium Editorial Board';
+      if (tagSelect) tagSelect.value = 'Editorial Proposal';
+    }
   };
 
   // Polls Editor
@@ -8422,7 +9775,7 @@
   function toggleFormDisabled(formId, disabled) {
     var form = document.getElementById(formId);
     if (!form) return;
-    var elems = form.querySelectorAll('input, textarea, select, button:not(#btn-toggle-live-edit):not(#btn-toggle-interview-edit)');
+    var elems = form.querySelectorAll('input, textarea, select');
     elems.forEach(function(el){
       el.disabled = disabled;
       if (disabled) {
@@ -8434,7 +9787,7 @@
       } else {
         el.style.backgroundColor = '#ffffff';
         el.style.color = '#0f172a';
-        el.style.cursor = 'text';
+        el.style.cursor = (el.tagName === 'SELECT' || el.type === 'checkbox') ? 'pointer' : 'text';
         el.style.opacity = '1';
         el.style.borderColor = '#00AEFE';
       }
@@ -8650,198 +10003,198 @@
     });
   }
 
+  var isEditingPayments = false;
   function loadPaymentSettings() {
     fetch(getRootUrl('api/payments.php?action=settings'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         if (!res.success || !res.data) return;
         var s = res.data;
-        document.getElementById('pay-paystack-public').value = s.paystack_public_key || '';
-        document.getElementById('pay-paystack-secret').value = s.paystack_secret_key || '';
-        document.getElementById('pay-paystack-enabled').checked = (s.paystack_enabled !== '0');
-        document.getElementById('pay-stripe-public').value = s.stripe_public_key || '';
-        document.getElementById('pay-stripe-secret').value = s.stripe_secret_key || '';
-        document.getElementById('pay-stripe-enabled').checked = (s.stripe_enabled !== '0');
-        document.getElementById('pay-default-gateway').value = s.default_gateway || 'paystack';
+        if (document.getElementById('pay-paystack-public')) document.getElementById('pay-paystack-public').value = s.paystack_public_key || '';
+        if (document.getElementById('pay-paystack-secret')) document.getElementById('pay-paystack-secret').value = s.paystack_secret_key || '';
+        if (document.getElementById('pay-paystack-enabled')) document.getElementById('pay-paystack-enabled').checked = (s.paystack_enabled !== '0');
+        if (document.getElementById('pay-stripe-public')) document.getElementById('pay-stripe-public').value = s.stripe_public_key || '';
+        if (document.getElementById('pay-stripe-secret')) document.getElementById('pay-stripe-secret').value = s.stripe_secret_key || '';
+        if (document.getElementById('pay-stripe-enabled')) document.getElementById('pay-stripe-enabled').checked = (s.stripe_enabled !== '0');
+        if (document.getElementById('pay-default-gateway')) document.getElementById('pay-default-gateway').value = s.default_gateway || 'paystack';
         toggleFormDisabled('form-payment-settings', !isEditingPayments);
       });
   }
 
-  var isEditingPayments = false;
-  var btnTogglePayments = document.getElementById('btn-toggle-payment-edit');
-  if (btnTogglePayments) {
-    btnTogglePayments.onclick = function() {
-      if (!isEditingPayments) {
-        isEditingPayments = true;
-        toggleFormDisabled('form-payment-settings', false);
-        btnTogglePayments.textContent = '💾 Save Payment Settings';
-        btnTogglePayments.className = 'csp-btn-sm csp-btn-primary btn-toggle-edit';
-      } else {
-        var payload = {
-          paystack_public_key: document.getElementById('pay-paystack-public').value,
-          paystack_secret_key: document.getElementById('pay-paystack-secret').value,
-          paystack_enabled: document.getElementById('pay-paystack-enabled').checked ? '1' : '0',
-          stripe_public_key: document.getElementById('pay-stripe-public').value,
-          stripe_secret_key: document.getElementById('pay-stripe-secret').value,
-          stripe_enabled: document.getElementById('pay-stripe-enabled').checked ? '1' : '0',
-          default_gateway: document.getElementById('pay-default-gateway').value
-        };
-
-        fetch(getRootUrl('api/payments.php?action=save_settings'), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
-        .then(function(r){ return r.json(); })
-        .then(function(res){
-          if (res.success) {
-            alert('🎉 Payment gateway credentials saved successfully!');
-            isEditingPayments = false;
-            toggleFormDisabled('form-payment-settings', true);
-            btnTogglePayments.textContent = '✏️ Edit Section';
-            btnTogglePayments.className = 'csp-btn-sm csp-btn-secondary btn-toggle-edit';
-          } else { alert('Error saving payment settings: ' + (res.error || 'Unknown error')); }
-        });
-      }
-    };
-  }
-
-  function loadSmtpSettings() {
+  var isEditingBranding = false;
+  function loadGeneralSettings() {
     fetch(getRootUrl('api/settings.php'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         if (!res.success || !res.settings) return;
         var s = res.settings;
-        document.getElementById('sub-smtp-host').value = s.smtp_host || 'smtp.hostinger.com';
-        document.getElementById('sub-smtp-port').value = s.smtp_port || '587';
-        document.getElementById('sub-smtp-user').value = s.smtp_user || '';
-        document.getElementById('sub-smtp-pass').value = s.smtp_pass || '';
-        document.getElementById('sub-sender-email').value = s.sender_email || 'newsletter@conspodium.com';
-        document.getElementById('sub-sender-name').value = s.sender_name || 'Conspodium Editorial';
-
-        // General branding fields
-        document.getElementById('gen-site-name').value = s.site_name || 'Conspodium';
-        document.getElementById('gen-site-tagline').value = s.site_tagline || 'Premium Diaspora Magazine';
-        document.getElementById('gen-admin-email').value = s.admin_email || 'admin@conspodium.com';
-        document.getElementById('gen-default-author').value = s.default_author || 'Conspodium Editorial';
-        document.getElementById('gen-posts-per-page').value = s.posts_per_page || 6;
-        document.getElementById('gen-allow-submissions').checked = (s.allow_submissions !== '0');
-
-        toggleFormDisabled('form-smtp-settings-subpane', !isEditingSmtp);
+        if (document.getElementById('gen-site-name')) document.getElementById('gen-site-name').value = s.site_name || 'Conspodium';
+        if (document.getElementById('gen-site-tagline')) document.getElementById('gen-site-tagline').value = s.site_tagline || 'Premium Diaspora Magazine';
+        if (document.getElementById('gen-admin-email')) document.getElementById('gen-admin-email').value = s.admin_email || 'admin@conspodium.com';
+        if (document.getElementById('gen-default-author')) document.getElementById('gen-default-author').value = s.default_author || 'Conspodium Editorial';
+        if (document.getElementById('gen-posts-per-page')) document.getElementById('gen-posts-per-page').value = s.posts_per_page || 6;
+        if (document.getElementById('gen-allow-submissions')) document.getElementById('gen-allow-submissions').checked = (s.allow_submissions !== '0');
         toggleFormDisabled('form-site-settings-general', !isEditingBranding);
-        toggleFormDisabled('form-admin-profile-general', !isEditingProfile);
       });
   }
 
-  var isEditingSmtp = false;
-  var btnToggleSmtp = document.getElementById('btn-toggle-smtp-edit');
-  if (btnToggleSmtp) {
-    btnToggleSmtp.onclick = function() {
-      if (!isEditingSmtp) {
-        isEditingSmtp = true;
-        toggleFormDisabled('form-smtp-settings-subpane', false);
-        btnToggleSmtp.textContent = '💾 Save SMTP Credentials';
-        btnToggleSmtp.className = 'csp-btn-sm csp-btn-primary btn-toggle-edit';
-      } else {
-        var payload = {
-          settings: {
-            smtp_host: document.getElementById('sub-smtp-host').value,
-            smtp_port: document.getElementById('sub-smtp-port').value,
-            smtp_user: document.getElementById('sub-smtp-user').value,
-            smtp_pass: document.getElementById('sub-smtp-pass').value,
-            sender_email: document.getElementById('sub-sender-email').value,
-            sender_name: document.getElementById('sub-sender-name').value
-          }
-        };
-        fetch(getRootUrl('api/settings.php'), {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
-          },
-          body: JSON.stringify(payload)
-        })
-        .then(function(r){ return r.json(); })
-        .then(function(res){
-          if (res.success) {
-            alert('🎉 Hostinger SMTP Credentials saved successfully!');
-            isEditingSmtp = false;
-            toggleFormDisabled('form-smtp-settings-subpane', true);
-            btnToggleSmtp.textContent = '✏️ Edit Section';
-            btnToggleSmtp.className = 'csp-btn-sm csp-btn-secondary btn-toggle-edit';
-          } else { alert('Error: ' + (res.error || 'Failed to save SMTP settings')); }
-        });
-      }
-    };
-  }
-
-  var btnTestSmtp = document.getElementById('btn-test-smtp');
-  if (btnTestSmtp) {
-    btnTestSmtp.addEventListener('click', function(){
-      alert('✉️ Test email triggered via Hostinger SMTP to ' + (document.getElementById('sub-sender-email').value || 'newsletter@conspodium.com') + '!');
-    });
-  }
-
-  var isEditingBranding = false;
-  var btnToggleBranding = document.getElementById('btn-toggle-branding-edit');
-  if (btnToggleBranding) {
-    btnToggleBranding.onclick = function() {
-      if (!isEditingBranding) {
-        isEditingBranding = true;
-        toggleFormDisabled('form-site-settings-general', false);
-        btnToggleBranding.textContent = '💾 Save Branding Settings';
-        btnToggleBranding.className = 'csp-btn-sm csp-btn-primary btn-toggle-edit';
-      } else {
-        var payload = {
-          settings: {
-            site_name: document.getElementById('gen-site-name').value,
-            site_tagline: document.getElementById('gen-site-tagline').value,
-            admin_email: document.getElementById('gen-admin-email').value,
-            default_author: document.getElementById('gen-default-author').value,
-            posts_per_page: document.getElementById('gen-posts-per-page').value,
-            allow_submissions: document.getElementById('gen-allow-submissions').checked ? '1' : '0'
-          }
-        };
-        fetch(getRootUrl('api/settings.php'), {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
-          },
-          body: JSON.stringify(payload)
-        })
-        .then(function(r){ return r.json(); })
-        .then(function(res){
-          if (res.success) {
-            alert('🎉 General Branding settings saved successfully!');
-            isEditingBranding = false;
-            toggleFormDisabled('form-site-settings-general', true);
-            btnToggleBranding.textContent = '✏️ Edit Section';
-            btnToggleBranding.className = 'csp-btn-sm csp-btn-secondary btn-toggle-edit';
-          } else { alert('Error: ' + (res.error || 'Failed to save branding settings')); }
-        });
-      }
-    };
-  }
-
+  var isEditingEmail = false;
   var isEditingProfile = false;
-  var btnToggleProfile = document.getElementById('btn-toggle-profile-edit');
-  if (btnToggleProfile) {
-    btnToggleProfile.onclick = function() {
-      if (!isEditingProfile) {
-        isEditingProfile = true;
-        toggleFormDisabled('form-admin-profile-general', false);
-        btnToggleProfile.textContent = '💾 Save Security Settings';
-        btnToggleProfile.className = 'csp-btn-sm csp-btn-primary btn-toggle-edit';
-      } else {
-        alert('🎉 Security settings locked and verified!');
-        isEditingProfile = false;
-        toggleFormDisabled('form-admin-profile-general', true);
-        btnToggleProfile.textContent = '✏️ Edit Section';
-        btnToggleProfile.className = 'csp-btn-sm csp-btn-secondary btn-toggle-edit';
+
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(function(){
+      // Lock profile form initially
+      toggleFormDisabled('form-admin-profile-general', true);
+
+      // Payment Settings Toggle
+      var btnPay = document.getElementById('btn-toggle-payment-edit');
+      if (btnPay) {
+        btnPay.addEventListener('click', function(){
+          if (!isEditingPayments) {
+            isEditingPayments = true;
+            toggleFormDisabled('form-payment-settings', false);
+            btnPay.textContent = '💾 Save Payment Settings';
+            btnPay.className = 'csp-btn-sm csp-btn-primary btn-toggle-edit';
+          } else {
+            var payload = {
+              paystack_public_key: document.getElementById('pay-paystack-public').value,
+              paystack_secret_key: document.getElementById('pay-paystack-secret').value,
+              paystack_enabled: document.getElementById('pay-paystack-enabled').checked ? '1' : '0',
+              stripe_public_key: document.getElementById('pay-stripe-public').value,
+              stripe_secret_key: document.getElementById('pay-stripe-secret').value,
+              stripe_enabled: document.getElementById('pay-stripe-enabled').checked ? '1' : '0',
+              default_gateway: document.getElementById('pay-default-gateway').value
+            };
+            fetch(getRootUrl('api/payments.php?action=save_settings'), {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            })
+            .then(function(r){ return r.json(); })
+            .then(function(res){
+              if (res.success) {
+                isEditingPayments = false;
+                toggleFormDisabled('form-payment-settings', true);
+                btnPay.textContent = '✏️ Edit Section';
+                btnPay.className = 'csp-btn-sm csp-btn-secondary btn-toggle-edit';
+                cspToast('🎉 Payment gateway credentials saved successfully!', 'success');
+              } else { cspToast('Error saving payment settings: ' + (res.error || 'Unknown error'), 'danger'); }
+            });
+          }
+        });
       }
-    };
-  }
+
+      // Email & Provider Settings Toggle
+      var btnEmail = document.getElementById('btn-toggle-email-edit');
+      if (btnEmail) {
+        btnEmail.addEventListener('click', function(){
+          if (!isEditingEmail) {
+            isEditingEmail = true;
+            toggleFormDisabled('form-email-provider-config', false);
+            btnEmail.textContent = '💾 Save Email Engine Credentials';
+            btnEmail.className = 'csp-btn-sm csp-btn-primary btn-toggle-edit';
+          } else {
+            var provider = document.getElementById('cfg-email-provider').value;
+            var fromName = document.getElementById('cfg-email-from-name').value.trim();
+            var fromAddr = document.getElementById('cfg-email-from-address').value.trim();
+            var apiKey   = document.getElementById('cfg-email-api-key').value.trim();
+            var webhook  = document.getElementById('cfg-email-webhook-url').value.trim();
+            var smtpHost = document.getElementById('cfg-email-smtp-host') ? document.getElementById('cfg-email-smtp-host').value.trim() : '';
+            var smtpPort = document.getElementById('cfg-email-smtp-port') ? document.getElementById('cfg-email-smtp-port').value.trim() : '';
+            var smtpUser = document.getElementById('cfg-email-smtp-user') ? document.getElementById('cfg-email-smtp-user').value.trim() : '';
+            var smtpPass = document.getElementById('cfg-email-smtp-pass') ? document.getElementById('cfg-email-smtp-pass').value.trim() : '';
+
+            fetch(getRootUrl('api/email_service.php?action=save_config'), {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                provider: provider,
+                fromName: fromName,
+                fromAddress: fromAddr,
+                apiKey: apiKey,
+                webhookUrl: webhook,
+                smtpHost: smtpHost,
+                smtpPort: smtpPort,
+                smtpUser: smtpUser,
+                smtpPass: smtpPass
+              })
+            })
+            .then(function(r){ return r.json(); })
+            .then(function(res){
+              if (res.success) {
+                isEditingEmail = false;
+                toggleFormDisabled('form-email-provider-config', true);
+                btnEmail.textContent = '✏️ Edit Section';
+                btnEmail.className = 'csp-btn-sm csp-btn-secondary btn-toggle-edit';
+                cspToast('🎉 Email provider settings saved successfully!', 'success');
+              } else { cspToast('Error: ' + (res.error || 'Failed to save email settings'), 'danger'); }
+            });
+          }
+        });
+      }
+
+      // General Branding Settings Toggle
+      var btnGeneral = document.getElementById('btn-toggle-branding-edit');
+      if (btnGeneral) {
+        btnGeneral.addEventListener('click', function(){
+          if (!isEditingBranding) {
+            isEditingBranding = true;
+            toggleFormDisabled('form-site-settings-general', false);
+            btnGeneral.textContent = '💾 Save Branding Settings';
+            btnGeneral.className = 'csp-btn-sm csp-btn-primary btn-toggle-edit';
+          } else {
+            var payload = {
+              settings: {
+                site_name: document.getElementById('gen-site-name').value,
+                site_tagline: document.getElementById('gen-site-tagline').value,
+                admin_email: document.getElementById('gen-admin-email').value,
+                default_author: document.getElementById('gen-default-author').value,
+                posts_per_page: document.getElementById('gen-posts-per-page').value,
+                allow_submissions: document.getElementById('gen-allow-submissions').checked ? '1' : '0'
+              }
+            };
+            fetch(getRootUrl('api/settings.php'), {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
+              },
+              body: JSON.stringify(payload)
+            })
+            .then(function(r){ return r.json(); })
+            .then(function(res){
+              if (res.success) {
+                isEditingBranding = false;
+                toggleFormDisabled('form-site-settings-general', true);
+                btnGeneral.textContent = '✏️ Edit Section';
+                btnGeneral.className = 'csp-btn-sm csp-btn-secondary btn-toggle-edit';
+                cspToast('🎉 General Branding settings saved successfully!', 'success');
+              } else { cspToast('Error: ' + (res.error || 'Failed to save branding settings'), 'danger'); }
+            });
+          }
+        });
+      }
+
+      // Admin Account & Security Toggle
+      var btnProfile = document.getElementById('btn-toggle-profile-edit');
+      if (btnProfile) {
+        btnProfile.addEventListener('click', function(){
+          if (!isEditingProfile) {
+            isEditingProfile = true;
+            toggleFormDisabled('form-admin-profile-general', false);
+            btnProfile.textContent = '💾 Save Security Settings';
+            btnProfile.className = 'csp-btn-sm csp-btn-primary btn-toggle-edit';
+          } else {
+            isEditingProfile = false;
+            toggleFormDisabled('form-admin-profile-general', true);
+            btnProfile.textContent = '✏️ Edit Section';
+            btnProfile.className = 'csp-btn-sm csp-btn-secondary btn-toggle-edit';
+            cspToast('🎉 Security & Profile settings saved!', 'success');
+          }
+        });
+      }
+    }, 300);
+  });
 
   // Update main tab click dispatcher to trigger Phase 2.2 loaders
   document.querySelectorAll('.csp-nav-item[data-tab]').forEach(function(t){
@@ -8849,7 +10202,7 @@
       if (t.dataset.tab === 'newsletter') { loadSubscribers(); loadCampaigns(); }
       if (t.dataset.tab === 'comments') loadComments();
       if (t.dataset.tab === 'forum') loadForumThreads();
-      if (t.dataset.tab === 'settings') { loadHomepageSections(); loadPaymentSettings(); loadSmtpSettings(); }
+      if (t.dataset.tab === 'settings') { loadHomepageSections(); loadPaymentSettings(); loadGeneralSettings(); }
     });
   });
 
