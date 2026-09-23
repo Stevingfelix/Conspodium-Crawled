@@ -16856,8 +16856,7 @@
           <div class="csp-watch-grid">
             <!-- Video 1 -->
             <div class="csp-vcard" onclick="openCspVideoModalByIdx(0)">
-              <video src="./videos/video-1.mp4" preload="auto" muted loop playsinline class="csp-vcard-video"
-                onloadedmetadata="this.currentTime=0.1;"></video>
+              <video src="/videos/video-1.mp4" poster="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" preload="metadata" muted loop playsinline class="csp-vcard-video"></video>
               <span
                 style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
               <div class="csp-vcard-play">
@@ -16872,8 +16871,7 @@
 
             <!-- Video 2 -->
             <div class="csp-vcard" onclick="openCspVideoModalByIdx(1)">
-              <video src="./videos/video-2.mp4" preload="auto" muted loop playsinline class="csp-vcard-video"
-                onloadedmetadata="this.currentTime=0.1;"></video>
+              <video src="/videos/video-2.mp4" poster="/wp-content/uploads/2026/01/location-1-300x210.webp" preload="metadata" muted loop playsinline class="csp-vcard-video"></video>
               <span
                 style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
               <div class="csp-vcard-play">
@@ -16888,8 +16886,7 @@
 
             <!-- Video 3 -->
             <div class="csp-vcard" onclick="openCspVideoModalByIdx(2)">
-              <video src="./videos/video-3.mp4" preload="auto" muted loop playsinline class="csp-vcard-video"
-                onloadedmetadata="this.currentTime=0.1;"></video>
+              <video src="/videos/video-3.mp4" poster="/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" preload="metadata" muted loop playsinline class="csp-vcard-video"></video>
               <span
                 style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
               <div class="csp-vcard-play">
@@ -16990,9 +16987,9 @@
 
       <script>
         var CSP_CLIPS = [
-          { src: './videos/video-1.mp4', title: 'Scholar Intro: Prof. Jane Doe' },
-          { src: './videos/video-2.mp4', title: 'Essay Summary: Climate Justice & Policy' },
-          { src: './videos/video-3.mp4', title: 'Behind the Scenes: Symposium Prep' }
+          { src: window.getRootUrl ? window.getRootUrl('videos/video-1.mp4') : '/videos/video-1.mp4', title: 'Scholar Intro: Prof. Jane Doe' },
+          { src: window.getRootUrl ? window.getRootUrl('videos/video-2.mp4') : '/videos/video-2.mp4', title: 'Essay Summary: Climate Justice & Policy' },
+          { src: window.getRootUrl ? window.getRootUrl('videos/video-3.mp4') : '/videos/video-3.mp4', title: 'Behind the Scenes: Symposium Prep' }
         ];
         var currentClipIdx = 0;
 

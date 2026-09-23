@@ -316,7 +316,7 @@ for (const page of PAGES) {
   }
 
   // Normalize relative assets & wp navigation links to root-relative paths
-  html = html.replace(/(src|href|srcset)=["']\.\.?\/(wp-content|wp-includes|assets)\//g, '$1="/$2/');
+  html = html.replace(/(src|href|srcset|poster)=["']\.\.?\/(wp-content|wp-includes|assets|videos)\//g, '$1="/$2/');
   html = html.replace(/href=["']\.\.\/([a-zA-Z0-9_-]+\/?)["']/g, 'href="/$1"');
   html = html.replace(/href=["']\.\/([a-zA-Z0-9_-]+\/?)["']/g, 'href="/$1"');
   html = html.replace(/href=["']\.\/["']/g, 'href="/"');
