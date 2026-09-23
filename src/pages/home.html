@@ -11196,20 +11196,24 @@
         padding: 0 !important;
       }
 
-      /* Stack Author & Button onto separate rows/columns on Mobile */
+      /* Center Author & Button on separate rows/columns on Mobile */
       .csp-card-footer-row {
         display: flex !important;
         flex-direction: column !important;
-        align-items: stretch !important;
+        align-items: center !important;
+        text-align: center !important;
         gap: 12px !important;
         padding-top: 14px !important;
         border-top: 1px solid #f1f5f9 !important;
+        width: 100% !important;
       }
 
       .csp-card-footer-row .csp-author-tag {
         width: 100% !important;
-        display: inline-flex !important;
+        display: flex !important;
         align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
         gap: 6px !important;
         font-size: 0.82rem !important;
         font-weight: 600 !important;
@@ -11218,6 +11222,7 @@
 
       .csp-card-footer-row .csp-cat-card-btn {
         width: 100% !important;
+        max-width: 260px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -11227,6 +11232,7 @@
         font-weight: 600 !important;
         border-radius: 50px !important;
         box-sizing: border-box !important;
+        margin: 0 auto !important;
       }
     }
 
@@ -14639,11 +14645,11 @@
       </div>
       <div
         class="elementor-element elementor-element-9c5da48 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded"
-        style="width:100% !important;max-width:100% !important;background-color:#ffffff !important;margin:0 !important;padding-top:64px !important;"
+        style="width:100% !important;max-width:100% !important;background-color:#ffffff !important;margin:0 !important;padding-top:64px !important;padding-bottom:64px !important;"
         data-id="9c5da48" data-element_type="container" data-e-type="container"
         data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
         <div class="e-con-inner"
-          style="max-width:1600px !important;width:96% !important;margin:0 auto !important;padding:32px 24px 0 24px !important;box-sizing:border-box !important;">
+          style="max-width:1600px !important;width:96% !important;margin:0 auto !important;padding:32px 24px 48px 24px !important;box-sizing:border-box !important;">
           <div
             class="elementor-element elementor-element-220f4a95 sticky-heading-prefixstyle elementor-widget elementor-widget-heading"
             data-id="220f4a95" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
@@ -19149,16 +19155,17 @@
 
         // B4. Featured Stories ("Voices That Inspire" - Mobile Responsive Grid Fix)
         if (d.featured_stories && d.featured_stories.length > 0) {
+          var isMobile = window.innerWidth < 768;
           var outerSec = document.querySelector('.elementor-element-9c5da48');
           if (outerSec) {
             outerSec.style.setProperty('width', '100%', 'important');
             outerSec.style.setProperty('max-width', '100%', 'important');
             outerSec.style.setProperty('margin', '0', 'important');
-            outerSec.style.setProperty('padding-top', '64px', 'important');
+            outerSec.style.setProperty('padding-top', isMobile ? '40px' : '64px', 'important');
+            outerSec.style.setProperty('padding-bottom', isMobile ? '48px' : '64px', 'important');
             outerSec.style.setProperty('background-color', '#ffffff', 'important');
           }
 
-          var isMobile = window.innerWidth < 768;
           var innerCon = document.querySelector('.elementor-element-9c5da48 > .e-con-inner');
           if (innerCon) {
             innerCon.style.setProperty('max-width', '1600px', 'important');
@@ -19166,6 +19173,7 @@
             innerCon.style.setProperty('margin-left', 'auto', 'important');
             innerCon.style.setProperty('margin-right', 'auto', 'important');
             innerCon.style.setProperty('padding-top', '32px', 'important');
+            innerCon.style.setProperty('padding-bottom', isMobile ? '36px' : '48px', 'important');
             innerCon.style.setProperty('padding-left', isMobile ? '12px' : '24px', 'important');
             innerCon.style.setProperty('padding-right', isMobile ? '12px' : '24px', 'important');
           }
@@ -19241,15 +19249,48 @@
         }
       }
 
+      var DEFAULT_HOMEPAGE_DATA = {
+        featured_interview: {
+          photo: '/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg',
+          name: 'Steving Felix',
+          title: 'Empowering Diaspora Communities Through Innovation & Heritage',
+          excerpt: 'Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.'
+        },
+        homepage_categories: [
+          { name: 'Culture & Heritage', slug: 'culture-heritage', icon: '🏛️', desc: 'Preserving and celebrating African heritage across global diaspora hubs.', image: '/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg', count: 12 },
+          { name: 'Innovation & Tech', slug: 'innovation', icon: '💡', desc: 'Highlighting tech founders and venture capitalists bridging global markets.', image: '/wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg', count: 18 },
+          { name: 'Art & Entertainment', slug: 'art-entertainment', icon: '🎨', desc: 'Showcasing contemporary African artists, cinema, and Afrobeats.', image: '/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg', count: 15 }
+        ],
+        featured_stories: [
+          { id: 1, title: 'Empowering Diaspora Communities Through Innovation & Heritage', author_name: 'Steving Felix', slug: 'empowering-diaspora-communities-through-innovation-heritage', featured_image: '/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg', views: 1420, category_name: 'Culture & Heritage', excerpt: 'Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.' },
+          { id: 2, title: 'Africans in Diaspora Influencing Global Economic Decisions', author_name: 'Prof. Amara Diallo', slug: 'africans-in-diaspora-influencing-global-economic-decisions', featured_image: '/wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg', views: 980, category_name: 'Innovation', excerpt: 'How African diaspora founders, venture capitalists, and policy advisors are driving bilateral trade and technology investments in Africa.' },
+          { id: 3, title: 'Creatives Are Shaping & Representing Global African Culture', author_name: 'Dr. Ngozi Eze', slug: 'creatives-shaping-representing-global-african-culture', featured_image: '/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg', views: 1150, category_name: 'Art & Entertainment', excerpt: 'From visual arts exhibitions in San Francisco to Afrobeats on global stages, African artists are redefining modern creative expression.' },
+          { id: 4, title: 'Taxation, Trust, and Transformation: Lessons from Sweden for Nigeria\'s 2025 Tax Reform', author_name: 'Conspodium Fiscal Desk', slug: 'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2', featured_image: '/wp-content/uploads/2026/01/AF3-1-png-300x171.jpg', views: 1852, category_name: 'African Diaspora Matters', excerpt: 'Examining Nigeria\'s ambitious tax overhaul against Sweden\'s high-trust fiscal model.' }
+        ],
+        trending_topics: [
+          { title: 'Empowering Diaspora Communities Through Innovation & Heritage', slug: 'empowering-diaspora-communities-through-innovation-heritage', views: 1420 },
+          { title: 'Africans in Diaspora Influencing Global Economic Decisions', slug: 'africans-in-diaspora-influencing-global-economic-decisions', views: 980 },
+          { title: 'Creatives Are Shaping & Representing Global African Culture', slug: 'creatives-shaping-representing-global-african-culture', views: 1150 },
+          { title: 'Taxation, Trust, and Transformation: Lessons from Sweden for Nigeria', slug: 'profiles-of-groundbreaking-tech-entrepreneurs-from-diaspora-2', views: 1852 }
+        ]
+      };
+
       function loadHomepageDynamicContent(retryCount) {
         retryCount = retryCount || 0;
-        // Fast initial render from LocalStorage cache
+        var rendered = false;
+
+        // Fast initial render from LocalStorage cache or DEFAULT_HOMEPAGE_DATA
         try {
           var cached = localStorage.getItem('csp_homepage_cache');
           if (cached) {
             renderHomepageContent(JSON.parse(cached));
+            rendered = true;
           }
         } catch (e) { }
+
+        if (!rendered) {
+          renderHomepageContent(DEFAULT_HOMEPAGE_DATA);
+        }
 
         // Fetch live database content via getRootUrl with cache buster
         var url = window.getRootUrl ? window.getRootUrl('api/homepage.php?action=get_all&_t=' + Date.now()) : './api/homepage.php?action=get_all&_t=' + Date.now();
@@ -19269,15 +19310,9 @@
                 return;
               }
             }
-            if (retryCount < 2) {
-              setTimeout(function () { loadHomepageDynamicContent(retryCount + 1); }, 600);
-            }
           })
           .catch(function (err) {
-            console.error('Failed to fetch homepage data:', err);
-            if (retryCount < 2) {
-              setTimeout(function () { loadHomepageDynamicContent(retryCount + 1); }, 600);
-            }
+            console.warn('Backend API offline or static mode. Rendered fallback content.', err);
           });
       }
 
