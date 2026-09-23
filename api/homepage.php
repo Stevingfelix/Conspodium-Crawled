@@ -333,6 +333,81 @@ if ($method === 'GET' && ($action === 'get_all' || $action === 'frontend')) {
             ];
         }
 
+        // 8. Living Archive (Dynamic + Admin Overrides)
+        $laMode = $sections['living_archive_mode'] ?? 'auto';
+        $livingArchive = ($laMode === 'custom' && !empty($sections['living_archive'])) ? $sections['living_archive'] : null;
+
+        if (empty($livingArchive) || !is_array($livingArchive)) {
+            $topPost = $trendingPosts[0] ?? null;
+            $latestPost = $featuredStories[0] ?? null;
+            $mostReadPost = $trendingPosts[1] ?? $topPost;
+            $historicPost = $featuredStories[1] ?? $latestPost;
+            $scholarItem = $scholars[0] ?? null;
+
+            $livingArchive = [
+                "present" => [
+                    [
+                        "badge" => "Trending Now",
+                        "title" => $topPost['title'] ?? "The Afrobeat Blueprint: What Cinema Can Learn from Music",
+                        "sub" => isset($topPost['views']) ? (number_format($topPost['views']) . " views · Active debate") : "Active debate — 340 comments this week",
+                        "url" => isset($topPost['slug']) ? ("/post/" . $topPost['slug'] . "/") : "/stories/"
+                    ],
+                    [
+                        "badge" => "Latest Publication",
+                        "title" => $latestPost['title'] ?? "Pan-African Innovation & Heritage",
+                        "sub" => isset($latestPost['author_name']) ? ("By " . $latestPost['author_name'] . " · Latest Editorial") : "Published recently · Most shared essay of the month",
+                        "url" => isset($latestPost['slug']) ? ("/post/" . $latestPost['slug'] . "/") : "/stories/"
+                    ],
+                    [
+                        "badge" => "Live Discussion",
+                        "title" => $liveDiscussion['topic'] ?? "Reader Roundtable: The Future of African Democracy",
+                        "sub" => "Speaker: " . ($liveDiscussion['speaker_name'] ?? 'Prof. Amara Diallo') . " · Open thread running live",
+                        "url" => "#csp-countdown"
+                    ]
+                ],
+                "past" => [
+                    [
+                        "badge" => "Most Read",
+                        "title" => $mostReadPost['title'] ?? "Beyond Diplomas: Rethinking What Leadership Requires",
+                        "sub" => isset($mostReadPost['views']) ? (number_format($mostReadPost['views']) . " reads · High-impact landmark essay") : "Highest-performing essay, drawing new readers weekly",
+                        "url" => isset($mostReadPost['slug']) ? ("/post/" . $mostReadPost['slug'] . "/") : "/stories/"
+                    ],
+                    [
+                        "badge" => "Popular Interview",
+                        "title" => ($featuredInterview['interviewee_name'] ?? 'Prof. Amara Diallo') . " — " . ($featuredInterview['quote'] ?? 'Building Bridges Across Nations'),
+                        "sub" => ($featuredInterview['interviewee_role'] ?? 'Cultural Historian') . " · Featured Scholar Dialogues",
+                        "url" => "#csp-featured-interview"
+                    ],
+                    [
+                        "badge" => "Historic Archive",
+                        "title" => $historicPost['title'] ?? "The Conspodium Archive: Nico Williams and the Diaspora Journey",
+                        "sub" => "Historic Diaspora Archive · Key takeaways and analysis",
+                        "url" => isset($historicPost['slug']) ? ("/post/" . $historicPost['slug'] . "/") : "/stories/"
+                    ]
+                ],
+                "upcoming" => [
+                    [
+                        "badge" => "Future Scholar",
+                        "title" => ($scholarItem['scholar_name'] ?? 'Prof. Amara Diallo Jr') . " — " . ($scholarItem['research_field'] ?? 'Governance & Heritage'),
+                        "sub" => ($scholarItem['title_affiliation'] ?? 'American School of Economics') . " · Upcoming Spotlight",
+                        "url" => "/stories/"
+                    ],
+                    [
+                        "badge" => "Scheduled Event",
+                        "title" => "Live Discussion: " . ($liveDiscussion['topic'] ?? 'The Future of African Democracy'),
+                        "sub" => "Event Date: " . ($liveDiscussion['discussion_date'] ?? 'Coming Soon') . " · Register to attend",
+                        "url" => "#csp-countdown"
+                    ],
+                    [
+                        "badge" => "Call for Stories",
+                        "title" => "Community Story Submissions Open for Editorial Review",
+                        "sub" => "Submit your article, essay, or research to Conspodium Desk",
+                        "url" => "/submit-story/"
+                    ]
+                ]
+            ];
+        }
+
         ob_clean();
         echo json_encode([
             "success" => true,
@@ -343,7 +418,8 @@ if ($method === 'GET' && ($action === 'get_all' || $action === 'frontend')) {
                 "trending_posts" => $trendingPosts,
                 "live_discussion" => $liveDiscussion,
                 "featured_interview" => $featuredInterview,
-                "homepage_categories" => $homepageCategories
+                "homepage_categories" => $homepageCategories,
+                "living_archive" => $livingArchive
             ]
         ]);
     } catch (Exception $e) {

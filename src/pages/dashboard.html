@@ -2001,6 +2001,193 @@ e-page-transition,
           <p style="color:#64748b;font-size:0.88rem;">Loading scholars...</p>
         </div>
       </div>
+
+      <!-- 8. Living Archive Manager (Auto vs Manual Mode) -->
+      <div class="csp-card" style="padding:24px;margin-top:24px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <h3 style="font-family:'Merriweather',serif;color:#0f172a;display:flex;align-items:center;gap:8px;">
+              <svg class="csp-sec-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+              Living Archive Manager
+            </h3>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">Control whether Living Archive tabs (Present, Past, Upcoming) update dynamically from your database or use manually selected articles.</p>
+          </div>
+        </div>
+
+        <form id="form-sec-living-archive">
+          <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:16px;margin-bottom:20px;">
+            <label style="font-weight:700;color:#0f172a;font-size:0.9rem;display:block;margin-bottom:10px;">Select Operating Mode:</label>
+            <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.88rem;color:#0f172a;font-weight:600;">
+                <input type="radio" name="la_mode" value="auto" id="la-mode-auto" checked onchange="toggleLivingArchiveModeUI()" style="accent-color:var(--blue);width:16px;height:16px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                Automatic Mode (Auto-calculates from database metrics, latest articles &amp; live discussions)
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.88rem;color:#0f172a;font-weight:600;">
+                <input type="radio" name="la_mode" value="custom" id="la-mode-custom" onchange="toggleLivingArchiveModeUI()" style="accent-color:var(--blue);width:16px;height:16px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Custom / Manual Mode (Select articles from database or pin custom content)
+              </label>
+            </div>
+          </div>
+
+          <div id="la-custom-fields-wrapper" style="display:none;">
+            <!-- Present Tab -->
+            <h4 style="font-size:0.9rem;color:var(--blue);margin-bottom:12px;border-bottom:1px solid #e2e8f0;padding-bottom:6px;display:flex;align-items:center;gap:6px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Present Tab (Slots 1, 2, 3)
+            </h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;margin-bottom:20px;">
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                <label class="csp-form-label" style="font-weight:700;color:#0f172a;">Slot 1: Article Dropdown</label>
+                <select id="la-pres-1-select" class="la-post-select csp-form-input" onchange="onLivingArchivePostSelected('pres', 1, this.value)" style="margin-bottom:10px;font-size:0.82rem;background:#ffffff;">
+                  <option value="">-- Select Article from Database --</option>
+                </select>
+                <label class="csp-form-label">Badge Label</label>
+                <input type="text" id="la-pres-1-badge" class="csp-form-input" placeholder="e.g. Trending Now">
+                <label class="csp-form-label" style="margin-top:6px;">Title</label>
+                <input type="text" id="la-pres-1-title" class="csp-form-input" placeholder="Title">
+                <label class="csp-form-label" style="margin-top:6px;">Subtitle / Meta Info</label>
+                <input type="text" id="la-pres-1-sub" class="csp-form-input" placeholder="Subtitle">
+                <label class="csp-form-label" style="margin-top:6px;">Target URL</label>
+                <input type="text" id="la-pres-1-url" class="csp-form-input" placeholder="/post/slug/ or /stories/">
+              </div>
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                <label class="csp-form-label" style="font-weight:700;color:#0f172a;">Slot 2: Article Dropdown</label>
+                <select id="la-pres-2-select" class="la-post-select csp-form-input" onchange="onLivingArchivePostSelected('pres', 2, this.value)" style="margin-bottom:10px;font-size:0.82rem;background:#ffffff;">
+                  <option value="">-- Select Article from Database --</option>
+                </select>
+                <label class="csp-form-label">Badge Label</label>
+                <input type="text" id="la-pres-2-badge" class="csp-form-input" placeholder="e.g. Latest Publication">
+                <label class="csp-form-label" style="margin-top:6px;">Title</label>
+                <input type="text" id="la-pres-2-title" class="csp-form-input" placeholder="Title">
+                <label class="csp-form-label" style="margin-top:6px;">Subtitle / Meta Info</label>
+                <input type="text" id="la-pres-2-sub" class="csp-form-input" placeholder="Subtitle">
+                <label class="csp-form-label" style="margin-top:6px;">Target URL</label>
+                <input type="text" id="la-pres-2-url" class="csp-form-input" placeholder="/post/slug/ or /stories/">
+              </div>
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                <label class="csp-form-label" style="font-weight:700;color:#0f172a;">Slot 3: Article / Event Dropdown</label>
+                <select id="la-pres-3-select" class="la-post-select csp-form-input" onchange="onLivingArchivePostSelected('pres', 3, this.value)" style="margin-bottom:10px;font-size:0.82rem;background:#ffffff;">
+                  <option value="">-- Select Article from Database --</option>
+                </select>
+                <label class="csp-form-label">Badge Label</label>
+                <input type="text" id="la-pres-3-badge" class="csp-form-input" placeholder="e.g. Live Discussion">
+                <label class="csp-form-label" style="margin-top:6px;">Title</label>
+                <input type="text" id="la-pres-3-title" class="csp-form-input" placeholder="Title">
+                <label class="csp-form-label" style="margin-top:6px;">Subtitle / Meta Info</label>
+                <input type="text" id="la-pres-3-sub" class="csp-form-input" placeholder="Subtitle">
+                <label class="csp-form-label" style="margin-top:6px;">Target URL</label>
+                <input type="text" id="la-pres-3-url" class="csp-form-input" placeholder="#csp-countdown">
+              </div>
+            </div>
+
+            <!-- Past Tab -->
+            <h4 style="font-size:0.9rem;color:var(--blue);margin-bottom:12px;border-bottom:1px solid #e2e8f0;padding-bottom:6px;display:flex;align-items:center;gap:6px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+              Past Tab (Slots 1, 2, 3)
+            </h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;margin-bottom:20px;">
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                <label class="csp-form-label" style="font-weight:700;color:#0f172a;">Slot 1: Article Dropdown</label>
+                <select id="la-past-1-select" class="la-post-select csp-form-input" onchange="onLivingArchivePostSelected('past', 1, this.value)" style="margin-bottom:10px;font-size:0.82rem;background:#ffffff;">
+                  <option value="">-- Select Article from Database --</option>
+                </select>
+                <label class="csp-form-label">Badge Label</label>
+                <input type="text" id="la-past-1-badge" class="csp-form-input" placeholder="e.g. Most Read">
+                <label class="csp-form-label" style="margin-top:6px;">Title</label>
+                <input type="text" id="la-past-1-title" class="csp-form-input" placeholder="Title">
+                <label class="csp-form-label" style="margin-top:6px;">Subtitle / Meta Info</label>
+                <input type="text" id="la-past-1-sub" class="csp-form-input" placeholder="Subtitle">
+                <label class="csp-form-label" style="margin-top:6px;">Target URL</label>
+                <input type="text" id="la-past-1-url" class="csp-form-input" placeholder="/stories/">
+              </div>
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                <label class="csp-form-label" style="font-weight:700;color:#0f172a;">Slot 2: Article Dropdown</label>
+                <select id="la-past-2-select" class="la-post-select csp-form-input" onchange="onLivingArchivePostSelected('past', 2, this.value)" style="margin-bottom:10px;font-size:0.82rem;background:#ffffff;">
+                  <option value="">-- Select Article from Database --</option>
+                </select>
+                <label class="csp-form-label">Badge Label</label>
+                <input type="text" id="la-past-2-badge" class="csp-form-input" placeholder="e.g. Popular Interview">
+                <label class="csp-form-label" style="margin-top:6px;">Title</label>
+                <input type="text" id="la-past-2-title" class="csp-form-input" placeholder="Title">
+                <label class="csp-form-label" style="margin-top:6px;">Subtitle / Meta Info</label>
+                <input type="text" id="la-past-2-sub" class="csp-form-input" placeholder="Subtitle">
+                <label class="csp-form-label" style="margin-top:6px;">Target URL</label>
+                <input type="text" id="la-past-2-url" class="csp-form-input" placeholder="#csp-featured-interview">
+              </div>
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                <label class="csp-form-label" style="font-weight:700;color:#0f172a;">Slot 3: Article Dropdown</label>
+                <select id="la-past-3-select" class="la-post-select csp-form-input" onchange="onLivingArchivePostSelected('past', 3, this.value)" style="margin-bottom:10px;font-size:0.82rem;background:#ffffff;">
+                  <option value="">-- Select Article from Database --</option>
+                </select>
+                <label class="csp-form-label">Badge Label</label>
+                <input type="text" id="la-past-3-badge" class="csp-form-input" placeholder="e.g. Historic Archive">
+                <label class="csp-form-label" style="margin-top:6px;">Title</label>
+                <input type="text" id="la-past-3-title" class="csp-form-input" placeholder="Title">
+                <label class="csp-form-label" style="margin-top:6px;">Subtitle / Meta Info</label>
+                <input type="text" id="la-past-3-sub" class="csp-form-input" placeholder="Subtitle">
+                <label class="csp-form-label" style="margin-top:6px;">Target URL</label>
+                <input type="text" id="la-past-3-url" class="csp-form-input" placeholder="/stories/">
+              </div>
+            </div>
+
+            <!-- Upcoming Tab -->
+            <h4 style="font-size:0.9rem;color:var(--blue);margin-bottom:12px;border-bottom:1px solid #e2e8f0;padding-bottom:6px;display:flex;align-items:center;gap:6px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Upcoming Tab (Slots 1, 2, 3)
+            </h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;margin-bottom:20px;">
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                <label class="csp-form-label" style="font-weight:700;color:#0f172a;">Slot 1: Article Dropdown</label>
+                <select id="la-upc-1-select" class="la-post-select csp-form-input" onchange="onLivingArchivePostSelected('upc', 1, this.value)" style="margin-bottom:10px;font-size:0.82rem;background:#ffffff;">
+                  <option value="">-- Select Article from Database --</option>
+                </select>
+                <label class="csp-form-label">Badge Label</label>
+                <input type="text" id="la-upc-1-badge" class="csp-form-input" placeholder="e.g. Future Scholar">
+                <label class="csp-form-label" style="margin-top:6px;">Title</label>
+                <input type="text" id="la-upc-1-title" class="csp-form-input" placeholder="Title">
+                <label class="csp-form-label" style="margin-top:6px;">Subtitle / Meta Info</label>
+                <input type="text" id="la-upc-1-sub" class="csp-form-input" placeholder="Subtitle">
+                <label class="csp-form-label" style="margin-top:6px;">Target URL</label>
+                <input type="text" id="la-upc-1-url" class="csp-form-input" placeholder="/stories/">
+              </div>
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                <label class="csp-form-label" style="font-weight:700;color:#0f172a;">Slot 2: Article Dropdown</label>
+                <select id="la-upc-2-select" class="la-post-select csp-form-input" onchange="onLivingArchivePostSelected('upc', 2, this.value)" style="margin-bottom:10px;font-size:0.82rem;background:#ffffff;">
+                  <option value="">-- Select Article from Database --</option>
+                </select>
+                <label class="csp-form-label">Badge Label</label>
+                <input type="text" id="la-upc-2-badge" class="csp-form-input" placeholder="e.g. Scheduled Event">
+                <label class="csp-form-label" style="margin-top:6px;">Title</label>
+                <input type="text" id="la-upc-2-title" class="csp-form-input" placeholder="Title">
+                <label class="csp-form-label" style="margin-top:6px;">Subtitle / Meta Info</label>
+                <input type="text" id="la-upc-2-sub" class="csp-form-input" placeholder="Subtitle">
+                <label class="csp-form-label" style="margin-top:6px;">Target URL</label>
+                <input type="text" id="la-upc-2-url" class="csp-form-input" placeholder="#csp-countdown">
+              </div>
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                <label class="csp-form-label" style="font-weight:700;color:#0f172a;">Slot 3: Article Dropdown</label>
+                <select id="la-upc-3-select" class="la-post-select csp-form-input" onchange="onLivingArchivePostSelected('upc', 3, this.value)" style="margin-bottom:10px;font-size:0.82rem;background:#ffffff;">
+                  <option value="">-- Select Article from Database --</option>
+                </select>
+                <label class="csp-form-label">Badge Label</label>
+                <input type="text" id="la-upc-3-badge" class="csp-form-input" placeholder="e.g. Call for Stories">
+                <label class="csp-form-label" style="margin-top:6px;">Title</label>
+                <input type="text" id="la-upc-3-title" class="csp-form-input" placeholder="Title">
+                <label class="csp-form-label" style="margin-top:6px;">Subtitle / Meta Info</label>
+                <input type="text" id="la-upc-3-sub" class="csp-form-input" placeholder="Subtitle">
+                <label class="csp-form-label" style="margin-top:6px;">Target URL</label>
+                <input type="text" id="la-upc-3-url" class="csp-form-input" placeholder="/submit-story/">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;">
+            <button type="submit" class="csp-btn-sm csp-btn-primary" style="padding:10px 24px;">Save Living Archive Settings</button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <!-- ── TAB 2: MANAGE POSTS ── -->
@@ -8146,12 +8333,49 @@ e-page-transition,
     }
   });
 
+  function populateLivingArchivePostDropdowns() {
+    if (!allArticlesData || allArticlesData.length === 0) return;
+    var tabs = ['pres', 'past', 'upc'];
+    var optionsHtml = '<option value="">-- Select Article from Database --</option>';
+    allArticlesData.forEach(function(art){
+      var titleEsc = art.title ? art.title.replace(/"/g, '&quot;') : ('Article #' + art.id);
+      var author = art.author_name || 'Editorial Team';
+      optionsHtml += '<option value="' + art.id + '">' + titleEsc + ' (' + author + ')</option>';
+    });
+
+    tabs.forEach(function(tb){
+      for (var i = 1; i <= 3; i++) {
+        var sel = document.getElementById('la-' + tb + '-' + i + '-select');
+        if (sel) {
+          var currVal = sel.value;
+          sel.innerHTML = optionsHtml;
+          if (currVal) sel.value = currVal;
+        }
+      }
+    });
+  }
+
+  window.onLivingArchivePostSelected = function(tabPrefix, itemNum, postId) {
+    if (!postId) return;
+    var art = allArticlesData.find(function(a){ return a.id == postId; });
+    if (!art) return;
+
+    var titleInput = document.getElementById('la-' + tabPrefix + '-' + itemNum + '-title');
+    var subInput = document.getElementById('la-' + tabPrefix + '-' + itemNum + '-sub');
+    var urlInput = document.getElementById('la-' + tabPrefix + '-' + itemNum + '-url');
+
+    if (titleInput) titleInput.value = art.title || '';
+    if (subInput) subInput.value = 'By ' + (art.author_name || 'Editorial Team') + (art.category_name ? ' · ' + art.category_name : '');
+    if (urlInput) urlInput.value = art.slug ? ('/post/' + art.slug + '/') : '/stories/';
+  };
+
   function loadArticleSelectors() {
     fetch(getRootUrl('api/posts.php?action=list&limit=100'))
       .then(function(r){ return r.json(); })
       .then(function(res){
         if (!res.success || !res.posts) return;
         allArticlesData = res.posts;
+        populateLivingArchivePostDropdowns();
 
         fetch(getRootUrl('api/homepage.php?action=get_all'))
           .then(function(r2){ return r2.json(); })
@@ -8372,6 +8596,123 @@ e-page-transition,
     loadArticleSelectors();
     loadLiveDiscussionForm();
     loadFeaturedInterviewForm();
+    loadLivingArchiveSettings();
+  }
+
+  function toggleLivingArchiveModeUI() {
+    var isCustom = document.getElementById('la-mode-custom') && document.getElementById('la-mode-custom').checked;
+    var wrapper = document.getElementById('la-custom-fields-wrapper');
+    if (wrapper) wrapper.style.display = isCustom ? 'block' : 'none';
+  }
+
+  function loadLivingArchiveSettings() {
+    fetch(getRootUrl('api/homepage.php?action=get_all'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (!res.success || !res.data || !res.data.sections) return;
+        var mode = res.data.sections.living_archive_mode || 'auto';
+        if (mode === 'custom') {
+          if (document.getElementById('la-mode-custom')) document.getElementById('la-mode-custom').checked = true;
+        } else {
+          if (document.getElementById('la-mode-auto')) document.getElementById('la-mode-auto').checked = true;
+        }
+        toggleLivingArchiveModeUI();
+
+        var la = res.data.sections.living_archive;
+        if (la && typeof la === 'object') {
+          var tabs = ['pres', 'past', 'upc'];
+          var tabKeys = ['present', 'past', 'upcoming'];
+          tabs.forEach(function(tb, tIdx){
+            var tabData = la[tabKeys[tIdx]] || [];
+            for (var i = 1; i <= 3; i++) {
+              var item = tabData[i - 1] || {};
+              if (document.getElementById('la-' + tb + '-' + i + '-badge')) document.getElementById('la-' + tb + '-' + i + '-badge').value = item.badge || '';
+              if (document.getElementById('la-' + tb + '-' + i + '-title')) document.getElementById('la-' + tb + '-' + i + '-title').value = item.title || '';
+              if (document.getElementById('la-' + tb + '-' + i + '-sub')) document.getElementById('la-' + tb + '-' + i + '-sub').value = item.sub || '';
+              if (document.getElementById('la-' + tb + '-' + i + '-url')) document.getElementById('la-' + tb + '-' + i + '-url').value = item.url || '';
+            }
+          });
+        }
+        populateLivingArchivePostDropdowns();
+      })
+      .catch(function(err){ console.error('Error loading Living Archive settings:', err); });
+  }
+
+  var formLA = document.getElementById('form-sec-living-archive');
+  if (formLA) {
+    formLA.addEventListener('submit', function(e){
+      e.preventDefault();
+      var mode = document.querySelector('input[name="la_mode"]:checked') ? document.querySelector('input[name="la_mode"]:checked').value : 'auto';
+      
+      var customPayload = {
+        present: [
+          {
+            badge: document.getElementById('la-pres-1-badge').value,
+            title: document.getElementById('la-pres-1-title').value,
+            sub: document.getElementById('la-pres-1-sub').value,
+            url: document.getElementById('la-pres-1-url').value
+          },
+          {
+            badge: document.getElementById('la-pres-2-badge').value,
+            title: document.getElementById('la-pres-2-title').value,
+            sub: document.getElementById('la-pres-2-sub').value,
+            url: document.getElementById('la-pres-2-url').value
+          },
+          {
+            badge: document.getElementById('la-pres-3-badge').value,
+            title: document.getElementById('la-pres-3-title').value,
+            sub: document.getElementById('la-pres-3-sub').value,
+            url: document.getElementById('la-pres-3-url').value
+          }
+        ],
+        past: [
+          {
+            badge: document.getElementById('la-past-1-badge').value,
+            title: document.getElementById('la-past-1-title').value,
+            sub: document.getElementById('la-past-1-sub').value,
+            url: document.getElementById('la-past-1-url').value
+          },
+          {
+            badge: document.getElementById('la-past-2-badge').value,
+            title: document.getElementById('la-past-2-title').value,
+            sub: document.getElementById('la-past-2-sub').value,
+            url: document.getElementById('la-past-2-url').value
+          },
+          {
+            badge: document.getElementById('la-past-3-badge').value,
+            title: document.getElementById('la-past-3-title').value,
+            sub: document.getElementById('la-past-3-sub').value,
+            url: document.getElementById('la-past-3-url').value
+          }
+        ],
+        upcoming: [
+          {
+            badge: document.getElementById('la-upc-1-badge').value,
+            title: document.getElementById('la-upc-1-title').value,
+            sub: document.getElementById('la-upc-1-sub').value,
+            url: document.getElementById('la-upc-1-url').value
+          },
+          {
+            badge: document.getElementById('la-upc-2-badge').value,
+            title: document.getElementById('la-upc-2-title').value,
+            sub: document.getElementById('la-upc-2-sub').value,
+            url: document.getElementById('la-upc-2-url').value
+          },
+          {
+            badge: document.getElementById('la-upc-3-badge').value,
+            title: document.getElementById('la-upc-3-title').value,
+            sub: document.getElementById('la-upc-3-sub').value,
+            url: document.getElementById('la-upc-3-url').value
+          }
+        ]
+      };
+
+      saveHomepageSection('living_archive_mode', mode, function(success){
+        if (success) {
+          saveHomepageSection('living_archive', customPayload);
+        }
+      });
+    });
   }
 
   var formScholar = document.getElementById('form-sec-scholar');
