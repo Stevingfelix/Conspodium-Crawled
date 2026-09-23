@@ -16629,11 +16629,11 @@
 
                   posts.forEach(function (post, idx) {
                     var link = window.getRootUrl ? window.getRootUrl('post/' + post.slug + '/') : './post/' + post.slug + '/';
-                    var emoji = emojis[idx % emojis.length];
+                    var svgIcon = window.getCategorySvgIcon ? window.getCategorySvgIcon(post) : '';
                     var rawTitle = (post.title || '').trim();
                     var displayTitle = rawTitle.length > 32 ? rawTitle.substring(0, 30) + '...' : rawTitle;
                     var reads = (post.views || (idx + 1) * 340) + ' reads';
-                    tagsHtml += '<a href="' + link + '" class="csp-tag"><span>' + emoji + '</span> <span class="csp-tag-text">' + displayTitle + '</span> <span class="csp-tag-num">' + reads + '</span></a>';
+                    tagsHtml += '<a href="' + link + '" class="csp-tag"><span style="display:inline-flex;align-items:center;">' + svgIcon + '</span> <span class="csp-tag-text">' + displayTitle + '</span> <span class="csp-tag-num">' + reads + '</span></a>';
                   });
 
                   // Reset animation before innerHTML update for continuous scroll
@@ -19316,11 +19316,11 @@
             var tagsHtml = '';
             d.trending_topics.forEach(function (post, idx) {
               var link = window.getRootUrl ? window.getRootUrl('post/' + post.slug + '/') : './post/' + post.slug + '/';
-              var emoji = emojis[idx % emojis.length];
+              var svgIcon = window.getCategorySvgIcon ? window.getCategorySvgIcon(post) : '';
               var rawTitle = (post.title || '').trim();
               var displayTitle = rawTitle.length > 35 ? rawTitle.substring(0, 33) + '...' : rawTitle;
               var reads = (post.views || (idx + 1) * 340) + ' reads';
-              tagsHtml += '<a href="' + link + '" class="csp-tag"><span>' + emoji + '</span> <span class="csp-tag-text">' + displayTitle + '</span> <span class="csp-tag-num">' + reads + '</span></a>';
+              tagsHtml += '<a href="' + link + '" class="csp-tag"><span style="display:inline-flex;align-items:center;">' + svgIcon + '</span> <span class="csp-tag-text">' + displayTitle + '</span> <span class="csp-tag-num">' + reads + '</span></a>';
             });
 
             trContainer.style.animation = 'none';

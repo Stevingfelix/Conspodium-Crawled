@@ -3026,6 +3026,188 @@
       initSubscriberForms();
     }
   })();
+
+  /* ── UNIVERSAL CONSPODIUM SVG ICON PROVIDER ────────────────── */
+  window.CSP_ICONS = {
+    'grid': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
+    'globe': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+    'heritage': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg>',
+    'lightbulb': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg>',
+    'palette': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>',
+    'users': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    'star': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+    'bar-chart': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+    'briefcase': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+    'plane': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.8-.2-1.6.3-1.8 1.1-.2.8.2 1.6 1 1.9l6 3.5-4 4-2.5-.5c-.4-.1-.8.1-1 .4l-.8.8c-.3.3-.3.8 0 1.1l2.5 2.5c.3.3.8.3 1.1 0l.8-.8c.3-.2.5-.6.4-1l-.5-2.5 4-4 3.5 6c.3.8 1.1 1.2 1.9 1 .8-.2 1.3-1 1.1-1.8z"/></svg>',
+    'heart-pulse': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+    'graduation-cap': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+    'author': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    'date': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+    'time': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    'views': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
+  };
+
+  /* ── EXECUTIVE BRIEFING DARK SIDEBAR INPUT FIXES ──────────────── */
+  .csp-sidebar-newsletter input,
+  .csp-sidebar-newsletter input[type="email"],
+  .csp-sidebar-newsletter input[type="text"],
+  .csp-sidebar-card input[type="email"],
+  .csp-sidebar-card input[type="text"] {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-size: 0.88rem !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  .csp-sidebar-newsletter input::placeholder,
+  .csp-sidebar-newsletter input[type="email"]::placeholder,
+  .csp-sidebar-card input::placeholder {
+    color: rgba(255, 255, 255, 0.65) !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.65) !important;
+  }
+
+  .csp-sidebar-newsletter input:focus,
+  .csp-sidebar-newsletter input[type="email"]:focus {
+    border-color: #00AEFE !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 0 0 3px rgba(0, 174, 254, 0.25) !important;
+  }
+
+  .csp-sidebar-newsletter input:-webkit-autofill,
+  .csp-sidebar-newsletter input:-webkit-autofill:hover,
+  .csp-sidebar-newsletter input:-webkit-autofill:focus,
+  .csp-sidebar-newsletter input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #0b1727 inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    color: #ffffff !important;
+  }
+</style>
+<script>
+  /* ── UNIVERSAL CONSPODIUM SVG ICON PROVIDER ────────────────── */
+  window.CSP_ICONS = {
+    'grid': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
+    'globe': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+    'heritage': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg>',
+    'lightbulb': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg>',
+    'palette': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>',
+    'users': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    'star': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+    'bar-chart': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+    'briefcase': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+    'plane': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.8-.2-1.6.3-1.8 1.1-.2.8.2 1.6 1 1.9l6 3.5-4 4-2.5-.5c-.4-.1-.8.1-1 .4l-.8.8c-.3.3-.3.8 0 1.1l2.5 2.5c.3.3.8.3 1.1 0l.8-.8c.3-.2.5-.6.4-1l-.5-2.5 4-4 3.5 6c.3.8 1.1 1.2 1.9 1 .8-.2 1.3-1 1.1-1.8z"/></svg>',
+    'heart-pulse': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+    'graduation-cap': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+    'flame': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3.5z"/></svg>',
+    'vote': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+    'mail': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B71F71" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+    'author': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    'date': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+    'time': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    'views': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
+  };
+
+  // Direct category slug mappings into window.CSP_ICONS
+  window.CSP_ICONS['all'] = window.CSP_ICONS['grid'];
+  window.CSP_ICONS['african-diaspora-matters'] = window.CSP_ICONS['globe'];
+  window.CSP_ICONS['culture-heritage'] = window.CSP_ICONS['heritage'];
+  window.CSP_ICONS['innovation'] = window.CSP_ICONS['lightbulb'];
+  window.CSP_ICONS['art-entertainment'] = window.CSP_ICONS['palette'];
+  window.CSP_ICONS['community'] = window.CSP_ICONS['users'];
+  window.CSP_ICONS['success-stories'] = window.CSP_ICONS['star'];
+  window.CSP_ICONS['diaspora-insights-analysis'] = window.CSP_ICONS['bar-chart'];
+
+  // Map common emoji strings from database columns to SVG keys
+  var EMOJI_TO_SVG_KEY = {
+    '🌍': 'globe',
+    '🎨': 'palette',
+    '🏛️': 'heritage',
+    '🏛': 'heritage',
+    '💡': 'lightbulb',
+    '👥': 'users',
+    '⭐': 'star',
+    '🌟': 'star',
+    '📊': 'bar-chart',
+    '📍': 'lightbulb',
+    '⚫': 'globe',
+    '🔵': 'globe'
+  };
+
+  window.getCategorySvgIcon = window.getCspCategorySvg = function(catOrKey) {
+    if (!catOrKey) return window.CSP_ICONS['globe'];
+    
+    var slug = '';
+    var name = '';
+    var icon = '';
+
+    if (typeof catOrKey === 'string') {
+      var str = catOrKey.trim();
+      if (EMOJI_TO_SVG_KEY[str]) return window.CSP_ICONS[EMOJI_TO_SVG_KEY[str]];
+      if (window.CSP_ICONS[str.toLowerCase()]) return window.CSP_ICONS[str.toLowerCase()];
+      slug = str.toLowerCase();
+      name = slug;
+      icon = slug;
+    } else if (typeof catOrKey === 'object' && catOrKey !== null) {
+      slug = (catOrKey.slug || catOrKey.category_slug || '').toLowerCase().trim();
+      name = (catOrKey.name || catOrKey.category_name || '').toLowerCase().trim();
+      icon = (catOrKey.icon || catOrKey.category_icon || '').trim();
+    }
+
+    // 1. Direct slug match (e.g. 'african-diaspora-matters', 'culture-heritage', 'art-entertainment', 'all', etc.)
+    if (slug && window.CSP_ICONS[slug]) return window.CSP_ICONS[slug];
+
+    // 2. Direct icon emoji conversion
+    if (icon && EMOJI_TO_SVG_KEY[icon]) return window.CSP_ICONS[EMOJI_TO_SVG_KEY[icon]];
+
+    // 3. Direct icon key match (if icon is 'globe', 'palette', etc.)
+    if (icon && window.CSP_ICONS[icon.toLowerCase()]) return window.CSP_ICONS[icon.toLowerCase()];
+
+    // 4. Combined text pattern matching on slug + name
+    var combined = (slug + ' ' + name).toLowerCase();
+
+    if (combined.includes('all') || slug === 'all') return window.CSP_ICONS['grid'];
+    if (combined.includes('culture') || combined.includes('heritage')) return window.CSP_ICONS['heritage'];
+    if (combined.includes('innovation') || combined.includes('tech')) return window.CSP_ICONS['lightbulb'];
+    if (combined.includes('art') || combined.includes('entertainment')) return window.CSP_ICONS['palette'];
+    if (combined.includes('community')) return window.CSP_ICONS['users'];
+    if (combined.includes('success')) return window.CSP_ICONS['star'];
+    if (combined.includes('insight') || combined.includes('analysis')) return window.CSP_ICONS['bar-chart'];
+    if (combined.includes('business') || combined.includes('trade')) return window.CSP_ICONS['briefcase'];
+    if (combined.includes('travel') || combined.includes('mobility')) return window.CSP_ICONS['plane'];
+    if (combined.includes('health') || combined.includes('medical')) return window.CSP_ICONS['heart-pulse'];
+    return window.CSP_ICONS['globe'];
+  };
+
+  window.handleCspVote = function(btn, optionText, percentage) {
+    var container = btn.closest('.csp-poll-options');
+    if (!container) return;
+    
+    var options = [
+      { label: 'Tech & AI Infrastructure', pct: 42, icon: window.CSP_ICONS['lightbulb'] },
+      { label: 'Cultural Heritage & Arts', pct: 35, icon: window.CSP_ICONS['heritage'] },
+      { label: 'Diaspora Capital & Trade', pct: 23, icon: window.CSP_ICONS['briefcase'] }
+    ];
+    
+    var html = '';
+    options.forEach(function(opt) {
+      var isChosen = optionText.toLowerCase().indexOf(opt.label.split(' ')[0].toLowerCase()) !== -1;
+      html += '<div style="margin-bottom:8px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;font-weight:600;color:' + (isChosen ? '#00AEFE' : '#475569') + ';margin-bottom:4px;">' +
+          '<span style="display:inline-flex;align-items:center;gap:4px;">' + opt.icon + ' ' + opt.label + (isChosen ? ' <strong style="color:#00AEFE;margin-left:4px;">(Your Vote)</strong>' : '') + '</span>' +
+          '<span style="font-weight:700;">' + opt.pct + '%</span>' +
+        '</div>' +
+        '<div style="height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;">' +
+          '<div style="height:100%;width:' + opt.pct + '%;background:' + (isChosen ? 'linear-gradient(90deg, #00AEFE, #B71F71)' : '#cbd5e1') + ';border-radius:4px;transition:width 0.6s ease;"></div>' +
+        '</div>' +
+      '</div>';
+    });
+    
+    container.innerHTML = html;
+    if (window.cspToast) window.cspToast('Vote recorded for "' + optionText + '"!', 'success');
+  };
 </script>
 <!-- CSP_HEADER_FIXES_END -->
 
@@ -3466,7 +3648,7 @@
     <!-- GLASSMORPHIC CATEGORY NAV BAR WITH PRE-RENDERED PILLS -->
     <div class="csp-cat-nav-wrap" style="position:sticky;top:85px;z-index:99;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:8px 16px;border-radius:50px;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:28px;width:100%;max-width:100%;box-sizing:border-box;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
       <div class="csp-cat-nav-inner" id="csp-cat-tabs-container" style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;align-items:center;justify-content:center;width:max-content;min-width:100%;-webkit-overflow-scrolling:touch;">
-        <a href="/stories/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">📚 All Stories</a>
+        <a href="/stories/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> All Stories</a>
         <a href="/category/culture-heritage/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg> Culture &amp; Heritage</a>
         <a href="/category/innovation/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg> Innovation &amp; Tech</a>
         <a href="/category/art-entertainment/" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg> Art &amp; Entertainment</a>
@@ -3482,11 +3664,11 @@
       <article>
         <h1 class="csp-post-title" id="post-title">Loading Article Title...</h1>
 
-        <div class="csp-post-meta">
-          <span>✍️ <strong id="post-author" style="color:#0f172a;">Conspodium Editorial</strong></span>
-          <span>📅 <span id="post-date">Recent</span></span>
-          <span>⏱️ <span id="post-reading-time">5 min read</span></span>
-          <span>👁️ <span id="post-views">0 views</span></span>
+        <div class="csp-post-meta" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:0.85rem;color:#64748b;margin-bottom:20px;">
+          <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <strong id="post-author" style="color:#0f172a;">Conspodium Editorial</strong></span>
+          <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span id="post-date">Recent</span></span>
+          <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <span id="post-reading-time">5 min read</span></span>
+          <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> <span id="post-views">0 views</span></span>
         </div>
 
         <!-- READER CONTROL TOOLBAR (Typography & Reading Themes) -->
@@ -4298,40 +4480,8 @@
             if (skel && skel.parentNode) skel.parentNode.removeChild(skel);
           }
 
-          // Populate Category Pills & Auto-Scroll to Active Category
-          var CATEGORY_FLATICON_SVGS = {
-            'bar-chart': { name: 'Analytics & Insights', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' },
-            'globe': { name: 'African Diaspora', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' },
-            'heritage': { name: 'Culture & Heritage', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg>' },
-            'lightbulb': { name: 'Innovation & Tech', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg>' },
-            'palette': { name: 'Art & Entertainment', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>' },
-            'users': { name: 'Community Network', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' },
-            'star': { name: 'Success Stories', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' },
-            'briefcase': { name: 'Business & Trade', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>' },
-            'plane': { name: 'Mobility & Travel', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.8-.2-1.6.3-1.8 1.1-.2.8.2 1.6 1 1.9l6 3.5-4 4-2.5-.5c-.4-.1-.8.1-1 .4l-.8.8c-.3.3-.3.8 0 1.1l2.5 2.5c.3.3.8.3 1.1 0l.8-.8c.3-.2.5-.6.4-1l-.5-2.5 4-4 3.5 6c.3.8 1.1 1.2 1.9 1 .8-.2 1.3-1 1.1-1.8z"/></svg>' },
-            'heart-pulse': { name: 'Health & Medical', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>' },
-            'graduation-cap': { name: 'Education & Youth', svg: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>' }
-          };
-
           function getCategorySvgIcon(catOrKey) {
-            var key = '';
-            if (typeof catOrKey === 'string') {
-              key = catOrKey.toLowerCase();
-            } else if (catOrKey && typeof catOrKey === 'object') {
-              key = ((catOrKey.icon || catOrKey.category_icon) || '').toLowerCase();
-              if (!key || key.length > 20) {
-                var slug = (catOrKey.slug || catOrKey.category_slug || '').toLowerCase();
-                var name = (catOrKey.name || catOrKey.category_name || '').toLowerCase();
-                if (slug.includes('culture') || name.includes('culture') || name.includes('heritage')) key = 'heritage';
-                else if (slug.includes('innovation') || name.includes('tech') || name.includes('innovation')) key = 'lightbulb';
-                else if (slug.includes('art') || name.includes('art') || name.includes('entertainment')) key = 'palette';
-                else if (slug.includes('community') || name.includes('community')) key = 'users';
-                else if (slug.includes('success') || name.includes('success')) key = 'star';
-                else if (slug.includes('insight') || name.includes('analysis')) key = 'bar-chart';
-                else key = 'globe';
-              }
-            }
-            return (CATEGORY_FLATICON_SVGS[key] ? CATEGORY_FLATICON_SVGS[key].svg : CATEGORY_FLATICON_SVGS['globe'].svg);
+            return window.getCategorySvgIcon ? window.getCategorySvgIcon(catOrKey) : '';
           }
 
           var catApiUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=categories') : '/api/posts.php?resource=categories';
@@ -4341,7 +4491,7 @@
               if (!cRes.success || !cRes.categories) return;
               var tabsContainer = document.getElementById('csp-cat-tabs-container');
               if (tabsContainer) {
-                var tabsHtml = '<a href="' + (window.getRootUrl ? window.getRootUrl('stories/') : '/stories/') + '" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;">📚 All Stories</a>';
+                var tabsHtml = '<a href="' + (window.getRootUrl ? window.getRootUrl('stories/') : '/stories/') + '" class="csp-cat-tab" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;">' + (window.getCategorySvgIcon ? window.getCategorySvgIcon('all') : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>') + ' All Stories</a>';
                 cRes.categories.forEach(function(cat){
                   var isActive = (cat.slug === p.category_slug || (p.category_slug && cat.slug.indexOf(p.category_slug) !== -1) || (p.category_name && cat.name.toLowerCase().trim() === p.category_name.toLowerCase().trim()));
                   var catUrl = window.getRootUrl ? window.getRootUrl('category/' + cat.slug + '/') : '/category/' + cat.slug + '/';

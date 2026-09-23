@@ -477,6 +477,9 @@
           if (res.success) {
             if (window.saveCommenterSession) window.saveCommenterSession(authorName, authorEmail);
             hideInlineReplyForm(parentId);
+            if (nameInput) nameInput.value = '';
+            if (emailInput) emailInput.value = '';
+            if (textInput) textInput.value = '';
             if (window.cspToast) window.cspToast('Reply posted successfully!', 'success');
             loadThreadDetail();
           } else {
@@ -671,7 +674,7 @@
           if (res.success) {
             if (window.saveCommenterSession) window.saveCommenterSession(authorName, authorEmail);
             cancelReplyTo();
-            document.getElementById('rp-content').value = '';
+            document.getElementById('form-thread-reply').reset();
             if (window.cspToast) window.cspToast('Reply posted successfully!', 'success');
             loadThreadDetail();
           } else { alert(res.error || 'Failed to post reply'); }

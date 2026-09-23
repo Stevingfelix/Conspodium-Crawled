@@ -3355,6 +3355,188 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       initSubscriberForms();
     }
   })();
+
+  /* ── UNIVERSAL CONSPODIUM SVG ICON PROVIDER ────────────────── */
+  window.CSP_ICONS = {
+    'grid': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
+    'globe': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+    'heritage': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg>',
+    'lightbulb': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg>',
+    'palette': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>',
+    'users': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    'star': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+    'bar-chart': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+    'briefcase': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+    'plane': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.8-.2-1.6.3-1.8 1.1-.2.8.2 1.6 1 1.9l6 3.5-4 4-2.5-.5c-.4-.1-.8.1-1 .4l-.8.8c-.3.3-.3.8 0 1.1l2.5 2.5c.3.3.8.3 1.1 0l.8-.8c.3-.2.5-.6.4-1l-.5-2.5 4-4 3.5 6c.3.8 1.1 1.2 1.9 1 .8-.2 1.3-1 1.1-1.8z"/></svg>',
+    'heart-pulse': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+    'graduation-cap': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+    'author': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    'date': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+    'time': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    'views': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
+  };
+
+  /* ── EXECUTIVE BRIEFING DARK SIDEBAR INPUT FIXES ──────────────── */
+  .csp-sidebar-newsletter input,
+  .csp-sidebar-newsletter input[type="email"],
+  .csp-sidebar-newsletter input[type="text"],
+  .csp-sidebar-card input[type="email"],
+  .csp-sidebar-card input[type="text"] {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-size: 0.88rem !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  .csp-sidebar-newsletter input::placeholder,
+  .csp-sidebar-newsletter input[type="email"]::placeholder,
+  .csp-sidebar-card input::placeholder {
+    color: rgba(255, 255, 255, 0.65) !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.65) !important;
+  }
+
+  .csp-sidebar-newsletter input:focus,
+  .csp-sidebar-newsletter input[type="email"]:focus {
+    border-color: #00AEFE !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 0 0 3px rgba(0, 174, 254, 0.25) !important;
+  }
+
+  .csp-sidebar-newsletter input:-webkit-autofill,
+  .csp-sidebar-newsletter input:-webkit-autofill:hover,
+  .csp-sidebar-newsletter input:-webkit-autofill:focus,
+  .csp-sidebar-newsletter input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #0b1727 inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    color: #ffffff !important;
+  }
+</style>
+<script>
+  /* ── UNIVERSAL CONSPODIUM SVG ICON PROVIDER ────────────────── */
+  window.CSP_ICONS = {
+    'grid': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
+    'globe': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+    'heritage': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg>',
+    'lightbulb': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg>',
+    'palette': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>',
+    'users': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    'star': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+    'bar-chart': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+    'briefcase': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+    'plane': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.8-.2-1.6.3-1.8 1.1-.2.8.2 1.6 1 1.9l6 3.5-4 4-2.5-.5c-.4-.1-.8.1-1 .4l-.8.8c-.3.3-.3.8 0 1.1l2.5 2.5c.3.3.8.3 1.1 0l.8-.8c.3-.2.5-.6.4-1l-.5-2.5 4-4 3.5 6c.3.8 1.1 1.2 1.9 1 .8-.2 1.3-1 1.1-1.8z"/></svg>',
+    'heart-pulse': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+    'graduation-cap': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+    'flame': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3.5z"/></svg>',
+    'vote': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+    'mail': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B71F71" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+    'author': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    'date': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+    'time': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    'views': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
+  };
+
+  // Direct category slug mappings into window.CSP_ICONS
+  window.CSP_ICONS['all'] = window.CSP_ICONS['grid'];
+  window.CSP_ICONS['african-diaspora-matters'] = window.CSP_ICONS['globe'];
+  window.CSP_ICONS['culture-heritage'] = window.CSP_ICONS['heritage'];
+  window.CSP_ICONS['innovation'] = window.CSP_ICONS['lightbulb'];
+  window.CSP_ICONS['art-entertainment'] = window.CSP_ICONS['palette'];
+  window.CSP_ICONS['community'] = window.CSP_ICONS['users'];
+  window.CSP_ICONS['success-stories'] = window.CSP_ICONS['star'];
+  window.CSP_ICONS['diaspora-insights-analysis'] = window.CSP_ICONS['bar-chart'];
+
+  // Map common emoji strings from database columns to SVG keys
+  var EMOJI_TO_SVG_KEY = {
+    '🌍': 'globe',
+    '🎨': 'palette',
+    '🏛️': 'heritage',
+    '🏛': 'heritage',
+    '💡': 'lightbulb',
+    '👥': 'users',
+    '⭐': 'star',
+    '🌟': 'star',
+    '📊': 'bar-chart',
+    '📍': 'lightbulb',
+    '⚫': 'globe',
+    '🔵': 'globe'
+  };
+
+  window.getCategorySvgIcon = window.getCspCategorySvg = function(catOrKey) {
+    if (!catOrKey) return window.CSP_ICONS['globe'];
+    
+    var slug = '';
+    var name = '';
+    var icon = '';
+
+    if (typeof catOrKey === 'string') {
+      var str = catOrKey.trim();
+      if (EMOJI_TO_SVG_KEY[str]) return window.CSP_ICONS[EMOJI_TO_SVG_KEY[str]];
+      if (window.CSP_ICONS[str.toLowerCase()]) return window.CSP_ICONS[str.toLowerCase()];
+      slug = str.toLowerCase();
+      name = slug;
+      icon = slug;
+    } else if (typeof catOrKey === 'object' && catOrKey !== null) {
+      slug = (catOrKey.slug || catOrKey.category_slug || '').toLowerCase().trim();
+      name = (catOrKey.name || catOrKey.category_name || '').toLowerCase().trim();
+      icon = (catOrKey.icon || catOrKey.category_icon || '').trim();
+    }
+
+    // 1. Direct slug match (e.g. 'african-diaspora-matters', 'culture-heritage', 'art-entertainment', 'all', etc.)
+    if (slug && window.CSP_ICONS[slug]) return window.CSP_ICONS[slug];
+
+    // 2. Direct icon emoji conversion
+    if (icon && EMOJI_TO_SVG_KEY[icon]) return window.CSP_ICONS[EMOJI_TO_SVG_KEY[icon]];
+
+    // 3. Direct icon key match (if icon is 'globe', 'palette', etc.)
+    if (icon && window.CSP_ICONS[icon.toLowerCase()]) return window.CSP_ICONS[icon.toLowerCase()];
+
+    // 4. Combined text pattern matching on slug + name
+    var combined = (slug + ' ' + name).toLowerCase();
+
+    if (combined.includes('all') || slug === 'all') return window.CSP_ICONS['grid'];
+    if (combined.includes('culture') || combined.includes('heritage')) return window.CSP_ICONS['heritage'];
+    if (combined.includes('innovation') || combined.includes('tech')) return window.CSP_ICONS['lightbulb'];
+    if (combined.includes('art') || combined.includes('entertainment')) return window.CSP_ICONS['palette'];
+    if (combined.includes('community')) return window.CSP_ICONS['users'];
+    if (combined.includes('success')) return window.CSP_ICONS['star'];
+    if (combined.includes('insight') || combined.includes('analysis')) return window.CSP_ICONS['bar-chart'];
+    if (combined.includes('business') || combined.includes('trade')) return window.CSP_ICONS['briefcase'];
+    if (combined.includes('travel') || combined.includes('mobility')) return window.CSP_ICONS['plane'];
+    if (combined.includes('health') || combined.includes('medical')) return window.CSP_ICONS['heart-pulse'];
+    return window.CSP_ICONS['globe'];
+  };
+
+  window.handleCspVote = function(btn, optionText, percentage) {
+    var container = btn.closest('.csp-poll-options');
+    if (!container) return;
+    
+    var options = [
+      { label: 'Tech & AI Infrastructure', pct: 42, icon: window.CSP_ICONS['lightbulb'] },
+      { label: 'Cultural Heritage & Arts', pct: 35, icon: window.CSP_ICONS['heritage'] },
+      { label: 'Diaspora Capital & Trade', pct: 23, icon: window.CSP_ICONS['briefcase'] }
+    ];
+    
+    var html = '';
+    options.forEach(function(opt) {
+      var isChosen = optionText.toLowerCase().indexOf(opt.label.split(' ')[0].toLowerCase()) !== -1;
+      html += '<div style="margin-bottom:8px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;font-weight:600;color:' + (isChosen ? '#00AEFE' : '#475569') + ';margin-bottom:4px;">' +
+          '<span style="display:inline-flex;align-items:center;gap:4px;">' + opt.icon + ' ' + opt.label + (isChosen ? ' <strong style="color:#00AEFE;margin-left:4px;">(Your Vote)</strong>' : '') + '</span>' +
+          '<span style="font-weight:700;">' + opt.pct + '%</span>' +
+        '</div>' +
+        '<div style="height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;">' +
+          '<div style="height:100%;width:' + opt.pct + '%;background:' + (isChosen ? 'linear-gradient(90deg, #00AEFE, #B71F71)' : '#cbd5e1') + ';border-radius:4px;transition:width 0.6s ease;"></div>' +
+        '</div>' +
+      '</div>';
+    });
+    
+    container.innerHTML = html;
+    if (window.cspToast) window.cspToast('Vote recorded for "' + optionText + '"!', 'success');
+  };
 </script>
 <!-- CSP_HEADER_FIXES_END -->
 </head>
@@ -3427,332 +3609,552 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 </div>
 
 				<div data-elementor-type="wp-page" data-elementor-id="979" class="elementor elementor-979">
-				<div class="elementor-element elementor-element-4d857de7 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="4d857de7" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-		<div class="elementor-element elementor-element-75d32a27 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="75d32a27" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-		<div class="elementor-element elementor-element-a95f01d e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="a95f01d" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-3056ee9c sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="3056ee9c" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">BECOME A SPONSOR</h2>				</div>
-				</div>
-				<div class="elementor-element elementor-element-e904587 eael-dual-header-content-align-left eael-dual-header-content-mobile-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="e904587" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
-				<div class="elementor-widget-container">
-								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-ad87566">Champion the Voices That Shape The </span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">Global Diaspora</span> </h2>					<span class="subtext"><p>Your sponsorship empowers us to discover new writers, reach underserved communities, and preserve the stories that define the diaspora experience. Join our community of supporters who believe every voice deserves to be heard.</p></span>
-							</div>
+<section class="csp-sponsorship-hero-sec">
+  <div class="csp-hero-ambient-glow glow-1"></div>
+  <div class="csp-hero-ambient-glow glow-2"></div>
+  <div class="csp-sponsorship-hero-container">
+    <div class="csp-hero-content-col">
+      <div class="csp-hero-badge-pill">
+        <span class="pill-dot"></span>
+        <span class="pill-text">BECOME A SPONSOR</span>
+      </div>
+      <h1 class="csp-hero-title">
+        Champion the Voices That Shape The <span class="csp-hero-gradient-text">Global Diaspora</span>
+      </h1>
+      <p class="csp-hero-description">
+        Your sponsorship empowers us to discover new writers, reach underserved communities, and preserve the stories that define the diaspora experience. Join our community of supporters who believe every voice deserves to be heard.
+      </p>
+      <div class="csp-hero-action-group">
+        <a href="https://wa.link/ojk2vx" target="_blank" rel="noopener noreferrer" class="csp-btn-primary-gradient">
+          <span>Become A Sponsor</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/about-us/" class="csp-btn-glass-secondary">
+          <span>Learn Our Story</span>
+        </a>
+      </div>
+    </div>
+    <div class="csp-hero-visual-col">
+      <div class="csp-hero-image-wrapper">
+        <img src="/wp-content/uploads/2026/01/back-view-two-young-black-females-celebrating-hugging-scaled.jpg" alt="Champion Diaspora Voices" class="csp-hero-main-img" />
+        <div class="csp-hero-overlay-card">
+          <div class="csp-overlay-badge-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue-accent)" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div>
+            <div class="csp-overlay-card-num">100% Impact</div>
+            <div class="csp-overlay-card-txt">Empowering Independent Diaspora Journalism</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Exotic Support Matters Section with Glassmorphism Cards & Visual Split -->
+<section class="csp-support-matters-sec">
+  <div class="csp-support-header-area">
+    <span class="csp-section-tag">FOR SPONSORS</span>
+    <h2 class="csp-support-sec-title">
+      Why Your Support <span class="csp-hero-gradient-text">Matters</span>
+    </h2>
+    <p class="csp-support-sec-sub">
+      Every contribution directly fuels our mission to amplify diaspora voices and build bridges across communities worldwide.
+    </p>
+  </div>
 
-						</div>
-				</div>
-		<div class="elementor-element elementor-element-d74cebf e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="d74cebf" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-170b1e1a sticky-ekit-buttonstyle elementor-align--mobilecenter elementor-align-center elementor-widget elementor-widget-elementskit-button animated fadeIn" data-id="170b1e1a" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}" data-widget_type="elementskit-button.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		<div class="ekit-btn-wraper">
-							<a href="https://wa.link/ojk2vx" class="elementskit-btn  whitespace--normal" id="">
-					Become A Sponsor				</a>
-					</div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-ba7f8bc sticky-ekit-buttonstyle elementor-align--mobilecenter elementor-align-center elementor-widget elementor-widget-elementskit-button animated fadeIn" data-id="ba7f8bc" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}" data-widget_type="elementskit-button.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		<div class="ekit-btn-wraper">
-							<a href="/about-us/" class="elementskit-btn  whitespace--normal" id="">
-					Learn Our Story				</a>
-					</div>
-        </div>				</div>
-				</div>
-				</div>
-				</div>
-		<div class="elementor-element elementor-element-fcb5826 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="fcb5826" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-02da6d3 elementor-widget elementor-widget-ucaddon_blob_shapes" data-id="02da6d3" data-element_type="widget" data-e-type="widget" data-widget_type="ucaddon_blob_shapes.default">
-				<div class="elementor-widget-container">
-					
-<!-- start Blob Shapes -->
-<style>/* widget: Blob Shapes */
+  <div class="csp-support-split-layout">
+    <!-- Visual Feature Card -->
+    <div class="csp-support-editorial-visual">
+      <img src="/wp-content/uploads/2026/01/back-view-two-young-black-females-celebrating-hugging-scaled.jpg" alt="Diaspora Community Impact" class="csp-editorial-bg-img" />
+      <div class="csp-editorial-gradient-overlay"></div>
+      <div class="csp-editorial-card-content">
+        <div class="csp-editorial-tag">OUR MISSION</div>
+        <h3 class="csp-editorial-heading">Preserving Culture, Empowering Stories</h3>
+        <p class="csp-editorial-excerpt">
+          Through curated mentorship, independent publishing, and archival preservation, we ensure our global heritage shines brightly.
+        </p>
+        <div class="csp-editorial-stats-row">
+          <div class="stat-box">
+            <span class="stat-num">50K+</span>
+            <span class="stat-lbl">Global Readers</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">120+</span>
+            <span class="stat-lbl">Writers Funded</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-#uc_blob_shapes_elementor_02da6d3{
-  mix-blend-mode: overlay;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-position:center center;
-  opacity: 100%; 
-}
+    <!-- 6 Glassmorphism Grid Cards -->
+    <div class="csp-support-glass-grid">
+      <div class="csp-glass-card">
+        <div class="csp-glass-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3 class="csp-glass-card-title">Amplify Unheard Voices</h3>
+        <p class="csp-glass-card-desc">Your sponsorship directly funds our mission to discover and platform writers from underrepresented diaspora communities.</p>
+      </div>
 
-#uc_blob_shapes_elementor_02da6d3_justification #uc_blob_shapes_elementor_02da6d3_justification-inner{
-  position: absolute;
-  background-position:center center;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
+      <div class="csp-glass-card">
+        <div class="csp-glass-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3 class="csp-glass-card-title">Expand Our Reach</h3>
+        <p class="csp-glass-card-desc">Help us bring Conspodium to new communities, translate stories, and build bridges across international borders.</p>
+      </div>
 
-#uc_blob_shapes_elementor_02da6d3_justification #uc_blob_shapes_elementor_02da6d3_justification-inner .ue_blob_inside{
-	width: 100%;
-}
+      <div class="csp-glass-card">
+        <div class="csp-glass-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v8"/><path d="M4.93 10.93a10 10 0 1 0 14.14 0"/><path d="M12 18h.01"/></svg>
+        </div>
+        <h3 class="csp-glass-card-title">Fund Emerging Writers</h3>
+        <p class="csp-glass-card-desc">Support our writer fellowship program that provides dedicated mentorship and paid opportunities to new voices.</p>
+      </div>
 
-#uc_blob_shapes_elementor_02da6d3_justification #uc_blob_shapes_elementor_02da6d3_justification-inner .blob{
-  background-position:center center;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-color: #000;
-}
+      <div class="csp-glass-card">
+        <div class="csp-glass-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <h3 class="csp-glass-card-title">Preserve Our Stories</h3>
+        <p class="csp-glass-card-desc">Enable our archival work documenting diaspora experiences, personal histories, and literary traditions for future generations.</p>
+      </div>
 
-#uc_blob_shapes_elementor_02da6d3_justification{
-  display:flex;
-  min-height:1px;
+      <div class="csp-glass-card">
+        <div class="csp-glass-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11l-3-3m0 0l-3 3m3-3v12"/></svg>
+        </div>
+        <h3 class="csp-glass-card-title">Build Community</h3>
+        <p class="csp-glass-card-desc">Fund interactive community events, literary workshops, and gatherings that bring diaspora storytellers together worldwide.</p>
+      </div>
+
+      <div class="csp-glass-card">
+        <div class="csp-glass-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3 class="csp-glass-card-title">Make A Difference</h3>
+        <p class="csp-glass-card-desc">Join a community of supporters who believe in the power of storytelling to create positive global change.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Exotic Styling for Hero and Support Matters Sections -->
+<style>
+/* Reset & Container System */
+.csp-sponsorship-hero-sec {
   position: relative;
+  background: #090C15;
+  color: #FFFFFF;
+  padding: 100px 5% 80px;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
 }
 
-#uc_blob_shapes_elementor_02da6d3 .ue-blob-link{
-  display:block;
+.csp-hero-ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  opacity: 0.35;
+}
+.csp-hero-ambient-glow.glow-1 {
+  width: 450px;
+  height: 450px;
+  background: var(--blue-accent, #00AEFE);
+  top: -100px;
+  right: -50px;
+}
+.csp-hero-ambient-glow.glow-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--pink-accent, #B71F71);
+  bottom: -80px;
+  left: -50px;
 }
 
-#uc_blob_shapes_elementor_02da6d3_justification .ue_blob_inside {
+.csp-sponsorship-hero-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
   position: relative;
   z-index: 2;
-  overflow:hidden;
+}
+
+.csp-hero-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  margin-bottom: 24px;
+}
+.csp-hero-badge-pill .pill-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--blue-accent, #00AEFE);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--blue-accent, #00AEFE);
+}
+.csp-hero-badge-pill .pill-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #E2E8F0;
+  text-transform: uppercase;
+}
+
+.csp-hero-title {
+  font-family: 'Merriweather', serif;
+  font-size: 3.4rem;
+  line-height: 1.25;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+.csp-hero-gradient-text {
+  background: linear-gradient(135deg, var(--blue-accent, #00AEFE) 0%, #A2007D 50%, var(--pink-accent, #B71F71) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.csp-hero-description {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #CBD5E1;
+  margin-bottom: 36px;
+  max-width: 580px;
+}
+
+.csp-hero-action-group {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.csp-btn-primary-gradient {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 34px;
+  background: linear-gradient(135deg, var(--blue-accent, #00AEFE) 0%, var(--pink-accent, #B71F71) 100%);
+  color: #FFFFFF !important;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(0, 174, 254, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.csp-btn-primary-gradient:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(183, 31, 113, 0.4);
+  color: #FFFFFF !important;
+}
+
+.csp-btn-glass-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 32px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF !important;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 50px;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+.csp-btn-glass-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #FFFFFF !important;
+}
+
+.csp-hero-visual-col {
+  position: relative;
+}
+.csp-hero-image-wrapper {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.csp-hero-main-img {
   width: 100%;
-  clip-path: animated;
-  -webkit-clip-path: animated;
-  background:linear-gradient(45deg, #00AEFE00 0%, 50%, #A2007D 100%); 
+  height: 480px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.csp-hero-image-wrapper:hover .csp-hero-main-img {
+  transform: scale(1.04);
 }
 
-#uc_blob_shapes_elementor_02da6d3_size{
-  animation-name: animated;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-timing-function: linear;
-  clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
-   -webkit-clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
+.csp-hero-overlay-card {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  padding: 18px 24px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.csp-overlay-badge-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 174, 254, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.csp-overlay-card-num {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+.csp-overlay-card-txt {
+  font-size: 0.85rem;
+  color: #94A3B8;
 }
 
-@keyframes animated {
-  0% {
-   clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
-   -webkit-clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
+/* Why Your Support Matters Section */
+.csp-support-matters-sec {
+  background: #0D111D;
+  padding: 110px 5%;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  color: #FFFFFF;
+}
+
+.csp-support-header-area {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 70px;
+}
+.csp-section-tag {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--blue-accent, #00AEFE);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.csp-support-sec-title {
+  font-family: 'Merriweather', serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 18px;
+}
+.csp-support-sec-sub {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #94A3B8;
+}
+
+.csp-support-split-layout {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 40px;
+  align-items: stretch;
+}
+
+/* Editorial Visual Card */
+.csp-support-editorial-visual {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+}
+.csp-editorial-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  transition: transform 0.7s ease;
+}
+.csp-support-editorial-visual:hover .csp-editorial-bg-img {
+  transform: scale(1.05);
+}
+.csp-editorial-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(13, 17, 29, 0.2) 0%, rgba(13, 17, 29, 0.95) 85%);
+  z-index: 2;
+}
+.csp-editorial-card-content {
+  position: relative;
+  z-index: 3;
+}
+.csp-editorial-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--pink-accent, #B71F71);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+.csp-editorial-heading {
+  font-family: 'Merriweather', serif;
+  font-size: 1.8rem;
+  line-height: 1.3;
+  color: #FFFFFF;
+  margin-bottom: 14px;
+}
+.csp-editorial-excerpt {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #CBD5E1;
+  margin-bottom: 28px;
+}
+.csp-editorial-stats-row {
+  display: flex;
+  gap: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 20px;
+}
+.csp-editorial-stats-row .stat-box {
+  display: flex;
+  flex-direction: column;
+}
+.csp-editorial-stats-row .stat-num {
+  font-family: 'Merriweather', serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--blue-accent, #00AEFE);
+}
+.csp-editorial-stats-row .stat-lbl {
+  font-size: 0.8rem;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Glassmorphism Grid */
+.csp-support-glass-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.csp-glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 32px 28px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+.csp-glass-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 174, 254, 0.35);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px -15px rgba(0, 174, 254, 0.25);
+}
+.csp-glass-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(0, 174, 254, 0.12) 0%, rgba(183, 31, 113, 0.12) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue-accent, #00AEFE);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+.csp-glass-card:hover .csp-glass-icon-box {
+  background: linear-gradient(135deg, var(--blue-accent, #00AEFE) 0%, var(--pink-accent, #B71F71) 100%);
+  color: #FFFFFF;
+  border-color: transparent;
+}
+.csp-glass-card-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 12px;
+}
+.csp-glass-card-desc {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #94A3B8;
+  margin: 0;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .csp-sponsorship-hero-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
-  50% {
-    clip-path: polygon(98.400% 19.800%, 99.300% 22.300%, 99.800% 24.900%, 100.000% 27.600%, 99.900% 30.400%, 99.600% 33.200%, 99.000% 36.100%, 98.200% 39.000%, 97.300% 42.000%, 96.200% 45.000%, 95.000% 48.000%, 93.700% 51.000%, 92.400% 54.000%, 91.100% 57.000%, 89.800% 60.000%, 88.500% 63.000%, 87.200% 65.900%, 86.000% 68.800%, 84.900% 71.600%, 83.900% 74.300%, 82.900% 77.000%, 81.900% 79.600%, 80.900% 82.100%, 80.000% 84.400%, 79.000% 86.600%, 78.000% 88.700%, 77.000% 90.600%, 75.900% 92.400%, 74.800% 94.000%, 73.600% 95.400%, 72.300% 96.600%, 70.900% 97.600%, 69.400% 98.400%, 67.800% 99.000%, 66.100% 99.400%, 64.200% 99.600%, 62.200% 99.600%, 60.100% 99.500%, 58.000% 99.200%, 55.800% 98.800%, 53.500% 98.200%, 51.100% 97.500%, 48.700% 96.700%, 46.200% 95.800%, 43.700% 94.900%, 41.100% 93.900%, 38.500% 92.900%, 35.900% 91.800%, 33.300% 90.700%, 30.700% 89.600%, 28.100% 88.500%, 25.500% 87.400%, 23.000% 86.300%, 20.500% 85.100%, 18.100% 83.900%, 15.800% 82.700%, 13.600% 81.400%, 11.500% 80.100%, 9.500% 78.700%, 7.700% 77.300%, 6.000% 75.800%, 4.500% 74.200%, 3.200% 72.500%, 2.100% 70.800%, 1.400% 69.400%, 0.700% 67.500%, 0.300% 65.500%, 0.100% 63.400%, 0.000% 61.200%, 0.200% 59.000%, 0.600% 56.700%, 1.100% 54.400%, 1.800% 52.000%, 2.700% 49.600%, 3.700% 47.100%, 4.900% 44.600%, 6.200% 42.000%, 7.600% 39.400%, 9.200% 36.800%, 10.900% 34.200%, 12.700% 31.600%, 14.600% 29.000%, 16.600% 26.400%, 18.700% 23.800%, 20.900% 21.300%, 23.100% 18.800%, 25.400% 16.400%, 27.800% 14.100%, 30.300% 11.900%, 32.900% 9.800%, 35.600% 7.900%, 38.400% 6.200%, 41.300% 4.600%, 44.300% 3.200%, 47.400% 2.100%, 50.600% 1.200%, 53.900% 0.600%, 57.200% 0.200%, 60.500% 0.000%, 63.900% 0.100%, 67.300% 0.500%, 70.700% 1.100%, 74.100% 1.900%, 77.400% 2.900%, 80.600% 4.100%, 83.600% 5.500%, 86.500% 7.100%, 89.200% 8.900%, 91.600% 10.800%, 93.800% 12.800%, 95.700% 15.000%, 97.300% 17.300%, 98.400% 19.800%);
-   -webkit-clip-path: polygon(98.400% 19.800%, 99.300% 22.300%, 99.800% 24.900%, 100.000% 27.600%, 99.900% 30.400%, 99.600% 33.200%, 99.000% 36.100%, 98.200% 39.000%, 97.300% 42.000%, 96.200% 45.000%, 95.000% 48.000%, 93.700% 51.000%, 92.400% 54.000%, 91.100% 57.000%, 89.800% 60.000%, 88.500% 63.000%, 87.200% 65.900%, 86.000% 68.800%, 84.900% 71.600%, 83.900% 74.300%, 82.900% 77.000%, 81.900% 79.600%, 80.900% 82.100%, 80.000% 84.400%, 79.000% 86.600%, 78.000% 88.700%, 77.000% 90.600%, 75.900% 92.400%, 74.800% 94.000%, 73.600% 95.400%, 72.300% 96.600%, 70.900% 97.600%, 69.400% 98.400%, 67.800% 99.000%, 66.100% 99.400%, 64.200% 99.600%, 62.200% 99.600%, 60.100% 99.500%, 58.000% 99.200%, 55.800% 98.800%, 53.500% 98.200%, 51.100% 97.500%, 48.700% 96.700%, 46.200% 95.800%, 43.700% 94.900%, 41.100% 93.900%, 38.500% 92.900%, 35.900% 91.800%, 33.300% 90.700%, 30.700% 89.600%, 28.100% 88.500%, 25.500% 87.400%, 23.000% 86.300%, 20.500% 85.100%, 18.100% 83.900%, 15.800% 82.700%, 13.600% 81.400%, 11.500% 80.100%, 9.500% 78.700%, 7.700% 77.300%, 6.000% 75.800%, 4.500% 74.200%, 3.200% 72.500%, 2.100% 70.800%, 1.400% 69.400%, 0.700% 67.500%, 0.300% 65.500%, 0.100% 63.400%, 0.000% 61.200%, 0.200% 59.000%, 0.600% 56.700%, 1.100% 54.400%, 1.800% 52.000%, 2.700% 49.600%, 3.700% 47.100%, 4.900% 44.600%, 6.200% 42.000%, 7.600% 39.400%, 9.200% 36.800%, 10.900% 34.200%, 12.700% 31.600%, 14.600% 29.000%, 16.600% 26.400%, 18.700% 23.800%, 20.900% 21.300%, 23.100% 18.800%, 25.400% 16.400%, 27.800% 14.100%, 30.300% 11.900%, 32.900% 9.800%, 35.600% 7.900%, 38.400% 6.200%, 41.300% 4.600%, 44.300% 3.200%, 47.400% 2.100%, 50.600% 1.200%, 53.900% 0.600%, 57.200% 0.200%, 60.500% 0.000%, 63.900% 0.100%, 67.300% 0.500%, 70.700% 1.100%, 74.100% 1.900%, 77.400% 2.900%, 80.600% 4.100%, 83.600% 5.500%, 86.500% 7.100%, 89.200% 8.900%, 91.600% 10.800%, 93.800% 12.800%, 95.700% 15.000%, 97.300% 17.300%, 98.400% 19.800%);
+  .csp-hero-title {
+    font-size: 2.8rem;
   }
-  100% {
-    clip-path: polygon(96.500% 13.800%, 97.700% 15.900%, 98.600% 18.100%, 99.300% 20.500%, 99.700% 23.000%, 99.900% 25.600%, 99.900% 28.300%, 99.700% 31.100%, 99.500% 34.000%, 99.000% 36.900%, 98.400% 39.900%, 97.700% 42.900%, 96.900% 45.900%, 96.000% 49.000%, 95.100% 52.100%, 94.100% 55.200%, 93.100% 58.200%, 92.100% 61.200%, 91.100% 64.100%, 90.100% 67.000%, 89.100% 69.800%, 88.000% 72.600%, 86.900% 75.300%, 85.700% 77.900%, 84.500% 80.400%, 83.200% 82.800%, 81.800% 85.100%, 80.300% 87.200%, 78.700% 89.200%, 77.000% 91.000%, 75.200% 92.700%, 73.300% 94.200%, 71.200% 95.600%, 69.000% 96.800%, 66.700% 97.800%, 64.300% 98.600%, 61.800% 99.200%, 59.200% 99.700%, 56.500% 100.000%, 53.800% 100.100%, 51.000% 100.100%, 48.200% 99.900%, 45.400% 99.600%, 42.600% 99.100%, 39.800% 98.500%, 37.000% 97.700%, 34.300% 96.800%, 31.700% 95.700%, 29.100% 94.500%, 26.600% 93.100%, 24.200% 91.600%, 21.900% 90.000%, 19.700% 88.300%, 17.600% 86.500%, 15.600% 84.500%, 13.700% 82.400%, 11.900% 80.300%, 10.300% 78.100%, 8.800% 75.800%, 7.400% 73.400%, 6.100% 70.900%, 4.900% 68.400%, 3.800% 65.800%, 2.800% 63.100%, 2.000% 60.400%, 1.300% 57.600%, 0.700% 54.800%, 0.200% 52.000%, -0.100% 49.200%, -0.300% 46.400%, 0.000% 43.300%, 0.100% 40.500%, 0.300% 37.700%, 0.700% 35.000%, 1.200% 32.300%, 1.900% 29.700%, 2.800% 27.200%, 3.800% 24.700%, 5.000% 22.300%, 6.400% 20.000%, 8.000% 17.900%, 9.800% 15.900%, 11.700% 14.000%, 13.800% 12.200%, 16.100% 10.500%, 18.500% 9.000%, 21.000% 7.600%, 23.700% 6.300%, 26.500% 5.100%, 29.400% 4.100%, 32.400% 3.200%, 35.500% 2.400%, 38.700% 1.700%, 41.900% 1.100%, 45.200% 0.600%, 48.500% 0.300%, 51.900% 0.100%, 55.300% 0.000%, 58.700% 0.000%, 62.100% 0.100%, 65.500% 0.300%, 68.800% 0.700%, 72.100% 1.200%, 75.300% 1.800%, 78.400% 2.600%, 81.300% 3.500%, 84.100% 4.500%, 86.700% 5.700%, 89.100% 7.000%, 91.300% 8.500%, 93.300% 10.100%, 95.000% 11.900%, 96.500% 13.800%);
-   -webkit-clip-path: polygon(96.500% 13.800%, 97.700% 15.900%, 98.600% 18.100%, 99.300% 20.500%, 99.700% 23.000%, 99.900% 25.600%, 99.900% 28.300%, 99.700% 31.100%, 99.500% 34.000%, 99.000% 36.900%, 98.400% 39.900%, 97.700% 42.900%, 96.900% 45.900%, 96.000% 49.000%, 95.100% 52.100%, 94.100% 55.200%, 93.100% 58.200%, 92.100% 61.200%, 91.100% 64.100%, 90.100% 67.000%, 89.100% 69.800%, 88.000% 72.600%, 86.900% 75.300%, 85.700% 77.900%, 84.500% 80.400%, 83.200% 82.800%, 81.800% 85.100%, 80.300% 87.200%, 78.700% 89.200%, 77.000% 91.000%, 75.200% 92.700%, 73.300% 94.200%, 71.200% 95.600%, 69.000% 96.800%, 66.700% 97.800%, 64.300% 98.600%, 61.800% 99.200%, 59.200% 99.700%, 56.500% 100.000%, 53.800% 100.100%, 51.000% 100.100%, 48.200% 99.900%, 45.400% 99.600%, 42.600% 99.100%, 39.800% 98.500%, 37.000% 97.700%, 34.300% 96.800%, 31.700% 95.700%, 29.100% 94.500%, 26.600% 93.100%, 24.200% 91.600%, 21.900% 90.000%, 19.700% 88.300%, 17.600% 86.500%, 15.600% 84.500%, 13.700% 82.400%, 11.900% 80.300%, 10.300% 78.100%, 8.800% 75.800%, 7.400% 73.400%, 6.100% 70.900%, 4.900% 68.400%, 3.800% 65.800%, 2.800% 63.100%, 2.000% 60.400%, 1.300% 57.600%, 0.700% 54.800%, 0.200% 52.000%, -0.100% 49.200%, -0.300% 46.400%, 0.000% 43.300%, 0.100% 40.500%, 0.300% 37.700%, 0.700% 35.000%, 1.200% 32.300%, 1.900% 29.700%, 2.800% 27.200%, 3.800% 24.700%, 5.000% 22.300%, 6.400% 20.000%, 8.000% 17.900%, 9.800% 15.900%, 11.700% 14.000%, 13.800% 12.200%, 16.100% 10.500%, 18.500% 9.000%, 21.000% 7.600%, 23.700% 6.300%, 26.500% 5.100%, 29.400% 4.100%, 32.400% 3.200%, 35.500% 2.400%, 38.700% 1.700%, 41.900% 1.100%, 45.200% 0.600%, 48.500% 0.300%, 51.900% 0.100%, 55.300% 0.000%, 58.700% 0.000%, 62.100% 0.100%, 65.500% 0.300%, 68.800% 0.700%, 72.100% 1.200%, 75.300% 1.800%, 78.400% 2.600%, 81.300% 3.500%, 84.100% 4.500%, 86.700% 5.700%, 89.100% 7.000%, 91.300% 8.500%, 93.300% 10.100%, 95.000% 11.900%, 96.500% 13.800%);
+  .csp-support-split-layout {
+    grid-template-columns: 1fr;
   }
-}	 
-	
-
-
-#uc_blob_shapes_elementor_02da6d3 {
-  	aspect-ratio: 1 / 1; 
-    width:100%;
-  	
+  .csp-support-editorial-visual {
+    min-height: 400px;
+  }
 }
-
-.ue-blob-text-holder{
-  position:absolute;
-  top:0px;
-  left:0px;
-  right:0px;
-  bottom:0px;
-  width:100%;
-  height:100%;
-  z-index:2;
-  display:flex;
-  justify-content:center;
-  flex-direction:column;
+@media (max-width: 640px) {
+  .csp-sponsorship-hero-sec {
+    padding: 60px 5% 50px;
+  }
+  .csp-hero-title {
+    font-size: 2.2rem;
+  }
+  .csp-support-sec-title {
+    font-size: 2.1rem;
+  }
+  .csp-support-glass-grid {
+    grid-template-columns: 1fr;
+  }
+  .csp-hero-action-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .csp-btn-primary-gradient, .csp-btn-glass-secondary {
+    justify-content: center;
+  }
 }
-
-.ue_blob_inside{
-  position:relative;
-}
-
 </style>
-
-<div id="uc_blob_shapes_elementor_02da6d3_justification" class="ue-blob-wrapper" role="group">
-  
-  <div id="uc_blob_shapes_elementor_02da6d3_size" class="ue_blob_inside">
-  
-    	
-        
-      <div id="uc_blob_shapes_elementor_02da6d3" style="background-image:url(../wp-content/uploads/2026/01/back-view-two-young-black-females-celebrating-hugging-scaled.jpg)" class="blob" role="presentation"></div>
-        
-      <div class="ue-blob-text-holder">
-                            </div>
-        
-      
-  </div>
-  
-    
-</div>
-<!-- end Blob Shapes -->				</div>
-				</div>
-				</div>
-				</div>
-					</div>
-				</div>
-		<div class="elementor-element elementor-element-598a9a85 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="598a9a85" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-				<div class="elementor-element elementor-element-482bd48b elementor-widget elementor-widget-spacer" data-id="482bd48b" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
-				<div class="elementor-widget-container">
-							<div class="elementor-spacer">
-			<div class="elementor-spacer-inner"></div>
-		</div>
-						</div>
-				</div>
-				<div class="elementor-element elementor-element-66896a2f sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="66896a2f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">FOR SPONSORS </h2>				</div>
-				</div>
-				<div class="elementor-element elementor-element-1e6aef7e eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="1e6aef7e" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
-				<div class="elementor-widget-container">
-								<div class="eael-dual-header">
-				<h1 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4">Why Your Support </span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">Matters</span> </h1>					<span class="subtext"><p>Every contribution directly fuels our mission to amplify diaspora voices and build bridges across communities.</p></span>
-							</div>
-
-						</div>
-				</div>
-		<div class="elementor-element elementor-element-d099459 e-grid e-con-boxed e-con e-child adv-sticky-elementor" data-id="d099459" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-				<div class="elementor-element elementor-element-4417a3f ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="4417a3f" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
-        <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon jki jki-users-light"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Amplify Unheard Voices                </h3>
-                        		  	<p>Your sponsorship directly funds our mission to discover and platform writers from underrepresented diaspora communities.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-0bc45d5 ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="0bc45d5" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
-        <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon jki jki-globe-americas-solid"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Expand Our Reach                </h3>
-                        		  	<p>Help us bring Conspodium to new communities, translate stories, and build bridges across borders.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-e443527 ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="e443527" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
-        <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon jki jki-idea-light"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Fund Emerging Writers                </h3>
-                        		  	<p>Support our writer fellowship program that provides mentorship and paid opportunities to new voices.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-1a8e202 ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="1a8e202" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
-        <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon jki jki-open-book-light"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Preserve Our Stories                </h3>
-                        		  	<p>Enable our archival work documenting diaspora experiences for future generations.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-2303373 ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="2303373" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
-        <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon far fa-handshake"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Build Community                </h3>
-                        		  	<p>Fund community events, workshops, and gatherings that bring diaspora together worldwide.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-1ffa11b ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="1ffa11b" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
-        <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon fas fa-hand-holding-heart"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Make A Difference                </h3>
-                        		  	<p>Join a community of supporters who believe in the power of storytelling to create change.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-					</div>
-				</div>
-				<div class="elementor-element elementor-element-5ccdd5e1 elementor-widget elementor-widget-spacer" data-id="5ccdd5e1" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
-				<div class="elementor-widget-container">
-							<div class="elementor-spacer">
-			<div class="elementor-spacer-inner"></div>
-		</div>
-						</div>
-				</div>
-					</div>
-				</div>
 		<div class="elementor-element elementor-element-d0d1d4a e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="d0d1d4a" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 					<div class="e-con-inner">
 		<div class="elementor-element elementor-element-516708b e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="516708b" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;background_motion_fx_motion_fx_scrolling&quot;:&quot;yes&quot;,&quot;background_motion_fx_devices&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;sticky_logo_enable&quot;:&quot;no&quot;}">

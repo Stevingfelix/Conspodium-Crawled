@@ -8469,6 +8469,7 @@ e-page-transition,
         btnToggleLive.textContent = '💾 Save Live Discussion Settings';
         btnToggleLive.className = 'csp-btn-sm csp-btn-primary';
       } else {
+        var adminToken = localStorage.getItem('conspodium_admin_token') || '';
         var payload = {
           topic: document.getElementById('live-topic').value,
           speaker_name: document.getElementById('live-speaker-name').value,
@@ -8480,7 +8481,10 @@ e-page-transition,
 
         fetch(getRootUrl('api/homepage.php?action=save_live_discussion'), {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Token': adminToken
+          },
           body: JSON.stringify(payload)
         })
         .then(function(r){ return r.json(); })
@@ -8498,7 +8502,7 @@ e-page-transition,
   }
 
   var isEditingInterview = false;
-  var btnToggleInterview = document.getElementById('btn-toggle-interview-edit');
+  var btnToggleInterview = document.getElementById('btn-toggle-int-edit') || document.getElementById('btn-toggle-interview-edit');
   if (btnToggleInterview) {
     btnToggleInterview.onclick = function() {
       if (!isEditingInterview) {
@@ -8507,7 +8511,9 @@ e-page-transition,
         btnToggleInterview.textContent = '💾 Save Featured Interview';
         btnToggleInterview.className = 'csp-btn-sm csp-btn-primary';
       } else {
+        var adminToken = localStorage.getItem('conspodium_admin_token') || '';
         var data = {
+          title: document.getElementById('sec-int-title') ? document.getElementById('sec-int-title').value : 'In Conversation With',
           interviewee_name: document.getElementById('sec-int-name').value,
           interviewee_role: document.getElementById('sec-int-role').value,
           quote: document.getElementById('sec-int-quote').value,
@@ -8516,7 +8522,10 @@ e-page-transition,
         };
         fetch(getRootUrl('api/homepage.php?action=save_featured_interview'), {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Token': adminToken
+          },
           body: JSON.stringify(data)
         })
         .then(function(r){ return r.json(); })
