@@ -11796,13 +11796,13 @@
     z-index: 2 !important;
     width: 88% !important;
     max-width: 360px !important;
-    background: rgba(6, 16, 34, 0.92) !important;
+    background: rgba(6, 16, 34, 0.94) !important;
     backdrop-filter: blur(24px) !important;
     -webkit-backdrop-filter: blur(24px) !important;
     border: 1px solid rgba(0, 174, 254, 0.3) !important;
     border-radius: 28px !important;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 174, 254, 0.2) !important;
-    padding: 60px 20px 32px !important;
+    padding: 76px 20px 28px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -11817,7 +11817,7 @@
 
   .csp-modal-card ul.csp-modal-menu {
     list-style: none !important;
-    margin: 0 !important;
+    margin: 16px 0 0 0 !important;
     padding: 0 !important;
     width: 100% !important;
     display: flex !important;
@@ -11827,7 +11827,7 @@
   }
 
   .csp-modal-card ul.csp-modal-menu>li:first-child {
-    margin-top: 6px !important;
+    margin-top: 0 !important;
   }
 
   .csp-modal-card li {
@@ -11893,15 +11893,15 @@
 
   .csp-mobile-menu-close {
     position: absolute !important;
-    top: 16px !important;
-    right: 16px !important;
-    width: 36px !important;
-    height: 36px !important;
+    top: 18px !important;
+    right: 18px !important;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    color: rgba(255, 255, 255, 0.85) !important;
-    font-size: 1.4rem !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 1.5rem !important;
     line-height: 1 !important;
     display: flex !important;
     align-items: center !important;
@@ -11912,7 +11912,7 @@
   }
 
   .csp-mobile-menu-close:hover {
-    background: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.25) !important;
     color: #ffffff !important;
     transform: scale(1.08) !important;
   }
@@ -13077,6 +13077,7 @@
           { text: 'About Us', href: getRootUrl('about-us/') },
           { text: 'Contact Us', href: getRootUrl('contact-us/') },
           { text: 'Stories', href: getRootUrl('stories/') },
+          { text: 'Forum', href: getRootUrl('forum/') },
           { text: 'Sponsorship', href: getRootUrl('sponsorship/') },
           { text: 'Advert', href: getRootUrl('advert/') },
           { text: 'Submit Story', href: getRootUrl('submit-story/'), isCta: true }
@@ -20811,9 +20812,10 @@
       function renderHomepageContent(d) {
         if (!d) return;
 
-        // A. Discover by Category Grid (Dynamic DB Selection)
+        // A. Discover by Category Grid (Dynamic DB Selection - Strictly limit to 3 categories)
         if (d.homepage_categories && d.homepage_categories.length > 0) {
           var catContainers = document.querySelectorAll('.elementor-element-7ad4723a, .csp-category-grid-container');
+          var topThreeCats = d.homepage_categories.slice(0, 3);
           catContainers.forEach(function (grid) {
             grid.innerHTML = '';
             grid.style.display = 'grid';
@@ -20822,7 +20824,7 @@
             grid.style.width = '100%';
             grid.style.marginBottom = '40px';
 
-            d.homepage_categories.forEach(function (cat) {
+            topThreeCats.forEach(function (cat) {
               var catImg = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(cat.image) : (cat.image || '/uploads/cat_diaspora_matters.png');
               var catUrl = window.getRootUrl ? window.getRootUrl('category/' + cat.slug + '/') : '/category/' + cat.slug + '/';
               grid.innerHTML += `
@@ -20910,7 +20912,7 @@
           }
         }
 
-        // B4. Featured Stories ("Voices That Inspire")
+        // B4. Featured Stories ("Voices That Inspire" - Mobile Responsive Grid Fix)
         if (d.featured_stories && d.featured_stories.length > 0) {
           var outerSec = document.querySelector('.elementor-element-9c5da48');
           if (outerSec) {
@@ -20936,8 +20938,9 @@
           if (gridContainer) {
             gridContainer.innerHTML = '';
             var count = d.featured_stories.length;
+            var responsiveCols = window.innerWidth < 768 ? '1fr' : (window.innerWidth < 1024 ? 'repeat(2, minmax(0, 1fr))' : (count === 4 ? 'repeat(4, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))'));
             gridContainer.style.setProperty('display', 'grid', 'important');
-            gridContainer.style.setProperty('grid-template-columns', count === 4 ? 'repeat(4, minmax(0, 1fr))' : (count === 3 ? 'repeat(3, minmax(0, 1fr))' : 'repeat(auto-fit, minmax(300px, 1fr))'), 'important');
+            gridContainer.style.setProperty('grid-template-columns', responsiveCols, 'important');
             gridContainer.style.setProperty('gap', '28px', 'important');
             gridContainer.style.setProperty('width', '100%', 'important');
 
@@ -21002,7 +21005,8 @@
         }
       }
 
-      function loadHomepageDynamicContent() {
+      function loadHomepageDynamicContent(retryCount) {
+        retryCount = retryCount || 0;
         // Fast initial render from LocalStorage cache
         try {
           var cached = localStorage.getItem('csp_homepage_cache');
@@ -21026,11 +21030,18 @@
                   localStorage.setItem('csp_homepage_cache', JSON.stringify(res.data));
                 } catch (e) { }
                 renderHomepageContent(res.data);
+                return;
               }
+            }
+            if (retryCount < 2) {
+              setTimeout(function () { loadHomepageDynamicContent(retryCount + 1); }, 600);
             }
           })
           .catch(function (err) {
             console.error('Failed to fetch homepage data:', err);
+            if (retryCount < 2) {
+              setTimeout(function () { loadHomepageDynamicContent(retryCount + 1); }, 600);
+            }
           });
       }
 

@@ -735,13 +735,13 @@
     z-index: 2 !important;
     width: 88% !important;
     max-width: 360px !important;
-    background: rgba(6, 16, 34, 0.92) !important;
+    background: rgba(6, 16, 34, 0.94) !important;
     backdrop-filter: blur(24px) !important;
     -webkit-backdrop-filter: blur(24px) !important;
     border: 1px solid rgba(0, 174, 254, 0.3) !important;
     border-radius: 28px !important;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 174, 254, 0.2) !important;
-    padding: 60px 20px 32px !important;
+    padding: 76px 20px 28px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -756,7 +756,7 @@
 
   .csp-modal-card ul.csp-modal-menu {
     list-style: none !important;
-    margin: 0 !important;
+    margin: 16px 0 0 0 !important;
     padding: 0 !important;
     width: 100% !important;
     display: flex !important;
@@ -766,7 +766,7 @@
   }
 
   .csp-modal-card ul.csp-modal-menu>li:first-child {
-    margin-top: 6px !important;
+    margin-top: 0 !important;
   }
 
   .csp-modal-card li {
@@ -832,15 +832,15 @@
 
   .csp-mobile-menu-close {
     position: absolute !important;
-    top: 16px !important;
-    right: 16px !important;
-    width: 36px !important;
-    height: 36px !important;
+    top: 18px !important;
+    right: 18px !important;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    color: rgba(255, 255, 255, 0.85) !important;
-    font-size: 1.4rem !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 1.5rem !important;
     line-height: 1 !important;
     display: flex !important;
     align-items: center !important;
@@ -851,7 +851,7 @@
   }
 
   .csp-mobile-menu-close:hover {
-    background: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.25) !important;
     color: #ffffff !important;
     transform: scale(1.08) !important;
   }
@@ -2016,6 +2016,7 @@
           { text: 'About Us', href: getRootUrl('about-us/') },
           { text: 'Contact Us', href: getRootUrl('contact-us/') },
           { text: 'Stories', href: getRootUrl('stories/') },
+          { text: 'Forum', href: getRootUrl('forum/') },
           { text: 'Sponsorship', href: getRootUrl('sponsorship/') },
           { text: 'Advert', href: getRootUrl('advert/') },
           { text: 'Submit Story', href: getRootUrl('submit-story/'), isCta: true }

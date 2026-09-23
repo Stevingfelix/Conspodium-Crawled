@@ -2,6 +2,7 @@
 // api/homepage.php - Dynamic Homepage Content & Layout API
 error_reporting(0);
 ini_set('display_errors', '0');
+ob_start();
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
@@ -332,6 +333,7 @@ if ($method === 'GET' && ($action === 'get_all' || $action === 'frontend')) {
             ];
         }
 
+        ob_clean();
         echo json_encode([
             "success" => true,
             "data" => [

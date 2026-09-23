@@ -12002,6 +12002,7 @@
             { text: 'About Us', href: getRootUrl('about-us/') },
             { text: 'Contact Us', href: getRootUrl('contact-us/') },
             { text: 'Stories', href: getRootUrl('stories/') },
+            { text: 'Forum', href: getRootUrl('forum/') },
             { text: 'Sponsorship', href: getRootUrl('sponsorship/') },
             { text: 'Advert', href: getRootUrl('advert/') },
             { text: 'Submit Story', href: getRootUrl('submit-story/'), isCta: true }
@@ -18941,9 +18942,10 @@
       function renderHomepageContent(d) {
         if (!d) return;
 
-        // A. Discover by Category Grid (Dynamic DB Selection)
+        // A. Discover by Category Grid (Dynamic DB Selection - Strictly limit to 3 categories)
         if (d.homepage_categories && d.homepage_categories.length > 0) {
           var catContainers = document.querySelectorAll('.elementor-element-7ad4723a, .csp-category-grid-container');
+          var topThreeCats = d.homepage_categories.slice(0, 3);
           catContainers.forEach(function (grid) {
             grid.innerHTML = '';
             grid.style.display = 'grid';
@@ -18952,7 +18954,7 @@
             grid.style.width = '100%';
             grid.style.marginBottom = '40px';
 
-            d.homepage_categories.forEach(function (cat) {
+            topThreeCats.forEach(function (cat) {
               var catImg = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(cat.image) : (cat.image || '/uploads/cat_diaspora_matters.png');
               var catUrl = window.getRootUrl ? window.getRootUrl('category/' + cat.slug + '/') : '/category/' + cat.slug + '/';
               grid.innerHTML += `
@@ -19040,7 +19042,7 @@
           }
         }
 
-        // B4. Featured Stories ("Voices That Inspire")
+        // B4. Featured Stories ("Voices That Inspire" - Mobile Responsive Grid Fix)
         if (d.featured_stories && d.featured_stories.length > 0) {
           var outerSec = document.querySelector('.elementor-element-9c5da48');
           if (outerSec) {
@@ -19066,8 +19068,9 @@
           if (gridContainer) {
             gridContainer.innerHTML = '';
             var count = d.featured_stories.length;
+            var responsiveCols = window.innerWidth < 768 ? '1fr' : (window.innerWidth < 1024 ? 'repeat(2, minmax(0, 1fr))' : (count === 4 ? 'repeat(4, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))'));
             gridContainer.style.setProperty('display', 'grid', 'important');
-            gridContainer.style.setProperty('grid-template-columns', count === 4 ? 'repeat(4, minmax(0, 1fr))' : (count === 3 ? 'repeat(3, minmax(0, 1fr))' : 'repeat(auto-fit, minmax(300px, 1fr))'), 'important');
+            gridContainer.style.setProperty('grid-template-columns', responsiveCols, 'important');
             gridContainer.style.setProperty('gap', '28px', 'important');
             gridContainer.style.setProperty('width', '100%', 'important');
 
@@ -19132,7 +19135,8 @@
         }
       }
 
-      function loadHomepageDynamicContent() {
+      function loadHomepageDynamicContent(retryCount) {
+        retryCount = retryCount || 0;
         // Fast initial render from LocalStorage cache
         try {
           var cached = localStorage.getItem('csp_homepage_cache');
@@ -19156,11 +19160,18 @@
                   localStorage.setItem('csp_homepage_cache', JSON.stringify(res.data));
                 } catch (e) { }
                 renderHomepageContent(res.data);
+                return;
               }
+            }
+            if (retryCount < 2) {
+              setTimeout(function () { loadHomepageDynamicContent(retryCount + 1); }, 600);
             }
           })
           .catch(function (err) {
             console.error('Failed to fetch homepage data:', err);
+            if (retryCount < 2) {
+              setTimeout(function () { loadHomepageDynamicContent(retryCount + 1); }, 600);
+            }
           });
       }
 
