@@ -18942,19 +18942,19 @@
       function renderHomepageContent(d) {
         if (!d) return;
 
-        // A. Discover by Category Grid (Dynamic DB Selection - Strictly limit to 3 categories)
+        // A. Discover by Category Grid (Dynamic Database Selection from Homepage Manager)
         if (d.homepage_categories && d.homepage_categories.length > 0) {
           var catContainers = document.querySelectorAll('.elementor-element-7ad4723a, .csp-category-grid-container');
-          var topThreeCats = d.homepage_categories.slice(0, 3);
           catContainers.forEach(function (grid) {
             grid.innerHTML = '';
             grid.style.display = 'grid';
-            grid.style.gridTemplateColumns = window.innerWidth < 768 ? '1fr' : 'repeat(3, 1fr)';
+            var catCount = d.homepage_categories.length;
+            grid.style.gridTemplateColumns = window.innerWidth < 768 ? '1fr' : `repeat(${Math.min(catCount, 3)}, 1fr)`;
             grid.style.gap = '30px';
             grid.style.width = '100%';
             grid.style.marginBottom = '40px';
 
-            topThreeCats.forEach(function (cat) {
+            d.homepage_categories.forEach(function (cat) {
               var catImg = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(cat.image) : (cat.image || '/uploads/cat_diaspora_matters.png');
               var catUrl = window.getRootUrl ? window.getRootUrl('category/' + cat.slug + '/') : '/category/' + cat.slug + '/';
               grid.innerHTML += `
