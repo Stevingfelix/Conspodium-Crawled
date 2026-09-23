@@ -11158,6 +11158,78 @@
       margin-right: auto !important;
     }
 
+    /* Voices That Inspire — Footer Row (Author & Button) */
+    .csp-card-footer-row {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding-top: 14px !important;
+      border-top: 1px solid #f1f5f9 !important;
+      font-size: 0.78rem !important;
+      color: #94a3b8 !important;
+    }
+
+    @media (max-width: 767px) {
+      /* Mobile stretch for Voices That Inspire section */
+      .elementor-element-9c5da48 {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 36px !important;
+      }
+
+      .elementor-element-9c5da48 > .e-con-inner {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        margin: 0 auto !important;
+      }
+
+      #latest-stories .eael-post-grid,
+      .eael-post-appender-1b58ee77 {
+        width: 100% !important;
+        max-width: 100% !important;
+        gap: 20px !important;
+        padding: 0 !important;
+      }
+
+      /* Stack Author & Button onto separate rows/columns on Mobile */
+      .csp-card-footer-row {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        padding-top: 14px !important;
+        border-top: 1px solid #f1f5f9 !important;
+      }
+
+      .csp-card-footer-row .csp-author-tag {
+        width: 100% !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        font-size: 0.82rem !important;
+        font-weight: 600 !important;
+        color: #475569 !important;
+      }
+
+      .csp-card-footer-row .csp-cat-card-btn {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 10px 18px !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        border-radius: 50px !important;
+        box-sizing: border-box !important;
+      }
+    }
+
     /* ── FOOTER LINK STYLING ─────────────────────────────────────────────────── */
     .elementor-location-footer a {
       color: rgba(255, 255, 255, 0.78) !important;
@@ -11377,12 +11449,14 @@
       display: flex !important;
       align-items: center !important;
       gap: 8px !important;
-      font-family: 'Merriweather', Georgia, serif !important;
-      font-size: 0.85rem !important;
-      font-weight: 800 !important;
-      color: #00AEFE !important;
-      letter-spacing: 1.5px !important;
+      font-family: 'Playfair Display', 'Cinzel', 'Merriweather', Georgia, serif !important;
+      font-size: 1.35rem !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+      fill: #ffffff !important;
+      letter-spacing: 2px !important;
       text-transform: uppercase !important;
+      text-shadow: 0 2px 10px rgba(0, 174, 254, 0.4) !important;
     }
 
     .csp-modal-card ul.csp-modal-menu {
@@ -19084,25 +19158,26 @@
             outerSec.style.setProperty('background-color', '#ffffff', 'important');
           }
 
+          var isMobile = window.innerWidth < 768;
           var innerCon = document.querySelector('.elementor-element-9c5da48 > .e-con-inner');
           if (innerCon) {
             innerCon.style.setProperty('max-width', '1600px', 'important');
-            innerCon.style.setProperty('width', '96%', 'important');
+            innerCon.style.setProperty('width', isMobile ? '100%' : '96%', 'important');
             innerCon.style.setProperty('margin-left', 'auto', 'important');
             innerCon.style.setProperty('margin-right', 'auto', 'important');
             innerCon.style.setProperty('padding-top', '32px', 'important');
-            innerCon.style.setProperty('padding-left', '24px', 'important');
-            innerCon.style.setProperty('padding-right', '24px', 'important');
+            innerCon.style.setProperty('padding-left', isMobile ? '12px' : '24px', 'important');
+            innerCon.style.setProperty('padding-right', isMobile ? '12px' : '24px', 'important');
           }
 
           var gridContainer = document.querySelector('.eael-post-appender-1b58ee77, #latest-stories .eael-post-grid');
           if (gridContainer) {
             gridContainer.innerHTML = '';
             var count = d.featured_stories.length;
-            var responsiveCols = window.innerWidth < 768 ? '1fr' : (window.innerWidth < 1024 ? 'repeat(2, minmax(0, 1fr))' : (count === 4 ? 'repeat(4, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))'));
+            var responsiveCols = isMobile ? '1fr' : (window.innerWidth < 1024 ? 'repeat(2, minmax(0, 1fr))' : (count === 4 ? 'repeat(4, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))'));
             gridContainer.style.setProperty('display', 'grid', 'important');
             gridContainer.style.setProperty('grid-template-columns', responsiveCols, 'important');
-            gridContainer.style.setProperty('gap', '28px', 'important');
+            gridContainer.style.setProperty('gap', isMobile ? '20px' : '28px', 'important');
             gridContainer.style.setProperty('width', '100%', 'important');
 
             d.featured_stories.forEach(function (st) {
@@ -19126,7 +19201,7 @@
                     </div>
                   </div>
                   <div style="padding:0 20px 20px;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid #f1f5f9;font-size:0.78rem;color:#94a3b8;">
+                    <div class="csp-card-footer-row">
                       <span class="csp-author-tag" style="display:inline-flex;align-items:center;gap:5px;font-weight:500;color:#64748b;font-size:0.78rem;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="csp-author-icon">
                           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
