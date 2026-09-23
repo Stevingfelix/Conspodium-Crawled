@@ -1106,6 +1106,57 @@
     transform: scale(1.08) !important;
   }
 
+  /* Next Live Discussion & Dark Modal Form Input Legibility */
+  .csp-cd-form-card input[type="text"],
+  .csp-cd-form-card input[type="email"],
+  #csp-cd-name-input,
+  #csp-cd-email-input {
+    width: 100% !important;
+    background: rgba(255, 255, 255, 0.14) !important;
+    border: 1.5px solid rgba(0, 174, 254, 0.45) !important;
+    border-radius: 12px !important;
+    padding: 14px 16px !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
+  }
+
+  .csp-cd-form-card input[type="text"]:focus,
+  .csp-cd-form-card input[type="email"]:focus,
+  #csp-cd-name-input:focus,
+  #csp-cd-email-input:focus {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: #00AEFE !important;
+    box-shadow: 0 0 18px rgba(0, 174, 254, 0.45) !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+
+  .csp-cd-form-card input[type="text"]::placeholder,
+  .csp-cd-form-card input[type="email"]::placeholder,
+  #csp-cd-name-input::placeholder,
+  #csp-cd-email-input::placeholder {
+    color: rgba(255, 255, 255, 0.65) !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.65) !important;
+    font-size: 0.9rem !important;
+  }
+
+  .csp-cd-form-card input:-webkit-autofill,
+  .csp-cd-form-card input:-webkit-autofill:hover,
+  .csp-cd-form-card input:-webkit-autofill:focus,
+  #csp-cd-name-input:-webkit-autofill,
+  #csp-cd-email-input:-webkit-autofill {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0px 1000px #0b1a30 inset !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+    color: #ffffff !important;
+  }
+
   /* ── GLOBAL PILL BUTTON STYLING ───────────────────────────────────────────── */
   .elementor-button,
   .elementor-price-table__button,
