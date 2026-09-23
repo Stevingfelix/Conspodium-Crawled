@@ -21128,7 +21128,10 @@
                     </div>
                     <div style="padding:20px 20px 16px;text-align:left;">
                       <div style="display:flex;align-items:center;gap:6px;font-size:0.78rem;color:#64748b;margin-bottom:8px;font-weight:500;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.75;color:#64748b;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;vertical-align:middle;">
+                          <path d="M1 12c2.5-5 7-8 11-8s8.5 3 11 8c-2.5 5-7 8-11 8s-8.5-3-11-8z" fill="none" stroke="#64748b" stroke-width="2"/>
+                          <circle cx="12" cy="12" r="3" fill="#64748b" stroke="none"/>
+                        </svg>
                         <span>${viewCount} views</span>
                       </div>
                       <h4 class="csp-cat-title" style="font-size:1.05rem;line-height:1.4;margin-bottom:8px;">${st.title}</h4>
@@ -21137,10 +21140,10 @@
                   </div>
                   <div style="padding:0 20px 24px 20px;">
                     <div class="csp-card-footer-row">
-                      <span class="csp-author-tag">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="csp-author-icon">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                          <circle cx="12" cy="7" r="4"></circle>
+                      <span class="csp-author-tag" style="display:flex;align-items:center;justify-content:center;gap:6px;font-weight:600;color:#475569;font-size:0.85rem;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" fill="none" stroke="#64748b" stroke-width="2"/>
+                          <circle cx="12" cy="7" r="4" fill="none" stroke="#64748b" stroke-width="2"/>
                         </svg>
                         <span>${st.author_name || 'Editorial'}</span>
                       </span>
