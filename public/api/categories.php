@@ -25,7 +25,7 @@ if ($action === 'list') {
             ORDER BY c.display_order ASC, c.id ASC
         ");
         $categories = $stmt->fetchAll();
-        echo json_encode(["success" => true, "categories" => $categories, "data" => $categories]);
+        echo json_encode(["success" => true, "categories" => $categories, "data" => $categories, "db_path" => realpath($dbPath)]);
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(["success" => false, "error" => $e->getMessage()]);
@@ -57,7 +57,7 @@ if (in_array($action, ['create', 'update', 'delete'])) {
         try {
             $stmt = $pdo->prepare("INSERT INTO categories (name, slug, icon, description, image, display_order) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->execute([$name, $slug, $icon, $description, $image, $displayOrder]);
-            echo json_encode(["success" => true, "message" => "Category created successfully!", "id" => $pdo->lastInsertId()]);
+            echo json_encode(["success" => true, "message" => "Category created successfully!", "id" => $pdo->lastInsertId(), "db_path" => realpath($dbPath)]);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode(["success" => false, "error" => $e->getMessage()]);

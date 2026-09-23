@@ -39,10 +39,19 @@ const PAGES = [
   { id: 'post',         out: 'post/index.html' }
 ];
 
-/** Recursively copy a directory */
+/** Recursively copy a directory (skipping .db files if target exists) */
 async function copyDir(src, dest) {
   await mkdir(dest, { recursive: true });
-  await cp(src, dest, { recursive: true, force: true });
+  await cp(src, dest, { 
+    recursive: true, 
+    force: true,
+    filter: (srcPath, destPath) => {
+      if (srcPath.endsWith('.db') && existsSync(destPath)) {
+        return false; // Preserve live database in public
+      }
+      return true;
+    }
+  });
 }
 
 // ── Main build process ───────────────────────────────────────────────────────

@@ -4492,9 +4492,28 @@
               <label class="csp-form-label">Category Name *</label>
               <input type="text" id="cat-name" class="csp-form-input" placeholder="e.g. African Diaspora Matters" required>
             </div>
-            <div class="csp-form-group">
-              <label class="csp-form-label">Icon Emoji</label>
-              <input type="text" id="cat-icon" class="csp-form-input" placeholder="🌍" value="🏷️">
+            <div class="csp-form-group" style="position:relative;">
+              <label class="csp-form-label">Category Icon (Flaticon Pack)</label>
+              <input type="hidden" id="cat-icon" value="globe">
+              <div class="flaticon-picker-wrapper" style="position:relative;">
+                <button type="button" id="flaticon-picker-trigger" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.88rem;color:#0f172a;transition:all 0.2s ease;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+                  <span style="display:flex;align-items:center;gap:10px;">
+                    <span id="flaticon-trigger-badge" style="width:34px;height:34px;border-radius:8px;background:rgba(2,132,199,0.12);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </span>
+                    <span style="font-size:0.82rem;font-weight:600;color:#64748b;">Choose Vector Icon</span>
+                  </span>
+                  <span style="font-size:0.75rem;color:#64748b;">▼</span>
+                </button>
+
+                <!-- Vector Flaticon SVG Dropdown Grid (WhatsApp-Style Tile Grid, NO Text Titles inside Grid) -->
+                <div id="flaticon-picker-popover" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:99999;background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;box-shadow:0 14px 36px rgba(15,23,42,0.2);padding:14px;max-height:280px;overflow-y:auto;">
+                  <div style="font-size:0.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Select Vector Icon</div>
+                  <div id="flaticon-grid-container" style="display:grid;grid-template-columns:repeat(6, 1fr);gap:10px;justify-items:center;">
+                    <!-- Pure vector icon tiles with tooltips on hover, NO text titles inside grid -->
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="csp-form-group">
               <label class="csp-form-label">Display Order (Sorting)</label>
@@ -9401,6 +9420,112 @@
     };
   }
 
+  var CATEGORY_FLATICON_SVGS = {
+    'bar-chart': { name: 'Analytics & Insights', stroke: '#6366f1', bg: 'rgba(99,102,241,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' },
+    'globe': { name: 'African Diaspora', stroke: '#0284c7', bg: 'rgba(2,132,199,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' },
+    'heritage': { name: 'Culture & Heritage', stroke: '#00AEFE', bg: 'rgba(0,174,254,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg>' },
+    'lightbulb': { name: 'Innovation & Tech', stroke: '#B71F71', bg: 'rgba(183,31,113,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B71F71" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg>' },
+    'palette': { name: 'Art & Entertainment', stroke: '#8b5cf6', bg: 'rgba(139,92,246,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>' },
+    'users': { name: 'Community Network', stroke: '#10b981', bg: 'rgba(16,185,129,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' },
+    'star': { name: 'Success Stories', stroke: '#f59e0b', bg: 'rgba(245,158,11,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' },
+    'scales': { name: 'Policy & Governance', stroke: '#64748b', bg: 'rgba(100,116,139,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1zM2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1zM7 21h10M12 3v18M3 7h18"/></svg>' },
+    'briefcase': { name: 'Business & Trade', stroke: '#0f172a', bg: 'rgba(15,23,42,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>' },
+    'plane': { name: 'Mobility & Travel', stroke: '#3b82f6', bg: 'rgba(59,130,246,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.8-.2-1.6.3-1.8 1.1-.2.8.2 1.6 1 1.9l6 3.5-4 4-2.5-.5c-.4-.1-.8.1-1 .4l-.8.8c-.3.3-.3.8 0 1.1l2.5 2.5c.3.3.8.3 1.1 0l.8-.8c.3-.2.5-.6.4-1l-.5-2.5 4-4 3.5 6c.3.8 1.1 1.2 1.9 1 .8-.2 1.3-1 1.1-1.8z"/></svg>' },
+    'heart-pulse': { name: 'Health & Medical', stroke: '#ef4444', bg: 'rgba(239,68,68,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>' },
+    'graduation-cap': { name: 'Education & Youth', stroke: '#059669', bg: 'rgba(5,150,105,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>' },
+    'newspaper': { name: 'News & Media', stroke: '#475569', bg: 'rgba(71,85,105,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M18 18h-8M18 10h-8"/></svg>' },
+    'message-square': { name: 'Forum & Discussions', stroke: '#8b5cf6', bg: 'rgba(139,92,246,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' },
+    'rocket': { name: 'Startups & Growth', stroke: '#ec4899', bg: 'rgba(236,72,153,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-3.05 11a22.35 22.35 0 0 1-3.95 2z"/></svg>' },
+    'trophy': { name: 'Leadership & Awards', stroke: '#eab308', bg: 'rgba(234,179,8,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22h10c0-1.76-.85-3.25-2.03-3.79-.5-.23-.97-.66-.97-1.21v-2.34"/><path d="M18 4H6v7a6 6 0 0 0 12 0V4z"/></svg>' },
+    'mic': { name: 'Voice & Podcasts', stroke: '#d97706', bg: 'rgba(217,119,6,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8"/></svg>' },
+    'map-pin': { name: 'Tourism & Location', stroke: '#06b6d4', bg: 'rgba(6,182,212,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' },
+    'book-open': { name: 'Literature & Research', stroke: '#0284c7', bg: 'rgba(2,132,199,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>' },
+    'camera': { name: 'Media & Film', stroke: '#8b5cf6', bg: 'rgba(139,92,246,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>' },
+    'music': { name: 'Music & Sound', stroke: '#ec4899', bg: 'rgba(236,72,153,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>' },
+    'dollar-sign': { name: 'Banking & Finance', stroke: '#10b981', bg: 'rgba(16,185,129,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>' },
+    'target': { name: 'Strategy & Goals', stroke: '#ef4444', bg: 'rgba(239,68,68,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>' },
+    'cpu': { name: 'AI & Deep Tech', stroke: '#3b82f6', bg: 'rgba(59,130,246,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>' },
+    'shield-check': { name: 'Security & Sovereignty', stroke: '#059669', bg: 'rgba(5,150,105,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>' },
+    'compass': { name: 'Navigation & Vision', stroke: '#00AEFE', bg: 'rgba(0,174,254,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>' },
+    'feather': { name: 'Journalism & Writing', stroke: '#B71F71', bg: 'rgba(183,31,113,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B71F71" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L3 13v5h5l9.24-9.24z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>' },
+    'flame': { name: 'Trending & Viral', stroke: '#f97316', bg: 'rgba(249,115,22,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17c1.38 0 2.5-1.12 2.5-2.5 0-1.07-.42-1.54-1.39-2.58C11.17 10.9 10 9.5 10 8c0 1.25-.8 2-2 3-1.04.87-1.5 1.77-1.5 2.76 0 .25.04.49.1.74z"/><path d="M12 2c1.47 3.34 4.5 5.5 4.5 10.5a6.5 6.5 0 1 1-13 0c0-3.37 2.2-6.2 4.5-8.5.5 1.5 1.5 3 4 3 0-1.5.5-3.5 0-5z"/></svg>' },
+    'handshake': { name: 'Partnerships & Alliances', stroke: '#6366f1', bg: 'rgba(99,102,241,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.4-.4.4-1 0-1.4l-2.2-2.2c-.4-.4-1-.4-1.4 0L2 17"/><path d="M15 9h-2a2 2 0 1 0 0 4h3c.6 0 1.1-.2 1.4-.6L21 7"/><path d="m17 3-1.6 1.4c-.4.4-.4 1 0 1.4l2.2 2.2c.4.4 1 .4 1.4 0L22 7"/></svg>' },
+    'layers': { name: 'Infrastructure & Tech Stack', stroke: '#475569', bg: 'rgba(71,85,105,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>' },
+    'zap': { name: 'Energy & Acceleration', stroke: '#eab308', bg: 'rgba(234,179,8,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' },
+    'pie-chart': { name: 'Demographics & Stats', stroke: '#06b6d4', bg: 'rgba(6,182,212,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>' },
+    'gift': { name: 'Philanthropy & NGO', stroke: '#ec4899', bg: 'rgba(236,72,153,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>' },
+    'tv': { name: 'Broadcasting & Cinema', stroke: '#64748b', bg: 'rgba(100,116,139,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>' },
+    'bookmark': { name: 'Archives & Heritage Docs', stroke: '#0284c7', bg: 'rgba(2,132,199,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>' },
+    'coffee': { name: 'Lifestyle & Networking', stroke: '#d97706', bg: 'rgba(217,119,6,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>' }
+  };
+
+  function renderFlaticonPicker() {
+    var container = document.getElementById('flaticon-grid-container');
+    if (!container) return;
+    container.innerHTML = '';
+    var activeVal = document.getElementById('cat-icon').value || 'globe';
+
+    Object.keys(CATEGORY_FLATICON_SVGS).forEach(function(key) {
+      var item = CATEGORY_FLATICON_SVGS[key];
+      var isSelected = (key === activeVal || item.badge === activeVal);
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.title = item.name;
+      btn.className = 'flaticon-tile-btn';
+      btn.style.cssText = 'width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.18s ease;background:' + (isSelected ? '#e0f2fe' : '#f8fafc') + ';border:' + (isSelected ? '2px solid #0284c7' : '1px solid #e2e8f0') + ';box-shadow:' + (isSelected ? '0 0 0 3px rgba(2,132,199,0.15)' : 'none') + ';';
+      btn.innerHTML = item.svg;
+
+      btn.onmouseenter = function() {
+        if (!isSelected) {
+          btn.style.background = '#f1f5f9';
+          btn.style.transform = 'translateY(-2px)';
+          btn.style.borderColor = '#cbd5e1';
+        }
+      };
+      btn.onmouseleave = function() {
+        if (!isSelected) {
+          btn.style.background = '#f8fafc';
+          btn.style.transform = 'none';
+          btn.style.borderColor = '#e2e8f0';
+        }
+      };
+
+      btn.onclick = function() {
+        selectFlaticonVectorIcon(key);
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  function selectFlaticonVectorIcon(key) {
+    var item = CATEGORY_FLATICON_SVGS[key] || CATEGORY_FLATICON_SVGS['globe'];
+    document.getElementById('cat-icon').value = key;
+
+    var badge = document.getElementById('flaticon-trigger-badge');
+    if (badge) {
+      badge.style.background = item.bg;
+      badge.innerHTML = item.svg;
+    }
+    var popover = document.getElementById('flaticon-picker-popover');
+    if (popover) popover.style.display = 'none';
+  }
+
+  // Bind Flaticon trigger button click
+  document.addEventListener('click', function(e) {
+    var triggerBtn = document.getElementById('flaticon-picker-trigger');
+    var popover = document.getElementById('flaticon-picker-popover');
+    var wrapper = document.querySelector('.flaticon-picker-wrapper');
+
+    if (triggerBtn && (triggerBtn.contains(e.target) || triggerBtn === e.target)) {
+      e.preventDefault();
+      var isHidden = popover.style.display === 'none' || !popover.style.display;
+      popover.style.display = isHidden ? 'block' : 'none';
+      if (isHidden) renderFlaticonPicker();
+    } else if (popover && wrapper && !wrapper.contains(e.target)) {
+      popover.style.display = 'none';
+    }
+  });
+
   // 8. Category Manager & Selected Homepage Categories
   var modalCategory = document.getElementById('modal-category-card');
   var btnAddCat = document.getElementById('btn-add-category');
@@ -9411,6 +9536,9 @@
       document.getElementById('cat-id').value = '0';
       document.getElementById('category-modal-title').textContent = 'Add New Category';
       document.getElementById('form-category-modal').reset();
+
+      selectFlaticonVectorIcon('globe');
+
       modalCategory.classList.add('active');
     };
   }
@@ -9419,32 +9547,37 @@
   }
 
   function getCategorySvgIcon(cat) {
-    var slug = ((cat && (cat.slug || cat.icon || '')) + '').toLowerCase();
-    var name = ((cat && (cat.name || '')) + '').toLowerCase();
+    var iconKey = ((cat && cat.icon) || '').toLowerCase();
+    var slug = ((cat && cat.slug) || '').toLowerCase();
+    var name = ((cat && cat.name) || '').toLowerCase();
 
-    if (slug.includes('culture') || name.includes('culture')) {
-      return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg>';
-    }
-    if (slug.includes('innovation') || name.includes('innovation')) {
-      return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B71F71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg>';
-    }
-    if (slug.includes('art') || name.includes('art') || name.includes('entertainment')) {
-      return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>';
-    }
-    if (slug.includes('community') || name.includes('community')) {
-      return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
-    }
-    if (slug.includes('success') || name.includes('success') || name.includes('story')) {
-      return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
-    }
-    if (slug.includes('diaspora') || name.includes('diaspora') || name.includes('matters')) {
-      return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
-    }
-    if (slug.includes('insight') || name.includes('insight') || name.includes('analysis')) {
-      return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>';
+    if (CATEGORY_FLATICON_SVGS[iconKey]) {
+      return CATEGORY_FLATICON_SVGS[iconKey].svg;
     }
 
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>';
+    if (iconKey.includes('bar-chart') || iconKey.includes('📊') || slug.includes('insight') || name.includes('insight') || name.includes('analysis')) {
+      return CATEGORY_FLATICON_SVGS['bar-chart'].svg;
+    }
+    if (iconKey.includes('heritage') || iconKey.includes('🏛') || slug.includes('culture') || name.includes('culture')) {
+      return CATEGORY_FLATICON_SVGS['heritage'].svg;
+    }
+    if (iconKey.includes('lightbulb') || iconKey.includes('💡') || slug.includes('innovation') || name.includes('innovation')) {
+      return CATEGORY_FLATICON_SVGS['lightbulb'].svg;
+    }
+    if (iconKey.includes('palette') || iconKey.includes('🎨') || slug.includes('art') || name.includes('art') || name.includes('entertainment')) {
+      return CATEGORY_FLATICON_SVGS['palette'].svg;
+    }
+    if (iconKey.includes('users') || iconKey.includes('👥') || slug.includes('community') || name.includes('community')) {
+      return CATEGORY_FLATICON_SVGS['users'].svg;
+    }
+    if (iconKey.includes('star') || iconKey.includes('🌟') || slug.includes('success') || name.includes('success') || name.includes('story')) {
+      return CATEGORY_FLATICON_SVGS['star'].svg;
+    }
+    if (iconKey.includes('globe') || iconKey.includes('🌍') || iconKey.includes('🌐') || slug.includes('diaspora') || name.includes('diaspora') || name.includes('matters')) {
+      return CATEGORY_FLATICON_SVGS['globe'].svg;
+    }
+
+    return CATEGORY_FLATICON_SVGS['globe'].svg;
   }
 
   function loadCategoriesManager() {
@@ -9519,9 +9652,11 @@
     document.getElementById('cat-id').value = id;
     document.getElementById('category-modal-title').textContent = 'Edit Category';
     document.getElementById('cat-name').value = name;
-    document.getElementById('cat-icon').value = icon;
-    document.getElementById('cat-desc').value = desc;
+    document.getElementById('cat-desc').value = desc || '';
     document.getElementById('cat-display-order').value = displayOrder || 0;
+
+    selectFlaticonVectorIcon(icon || 'globe');
+
     renderImagePicker('cat-image-container', 'cat-image', 'file-cat-image', image);
     modalCategory.classList.add('active');
   };
