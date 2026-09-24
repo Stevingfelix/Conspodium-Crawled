@@ -76,9 +76,15 @@ try {
             $dbPath = $dbDir . '/conspodium.db';
         }
 
-        $pdo = new PDO("sqlite:" . $dbPath);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        if (!isset($GLOBALS['pdo']) || !($GLOBALS['pdo'] instanceof PDO)) {
+            $pdo = new PDO("sqlite:" . $dbPath);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            @$pdo->exec("PRAGMA busy_timeout = 5000;");
+            $GLOBALS['pdo'] = $pdo;
+        } else {
+            $pdo = $GLOBALS['pdo'];
+        }
     }
 
     // Check if database schema is already initialized
