@@ -71,7 +71,7 @@ if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action ===
             ];
             $_SESSION['admin_user'] = $userData;
             echo json_encode(["success" => true, "authenticated" => true, "user" => $userData]);
-            exit;
+            return;
         }
     }
 
@@ -88,7 +88,7 @@ if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action ===
             "error" => "Not authenticated"
         ]);
     }
-    exit;
+    return;
 }
 
 // ── ADMIN LOGIN ─────────────────────────────────────────────────────────────
@@ -96,7 +96,7 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
     if (!csp_check_rate_limit('admin_login', 30, 60)) {
         http_response_code(429);
         echo json_encode(["success" => false, "error" => "Too many failed login attempts. Please wait 60 seconds."]);
-        exit;
+        return;
     }
 
     $username = csp_sanitize($input['username'] ?? '');
@@ -105,7 +105,7 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
     if (!$username || !$password) {
         http_response_code(400);
         echo json_encode(["success" => false, "error" => "Username and password are required"]);
-        exit;
+        return;
     }
 
     $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ? OR email = ?");
@@ -141,7 +141,7 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
         http_response_code(401);
         echo json_encode(["success" => false, "error" => "Invalid username or password"]);
     }
-    exit;
+    return;
 }
 
 // ── ADMIN LOGOUT ────────────────────────────────────────────────────────────
@@ -164,7 +164,7 @@ if ($method === 'POST' && ($action === 'logout' || $action === 'signout')) {
     session_destroy();
 
     echo json_encode(["success" => true, "message" => "Logged out successfully"]);
-    exit;
+    return;
 }
 
 // ── UPDATE ADMIN PROFILE (USERNAME, DISPLAY NAME, EMAIL, PASSWORD) ───────────
@@ -182,7 +182,7 @@ if ($method === 'POST' && $action === 'update_profile') {
     if (!$username || !$name || !$email) {
         http_response_code(400);
         echo json_encode(["success" => false, "error" => "Username, display name, and email are required"]);
-        exit;
+        return;
     }
 
     $stmt = $pdo->prepare("SELECT * FROM admins WHERE id = ?");
@@ -192,7 +192,7 @@ if ($method === 'POST' && $action === 'update_profile') {
     if (!$admin) {
         http_response_code(404);
         echo json_encode(["success" => false, "error" => "Admin user not found"]);
-        exit;
+        return;
     }
 
     // Check if username/email belongs to another admin
@@ -201,14 +201,14 @@ if ($method === 'POST' && $action === 'update_profile') {
     if ($checkStmt->fetch()) {
         http_response_code(400);
         echo json_encode(["success" => false, "error" => "Username or email is already in use by another admin"]);
-        exit;
+        return;
     }
 
     if ($newPass) {
         if (!$currentPass || !password_verify($currentPass, $admin['password_hash'])) {
             http_response_code(400);
             echo json_encode(["success" => false, "error" => "Current password is incorrect"]);
-            exit;
+            return;
         }
         $newHash = password_hash($newPass, PASSWORD_BCRYPT);
         $updateStmt = $pdo->prepare("UPDATE admins SET username = ?, name = ?, email = ?, password_hash = ? WHERE id = ?");
@@ -228,5 +228,5 @@ if ($method === 'POST' && $action === 'update_profile') {
         "user" => $_SESSION['admin_user'],
         "message" => "Admin account credentials updated successfully!"
     ]);
-    exit;
+    return;
 }
