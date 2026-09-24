@@ -81,9 +81,21 @@ try {
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     }
 
-    // Create tables if not exist
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS categories (
+    // Check if database schema is already initialized
+    $schemaInit = false;
+    try {
+        $checkStmt = $pdo->query("SELECT 1 FROM admins LIMIT 1");
+        if ($checkStmt !== false) {
+            $schemaInit = true;
+        }
+    } catch (Throwable $e) {
+        $schemaInit = false;
+    }
+
+    if (!$schemaInit) {
+        // Create tables if not exist
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS categories (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL UNIQUE,
             slug TEXT NOT NULL UNIQUE,
@@ -999,9 +1011,10 @@ try {
             date('Y-m-d H:i:s', strtotime('-18 hours'))
         ]);
     }
+}
 
-} catch (PDOException $e) {
-    die(json_encode(["success" => false, "error" => "Database Connection Failed: " . $e->getMessage()]));
+} catch (Throwable $e) {
+    error_log("Database Connection/Init Error: " . $e->getMessage());
 }
 
 function csp_check_rate_limit($actionKey, $maxRequests = 30, $windowSeconds = 60) {
