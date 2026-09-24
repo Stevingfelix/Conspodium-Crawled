@@ -657,12 +657,10 @@
   }
 
   /* ── NAV TEXT: Normal State vs Sticky State ──────────────────────────────── */
-  /* Homepage, Forum & Sponsorship page normal state: white text & toggle over dark hero */
+  /* Homepage & Forum Hero page normal state: white text & toggle over dark hero */
   body.home .elementor-1969 .elementor-nav-menu--main .elementor-item,
   body.forum-page .elementor-1969 .elementor-nav-menu--main .elementor-item,
-  body.page-id-979 .elementor-1969 .elementor-nav-menu--main .elementor-item,
-  body.forum-page .elementor-item,
-  body.page-id-979 .elementor-item {
+  body.forum-page .elementor-item {
     color: #ffffff !important;
     fill: #ffffff !important;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
@@ -671,29 +669,28 @@
   body.home .elementor-1969 .elementor-menu-toggle,
   body.home .elementor-1969 .elementor-menu-toggle i,
   body.forum-page .elementor-1969 .elementor-menu-toggle,
-  body.forum-page .elementor-1969 .elementor-menu-toggle i,
-  body.page-id-979 .elementor-1969 .elementor-menu-toggle,
-  body.page-id-979 .elementor-1969 .elementor-menu-toggle i,
-  body.page-id-979 .elementor-menu-toggle,
-  body.page-id-979 .elementor-menu-toggle i,
-  body.page-id-979 .elementor-menu-toggle:before,
-  body.page-id-979 .elementor-menu-toggle:after,
-  body.page-id-979 .elementor-menu-toggle i:after {
+  body.forum-page .elementor-1969 .elementor-menu-toggle i {
     color: #ffffff !important;
     fill: #ffffff !important;
-    stroke: #ffffff !important;
   }
 
   /* Inner pages normal state (un-scrolled): dark text over light page background */
-  body:not(.home):not(.forum-page):not(.page-id-979) .elementor-1969 .elementor-nav-menu--main .elementor-item,
-  body:not(.home):not(.forum-page):not(.page-id-979) .elementor-item {
+  body:not(.home):not(.forum-page) .elementor-1969 .elementor-nav-menu--main .elementor-item,
+  body:not(.home):not(.forum-page) .elementor-item {
     color: #0f172a !important;
     fill: #0f172a !important;
   }
 
-  body:not(.home):not(.forum-page):not(.page-id-979) .elementor-1969 .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.page-id-979) .elementor-1969 .elementor-menu-toggle i {
+  body:not(.home):not(.forum-page) .elementor-1969 .elementor-menu-toggle,
+  body:not(.home):not(.forum-page) .elementor-1969 .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page) .elementor-menu-toggle:before,
+  body:not(.home):not(.forum-page) .elementor-menu-toggle:after,
+  body:not(.home):not(.forum-page) .elementor-menu-toggle i:after {
     color: #0f172a !important;
+    fill: #0f172a !important;
+    stroke: #0f172a !important;
   }
 
   /* STICKY STATE (ALL PAGES): When scrolled down, header turns dark glass, so text MUST BE BRIGHT WHITE */
