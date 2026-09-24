@@ -3,13 +3,17 @@
   "builds": [
     {
       "src": "api/index.php",
-      "use": "vercel-php@0.7.2",
+      "use": "vercel-php@0.7.4",
       "config": {
-        "includeFiles": "{api/**,data/**}"
+        "includeFiles": "api/**"
       }
     },
     {
       "src": "public/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "data/**",
       "use": "@vercel/static"
     }
   ],
