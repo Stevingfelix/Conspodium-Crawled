@@ -40,10 +40,13 @@ if (extension_loaded('pdo_sqlite')) {
     try {
         require_once __DIR__ . '/db.php';
         $pdoStatus = true;
-        $tableCounts['posts'] = $pdo->query("SELECT COUNT(*) as count FROM posts")->fetch()['count'] ?? 0;
-        $tableCounts['categories'] = $pdo->query("SELECT COUNT(*) as count FROM categories")->fetch()['count'] ?? 0;
-        $tableCounts['submissions'] = $pdo->query("SELECT COUNT(*) as count FROM story_submissions")->fetch()['count'] ?? 0;
-    } catch (Exception $e) {
+        $resP = $pdo->query("SELECT COUNT(*) as count FROM posts")->fetch();
+        $tableCounts['posts'] = $resP ? intval($resP['count']) : 0;
+        $resC = $pdo->query("SELECT COUNT(*) as count FROM categories")->fetch();
+        $tableCounts['categories'] = $resC ? intval($resC['count']) : 0;
+        $resS = $pdo->query("SELECT COUNT(*) as count FROM story_submissions")->fetch();
+        $tableCounts['submissions'] = $resS ? intval($resS['count']) : 0;
+    } catch (Throwable $e) {
         $pdoError = $e->getMessage();
     }
 }
