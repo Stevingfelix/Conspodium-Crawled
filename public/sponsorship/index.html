@@ -3788,15 +3788,15 @@ body.page-id-979 .elementor-menu-toggle i {
   stroke: #0F172A !important;
 }
 
-/* 2. Light & Crisp Editorial Hero Section */
+/* 2. Light & Crisp Editorial Hero Section (Seamless Flow into next section) */
 .csp-sponsorship-hero-sec {
   position: relative;
-  background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
   color: #0F172A;
-  padding: 150px 5% 90px;
+  padding: 150px 5% 70px;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: none !important;
 }
 
 .csp-hero-ambient-glow {
@@ -3983,14 +3983,14 @@ body.page-id-979 .elementor-menu-toggle i {
   transform: scale(1.06) !important;
 }
 
-/* 3. Why Your Support Matters Section — LIGHT THEME */
+/* 3. Why Your Support Matters Section — Seamless Flow Light Theme */
 .csp-support-matters-sec.csp-light-theme {
-  background: #F8FAFC;
-  padding: 110px 5%;
+  background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+  padding: 70px 5% 110px;
   position: relative;
   font-family: 'Inter', sans-serif;
   color: #0F172A;
-  border-top: 1px solid #E2E8F0;
+  border-top: none !important;
   border-bottom: 1px solid #E2E8F0;
 }
 
@@ -4186,7 +4186,7 @@ body.page-id-979 .elementor-menu-toggle i {
   padding-bottom: 0 !important;
 }
 
-/* Responsive Media Queries */
+/* Responsive Media Queries (Mobile Center Alignment) */
 @media (max-width: 1024px) {
   .csp-sponsorship-hero-sec {
     padding-top: 130px;
@@ -4195,8 +4195,30 @@ body.page-id-979 .elementor-menu-toggle i {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+  .csp-hero-content-col {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .csp-hero-badge-pill {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
   .csp-hero-title {
     font-size: 2.8rem;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .csp-hero-description {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .csp-hero-action-group {
+    justify-content: center !important;
+    width: 100% !important;
   }
   .csp-support-split-layout {
     grid-template-columns: 1fr;
@@ -4212,8 +4234,16 @@ body.page-id-979 .elementor-menu-toggle i {
   .csp-sponsorship-hero-sec {
     padding: 120px 5% 50px;
   }
+  .csp-hero-content-col {
+    text-align: center !important;
+    align-items: center !important;
+  }
   .csp-hero-title {
     font-size: 2.2rem;
+    text-align: center !important;
+  }
+  .csp-hero-description {
+    text-align: center !important;
   }
   .csp-light-theme .csp-support-sec-title {
     font-size: 2.1rem;
@@ -4224,29 +4254,218 @@ body.page-id-979 .elementor-menu-toggle i {
   .csp-hero-action-group {
     flex-direction: column;
     align-items: stretch;
+    justify-content: center !important;
   }
   .csp-btn-primary-gradient, .csp-btn-glass-secondary {
     justify-content: center;
   }
 }
 
-/* Card layout & equal height button alignment fix */
+/* Expand Pricing Section Container Width & Sleek Card UI */
+.elementor-element-d0d1d4a > .e-con-inner,
+.elementor-element-d0d1d4a {
+  max-width: 1400px !important;
+  width: 96% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.elementor-element-2bf4d03,
+.elementor-element-2bf4d03 .elementor-widget-price-table,
+.elementor-element-2bf4d03 .elementor-widget-container,
+.elementor-element-d0d1d4a,
+.elementor-element-d0d1d4a > .e-con-inner {
+  overflow: visible !important;
+}
+
 .elementor-element-2bf4d03 {
   align-items: stretch !important;
+  gap: 28px !important;
+  width: 100% !important;
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+  margin-bottom: 90px !important;
 }
+
+.elementor-element-239887b,
+.elementor-element-873aaac {
+  margin-top: 30px !important;
+}
+
+@media (max-width: 640px) {
+  .elementor-element-2bf4d03 {
+    margin-bottom: 60px !important;
+  }
+}
+
+.elementor-widget-price-table {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  height: 100% !important;
+}
+
+.elementor-widget-price-table:hover {
+  transform: translateY(-6px) !important;
+}
+
 .elementor-price-table {
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 24px !important;
+  padding: 32px 28px !important;
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.02) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative !important;
 }
+
+.elementor-widget-price-table:hover .elementor-price-table {
+  border-color: #0EA5E9 !important;
+  box-shadow: 0 20px 45px -15px rgba(14, 165, 233, 0.22), 0 8px 12px -4px rgba(14, 165, 233, 0.08) !important;
+}
+
+.elementor-price-table__header {
+  padding: 0 0 12px 0 !important;
+  background: transparent !important;
+  text-align: center !important;
+}
+
+.elementor-price-table__heading {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  letter-spacing: -0.02em !important;
+  margin-bottom: 0 !important;
+}
+
+.elementor-price-table__price {
+  padding: 8px 0 16px 0 !important;
+  background: transparent !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  margin-bottom: 20px !important;
+  text-align: center !important;
+}
+
+.elementor-price-table__currency {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  vertical-align: top !important;
+}
+
+.elementor-price-table__integer-part {
+  font-size: 2.75rem !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  line-height: 1 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.elementor-price-table__period {
+  display: block !important;
+  margin-top: 8px !important;
+  font-size: 0.84rem !important;
+  color: #64748B !important;
+  line-height: 1.4 !important;
+  font-weight: 400 !important;
+}
+
+.elementor-price-table__period br {
+  display: inline !important;
+}
+
+.elementor-price-table__period br + br {
+  display: none !important;
+}
+
+/* Pricing Card Benefits List Redesign - Flush Left Alignment & Visible Divider Lines */
 .elementor-price-table__features-list {
   flex-grow: 1 !important;
-  margin-bottom: 24px !important;
+  margin: 0 0 24px 0 !important;
+  padding: 0 !important; /* Completely flush to card inner padding boundary */
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  list-style: none !important;
+  align-items: stretch !important;
 }
+
+.elementor-price-table__features-list li {
+  padding: 11px 0 !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #E2E8F0 !important; /* Visible, clean divider lines */
+  background: transparent !important;
+  width: 100% !important;
+  transition: background 0.2s ease !important;
+}
+
+.elementor-price-table__features-list li:hover {
+  background: transparent !important;
+}
+
+.elementor-price-table__features-list li:last-child {
+  border-bottom: none !important;
+}
+
+.elementor-price-table__feature-inner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+/* Flat Sky Blue SVG Icon */
+.elementor-price-table__feature-inner i {
+  display: inline-block !important;
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  background-color: #0EA5E9 !important; /* Normal Sky Blue */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") no-repeat center / contain !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") no-repeat center / contain !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.elementor-price-table__feature-inner i:before {
+  content: "" !important;
+  display: none !important;
+}
+
+.elementor-price-table__feature-inner span {
+  font-size: 0.83rem !important; /* Scaled to ensure 1-line text fit */
+  font-weight: 500 !important;
+  color: #334155 !important;
+  line-height: 1.3 !important;
+  text-align: left !important;
+  flex-grow: 1 !important;
+  white-space: nowrap !important; /* Single line text guarantee */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
 .elementor-price-table__footer {
   margin-top: auto !important;
-  padding-bottom: 28px !important;
+  padding: 0 !important;
   text-align: center !important;
+}
+
+.elementor-price-table__button {
+  width: 100% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 13px 20px !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
 }
 </style>
 		<div class="elementor-element elementor-element-d0d1d4a e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="d0d1d4a" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
