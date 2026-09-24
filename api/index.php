@@ -18,8 +18,22 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS
 }
 
 // Extract requested path from Vercel rewrite parameter or request URI
-$reqPath = $_GET['__vercel_path'] ?? $_SERVER['REQUEST_URI'] ?? '';
-$reqPath = parse_url($reqPath, PHP_URL_PATH);
+$rawPath = $_GET['__vercel_path'] ?? $_SERVER['REQUEST_URI'] ?? '';
+
+// If __vercel_path contains query string (e.g. auth.php?action=login), parse query params into $_GET
+if (strpos($rawPath, '?') !== false) {
+    $queryString = parse_url($rawPath, PHP_URL_QUERY);
+    if ($queryString) {
+        parse_str($queryString, $extraGet);
+        foreach ($extraGet as $k => $v) {
+            if (!isset($_GET[$k])) {
+                $_GET[$k] = $v;
+            }
+        }
+    }
+}
+
+$reqPath = parse_url($rawPath, PHP_URL_PATH);
 
 // Strip leading /api/ or api/
 $path = preg_replace('/^\/?(api\/)?/', '', $reqPath);
