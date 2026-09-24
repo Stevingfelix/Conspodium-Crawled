@@ -8,6 +8,13 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $publicDir = __DIR__ . '/public';
 $filePath = $publicDir . $uri;
 
+// 0. Route API calls cleanly to api/index.php engine
+if (strpos($uri, '/api/') === 0) {
+    $_GET['__vercel_path'] = preg_replace('/^\/api\//', '', $uri);
+    require __DIR__ . '/api/index.php';
+    return true;
+}
+
 // 1. Direct file pass-through for existing static assets and PHP API scripts
 if ($uri !== '/' && file_exists($filePath) && !is_dir($filePath)) {
     return false;
