@@ -1,11 +1,18 @@
 {
   "version": 2,
-  "functions": {
-    "api/index.php": {
-      "runtime": "vercel-php@0.9.0",
-      "includeFiles": "api/**"
+  "builds": [
+    {
+      "src": "api/index.php",
+      "use": "vercel-php@0.7.2",
+      "config": {
+        "includeFiles": "{api/**,data/**}"
+      }
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
