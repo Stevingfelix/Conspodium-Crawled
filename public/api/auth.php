@@ -29,7 +29,10 @@ if (session_status() === PHP_SESSION_NONE) {
         'httponly' => true,
         'samesite' => 'Lax'
     ]);
-    session_start();
+    @session_start();
+    register_shutdown_function(function() {
+        @session_write_close();
+    });
 }
 
 require_once __DIR__ . '/db.php';
