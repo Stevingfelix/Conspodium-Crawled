@@ -1427,6 +1427,15 @@ e-page-transition,
 
 				<div data-elementor-type="wp-page" data-elementor-id="979" class="elementor elementor-979">
 <section class="csp-sponsorship-hero-sec">
+  <div class="csp-hero-grid-mesh"></div>
+  <div class="csp-hero-floating-squares">
+    <div class="csp-square sq-1"></div>
+    <div class="csp-square sq-2"></div>
+    <div class="csp-square sq-3"></div>
+    <div class="csp-square sq-4"></div>
+    <div class="csp-square sq-5"></div>
+    <div class="csp-square sq-6"></div>
+  </div>
   <div class="csp-hero-ambient-glow glow-1"></div>
   <div class="csp-hero-ambient-glow glow-2"></div>
   <div class="csp-sponsorship-hero-container">
@@ -1551,6 +1560,39 @@ e-page-transition,
 
 <!-- Exotic Styling for Hero Blob & Light Theme Support Matters Sections -->
 <style>
+/* -------------------------------------------------------------
+   Global Warm Feel & Soft Grey Subtext System across Sponsorship Page
+   ------------------------------------------------------------- */
+.subtext,
+.subtext p,
+.eael-dual-header .subtext,
+.eael-dual-header .subtext p,
+.csp-hero-description,
+.csp-support-sec-sub,
+.csp-glass-card-desc,
+.elementor-price-table__period,
+.elementor-price-table__feature-inner span,
+.elementor-widget-container p,
+.elementskit-infobox .box-body p,
+.elementskit-infobox p {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  color: #64748B !important; /* Soft warm neutral slate grey */
+  font-weight: 400 !important;
+  line-height: 1.65 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.csp-hero-description,
+.csp-support-sec-sub {
+  font-size: 1.1rem !important;
+}
+
+.eael-dual-header .subtext p,
+.eael-dual-header .subtext {
+  font-size: 1.05rem !important;
+  line-height: 1.65 !important;
+}
+
 /* 1. Header Overlay (Sitting directly on top of the Hero Section) */
 .elementor-location-header,
 .elementor-1969,
@@ -1598,34 +1640,153 @@ body.page-id-979 .elementor-menu-toggle i {
 /* 2. Light & Crisp Editorial Hero Section (Seamless Flow into next section) */
 .csp-sponsorship-hero-sec {
   position: relative;
-  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+  background: #FFFFFF;
   color: #0F172A;
-  padding: 150px 5% 70px;
+  padding: 150px 5% 80px;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
   border-bottom: none !important;
 }
 
+/* Hero Animated Square Grid Mesh & Floating Glass Squares */
+.csp-hero-grid-mesh {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.csp-hero-floating-squares {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.csp-square {
+  position: absolute;
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: cspSquareFloat 12s ease-in-out infinite alternate;
+}
+
+.csp-square.sq-1 {
+  width: 75px;
+  height: 75px;
+  top: 14%;
+  left: 6%;
+  background: rgba(0, 174, 254, 0.04);
+  border: 1px solid rgba(0, 174, 254, 0.2);
+  animation-duration: 14s;
+}
+
+.csp-square.sq-2 {
+  width: 95px;
+  height: 95px;
+  top: 52%;
+  left: 3%;
+  background: rgba(183, 31, 113, 0.04);
+  border: 1px solid rgba(183, 31, 113, 0.18);
+  animation-duration: 18s;
+  animation-delay: -3s;
+}
+
+.csp-square.sq-3 {
+  width: 80px;
+  height: 80px;
+  top: 10%;
+  right: 10%;
+  background: rgba(183, 31, 113, 0.05);
+  border: 1px solid rgba(183, 31, 113, 0.22);
+  animation-duration: 16s;
+  animation-delay: -5s;
+}
+
+.csp-square.sq-4 {
+  width: 115px;
+  height: 115px;
+  bottom: 16%;
+  right: 4%;
+  background: rgba(0, 174, 254, 0.05);
+  border: 1px solid rgba(0, 174, 254, 0.22);
+  animation-duration: 20s;
+  animation-delay: -2s;
+}
+
+.csp-square.sq-5 {
+  width: 48px;
+  height: 48px;
+  top: 42%;
+  left: 46%;
+  background: rgba(0, 174, 254, 0.03);
+  border: 1px solid rgba(0, 174, 254, 0.15);
+  animation-duration: 11s;
+  animation-delay: -7s;
+}
+
+.csp-square.sq-6 {
+  width: 60px;
+  height: 60px;
+  bottom: 12%;
+  left: 38%;
+  background: rgba(183, 31, 113, 0.04);
+  border: 1px solid rgba(183, 31, 113, 0.16);
+  animation-duration: 15s;
+  animation-delay: -4s;
+}
+
+@keyframes cspSquareFloat {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-26px) rotate(14deg) scale(1.04);
+  }
+  100% {
+    transform: translateY(10px) rotate(-10deg) scale(0.96);
+  }
+}
+
+/* Seamless Bottom Gradient Fade into Next Section */
+.csp-sponsorship-hero-sec::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0) 0%, #F8FAFC 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .csp-hero-ambient-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(130px);
+  filter: blur(160px);
   pointer-events: none;
-  opacity: 0.18;
 }
 .csp-hero-ambient-glow.glow-1 {
-  width: 500px;
-  height: 500px;
-  background: var(--blue-accent, #00AEFE);
-  top: -100px;
-  right: -50px;
+  width: 550px;
+  height: 550px;
+  background: rgba(0, 174, 254, 0.12);
+  top: -120px;
+  right: -80px;
 }
 .csp-hero-ambient-glow.glow-2 {
-  width: 450px;
-  height: 450px;
-  background: var(--pink-accent, #B71F71);
-  bottom: -80px;
-  left: -50px;
+  width: 500px;
+  height: 500px;
+  background: rgba(183, 31, 113, 0.08); /* Soft pink ambient aura */
+  bottom: 40px; /* Positioned inside so it smoothly tapers off before bottom boundary */
+  left: -100px;
 }
 
 .csp-sponsorship-hero-container {
@@ -1792,13 +1953,38 @@ body.page-id-979 .elementor-menu-toggle i {
 
 /* 3. Why Your Support Matters Section — Seamless Flow Light Theme */
 .csp-support-matters-sec.csp-light-theme {
-  background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+  background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
   padding: 70px 5% 110px;
   position: relative;
   font-family: 'Inter', sans-serif;
   color: #0F172A;
   border-top: none !important;
   border-bottom: 1px solid #E2E8F0;
+  overflow: hidden;
+}
+
+.csp-support-matters-sec.csp-light-theme::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: 5%;
+  right: -100px;
+  background: radial-gradient(circle, rgba(0, 174, 254, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.csp-support-matters-sec.csp-light-theme::after {
+  content: '';
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  bottom: 0%;
+  left: -120px;
+  background: radial-gradient(circle, rgba(183, 31, 113, 0.07) 0%, rgba(255, 255, 255, 0) 70%);
+  filter: blur(110px);
+  pointer-events: none;
 }
 
 .csp-support-header-area {
@@ -2171,20 +2357,40 @@ body.page-id-979 .elementor-menu-toggle i {
 }
 
 .elementor-price-table__period {
-  display: block !important;
-  margin-top: 8px !important;
-  font-size: 0.84rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  margin-top: 10px !important;
+  margin-bottom: 8px !important;
+  width: 100% !important;
+}
+
+.csp-price-period-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: #0EA5E9 !important;
+  background: #EFF6FF !important;
+  border: 1px solid #BAE6FD !important;
+  padding: 6px 20px !important;
+  border-radius: 50px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  margin: 10px 0 14px 0 !important;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.1) !important;
+}
+
+.csp-price-card-desc {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.92rem !important;
   color: #64748B !important;
-  line-height: 1.4 !important;
+  line-height: 1.6 !important;
+  margin: 0 0 16px 0 !important;
   font-weight: 400 !important;
-}
-
-.elementor-price-table__period br {
-  display: inline !important;
-}
-
-.elementor-price-table__period br + br {
-  display: none !important;
+  text-align: center !important;
 }
 
 /* Pricing Card Benefits List Redesign - Flush Left Alignment & Visible Divider Lines */
@@ -2307,7 +2513,10 @@ body.page-id-979 .elementor-menu-toggle i {
 				
 				
 				
-									<span class="elementor-price-table__period elementor-typo-excluded">Monthly<br><br>Support our mission to amplify diaspora voices and stories that matter.</span>							</div>
+									<div class="elementor-price-table__period elementor-typo-excluded">
+										<span class="csp-price-period-badge">Monthly</span>
+										<p class="csp-price-card-desc">Support our mission to amplify diaspora voices and stories that matter.</p>
+									</div>							</div>
 
 							<ul class="elementor-price-table__features-list">
 											<li class="elementor-repeater-item-85b998f">
@@ -2367,7 +2576,10 @@ body.page-id-979 .elementor-menu-toggle i {
 				
 				
 				
-									<span class="elementor-price-table__period elementor-typo-excluded">Monthly<br><br>Help us reach underrepresented communities and discover new voices.</span>							</div>
+									<div class="elementor-price-table__period elementor-typo-excluded">
+										<span class="csp-price-period-badge">Monthly</span>
+										<p class="csp-price-card-desc">Help us reach underrepresented communities and discover new voices.</p>
+									</div>							</div>
 
 							<ul class="elementor-price-table__features-list">
 											<li class="elementor-repeater-item-85b998f">
@@ -2433,7 +2645,10 @@ body.page-id-979 .elementor-menu-toggle i {
 				
 				
 				
-									<span class="elementor-price-table__period elementor-typo-excluded">Monthly<br><br>Be a cornerstone supporter powering our global mission and outreach.</span>							</div>
+									<div class="elementor-price-table__period elementor-typo-excluded">
+										<span class="csp-price-period-badge">Monthly</span>
+										<p class="csp-price-card-desc">Be a cornerstone supporter powering our global mission and outreach.</p>
+									</div>							</div>
 
 							<ul class="elementor-price-table__features-list">
 											<li class="elementor-repeater-item-85b998f">
