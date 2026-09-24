@@ -90,7 +90,7 @@ if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action ===
 
 // ── ADMIN LOGIN ─────────────────────────────────────────────────────────────
 if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($input['username'])))) {
-    if (!csp_check_rate_limit('admin_login', 5, 60)) {
+    if (!csp_check_rate_limit('admin_login', 30, 60)) {
         http_response_code(429);
         echo json_encode(["success" => false, "error" => "Too many failed login attempts. Please wait 60 seconds."]);
         exit;

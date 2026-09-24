@@ -1004,7 +1004,7 @@ try {
     die(json_encode(["success" => false, "error" => "Database Connection Failed: " . $e->getMessage()]));
 }
 
-function csp_check_rate_limit($actionKey, $maxRequests = 5, $windowSeconds = 60) {
+function csp_check_rate_limit($actionKey, $maxRequests = 30, $windowSeconds = 60) {
     global $pdo;
     $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
     $now = time();
@@ -1017,8 +1017,8 @@ function csp_check_rate_limit($actionKey, $maxRequests = 5, $windowSeconds = 60)
         $stmt->execute([$actionKey, $ip]);
         $row = $stmt->fetch();
 
-        if ($row) {
-            if ($row['request_count'] >= $maxRequests) {
+        if ($row && is_array($row)) {
+            if (intval($row['request_count'] ?? 0) >= $maxRequests) {
                 return false;
             }
             $stmtUp = $pdo->prepare("UPDATE rate_limits SET request_count = request_count + 1, last_request = ? WHERE id = ?");
@@ -1027,7 +1027,9 @@ function csp_check_rate_limit($actionKey, $maxRequests = 5, $windowSeconds = 60)
             $stmtIns = $pdo->prepare("INSERT INTO rate_limits (action_key, ip_address, request_count, last_request) VALUES (?, ?, 1, ?)");
             $stmtIns->execute([$actionKey, $ip, $now]);
         }
-    } catch (Exception $e) {}
+    } catch (Throwable $e) {
+        return true;
+    }
 
     return true;
 }
