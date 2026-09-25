@@ -732,6 +732,36 @@ min-width: 100px;
     opacity: 1 !important;
   }
 
+  /* Desktop Stories Hero Grid Layout */
+  @media (min-width: 993px) {
+    .elementor-element-2f73cc35 {
+      display: grid !important;
+      grid-template-columns: 1fr 1.15fr !important;
+      grid-template-areas: 
+        "blob text"
+        "blob button" !important;
+      align-items: center !important;
+      gap: 20px 48px !important;
+    }
+
+    .elementor-element-2706cfdd {
+      grid-area: blob !important;
+      width: 100% !important;
+      max-width: 440px !important;
+    }
+
+    .elementor-element-77f610a5 {
+      grid-area: text !important;
+      width: 100% !important;
+    }
+
+    .elementor-element-7e9ede5e.csp-hero-read-stories-wrap,
+    .elementor-element-7e9ede5e {
+      grid-area: button !important;
+      margin-top: -10px !important;
+    }
+  }
+
   /* Animated Jump Button & Bounce Icon */
   @keyframes cspBounceArrow {
     0%, 100% { transform: translateY(0); }
@@ -2595,37 +2625,32 @@ min-width: 100px;
     .elementor-element-2f73cc35 {
       display: flex !important;
       flex-direction: column !important;
+      align-items: center !important;
       gap: 16px !important;
     }
 
+    /* 1. Header Text, Subtext, & Live Search Bar */
     .elementor-element-77f610a5 {
       order: 1 !important;
       width: 100% !important;
       display: flex !important;
       flex-direction: column !important;
-    }
-
-    .elementor-element-77f610a5 .elementor-element-26fbb2fc {
-      order: 1 !important;
-    }
-
-    .elementor-element-77f610a5 .elementor-element-3076d049 {
-      order: 2 !important;
+      align-items: center !important;
+      text-align: center !important;
     }
 
     .elementor-element-77f610a5 .csp-stories-search-bar {
-      order: 3 !important;
       max-width: 100% !important;
       width: 100% !important;
-      margin-bottom: 8px !important;
+      margin-bottom: 6px !important;
     }
 
-    /* Original Image Blob placed after search bar on mobile */
+    /* 2. Self-Contained Blob Image with Gradient Mask */
     .elementor-element-2706cfdd {
       order: 2 !important;
       width: 100% !important;
-      max-width: 320px !important;
-      margin: 8px auto !important;
+      max-width: 310px !important;
+      margin: 12px auto !important;
       display: flex !important;
       justify-content: center !important;
     }
@@ -2633,18 +2658,19 @@ min-width: 100px;
     #uc_blob_shapes_elementor_2c3c3975_justification,
     #uc_blob_shapes_elementor_2c3c3975_size {
       width: 100% !important;
-      max-width: 320px !important;
+      max-width: 310px !important;
       margin: 0 auto !important;
     }
 
-    /* Animated Read All Stories CTA Button placed AFTER the Image Blob on mobile */
-    .elementor-element-77f610a5 .elementor-element-7e9ede5e {
-      order: 5 !important;
+    /* 3. Animated Read Latest Stories CTA Button placed AFTER the Image Blob on mobile */
+    .elementor-element-7e9ede5e.csp-hero-read-stories-wrap,
+    .elementor-element-7e9ede5e {
+      order: 3 !important;
       width: 100% !important;
       display: flex !important;
       justify-content: center !important;
-      margin-top: 10px !important;
-      margin-bottom: 20px !important;
+      margin-top: 14px !important;
+      margin-bottom: 25px !important;
     }
 
     /* ── Fix Home Page Blob Bleeding into Counter on Mobile ── */
@@ -4240,7 +4266,7 @@ min-width: 100px;
 				</div>
 
         <!-- Live Instant Search Bar -->
-        <div class="csp-stories-search-bar" style="margin-top:6px;max-width:480px;width:100%;margin-bottom:18px;">
+        <div class="csp-stories-search-bar" style="margin-top:6px;max-width:480px;width:100%;margin-bottom:8px;">
           <div style="position:relative;display:flex;align-items:center;background:#ffffff;border:1.5px solid #cbd5e1;border-radius:50px;padding:4px 6px 4px 16px;box-shadow:0 8px 24px rgba(0,174,254,0.08);transition:all 0.3s ease;width:100%;box-sizing:border-box;" class="csp-search-input-wrap">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-right:8px;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input type="text" id="csp-stories-search-input" placeholder="Search stories, topics, keywords..." style="flex:1 1 0%;min-width:0;width:100%;border:none;outline:none;background:transparent;font-size:0.86rem;color:#334155;font-family:'Inter',sans-serif;font-weight:400;padding:8px 8px 8px 0;letter-spacing:-0.01em;" />
@@ -4248,16 +4274,19 @@ min-width: 100px;
           </div>
         </div>
 
-				<div class="elementor-element elementor-element-7e9ede5e elementor-align-left sticky-ekit-buttonstyle elementor-widget__width-initial elementor-align--mobilecenter elementor-align--tabletright elementor-widget elementor-widget-elementskit-button" data-id="7e9ede5e" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-button.default">
+				</div>
+
+    <!-- 3. Animated Read Latest Stories CTA Button Container -->
+		<div class="elementor-element elementor-element-7e9ede5e elementor-align-left sticky-ekit-buttonstyle elementor-widget__width-initial elementor-align--mobilecenter elementor-align--tabletright elementor-widget elementor-widget-elementskit-button csp-hero-read-stories-wrap" data-id="7e9ede5e" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-button.default">
 				<div class="elementor-widget-container">
 					<div class="ekit-wid-con">		<div class="ekit-btn-wraper">
-							<a href="#latest-stories" class="csp-jump-stories-btn elementskit-btn whitespace--normal" style="display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:50px;background:rgba(0,174,254,0.08);border:1px solid rgba(0,174,254,0.3);color:#00AEFE;font-size:0.84rem;text-decoration:none;font-weight:600;transition:all 0.25s ease;">
-					<span>Explore Latest Stories</span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="csp-bounce-arrow" style="animation:cspBounceArrow 1.6s infinite ease-in-out;"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></a>
+							<a href="#latest-stories" class="elementskit-btn whitespace--normal csp-animated-read-btn" style="display:inline-flex;align-items:center;gap:10px;padding:12px 28px;border-radius:50px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#ffffff !important;font-size:0.88rem;text-decoration:none;font-weight:600;box-shadow:0 6px 20px rgba(0,174,254,0.3);transition:all 0.3s ease;">
+					<span>Read Latest Stories</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="csp-bounce-arrow" style="animation:cspBounceArrow 1.5s infinite ease-in-out;"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></a>
 					</div>
         </div>				</div>
 				</div>
-				</div>
+
 				</div>
 					</div>
 				</div>
