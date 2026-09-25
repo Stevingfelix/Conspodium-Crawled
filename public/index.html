@@ -11118,6 +11118,60 @@
     opacity: 0 !important;
     pointer-events: none !important;
   }
+
+  /* ── FORUM HERO SUBTITLE LIGHT COLOR FIX ── */
+  .csp-forum-subtitle,
+  .forum-page .csp-forum-subtitle,
+  section.csp-forum-hero p {
+    color: #f1f5f9 !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6) !important;
+    opacity: 0.95 !important;
+  }
+
+  /* ── JOIN OUR GLOBAL COMMUNITY DUAL HEADER TITLE FIX ── */
+  .elementor-repeater-item-67ae5f4,
+  .eael-dch-title-text.elementor-repeater-item-67ae5f4,
+  .eael-dual-header .elementor-repeater-item-67ae5f4 {
+    color: #ffffff !important;
+  }
+
+  .elementor-element-3ae1746 .eael-dual-header .subtext p,
+  .elementor-element-222bfda .eael-dual-header .subtext p,
+  .elementor-element-4e0df79 .eael-dual-header .subtext p {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+
+  /* ── UNIVERSAL JOIN OUR GLOBAL COMMUNITY WHITE COLOR FIX ── */
+  .elementor-repeater-item-67ae5f4,
+  .eael-dch-title-text.elementor-repeater-item-67ae5f4,
+  .elementor-element-59236d24 .eael-dch-title,
+  .elementor-element-59236d24 .eael-dch-title span:first-child,
+  .elementor-element-59236d24 .eael-dch-title .eael-dch-title-text:first-child,
+  .elementor-element-590ac871 .eael-dch-title,
+  .elementor-element-590ac871 .eael-dch-title span:first-child,
+  .elementor-element-ca95b25 .eael-dch-title,
+  .elementor-element-ca95b25 .eael-dch-title span:first-child,
+  .elementor-element-ca95b25 .elementor-repeater-item-67ae5f4,
+  .eael-dual-header .elementor-repeater-item-67ae5f4 {
+    color: #ffffff !important;
+  }
+
+  .elementor-element-59236d24 .subtext p,
+  .elementor-element-590ac871 .subtext p,
+  .elementor-element-ca95b25 .subtext p,
+  .elementor-element-ca95b25 .subtext span,
+  .elementor-element-3ae1746 .eael-dual-header .subtext p,
+  .elementor-element-222bfda .eael-dual-header .subtext p,
+  .elementor-element-4e0df79 .eael-dual-header .subtext p {
+    color: rgba(255, 255, 255, 0.88) !important;
+  }
+
+  .elementor-element-47dc6089 .elementor-heading-title,
+  .elementor-element-ca95b25 .elementor-heading-title {
+    color: #00AEFE !important;
+  }
+
 </style>
 <style id="csp-header-fixes">
   /* Apply Merienda font to ALL gradient colored text across all section titles and custom sections */
@@ -14578,8 +14632,9 @@
     'time': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
     'views': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
   };
-
-  /* ── EXECUTIVE BRIEFING DARK SIDEBAR INPUT FIXES ──────────────── */
+</script>
+<style id="csp-additional-sidebar-fixes">
+/* ── EXECUTIVE BRIEFING DARK SIDEBAR INPUT FIXES ──────────────── */
   .csp-sidebar-newsletter input,
   .csp-sidebar-newsletter input[type="email"],
   .csp-sidebar-newsletter input[type="text"],
@@ -14933,8 +14988,8 @@
     }
   }
 
-</style>
-<script>
+
+
   /* ── UNIVERSAL CONSPODIUM SVG ICON PROVIDER ────────────────── */
   window.CSP_ICONS = {
     'grid': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
@@ -15056,7 +15111,7 @@
     container.innerHTML = html;
     if (window.cspToast) window.cspToast('Vote recorded for "' + optionText + '"!', 'success');
   };
-</script>
+</style>
 </head>
 
 <body

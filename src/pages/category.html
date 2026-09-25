@@ -1677,251 +1677,162 @@ e-page-transition,
   <!-- INCLUDE:wp-footer.html -->
 
   <!-- DYNAMIC CATEGORY CONTROLLER SCRIPT -->
+  
   <script>
-  (function(){
-    // Immediate Guard: Prevent landing on /category/stories/ or nested /category/post/
-    var path = window.location.pathname;
-    if (path.indexOf('/category/stories') !== -1 || path.indexOf('/category/post') !== -1 || path.indexOf('/category/story') !== -1 || path.indexOf('/category/submit-story') !== -1) {
-      window.location.replace(getRootUrl('stories/'));
+(function(){
+  // Immediate Guard: Prevent landing on /category/stories/ or nested /category/post/
+  var path = window.location.pathname;
+  if (path.indexOf('/category/stories') !== -1 || path.indexOf('/category/post') !== -1 || path.indexOf('/category/story') !== -1 || path.indexOf('/category/submit-story') !== -1) {
+    window.location.replace(getRootUrl('stories/'));
+    return;
+  }
+
+  function getCategorySlugFromUrl() {
+    var cleanPath = window.location.pathname.replace(/\/$/, '');
+    var parts = cleanPath.split('/');
+    var idx = parts.indexOf('category');
+    var slug = null;
+
+    if (idx !== -1 && parts[idx + 1] && parts[idx + 1] !== 'index.html') {
+      slug = decodeURIComponent(parts[idx + 1]);
+    } else {
+      var urlParams = new URLSearchParams(window.location.search);
+      slug = urlParams.get('cat') || urlParams.get('category');
+    }
+
+    if (!slug || slug === 'post' || slug === 'story' || slug === 'stories' || slug === 'submit-story') {
+      slug = 'innovation';
+    }
+    return slug;
+  }
+
+  function getCategorySvgIcon(catOrKey) {
+    return window.getCategorySvgIcon ? window.getCategorySvgIcon(catOrKey) : '';
+  }
+
+  var currentSlug = getCategorySlugFromUrl();
+
+  // Helper to render stories into the grid
+  function renderCategoryPosts(posts, categoryName) {
+    var grid = document.getElementById('cat-posts-grid');
+    var badge = document.getElementById('cat-hero-badge');
+    if (!grid) return;
+
+    if (!posts || posts.length === 0) {
+      if (badge) badge.innerHTML = (window.CSP_ICONS ? window.CSP_ICONS['grid'] : '📂') + ' 0 Articles Published';
+      grid.innerHTML = '<div class="csp-empty-card"><div style="font-size:3rem;margin-bottom:12px;">✍️</div><h3 style="font-family:Merriweather,serif;color:#0f172a;font-size:1.4rem;margin-bottom:10px;">No Stories Published Under This Category Yet</h3><p style="color:#64748b;max-width:500px;margin:0 auto 24px auto;font-size:0.95rem;line-height:1.6;">Be the first author to submit an essay, report, or opinion piece for this category!</p><a href="' + getRootUrl('submit-story/') + '" class="csp-btn-sm csp-btn-primary" style="display:inline-flex;padding:12px 28px;font-size:0.9rem;border-radius:50px;text-decoration:none;">Submit Your Story →</a></div>';
       return;
     }
 
-    var postsCache = [];
-
-    // Helper: Extract current category slug from URL path (e.g. /category/culture-heritage/ or /category/innovation)
-    function getCategorySlugFromUrl() {
-      var cleanPath = window.location.pathname.replace(/\/$/, '');
-      var parts = cleanPath.split('/');
-      var idx = parts.indexOf('category');
-      var slug = null;
-
-      if (idx !== -1 && parts[idx + 1] && parts[idx + 1] !== 'index.html') {
-        slug = decodeURIComponent(parts[idx + 1]);
-      } else {
-        var urlParams = new URLSearchParams(window.location.search);
-        slug = urlParams.get('cat') || urlParams.get('category');
-      }
-
-      // If invalid slug or path is nested /category/post/..., redirect to /stories/
-      if (!slug || slug === 'post' || slug === 'story' || slug === 'stories' || slug === 'submit-story') {
-        window.location.replace(getRootUrl('stories/'));
-        return 'culture-heritage';
-      }
-      return slug;
+    if (badge) {
+      badge.innerHTML = (window.CSP_ICONS ? window.CSP_ICONS['grid'] : '📂') + ' ' + posts.length + ' Article' + (posts.length === 1 ? '' : 's') + ' Published';
     }
 
-    function getCategorySvgIcon(catOrKey) {
-      return window.getCategorySvgIcon ? window.getCategorySvgIcon(catOrKey) : '';
-    }
+    var gridHtml = '';
+    posts.forEach(function(p){
+      var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : getRootUrl('wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');
+      var pubDate = p.published_at ? p.published_at.slice(0,10) : 'Recent';
+      var postLink = getRootUrl('post/' + (p.slug || p.id) + '/');
 
-    var currentSlug = getCategorySlugFromUrl();
+      gridHtml += '<div class="csp-card-item" data-link="' + postLink + '" style="cursor:pointer;"><div class="csp-card-img-wrap"><img src="' + imgUrl + '" alt="' + (p.title || '') + '" class="csp-card-img" /><span class="csp-card-badge">' + getCategorySvgIcon(p) + ' ' + (p.category_name || categoryName || 'Category') + '</span></div><div class="csp-card-body"><div class="csp-card-meta"><span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' + (p.author_name || 'Conspodium Editorial') + '</span><span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ' + (p.reading_time || '5 min') + '</span></div><h3 class="csp-card-title">' + p.title + '</h3><p class="csp-card-excerpt">' + (p.excerpt || '') + '</p><div class="csp-card-footer"><span>Published ' + pubDate + '</span><span>Read Article &rarr;</span></div></div></div>';
+    });
 
-    // 1. Load All Categories for Top Filter Tabs & Match Active Category Hero Info
-    fetch(getRootUrl('api/posts.php?resource=categories'))
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        if (!res.success || !res.categories) return;
+    grid.innerHTML = gridHtml;
 
-        var tabsContainer = document.getElementById('csp-cat-tabs-container');
-        if (tabsContainer) {
-          var tabsHtml = '<a href="' + getRootUrl('stories/') + '" class="csp-cat-tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> All Stories</a>';
-          res.categories.forEach(function(c){
-            var isActive = (c.slug === currentSlug);
-            var catUrl = getRootUrl('category/' + c.slug + '/');
-            var styleAttr = isActive 
-              ? 'padding:6px 14px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;'
-              : 'padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;';
-            tabsHtml += '<a href="' + catUrl + '" class="csp-cat-tab' + (isActive ? ' active' : '') + '" style="' + styleAttr + '">' + getCategorySvgIcon(c) + ' ' + c.name + '</a>';
-          });
-          tabsContainer.innerHTML = tabsHtml;
+    grid.onclick = function(e) {
+      var card = e.target.closest('.csp-card-item');
+      if (card && card.getAttribute('data-link')) {
+        window.location.href = card.getAttribute('data-link');
+      }
+    };
+  }
 
-          setTimeout(function() {
-            var activeTab = tabsContainer.querySelector('.active');
-            if (activeTab && tabsContainer) {
-              tabsContainer.scrollTo({
-                left: activeTab.offsetLeft - (tabsContainer.offsetWidth / 2) + (activeTab.offsetWidth / 2),
-                behavior: 'smooth'
-              });
-            }
-          }, 150);
+  // 1. DYNAMICALLY LOAD CATEGORY DETAILS & TABS FROM DATABASE (api/posts.php?resource=categories)
+  fetch(getRootUrl('api/posts.php?resource=categories'))
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (!res || !res.success || !res.categories) return;
+
+      // Render category navigation tabs dynamically from database
+      var tabsContainer = document.getElementById('csp-cat-tabs-container');
+      if (tabsContainer) {
+        var tabsHtml = '<a href="' + getRootUrl('stories/') + '" class="csp-cat-tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> All Stories</a>';
+        res.categories.forEach(function(c){
+          var isActive = (c.slug === currentSlug);
+          var catUrl = getRootUrl('category/' + c.slug + '/');
+          var styleAttr = isActive 
+            ? 'padding:6px 14px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;'
+            : 'padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;';
+          tabsHtml += '<a href="' + catUrl + '" class="csp-cat-tab' + (isActive ? ' active' : '') + '" style="' + styleAttr + '">' + getCategorySvgIcon(c) + ' ' + c.name + '</a>';
+        });
+        tabsContainer.innerHTML = tabsHtml;
+      }
+
+      // Match the active category and DYNAMICALLY update name, description, and IMAGE from database
+      var matchedCat = res.categories.find(function(c){ return c.slug === currentSlug; });
+      if (matchedCat) {
+        document.title = matchedCat.name + ' — Conspodium Category';
+        var pt = document.getElementById('page-title'); if (pt) pt.textContent = matchedCat.name + ' — Conspodium Category';
+        var bcn = document.getElementById('cat-bc-name'); if (bcn) bcn.textContent = matchedCat.name;
+        var chn = document.getElementById('cat-hero-name'); if (chn) chn.textContent = matchedCat.name;
+        if (matchedCat.description) {
+          var chd = document.getElementById('cat-hero-desc'); if (chd) chd.textContent = matchedCat.description;
         }
-
-        // Match current category info
-        var matchedCat = res.categories.find(function(c){ return c.slug === currentSlug; });
-        if (matchedCat) {
-          document.title = matchedCat.name + ' — Conspodium Category';
-          document.getElementById('page-title').textContent = matchedCat.name + ' — Conspodium Category';
-          document.getElementById('cat-bc-name').textContent = matchedCat.name;
-          document.getElementById('cat-hero-name').textContent = matchedCat.name;
-          if (matchedCat.description) {
-            document.getElementById('cat-hero-desc').textContent = matchedCat.description;
-          }
-          if (matchedCat.image) {
-            var banner = document.getElementById('cat-hero-banner');
+        if (matchedCat.image) {
+          var banner = document.getElementById('cat-hero-banner');
+          if (banner) {
             banner.src = getAbsoluteImageUrl(matchedCat.image);
             banner.style.display = 'block';
           }
-        } else {
-          // Fallback title formatting from slug
-          var formattedName = currentSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-          document.title = formattedName + ' — Conspodium Category';
-          document.getElementById('page-title').textContent = formattedName + ' — Conspodium Category';
-          document.getElementById('cat-bc-name').textContent = formattedName;
-          document.getElementById('cat-hero-name').textContent = formattedName;
         }
-      })
-      .catch(function(err){ console.error('Error fetching categories:', err); });
-
-    // 2. Fetch Posts for Active Category
-    fetch(getRootUrl('api/posts.php?category=' + encodeURIComponent(currentSlug) + '&limit=50'))
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        var grid = document.getElementById('cat-posts-grid');
-        if (!grid) return;
-
-        if (!res.success || !res.posts || res.posts.length === 0) {
-          document.getElementById('cat-hero-badge').innerHTML = window.CSP_ICONS['grid'] + ' 0 Articles Published';
-          grid.innerHTML = `
-            <div class="csp-empty-card">
-              <div style="font-size:3rem;margin-bottom:12px;">✍️</div>
-              <h3 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.4rem;margin-bottom:10px;">No Stories Published Under This Category Yet</h3>
-              <p style="color:#64748b;max-width:500px;margin:0 auto 24px auto;font-size:0.95rem;line-height:1.6;">
-                Be the first author to submit an essay, report, or opinion piece for this category!
-              </p>
-              <a href="${getRootUrl('submit-story/')}" class="csp-btn-sm csp-btn-primary" style="display:inline-flex;padding:12px 28px;font-size:0.9rem;border-radius:50px;text-decoration:none;">
-                Submit Your Story →
-              </a>
-            </div>
-          `;
-          return;
-        }
-
-        postsCache = res.posts;
-        document.getElementById('cat-hero-badge').innerHTML = window.CSP_ICONS['grid'] + ' ' + res.posts.length + ' Article' + (res.posts.length === 1 ? '' : 's') + ' Published';
-        
-        var gridHtml = '';
-        res.posts.forEach(function(p){
-          var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
-          var pubDate = p.published_at ? p.published_at.slice(0,10) : 'Recent';
-          var postLink = getRootUrl('post/' + (p.slug || p.id) + '/');
-          
-          gridHtml += `
-            <div class="csp-card-item" onclick="window.location.href='${postLink}'">
-              <div class="csp-card-img-wrap">
-                <img src="${imgUrl}" alt="${p.title}" class="csp-card-img" />
-                <span class="csp-card-badge">${getCategorySvgIcon(p)} ${p.category_name || 'Category'}</span>
-              </div>
-              <div class="csp-card-body">
-                <div class="csp-card-meta">
-                  <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${p.author_name || 'Conspodium Editorial'}</span>
-                  <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${p.reading_time || '5 min'}</span>
-                </div>
-                <h3 class="csp-card-title">${p.title}</h3>
-                <p class="csp-card-excerpt">${p.excerpt || ''}</p>
-                <div class="csp-card-footer">
-                  <span>Published ${pubDate}</span>
-                  <span>Read Article &rarr;</span>
-                </div>
-              </div>
-            </div>
-          `;
-        });
-
-        grid.innerHTML = gridHtml;
-      })
-      .catch(function(err){
-        console.error('Error fetching category posts:', err);
-        var grid = document.getElementById('cat-posts-grid');
-        if (grid) {
-          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#ef4444;">Unable to load stories. Please try refreshing.</div>';
-        }
-      });
-
-    // 3. Fetch Related / More Stories across all categories
-    fetch(getRootUrl('api/posts.php?limit=6'))
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        var relGrid = document.getElementById('related-posts-grid');
-        if (!relGrid || !res.success || !res.posts) return;
-
-        var otherPosts = res.posts.filter(function(p){ return p.category_slug !== currentSlug; });
-        if (otherPosts.length === 0) otherPosts = res.posts;
-
-        var relHtml = '';
-        otherPosts.slice(0, 4).forEach(function(p){
-          var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : '../wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg';
-          var postLink = getRootUrl('post/' + (p.slug || p.id) + '/');
-          relHtml += `
-            <div class="csp-card-item" onclick="window.location.href='${postLink}'">
-              <div class="csp-card-img-wrap">
-                <img src="${imgUrl}" alt="${p.title}" class="csp-card-img" />
-                <span class="csp-card-badge">${getCategorySvgIcon(p)} ${p.category_name || 'Category'}</span>
-              </div>
-              <div class="csp-card-body">
-                <div class="csp-card-meta">
-                  <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${p.author_name || 'Conspodium Editorial'}</span>
-                  <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${p.reading_time || '5 min'}</span>
-                </div>
-                <h3 class="csp-card-title">${p.title}</h3>
-                <p class="csp-card-excerpt">${p.excerpt || ''}</p>
-                <div class="csp-card-footer">
-                  <span>Read Story</span>
-                  <span>Read Article &rarr;</span>
-                </div>
-              </div>
-            </div>
-          `;
-        });
-
-        relGrid.innerHTML = relHtml;
-      })
-      .catch(function(err){ console.error('Error fetching related stories:', err); });
-
-    // 4. Modal View Handler & Close Listeners
-    window.openViewArticleModal = function(id) {
-      var p = postsCache.find(function(item){ return item.id == id; });
-      if (!p) return;
-
-      document.getElementById('art-modal-title').textContent = p.title;
-      document.getElementById('art-modal-eyebrow').textContent = p.eyebrow || p.category_name || 'Featured Article';
-      document.getElementById('art-modal-author').textContent = p.author_name || 'Conspodium Editorial';
-      document.getElementById('art-modal-date').textContent = p.published_at ? p.published_at.slice(0,10) : 'Recent';
-
-      var catBadge = document.getElementById('art-modal-category-badge');
-      if (catBadge) {
-        catBadge.innerHTML = getCategorySvgIcon(p) + ' ' + (p.category_name || 'General');
       }
-
-      var imgEl = document.getElementById('art-modal-image');
-      if (p.featured_image) {
-        imgEl.src = getAbsoluteImageUrl(p.featured_image);
-        imgEl.style.display = 'block';
-      } else {
-        imgEl.style.display = 'none';
-      }
-
-      var excEl = document.getElementById('art-modal-excerpt');
-      if (p.excerpt) {
-        excEl.textContent = p.excerpt;
-        excEl.style.display = 'block';
-      } else {
-        excEl.style.display = 'none';
-      }
-
-      document.getElementById('art-modal-body').innerHTML = p.content || p.excerpt || 'No content';
-
-      var modal = document.getElementById('modal-view-article');
-      if (modal) modal.classList.add('active');
-    };
-
-    document.addEventListener('click', function(e){
-      if (e.target.closest('[data-close="modal-view-article"]') || e.target.id === 'modal-view-article') {
-        var modal = document.getElementById('modal-view-article');
-        if (modal) modal.classList.remove('active');
-      }
+    })
+    .catch(function(err){
+      console.warn('Could not fetch categories from database:', err);
     });
-  })();
-  </script>
+
+  // 2. DYNAMICALLY FETCH POSTS FOR THIS CATEGORY FROM DATABASE (api/posts.php?category=...)
+  fetch(getRootUrl('api/posts.php?category=' + encodeURIComponent(currentSlug) + '&limit=50'))
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res && res.success && res.posts) {
+        renderCategoryPosts(res.posts);
+      } else {
+        renderCategoryPosts([]);
+      }
+    })
+    .catch(function(err){
+      console.error('Error loading category posts from database:', err);
+      renderCategoryPosts([]);
+    });
+
+  // 3. DYNAMICALLY FETCH RELATED POSTS FROM DATABASE (api/posts.php?limit=6)
+  fetch(getRootUrl('api/posts.php?limit=6'))
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      var relGrid = document.getElementById('related-posts-grid');
+      if (!relGrid || !res.success || !res.posts) return;
+
+      var otherPosts = res.posts.filter(function(p){ return p.category_slug !== currentSlug; });
+      if (otherPosts.length === 0) otherPosts = res.posts;
+
+      var relHtml = '';
+      otherPosts.slice(0, 4).forEach(function(p){
+        var imgUrl = p.featured_image ? getAbsoluteImageUrl(p.featured_image) : getRootUrl('wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');
+        var postLink = getRootUrl('post/' + (p.slug || p.id) + '/');
+        relHtml += '<div class="csp-card-item" data-link="' + postLink + '" style="cursor:pointer;"><div class="csp-card-img-wrap"><img src="' + imgUrl + '" alt="' + (p.title || '') + '" class="csp-card-img" /><span class="csp-card-badge">' + getCategorySvgIcon(p) + ' ' + (p.category_name || 'Category') + '</span></div><div class="csp-card-body"><div class="csp-card-meta"><span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' + (p.author_name || 'Conspodium Editorial') + '</span><span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ' + (p.reading_time || '5 min') + '</span></div><h3 class="csp-card-title">' + p.title + '</h3><p class="csp-card-excerpt">' + (p.excerpt || '') + '</p><div class="csp-card-footer"><span>Published Recent</span><span>Read Article &rarr;</span></div></div></div>';
+      });
+      relGrid.innerHTML = relHtml;
+      relGrid.onclick = function(e) {
+        var card = e.target.closest('.csp-card-item');
+        if (card && card.getAttribute('data-link')) {
+          window.location.href = card.getAttribute('data-link');
+        }
+      };
+    })
+    .catch(function(e){ console.log('Related posts API fetch skipped'); });
+})();
+</script>
 
 </body>
 </html>

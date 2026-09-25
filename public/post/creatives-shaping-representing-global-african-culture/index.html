@@ -57,6 +57,60 @@
     opacity: 0 !important;
     pointer-events: none !important;
   }
+
+  /* ── FORUM HERO SUBTITLE LIGHT COLOR FIX ── */
+  .csp-forum-subtitle,
+  .forum-page .csp-forum-subtitle,
+  section.csp-forum-hero p {
+    color: #f1f5f9 !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6) !important;
+    opacity: 0.95 !important;
+  }
+
+  /* ── JOIN OUR GLOBAL COMMUNITY DUAL HEADER TITLE FIX ── */
+  .elementor-repeater-item-67ae5f4,
+  .eael-dch-title-text.elementor-repeater-item-67ae5f4,
+  .eael-dual-header .elementor-repeater-item-67ae5f4 {
+    color: #ffffff !important;
+  }
+
+  .elementor-element-3ae1746 .eael-dual-header .subtext p,
+  .elementor-element-222bfda .eael-dual-header .subtext p,
+  .elementor-element-4e0df79 .eael-dual-header .subtext p {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+
+  /* ── UNIVERSAL JOIN OUR GLOBAL COMMUNITY WHITE COLOR FIX ── */
+  .elementor-repeater-item-67ae5f4,
+  .eael-dch-title-text.elementor-repeater-item-67ae5f4,
+  .elementor-element-59236d24 .eael-dch-title,
+  .elementor-element-59236d24 .eael-dch-title span:first-child,
+  .elementor-element-59236d24 .eael-dch-title .eael-dch-title-text:first-child,
+  .elementor-element-590ac871 .eael-dch-title,
+  .elementor-element-590ac871 .eael-dch-title span:first-child,
+  .elementor-element-ca95b25 .eael-dch-title,
+  .elementor-element-ca95b25 .eael-dch-title span:first-child,
+  .elementor-element-ca95b25 .elementor-repeater-item-67ae5f4,
+  .eael-dual-header .elementor-repeater-item-67ae5f4 {
+    color: #ffffff !important;
+  }
+
+  .elementor-element-59236d24 .subtext p,
+  .elementor-element-590ac871 .subtext p,
+  .elementor-element-ca95b25 .subtext p,
+  .elementor-element-ca95b25 .subtext span,
+  .elementor-element-3ae1746 .eael-dual-header .subtext p,
+  .elementor-element-222bfda .eael-dual-header .subtext p,
+  .elementor-element-4e0df79 .eael-dual-header .subtext p {
+    color: rgba(255, 255, 255, 0.88) !important;
+  }
+
+  .elementor-element-47dc6089 .elementor-heading-title,
+  .elementor-element-ca95b25 .elementor-heading-title {
+    color: #00AEFE !important;
+  }
+
 </style>
 <style id="csp-header-fixes">
   /* Apply Merienda font to ALL gradient colored text across all section titles and custom sections */
@@ -3517,8 +3571,9 @@
     'time': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
     'views': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
   };
-
-  /* ── EXECUTIVE BRIEFING DARK SIDEBAR INPUT FIXES ──────────────── */
+</script>
+<style id="csp-additional-sidebar-fixes">
+/* ── EXECUTIVE BRIEFING DARK SIDEBAR INPUT FIXES ──────────────── */
   .csp-sidebar-newsletter input,
   .csp-sidebar-newsletter input[type="email"],
   .csp-sidebar-newsletter input[type="text"],
@@ -3872,8 +3927,8 @@
     }
   }
 
-</style>
-<script>
+
+
   /* ── UNIVERSAL CONSPODIUM SVG ICON PROVIDER ────────────────── */
   window.CSP_ICONS = {
     'grid': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
@@ -3995,7 +4050,7 @@
     container.innerHTML = html;
     if (window.cspToast) window.cspToast('Vote recorded for "' + optionText + '"!', 'success');
   };
-</script>
+</style>
 
   <style>
     :root {
@@ -4455,21 +4510,7 @@
           <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> <span id="post-views">1150 views</span></span>
         </div>
 
-        <!-- READER CONTROL TOOLBAR (Typography & Reading Themes) -->
-        <div id="csp-reader-toolbar" style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;border:1px solid #e2e8f0;border-radius:50px;padding:8px 18px;margin-bottom:20px;font-size:0.82rem;color:#475569;flex-wrap:wrap;gap:8px;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span style="font-weight:600;color:#0f172a;">Font Size:</span>
-            <button type="button" onclick="window.changeArticleFontSize(-1)" style="border:1px solid #cbd5e1;background:#fff;border-radius:20px;padding:3px 10px;font-weight:700;cursor:pointer;color:#334155;" title="Decrease font size">A-</button>
-            <span id="font-size-indicator" style="font-weight:600;color:#00AEFE;">100%</span>
-            <button type="button" onclick="window.changeArticleFontSize(1)" style="border:1px solid #cbd5e1;background:#fff;border-radius:20px;padding:3px 10px;font-weight:700;cursor:pointer;color:#334155;" title="Increase font size">A+</button>
-          </div>
-          <div style="display:flex;align-items:center;gap:6px;">
-            <span style="font-weight:600;color:#0f172a;margin-right:4px;">Reading Theme:</span>
-            <button type="button" onclick="window.setArticleReadingTheme('paper')" style="border:1px solid #cbd5e1;background:#ffffff;color:#0f172a;border-radius:20px;padding:3px 10px;font-size:0.78rem;font-weight:600;cursor:pointer;">☀️ Paper</button>
-            <button type="button" onclick="window.setArticleReadingTheme('sepia')" style="border:1px solid #e2d6b5;background:#fbf0d9;color:#5f4b32;border-radius:20px;padding:3px 10px;font-size:0.78rem;font-weight:600;cursor:pointer;">📜 Sepia</button>
-            <button type="button" onclick="window.setArticleReadingTheme('dark')" style="border:1px solid #334155;background:#0f172a;color:#f8fafc;border-radius:20px;padding:3px 10px;font-size:0.78rem;font-weight:600;cursor:pointer;">🌙 Dark</button>
-          </div>
-        </div>
+        
 
         <img id="post-hero-image" src="/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Creatives Are Shaping & Representing Global African Culture" class="csp-post-hero-img" style="display:block;">
 
@@ -4693,6 +4734,7 @@
 
   <!-- SINGLE POST CONTROLLER SCRIPT -->
   <script>
+  (function(){
   window.isAdminLoggedIn = false;
   window.currentCommentParentId = null;
 
@@ -5402,165 +5444,10 @@
       });
   };
 
-  // ── READER TYPOGRAPHY CONTROLLER ──
-  window.currentArticleFontSizePercent = 100;
-  window.changeArticleFontSize = function(delta) {
-    window.currentArticleFontSizePercent = Math.min(140, Math.max(85, window.currentArticleFontSizePercent + (delta * 10)));
-    var bodyEl = document.getElementById('post-content-body');
-    var indEl = document.getElementById('font-size-indicator');
-    if (bodyEl) {
-      bodyEl.style.fontSize = (window.currentArticleFontSizePercent / 100 * 1.05) + 'rem';
-    }
-    if (indEl) indEl.textContent = window.currentArticleFontSizePercent + '%';
-  };
-
-  window.setArticleReadingTheme = function(theme) {
-    var bodyEl = document.getElementById('post-content-body');
-    if (!bodyEl) return;
-    if (theme === 'sepia') {
-      bodyEl.style.background = '#fbf0d9';
-      bodyEl.style.color = '#433422';
-      bodyEl.style.padding = '24px';
-      bodyEl.style.borderRadius = '16px';
-    } else if (theme === 'dark') {
-      bodyEl.style.background = '#0f172a';
-      bodyEl.style.color = '#f8fafc';
-      bodyEl.style.padding = '24px';
-      bodyEl.style.borderRadius = '16px';
-    } else {
-      bodyEl.style.background = 'transparent';
-      bodyEl.style.color = '#1e293b';
-      bodyEl.style.padding = '0';
-    }
-    if (window.cspToast) window.cspToast('Reading theme set to ' + theme.toUpperCase(), 'info');
-  };
-
-  // ── AUTO TABLE OF CONTENTS GENERATOR ──
-  window.generateTableOfContents = function() {
-    var bodyEl = document.getElementById('post-content-body');
-    var tocContainer = document.getElementById('post-toc-container');
-    var tocList = document.getElementById('post-toc-list');
-    if (!bodyEl || !tocContainer || !tocList) return;
-
-    var headings = bodyEl.querySelectorAll('h2, h3, h4');
-    if (!headings || headings.length < 2) {
-      tocContainer.style.display = 'none';
-      return;
-    }
-
-    var listHtml = '';
-    headings.forEach(function(h, idx) {
-      var anchorId = 'toc-heading-' + idx;
-      h.id = anchorId;
-      var text = h.textContent.trim();
-      var isSub = h.tagName.toLowerCase() === 'h3' || h.tagName.toLowerCase() === 'h4';
-      listHtml += '<li style="margin-bottom:6px;' + (isSub ? 'margin-left:16px;' : '') + '"><a href="#' + anchorId + '" onclick="event.preventDefault(); var el=document.getElementById(\'' + anchorId + '\'); if(el) el.scrollIntoView({behavior:\'smooth\'});" style="color:#00AEFE;text-decoration:none;font-weight:600;">' + text + '</a></li>';
-    });
-
-    tocList.innerHTML = listHtml;
-    tocContainer.style.display = 'block';
-  };
-
-  // ── COMMUNITY REACTIONS HANDLER ──
-  window.reactToPost = function(reactionType, btnEl) {
-    var postSlugOrId = window.location.pathname.replace(/\/$/, '').split('/').pop() || 'we-are-the-world';
-    var key = 'csp_reacted_' + reactionType + '_' + postSlugOrId;
-    var countEl = document.getElementById('react-count-' + reactionType);
-
-    if (localStorage.getItem(key)) {
-      if (window.cspToast) window.cspToast('You already reacted to this story!', 'info');
-      return;
-    }
-
-    var currentCount = parseInt(countEl ? countEl.textContent : '0') || 0;
-    currentCount++;
-    if (countEl) countEl.textContent = currentCount;
-    localStorage.setItem(key, '1');
-
-    if (btnEl) {
-      btnEl.style.transform = 'scale(1.1)';
-      setTimeout(function(){ btnEl.style.transform = 'scale(1)'; }, 200);
-      btnEl.style.borderColor = '#00AEFE';
-    }
-
-    if (window.cspToast) window.cspToast('🎉 Thanks for your feedback! Reaction added.', 'success');
-  };
-
-  // ── TEXT HIGHLIGHT QUOTE & SHARE POPOVER ──
-  window.initQuoteSharer = function() {
-    var bodyEl = document.getElementById('post-content-body');
-    if (!bodyEl) return;
-
-    var popover = document.createElement('div');
-    popover.id = 'csp-quote-share-popover';
-    popover.style.cssText = 'position:fixed;display:none;z-index:9999999;background:#0f172a;color:#ffffff;border-radius:50px;padding:8px 16px;box-shadow:0 10px 30px rgba(0,0,0,0.3);font-size:0.8rem;font-weight:600;gap:10px;align-items:center;transform:translate(-50%,-100%);pointer-events:auto;';
-    popover.innerHTML = `
-      <button type="button" id="btn-quote-tweet" style="background:none;border:none;color:#38bdf8;font-weight:600;font-size:0.8rem;cursor:pointer;display:inline-flex;align-items:center;gap:4px;"><i class="fab fa-twitter"></i> Tweet Quote</button>
-      <span style="color:#334155;">|</span>
-      <button type="button" id="btn-quote-copy" style="background:none;border:none;color:#ffffff;font-weight:600;font-size:0.8rem;cursor:pointer;display:inline-flex;align-items:center;gap:4px;"><i class="fas fa-copy"></i> Copy Quote</button>
-    `;
-    document.body.appendChild(popover);
-
-    var selectedQuoteText = '';
-
-    document.addEventListener('mouseup', function(e) {
-      if (popover.contains(e.target)) return;
-      var sel = window.getSelection();
-      var text = sel ? sel.toString().trim() : '';
-
-      if (text.length > 5 && bodyEl.contains(sel.anchorNode)) {
-        selectedQuoteText = text;
-        var range = sel.getRangeAt(0);
-        var rect = range.getBoundingClientRect();
-        popover.style.top = (rect.top - 12) + 'px';
-        popover.style.left = (rect.left + (rect.width / 2)) + 'px';
-        popover.style.display = 'flex';
-      } else {
-        popover.style.display = 'none';
-      }
-    });
-
-    var twBtn = document.getElementById('btn-quote-tweet');
-    if (twBtn) {
-      twBtn.onclick = function() {
-        if (!selectedQuoteText) return;
-        var tweetUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('"' + selectedQuoteText.slice(0, 240) + '"') + '&url=' + encodeURIComponent(window.location.href);
-        window.open(tweetUrl, '_blank', 'width=600,height=500');
-        popover.style.display = 'none';
-      };
-    }
-
-    var cpBtn = document.getElementById('btn-quote-copy');
-    if (cpBtn) {
-      cpBtn.onclick = function() {
-        if (!selectedQuoteText) return;
-        navigator.clipboard.writeText('"' + selectedQuoteText + '" — ' + window.location.href);
-        if (window.cspToast) window.cspToast('Quote copied to clipboard!', 'success');
-        popover.style.display = 'none';
-      };
-    }
-  };
-
-  (function(){
-    // Check Admin Authentication Status
-    window.checkAdminStatus();
-
-    // Fetch dynamic post details if needed
-    window.fetchPostDetails();
-
-    // Render Related Stories
-    window.loadRelatedStories();
-
-    // Initial Render of Comments
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() {
-        window.renderCommentsStream();
-        window.loadRelatedStories();
-      });
-    } else {
-      window.renderCommentsStream();
-      window.loadRelatedStories();
-    }
+  // Initial Execution
+  window.fetchPostDetails();
+  window.renderCommentsStream();
+  window.loadRelatedStories();
 
     // Sync Share Links with Current Location & Open Popup Windows
     var pUrl = encodeURIComponent(window.location.href);
