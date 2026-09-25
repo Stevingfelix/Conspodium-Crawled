@@ -672,6 +672,43 @@
     box-shadow: 0 10px 30px rgba(0, 174, 254, 0.22) !important;
   }
 
+  /* Soft Search Input & Placeholder Styling */
+  #csp-stories-search-input,
+  #csp-stories-search-input::placeholder {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 0.86rem !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  #csp-stories-search-input::placeholder {
+    color: #94a3b8 !important;
+    font-weight: 400 !important;
+    opacity: 1 !important;
+  }
+
+  /* Animated Jump Button & Bounce Icon */
+  @keyframes cspBounceArrow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  .csp-jump-stories-btn:hover {
+    background: rgba(0, 174, 254, 0.15) !important;
+    border-color: #00AEFE !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 18px rgba(0, 174, 254, 0.2) !important;
+  }
+
+  /* Floating Animation for Hero Showcase Card */
+  @keyframes cspFloatHero {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-7px); }
+  }
+
+  .csp-hero-floating-showcase {
+    animation: cspFloatHero 4.5s ease-in-out infinite;
+  }
+
   /* Fix logo images collapsed to height:0 by JS at crawl time */
   img.sticel-logo-shrink {
     height: auto !important;
@@ -2506,6 +2543,35 @@
 
     .csp-hero-spotlight-meta {
       text-align: center !important;
+    }
+
+    /* ── Stories Top Hero Mobile Layout & Zero Overlap ── */
+    .elementor-element-2f73cc35 {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 20px !important;
+    }
+
+    .elementor-element-77f610a5 {
+      order: 1 !important;
+      width: 100% !important;
+    }
+
+    .elementor-element-2706cfdd {
+      order: 2 !important;
+      width: 100% !important;
+      margin-top: 8px !important;
+      margin-bottom: 24px !important;
+    }
+
+    .csp-hero-floating-showcase {
+      max-width: 100% !important;
+      margin: 0 auto !important;
+    }
+
+    .csp-stories-search-bar {
+      max-width: 100% !important;
+      width: 100% !important;
     }
 
     /* ── Fix Home Page Blob Bleeding into Counter on Mobile ── */
