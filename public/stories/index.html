@@ -732,7 +732,7 @@ min-width: 100px;
     opacity: 1 !important;
   }
 
-  /* Desktop Stories Hero 2-Column Flex Layout */
+    /* Desktop Stories Hero: Text on Left (order 1), Blob Image on Right (order 2) */
   @media (min-width: 993px) {
     .elementor-element-2f73cc35 {
       display: flex !important;
@@ -742,20 +742,22 @@ min-width: 100px;
       gap: 40px !important;
     }
 
-    .elementor-element-2706cfdd {
-      flex: 0 0 45% !important;
-      max-width: 460px !important;
-      width: 45% !important;
-    }
-
     .elementor-element-77f610a5 {
-      flex: 0 0 52% !important;
-      max-width: 540px !important;
-      width: 52% !important;
+      order: 1 !important;
+      flex: 0 0 54% !important;
+      max-width: 580px !important;
+      width: 54% !important;
       display: flex !important;
       flex-direction: column !important;
       align-items: flex-start !important;
       text-align: left !important;
+    }
+
+    .elementor-element-2706cfdd {
+      order: 2 !important;
+      flex: 0 0 42% !important;
+      max-width: 440px !important;
+      width: 42% !important;
     }
 
     .csp-hero-chronicles-title {
@@ -2630,13 +2632,13 @@ min-width: 100px;
       text-align: center !important;
     }
 
-    /* ── Stories Top Hero Mobile Layout & Ordering ── */
+        /* ── Stories Top Hero Mobile Layout & Ordering ── */
     .elementor-element-2f73cc35 {
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
       gap: 0px !important;
-      margin-bottom: 30px !important;
+      margin-bottom: 25px !important;
     }
 
     .elementor-element-77f610a5 {
@@ -2675,8 +2677,8 @@ min-width: 100px;
     .elementor-element-2706cfdd {
       order: 4 !important;
       width: 100% !important;
-      max-width: 290px !important;
-      margin: 10px auto 20px auto !important;
+      max-width: 280px !important;
+      margin: 15px auto 20px auto !important;
       display: flex !important;
       justify-content: center !important;
     }
@@ -2684,7 +2686,7 @@ min-width: 100px;
     #uc_blob_shapes_elementor_2c3c3975_justification,
     #uc_blob_shapes_elementor_2c3c3975_size {
       width: 100% !important;
-      max-width: 290px !important;
+      max-width: 280px !important;
       margin: 0 auto !important;
     }
 
@@ -2695,11 +2697,11 @@ min-width: 100px;
       width: 100% !important;
       display: flex !important;
       justify-content: center !important;
-      margin-top: 20px !important;
+      margin-top: 15px !important;
       margin-bottom: 45px !important;
     }
 
-    /* Extra spacing before the Discover by Category section */
+    /* Spacing before Discover By Category */
     .elementor-element-181d0192 {
       margin-top: 40px !important;
       padding-top: 30px !important;
@@ -4199,11 +4201,16 @@ min-width: 100px;
 <style>/* widget: Blob Shapes */
 
 #uc_blob_shapes_elementor_2c3c3975{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   mix-blend-mode: overlay;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-position:center center;
-  opacity: 100%; 
+  opacity: 100%;
 }
 
 #uc_blob_shapes_elementor_2c3c3975_justification #uc_blob_shapes_elementor_2c3c3975_justification-inner{
@@ -4248,9 +4255,17 @@ min-width: 100px;
   background:linear-gradient(45deg, #00AEFE 0%, 50%, #A2007DC7 100%); 
 }
 
-#uc_blob_shapes_elementor_2c3c3975 {
-  aspect-ratio: 1 / 1; 
-  width:100%;
+#uc_blob_shapes_elementor_2c3c3975{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  mix-blend-mode: overlay;
+  opacity: 100%;
 }
 
 .ue-blob-text-holder{
