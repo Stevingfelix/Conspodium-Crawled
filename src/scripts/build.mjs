@@ -66,8 +66,17 @@ if (existsSync(join(PUBLIC, 'category'))) {
 if (existsSync(ASSETS)) {
   await copyDir(ASSETS, PUBLIC);
 }
+if (existsSync(join(ROOT, 'api'))) {
+  await copyDir(join(ROOT, 'api'), join(PUBLIC, 'api'));
+}
+if (existsSync(join(ROOT, 'data'))) {
+  await copyDir(join(ROOT, 'data'), join(PUBLIC, 'data'));
+}
 if (existsSync(join(ROOT, 'install.php'))) {
   await cp(join(ROOT, 'install.php'), join(PUBLIC, 'install.php'));
+}
+if (existsSync(join(ROOT, 'installation-guide.html'))) {
+  await cp(join(ROOT, 'installation-guide.html'), join(PUBLIC, 'installation-guide.html'));
 }
 if (existsSync(join(ROOT, '.htaccess'))) {
   await cp(join(ROOT, '.htaccess'), join(PUBLIC, '.htaccess'));
@@ -207,6 +216,11 @@ const POST_DATA = {
     `
   }
 };
+
+// Register individual post pages for static generation
+for (const slug of Object.keys(POST_DATA)) {
+  PAGES.push({ id: 'post', out: `post/${slug}/index.html` });
+}
 
 // Step 3 — Process and write pages
 console.log(`  2. Building ${PAGES.length} pages:\n`);

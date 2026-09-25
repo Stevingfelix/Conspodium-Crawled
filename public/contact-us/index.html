@@ -1145,15 +1145,24 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
   }
 
-  /* ── HERO OVERLAY PAGES (body.home, body.forum-page): Transparent on top, Dark Glass on scroll ─── */
+  /* ── HERO OVERLAY PAGES (body.home, body.forum-page, body.elementor-page-977): Transparent on top, Dark Glass on scroll ─── */
   body.home .elementor-location-header:not(.is-sticky),
   body.home .she-header-yes:not(.is-sticky),
   body.home .elementor-element-2d9e131:not(.is-sticky),
   body.forum-page .elementor-location-header:not(.is-sticky),
   body.forum-page .she-header-yes:not(.is-sticky),
-  body.forum-page .elementor-element-2d9e131:not(.is-sticky) {
+  body.forum-page .elementor-element-2d9e131:not(.is-sticky),
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky),
+  body.elementor-page-977 .she-header-yes:not(.is-sticky),
+  body.elementor-page-977 .elementor-element-2d9e131:not(.is-sticky),
+  body.page-id-977 .elementor-location-header:not(.is-sticky),
+  body.page-id-977 .she-header-yes:not(.is-sticky),
+  body.page-id-977 .elementor-element-2d9e131:not(.is-sticky) {
     position: absolute !important;
     top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
     background: transparent !important;
     background-color: transparent !important;
     backdrop-filter: none !important;
@@ -1167,7 +1176,13 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   body.home .elementor-element-2d9e131.is-sticky,
   body.forum-page .elementor-location-header.is-sticky,
   body.forum-page .she-header-yes.is-sticky,
-  body.forum-page .elementor-element-2d9e131.is-sticky {
+  body.forum-page .elementor-element-2d9e131.is-sticky,
+  body.elementor-page-977 .elementor-location-header.is-sticky,
+  body.elementor-page-977 .she-header-yes.is-sticky,
+  body.elementor-page-977 .elementor-element-2d9e131.is-sticky,
+  body.page-id-977 .elementor-location-header.is-sticky,
+  body.page-id-977 .she-header-yes.is-sticky,
+  body.page-id-977 .elementor-element-2d9e131.is-sticky {
     position: fixed !important;
     top: 0 !important;
     background: rgba(6, 16, 34, 0.92) !important;
@@ -1683,66 +1698,81 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   /* ── STANDALONE MOBILE MODAL (ATTACHED TO BODY) ────────────────────────────── */
   #csp-mobile-menu-modal {
     position: fixed !important;
+    inset: 0 !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
+    width: 100% !important;
     width: 100vw !important;
+    height: 100% !important;
     height: 100vh !important;
+    height: 100dvh !important;
     z-index: 99999999 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
-    transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.28s ease !important;
   }
 
   #csp-mobile-menu-modal.active {
     opacity: 1 !important;
     pointer-events: auto !important;
     visibility: visible !important;
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s !important;
   }
 
   /* Dark blurry backdrop BEHIND card */
   .csp-modal-backdrop {
     position: absolute !important;
+    inset: 0 !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    background: rgba(0, 0, 0, 0.25) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
+    background: rgba(3, 8, 20, 0.55) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
     z-index: 1 !important;
+    transition: opacity 0.28s ease !important;
   }
 
-  /* Menu card ON TOP of backdrop */
+  /* Menu card ON TOP of backdrop - Perfectly centered in viewport */
   .csp-modal-card {
     position: relative !important;
     z-index: 2 !important;
-    width: 88% !important;
+    margin: auto !important;
+    width: 90% !important;
     max-width: 360px !important;
+    max-height: calc(100dvh - 36px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
     background: rgba(6, 16, 34, 0.96) !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
-    border: 1px solid rgba(0, 174, 254, 0.3) !important;
+    backdrop-filter: blur(28px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    border: 1px solid rgba(0, 174, 254, 0.35) !important;
     border-radius: 28px !important;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 174, 254, 0.2) !important;
-    padding: 22px 20px 28px !important;
+    box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.75), 0 0 35px rgba(0, 174, 254, 0.25) !important;
+    padding: 22px 20px 26px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
     justify-content: flex-start !important;
-    transform: scale(0.85) translateY(24px);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transform: scale(0.9) translateY(14px);
+    opacity: 0;
+    transition: transform 0.32s cubic-bezier(0.34, 1.35, 0.64, 1), opacity 0.26s ease !important;
   }
 
   #csp-mobile-menu-modal.active .csp-modal-card {
-    transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0) !important;
+    opacity: 1 !important;
   }
 
   .csp-modal-header-row {
@@ -4203,7 +4233,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2087"><a href="/about-us/" class="elementor-item">About Us</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2089"><a href="/contact-us/" class="elementor-item">Contact Us</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2086"><a href="/stories/" class="elementor-item">Stories</a></li>
-								<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/forum/" class="elementor-item">Discussion Forum</a></li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/forum/" class="elementor-item">Forum</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2090"><a href="/sponsorship/" class="elementor-item">Sponsorship</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2088"><a href="/advert/" class="elementor-item">Advert</a></li>
 							</ul>

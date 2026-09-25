@@ -365,6 +365,354 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 <style id="advert-page-clean-overrides">
   /* -------------------------------------------------------------
+     Advert Page Transparent Header & Page Canvas Integration
+     ------------------------------------------------------------- */
+  body.elementor-page-977,
+  body.page-id-977 {
+    background-color: #FAFAFC !important;
+  }
+
+  /* Seamless Transparent Floating Header on Advert Page */
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky),
+  body.elementor-page-977 .she-header:not(.is-sticky),
+  body.elementor-page-977 .she-header-yes:not(.is-sticky),
+  body.elementor-page-977 .elementor-element-2d9e131:not(.is-sticky),
+  body.page-id-977 .elementor-location-header:not(.is-sticky),
+  body.page-id-977 .she-header:not(.is-sticky),
+  body.page-id-977 .she-header-yes:not(.is-sticky),
+  body.page-id-977 .elementor-element-2d9e131:not(.is-sticky) {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    border-bottom: none !important;
+    z-index: 999999 !important;
+  }
+
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky) .elementor-section-wrap,
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky) .elementor-element-2d9e131,
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky) .elementor-element-f22f163,
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky) .elementor-element-adf27cc {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Hero Section Container Padding & Relative Context */
+  .elementor-element-598a9a85 {
+    position: relative !important;
+    overflow: hidden !important;
+    background: #FAFAFC !important;
+    padding-top: 110px !important;
+    padding-bottom: 60px !important;
+  }
+  .elementor-element-598a9a85 > .e-con-inner {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+  @media (max-width: 767px) {
+    .elementor-element-598a9a85 {
+      padding-top: 85px !important;
+      padding-bottom: 40px !important;
+    }
+  }
+
+  /* ── UNIQUE ADVERT ANIMATED BACKGROUND: GLOBAL DIASPORA MEDIA NETWORK ── */
+  .csp-advert-animated-bg {
+    position: absolute;
+    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  /* Radiant Luminous Mesh Orbs */
+  .csp-adv-glow-mesh {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 70% 50% at 85% 12%, rgba(0, 174, 254, 0.12) 0%, rgba(0, 174, 254, 0) 70%),
+      radial-gradient(ellipse 65% 50% at 12% 28%, rgba(183, 31, 113, 0.08) 0%, rgba(183, 31, 113, 0) 70%),
+      radial-gradient(circle 480px at 50% 8%, rgba(255, 255, 255, 0.95) 0%, rgba(250, 250, 252, 0) 100%);
+    opacity: 0.95;
+  }
+
+  /* Slowly Floating Radiant Energy Orbs */
+  .csp-adv-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(65px);
+    -webkit-filter: blur(65px);
+    opacity: 0.65;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  .csp-adv-orb-cyan {
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(0, 174, 254, 0.22) 0%, rgba(0, 174, 254, 0) 70%);
+    top: -80px;
+    right: -100px;
+    animation: cspOrbDriftCyan 18s ease-in-out infinite alternate;
+  }
+
+  .csp-adv-orb-magenta {
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(183, 31, 113, 0.16) 0%, rgba(183, 31, 113, 0) 70%);
+    top: 40px;
+    left: -120px;
+    animation: cspOrbDriftMagenta 22s ease-in-out infinite alternate;
+  }
+
+  .csp-adv-orb-gold {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, rgba(245, 158, 11, 0) 70%);
+    top: 30%;
+    left: 45%;
+    animation: cspOrbDriftGold 25s ease-in-out infinite alternate;
+  }
+
+  @keyframes cspOrbDriftCyan {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(-60px, 40px, 0) scale(1.1); }
+    100% { transform: translate3d(30px, 80px, 0) scale(0.95); }
+  }
+
+  @keyframes cspOrbDriftMagenta {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(70px, -30px, 0) scale(1.08); }
+    100% { transform: translate3d(-30px, 50px, 0) scale(0.92); }
+  }
+
+  @keyframes cspOrbDriftGold {
+    0% { transform: translate3d(0, 0, 0) scale(0.9); }
+    100% { transform: translate3d(40px, -40px, 0) scale(1.15); }
+  }
+
+  /* Fine Isometric Media Grid Lines */
+  .csp-adv-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+    background-size: 52px 52px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 80%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 80%);
+  }
+
+  /* Concentric Broadcasting Reach Pulse Rings */
+  .csp-adv-broadcast-rings {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    pointer-events: none;
+  }
+
+  .csp-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px dashed rgba(0, 174, 254, 0.18);
+  }
+
+  .csp-ring-1 {
+    width: 240px;
+    height: 240px;
+    animation: cspRingRotate 60s linear infinite;
+  }
+
+  .csp-ring-2 {
+    width: 440px;
+    height: 440px;
+    border-style: solid;
+    border-color: rgba(183, 31, 113, 0.12);
+    animation: cspRingPulse 8s ease-in-out infinite alternate;
+  }
+
+  .csp-ring-3 {
+    width: 640px;
+    height: 640px;
+    border-style: dashed;
+    border-color: rgba(0, 174, 254, 0.08);
+    animation: cspRingRotate 90s linear infinite reverse;
+  }
+
+  @keyframes cspRingRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @keyframes cspRingPulse {
+    0% { transform: translate(-50%, -50%) scale(0.97); opacity: 0.6; }
+    100% { transform: translate(-50%, -50%) scale(1.03); opacity: 1; }
+  }
+
+  /* Floating Media Reach Beacons on DESKTOP & MOBILE */
+  .csp-adv-floating-beacons {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .csp-beacon {
+    position: absolute;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 174, 254, 0.25);
+    border-radius: 50px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.07), 0 0 15px rgba(0, 174, 254, 0.08);
+    animation: cspBeaconHover 10s ease-in-out infinite alternate;
+  }
+
+  .csp-beacon-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00AEFE;
+    box-shadow: 0 0 8px #00AEFE;
+    animation: cspBeaconDotBlink 2.5s infinite;
+  }
+
+  .csp-beacon-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #1E293B;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .csp-beacon-1 {
+    top: 18%;
+    left: 4%;
+    animation-duration: 12s;
+  }
+
+  .csp-beacon-2 {
+    top: 24%;
+    right: 4%;
+    border-color: rgba(183, 31, 113, 0.25);
+    animation-duration: 14s;
+    animation-delay: -3s;
+  }
+  .csp-beacon-2 .csp-beacon-dot {
+    background: #B71F71;
+    box-shadow: 0 0 8px #B71F71;
+  }
+
+  @keyframes cspBeaconHover {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(0.8deg); }
+    100% { transform: translateY(8px) rotate(-0.8deg); }
+  }
+
+  @keyframes cspBeaconDotBlink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* Mobile floating beacons: hidden on mobile to prevent overlapping hero text (Request 1) */
+  @media (max-width: 767px) {
+    .csp-adv-floating-beacons {
+      display: none !important;
+    }
+    .csp-adv-broadcast-rings {
+      top: 140px !important;
+      width: 280px !important;
+      height: 280px !important;
+      display: block !important;
+      opacity: 0.6 !important;
+    }
+  }
+
+  /* -------------------------------------------------------------
+     Sleek Floating Image Badges (Directly On Showcase Images)
+     ------------------------------------------------------------- */
+  .csp-hero-image-badge {
+    position: absolute;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    background: rgba(6, 16, 34, 0.82);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(0, 174, 254, 0.45);
+    border-radius: 50px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.38), 0 0 18px rgba(0, 174, 254, 0.25);
+    z-index: 10;
+    pointer-events: auto;
+    animation: cspBadgeFloat 8s ease-in-out infinite alternate;
+  }
+  .csp-hero-badge-demographics {
+    bottom: 24px;
+    right: 24px;
+  }
+  .csp-hero-badge-reach {
+    top: 24px;
+    left: 24px;
+    border-color: rgba(183, 31, 113, 0.45);
+    animation-delay: -3s;
+  }
+  .csp-hero-image-badge .csp-beacon-text {
+    color: #FFFFFF !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+  }
+  .csp-dot-cyan {
+    background: #00AEFE !important;
+    box-shadow: 0 0 8px #00AEFE !important;
+  }
+  .csp-dot-magenta {
+    background: #B71F71 !important;
+    box-shadow: 0 0 8px #B71F71 !important;
+  }
+  @keyframes cspBadgeFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-7px); }
+  }
+  @media (max-width: 767px) {
+    .csp-hero-badge-reach { display: none !important; }
+    .csp-hero-badge-demographics {
+      bottom: 12px;
+      right: 12px;
+      padding: 6px 14px;
+    }
+    .csp-hero-image-badge .csp-beacon-text {
+      font-size: 0.74rem !important;
+    }
+  }
+
+  /* -------------------------------------------------------------
      Global Warm Subtext Design System
      ------------------------------------------------------------- */
   .subtext,
@@ -377,14 +725,54 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   .elementor-icon-list-text,
   .elementor-widget-container p {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    color: #64748B !important; /* Soft warm neutral grey */
+    color: #64748B !important;
     font-weight: 400 !important;
     line-height: 1.65 !important;
     letter-spacing: -0.01em !important;
   }
 
   /* -------------------------------------------------------------
-     0. Why Conspodium Works Section Refinement
+     Sleek Schedule CTA Button
+     ------------------------------------------------------------- */
+  .csp-sleek-schedule-btn,
+  .elementor-element-e1cd348 .elementskit-btn,
+  .elementor-element-680bd459 .elementskit-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 13px 36px !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    color: #ffffff !important;
+    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    border: none !important;
+    border-radius: 50px !important;
+    box-shadow: 0 6px 20px -2px rgba(0, 174, 254, 0.4), 0 3px 10px rgba(183, 31, 113, 0.22) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    text-decoration: none !important;
+  }
+  .csp-sleek-schedule-btn:hover,
+  .elementor-element-e1cd348 .elementskit-btn:hover,
+  .elementor-element-680bd459 .elementskit-btn:hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 10px 28px -2px rgba(0, 174, 254, 0.5), 0 5px 14px rgba(183, 31, 113, 0.3) !important;
+    background: linear-gradient(110deg, #B71F71 0%, #00AEFE 100%) !important;
+    color: #ffffff !important;
+  }
+  .csp-sleek-schedule-btn i,
+  .elementor-element-e1cd348 .elementskit-btn i,
+  .elementor-element-680bd459 .elementskit-btn i {
+    font-size: 0.95rem !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  /* -------------------------------------------------------------
+     0. Why Conspodium Works (Verified Audience Cards):
+     NO Outer Container Outline, Expanded Sleek Cards with Single Clean Outline
      ------------------------------------------------------------- */
   .elementor-element-702ac813 .elementor-heading-title {
     font-family: 'Cardo', serif !important;
@@ -392,37 +780,80 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     font-weight: 700 !important;
     color: #0F172A !important;
     text-align: center !important;
-    margin-top: 50px !important;
-    margin-bottom: 36px !important;
+    margin-top: 55px !important;
+    margin-bottom: 14px !important; /* Closer to cards */
+  }
+
+  /* Hide intermediate spacer to keep headline close to cards (Request 4) */
+  .elementor-element-1f95249f {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element-d099459,
+  .elementor-element-d099459.e-con,
+  .elementor-element-d099459.e-con-boxed,
+  .elementor-element-d099459 > .e-con-inner {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
   }
 
   .elementor-element-d099459 {
-    max-width: 1240px !important;
+    display: block !important;
+    max-width: 1280px !important;
     width: 100% !important;
-    margin: 0 auto 60px auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    margin: 0 auto 50px auto !important;
   }
 
   .elementor-element-d099459 > .e-con-inner {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: wrap !important;
-    gap: 24px !important;
+    gap: 28px !important;
     justify-content: center !important;
     align-items: stretch !important;
-  }
-
-  .elementor-element-d099459 > .e-con-inner > .elementor-element {
-    flex: 1 1 300px !important;
+    width: 100% !important;
     max-width: 100% !important;
   }
 
+  .elementor-element-d099459 > .e-con-inner > .elementor-element {
+    flex: 1 1 340px !important; /* expanded wide cards */
+    max-width: calc(33.333% - 20px) !important;
+    width: auto !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element-d099459 .elementor-widget-container,
+  .elementor-element-d099459 .ekit-wid-con {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    height: 100% !important;
+  }
+
+  /* Single clean luxury card outline - expanded & sleek */
   .elementor-element-d099459 .elementskit-infobox {
     background: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
-    border-radius: 20px !important;
-    padding: 36px 28px !important;
+    border-radius: 24px !important;
+    padding: 44px 32px 40px !important;
     height: 100% !important;
-    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03) !important;
+    min-height: auto !important;
+    max-height: none !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
     display: flex !important;
     flex-direction: column !important;
@@ -431,15 +862,19 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   .elementor-element-d099459 .elementskit-infobox:hover {
-    transform: translateY(-5px) !important;
-    border-color: #0EA5E9 !important;
-    box-shadow: 0 16px 35px -10px rgba(14, 165, 233, 0.18) !important;
+    transform: translateY(-6px) !important;
+    border-color: #00AEFE !important;
+    box-shadow: 0 16px 36px -8px rgba(0, 174, 254, 0.18) !important;
+  }
+
+  .elementor-element-d099459 .elementskit-box-header {
+    margin-bottom: 8px !important;
   }
 
   .elementor-element-d099459 .elementskit-info-box-icon {
-    width: 52px !important;
-    height: 52px !important;
-    min-width: 52px !important;
+    width: 54px !important;
+    height: 54px !important;
+    min-width: 54px !important;
     border-radius: 14px !important;
     background: #EFF6FF !important;
     border: 1px solid #BAE6FD !important;
@@ -447,39 +882,219 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 0 !important;
   }
 
   .elementor-element-d099459 .elementskit-info-box-icon svg {
-    width: 24px !important;
-    height: 24px !important;
+    width: 25px !important;
+    height: 25px !important;
     color: #0EA5E9 !important;
     stroke: #0EA5E9 !important;
     fill: none !important;
     display: block !important;
   }
 
-  .elementor-element-d099459 .elementskit-info-box-icon i {
-    font-size: 22px !important;
-    color: #0EA5E9 !important;
-  }
-
+  /* Verified Audience Headline: Space before it so it's not close to icon */
   .elementor-element-d099459 .elementskit-info-box-title {
     font-family: 'Cardo', serif !important;
-    font-size: 1.35rem !important;
+    font-size: 1.42rem !important;
     font-weight: 700 !important;
     color: #0F172A !important;
-    margin-bottom: 12px !important;
+    margin-top: 20px !important;
+    margin-bottom: 14px !important;
   }
 
   .elementor-element-d099459 .box-body p {
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.92rem !important;
+    font-size: 0.94rem !important;
     font-weight: 400 !important;
     color: #64748B !important;
-    line-height: 1.65 !important;
+    line-height: 1.68 !important;
     letter-spacing: -0.01em !important;
     margin: 0 !important;
+  }
+
+  @media (max-width: 767px) {
+    .elementor-element-702ac813 .elementor-heading-title {
+      margin-top: 40px !important;
+      margin-bottom: 12px !important;
+      font-size: 1.75rem !important;
+    }
+    .elementor-element-d099459 {
+      margin: 0 auto 15px auto !important;
+      padding: 0 16px !important;
+    }
+    .elementor-element-d099459 > .e-con-inner {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 16px !important;
+    }
+    .elementor-element-d099459 > .e-con-inner > .elementor-element {
+      width: 100% !important;
+      max-width: 100% !important;
+      flex: 0 0 auto !important;
+    }
+    .elementor-element-d099459 .elementskit-infobox {
+      height: auto !important;
+      padding: 32px 24px 28px !important;
+      border-radius: 20px !important;
+    }
+  }
+
+  /* -------------------------------------------------------------
+     Section Separation & Spacing (Requests 4, 5, 6)
+     ------------------------------------------------------------- */
+  /* Hide spacer between Verified Audience and Measurable Reach (Request 5) */
+  .elementor-element-5ccdd5e1 {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Measurable Reach section */
+  .elementor-element-73830d1b {
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+  }
+  .elementor-element-54d59a54 .elementor-heading-title {
+    font-family: 'Cardo', serif !important;
+    font-size: 2.1rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+    text-align: center !important;
+    margin-bottom: 24px !important;
+  }
+
+  @media (max-width: 767px) {
+    .elementor-element-73830d1b {
+      margin-top: 10px !important;
+      margin-bottom: 20px !important;
+      padding: 10px 0 !important;
+    }
+    .elementor-element-54d59a54 .elementor-heading-title {
+      margin-bottom: 16px !important;
+      font-size: 1.75rem !important;
+    }
+  }
+
+  /* Active community headline sleek gray lowercase soft font (Request 3) */
+  .elementor-element-3fa694ac {
+    margin-top: 20px !important;
+    margin-bottom: 25px !important;
+    text-align: center !important;
+  }
+  .elementor-element-3fa694ac .elementor-heading-title {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 0.95rem !important;
+    font-weight: 400 !important;
+    line-height: 1.6 !important;
+    letter-spacing: -0.01em !important;
+    color: #64748B !important;
+    text-align: center !important;
+    max-width: 680px !important;
+    margin: 0 auto !important;
+    text-transform: lowercase !important;
+  }
+
+  /* Who Advertises With Us section spacing */
+  .elementor-element-812547d {
+    margin-top: 60px !important;
+    margin-bottom: 40px !important;
+  }
+  .elementor-element-dbba7ca {
+    margin-bottom: 30px !important;
+  }
+
+  /* Partnership Opportunities: sleek stroked flat SVG icons (Request 2) */
+  .elementor-element-6283bb91 .elementskit-info-box-icon svg,
+  .elementor-element-6283bb91 .csp-flat-svg {
+    width: 38px !important;
+    height: 38px !important;
+    display: inline-block !important;
+    fill: none !important;
+    stroke: #00AEFE !important;
+    stroke-width: 1.8 !important;
+    vertical-align: middle !important;
+  }
+  .elementor-element-6283bb91 .elementskit-info-box-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Advertising Options section spacing & button alignment (Request 6) */
+  @media (max-width: 767px) {
+    .elementor-element-d802c16 {
+      margin-top: 55px !important;
+      margin-bottom: 25px !important;
+    }
+  }
+
+  .elementor-element-b75da38 .ekit-btn-wraper,
+  .elementor-element-3b186358 .ekit-btn-wraper,
+  .elementor-element-b75da38,
+  .elementor-element-3b186358 {
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-top: 15px !important;
+  }
+  .elementor-element-b75da38 .elementskit-btn,
+  .elementor-element-3b186358 .elementskit-btn {
+    margin: 0 auto !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    max-width: 300px !important;
+  }
+
+  /* Partner Testimonial section spacing */
+  .elementor-element-4d330d3 {
+    margin-top: 60px !important;
+    margin-bottom: 40px !important;
+  }
+
+  /* Bottom Get Started / Schedule section spacing */
+  .elementor-element-689c7760 {
+    margin-top: 60px !important;
+    margin-bottom: 15px !important;
+  }
+  .elementor-element-680bd459 {
+    margin-top: 10px !important;
+    margin-bottom: 35px !important;
+  }
+
+  /* Stay Connected / Form section spacing */
+  .elementor-element-2fe749f4 {
+    margin-top: 60px !important;
+    padding-top: 75px !important;
+  }
+
+  @media (max-width: 767px) {
+    .elementor-element-d099459 {
+      margin: 0 auto 40px auto !important;
+      padding: 0 16px !important;
+    }
+    .elementor-element-d099459 > .e-con-inner {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 20px !important;
+      height: auto !important;
+    }
+    .elementor-element-d099459 > .e-con-inner > .elementor-element {
+      width: 100% !important;
+      max-width: 100% !important;
+      flex: 0 0 auto !important;
+      height: auto !important;
+    }
+    .elementor-element-d099459 .ekit-wid-con,
+    .elementor-element-d099459 .elementskit-infobox {
+      height: auto !important;
+      min-height: auto !important;
+      padding: 30px 22px 28px !important;
+    }
   }
 
   /* -------------------------------------------------------------
@@ -1020,15 +1635,24 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
   }
 
-  /* ── HERO OVERLAY PAGES (body.home, body.forum-page): Transparent on top, Dark Glass on scroll ─── */
+  /* ── HERO OVERLAY PAGES (body.home, body.forum-page, body.elementor-page-977): Transparent on top, Dark Glass on scroll ─── */
   body.home .elementor-location-header:not(.is-sticky),
   body.home .she-header-yes:not(.is-sticky),
   body.home .elementor-element-2d9e131:not(.is-sticky),
   body.forum-page .elementor-location-header:not(.is-sticky),
   body.forum-page .she-header-yes:not(.is-sticky),
-  body.forum-page .elementor-element-2d9e131:not(.is-sticky) {
+  body.forum-page .elementor-element-2d9e131:not(.is-sticky),
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky),
+  body.elementor-page-977 .she-header-yes:not(.is-sticky),
+  body.elementor-page-977 .elementor-element-2d9e131:not(.is-sticky),
+  body.page-id-977 .elementor-location-header:not(.is-sticky),
+  body.page-id-977 .she-header-yes:not(.is-sticky),
+  body.page-id-977 .elementor-element-2d9e131:not(.is-sticky) {
     position: absolute !important;
     top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
     background: transparent !important;
     background-color: transparent !important;
     backdrop-filter: none !important;
@@ -1042,7 +1666,13 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   body.home .elementor-element-2d9e131.is-sticky,
   body.forum-page .elementor-location-header.is-sticky,
   body.forum-page .she-header-yes.is-sticky,
-  body.forum-page .elementor-element-2d9e131.is-sticky {
+  body.forum-page .elementor-element-2d9e131.is-sticky,
+  body.elementor-page-977 .elementor-location-header.is-sticky,
+  body.elementor-page-977 .she-header-yes.is-sticky,
+  body.elementor-page-977 .elementor-element-2d9e131.is-sticky,
+  body.page-id-977 .elementor-location-header.is-sticky,
+  body.page-id-977 .she-header-yes.is-sticky,
+  body.page-id-977 .elementor-element-2d9e131.is-sticky {
     position: fixed !important;
     top: 0 !important;
     background: rgba(6, 16, 34, 0.92) !important;
@@ -1558,66 +2188,81 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   /* ── STANDALONE MOBILE MODAL (ATTACHED TO BODY) ────────────────────────────── */
   #csp-mobile-menu-modal {
     position: fixed !important;
+    inset: 0 !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
+    width: 100% !important;
     width: 100vw !important;
+    height: 100% !important;
     height: 100vh !important;
+    height: 100dvh !important;
     z-index: 99999999 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
-    transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.28s ease !important;
   }
 
   #csp-mobile-menu-modal.active {
     opacity: 1 !important;
     pointer-events: auto !important;
     visibility: visible !important;
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s !important;
   }
 
   /* Dark blurry backdrop BEHIND card */
   .csp-modal-backdrop {
     position: absolute !important;
+    inset: 0 !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    background: rgba(0, 0, 0, 0.25) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
+    background: rgba(3, 8, 20, 0.55) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
     z-index: 1 !important;
+    transition: opacity 0.28s ease !important;
   }
 
-  /* Menu card ON TOP of backdrop */
+  /* Menu card ON TOP of backdrop - Perfectly centered in viewport */
   .csp-modal-card {
     position: relative !important;
     z-index: 2 !important;
-    width: 88% !important;
+    margin: auto !important;
+    width: 90% !important;
     max-width: 360px !important;
+    max-height: calc(100dvh - 36px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
     background: rgba(6, 16, 34, 0.96) !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
-    border: 1px solid rgba(0, 174, 254, 0.3) !important;
+    backdrop-filter: blur(28px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    border: 1px solid rgba(0, 174, 254, 0.35) !important;
     border-radius: 28px !important;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 174, 254, 0.2) !important;
-    padding: 22px 20px 28px !important;
+    box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.75), 0 0 35px rgba(0, 174, 254, 0.25) !important;
+    padding: 22px 20px 26px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
     justify-content: flex-start !important;
-    transform: scale(0.85) translateY(24px);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transform: scale(0.9) translateY(14px);
+    opacity: 0;
+    transition: transform 0.32s cubic-bezier(0.34, 1.35, 0.64, 1), opacity 0.26s ease !important;
   }
 
   #csp-mobile-menu-modal.active .csp-modal-card {
-    transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0) !important;
+    opacity: 1 !important;
   }
 
   .csp-modal-header-row {
@@ -4078,7 +4723,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2087"><a href="/about-us/" class="elementor-item">About Us</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2089"><a href="/contact-us/" class="elementor-item">Contact Us</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2086"><a href="/stories/" class="elementor-item">Stories</a></li>
-								<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/forum/" class="elementor-item">Discussion Forum</a></li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/forum/" class="elementor-item">Forum</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2090"><a href="/sponsorship/" class="elementor-item">Sponsorship</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2088"><a href="/advert/" class="elementor-item">Advert</a></li>
 							</ul>
@@ -4114,6 +4759,30 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 				<div data-elementor-type="wp-page" data-elementor-id="977" class="elementor elementor-977">
 				<div class="elementor-element elementor-element-598a9a85 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="598a9a85" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+					<!-- CSP_ADVERT_ANIMATED_BG_START -->
+					<div class="csp-advert-animated-bg" aria-hidden="true">
+						<div class="csp-adv-glow-mesh"></div>
+						<div class="csp-adv-orb csp-adv-orb-cyan"></div>
+						<div class="csp-adv-orb csp-adv-orb-magenta"></div>
+						<div class="csp-adv-orb csp-adv-orb-gold"></div>
+						<div class="csp-adv-grid-lines"></div>
+						<div class="csp-adv-broadcast-rings">
+							<div class="csp-ring csp-ring-1"></div>
+							<div class="csp-ring csp-ring-2"></div>
+							<div class="csp-ring csp-ring-3"></div>
+						</div>
+						<div class="csp-adv-floating-beacons">
+							<div class="csp-beacon csp-beacon-1">
+								<span class="csp-beacon-dot"></span>
+								<span class="csp-beacon-text">Global Diaspora Reach</span>
+							</div>
+							<div class="csp-beacon csp-beacon-2">
+								<span class="csp-beacon-dot"></span>
+								<span class="csp-beacon-text">Print &amp; Digital Circulation</span>
+							</div>
+						</div>
+					</div>
+					<!-- CSP_ADVERT_ANIMATED_BG_END -->
 					<div class="e-con-inner">
 				<div class="elementor-element elementor-element-482bd48b elementor-widget elementor-widget-spacer" data-id="482bd48b" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
 				<div class="elementor-widget-container">
@@ -4136,7 +4805,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 				<div class="elementor-element elementor-element-1e6aef7e eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="1e6aef7e" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
 				<div class="elementor-widget-container">
 								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4">Your Diaspora</span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient"> Audience</span> <span class="eael-dch-title-text elementor-repeater-item-d9c9ae2">Is Here</span> </h2>					<span class="subtext"><p>Conspodium puts your brand in front of the exact diaspora audience you want to reach.</p></span>
+				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4">Your Diaspora</span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient"> Audience</span> <span class="eael-dch-title-text elementor-repeater-item-d9c9ae2">Is Here</span> </h2>					<span class="subtext"><p>Conspodium puts your brand in front of the exact diaspora audience you want to reach. You can book a slot by clicking the button below.</p></span>
 							</div>
 
 						</div>
@@ -4144,14 +4813,18 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 				<div class="elementor-element elementor-element-e1cd348 sticky-ekit-buttonstyle elementor-align-center elementor-widget elementor-widget-elementskit-button animated fadeIn" data-id="e1cd348" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}" data-widget_type="elementskit-button.default">
 				<div class="elementor-widget-container">
 					<div class="ekit-wid-con">		<div class="ekit-btn-wraper">
-							<a href="https://wa.link/h1piri" class="elementskit-btn  whitespace--normal" id="">
-					<i class="far fa-calendar-alt"></i>Schedule Consultation				</a>
+							<a href="https://wa.link/h1piri" class="elementskit-btn csp-sleek-schedule-btn whitespace--normal" id="csp-advert-schedule-btn">
+					<i class="far fa-calendar-alt"></i>Schedule				</a>
 					</div>
         </div>				</div>
 				</div>
 				<div class="elementor-element e-con-full e-flex e-con" style="max-width: 1100px; margin: 35px auto 25px auto; width: 100%;">
-					<div style="width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08); border: 1px solid #E2E8F0; background: #FFFFFF;">
+					<div style="position: relative; width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08); border: 1px solid #E2E8F0; background: #FFFFFF;">
 						<img src="/images/advert-hero.png" alt="Conspodium Advertising Showcase" style="width: 100%; max-height: 480px; object-fit: cover; display: block;" />
+						<div class="csp-hero-image-badge csp-hero-badge-demographics">
+							<span class="csp-beacon-dot csp-dot-cyan"></span>
+							<span class="csp-beacon-text">High-Income Demographics</span>
+						</div>
 					</div>
 				</div>
 				<div class="elementor-element elementor-element-702ac813 sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="702ac813" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
@@ -4165,8 +4838,8 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 		</div>
 						</div>
 				</div>
-		<div class="elementor-element elementor-element-d099459 e-grid e-con-boxed e-con e-child adv-sticky-elementor" data-id="d099459" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-d099459 e-grid e-con e-child adv-sticky-elementor" data-id="d099459" data-element_type="container" data-e-type="container" style="background: transparent !important; border: none !important; box-shadow: none !important; outline: none !important; width: 100% !important; max-width: 1280px !important; margin: 0 auto 80px auto !important;" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+					<div class="e-con-inner" style="background: transparent !important; border: none !important; box-shadow: none !important; outline: none !important; width: 100% !important;">
 				<div class="elementor-element elementor-element-4417a3f ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="4417a3f" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="ekit-wid-con">        <!-- link opening -->
@@ -4308,7 +4981,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 				</div>
 				<div class="elementor-element elementor-element-3fa694ac sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="3fa694ac" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">We also have a very active community on social media and on whatsapp.</h2>				</div>
+					<p class="elementor-heading-title elementor-size-default" style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important; font-size: 0.95rem !important; font-weight: 400 !important; line-height: 1.6 !important; letter-spacing: -0.01em !important; color: #64748B !important; text-align: center !important; max-width: 680px !important; margin: 20px auto 30px auto !important; text-transform: lowercase !important;">we also have a very active community on social media and on whatsapp.</p>				</div>
 				</div>
 				</div>
 					</div>
@@ -4583,7 +5256,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon jki jki-chat-light"></i>
+                    <svg class="csp-flat-svg" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="8" y1="7" x2="16" y2="7"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
                 </div>
           </div>
                         <div class="box-body">
@@ -4606,7 +5279,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon jki jki-calendar1-light"></i>
+                    <svg class="csp-flat-svg" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3" ry="3"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><circle cx="8" cy="15" r="1.2" fill="#00AEFE"></circle><circle cx="12" cy="15" r="1.2" fill="#00AEFE"></circle><circle cx="16" cy="15" r="1.2" fill="#00AEFE"></circle></svg>
                 </div>
           </div>
                         <div class="box-body">
@@ -4629,7 +5302,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
         <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
                     <div class="elementskit-box-header elementor-animation-">
                 <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon jki jki-hands-helping-solid"></i>
+                    <svg class="csp-flat-svg" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </div>
           </div>
                         <div class="box-body">
@@ -4678,15 +5351,25 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 					<span class="elementor-headline-dynamic-text elementor-headline-text-active">Today</span>
 				</span>
 				</h3>
+				<p class="csp-bottom-subheadline" style="color: #64748B !important; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important; font-size: 1.05rem !important; font-weight: 400 !important; text-align: center !important; margin: 14px auto 26px auto !important; letter-spacing: -0.01em !important;">You can book a slot by clicking the button below.</p>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-680bd459 elementor-align-left sticky-ekit-buttonstyle elementor-invisible elementor-widget elementor-widget-elementskit-button" data-id="680bd459" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}" data-widget_type="elementskit-button.default">
+				<div class="elementor-element elementor-element-680bd459 elementor-align-center sticky-ekit-buttonstyle elementor-widget elementor-widget-elementskit-button" data-id="680bd459" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}" data-widget_type="elementskit-button.default">
 				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		<div class="ekit-btn-wraper">
-							<a href="https://wa.link/h1piri" class="elementskit-btn  whitespace--normal" id="">
-					<i class="far fa-calendar-alt"></i>Schedule Consultation				</a>
+					<div class="ekit-wid-con">		<div class="ekit-btn-wraper" style="text-align: center; display: flex; justify-content: center;">
+							<a href="https://wa.link/h1piri" class="elementskit-btn csp-sleek-schedule-btn whitespace--normal" id="csp-bottom-schedule-btn">
+					<i class="far fa-calendar-alt"></i>Schedule				</a>
 					</div>
         </div>				</div>
+				</div>
+				<div class="csp-advert-consultation-wrap" style="max-width: 1080px; width: 100%; margin: 40px auto 65px auto; padding: 0 15px;">
+					<div style="position: relative; width: 100%; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.12); border: 1px solid #E2E8F0; background: #FFFFFF;">
+						<img src="/images/advert-consultation.jpg" alt="Conspodium Consultation & Strategy" style="width: 100%; max-height: 480px; object-fit: cover; display: block;" />
+						<div class="csp-hero-image-badge" style="bottom: 24px; left: 24px;">
+							<span class="csp-beacon-dot csp-dot-magenta"></span>
+							<span class="csp-beacon-text">Bespoke Diaspora Campaigns</span>
+						</div>
+					</div>
 				</div>
 				</div>
 					</div>

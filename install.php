@@ -550,93 +550,148 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isInstalled && $allChecksPassed) 
                 $stmtAdmin->execute(['admin', 'editor@conspodium.com', $defaultPassHash, 'Editor Admin']);
             }
 
-            // Seed starter content if requested
+            // Seed content if requested
             if ($seedData) {
-                $catCount = $pdo->query("SELECT COUNT(*) as count FROM categories")->fetch()['count'] ?? 0;
-                if ($catCount == 0) {
-                    $stmtCat = $pdo->prepare("INSERT INTO categories (name, slug, icon, description, image) VALUES (?, ?, ?, ?, ?)");
-                    $stmtCat->execute(['Culture & Heritage', 'culture-heritage', '🏛️', 'Heritage, traditions, and the African spirit abroad.', '/uploads/cat_diaspora_insights.png']);
-                    $stmtCat->execute(['Innovation', 'innovation', '💡', 'Africans in Diaspora influencing economic decisions worldwide.', '/wp-content/uploads/2026/01/location-1-300x210.webp']);
-                    $stmtCat->execute(['Art & Entertainment', 'art-entertainment', '🎨', 'Creatives are shaping and representing global culture.', '/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg']);
-                    $stmtCat->execute(['Community', 'community', '👥', 'Stories connecting Africans in Diaspora across the globe.', '/wp-content/uploads/2026/01/AF3-1-png-300x171.jpg']);
-                    $stmtCat->execute(['Success Stories', 'success-stories', '🌟', 'Growth, Success, leadership, and diaspora impact.', '/wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg']);
-                    $stmtCat->execute(['African Diaspora Matters', 'african-diaspora-matters', '🌍', 'Crucial issues, policy debates, and global diaspora developments.', '/uploads/cat_diaspora_matters.png']);
+                $migratedFromSqlite = false;
+                $sqliteCandidates = [
+                    $dataDir . '/conspodium.db',
+                    __DIR__ . '/data/conspodium.db',
+                    __DIR__ . '/public/data/conspodium.db'
+                ];
+                $sqliteDb = null;
+                foreach ($sqliteCandidates as $sc) {
+                    if (file_exists($sc) && filesize($sc) > 10000) {
+                        $sqliteDb = $sc;
+                        break;
+                    }
                 }
 
-                $postCount = $pdo->query("SELECT COUNT(*) as count FROM posts")->fetch()['count'] ?? 0;
-                if ($postCount == 0) {
-                    $stmtPost = $pdo->prepare("
-                        INSERT INTO posts (title, slug, eyebrow, excerpt, content, category_id, author_name, author_avatar, featured_image, reading_time, views, is_featured, published_at)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    ");
+                // If existing SQLite database has data, clone ALL live tables into MySQL
+                if ($dbType === 'mysql' && $sqliteDb && extension_loaded('pdo_sqlite')) {
+                    try {
+                        $sqlitePdo = new PDO("sqlite:" . $sqliteDb);
+                        $sqlitePdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-                    $stmtPost->execute([
-                        "Empowering Diaspora Communities Through Innovation & Heritage",
-                        "empowering-diaspora-communities-through-innovation-heritage",
-                        "Featured Story",
-                        "Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.",
-                        "<p>Across Africa and its global diaspora, leaders in technology, finance, and arts are building bridges for sustainable economic growth and cultural exchange.</p><p>Through diaspora summits, bilateral investment funds, and cross-border tech incubator networks, pan-African innovators are turning shared history into actionable global impact.</p>",
-                        1,
-                        $adminName,
-                        strtoupper(substr($adminName, 0, 2)),
-                        "/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg",
-                        "8 min read",
-                        1424,
-                        1,
-                        date('Y-m-d H:i:s')
-                    ]);
+                        $tablesToMigrate = [
+                            'categories', 'posts', 'transcripts', 'polls', 'poll_votes',
+                            'story_submissions', 'comments', 'contact_messages', 'homepage_sections',
+                            'payment_settings', 'forum_categories', 'forum_threads', 'forum_replies',
+                            'scholar_spotlights', 'live_discussions', 'featured_interviews', 'settings'
+                        ];
 
-                    $stmtPost->execute([
-                        "Africans in Diaspora Influencing Global Economic Decisions",
-                        "africans-in-diaspora-influencing-global-economic-decisions",
-                        "Economic Horizons",
-                        "How African diaspora founders, venture capitalists, and policy advisors are driving bilateral trade and technology investments in Africa.",
-                        "<p>Global financial hubs are seeing an uptick in diaspora-led venture funds aimed at fueling sub-Saharan infrastructure, renewable energy, and fintech ecosystems.</p><p>This new generation of investors prioritizes both high growth and measurable social impact across the African continent.</p>",
-                        2,
-                        "Prof. Amara Diallo",
-                        "AD",
-                        "/wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg",
-                        "6 min read",
-                        980,
-                        0,
-                        date('Y-m-d H:i:s')
-                    ]);
+                        $pdo->exec("SET FOREIGN_KEY_CHECKS = 0;");
 
-                    $stmtPost->execute([
-                        "Creatives Are Shaping & Representing Global African Culture",
-                        "creatives-shaping-representing-global-african-culture",
-                        "Art & Identity",
-                        "From visual arts exhibitions in San Francisco to Afrobeats on global stages, African artists are redefining modern creative expression.",
-                        "<p>Contemporary African artists and filmmakers are captivating international audiences while staying deeply rooted in authentic storytelling and cultural heritage.</p><p>Major museum retrospectives and independent cinema showcases are ensuring that African stories are told on the world's biggest stages by African voices.</p>",
-                        3,
-                        "Dr. Ngozi Eze",
-                        "NE",
-                        "/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg",
-                        "10 min read",
-                        1152,
-                        0,
-                        date('Y-m-d H:i:s')
-                    ]);
+                        foreach ($tablesToMigrate as $tbl) {
+                            $check = $sqlitePdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name='$tbl'")->fetch();
+                            if (!$check) continue;
+
+                            $rows = $sqlitePdo->query("SELECT * FROM `$tbl`")->fetchAll();
+                            if (empty($rows)) continue;
+
+                            try {
+                                $pdo->exec("TRUNCATE TABLE `$tbl`");
+                            } catch (Exception $e) {}
+
+                            $cols = array_keys($rows[0]);
+                            $escapedCols = implode(", ", array_map(function($c){ return "`$c`"; }, $cols));
+                            $placeholders = implode(", ", array_fill(0, count($cols), '?'));
+
+                            $stmtIns = $pdo->prepare("INSERT INTO `$tbl` ($escapedCols) VALUES ($placeholders)");
+                            foreach ($rows as $row) {
+                                try {
+                                    $stmtIns->execute(array_values($row));
+                                } catch (Exception $e) {}
+                            }
+                        }
+
+                        $pdo->exec("SET FOREIGN_KEY_CHECKS = 1;");
+                        $migratedFromSqlite = true;
+                    } catch (Throwable $mErr) {
+                        $migratedFromSqlite = false;
+                    }
                 }
 
-                $schCount = $pdo->query("SELECT COUNT(*) as count FROM scholar_spotlights")->fetch()['count'] ?? 0;
-                if ($schCount == 0) {
-                    $stmtSch = $pdo->prepare("INSERT INTO scholar_spotlights (scholar_name, title_affiliation, bio, image_url, research_field, profile_link, display_order, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, 1)");
-                    $stmtSch->execute(["Prof. Amara Diallo Jr", "American School of Economics", '"Democracy, Digital Sovereignty & the African Voice in Global Governance..."', "/uploads/upload_1789726789_a3866bad.webp", "Democracy Sovereignty", "/post/empowering-diaspora-communities-through-innovation-heritage/", 1]);
-                    $stmtSch->execute(["Mrs Margaret Benson", "MIT Media Lab", '"Biotechnology and the Future of African Health Systems — Who Controls the Science?"', "/uploads/upload_1789741903_83d9f9e0.jpg", "Biotechnology & Health Systems", "/post/we-are-the-world/", 2]);
-                    $stmtSch->execute(["Prof. Kwame Osei", "University of Ghana / Oxford", '"African Intellectual Heritage and the Decolonisation of Academic Thought"', "/wp-content/uploads/2026/08/scholar-kwame-osei.png", "African Intellectual Heritage", "/post/creatives-shaping-representing-global-african-culture/", 3]);
-                }
+                // Fallback rich seeding if no SQLite file was present
+                if (!$migratedFromSqlite) {
+                    $catCount = $pdo->query("SELECT COUNT(*) as count FROM categories")->fetch()['count'] ?? 0;
+                    if ($catCount == 0) {
+                        $stmtCat = $pdo->prepare("INSERT INTO categories (name, slug, icon, description, image, display_order) VALUES (?, ?, ?, ?, ?, ?)");
+                        $stmtCat->execute(['Culture & Heritage', 'culture-heritage', '🏛️', 'Heritage, traditions, and the African spirit abroad.', '/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg', 1]);
+                        $stmtCat->execute(['Innovation', 'innovation', '💡', 'Africans in Diaspora influencing economic decisions worldwide.', '/wp-content/uploads/2026/01/location-1-300x210.webp', 2]);
+                        $stmtCat->execute(['Art & Entertainment', 'art-entertainment', '🎨', 'Creatives are shaping and representing global culture.', '/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg', 3]);
+                        $stmtCat->execute(['Community', 'community', '👥', 'Stories connecting Africans in Diaspora across the globe.', '/wp-content/uploads/2026/01/AF3-1-png-300x171.jpg', 4]);
+                        $stmtCat->execute(['Success Stories', 'success-stories', '🌟', 'Growth, Success, leadership, and diaspora impact.', '/wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-300x200.jpg', 5]);
+                        $stmtCat->execute(['African Diaspora Matters', 'african-diaspora-matters', '🌍', 'Crucial issues, policy debates, and global diaspora developments.', '/uploads/cat_diaspora_matters.png', 6]);
+                        $stmtCat->execute(['Diaspora Insights & Analysis', 'diaspora-insights-analysis', '📊', 'In-depth research, economic reports, and diaspora market analysis.', '/uploads/cat_diaspora_insights.png', 7]);
+                    }
 
-                $fiCount = $pdo->query("SELECT COUNT(*) as count FROM featured_interviews")->fetch()['count'] ?? 0;
-                if ($fiCount == 0) {
-                    $stmtFi = $pdo->prepare("INSERT INTO featured_interviews (title, interviewee_name, interviewee_role, quote, photo, video_url, is_active) VALUES (?, ?, ?, ?, ?, ?, 1)");
-                    $stmtFi->execute(["In Conversation With", "Prof. Amara Diallo & The Panel", "Cultural Historian", "Building Bridges Across Nations", "/uploads/upload_1789745044_214929bc.jpg", ""]);
-                }
+                    $postCount = $pdo->query("SELECT COUNT(*) as count FROM posts")->fetch()['count'] ?? 0;
+                    if ($postCount == 0) {
+                        $stmtPost = $pdo->prepare("
+                            INSERT INTO posts (title, slug, eyebrow, excerpt, content, category_id, author_name, author_avatar, featured_image, reading_time, views, is_featured, published_at)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        ");
 
-                $ldCount = $pdo->query("SELECT COUNT(*) as count FROM live_discussions")->fetch()['count'] ?? 0;
-                if ($ldCount == 0) {
-                    $stmtLd = $pdo->prepare("INSERT INTO live_discussions (topic, speaker_name, speaker_role, speaker_avatar, discussion_date, zoom_link, ics_summary, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, 1)");
-                    $stmtLd->execute(["The Future of African Democracy", "Prof. Amara Diallo & The Panel", "London School of Economics", "/uploads/upload_1789742036_15826c02.jpg", "2026-10-17T18:00", "https://zoom.us/j/conspodium-live", ""]);
+                        $stmtPost->execute([
+                            "Pan-African Innovation & Heritage: Empowering Global Diaspora Networks",
+                            "empowering-diaspora-communities-through-innovation-heritage",
+                            "Featured Editorial",
+                            "Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.",
+                            "<p>Across Africa and its global diaspora, leaders in technology, finance, and arts are building bridges for sustainable economic growth and cultural exchange.</p><p>Through diaspora summits, bilateral investment funds, and cross-border tech incubator networks, pan-African innovators are turning shared history into actionable global impact.</p>",
+                            2,
+                            "Steving Felix",
+                            "SF",
+                            "/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg",
+                            "6 min read",
+                            2450,
+                            1,
+                            date('Y-m-d H:i:s')
+                        ]);
+
+                        $stmtPost->execute([
+                            "Where Heritage, Adventure, Nature and Opportunity Come Alive: Calabar & Cross River State",
+                            "calabar-cross-river-state-tourism-and-diaspora-investment",
+                            "Destination Feature",
+                            "Cross River State continues to demonstrate that tourism is more than sightseeing—it is a catalyst for economic growth, cultural preservation, and international partnerships.",
+                            "<p>Cross River State continues to demonstrate that tourism is a catalyst for economic growth, cultural preservation, and international partnerships. For members of the global diaspora, Cross River offers a unique opportunity to reconnect with ancestral heritage while participating in one of Nigeria's most promising investment frontiers.</p>",
+                            1,
+                            "Editorial Feature Desk",
+                            "EF",
+                            "/uploads/calabar_tourism_hero.png",
+                            "7 min read",
+                            1640,
+                            0,
+                            date('Y-m-d H:i:s', strtotime('-1 days'))
+                        ]);
+                    }
+
+                    $schCount = $pdo->query("SELECT COUNT(*) as count FROM scholar_spotlights")->fetch()['count'] ?? 0;
+                    if ($schCount == 0) {
+                        $stmtSch = $pdo->prepare("INSERT INTO scholar_spotlights (scholar_name, title_affiliation, bio, image_url, research_field, profile_link, display_order, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, 1)");
+                        $stmtSch->execute(["Prof. Amara Diallo Jr", "American School of Economics", '"Democracy, Digital Sovereignty & the African Voice in Global Governance..."', "/uploads/upload_1789726789_a3866bad.webp", "Democracy Sovereignty", "/post/empowering-diaspora-communities-through-innovation-heritage/", 1]);
+                        $stmtSch->execute(["Mrs Margaret Benson", "MIT Media Lab", '"Biotechnology and the Future of African Health Systems — Who Controls the Science?"', "/uploads/upload_1789741903_83d9f9e0.jpg", "Biotechnology & Health Systems", "/post/we-are-the-world/", 2]);
+                        $stmtSch->execute(["Prof. Kwame Osei", "University of Ghana / Oxford", '"African Intellectual Heritage and the Decolonisation of Academic Thought"', "/wp-content/uploads/2026/08/scholar-kwame-osei.png", "African Intellectual Heritage", "/post/creatives-shaping-representing-global-african-culture/", 3]);
+                    }
+
+                    $fiCount = $pdo->query("SELECT COUNT(*) as count FROM featured_interviews")->fetch()['count'] ?? 0;
+                    if ($fiCount == 0) {
+                        $stmtFi = $pdo->prepare("INSERT INTO featured_interviews (title, interviewee_name, interviewee_role, quote, photo, video_url, is_active) VALUES (?, ?, ?, ?, ?, ?, 1)");
+                        $stmtFi->execute(["In Conversation With", "Prof. Amara Diallo & The Panel", "Cultural Historian", "Building Bridges Across Nations", "/uploads/upload_1789745044_214929bc.jpg", ""]);
+                    }
+
+                    $ldCount = $pdo->query("SELECT COUNT(*) as count FROM live_discussions")->fetch()['count'] ?? 0;
+                    if ($ldCount == 0) {
+                        $stmtLd = $pdo->prepare("INSERT INTO live_discussions (topic, speaker_name, speaker_role, speaker_avatar, discussion_date, zoom_link, ics_summary, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, 1)");
+                        $stmtLd->execute(["The Future of African Democracy", "Prof. Amara Diallo & The Panel", "London School of Economics", "/uploads/upload_1789742036_15826c02.jpg", "2026-10-17T18:00", "https://zoom.us/j/conspodium-live", ""]);
+                    }
+
+                    // Seed default homepage sections
+                    try {
+                        $stmtHomeSec = $pdo->prepare("INSERT INTO homepage_sections (`key`, value_json, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) ON DUPLICATE KEY UPDATE value_json = VALUES(value_json)");
+                        $stmtHomeSec->execute(['featured_stories_ids', json_encode([1, 2, 3, 5])]);
+                        $stmtHomeSec->execute(['trending_ids', json_encode([6, 5, 4, 1, 7, 3])]);
+                        $stmtHomeSec->execute(['homepage_category_ids', json_encode([1, 2, 3])]);
+                    } catch (Exception $e) {}
                 }
             }
 
