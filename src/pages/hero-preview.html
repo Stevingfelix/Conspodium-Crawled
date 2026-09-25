@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conspodium - Stories Hero Concepts Preview</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,700&family=Merienda:wght@700;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0b0f19;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+
+    /* Top Switcher Toolbar */
+    .preview-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10000;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .preview-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .preview-brand h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #fff;
+    }
+
+    .preview-brand span {
+      background: linear-gradient(135deg, #00AEFE, #B71F71);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .preview-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .preview-btn {
+      background: rgba(255, 255, 255, 0.06);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preview-btn:hover {
+      background: rgba(0, 174, 254, 0.15);
+      border-color: #00AEFE;
+      color: #fff;
+    }
+
+    .preview-btn.active {
+      background: linear-gradient(135deg, #00AEFE 0%, #B71F71 100%);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(0, 174, 254, 0.35);
+    }
+
+    /* Mock Header */
+    .mock-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 24px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mock-logo {
+      height: 38px;
+      filter: brightness(0) invert(1);
+    }
+
+    .mock-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .mock-nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .mock-nav a:hover, .mock-nav a.active {
+      color: #00AEFE;
+    }
+
+    .mock-cta {
+      background: linear-gradient(135deg, #00AEFE 0%, #B71F71 100%);
+      color: #fff;
+      padding: 9px 22px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* Concept Section Wrappers */
+    .concept-section {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 130px 6% 80px;
+      border-bottom: 8px solid #0f172a;
+      overflow: hidden;
+    }
+
+    .concept-badge-indicator {
+      position: absolute;
+      top: 30px;
+      right: 6%;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #38bdf8;
+      z-index: 110;
+      letter-spacing: 0.05em;
+    }
+
+    /* ==========================================================================
+       OPTION 1: FULL-BLEED CINEMATIC EDITORIAL HERO
+       ========================================================================== */
+    .concept-1 {
+      background: #061022;
+    }
+
+    .concept-1-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('/wp-content/uploads/2026/01/friends-with-costume-carnival-scaled.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      z-index: 0;
+      filter: saturate(1.1);
+      transform: scale(1.02);
+      transition: transform 12s ease;
+    }
+
+    .concept-1:hover .concept-1-bg {
+      transform: scale(1.08);
+    }
+
+    .concept-1-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6, 16, 34, 0.70) 0%, rgba(6, 16, 34, 0.88) 60%, #061022 100%),
+                  radial-gradient(circle at 80% 20%, rgba(183, 31, 113, 0.25) 0%, transparent 50%),
+                  radial-gradient(circle at 20% 80%, rgba(0, 174, 254, 0.25) 0%, transparent 50%);
+      z-index: 1;
+    }
+
+    .concept-1-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .concept-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .concept-1-tag {
+      background: rgba(0, 174, 254, 0.15);
+      border: 1px solid rgba(0, 174, 254, 0.4);
+      color: #38bdf8;
+    }
+
+    .concept-1-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 800;
+      line-height: 1.12;
+      color: #ffffff;
+      margin-bottom: 20px;
+      letter-spacing: -0.025em;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .gradient-word {
+      font-family: 'Merienda', cursive;
+      background: linear-gradient(135deg, #00AEFE 0%, #ff52a8 55%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .concept-1-subtext {
+      font-size: 1.2rem;
+      line-height: 1.75;
+      color: #cbd5e1;
+      max-width: 650px;
+      margin: 0 auto 36px;
+      font-weight: 400;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .glass-search-bar {
+      max-width: 580px;
+      margin: 0 auto 28px;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(16px);
+      padding: 6px 8px 6px 20px;
+      border-radius: 50px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+      transition: all 0.3s ease;
+    }
+
+    .glass-search-bar:focus-within {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #00AEFE;
+      box-shadow: 0 12px 40px rgba(0, 174, 254, 0.35);
+    }
+
+    .glass-search-bar input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+
+    .glass-search-bar input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .glass-search-btn {
+      background: linear-gradient(135deg, #00AEFE 0%, #B71F71 100%);
+      color: #fff;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 174, 254, 0.4);
+    }
+
+    /* ==========================================================================
+       OPTION 2: DUOTONE BRAND TINT & SOFT FADE
+       ========================================================================== */
+    .concept-2 {
+      background: #0a0f1d;
+    }
+
+    .concept-2-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 50px;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .concept-2-visual {
+      position: relative;
+      height: 480px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .concept-2-visual-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.15) brightness(0.9);
+    }
+
+    .concept-2-duotone {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0, 174, 254, 0.6) 0%, rgba(183, 31, 113, 0.7) 100%);
+      mix-blend-mode: color;
+    }
+
+    .concept-2-visual-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #0a0f1d 0%, transparent 35%, transparent 65%, #0a0f1d 100%),
+                  linear-gradient(to top, #0a0f1d 0%, transparent 40%);
+    }
+
+    /* ==========================================================================
+       OPTION 3: SPLIT-SCREEN MAGAZINE HERO
+       ========================================================================== */
+    .concept-3 {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    .concept-3 .mock-header {
+      border-bottom: 1px solid #e2e8f0;
+      background: #fff;
+    }
+
+    .concept-3 .mock-logo {
+      filter: none;
+    }
+
+    .concept-3 .mock-nav a {
+      color: #334155;
+    }
+
+    .concept-3-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 60px;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .concept-3-card-wrap {
+      position: relative;
+    }
+
+    .concept-3-photo-frame {
+      width: 100%;
+      height: 520px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0, 174, 254, 0.18);
+      position: relative;
+    }
+
+    .concept-3-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .concept-3-floating-pill {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      padding: 16px 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      border: 1px solid rgba(255,255,255,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ==========================================================================
+       OPTION 4: FLOATING 3-IMAGE CULTURAL MOSAIC
+       ========================================================================== */
+    .concept-4 {
+      background: radial-gradient(circle at 10% 20%, #0d1527 0%, #060b14 100%);
+    }
+
+    .concept-4-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 50px;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .mosaic-gallery {
+      position: relative;
+      height: 500px;
+    }
+
+    .mosaic-card {
+      position: absolute;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .mosaic-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mosaic-1 {
+      width: 270px;
+      height: 340px;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+      transform: rotate(-3deg);
+    }
+
+    .mosaic-2 {
+      width: 240px;
+      height: 290px;
+      top: 90px;
+      right: 20px;
+      z-index: 1;
+      transform: rotate(4deg);
+    }
+
+    .mosaic-3 {
+      width: 260px;
+      height: 210px;
+      bottom: 10px;
+      left: 140px;
+      z-index: 3;
+      transform: rotate(-1deg);
+    }
+
+    .mosaic-card:hover {
+      transform: scale(1.06) rotate(0deg) !important;
+      z-index: 10 !important;
+      box-shadow: 0 28px 70px rgba(0, 174, 254, 0.4);
+      border-color: #00AEFE;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .concept-2-grid, .concept-3-grid, .concept-4-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .concept-2-visual, .concept-3-photo-frame {
+        height: 320px;
+      }
+      .mosaic-gallery {
+        height: 380px;
+      }
+      .mosaic-1 { width: 180px; height: 230px; left: 10px; }
+      .mosaic-2 { width: 170px; height: 210px; right: 10px; }
+      .mosaic-3 { width: 190px; height: 160px; left: 70px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Toolbar -->
+  <header class="preview-toolbar">
+    <div class="preview-brand">
+      <h1>Conspodium Stories Hero Concepts</h1>
+      <span>Interactive Preview</span>
+    </div>
+    <nav class="preview-nav">
+      <button class="preview-btn active" onclick="showConcept('all')">👁️ View All 4</button>
+      <button class="preview-btn" onclick="showConcept('1')">Option 1: Full-Bleed Background</button>
+      <button class="preview-btn" onclick="showConcept('2')">Option 2: Duotone Tint & Fade</button>
+      <button class="preview-btn" onclick="showConcept('3')">Option 3: Split Magazine Light</button>
+      <button class="preview-btn" onclick="showConcept('4')">Option 4: 3-Image Mosaic</button>
+    </nav>
+  </header>
+
+  <!-- =========================================================================
+       OPTION 1: FULL-BLEED CINEMATIC EDITORIAL HERO
+       ========================================================================= -->
+  <section class="concept-section concept-1" id="concept-1">
+    <div class="concept-badge-indicator">OPTION 1 • FULL-BLEED CINEMATIC</div>
+    
+    <div class="mock-header">
+      <img src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" alt="Conspodium Logo" class="mock-logo">
+      <ul class="mock-nav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#" class="active">Stories</a></li>
+        <li><a href="#">Forum</a></li>
+        <li><a href="#">Sponsorship</a></li>
+        <li><a href="#">Advert</a></li>
+      </ul>
+      <a href="#" class="mock-cta">Submit Story</a>
+    </div>
+
+    <div class="concept-1-bg"></div>
+    <div class="concept-1-overlay"></div>
+
+    <div class="concept-1-content">
+      <div class="concept-tag concept-1-tag">✨ GLOBAL DIASPORA CHRONICLES</div>
+      <h1 class="concept-1-title">
+        Voices From Around the <span class="gradient-word">World!</span>
+      </h1>
+      <p class="concept-1-subtext">
+        Discover inspiring stories, cultural insights, and groundbreaking narratives connecting diaspora communities across 54 nations and six continents.
+      </p>
+
+      <div class="glass-search-bar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:12px;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Search stories, people, topics, regions..." />
+        <button class="glass-search-btn">Explore Stories</button>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;color:#94a3b8;font-size:0.85rem;">
+        <span>Popular:</span>
+        <span style="background:rgba(255,255,255,0.08);padding:4px 12px;border-radius:20px;color:#fff;">Tech Innovators</span>
+        <span style="background:rgba(255,255,255,0.08);padding:4px 12px;border-radius:20px;color:#fff;">Cultural Ambassadors</span>
+        <span style="background:rgba(255,255,255,0.08);padding:4px 12px;border-radius:20px;color:#fff;">Community</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       OPTION 2: DUOTONE BRAND TINT & SOFT FADE
+       ========================================================================= -->
+  <section class="concept-section concept-2" id="concept-2">
+    <div class="concept-badge-indicator">OPTION 2 • DUOTONE BRAND TINT</div>
+
+    <div class="mock-header">
+      <img src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" alt="Conspodium Logo" class="mock-logo">
+      <ul class="mock-nav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#" class="active">Stories</a></li>
+        <li><a href="#">Forum</a></li>
+        <li><a href="#">Sponsorship</a></li>
+      </ul>
+      <a href="#" class="mock-cta">Submit Story</a>
+    </div>
+
+    <div class="concept-2-grid">
+      <div class="concept-2-content">
+        <div class="concept-tag" style="background:rgba(183,31,113,0.18);border:1px solid rgba(183,31,113,0.4);color:#f472b6;">
+          🌍 CONTINENTAL VOICES
+        </div>
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.6rem,4.8vw,4.2rem);font-weight:800;line-height:1.15;color:#fff;margin-bottom:18px;">
+          Voices From Around the <span class="gradient-word">World!</span>
+        </h1>
+        <p style="font-size:1.12rem;line-height:1.75;color:#94a3b8;margin-bottom:30px;max-width:540px;">
+          Immerse yourself in authentic narratives celebrating heritage, entrepreneurship, and global African impact.
+        </p>
+
+        <div style="display:flex;align-items:center;background:#1e293b;border:1.5px solid #334155;border-radius:50px;padding:5px 6px 5px 18px;max-width:480px;box-shadow:0 8px 30px rgba(0,0,0,0.3);margin-bottom:20px;">
+          <input type="text" placeholder="Search archive..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:0.9rem;" />
+          <button style="background:#00AEFE;color:#fff;border:none;padding:10px 22px;border-radius:40px;font-weight:700;cursor:pointer;">Search</button>
+        </div>
+      </div>
+
+      <div class="concept-2-visual">
+        <img src="/wp-content/uploads/2026/01/friends-with-costume-carnival-scaled.jpg" class="concept-2-visual-img" alt="Carnival">
+        <div class="concept-2-duotone"></div>
+        <div class="concept-2-visual-overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       OPTION 3: SPLIT-SCREEN MAGAZINE HERO (CLEAN LIGHT)
+       ========================================================================= -->
+  <section class="concept-section concept-3" id="concept-3">
+    <div class="concept-badge-indicator" style="background:rgba(0,0,0,0.8);color:#38bdf8;">OPTION 3 • SPLIT MAGAZINE LIGHT</div>
+
+    <div class="mock-header">
+      <img src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" alt="Conspodium Logo" class="mock-logo">
+      <ul class="mock-nav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#" class="active">Stories</a></li>
+        <li><a href="#">Forum</a></li>
+        <li><a href="#">Sponsorship</a></li>
+      </ul>
+      <a href="#" class="mock-cta">Submit Story</a>
+    </div>
+
+    <div class="concept-3-grid">
+      <div class="concept-3-content">
+        <div class="concept-tag" style="background:#e0f2fe;border:1px solid #bae6fd;color:#0284c7;">
+          STORIES & INSIGHTS
+        </div>
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.6rem,4.8vw,4.2rem);font-weight:800;line-height:1.15;color:#0f172a;margin-bottom:18px;">
+          Voices From Around the <span class="gradient-word">World!</span>
+        </h1>
+        <p style="font-size:1.12rem;line-height:1.75;color:#475569;margin-bottom:30px;max-width:540px;">
+          Discover inspiring stories, cultural insights, and success narratives from diaspora communities across six continents.
+        </p>
+
+        <div style="display:flex;align-items:center;background:#f8fafc;border:1.5px solid #cbd5e1;border-radius:50px;padding:5px 6px 5px 18px;max-width:480px;box-shadow:0 6px 24px rgba(0,174,254,0.08);margin-bottom:24px;">
+          <input type="text" placeholder="Search stories, topics, keywords..." style="flex:1;background:transparent;border:none;outline:none;color:#1e293b;font-size:0.9rem;" />
+          <button style="background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border:none;padding:10px 22px;border-radius:40px;font-weight:700;cursor:pointer;">Search</button>
+        </div>
+      </div>
+
+      <div class="concept-3-card-wrap">
+        <div class="concept-3-photo-frame">
+          <img src="/wp-content/uploads/2026/01/friends-with-costume-carnival-scaled.jpg" alt="Diaspora Stories">
+          <div class="concept-3-floating-pill">
+            <div>
+              <div style="font-weight:700;font-size:0.95rem;color:#0f172a;">Global African Carnival</div>
+              <div style="font-size:0.8rem;color:#64748b;">Culture, Heritage & Unity</div>
+            </div>
+            <span style="background:linear-gradient(135deg,#00AEFE,#B71F71);color:#fff;font-size:0.75rem;padding:5px 12px;border-radius:20px;font-weight:700;">Featured</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       OPTION 4: FLOATING 3-IMAGE CULTURAL MOSAIC
+       ========================================================================= -->
+  <section class="concept-section concept-4" id="concept-4">
+    <div class="concept-badge-indicator">OPTION 4 • 3-IMAGE CULTURAL MOSAIC</div>
+
+    <div class="mock-header">
+      <img src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" alt="Conspodium Logo" class="mock-logo">
+      <ul class="mock-nav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#" class="active">Stories</a></li>
+        <li><a href="#">Forum</a></li>
+        <li><a href="#">Sponsorship</a></li>
+      </ul>
+      <a href="#" class="mock-cta">Submit Story</a>
+    </div>
+
+    <div class="concept-4-grid">
+      <div class="concept-4-content">
+        <div class="concept-tag" style="background:rgba(99,102,241,0.18);border:1px solid rgba(99,102,241,0.4);color:#a5b4fc;">
+          ✨ DIASPORA SPECTRUM
+        </div>
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.6rem,4.8vw,4.2rem);font-weight:800;line-height:1.15;color:#fff;margin-bottom:18px;">
+          Voices From Around the <span class="gradient-word">World!</span>
+        </h1>
+        <p style="font-size:1.12rem;line-height:1.75;color:#94a3b8;margin-bottom:30px;max-width:520px;">
+          Every story is a bridge. Explore our living mosaic of culture, technology, art, and community narratives.
+        </p>
+
+        <div style="display:flex;align-items:center;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.2);backdrop-filter:blur(12px);border-radius:50px;padding:5px 6px 5px 18px;max-width:480px;margin-bottom:20px;">
+          <input type="text" placeholder="Explore diaspora voices..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:0.9rem;" />
+          <button style="background:linear-gradient(135deg,#00AEFE,#B71F71);color:#fff;border:none;padding:10px 22px;border-radius:40px;font-weight:700;cursor:pointer;">Search</button>
+        </div>
+      </div>
+
+      <div class="mosaic-gallery">
+        <div class="mosaic-card mosaic-1">
+          <img src="/wp-content/uploads/2026/01/friends-with-costume-carnival-scaled.jpg" alt="Culture">
+        </div>
+        <div class="mosaic-card mosaic-2">
+          <img src="/wp-content/uploads/2026/02/group-five-african-college-students-spending-time-together-campus-university-yard-black-afro-friends-making-selfie-phone-education-theme-scaled.jpg" alt="Community">
+        </div>
+        <div class="mosaic-card mosaic-3">
+          <img src="/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Art">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Switcher JS -->
+  <script>
+    function showConcept(id) {
+      document.querySelectorAll('.preview-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (id === 'all') {
+        document.querySelectorAll('.concept-section').forEach(sec => sec.style.display = 'flex');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.querySelectorAll('.concept-section').forEach(sec => sec.style.display = 'none');
+        const target = document.getElementById('concept-' + id);
+        if (target) {
+          target.style.display = 'flex';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    }
+  </script>
+</body>
+</html>
