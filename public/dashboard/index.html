@@ -846,6 +846,50 @@
 
     
 
+  /* Stories Hero Section - Subtle Luxury Animated Mesh Gradient Backdrop */
+  .elementor-element-362a422c {
+    position: relative !important;
+    overflow: hidden !important;
+    background: radial-gradient(circle at 12% 20%, rgba(0, 174, 254, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 88% 25%, rgba(183, 31, 113, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 50% 85%, rgba(139, 92, 246, 0.06) 0%, transparent 55%),
+                linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+  }
+
+  .elementor-element-362a422c::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 120%;
+    height: 140%;
+    background: radial-gradient(ellipse at 15% 25%, rgba(0, 174, 254, 0.12) 0%, transparent 42%),
+                radial-gradient(ellipse at 85% 55%, rgba(183, 31, 113, 0.10) 0%, transparent 48%),
+                radial-gradient(ellipse at 50% 90%, rgba(99, 102, 241, 0.08) 0%, transparent 42%);
+    filter: blur(55px);
+    opacity: 0.9;
+    z-index: 0;
+    pointer-events: none;
+    animation: cspHeroGradientShift 14s ease-in-out infinite alternate;
+  }
+
+  @keyframes cspHeroGradientShift {
+    0% {
+      transform: translateY(0) scale(1) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) scale(1.05) rotate(2deg);
+    }
+    100% {
+      transform: translateY(15px) scale(0.98) rotate(-2deg);
+    }
+  }
+
+  .elementor-element-362a422c > * {
+    position: relative;
+    z-index: 1;
+  }
+
   /* Floating Animation for ElementsKit Read Latest Stories Button */
   @keyframes cspReadStoriesFloat {
     0%, 100% {
