@@ -1813,14 +1813,14 @@ e-page-transition,
 
         <!-- 2. GLASSMORPHIC CATEGORY FILTER BAR -->
         <div class="csp-cat-nav-wrap" style="margin-bottom:24px;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
-          <div class="csp-cat-nav-inner" id="csp-stories-filter-pills" style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:nowrap;width:max-content;min-width:100%;padding:4px 0;">
+          <div class="csp-cat-nav-inner" id="csp-stories-filter-pills" style="display:flex;align-items:center;justify-content:flex-start;gap:8px;flex-wrap:nowrap;width:max-content;min-width:100%;padding:4px 8px;">
             <button type="button" class="csp-cat-pill active" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('all', this);" style="padding:6px 14px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> All Stories</button>
             <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('culture-heritage', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg> Culture &amp; Heritage</button>
             <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('innovation', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg> Innovation &amp; Tech</button>
             <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('art-entertainment', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg> Art &amp; Entertainment</button>
             <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('community', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Community</button>
             <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('success-stories', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Success Stories</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('african-diaspora-matters', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> African Diaspora Matters</button>
+            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('african-diaspora-matters', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/></svg> African Diaspora Matters</button>
             <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('diaspora-insights-analysis', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Diaspora Insights &amp; Analysis</button>
           </div>
         </div>
@@ -2076,6 +2076,21 @@ e-page-transition,
     return window.getCategorySvgIcon ? window.getCategorySvgIcon(catOrKey) : '';
   }
 
+  function scrollActivePillIntoView(targetEl) {
+    var navWrap = document.querySelector('.csp-cat-nav-wrap');
+    var activeEl = targetEl || (pillContainer ? pillContainer.querySelector('.csp-cat-pill.active') : null);
+    if (!navWrap || !activeEl) return;
+
+    if (activeEl === pillContainer.firstElementChild) {
+      navWrap.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      var navRect = navWrap.getBoundingClientRect();
+      var elRect = activeEl.getBoundingClientRect();
+      var scrollLeft = navWrap.scrollLeft + (elRect.left - navRect.left) - (navRect.width / 2) + (elRect.width / 2);
+      navWrap.scrollTo({ left: Math.max(0, scrollLeft), behavior: 'smooth' });
+    }
+  }
+
   // 1. Fetch & Render Dynamic Category Pills & Discover By Category Grid
   var discoverContainer = document.getElementById('csp-stories-discover-categories');
   fetch(getRootUrl('api/posts.php?resource=categories'))
@@ -2090,6 +2105,7 @@ e-page-transition,
           pillsHtml += `<button type="button" class="csp-cat-pill" onclick="window.filterStoriesCategory('${cat.slug}', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;">${getCategorySvgIcon(cat)} ${cat.name}</button>`;
         });
         pillContainer.innerHTML = pillsHtml;
+        setTimeout(scrollActivePillIntoView, 150);
       }
 
       // Render Discover By Category Section Cards
@@ -2157,7 +2173,11 @@ e-page-transition,
       btnEl.style.background = 'linear-gradient(110deg,#00AEFE 0%,#B71F71 100%)';
       btnEl.style.color = '#ffffff';
       btnEl.style.border = 'none';
+      scrollActivePillIntoView(btnEl);
     }
+
+    loadStoriesPage(1);
+  };
 
     loadStoriesPage(1);
   };
