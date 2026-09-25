@@ -608,7 +608,7 @@ min-width: 100px;
   }
 
   /* ═════════════════════════════════════════════════════════════════════════════
-     GLOBAL SLEEK & SOFT EDITORIAL TYPOGRAPHY SYSTEM
+     GLOBAL SLEEK & SOFT EDITORIAL TYPOGRAPHY SYSTEM (LIGHT & DARK AWARE)
      ═════════════════════════════════════════════════════════════════════════════ */
   body, html {
     -webkit-font-smoothing: antialiased !important;
@@ -616,7 +616,7 @@ min-width: 100px;
     text-rendering: optimizeLegibility !important;
   }
 
-  /* Universal Soft Subtext & Paragraphs */
+  /* Universal Soft Subtext & Typography for standard light areas */
   p,
   .subtext,
   .subtext p,
@@ -631,10 +631,20 @@ min-width: 100px;
   .advert-card-desc,
   .csp-poll-prompt {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
-    color: #475569 !important;
     line-height: 1.68 !important;
     letter-spacing: -0.011em !important;
     font-weight: 400 !important;
+  }
+
+  /* Default Soft Slate for standard light surfaces */
+  body:not(.dark) p,
+  body:not(.dark) .subtext p,
+  .elementor-widget-text-editor:not(.csp-light-text) p,
+  .elementskit-box-style-content,
+  .eael-grid-post-excerpt p,
+  .advert-card-desc,
+  .csp-poll-prompt {
+    color: #475569;
   }
 
   /* Soft Meta & Micro-copy */
@@ -650,14 +660,71 @@ min-width: 100px;
     font-weight: 500 !important;
   }
 
-  /* Dark Card & Hero Overrides to preserve soft translucent white */
+  /* ── FULL VISIBILITY PRESERVATION FOR ALL DARK BACKGROUND SECTIONS ACROSS THE SITE ── */
+  .dark-section,
+  .dark-section *,
+  [data-theme="dark"],
+  [data-theme="dark"] *,
+  footer,
+  footer p,
+  footer span,
+  footer a,
+  footer li,
+  .elementor-location-footer,
+  .elementor-location-footer p,
+  .elementor-location-footer span,
+  .elementor-location-footer a,
+  .elementor-location-footer li,
+  .elementor-location-footer .elementor-widget-text-editor p,
+  section#csp-countdown,
+  section#csp-countdown p,
+  section#csp-countdown span,
+  #csp-countdown,
+  #csp-countdown p,
+  #csp-countdown span,
+  .csp-stories-hero-spotlight,
   .csp-stories-hero-spotlight p,
+  .csp-stories-hero-spotlight span,
   .csp-hero-spotlight-excerpt,
+  .csp-sidebar-newsletter,
   .csp-sidebar-newsletter p,
+  .csp-sidebar-newsletter span,
+  .is-sticky,
+  .is-sticky p,
+  .is-sticky span,
+  .she-header.is-sticky,
   .she-header.is-sticky p,
+  .she-header.is-sticky span,
+  .elementor-element-362a422c,
+  .elementor-element-362a422c p,
+  .elementor-element-362a422c span,
+  .elementor-element-8997264,
+  .elementor-element-7440409,
+  .elementor-element-444458f2,
+  .elementor-element-444458f2 p,
+  .elementor-element-2d9e131,
+  .e-con[style*="background:#0"],
+  .e-con[style*="background: #0"],
+  .e-con[style*="background:#1"],
+  .e-con[style*="background: #1"],
+  .e-con[style*="background:rgb(6"],
+  .e-con[style*="background: rgb(6"],
+  .e-con[style*="background:rgba(6"],
+  .e-con[style*="background: rgba(6"],
+  .elementor-section[style*="background:#0"],
+  .elementor-section[style*="background: #0"],
+  .elementor-section[style*="background:#1"],
+  .elementor-section[style*="background: #1"],
+  .elementor-section[style*="background:rgb(6"],
+  .elementor-section[style*="background: rgb(6"],
+  .elementor-section[style*="background:rgba(6"],
+  .elementor-section[style*="background: rgba(6"] {
+    color: rgba(255, 255, 255, 0.88) !important;
+  }
+
   .csp-modal-card p,
-  [data-theme="dark"] p {
-    color: rgba(255, 255, 255, 0.8) !important;
+  .csp-stories-hero-spotlight p {
+    color: rgba(255, 255, 255, 0.85) !important;
   }
 
   .csp-search-input-wrap:focus-within {
@@ -2538,33 +2605,60 @@ min-width: 100px;
       text-align: center !important;
     }
 
-    /* ── Stories Top Hero Mobile Layout & Zero Overlap ── */
+    /* ── Stories Top Hero Mobile Layout & Ordering ── */
     .elementor-element-2f73cc35 {
       display: flex !important;
       flex-direction: column !important;
-      gap: 20px !important;
+      gap: 16px !important;
     }
 
     .elementor-element-77f610a5 {
       order: 1 !important;
       width: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
     }
 
+    .elementor-element-77f610a5 .elementor-element-26fbb2fc {
+      order: 1 !important;
+    }
+
+    .elementor-element-77f610a5 .elementor-element-3076d049 {
+      order: 2 !important;
+    }
+
+    .elementor-element-77f610a5 .csp-stories-search-bar {
+      order: 3 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      margin-bottom: 8px !important;
+    }
+
+    /* Original Image Blob placed after search bar on mobile */
     .elementor-element-2706cfdd {
       order: 2 !important;
       width: 100% !important;
-      margin-top: 8px !important;
-      margin-bottom: 24px !important;
+      max-width: 320px !important;
+      margin: 8px auto !important;
+      display: flex !important;
+      justify-content: center !important;
     }
 
-    .csp-hero-floating-showcase {
-      max-width: 100% !important;
+    #uc_blob_shapes_elementor_2c3c3975_justification,
+    #uc_blob_shapes_elementor_2c3c3975_size {
+      width: 100% !important;
+      max-width: 320px !important;
       margin: 0 auto !important;
     }
 
-    .csp-stories-search-bar {
-      max-width: 100% !important;
+    /* Animated Read All Stories CTA Button placed AFTER the Image Blob on mobile */
+    .elementor-element-77f610a5 .elementor-element-7e9ede5e {
+      order: 5 !important;
       width: 100% !important;
+      display: flex !important;
+      justify-content: center !important;
+      margin-top: 10px !important;
+      margin-bottom: 20px !important;
     }
 
     /* ── Fix Home Page Blob Bleeding into Counter on Mobile ── */
@@ -4054,33 +4148,94 @@ min-width: 100px;
 					<div class="e-con-inner">
 		<div class="elementor-element elementor-element-2f73cc35 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="2f73cc35" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 		<div class="elementor-element elementor-element-2706cfdd e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="2706cfdd" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-2c3c3975 elementor-widget" data-id="2c3c3975" data-element_type="widget" style="width:100%;display:flex;justify-content:center;align-items:center;">
-				<div class="elementor-widget-container" style="width:100%;max-width:460px;">
+				<div class="elementor-element elementor-element-2c3c3975 elementor-widget elementor-widget-ucaddon_blob_shapes" data-id="2c3c3975" data-element_type="widget" data-widget_type="ucaddon_blob_shapes.default">
+				<div class="elementor-widget-container">
 					
-          <!-- Sleek Modern Floating Showcase Card -->
-          <div class="csp-hero-floating-showcase" style="position:relative;width:100%;border-radius:24px;overflow:hidden;box-shadow:0 20px 45px rgba(0,0,0,0.12);border:1px solid rgba(0,174,254,0.25);background:linear-gradient(135deg,rgba(255,255,255,0.9) 0%,rgba(240,249,255,0.7) 100%);">
-            <div style="position:relative;height:300px;overflow:hidden;">
-              <img width="1536" height="864" src="/wp-content/uploads/2026/01/friends-with-costume-carnival-scaled.jpg" alt="Diaspora Celebrations" style="width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1.02)'" />
-              <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(6,16,34,0.75) 0%, rgba(6,16,34,0) 60%);"></div>
-              
-              <!-- Floating Live Badge -->
-              <div style="position:absolute;top:16px;left:16px;background:rgba(6,16,34,0.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);color:#ffffff;padding:6px 14px;border-radius:50px;font-size:0.75rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;box-shadow:0 8px 20px rgba(0,0,0,0.3);">
-                <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;"></span>
-                Global Diaspora Voice
-              </div>
+<!-- start Blob Shapes -->
+<style>/* widget: Blob Shapes */
 
-              <!-- Floating Info Strip -->
-              <div style="position:absolute;bottom:16px;left:16px;right:16px;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(0,174,254,0.25);padding:10px 16px;border-radius:16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 10px 25px rgba(0,0,0,0.1);">
-                <div>
-                  <div style="font-family:'Merriweather',serif;font-size:0.85rem;font-weight:700;color:#0f172a;line-height:1.2;">African Heritage &amp; Arts</div>
-                  <div style="font-size:0.75rem;color:#64748b;">Community Highlights · 2026 Edition</div>
-                </div>
-                <span style="font-size:1.1rem;">🌍</span>
-              </div>
-            </div>
-          </div>
+#uc_blob_shapes_elementor_2c3c3975{
+  mix-blend-mode: normal;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center center;
+  opacity: 100%; 
+}
 
-				</div>
+#uc_blob_shapes_elementor_2c3c3975_justification #uc_blob_shapes_elementor_2c3c3975_justification-inner{
+  position: absolute;
+  background-position:center center;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+#uc_blob_shapes_elementor_2c3c3975_justification #uc_blob_shapes_elementor_2c3c3975_justification-inner .ue_blob_inside{
+	width: 100%;
+}
+
+#uc_blob_shapes_elementor_2c3c3975_justification #uc_blob_shapes_elementor_2c3c3975_justification-inner .blob{
+  background-position:center center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-color: #000;
+}
+
+#uc_blob_shapes_elementor_2c3c3975_justification{
+  display:flex;
+  min-height:1px;
+  position: relative;
+}
+
+#uc_blob_shapes_elementor_2c3c3975 .ue-blob-link{
+  display:block;
+}
+
+#uc_blob_shapes_elementor_2c3c3975_justification .ue_blob_inside {
+  position: relative;
+  z-index: 2;
+  overflow:hidden;
+  width: 100%;
+  clip-path: polygon(92.200% 11.000%, 93.800% 12.800%, 95.200% 14.800%, 96.400% 17.000%, 97.400% 19.300%, 98.200% 21.800%, 98.900% 24.400%, 99.400% 27.100%, 99.800% 29.900%, 100.000% 32.800%, 100.100% 35.800%, 100.000% 38.900%, 99.800% 42.000%, 99.500% 45.200%, 99.100% 48.400%, 98.500% 51.600%, 97.800% 54.800%, 97.000% 58.000%, 96.100% 61.100%, 95.100% 64.200%, 94.000% 67.200%, 92.800% 70.200%, 91.500% 73.000%, 90.100% 75.800%, 88.600% 78.500%, 87.000% 81.000%, 85.300% 83.500%, 83.400% 85.800%, 81.400% 88.000%, 79.300% 90.000%, 77.100% 91.900%, 74.800% 93.600%, 72.300% 95.100%, 69.700% 96.400%, 67.000% 97.500%, 64.200% 98.400%, 61.400% 99.100%, 58.500% 99.600%, 55.600% 99.900%, 52.700% 100.000%, 49.800% 99.900%, 46.900% 99.700%, 44.000% 99.300%, 41.200% 98.700%, 38.500% 97.900%, 35.900% 96.900%, 33.400% 95.700%, 31.100% 94.400%, 28.900% 92.900%, 26.900% 91.200%, 25.000% 89.300%, 23.300% 87.300%, 21.700% 85.100%, 20.200% 82.800%, 18.900% 80.400%, 17.700% 77.900%, 16.500% 75.200%, 15.400% 72.400%, 14.400% 69.500%, 13.400% 66.600%, 12.400% 63.600%, 11.400% 60.500%, 10.400% 57.400%, 9.400% 54.200%, 8.400% 51.000%, 7.400% 47.700%, 6.400% 44.400%, 5.400% 41.100%, 4.400% 37.800%, 3.400% 34.600%, 2.500% 31.400%, 1.700% 28.300%, 1.000% 25.300%, 0.500% 22.400%, 0.100% 19.600%, 0.000% 16.900%, 0.000% 14.400%, 0.200% 12.100%, 0.700% 10.000%, 1.500% 8.100%, 2.600% 6.400%, 4.000% 4.900%, 5.600% 3.700%, 7.500% 2.700%, 9.700% 1.900%, 12.100% 1.200%, 14.700% 0.700%, 17.500% 0.400%, 20.500% 0.200%, 23.600% 0.100%, 26.800% 0.100%, 30.100% 0.200%, 33.500% 0.300%, 37.000% 0.500%, 40.500% 0.700%, 44.000% 0.900%, 47.500% 1.100%, 51.000% 1.300%, 54.400% 1.500%, 57.800% 1.700%, 61.100% 1.900%, 64.300% 2.100%, 67.500% 2.400%, 70.600% 2.800%, 73.600% 3.200%, 76.400% 3.700%, 79.000% 4.200%, 81.600% 5.000%, 84.000% 5.900%, 86.300% 6.900%, 88.400% 8.100%, 90.300% 9.500%, 92.200% 11.000%);
+  -webkit-clip-path: polygon(92.200% 11.000%, 93.800% 12.800%, 95.200% 14.800%, 96.400% 17.000%, 97.400% 19.300%, 98.200% 21.800%, 98.900% 24.400%, 99.400% 27.100%, 99.800% 29.900%, 100.000% 32.800%, 100.100% 35.800%, 100.000% 38.900%, 99.800% 42.000%, 99.500% 45.200%, 99.100% 48.400%, 98.500% 51.600%, 97.800% 54.800%, 97.000% 58.000%, 96.100% 61.100%, 95.100% 64.200%, 94.000% 67.200%, 92.800% 70.200%, 91.500% 73.000%, 90.100% 75.800%, 88.600% 78.500%, 87.000% 81.000%, 85.300% 83.500%, 83.400% 85.800%, 81.400% 88.000%, 79.300% 90.000%, 77.100% 91.900%, 74.800% 93.600%, 72.300% 95.100%, 69.700% 96.400%, 67.000% 97.500%, 64.200% 98.400%, 61.400% 99.100%, 58.500% 99.600%, 55.600% 99.900%, 52.700% 100.000%, 49.800% 99.900%, 46.900% 99.700%, 44.000% 99.300%, 41.200% 98.700%, 38.500% 97.900%, 35.900% 96.900%, 33.400% 95.700%, 31.100% 94.400%, 28.900% 92.900%, 26.900% 91.200%, 25.000% 89.300%, 23.300% 87.300%, 21.700% 85.100%, 20.200% 82.800%, 18.900% 80.400%, 17.700% 77.900%, 16.500% 75.200%, 15.400% 72.400%, 14.400% 69.500%, 13.400% 66.600%, 12.400% 63.600%, 11.400% 60.500%, 10.400% 57.400%, 9.400% 54.200%, 8.400% 51.000%, 7.400% 47.700%, 6.400% 44.400%, 5.400% 41.100%, 4.400% 37.800%, 3.400% 34.600%, 2.500% 31.400%, 1.700% 28.300%, 1.000% 25.300%, 0.500% 22.400%, 0.100% 19.600%, 0.000% 16.900%, 0.000% 14.400%, 0.200% 12.100%, 0.700% 10.000%, 1.500% 8.100%, 2.600% 6.400%, 4.000% 4.900%, 5.600% 3.700%, 7.500% 2.700%, 9.700% 1.900%, 12.100% 1.200%, 14.700% 0.700%, 17.500% 0.400%, 20.500% 0.200%, 23.600% 0.100%, 26.800% 0.100%, 30.100% 0.200%, 33.500% 0.300%, 37.000% 0.500%, 40.500% 0.700%, 44.000% 0.900%, 47.500% 1.100%, 51.000% 1.300%, 54.400% 1.500%, 57.800% 1.700%, 61.100% 1.900%, 64.300% 2.100%, 67.500% 2.400%, 70.600% 2.800%, 73.600% 3.200%, 76.400% 3.700%, 79.000% 4.200%, 81.600% 5.000%, 84.000% 5.900%, 86.300% 6.900%, 88.400% 8.100%, 90.300% 9.500%, 92.200% 11.000%);
+  background:linear-gradient(45deg, #00AEFE 0%, 50%, #A2007DC7 100%); 
+}
+
+#uc_blob_shapes_elementor_2c3c3975 {
+  aspect-ratio: 1 / 1; 
+  width:100%;
+}
+
+.ue-blob-text-holder{
+  position:absolute;
+  top:0px;
+  left:0px;
+  right:0px;
+  bottom:0px;
+  width:100%;
+  height:100%;
+  z-index:2;
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+}
+
+.ue_blob_inside{
+  position:relative;
+}
+
+</style>
+
+<div id="uc_blob_shapes_elementor_2c3c3975_justification" class="ue-blob-wrapper" role="group">
+  <div id="uc_blob_shapes_elementor_2c3c3975_size" class="ue_blob_inside">
+    <div id="uc_blob_shapes_elementor_2c3c3975" style="background-image:url(../wp-content/uploads/2026/01/friends-with-costume-carnival-scaled.jpg)" class="blob" role="presentation"></div>
+    <div class="ue-blob-text-holder"></div>
+  </div>
+</div>
+<!-- end Blob Shapes -->				</div>
 				</div>
 				</div>
 		<div class="elementor-element elementor-element-77f610a5 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="77f610a5" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">

@@ -574,7 +574,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   /* ═════════════════════════════════════════════════════════════════════════════
-     GLOBAL SLEEK & SOFT EDITORIAL TYPOGRAPHY SYSTEM
+     GLOBAL SLEEK & SOFT EDITORIAL TYPOGRAPHY SYSTEM (LIGHT & DARK AWARE)
      ═════════════════════════════════════════════════════════════════════════════ */
   body, html {
     -webkit-font-smoothing: antialiased !important;
@@ -582,7 +582,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     text-rendering: optimizeLegibility !important;
   }
 
-  /* Universal Soft Subtext & Paragraphs */
+  /* Universal Soft Subtext & Typography for standard light areas */
   p,
   .subtext,
   .subtext p,
@@ -597,10 +597,20 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   .advert-card-desc,
   .csp-poll-prompt {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
-    color: #475569 !important;
     line-height: 1.68 !important;
     letter-spacing: -0.011em !important;
     font-weight: 400 !important;
+  }
+
+  /* Default Soft Slate for standard light surfaces */
+  body:not(.dark) p,
+  body:not(.dark) .subtext p,
+  .elementor-widget-text-editor:not(.csp-light-text) p,
+  .elementskit-box-style-content,
+  .eael-grid-post-excerpt p,
+  .advert-card-desc,
+  .csp-poll-prompt {
+    color: #475569;
   }
 
   /* Soft Meta & Micro-copy */
@@ -616,14 +626,71 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     font-weight: 500 !important;
   }
 
-  /* Dark Card & Hero Overrides to preserve soft translucent white */
+  /* ── FULL VISIBILITY PRESERVATION FOR ALL DARK BACKGROUND SECTIONS ACROSS THE SITE ── */
+  .dark-section,
+  .dark-section *,
+  [data-theme="dark"],
+  [data-theme="dark"] *,
+  footer,
+  footer p,
+  footer span,
+  footer a,
+  footer li,
+  .elementor-location-footer,
+  .elementor-location-footer p,
+  .elementor-location-footer span,
+  .elementor-location-footer a,
+  .elementor-location-footer li,
+  .elementor-location-footer .elementor-widget-text-editor p,
+  section#csp-countdown,
+  section#csp-countdown p,
+  section#csp-countdown span,
+  #csp-countdown,
+  #csp-countdown p,
+  #csp-countdown span,
+  .csp-stories-hero-spotlight,
   .csp-stories-hero-spotlight p,
+  .csp-stories-hero-spotlight span,
   .csp-hero-spotlight-excerpt,
+  .csp-sidebar-newsletter,
   .csp-sidebar-newsletter p,
+  .csp-sidebar-newsletter span,
+  .is-sticky,
+  .is-sticky p,
+  .is-sticky span,
+  .she-header.is-sticky,
   .she-header.is-sticky p,
+  .she-header.is-sticky span,
+  .elementor-element-362a422c,
+  .elementor-element-362a422c p,
+  .elementor-element-362a422c span,
+  .elementor-element-8997264,
+  .elementor-element-7440409,
+  .elementor-element-444458f2,
+  .elementor-element-444458f2 p,
+  .elementor-element-2d9e131,
+  .e-con[style*="background:#0"],
+  .e-con[style*="background: #0"],
+  .e-con[style*="background:#1"],
+  .e-con[style*="background: #1"],
+  .e-con[style*="background:rgb(6"],
+  .e-con[style*="background: rgb(6"],
+  .e-con[style*="background:rgba(6"],
+  .e-con[style*="background: rgba(6"],
+  .elementor-section[style*="background:#0"],
+  .elementor-section[style*="background: #0"],
+  .elementor-section[style*="background:#1"],
+  .elementor-section[style*="background: #1"],
+  .elementor-section[style*="background:rgb(6"],
+  .elementor-section[style*="background: rgb(6"],
+  .elementor-section[style*="background:rgba(6"],
+  .elementor-section[style*="background: rgba(6"] {
+    color: rgba(255, 255, 255, 0.88) !important;
+  }
+
   .csp-modal-card p,
-  [data-theme="dark"] p {
-    color: rgba(255, 255, 255, 0.8) !important;
+  .csp-stories-hero-spotlight p {
+    color: rgba(255, 255, 255, 0.85) !important;
   }
 
   .csp-search-input-wrap:focus-within {
@@ -2504,33 +2571,60 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       text-align: center !important;
     }
 
-    /* ── Stories Top Hero Mobile Layout & Zero Overlap ── */
+    /* ── Stories Top Hero Mobile Layout & Ordering ── */
     .elementor-element-2f73cc35 {
       display: flex !important;
       flex-direction: column !important;
-      gap: 20px !important;
+      gap: 16px !important;
     }
 
     .elementor-element-77f610a5 {
       order: 1 !important;
       width: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
     }
 
+    .elementor-element-77f610a5 .elementor-element-26fbb2fc {
+      order: 1 !important;
+    }
+
+    .elementor-element-77f610a5 .elementor-element-3076d049 {
+      order: 2 !important;
+    }
+
+    .elementor-element-77f610a5 .csp-stories-search-bar {
+      order: 3 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      margin-bottom: 8px !important;
+    }
+
+    /* Original Image Blob placed after search bar on mobile */
     .elementor-element-2706cfdd {
       order: 2 !important;
       width: 100% !important;
-      margin-top: 8px !important;
-      margin-bottom: 24px !important;
+      max-width: 320px !important;
+      margin: 8px auto !important;
+      display: flex !important;
+      justify-content: center !important;
     }
 
-    .csp-hero-floating-showcase {
-      max-width: 100% !important;
+    #uc_blob_shapes_elementor_2c3c3975_justification,
+    #uc_blob_shapes_elementor_2c3c3975_size {
+      width: 100% !important;
+      max-width: 320px !important;
       margin: 0 auto !important;
     }
 
-    .csp-stories-search-bar {
-      max-width: 100% !important;
+    /* Animated Read All Stories CTA Button placed AFTER the Image Blob on mobile */
+    .elementor-element-77f610a5 .elementor-element-7e9ede5e {
+      order: 5 !important;
       width: 100% !important;
+      display: flex !important;
+      justify-content: center !important;
+      margin-top: 10px !important;
+      margin-bottom: 20px !important;
     }
 
     /* ── Fix Home Page Blob Bleeding into Counter on Mobile ── */
