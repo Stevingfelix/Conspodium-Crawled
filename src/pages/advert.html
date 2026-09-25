@@ -1418,6 +1418,233 @@ e-page-transition,
 <!-- CSP_HEADER_FIXES_END -->
 <style id="advert-page-clean-overrides">
   /* -------------------------------------------------------------
+     Advert Page Transparent Floating Header & Hero Spacing
+     ------------------------------------------------------------- */
+  body.elementor-page-977,
+  body.page-id-977 {
+    background-color: #FAFAFC !important;
+  }
+
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky),
+  body.elementor-page-977 .she-header:not(.is-sticky),
+  body.elementor-page-977 .she-header-yes:not(.is-sticky),
+  body.elementor-page-977 .elementor-element-2d9e131:not(.is-sticky),
+  body.page-id-977 .elementor-location-header:not(.is-sticky),
+  body.page-id-977 .she-header:not(.is-sticky),
+  body.page-id-977 .she-header-yes:not(.is-sticky),
+  body.page-id-977 .elementor-element-2d9e131:not(.is-sticky) {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    border-bottom: none !important;
+    z-index: 999999 !important;
+  }
+
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky) .elementor-section-wrap,
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky) .elementor-element-2d9e131,
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky) .elementor-element-f22f163,
+  body.elementor-page-977 .elementor-location-header:not(.is-sticky) .elementor-element-adf27cc {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Hero Section Container Padding & Relative Context */
+  .elementor-element-598a9a85 {
+    position: relative !important;
+    overflow: hidden !important;
+    background: #FAFAFC !important;
+    padding-top: 130px !important;
+    padding-bottom: 50px !important;
+  }
+  .elementor-element-598a9a85 > .e-con-inner {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+  @media (max-width: 767px) {
+    .elementor-element-598a9a85 {
+      padding-top: 95px !important;
+      padding-bottom: 35px !important;
+    }
+  }
+
+  /* ── UNIQUE ADVERT ANIMATED BACKGROUND: GLOBAL DIASPORA MEDIA NETWORK ── */
+  .csp-advert-animated-bg {
+    position: absolute;
+    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  /* Radiant Luminous Mesh Orbs */
+  .csp-adv-glow-mesh {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 70% 50% at 85% 12%, rgba(0, 174, 254, 0.12) 0%, rgba(0, 174, 254, 0) 70%),
+      radial-gradient(ellipse 65% 50% at 12% 28%, rgba(183, 31, 113, 0.08) 0%, rgba(183, 31, 113, 0) 70%),
+      radial-gradient(circle 480px at 50% 8%, rgba(255, 255, 255, 0.95) 0%, rgba(250, 250, 252, 0) 100%);
+    opacity: 0.95;
+  }
+
+  /* Slowly Floating Radiant Energy Orbs */
+  .csp-adv-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(65px);
+    -webkit-filter: blur(65px);
+    opacity: 0.65;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  .csp-adv-orb-cyan {
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(0, 174, 254, 0.22) 0%, rgba(0, 174, 254, 0) 70%);
+    top: -80px;
+    right: -100px;
+    animation: cspOrbDriftCyan 18s ease-in-out infinite alternate;
+  }
+
+  .csp-adv-orb-magenta {
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(183, 31, 113, 0.16) 0%, rgba(183, 31, 113, 0) 70%);
+    top: 40px;
+    left: -120px;
+    animation: cspOrbDriftMagenta 22s ease-in-out infinite alternate;
+  }
+
+  .csp-adv-orb-gold {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, rgba(245, 158, 11, 0) 70%);
+    top: 30%;
+    left: 45%;
+    animation: cspOrbDriftGold 25s ease-in-out infinite alternate;
+  }
+
+  @keyframes cspOrbDriftCyan {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(-60px, 40px, 0) scale(1.1); }
+    100% { transform: translate3d(30px, 80px, 0) scale(0.95); }
+  }
+
+  @keyframes cspOrbDriftMagenta {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(70px, -30px, 0) scale(1.08); }
+    100% { transform: translate3d(-30px, 50px, 0) scale(0.92); }
+  }
+
+  @keyframes cspOrbDriftGold {
+    0% { transform: translate3d(0, 0, 0) scale(0.9); }
+    100% { transform: translate3d(40px, -40px, 0) scale(1.15); }
+  }
+
+  /* Fine Isometric Media Grid Lines */
+  .csp-adv-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+    background-size: 52px 52px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 80%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 80%);
+  }
+
+  /* Concentric Broadcasting Reach Pulse Rings */
+  .csp-adv-broadcast-rings {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    pointer-events: none;
+  }
+
+  .csp-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px dashed rgba(0, 174, 254, 0.18);
+  }
+
+  .csp-ring-1 {
+    width: 240px;
+    height: 240px;
+    animation: cspRingRotate 60s linear infinite;
+  }
+
+  .csp-ring-2 {
+    width: 440px;
+    height: 440px;
+    border-style: solid;
+    border-color: rgba(183, 31, 113, 0.12);
+    animation: cspRingPulse 8s ease-in-out infinite alternate;
+  }
+
+  .csp-ring-3 {
+    width: 640px;
+    height: 640px;
+    border-style: dashed;
+    border-color: rgba(0, 174, 254, 0.08);
+    animation: cspRingRotate 90s linear infinite reverse;
+  }
+
+  @keyframes cspRingRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @keyframes cspRingPulse {
+    0% { transform: translate(-50%, -50%) scale(0.97); opacity: 0.6; }
+    100% { transform: translate(-50%, -50%) scale(1.03); opacity: 1; }
+  }
+
+  @media (max-width: 767px) {
+    .csp-adv-broadcast-rings {
+      top: 140px !important;
+      width: 280px !important;
+      height: 280px !important;
+      display: block !important;
+      opacity: 0.6 !important;
+    }
+  }
+
+  /* Dual Color Header Gradient Accent */
+  .eael-dual-header .eael-dch-title-gradient,
+  .elementor-repeater-item-83c38c3,
+  .elementor-repeater-item-52db60f {
+    font-family: 'Merienda', cursive, sans-serif !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    background-image: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    display: inline-block !important;
+  }
+
+  /* -------------------------------------------------------------
      Global Warm Subtext Design System
      ------------------------------------------------------------- */
   .subtext,
@@ -1921,6 +2148,20 @@ e-page-transition,
 
 				<div data-elementor-type="wp-page" data-elementor-id="977" class="elementor elementor-977">
 				<div class="elementor-element elementor-element-598a9a85 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="598a9a85" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+					<!-- CSP_ADVERT_ANIMATED_BG_START -->
+					<div class="csp-advert-animated-bg" aria-hidden="true">
+						<div class="csp-adv-glow-mesh"></div>
+						<div class="csp-adv-orb csp-adv-orb-cyan"></div>
+						<div class="csp-adv-orb csp-adv-orb-magenta"></div>
+						<div class="csp-adv-orb csp-adv-orb-gold"></div>
+						<div class="csp-adv-grid-lines"></div>
+						<div class="csp-adv-broadcast-rings">
+							<div class="csp-ring csp-ring-1"></div>
+							<div class="csp-ring csp-ring-2"></div>
+							<div class="csp-ring csp-ring-3"></div>
+						</div>
+					</div>
+					<!-- CSP_ADVERT_ANIMATED_BG_END -->
 					<div class="e-con-inner">
 				<div class="elementor-element elementor-element-482bd48b elementor-widget elementor-widget-spacer" data-id="482bd48b" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
 				<div class="elementor-widget-container">

@@ -1025,18 +1025,23 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     fill: #0f172a !important;
   }
 
-  /* Mobile logo size constraints */
-  .elementor-element-2d4f26f,
-  .elementor-element-2d4f26f .elementor-widget-container,
-  .elementor-element-2d4f26f a,
-  .elementor-element-2d4f26f img,
-  .elementor-1969 .elementor-element-2d4f26f img {
-    height: 48px !important;
-    width: 48px !important;
-    max-height: 48px !important;
-    max-width: 48px !important;
-    object-fit: contain !important;
-    display: block !important;
+  /* Mobile logo size constraints (only on mobile, hidden on desktop) */
+  @media (min-width: 768px) {
+    .elementor-element-2d4f26f,
+    .elementor-hidden-desktop {
+      display: none !important;
+    }
+  }
+  @media (max-width: 767px) {
+    .elementor-element-2d4f26f img,
+    .elementor-1969 .elementor-element-2d4f26f img {
+      height: 48px !important;
+      width: 48px !important;
+      max-height: 48px !important;
+      max-width: 48px !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
   }
 
   body:not(.home):not(.forum-page) .elementor-1969 .elementor-menu-toggle,
