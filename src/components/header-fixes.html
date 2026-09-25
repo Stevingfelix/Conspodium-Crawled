@@ -3645,3 +3645,317 @@
   };
 </script>
 <!-- CSP_HEADER_FIXES_END -->
+
+  /* ── Option 4 Light Hero Mosaic with Doodles & Popular Topics ── */
+  .csp-stories-mosaic-hero {
+    position: relative !important;
+    background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%) !important;
+    padding-top: clamp(110px, 13vw, 150px) !important;
+    padding-bottom: 70px !important;
+    overflow: hidden !important;
+  }
+
+  .csp-mosaic-hero-grid {
+    display: grid !important;
+    grid-template-columns: 1.05fr 0.95fr !important;
+    align-items: center !important;
+    gap: 40px !important;
+    width: 100% !important;
+  }
+
+  .csp-mosaic-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: rgba(0, 174, 254, 0.08) !important;
+    border: 1px solid rgba(0, 174, 254, 0.25) !important;
+    color: #0284c7 !important;
+    padding: 6px 16px !important;
+    border-radius: 30px !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    margin-bottom: 16px !important;
+  }
+
+  .csp-mosaic-title {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: clamp(2.4rem, 4.8vw, 4.1rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.025em !important;
+    color: #0F172A !important;
+    margin-bottom: 16px !important;
+  }
+
+  .csp-gradient-world {
+    font-family: 'Merienda', cursive !important;
+    background: linear-gradient(135deg, #00AEFE 0%, #B71F71 70%, #8B5CF6 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    display: inline-block !important;
+  }
+
+  .csp-mosaic-subtext {
+    font-size: 1.12rem !important;
+    line-height: 1.75 !important;
+    color: #475569 !important;
+    margin-bottom: 24px !important;
+    max-width: 540px !important;
+  }
+
+  /* Search Bar */
+  .csp-mosaic-search-bar {
+    display: flex !important;
+    align-items: center !important;
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 50px !important;
+    padding: 4px 6px 4px 16px !important;
+    box-shadow: 0 8px 24px rgba(0, 174, 254, 0.08) !important;
+    max-width: 500px !important;
+    box-sizing: border-box !important;
+    transition: all 0.25s ease !important;
+  }
+
+  .csp-mosaic-search-bar:focus-within {
+    border-color: #00AEFE !important;
+    box-shadow: 0 8px 28px rgba(0, 174, 254, 0.2) !important;
+  }
+
+  .csp-mosaic-search-bar input {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    font-size: 0.9rem !important;
+    color: #1e293b !important;
+    font-family: 'Inter', sans-serif !important;
+    padding: 9px 8px !important;
+  }
+
+  .csp-mosaic-search-bar button {
+    padding: 9px 20px !important;
+    border-radius: 50px !important;
+    border: none !important;
+    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    font-size: 0.82rem !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(0, 174, 254, 0.3) !important;
+    white-space: nowrap !important;
+  }
+
+  /* Popular Topics */
+  .csp-hero-popular-topics {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-top: 14px !important;
+    margin-bottom: 24px !important;
+    font-size: 0.84rem !important;
+  }
+
+  .csp-popular-label {
+    color: #64748b !important;
+    font-weight: 600 !important;
+    margin-right: 4px !important;
+  }
+
+  .csp-topic-pill {
+    background: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #334155 !important;
+    padding: 4px 12px !important;
+    border-radius: 20px !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .csp-topic-pill:hover {
+    background: rgba(0, 174, 254, 0.1) !important;
+    border-color: #00AEFE !important;
+    color: #0284c7 !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Mosaic Gallery with Doodles */
+  .csp-mosaic-gallery-wrap {
+    position: relative !important;
+    height: 480px !important;
+    width: 100% !important;
+  }
+
+  .csp-doodle-bg-svg {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+  }
+
+  .csp-mosaic-card {
+    position: absolute !important;
+    border-radius: 22px !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    cursor: pointer !important;
+  }
+
+  .csp-mosaic-img-inner {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12) !important;
+    z-index: 3 !important;
+  }
+
+  .csp-mosaic-img-inner img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* Doodle Outlines */
+  .csp-doodle-outline {
+    position: absolute !important;
+    inset: -6px !important;
+    border-radius: 26px !important;
+    border: 2.5px dashed !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+  }
+
+  .csp-doodle-cyan {
+    border-color: #00AEFE !important;
+    transform: rotate(2deg) !important;
+  }
+
+  .csp-doodle-magenta {
+    border-color: #B71F71 !important;
+    transform: rotate(-2.5deg) !important;
+  }
+
+  .csp-doodle-indigo {
+    border-color: #8B5CF6 !important;
+    transform: rotate(1.8deg) !important;
+  }
+
+  /* Doodle Badges */
+  .csp-card-doodle-badge {
+    position: absolute !important;
+    bottom: 12px !important;
+    left: 12px !important;
+    right: 12px !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(12px) !important;
+    padding: 8px 12px !important;
+    border-radius: 14px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+
+  .csp-badge-cyan span { color: #0284c7 !important; }
+  .csp-badge-magenta span { color: #be185d !important; }
+  .csp-badge-indigo span { color: #6d28d9 !important; }
+
+  /* Positioning the 3 Cards */
+  .csp-mosaic-card-1 {
+    width: 250px !important;
+    height: 310px !important;
+    top: 15px !important;
+    left: 20px !important;
+    z-index: 4 !important;
+    transform: rotate(-3deg) !important;
+  }
+
+  .csp-mosaic-card-2 {
+    width: 230px !important;
+    height: 270px !important;
+    top: 75px !important;
+    right: 20px !important;
+    z-index: 3 !important;
+    transform: rotate(4deg) !important;
+  }
+
+  .csp-mosaic-card-3 {
+    width: 240px !important;
+    height: 200px !important;
+    bottom: 15px !important;
+    left: 130px !important;
+    z-index: 5 !important;
+    transform: rotate(-1.5deg) !important;
+  }
+
+  .csp-mosaic-card:hover {
+    transform: scale(1.06) rotate(0deg) !important;
+    z-index: 10 !important;
+  }
+
+  .csp-mosaic-card:hover .csp-mosaic-img-inner {
+    box-shadow: 0 24px 50px rgba(0, 174, 254, 0.25) !important;
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 992px) {
+    .csp-mosaic-hero-grid {
+      grid-template-columns: 1fr !important;
+      text-align: center !important;
+    }
+
+    .csp-mosaic-subtext {
+      margin: 0 auto 20px auto !important;
+    }
+
+    .csp-mosaic-search-bar {
+      margin: 0 auto !important;
+    }
+
+    .csp-hero-popular-topics {
+      justify-content: center !important;
+    }
+
+    .csp-mosaic-cta-wrap {
+      display: flex !important;
+      justify-content: center !important;
+      margin-bottom: 25px !important;
+    }
+
+    .csp-mosaic-gallery-wrap {
+      height: 380px !important;
+      max-width: 440px !important;
+      margin: 0 auto !important;
+    }
+
+    .csp-mosaic-card-1 {
+      width: 170px !important;
+      height: 220px !important;
+      left: 10px !important;
+      top: 10px !important;
+    }
+
+    .csp-mosaic-card-2 {
+      width: 160px !important;
+      height: 200px !important;
+      right: 10px !important;
+      top: 50px !important;
+    }
+
+    .csp-mosaic-card-3 {
+      width: 180px !important;
+      height: 160px !important;
+      left: 70px !important;
+      bottom: 10px !important;
+    }
+  }
