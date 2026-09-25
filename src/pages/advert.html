@@ -1766,26 +1766,73 @@ e-page-transition,
   }
 
   /* -------------------------------------------------------------
-     Global Warm Subtext Design System
+     Global Warm Feel & Sleek Typography System (Matching Sponsorship Page)
      ------------------------------------------------------------- */
   .subtext,
   .subtext p,
   .eael-dual-header .subtext,
   .eael-dual-header .subtext p,
+  .csp-bottom-subheadline,
   .elementskit-infobox .box-body p,
   .elementskit-infobox p,
   .funfact-title,
   .elementor-icon-list-text,
   .elementor-widget-container p {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    color: #64748B !important;
+    color: #475569 !important; /* Soft warm slate grey */
     font-weight: 400 !important;
-    line-height: 1.65 !important;
+    font-size: 1.05rem !important;
+    line-height: 1.7 !important;
     letter-spacing: -0.01em !important;
   }
 
+  .eael-dual-header .subtext,
+  .eael-dual-header .subtext p {
+    font-size: 1.08rem !important;
+    line-height: 1.7 !important;
+    color: #475569 !important;
+    max-width: 720px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Dual Color Header Title & Gradient Accent (Matching Sponsorship) */
+  .eael-dual-header .eael-dch-title {
+    font-family: 'Merriweather', serif !important;
+    font-size: 2.8rem !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+    color: #0F172A !important;
+    letter-spacing: -0.5px !important;
+  }
+  .eael-dual-header .eael-dch-title-gradient,
+  .elementor-repeater-item-83c38c3 {
+    background-image: linear-gradient(135deg, #00AEFE 0%, #A2007D 50%, #B71F71 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    display: inline-block !important;
+  }
+
+  /* Section Prefix Titles (FOR ADVERTISERS, STAY CONNECTED WITH US, etc.) */
+  .sticky-heading-prefixstyle .elementor-heading-title,
+  .elementor-element-72f524fa .elementor-heading-title,
+  .elementor-element-265fc70c .elementor-heading-title,
+  .elementor-element-54d59a54 .elementor-heading-title {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    color: #00AEFE !important;
+    display: inline-block !important;
+    margin-bottom: 12px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
   /* -------------------------------------------------------------
-     Sleek Schedule CTA Button
+     Sleek Schedule CTA Buttons (Matching Sponsorship Primary CTA)
      ------------------------------------------------------------- */
   .csp-sleek-schedule-btn,
   .elementor-element-e1cd348 .elementskit-btn,
@@ -1793,51 +1840,50 @@ e-page-transition,
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 8px !important;
-    padding: 13px 36px !important;
+    gap: 10px !important;
+    padding: 16px 36px !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    font-size: 0.95rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.02em !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.01em !important;
     color: #ffffff !important;
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    background: linear-gradient(135deg, #00AEFE 0%, #B71F71 100%) !important;
     border: none !important;
     border-radius: 50px !important;
-    box-shadow: 0 6px 20px -2px rgba(0, 174, 254, 0.4), 0 3px 10px rgba(183, 31, 113, 0.22) !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 10px 25px rgba(0, 174, 254, 0.3) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     text-decoration: none !important;
   }
   .csp-sleek-schedule-btn:hover,
   .elementor-element-e1cd348 .elementskit-btn:hover,
   .elementor-element-680bd459 .elementskit-btn:hover {
-    transform: translateY(-2px) scale(1.02) !important;
-    box-shadow: 0 10px 28px -2px rgba(0, 174, 254, 0.5), 0 5px 14px rgba(183, 31, 113, 0.3) !important;
-    background: linear-gradient(110deg, #B71F71 0%, #00AEFE 100%) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 15px 35px rgba(183, 31, 113, 0.4) !important;
+    background: linear-gradient(135deg, #00AEFE 0%, #B71F71 100%) !important;
     color: #ffffff !important;
   }
   .csp-sleek-schedule-btn i,
   .elementor-element-e1cd348 .elementskit-btn i,
   .elementor-element-680bd459 .elementskit-btn i {
-    font-size: 0.95rem !important;
+    font-size: 1rem !important;
     margin: 0 !important;
     transform: none !important;
   }
 
   /* -------------------------------------------------------------
      0. Why Conspodium Works (Verified Audience Cards):
-     NO Outer Container Outline, Expanded Sleek Cards with Single Clean Outline
+     Sleek Glassmorphic Luxury Cards with Single Clean Outline
      ------------------------------------------------------------- */
   .elementor-element-702ac813 .elementor-heading-title {
-    font-family: 'Cardo', serif !important;
-    font-size: 2.2rem !important;
+    font-family: 'Merriweather', serif !important;
+    font-size: 2.3rem !important;
     font-weight: 700 !important;
     color: #0F172A !important;
     text-align: center !important;
     margin-top: 55px !important;
-    margin-bottom: 14px !important; /* Closer to cards */
+    margin-bottom: 14px !important;
   }
 
-  /* Hide intermediate spacer to keep headline close to cards (Request 4) */
   .elementor-element-1f95249f {
     display: none !important;
     height: 0 !important;
@@ -1877,7 +1923,7 @@ e-page-transition,
   }
 
   .elementor-element-d099459 > .e-con-inner > .elementor-element {
-    flex: 1 1 340px !important; /* expanded wide cards */
+    flex: 1 1 340px !important;
     max-width: calc(33.333% - 20px) !important;
     width: auto !important;
     background: transparent !important;
@@ -1897,17 +1943,17 @@ e-page-transition,
     height: 100% !important;
   }
 
-  /* Single clean luxury card outline - expanded & sleek */
+  /* Sleek luxury card - matching sponsorship cards */
   .elementor-element-d099459 .elementskit-infobox {
     background: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 24px !important;
-    padding: 44px 32px 40px !important;
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
+    border-radius: 20px !important;
+    padding: 40px 30px !important;
     height: 100% !important;
     min-height: auto !important;
     max-height: none !important;
-    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -1916,8 +1962,8 @@ e-page-transition,
 
   .elementor-element-d099459 .elementskit-infobox:hover {
     transform: translateY(-6px) !important;
-    border-color: #00AEFE !important;
-    box-shadow: 0 16px 36px -8px rgba(0, 174, 254, 0.18) !important;
+    border-color: rgba(0, 174, 254, 0.45) !important;
+    box-shadow: 0 20px 40px rgba(0, 174, 254, 0.12) !important;
   }
 
   .elementor-element-d099459 .elementskit-box-header {
@@ -1925,32 +1971,38 @@ e-page-transition,
   }
 
   .elementor-element-d099459 .elementskit-info-box-icon {
-    width: 54px !important;
-    height: 54px !important;
-    min-width: 54px !important;
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
     border-radius: 14px !important;
-    background: #EFF6FF !important;
-    border: 1px solid #BAE6FD !important;
-    color: #0EA5E9 !important;
+    background: linear-gradient(135deg, rgba(0, 174, 254, 0.08) 0%, rgba(183, 31, 113, 0.08) 100%) !important;
+    border: 1px solid rgba(0, 174, 254, 0.15) !important;
+    color: #00AEFE !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     margin-bottom: 0 !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .elementor-element-d099459 .elementskit-infobox:hover .elementskit-info-box-icon {
+    background: linear-gradient(135deg, #00AEFE 0%, #B71F71 100%) !important;
+    color: #FFFFFF !important;
+    border-color: transparent !important;
   }
 
   .elementor-element-d099459 .elementskit-info-box-icon svg {
     width: 25px !important;
     height: 25px !important;
-    color: #0EA5E9 !important;
-    stroke: #0EA5E9 !important;
+    color: currentColor !important;
+    stroke: currentColor !important;
     fill: none !important;
     display: block !important;
   }
 
-  /* Verified Audience Headline: Space before it so it's not close to icon */
   .elementor-element-d099459 .elementskit-info-box-title {
-    font-family: 'Cardo', serif !important;
-    font-size: 1.42rem !important;
+    font-family: 'Merriweather', serif !important;
+    font-size: 1.35rem !important;
     font-weight: 700 !important;
     color: #0F172A !important;
     margin-top: 20px !important;
@@ -1959,45 +2011,17 @@ e-page-transition,
 
   .elementor-element-d099459 .box-body p {
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.94rem !important;
+    font-size: 1rem !important;
     font-weight: 400 !important;
-    color: #64748B !important;
+    color: #475569 !important;
     line-height: 1.68 !important;
     letter-spacing: -0.01em !important;
     margin: 0 !important;
   }
 
-  @media (max-width: 767px) {
-    .elementor-element-702ac813 .elementor-heading-title {
-      margin-top: 40px !important;
-      margin-bottom: 12px !important;
-      font-size: 1.75rem !important;
-    }
-    .elementor-element-d099459 {
-      margin: 0 auto 15px auto !important;
-      padding: 0 16px !important;
-    }
-    .elementor-element-d099459 > .e-con-inner {
-      flex-direction: column !important;
-      align-items: stretch !important;
-      gap: 16px !important;
-    }
-    .elementor-element-d099459 > .e-con-inner > .elementor-element {
-      width: 100% !important;
-      max-width: 100% !important;
-      flex: 0 0 auto !important;
-    }
-    .elementor-element-d099459 .elementskit-infobox {
-      height: auto !important;
-      padding: 32px 24px 28px !important;
-      border-radius: 20px !important;
-    }
-  }
-
   /* -------------------------------------------------------------
-     Section Separation & Spacing (Requests 4, 5, 6)
+     1. Measurable Reach Section (Stat Counters Overhaul)
      ------------------------------------------------------------- */
-  /* Hide spacer between Verified Audience and Measurable Reach (Request 5) */
   .elementor-element-5ccdd5e1 {
     display: none !important;
     height: 0 !important;
@@ -2005,186 +2029,21 @@ e-page-transition,
     padding: 0 !important;
   }
 
-  /* Measurable Reach section */
-  .elementor-element-73830d1b {
-    margin-top: 30px !important;
-    margin-bottom: 30px !important;
-  }
-  .elementor-element-54d59a54 .elementor-heading-title {
-    font-family: 'Cardo', serif !important;
-    font-size: 2.1rem !important;
-    font-weight: 700 !important;
-    color: #0F172A !important;
-    text-align: center !important;
-    margin-bottom: 24px !important;
-  }
-
-  @media (max-width: 767px) {
-    .elementor-element-73830d1b {
-      margin-top: 10px !important;
-      margin-bottom: 20px !important;
-      padding: 10px 0 !important;
-    }
-    .elementor-element-54d59a54 .elementor-heading-title {
-      margin-bottom: 16px !important;
-      font-size: 1.75rem !important;
-    }
-  }
-
-  /* Active community headline sleek gray lowercase soft font (Request 3) */
-  .elementor-element-3fa694ac {
-    margin-top: 20px !important;
-    margin-bottom: 25px !important;
-    text-align: center !important;
-  }
-  .elementor-element-3fa694ac .elementor-heading-title {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    font-size: 0.95rem !important;
-    font-weight: 400 !important;
-    line-height: 1.6 !important;
-    letter-spacing: -0.01em !important;
-    color: #64748B !important;
-    text-align: center !important;
-    max-width: 680px !important;
-    margin: 0 auto !important;
-    text-transform: lowercase !important;
-  }
-
-  /* Who Advertises With Us section spacing */
-  .elementor-element-812547d {
-    margin-top: 60px !important;
-    margin-bottom: 40px !important;
-  }
-  .elementor-element-dbba7ca {
-    margin-bottom: 30px !important;
-  }
-
-  /* Partnership Opportunities: sleek stroked flat SVG icons (Request 2) */
-  .elementor-element-6283bb91 .elementskit-info-box-icon svg,
-  .elementor-element-6283bb91 .csp-flat-svg {
-    width: 38px !important;
-    height: 38px !important;
-    display: inline-block !important;
-    fill: none !important;
-    stroke: #00AEFE !important;
-    stroke-width: 1.8 !important;
-    vertical-align: middle !important;
-  }
-  .elementor-element-6283bb91 .elementskit-info-box-icon {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  /* Advertising Options section spacing & button alignment (Request 6) */
-  @media (max-width: 767px) {
-    .elementor-element-d802c16 {
-      margin-top: 55px !important;
-      margin-bottom: 25px !important;
-    }
-  }
-
-  .elementor-element-b75da38 .ekit-btn-wraper,
-  .elementor-element-3b186358 .ekit-btn-wraper,
-  .elementor-element-b75da38,
-  .elementor-element-3b186358 {
-    display: flex !important;
-    justify-content: center !important;
-    text-align: center !important;
-    width: 100% !important;
-    margin-top: 15px !important;
-  }
-  .elementor-element-b75da38 .elementskit-btn,
-  .elementor-element-3b186358 .elementskit-btn {
-    margin: 0 auto !important;
-    display: inline-flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    max-width: 300px !important;
-  }
-
-  /* Partner Testimonial section spacing */
-  .elementor-element-4d330d3 {
-    margin-top: 60px !important;
-    margin-bottom: 40px !important;
-  }
-
-  /* Bottom Get Started / Schedule section spacing */
-  .elementor-element-689c7760 {
-    margin-top: 60px !important;
-    margin-bottom: 15px !important;
-  }
-  .elementor-element-680bd459 {
-    margin-top: 10px !important;
-    margin-bottom: 35px !important;
-  }
-
-  /* Stay Connected / Form section spacing */
-  .elementor-element-2fe749f4 {
-    margin-top: 60px !important;
-    padding-top: 75px !important;
-  }
-
-  @media (max-width: 767px) {
-    .elementor-element-d099459 {
-      margin: 0 auto 40px auto !important;
-      padding: 0 16px !important;
-    }
-    .elementor-element-d099459 > .e-con-inner {
-      flex-direction: column !important;
-      align-items: center !important;
-      gap: 20px !important;
-      height: auto !important;
-    }
-    .elementor-element-d099459 > .e-con-inner > .elementor-element {
-      width: 100% !important;
-      max-width: 100% !important;
-      flex: 0 0 auto !important;
-      height: auto !important;
-    }
-    .elementor-element-d099459 .ekit-wid-con,
-    .elementor-element-d099459 .elementskit-infobox {
-      height: auto !important;
-      min-height: auto !important;
-      padding: 30px 22px 28px !important;
-    }
-  }
-
-  /* -------------------------------------------------------------
-     1. Measurable Reach Section (Stat Counters Light Luxury Overhaul)
-     ------------------------------------------------------------- */
   .elementor-element-73830d1b {
     background: transparent !important;
     border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    padding: 40px 0 !important;
-    margin: 20px 0 !important;
+    padding: 20px 0 !important;
+    margin: 20px 0 30px 0 !important;
     display: block !important;
     width: 100% !important;
   }
 
   .elementor-element-54d59a54 {
     text-align: center !important;
-    margin-bottom: 32px !important;
+    margin-bottom: 24px !important;
     width: 100% !important;
-  }
-
-  /* Remove container outline / box around MEASURABLE REACH heading */
-  .elementor-element-54d59a54 .elementor-heading-title {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.85rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
-    color: #0EA5E9 !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    display: block !important;
-    text-align: center !important;
-    margin: 0 auto !important;
-    box-shadow: none !important;
   }
 
   .elementor-element-8f64007 {
@@ -2212,76 +2071,66 @@ e-page-transition,
 
   .elementor-element-8f64007 .elementskit-funfact {
     background: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
     border-radius: 20px !important;
     padding: 36px 24px !important;
-    box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05) !important;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
     text-align: center !important;
     height: 100% !important;
   }
 
   .elementor-element-8f64007 .elementskit-funfact:hover {
     transform: translateY(-5px) !important;
-    border-color: #0EA5E9 !important;
-    box-shadow: 0 20px 40px -12px rgba(14, 165, 233, 0.18) !important;
+    border-color: rgba(0, 174, 254, 0.45) !important;
+    box-shadow: 0 20px 40px rgba(0, 174, 254, 0.12) !important;
   }
 
   .elementor-element-8f64007 .number-percentage-wraper {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 2.8rem !important;
+    font-family: 'Merriweather', serif !important;
+    font-size: 2.6rem !important;
     font-weight: 800 !important;
-    color: #0F172A !important;
+    color: #00AEFE !important;
     letter-spacing: -0.03em !important;
     margin-bottom: 8px !important;
   }
 
   .elementor-element-8f64007 .funfact-title {
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.95rem !important;
+    font-size: 1rem !important;
     font-weight: 500 !important;
-    color: #64748B !important;
+    color: #475569 !important;
     margin: 0 !important;
   }
 
   .elementor-element-3fa694ac {
+    margin-top: 20px !important;
+    margin-bottom: 25px !important;
     text-align: center !important;
-    width: 100% !important;
   }
-
-  /* Community Subtext - Warm Grey, Slightly Larger, Natural Case */
   .elementor-element-3fa694ac .elementor-heading-title {
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     font-size: 1.05rem !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.01em !important;
-    text-transform: none !important;
+    font-weight: 400 !important;
+    line-height: 1.65 !important;
+    letter-spacing: -0.01em !important;
     color: #64748B !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    display: block !important;
     text-align: center !important;
-    margin-top: 32px !important;
-    margin-bottom: 20px !important;
-    box-shadow: none !important;
+    max-width: 680px !important;
+    margin: 0 auto !important;
+    text-transform: lowercase !important;
   }
 
   /* -------------------------------------------------------------
-     2. Who Advertises With Us Section Overhaul
+     2. Who Advertises With Us Section
      ------------------------------------------------------------- */
   .elementor-element-812547d {
     background: #FFFFFF !important;
-    padding: 70px 5% !important;
+    padding: 60px 5% 40px !important;
   }
 
   .elementor-element-dbba7ca .title.eael-dch-title {
-    font-family: 'Cardo', serif !important;
-    font-size: 2.2rem !important;
-    font-weight: 700 !important;
-    color: #0F172A !important;
-    text-align: center !important;
-    margin-bottom: 40px !important;
+    margin-bottom: 30px !important;
   }
 
   .elementor-element-2ef9f0da {
@@ -2303,20 +2152,20 @@ e-page-transition,
 
   .elementor-element-2ef9f0da .elementskit-infobox {
     background: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
     border-radius: 20px !important;
-    padding: 28px 22px !important;
+    padding: 30px 24px !important;
     height: 100% !important;
-    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
     display: flex !important;
     flex-direction: column !important;
   }
 
   .elementor-element-2ef9f0da .elementskit-infobox:hover {
     transform: translateY(-5px) !important;
-    border-color: #0EA5E9 !important;
-    box-shadow: 0 16px 35px -10px rgba(14, 165, 233, 0.18) !important;
+    border-color: rgba(0, 174, 254, 0.45) !important;
+    box-shadow: 0 20px 40px rgba(0, 174, 254, 0.12) !important;
   }
 
   .elementor-element-2ef9f0da .elementskit-info-box-icon {
@@ -2324,9 +2173,9 @@ e-page-transition,
     height: 48px !important;
     min-width: 48px !important;
     border-radius: 14px !important;
-    background: #EFF6FF !important;
-    border: 1px solid #BAE6FD !important;
-    color: #0EA5E9 !important;
+    background: linear-gradient(135deg, rgba(0, 174, 254, 0.08) 0%, rgba(183, 31, 113, 0.08) 100%) !important;
+    border: 1px solid rgba(0, 174, 254, 0.15) !important;
+    color: #00AEFE !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2335,12 +2184,12 @@ e-page-transition,
 
   .elementor-element-2ef9f0da .elementskit-info-box-icon i {
     font-size: 20px !important;
-    color: #0EA5E9 !important;
+    color: #00AEFE !important;
   }
 
   .elementor-element-2ef9f0da .elementskit-info-box-title {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 1.1rem !important;
+    font-family: 'Merriweather', serif !important;
+    font-size: 1.15rem !important;
     font-weight: 700 !important;
     color: #0F172A !important;
     margin-bottom: 8px !important;
@@ -2348,29 +2197,24 @@ e-page-transition,
 
   .elementor-element-2ef9f0da .box-body p {
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.88rem !important;
+    font-size: 0.95rem !important;
     color: #475569 !important;
-    line-height: 1.55 !important;
+    line-height: 1.6 !important;
     margin: 0 !important;
   }
 
   /* -------------------------------------------------------------
-     3. Advertising Options (Print & Digital Placement Cards Overhaul)
+     3. Advertising Options (Print & Digital Placement Cards)
      ------------------------------------------------------------- */
   .elementor-element-d802c16 .title.eael-dch-title {
-    font-family: 'Cardo', serif !important;
-    font-size: 2.2rem !important;
-    font-weight: 700 !important;
-    color: #0F172A !important;
-    text-align: center !important;
-    margin-top: 60px !important;
-    margin-bottom: 40px !important;
+    margin-top: 50px !important;
+    margin-bottom: 30px !important;
   }
 
   .elementor-element-e54f59f {
     max-width: 1240px !important;
     width: 100% !important;
-    margin: 0 auto 80px auto !important;
+    margin: 0 auto 60px auto !important;
   }
 
   .elementor-element-e54f59f > .e-con-inner {
@@ -2389,11 +2233,11 @@ e-page-transition,
     flex: 1 1 450px !important;
     max-width: 100% !important;
     background: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 24px !important;
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
+    border-radius: 20px !important;
     padding: 32px !important;
-    box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05) !important;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
     display: flex !important;
     flex-direction: column !important;
   }
@@ -2401,15 +2245,15 @@ e-page-transition,
   .elementor-element-9c0f372:hover,
   .elementor-element-243a65ca:hover {
     transform: translateY(-6px) !important;
-    border-color: #0EA5E9 !important;
-    box-shadow: 0 20px 45px -15px rgba(14, 165, 233, 0.22) !important;
+    border-color: rgba(0, 174, 254, 0.45) !important;
+    box-shadow: 0 20px 40px rgba(0, 174, 254, 0.12) !important;
   }
 
   /* Card Showcase Image Banner */
   .advert-card-media {
     width: 100% !important;
-    height: 220px !important;
-    min-height: 220px !important;
+    height: 240px !important;
+    min-height: 240px !important;
     border-radius: 16px !important;
     overflow: hidden !important;
     margin-bottom: 24px !important;
@@ -2428,7 +2272,7 @@ e-page-transition,
 
   .elementor-element-9c0f372:hover .advert-card-media img,
   .elementor-element-243a65ca:hover .advert-card-media img {
-    transform: scale(1.05) !important;
+    transform: scale(1.04) !important;
   }
 
   .elementor-element-46f7ba70 .elementskit-info-box-icon,
@@ -2441,21 +2285,20 @@ e-page-transition,
     min-width: 52px !important;
     min-height: 52px !important;
     border-radius: 14px !important;
-    background: #EFF6FF !important;
-    border: 1px solid #BAE6FD !important;
+    background: linear-gradient(135deg, rgba(0, 174, 254, 0.08) 0%, rgba(183, 31, 113, 0.08) 100%) !important;
+    border: 1px solid rgba(0, 174, 254, 0.15) !important;
     margin-bottom: 16px !important;
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.12) !important;
   }
 
   .elementor-element-46f7ba70 .elementskit-info-box-icon i,
   .elementor-element-455d4f47 .elementskit-info-box-icon i {
     font-size: 24px !important;
-    color: #0EA5E9 !important;
+    color: #00AEFE !important;
   }
 
   .elementor-element-46f7ba70 .elementskit-info-box-title,
   .elementor-element-455d4f47 .elementskit-info-box-title {
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Merriweather', serif !important;
     font-size: 1.35rem !important;
     font-weight: 700 !important;
     color: #0F172A !important;
@@ -2485,16 +2328,16 @@ e-page-transition,
 
   .elementor-element-68a08653 .elementor-icon-list-icon i,
   .elementor-element-6db6bf24 .elementor-icon-list-icon i {
-    color: #0EA5E9 !important;
+    color: #00AEFE !important;
     font-size: 16px !important;
   }
 
   .elementor-element-68a08653 .elementor-icon-list-text,
   .elementor-element-6db6bf24 .elementor-icon-list-text {
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.92rem !important;
-    color: #334155 !important;
-    line-height: 1.45 !important;
+    font-size: 1rem !important;
+    color: #475569 !important;
+    line-height: 1.5 !important;
   }
 
   .elementor-element-b75da38 .elementskit-btn,
@@ -2504,24 +2347,171 @@ e-page-transition,
     justify-content: center !important;
     gap: 10px !important;
     width: 100% !important;
-    padding: 14px 24px !important;
-    background: linear-gradient(135deg, #0EA5E9 0%, #2563EB 100%) !important;
+    padding: 15px 32px !important;
+    background: linear-gradient(135deg, #00AEFE 0%, #B71F71 100%) !important;
     color: #FFFFFF !important;
     font-family: 'Inter', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 0.95rem !important;
-    border-radius: 12px !important;
-    transition: all 0.25s ease !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    border-radius: 50px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     text-decoration: none !important;
-    box-shadow: 0 8px 20px -5px rgba(14, 165, 233, 0.3) !important;
+    box-shadow: 0 10px 25px rgba(0, 174, 254, 0.3) !important;
     margin-top: auto !important;
   }
 
   .elementor-element-b75da38 .elementskit-btn:hover,
   .elementor-element-3b186358 .elementskit-btn:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 12px 25px -5px rgba(14, 165, 233, 0.45) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 15px 35px rgba(183, 31, 113, 0.4) !important;
     color: #FFFFFF !important;
+  }
+
+  /* -------------------------------------------------------------
+     4. Partnership Opportunities Section
+     ------------------------------------------------------------- */
+  .elementor-element-6283bb91 .elementskit-info-box-icon svg,
+  .elementor-element-6283bb91 .csp-flat-svg {
+    width: 38px !important;
+    height: 38px !important;
+    display: inline-block !important;
+    fill: none !important;
+    stroke: #00AEFE !important;
+    stroke-width: 1.8 !important;
+    vertical-align: middle !important;
+  }
+  .elementor-element-6283bb91 .elementskit-info-box-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .elementor-element-6283bb91 .elementskit-info-box-title {
+    font-family: 'Merriweather', serif !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+  }
+  .elementor-element-6283bb91 .box-body p {
+    font-size: 1rem !important;
+    color: #475569 !important;
+  }
+
+  /* -------------------------------------------------------------
+     5. Bottom Consultation Showcase Image (Full Size like Hero)
+     ------------------------------------------------------------- */
+  .csp-advert-consultation-wrap {
+    max-width: 1100px !important;
+    width: 100% !important;
+    margin: 40px auto 55px auto !important;
+    padding: 0 15px !important;
+    display: block !important;
+  }
+
+  .csp-advert-consultation-wrap .csp-consultation-img-container {
+    position: relative !important;
+    width: 100% !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1) !important;
+    border: 1px solid #E2E8F0 !important;
+    background: #FFFFFF !important;
+  }
+
+  .csp-advert-consultation-wrap img {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 380px !important;
+    max-height: 520px !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* Partner Testimonial & Bottom Schedule Spacing */
+  .elementor-element-4d330d3 {
+    margin-top: 50px !important;
+    margin-bottom: 35px !important;
+  }
+  .elementor-element-689c7760 {
+    margin-top: 50px !important;
+    margin-bottom: 12px !important;
+  }
+  .elementor-element-680bd459 {
+    margin-top: 10px !important;
+    margin-bottom: 30px !important;
+  }
+  .elementor-element-2fe749f4 {
+    margin-top: 50px !important;
+    padding-top: 70px !important;
+  }
+
+  /* -------------------------------------------------------------
+     6. Mobile Responsive Typography & Polish (@media max-width: 767px)
+     ------------------------------------------------------------- */
+  @media (max-width: 767px) {
+    .eael-dual-header .eael-dch-title {
+      font-size: 2.1rem !important;
+      line-height: 1.25 !important;
+    }
+    .subtext,
+    .subtext p,
+    .eael-dual-header .subtext,
+    .eael-dual-header .subtext p,
+    .csp-bottom-subheadline,
+    .elementskit-infobox .box-body p,
+    .elementskit-infobox p,
+    .elementor-icon-list-text {
+      font-size: 1.02rem !important;
+      line-height: 1.65 !important;
+      color: #475569 !important;
+    }
+    .elementor-element-702ac813 .elementor-heading-title {
+      margin-top: 35px !important;
+      margin-bottom: 12px !important;
+      font-size: 1.85rem !important;
+    }
+    .elementor-element-d099459 {
+      margin: 0 auto 15px auto !important;
+      padding: 0 14px !important;
+    }
+    .elementor-element-d099459 > .e-con-inner {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 16px !important;
+    }
+    .elementor-element-d099459 > .e-con-inner > .elementor-element {
+      width: 100% !important;
+      max-width: 100% !important;
+      flex: 0 0 auto !important;
+    }
+    .elementor-element-d099459 .elementskit-infobox {
+      height: auto !important;
+      padding: 32px 24px 28px !important;
+      border-radius: 20px !important;
+    }
+    .elementor-element-73830d1b {
+      margin-top: 10px !important;
+      margin-bottom: 20px !important;
+      padding: 10px 0 !important;
+    }
+    .elementor-element-54d59a54 .elementor-heading-title {
+      margin-bottom: 16px !important;
+      font-size: 1.75rem !important;
+    }
+    .elementor-element-d802c16 {
+      margin-top: 45px !important;
+      margin-bottom: 20px !important;
+    }
+    .csp-advert-consultation-wrap,
+    .elementor-element.e-con-full.e-flex.e-con {
+      padding: 0 12px !important;
+    }
+    .csp-advert-consultation-wrap img,
+    .elementor-element.e-con-full.e-flex.e-con img {
+      min-height: 250px !important;
+      max-height: 380px !important;
+      height: auto !important;
+      width: 100% !important;
+      object-fit: cover !important;
+    }
   }
 </style>
 
@@ -3139,9 +3129,9 @@ e-page-transition,
 					</div>
         </div>				</div>
 				</div>
-				<div class="csp-advert-consultation-wrap" style="max-width: 1080px; width: 100%; margin: 40px auto 65px auto; padding: 0 15px;">
-					<div style="position: relative; width: 100%; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.12); border: 1px solid #E2E8F0; background: #FFFFFF;">
-						<img src="/images/advert-consultation.jpg" alt="Conspodium Consultation & Strategy" style="width: 100%; max-height: 480px; object-fit: cover; display: block;" />
+				<div class="csp-advert-consultation-wrap" style="max-width: 1100px; width: 100%; margin: 35px auto 55px auto; padding: 0 15px;">
+					<div class="csp-consultation-img-container" style="position: relative; width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1); border: 1px solid #E2E8F0; background: #FFFFFF;">
+						<img src="/images/advert-consultation.jpg" alt="Conspodium Consultation & Strategy" style="width: 100%; height: auto; min-height: 380px; max-height: 520px; object-fit: cover; display: block;" />
 						<div class="csp-hero-image-badge" style="bottom: 24px; left: 24px;">
 							<span class="csp-beacon-dot csp-dot-magenta"></span>
 							<span class="csp-beacon-text">Bespoke Diaspora Campaigns</span>
