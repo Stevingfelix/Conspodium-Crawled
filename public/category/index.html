@@ -2189,8 +2189,8 @@
     position: relative;
     background: linear-gradient(135deg, #061022 0%, #0f172a 100%);
     border-radius: 28px;
-    padding: 44px;
-    margin-bottom: 40px;
+    padding: 36px 40px;
+    margin-bottom: 36px;
     border: 1px solid rgba(0, 174, 254, 0.35);
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
@@ -2201,12 +2201,105 @@
   .csp-stories-hero-grid {
     position: relative;
     z-index: 2;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 36px;
+    display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    gap: 36px;
     width: 100%;
     box-sizing: border-box;
+  }
+
+  .csp-hero-spotlight-content {
+    flex: 1 1 58%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  .csp-hero-spotlight-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 14px !important;
+    border-radius: 50px !important;
+    background: rgba(0, 174, 254, 0.15) !important;
+    border: 1px solid rgba(0, 174, 254, 0.4) !important;
+    color: #00AEFE !important;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    margin-bottom: 14px !important;
+    width: auto !important;
+    height: auto !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    box-shadow: none !important;
+  }
+
+  .csp-hero-spotlight-title {
+    font-family: 'Merriweather', serif;
+    font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+    color: #ffffff;
+    line-height: 1.25;
+    margin: 0 0 14px;
+  }
+
+  .csp-hero-spotlight-excerpt {
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin: 0 0 20px;
+  }
+
+  .csp-hero-spotlight-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .csp-hero-spotlight-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 26px;
+    border-radius: 50px;
+    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
+    color: #fff;
+    font-family: 'Merriweather', serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(0, 174, 254, 0.4);
+    transition: transform 0.2s ease;
+  }
+
+  .csp-hero-spotlight-meta {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.82rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .csp-hero-spotlight-media {
+    flex: 1 1 42%;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    max-width: 100%;
+    max-height: 280px;
+  }
+
+  .csp-hero-spotlight-media img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 280px !important;
+    object-fit: cover !important;
+    display: block !important;
   }
 
   .csp-stories-post-grid {
@@ -2217,6 +2310,59 @@
     box-sizing: border-box;
   }
 
+  /* Universal Article Card Containment */
+  .eael-grid-post,
+  .eael-post-grid-column {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .eael-grid-post .eael-grid-post-holder,
+  .eael-grid-post .eael-grid-post-holder-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .eael-grid-post .eael-entry-media,
+  .eael-grid-post .eael-entry-thumbnail {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 200px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 20px 20px 0 0 !important;
+  }
+
+  .eael-grid-post .eael-entry-media img,
+  .eael-grid-post .eael-entry-thumbnail img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .eael-grid-post .eael-entry-wrapper {
+    padding: 20px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
   /* ── FULL MOBILE RESPONSIVENESS & ZERO OVERFLOW FIXES ─────────────────── */
   @media (max-width: 992px) {
     .csp-stories-container-inner {
@@ -2224,37 +2370,69 @@
     }
 
     .csp-stories-hero-spotlight {
-      padding: 24px 20px !important;
+      padding: 22px 18px !important;
       border-radius: 20px !important;
       margin-bottom: 24px !important;
     }
 
     .csp-stories-hero-grid {
-      grid-template-columns: 1fr !important;
-      gap: 20px !important;
+      flex-direction: column !important;
+      gap: 18px !important;
+      align-items: stretch !important;
     }
 
-    .csp-stories-hero-grid>div {
-      max-width: 100% !important;
-      overflow: hidden !important;
+    .csp-hero-spotlight-content {
+      width: 100% !important;
+      flex: none !important;
     }
 
-    .csp-stories-hero-grid>div>div:first-child {
+    .csp-hero-spotlight-badge {
       display: inline-flex !important;
       max-width: max-content !important;
       height: auto !important;
       white-space: nowrap !important;
-      font-size: 0.65rem !important;
+      font-size: 0.68rem !important;
+      padding: 5px 12px !important;
+      margin-bottom: 10px !important;
       border-radius: 50px !important;
     }
 
-    .csp-stories-hero-spotlight h1 {
-      font-size: 1.5rem !important;
+    .csp-hero-spotlight-title {
+      font-size: 1.35rem !important;
+      margin-bottom: 10px !important;
       word-wrap: break-word !important;
     }
 
-    .csp-stories-hero-grid img {
-      height: 200px !important;
+    .csp-hero-spotlight-excerpt {
+      font-size: 0.88rem !important;
+      margin-bottom: 16px !important;
+    }
+
+    .csp-hero-spotlight-actions {
+      gap: 12px !important;
+      margin-bottom: 4px !important;
+    }
+
+    .csp-hero-spotlight-cta {
+      width: 100% !important;
+      justify-content: center !important;
+      padding: 12px 20px !important;
+      box-sizing: border-box !important;
+    }
+
+    .csp-hero-spotlight-media {
+      width: 100% !important;
+      flex: none !important;
+      height: 190px !important;
+      max-height: 190px !important;
+      border-radius: 14px !important;
+    }
+
+    .csp-hero-spotlight-media img {
+      width: 100% !important;
+      height: 190px !important;
+      max-height: 190px !important;
+      object-fit: cover !important;
     }
 
     /* ── Fix Home Page Blob Bleeding into Counter on Mobile ── */
