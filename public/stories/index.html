@@ -735,8 +735,12 @@ min-width: 100px;
     
 
   
-  /* Header transparent overlay on hero section */
-  .elementor-1969 {
+  
+  /* ── Full Transparent Header Over Hero ── */
+  .elementor-location-header,
+  .elementor-1969,
+  .elementor-1969 .elementor-section-wrap,
+  .elementor-1969 .elementor-element-2d9e131:not(.is-sticky):not(.header-sticky) {
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
@@ -744,33 +748,39 @@ min-width: 100px;
     z-index: 9999 !important;
     background: transparent !important;
     background-color: transparent !important;
+    box-shadow: none !important;
   }
 
-  .elementor-element-2d9e131:not(.is-sticky):not(.header-sticky) {
+  .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky):not(.header-sticky),
+  .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky):not(.header-sticky) > .elementor-motion-effects-container > .elementor-motion-effects-layer {
     background: transparent !important;
     background-color: transparent !important;
     box-shadow: none !important;
   }
 
-  /* Stories Hero Section - Animated Mesh Gradient Backdrop */
+  /* ── Stories Hero Section - Dynamic Mesh Gradient Backdrop ── */
   .elementor-element-362a422c {
     position: relative !important;
     overflow: hidden !important;
-    padding-top: clamp(120px, 14vw, 160px) !important;
+    background: linear-gradient(180deg, #f0f7ff 0%, #faf5ff 50%, #ffffff 100%) !important;
+    padding-top: clamp(110px, 13vw, 150px) !important;
     padding-bottom: 60px !important;
-    background: #f8fafc !important;
   }
 
   .elementor-element-362a422c .e-con-inner,
   .elementor-element-5591cd2e,
-  .elementor-element-5591cd2e .e-con-inner {
+  .elementor-element-5591cd2e .e-con-inner,
+  .elementor-element-2f73cc35 {
     background: transparent !important;
     background-color: transparent !important;
+    position: relative;
+    z-index: 1;
   }
 
-  .csp-hero-mesh-bg {
+  .csp-hero-mesh-canvas {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
@@ -778,88 +788,75 @@ min-width: 100px;
     z-index: 0;
   }
 
-  .csp-mesh-orb {
+  .csp-mesh-blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(65px);
-    opacity: 0.65;
+    filter: blur(60px);
+    opacity: 0.55;
     will-change: transform;
   }
 
-  .csp-mesh-orb-1 {
+  .csp-blob-cyan {
     width: 480px;
     height: 480px;
-    top: -10%;
-    left: -5%;
-    background: radial-gradient(circle, rgba(0, 174, 254, 0.40) 0%, rgba(0, 174, 254, 0.05) 70%, transparent 100%);
-    animation: cspMeshFloat1 12s ease-in-out infinite alternate;
+    top: -60px;
+    left: -60px;
+    background: radial-gradient(circle, #00AEFE 0%, rgba(0,174,254,0) 70%);
+    animation: cspBlobFloat1 11s ease-in-out infinite alternate;
   }
 
-  .csp-mesh-orb-2 {
-    width: 540px;
-    height: 540px;
-    top: 10%;
-    right: -8%;
-    background: radial-gradient(circle, rgba(183, 31, 113, 0.35) 0%, rgba(183, 31, 113, 0.04) 70%, transparent 100%);
-    animation: cspMeshFloat2 15s ease-in-out infinite alternate;
+  .csp-blob-magenta {
+    width: 520px;
+    height: 520px;
+    top: 40px;
+    right: -100px;
+    background: radial-gradient(circle, #B71F71 0%, rgba(183,31,113,0) 70%);
+    animation: cspBlobFloat2 14s ease-in-out infinite alternate;
   }
 
-  .csp-mesh-orb-3 {
-    width: 400px;
-    height: 400px;
-    bottom: -15%;
-    left: 40%;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.30) 0%, rgba(139, 92, 246, 0.04) 70%, transparent 100%);
-    animation: cspMeshFloat3 10s ease-in-out infinite alternate;
+  .csp-blob-indigo {
+    width: 420px;
+    height: 420px;
+    bottom: -80px;
+    left: 30%;
+    background: radial-gradient(circle, #8B5CF6 0%, rgba(139,92,246,0) 70%);
+    animation: cspBlobFloat3 12s ease-in-out infinite alternate;
   }
 
-  @keyframes cspMeshFloat1 {
+  @keyframes cspBlobFloat1 {
     0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(60px, 50px) scale(1.15); }
+    100% { transform: translate(80px, 60px) scale(1.2); }
   }
 
-  @keyframes cspMeshFloat2 {
+  @keyframes cspBlobFloat2 {
     0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(-70px, 40px) scale(1.18); }
+    100% { transform: translate(-90px, 50px) scale(1.15); }
   }
 
-  @keyframes cspMeshFloat3 {
+  @keyframes cspBlobFloat3 {
     0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(30px, -40px) scale(1.12); }
+    100% { transform: translate(50px, -50px) scale(1.25); }
   }
 
-  .elementor-element-362a422c > *:not(.csp-hero-mesh-bg) {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Desktop Stories Hero Headline - Bigger and Prettier */
+  /* Stories Hero Headline Typography */
   .elementor-element-3076d049 .title,
   .elementor-element-3076d049 .eael-dch-title {
     font-family: 'Playfair Display', 'Merriweather', Georgia, serif !important;
-    font-size: clamp(2.6rem, 5.5vw, 4.4rem) !important;
+    font-size: clamp(2.6rem, 5.2vw, 4.4rem) !important;
     font-weight: 800 !important;
-    line-height: 1.14 !important;
+    line-height: 1.15 !important;
     letter-spacing: -0.03em !important;
     color: #0f172a !important;
     margin-bottom: 16px !important;
   }
 
   .elementor-element-3076d049 .eael-dch-title-gradient {
-    background: linear-gradient(135deg, #00AEFE 0%, #B71F71 65%, #8B5CF6 100%) !important;
+    background: linear-gradient(135deg, #00AEFE 0%, #B71F71 70%, #8B5CF6 100%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     display: inline-block !important;
   }
 
-  .elementor-element-3076d049 .subtext p {
-    font-size: clamp(1.05rem, 1.4vw, 1.25rem) !important;
-    line-height: 1.75 !important;
-    color: #475569 !important;
-    font-weight: 400 !important;
-    letter-spacing: -0.012em !important;
-    max-width: 600px !important;
-  }
 
   /* Floating Animation for ElementsKit Read Latest Stories Button */
   @keyframes cspReadStoriesFloat {
@@ -4213,11 +4210,7 @@ min-width: 100px;
 					<div class="elementor-section-wrap">
 						
 <div class="elementor-element elementor-element-362a422c e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="362a422c" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-  <div class="csp-hero-mesh-bg">
-    <div class="csp-mesh-orb csp-mesh-orb-1"></div>
-    <div class="csp-mesh-orb csp-mesh-orb-2"></div>
-    <div class="csp-mesh-orb csp-mesh-orb-3"></div>
-  </div>
+  <div class="csp-hero-mesh-canvas"><div class="csp-mesh-blob csp-blob-cyan"></div><div class="csp-mesh-blob csp-blob-magenta"></div><div class="csp-mesh-blob csp-blob-indigo"></div></div>
 					<div class="e-con-inner">
 		<div class="elementor-element elementor-element-5591cd2e e-flex e-con-boxed e-con e-child adv-sticky-elementor" data-id="5591cd2e" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
 					<div class="e-con-inner">
@@ -4332,10 +4325,10 @@ min-width: 100px;
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">STORIES &amp; INSIGHTS</h2>				</div>
 				</div>
-				<div class="elementor-element elementor-element-3076d049 eael-dual-header-content-align-left eael-dual-header-content-mobile-align-center eael-dual-header-content-tablet-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="3076d049" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
+				<div class="elementor-element elementor-element-3076d049 eael-dual-header-content-align-left eael-dual-header-content-mobile-align-center eael-dual-header-content-tablet-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="3076d049" data-element_type="widget" data-widget_type="eael-dual-color-header.default">
 				<div class="elementor-widget-container">
 								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4">Voices From Around the </span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">World!</span> </h2>					<span class="subtext"><p>Discover inspiring stories, cultural insights, and success narratives from diaspora communities across six continents.</p></span>
+				<h1 class="title eael-dch-title" style="font-family:'Playfair Display','Merriweather',Georgia,serif !important;font-size:clamp(2.6rem,5.2vw,4.4rem) !important;font-weight:800 !important;line-height:1.15 !important;letter-spacing:-0.03em !important;margin-bottom:16px !important;"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4" style="color:#0f172a !important;">Voices From Around the </span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient" style="background:linear-gradient(135deg,#00AEFE 0%,#B71F71 70%,#8B5CF6 100%) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;display:inline-block !important;">World!</span> </h1>					<span class="subtext"><p style="font-size:clamp(1.05rem,1.4vw,1.25rem) !important;line-height:1.75 !important;color:#475569 !important;font-weight:400 !important;letter-spacing:-0.012em !important;max-width:580px !important;">Discover inspiring stories, cultural insights, and success narratives from diaspora communities across six continents.</p></span>
 							</div>
 
 						</div>
