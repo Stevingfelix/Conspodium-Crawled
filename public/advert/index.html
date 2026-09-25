@@ -1082,6 +1082,170 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     box-shadow: 0 12px 25px -5px rgba(14, 165, 233, 0.45) !important;
     color: #FFFFFF !important;
   }
+
+  /* -------------------------------------------------------------
+     5. Bottom Consultation Showcase Image (Full Size like Hero)
+     ------------------------------------------------------------- */
+  .csp-advert-consultation-wrap {
+    max-width: 1100px !important;
+    width: 100% !important;
+    margin: 15px auto 45px auto !important;
+    padding: 0 15px !important;
+    display: block !important;
+  }
+
+  .csp-advert-consultation-wrap .csp-consultation-img-container {
+    position: relative !important;
+    width: 100% !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1) !important;
+    border: 1px solid #E2E8F0 !important;
+    background: #FFFFFF !important;
+  }
+
+  .csp-advert-consultation-wrap img {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 380px !important;
+    max-height: 520px !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* Partner Testimonial & Bottom Schedule Spacing */
+  .elementor-element-4d330d3 {
+    margin-top: 45px !important;
+    margin-bottom: 25px !important;
+  }
+  .elementor-element-56e96b68 {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .elementor-element-689c7760 {
+    margin-top: 30px !important;
+    margin-bottom: 4px !important;
+  }
+  .elementor-element-680bd459 {
+    margin-top: 6px !important;
+    margin-bottom: 12px !important;
+    text-align: center !important;
+  }
+  .elementor-element-680bd459 > .elementor-widget-container {
+    margin: 0 !important;
+  }
+  .elementor-element-680bd459 .ekit-btn-wraper {
+    display: flex !important;
+    justify-content: center !important;
+  }
+  .elementor-element-2fe749f4 {
+    margin-top: 45px !important;
+    padding-top: 60px !important;
+  }
+
+  /* -------------------------------------------------------------
+     6. Mobile Responsive Typography & Big Button Sizing (@media max-width: 767px)
+     ------------------------------------------------------------- */
+  @media (max-width: 767px) {
+    /* Large prominent buttons on mobile like Sponsorship page */
+    .elementskit-btn,
+    .elementor-element-e1cd348 .elementskit-btn,
+    .elementor-element-680bd459 .elementskit-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 10px !important;
+      width: 100% !important;
+      max-width: 320px !important;
+      min-height: 54px !important;
+      padding: 16px 28px !important;
+      font-size: 1.05rem !important;
+      font-weight: 700 !important;
+      border-radius: 50px !important;
+      box-sizing: border-box !important;
+      box-shadow: 0 8px 25px rgba(0, 174, 254, 0.3) !important;
+    }
+
+    .elementor-element-e1cd348 .ekit-btn-wraper,
+    .elementor-element-680bd459 .ekit-btn-wraper {
+      display: flex !important;
+      justify-content: center !important;
+      width: 100% !important;
+    }
+
+    /* Dual header mobile sizing */
+    .eael-dual-header .eael-dch-title {
+      font-size: 2.1rem !important;
+      line-height: 1.25 !important;
+    }
+
+    /* Mobile Subtext Legibility (Sponsorship page style) */
+    .subtext,
+    .subtext p,
+    .eael-dual-header .subtext,
+    .eael-dual-header .subtext p,
+    .csp-bottom-subheadline,
+    .elementskit-infobox .box-body p,
+    .elementskit-infobox p,
+    .elementor-icon-list-text {
+      font-size: 1.02rem !important;
+      line-height: 1.65 !important;
+      color: #475569 !important;
+    }
+
+    /* Why Conspodium Works Mobile Spacing */
+    .elementor-element-702ac813 .elementor-heading-title {
+      margin-top: 35px !important;
+      margin-bottom: 12px !important;
+      font-size: 1.85rem !important;
+    }
+    .elementor-element-d099459 {
+      margin: 0 auto 12px auto !important;
+      padding: 0 14px !important;
+    }
+    .elementor-element-d099459 > .e-con-inner {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 16px !important;
+    }
+    .elementor-element-d099459 > .e-con-inner > .elementor-element {
+      width: 100% !important;
+      max-width: 100% !important;
+      flex: 0 0 auto !important;
+    }
+    .elementor-element-d099459 .elementskit-infobox {
+      height: auto !important;
+      padding: 28px 22px !important;
+      border-radius: 20px !important;
+    }
+
+    /* Measurable Reach Tight Spacing on Mobile */
+    .elementor-element-73830d1b {
+      margin-top: 5px !important;
+      margin-bottom: 15px !important;
+      padding: 5px 0 !important;
+    }
+    .elementor-element-54d59a54 .elementor-heading-title {
+      margin-top: 8px !important;
+      margin-bottom: 12px !important;
+      font-size: 1.75rem !important;
+    }
+
+    /* Bottom Consultation Image Mobile */
+    .csp-advert-consultation-wrap {
+      margin: 10px auto 30px auto !important;
+      padding: 0 12px !important;
+    }
+    .csp-advert-consultation-wrap img {
+      min-height: 250px !important;
+      max-height: 380px !important;
+      height: auto !important;
+      width: 100% !important;
+      object-fit: cover !important;
+    }
+  }
 </style>
 
 <!-- CSP_HEADER_FIXES_START -->
@@ -4985,13 +5149,6 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 					</blockquote>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-56e96b68 elementor-widget elementor-widget-spacer" data-id="56e96b68" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
-				<div class="elementor-widget-container">
-							<div class="elementor-spacer">
-			<div class="elementor-spacer-inner"></div>
-		</div>
-						</div>
-				</div>
 				<div class="elementor-element elementor-element-689c7760 elementor-headline--style-highlight elementor-widget elementor-widget-animated-headline" data-id="689c7760" data-element_type="widget" data-e-type="widget" data-settings="{&quot;marker&quot;:&quot;curly&quot;,&quot;highlighted_text&quot;:&quot;Today&quot;,&quot;headline_style&quot;:&quot;highlight&quot;,&quot;loop&quot;:&quot;yes&quot;,&quot;highlight_animation_duration&quot;:1200,&quot;highlight_iteration_delay&quot;:8000}" data-widget_type="animated-headline.default">
 				<div class="elementor-widget-container">
 							<h3 class="elementor-headline">
@@ -5000,15 +5157,25 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 					<span class="elementor-headline-dynamic-text elementor-headline-text-active">Today</span>
 				</span>
 				</h3>
+				<p class="csp-bottom-subheadline" style="color: #64748B !important; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important; font-size: 1.05rem !important; font-weight: 400 !important; text-align: center !important; margin: 6px auto 16px auto !important; letter-spacing: -0.01em !important;">You can book a slot by clicking the button below.</p>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-680bd459 elementor-align-left sticky-ekit-buttonstyle elementor-invisible elementor-widget elementor-widget-elementskit-button" data-id="680bd459" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}" data-widget_type="elementskit-button.default">
+				<div class="elementor-element elementor-element-680bd459 elementor-align-center sticky-ekit-buttonstyle elementor-widget elementor-widget-elementskit-button" data-id="680bd459" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}" data-widget_type="elementskit-button.default">
 				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		<div class="ekit-btn-wraper">
-							<a href="https://wa.link/h1piri" class="elementskit-btn  whitespace--normal" id="">
+					<div class="ekit-wid-con">		<div class="ekit-btn-wraper" style="text-align: center; display: flex; justify-content: center; margin-bottom: 0;">
+							<a href="https://wa.link/h1piri" class="elementskit-btn csp-sleek-schedule-btn whitespace--normal" id="csp-bottom-schedule-btn">
 					<i class="far fa-calendar-alt"></i>Schedule Consultation				</a>
 					</div>
         </div>				</div>
+				</div>
+				<div class="csp-advert-consultation-wrap" style="max-width: 1100px; width: 100%; margin: 15px auto 45px auto; padding: 0 15px;">
+					<div class="csp-consultation-img-container" style="position: relative; width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1); border: 1px solid #E2E8F0; background: #FFFFFF;">
+						<img src="/images/advert-consultation.jpg" alt="Conspodium Consultation & Strategy" style="width: 100%; height: auto; min-height: 380px; max-height: 520px; object-fit: cover; display: block;" />
+						<div class="csp-hero-image-badge" style="bottom: 24px; left: 24px;">
+							<span class="csp-beacon-dot csp-dot-magenta"></span>
+							<span class="csp-beacon-text">Bespoke Diaspora Campaigns</span>
+						</div>
+					</div>
 				</div>
 				</div>
 					</div>
