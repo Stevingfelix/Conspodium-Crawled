@@ -5157,38 +5157,129 @@
         <div class="csp-card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <span class="csp-card-header-title" style="display:flex;align-items:center;gap:8px;">
             <svg class="csp-sec-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            Articles Database &amp; Drafts
+            Articles Database &amp; Spotlight Curation
           </span>
           <button id="btn-bulk-delete-posts" class="csp-btn-sm csp-btn-danger" style="display:none;font-size:0.78rem;padding:6px 14px;">Delete Selected (<span id="count-selected-posts">0</span>)</button>
         </div>
-        <div style="padding:12px 20px;border-bottom:1px solid #e2e8f0;background:#f8fafc;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-          <button type="button" class="post-subtab-btn active" id="btn-post-subtab-all" onclick="filterPostsSubTab('all')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#0f172a;">All Articles (<span id="cnt-posts-all">0</span>)</button>
-          <button type="button" class="post-subtab-btn" id="btn-post-subtab-published" onclick="filterPostsSubTab('published')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#64748b;">Published (<span id="cnt-posts-published">0</span>)</button>
-          <button type="button" class="post-subtab-btn" id="btn-post-subtab-draft" onclick="filterPostsSubTab('draft')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#64748b;">📝 Drafts (<span id="cnt-posts-draft">0</span>)</button>
+        <div style="padding:12px 20px;border-bottom:1px solid #e2e8f0;background:#f8fafc;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:space-between;">
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <button type="button" class="post-subtab-btn active" id="btn-post-subtab-all" onclick="filterPostsSubTab('all')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#0f172a;">All Articles (<span id="cnt-posts-all">0</span>)</button>
+            <button type="button" class="post-subtab-btn" id="btn-post-subtab-published" onclick="filterPostsSubTab('published')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#64748b;">Published (<span id="cnt-posts-published">0</span>)</button>
+            <button type="button" class="post-subtab-btn" id="btn-post-subtab-draft" onclick="filterPostsSubTab('draft')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#64748b;">📝 Drafts (<span id="cnt-posts-draft">0</span>)</button>
+          </div>
+          <button type="button" class="post-subtab-btn" id="btn-post-subtab-spotlight" onclick="filterPostsSubTab('spotlight')" style="padding:6px 16px;border-radius:20px;border:1px solid #f59e0b;background:#fffbeb;font-size:0.82rem;font-weight:700;cursor:pointer;color:#b45309;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s ease;">
+            ⭐ Featured Spotlight Story
+          </button>
         </div>
-        <div class="csp-table-wrapper">
-          <table class="csp-table">
-            <thead>
-              <tr>
-                <th style="width:40px;text-align:center;"><input type="checkbox" id="select-all-posts" style="cursor:pointer;" aria-label="Select all articles" /></th>
-                <th>Article</th>
-                <th>Category</th>
-                <th>Author</th>
-                <th>Published Date</th>
-                <th>Views</th>
-                <th>Featured</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="posts-cms-table">
-              <tr><td colspan="8">Loading articles...</td></tr>
-            </tbody>
-          </table>
+
+        <!-- Table View for All / Published / Drafts -->
+        <div id="posts-table-view-container">
+          <div class="csp-table-wrapper">
+            <table class="csp-table">
+              <thead>
+                <tr>
+                  <th style="width:40px;text-align:center;"><input type="checkbox" id="select-all-posts" style="cursor:pointer;" aria-label="Select all articles" /></th>
+                  <th>Article</th>
+                  <th>Category</th>
+                  <th>Author</th>
+                  <th>Published Date</th>
+                  <th>Views</th>
+                  <th>Featured</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="posts-cms-table">
+                <tr><td colspan="8">Loading articles...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="posts-pagination-bar" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px;font-size:0.85rem;color:var(--text-muted);background:#fafafa;border-bottom-left-radius:16px;border-bottom-right-radius:16px;">
+            <div id="posts-pagination-info">Showing 0 of 0 articles</div>
+            <div id="posts-pagination-buttons" style="display:flex;gap:6px;align-items:center;"></div>
+          </div>
         </div>
-        <div id="posts-pagination-bar" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px;font-size:0.85rem;color:var(--text-muted);background:#fafafa;border-bottom-left-radius:16px;border-bottom-right-radius:16px;">
-          <div id="posts-pagination-info">Showing 0 of 0 articles</div>
-          <div id="posts-pagination-buttons" style="display:flex;gap:6px;align-items:center;"></div>
+
+        <!-- Spotlight Story Selection & Live Preview Sub-Panel -->
+        <div id="posts-spotlight-view-container" style="display:none;padding:24px 20px;">
+          <div style="background:linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);border:1px solid #bfdbfe;border-radius:16px;padding:20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+            <div>
+              <div style="display:inline-flex;align-items:center;gap:6px;background:#dbeafe;color:#1e40af;font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">
+                Dynamic Hero Banner
+              </div>
+              <h4 style="margin:0 0 4px;font-size:1.15rem;color:#0f172a;font-weight:800;">Featured Spotlight Story Selection</h4>
+              <p style="margin:0;font-size:0.85rem;color:#475569;max-width:620px;">Select any published article to immediately feature at the top of the <a href="/stories/" target="_blank" style="color:#0284c7;font-weight:600;text-decoration:none;">Stories Hub (/stories/) ↗</a>. Real-time live preview renders below.</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <a href="/stories/" target="_blank" class="csp-btn-sm csp-btn-secondary" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:8px 16px;font-weight:600;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                View Live Stories Page
+              </a>
+            </div>
+          </div>
+
+          <!-- Selector Controls -->
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 4px 14px rgba(0,0,0,0.03);">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:20px;align-items:end;">
+              <div>
+                <label style="display:block;font-size:0.85rem;font-weight:700;color:#0f172a;margin-bottom:8px;">
+                  Choose Article to Feature:
+                </label>
+                <select id="spotlight-post-select" onchange="onSpotlightSelectChange(this.value)" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #cbd5e1;background:#f8fafc;font-size:0.9rem;font-weight:600;color:#0f172a;cursor:pointer;">
+                  <option value="">-- Select a Published Article --</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-size:0.85rem;font-weight:700;color:#0f172a;margin-bottom:8px;">
+                  Active Status:
+                </label>
+                <div id="spotlight-active-status-badge" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:10px;background:#f1f5f9;color:#64748b;font-size:0.85rem;font-weight:600;width:100%;">
+                  <span>⏳ Checking active spotlight...</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <button type="button" id="btn-save-spotlight" onclick="saveActiveSpotlight()" class="csp-btn-sm csp-btn-primary" style="padding:10px 24px;font-size:0.9rem;font-weight:700;border-radius:10px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(0,174,254,0.3);transition:transform 0.2s ease;">
+                  ⭐ Save as Active Spotlight
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Visual Preview Card -->
+          <div style="margin-top:20px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <span style="font-size:0.88rem;font-weight:700;color:#0f172a;display:inline-flex;align-items:center;gap:6px;">
+                👁️ Real-Time Live Preview (Stories Page Hero Banner)
+              </span>
+              <span style="font-size:0.75rem;color:#64748b;">Updates immediately upon selecting an article above</span>
+            </div>
+
+            <div id="spotlight-live-preview-card" style="background:#080E1A;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:28px;position:relative;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,0.35);display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:center;">
+              <div>
+                <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,174,254,0.15);border:1px solid rgba(0,174,254,0.4);color:#38bdf8;padding:4px 12px;border-radius:50px;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:14px;">
+                  🔥 FEATURED SPOTLIGHT STORY
+                </div>
+                <h2 id="prev-spotlight-title" style="font-family:'Merriweather',serif;color:#ffffff;font-size:1.45rem;font-weight:800;line-height:1.35;margin:0 0 12px;">
+                  Select an article above to preview...
+                </h2>
+                <p id="prev-spotlight-excerpt" style="font-family:'Inter',sans-serif;color:#94a3b8;font-size:0.9rem;line-height:1.6;margin:0 0 18px;">
+                  The story summary, author byline, category tags, and reading duration will appear right here exactly as readers see it.
+                </p>
+                <div id="prev-spotlight-meta" style="display:flex;align-items:center;gap:14px;color:#64748b;font-size:0.8rem;margin-bottom:20px;flex-wrap:wrap;">
+                  <span id="prev-spotlight-readtime">⏱️ 5 min read</span>
+                  <span id="prev-spotlight-author">✍️ By Conspodium Editorial</span>
+                  <span id="prev-spotlight-category" style="background:rgba(255,255,255,0.08);color:#cbd5e1;padding:2px 8px;border-radius:6px;">🏷️ General</span>
+                </div>
+                <div style="display:inline-flex;align-items:center;gap:8px;padding:9px 22px;border-radius:50px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:700;font-size:0.82rem;">
+                  Read Full Feature &rarr;
+                </div>
+              </div>
+              <div style="height:210px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.15);background:#0f172a;display:flex;align-items:center;justify-content:center;">
+                <img id="prev-spotlight-image" src="/wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg" alt="Spotlight Preview" style="width:100%;height:100%;object-fit:cover;" />
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
 
@@ -7051,24 +7142,171 @@
 
   var currentPostSubTab = 'all';
   var allPostsRawCache = [];
+  var currentSpotlightPost = null;
 
   window.filterPostsSubTab = function(status) {
     currentPostSubTab = status;
-    currentPostsPage = 1;
+    var tblContainer = document.getElementById('posts-table-view-container');
+    var sptContainer = document.getElementById('posts-spotlight-view-container');
+
     document.querySelectorAll('.post-subtab-btn').forEach(function(btn){
       btn.classList.remove('active');
       btn.style.color = '#64748b';
       btn.style.borderColor = '#cbd5e1';
       btn.style.background = '#ffffff';
     });
+
     var activeBtn = document.getElementById('btn-post-subtab-' + status);
     if (activeBtn) {
       activeBtn.classList.add('active');
-      activeBtn.style.color = '#0f172a';
-      activeBtn.style.borderColor = '#00AEFE';
-      activeBtn.style.background = '#ffffff';
+      if (status === 'spotlight') {
+        activeBtn.style.color = '#b45309';
+        activeBtn.style.borderColor = '#f59e0b';
+        activeBtn.style.background = '#fef3c7';
+      } else {
+        activeBtn.style.color = '#0f172a';
+        activeBtn.style.borderColor = '#00AEFE';
+        activeBtn.style.background = '#ffffff';
+      }
     }
+
+    if (status === 'spotlight') {
+      if (tblContainer) tblContainer.style.display = 'none';
+      if (sptContainer) sptContainer.style.display = 'block';
+      loadSpotlightDashboard();
+      return;
+    }
+
+    if (tblContainer) tblContainer.style.display = 'block';
+    if (sptContainer) sptContainer.style.display = 'none';
+    currentPostsPage = 1;
     applyPostsSubTabFiltering(1);
+  };
+
+  window.loadSpotlightDashboard = function() {
+    if (!allPostsRawCache || allPostsRawCache.length === 0) {
+      fetch(getRootUrl('api/posts.php?limit=100'))
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success && res.posts) {
+            allPostsRawCache = res.posts;
+            populateSpotlightSelectAndPreview();
+          }
+        });
+    } else {
+      populateSpotlightSelectAndPreview();
+    }
+  };
+
+  function populateSpotlightSelectAndPreview() {
+    var selectEl = document.getElementById('spotlight-post-select');
+    var statusBadge = document.getElementById('spotlight-active-status-badge');
+    if (!selectEl) return;
+
+    var publishedPosts = allPostsRawCache.filter(function(p){ return p.status !== 'draft'; });
+
+    var selectHtml = '<option value="">-- Choose a Published Article --</option>';
+    publishedPosts.forEach(function(p){
+      var isFeat = (p.is_featured == 1);
+      selectHtml += `<option value="${p.id}" ${isFeat ? 'selected' : ''}>${isFeat ? '⭐ [ACTIVE SPOTLIGHT] ' : ''}${p.title} (${p.author_name || 'Editorial'})</option>`;
+    });
+    selectEl.innerHTML = selectHtml;
+
+    fetch(getRootUrl('api/posts.php?spotlight=1'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.post) {
+          currentSpotlightPost = res.post;
+          if (selectEl) selectEl.value = res.post.id;
+          if (statusBadge) {
+            statusBadge.innerHTML = `<span style="color:#059669;font-weight:700;">🟢 Active: ${res.post.title.substring(0, 38)}...</span>`;
+          }
+          updateSpotlightLivePreview(res.post);
+        } else if (publishedPosts.length > 0) {
+          currentSpotlightPost = publishedPosts[0];
+          updateSpotlightLivePreview(publishedPosts[0]);
+          if (statusBadge) statusBadge.innerHTML = '<span style="color:#64748b;">No spotlight set. Defaulting to newest.</span>';
+        }
+      })
+      .catch(function(e){
+        if (publishedPosts.length > 0) {
+          updateSpotlightLivePreview(publishedPosts[0]);
+        }
+      });
+  }
+
+  window.onSpotlightSelectChange = function(postId) {
+    if (!postId) return;
+    var post = allPostsRawCache.find(function(p){ return String(p.id) === String(postId); });
+    if (post) {
+      updateSpotlightLivePreview(post);
+    }
+  };
+
+  function updateSpotlightLivePreview(post) {
+    if (!post) return;
+    var titleEl = document.getElementById('prev-spotlight-title');
+    var excerptEl = document.getElementById('prev-spotlight-excerpt');
+    var readTimeEl = document.getElementById('prev-spotlight-readtime');
+    var authorEl = document.getElementById('prev-spotlight-author');
+    var catEl = document.getElementById('prev-spotlight-category');
+    var imgEl = document.getElementById('prev-spotlight-image');
+
+    if (titleEl) titleEl.textContent = post.title || 'Untitled Article';
+    if (excerptEl) excerptEl.textContent = post.excerpt || (post.content ? post.content.replace(/<[^>]*>?/gm, '').substring(0, 160) + '...' : '');
+    if (readTimeEl) readTimeEl.textContent = '⏱️ ' + (post.reading_time || (post.read_time ? post.read_time + ' min read' : '5 min read'));
+    if (authorEl) authorEl.textContent = '✍️ By ' + (post.author_name || 'Conspodium Editorial');
+    if (catEl) catEl.textContent = (post.category_icon || '🏷️') + ' ' + (post.category_name || 'Stories');
+    if (imgEl) imgEl.src = getAbsoluteImageUrl(post.featured_image || '/wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');
+  }
+
+  window.saveActiveSpotlight = function() {
+    var selectEl = document.getElementById('spotlight-post-select');
+    var saveBtn = document.getElementById('btn-save-spotlight');
+    var statusBadge = document.getElementById('spotlight-active-status-badge');
+    var postId = selectEl ? selectEl.value : null;
+
+    if (!postId) {
+      cspToast('Please choose an article from the dropdown to feature.', 'warning');
+      return;
+    }
+
+    if (saveBtn) {
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '⏳ Saving Spotlight...';
+    }
+
+    fetch(getRootUrl('api/posts.php?action=set_spotlight'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Token': adminToken || localStorage.getItem('csp_admin_token') || ''
+      },
+      body: JSON.stringify({ id: postId })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '⭐ Save as Active Spotlight';
+      }
+      if (res.success) {
+        cspToast('🎉 Spotlight Story updated successfully! Stories hub is synced.', 'success');
+        if (statusBadge && res.post) {
+          statusBadge.innerHTML = `<span style="color:#059669;font-weight:700;">🟢 Active: ${res.post.title.substring(0, 38)}...</span>`;
+        }
+        loadPosts(true);
+      } else {
+        cspToast('Failed to update spotlight: ' + (res.error || 'Unknown error'), 'danger');
+      }
+    })
+    .catch(function(err){
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '⭐ Save as Active Spotlight';
+      }
+      cspToast('Network error saving spotlight.', 'danger');
+    });
   };
 
   function applyPostsSubTabFiltering(targetPage) {

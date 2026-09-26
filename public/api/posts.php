@@ -234,6 +234,20 @@ if ($resource === 'comments') {
 
 // ── POSTS RESOURCE ───────────────────────────────────────────────────────────
 if ($method === 'GET') {
+    if (isset($_GET['spotlight']) || ($_GET['action'] ?? '') === 'get_spotlight') {
+        $stmt = $pdo->query("
+            SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
+            FROM posts p
+            LEFT JOIN categories c ON p.category_id = c.id
+            WHERE (p.status = 'published' OR p.status IS NULL OR p.status = '')
+            ORDER BY p.is_featured DESC, p.published_at DESC
+            LIMIT 1
+        ");
+        $spotlight = $stmt->fetch();
+        echo json_encode(["success" => true, "post" => $spotlight]);
+        exit;
+    }
+
     $slugOrId = $_GET['slug'] ?? $_GET['id'] ?? null;
 
     if ($slugOrId) {
@@ -376,9 +390,25 @@ if ($method === 'POST') {
         }
         
         if ($action === 'set_spotlight') {
-            $stmt = $pdo->prepare("UPDATE posts SET is_featured = 1, published_at = CURRENT_TIMESTAMP WHERE id = ?");
+            $pdo->prepare("UPDATE posts SET is_featured = 0")->execute();
+            $stmt = $pdo->prepare("UPDATE posts SET is_featured = 1 WHERE id = ?");
             $stmt->execute([$targetId]);
-            echo json_encode(["success" => true, "is_featured" => 1, "message" => "Post set as primary Featured Spotlight!"]);
+
+            $fetchStmt = $pdo->prepare("
+                SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
+                FROM posts p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE p.id = ?
+            ");
+            $fetchStmt->execute([$targetId]);
+            $updatedPost = $fetchStmt->fetch();
+
+            echo json_encode([
+                "success" => true,
+                "is_featured" => 1,
+                "post" => $updatedPost,
+                "message" => "Post successfully set as the active Featured Spotlight story!"
+            ]);
             exit;
         }
 
