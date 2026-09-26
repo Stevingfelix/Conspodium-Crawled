@@ -2723,12 +2723,25 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     color: #64748b;
   }
 
-  .csp-poll-prompt {
-    font-size: 0.88rem;
-    color: #334155;
-    line-height: 1.5;
-    font-weight: 500;
-    margin-bottom: 14px;
+  .csp-sidebar-poll {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  .csp-sidebar-poll .csp-sidebar-title {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+  }
+
+  .csp-poll-prompt,
+  #csp-sidebar-poll-question,
+  .csp-poll-q,
+  #csp-poll-q-text {
+    font-size: 0.92rem !important;
+    color: #0f172a !important;
+    line-height: 1.55 !important;
+    font-weight: 600 !important;
+    margin-bottom: 14px !important;
   }
 
   .csp-poll-options {
@@ -2738,22 +2751,31 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   .csp-poll-opt-btn {
-    padding: 10px 14px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #334155;
-    background: #f8fafc;
-    border: 1px solid #cbd5e1;
-    border-radius: 12px;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    padding: 10px 14px !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 12px !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
   }
 
   .csp-poll-opt-btn:hover {
-    background: rgba(0, 174, 254, 0.08);
-    border-color: #00AEFE;
-    color: #0f172a;
+    background: rgba(0, 174, 254, 0.08) !important;
+    border-color: #00AEFE !important;
+    color: #00AEFE !important;
+  }
+
+  .csp-poll-opt-text,
+  .csp-poll-result-label {
+    color: #0f172a !important;
+    font-weight: 600 !important;
   }
 
   /* ── MODERN PRICING TABLE CARD STYLING (FOLLOWS SITE LIGHT/GLASS UI) ───── */

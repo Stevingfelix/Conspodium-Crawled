@@ -365,6 +365,39 @@ if ($method === 'GET') {
 }
 
 if ($method === 'POST') {
+    $action = $_GET['action'] ?? ($input['action'] ?? '');
+    if ($action === 'toggle_featured' || $action === 'set_spotlight') {
+        requireAdmin();
+        $targetId = intval($input['id'] ?? $_GET['id'] ?? 0);
+        if (!$targetId) {
+            http_response_code(400);
+            echo json_encode(["success" => false, "error" => "Invalid post ID"]);
+            exit;
+        }
+        
+        if ($action === 'set_spotlight') {
+            $stmt = $pdo->prepare("UPDATE posts SET is_featured = 1, published_at = CURRENT_TIMESTAMP WHERE id = ?");
+            $stmt->execute([$targetId]);
+            echo json_encode(["success" => true, "is_featured" => 1, "message" => "Post set as primary Featured Spotlight!"]);
+            exit;
+        }
+
+        $stmt = $pdo->prepare("SELECT is_featured FROM posts WHERE id = ?");
+        $stmt->execute([$targetId]);
+        $curr = $stmt->fetchColumn();
+        $newStatus = ($curr == 1) ? 0 : 1;
+        
+        $upStmt = $pdo->prepare("UPDATE posts SET is_featured = ? WHERE id = ?");
+        $upStmt->execute([$newStatus, $targetId]);
+        
+        echo json_encode([
+            "success" => true,
+            "is_featured" => $newStatus,
+            "message" => $newStatus ? "Article marked as Featured ⭐" : "Article removed from Featured"
+        ]);
+        exit;
+    }
+
     requireAdmin();
     $title = trim($input['title'] ?? '');
     $content = trim($input['content'] ?? '');
