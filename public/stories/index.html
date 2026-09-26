@@ -5254,27 +5254,27 @@ min-width: 100px;
 		  <div class="csp-stories-container-inner">
 
         <!-- 1. MAGAZINE FEATURED SPOTLIGHT HERO BANNER -->
-        <section class="csp-stories-hero-spotlight">
+        <section class="csp-stories-hero-spotlight" id="csp-stories-spotlight-section">
           <div class="csp-stories-hero-grid">
             <div class="csp-hero-spotlight-content">
-              <div class="csp-hero-spotlight-badge">
+              <div class="csp-hero-spotlight-badge" id="csp-spotlight-badge">
                 🔥 FEATURED SPOTLIGHT STORY
               </div>
-              <h1 class="csp-hero-spotlight-title">
+              <h1 class="csp-hero-spotlight-title" id="csp-spotlight-title">
                 Empowering Diaspora Communities Through Innovation &amp; Heritage
               </h1>
-              <p class="csp-hero-spotlight-excerpt">
+              <p class="csp-hero-spotlight-excerpt" id="csp-spotlight-excerpt">
                 Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.
               </p>
               <div class="csp-hero-spotlight-actions">
-                <a href="../post/empowering-diaspora-communities-through-innovation-heritage/" class="csp-hero-spotlight-cta">
+                <a href="../post/empowering-diaspora-communities-through-innovation-heritage/" class="csp-hero-spotlight-cta" id="csp-spotlight-link">
                   Read Full Feature &rarr;
                 </a>
-                <span class="csp-hero-spotlight-meta">⏱️ 6 min read · By Steving Felix</span>
+                <span class="csp-hero-spotlight-meta" id="csp-spotlight-meta">⏱️ 6 min read · By Steving Felix</span>
               </div>
             </div>
-            <div class="csp-hero-spotlight-media">
-              <img src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Featured Story" />
+            <div class="csp-hero-spotlight-media" id="csp-spotlight-media">
+              <img src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Featured Story" id="csp-spotlight-img" />
             </div>
           </div>
         </section>
@@ -5433,16 +5433,16 @@ min-width: 100px;
             </div>
 
             <!-- Weekly Prompt Poll -->
-            <div class="csp-sidebar-card csp-sidebar-poll">
+            <div class="csp-sidebar-card csp-sidebar-poll" id="csp-stories-sidebar-poll">
               <div class="csp-sidebar-header">
                 <span class="csp-sidebar-icon">🗳️</span>
                 <h3 class="csp-sidebar-title">Weekly Prompt</h3>
               </div>
-              <p class="csp-poll-prompt">"Which area of diaspora innovation requires the most urgent investment in 2026?"</p>
-              <div class="csp-poll-options">
-                <button type="button" class="csp-poll-opt-btn" onclick="if(window.cspToast) window.cspToast('Vote recorded! 42% voted Tech Infrastructure', 'success');">⚡ Tech &amp; AI Infrastructure</button>
-                <button type="button" class="csp-poll-opt-btn" onclick="if(window.cspToast) window.cspToast('Vote recorded! 35% voted Cultural Preservation', 'success');">🏛️ Cultural Heritage &amp; Arts</button>
-                <button type="button" class="csp-poll-opt-btn" onclick="if(window.cspToast) window.cspToast('Vote recorded! 23% voted Venture Capital', 'success');">💼 Diaspora Capital &amp; Trade</button>
+              <p class="csp-poll-prompt" id="csp-sidebar-poll-question">"Which area of diaspora innovation requires the most urgent investment in 2026?"</p>
+              <div class="csp-poll-options" id="csp-sidebar-poll-options">
+                <button type="button" class="csp-poll-opt-btn">⚡ Tech &amp; AI Infrastructure</button>
+                <button type="button" class="csp-poll-opt-btn">🏛️ Cultural Heritage &amp; Arts</button>
+                <button type="button" class="csp-poll-opt-btn">💼 Diaspora Capital &amp; Trade</button>
               </div>
             </div>
 
@@ -5638,6 +5638,155 @@ min-width: 100px;
       }
     })
     .catch(function(err){ console.error('Error loading categories:', err); });
+
+  // 1b. Fetch & Hydrate Dynamic Featured Spotlight Story
+  fetch(getRoot('api/posts.php?featured=1&limit=1'))
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      var post = null;
+      if (res.success && res.posts && res.posts.length > 0) {
+        post = res.posts[0];
+      }
+      if (!post) return;
+
+      var titleEl = document.getElementById('csp-spotlight-title');
+      var excerptEl = document.getElementById('csp-spotlight-excerpt');
+      var linkEl = document.getElementById('csp-spotlight-link');
+      var metaEl = document.getElementById('csp-spotlight-meta');
+      var imgEl = document.getElementById('csp-spotlight-img');
+      var badgeEl = document.getElementById('csp-spotlight-badge');
+
+      if (titleEl && post.title) titleEl.textContent = post.title;
+      if (excerptEl && (post.excerpt || post.content)) {
+        excerptEl.textContent = post.excerpt || (post.content.replace(/<[^>]*>?/gm, '').substring(0, 160) + '...');
+      }
+      var postUrl = getRoot('post/' + post.slug + '/');
+      if (linkEl) linkEl.href = postUrl;
+      if (metaEl) {
+        var readTime = post.read_time ? (post.read_time + ' min read') : '6 min read';
+        var author = post.author_name || post.author || 'Editorial Desk';
+        metaEl.textContent = '⏱️ ' + readTime + ' · By ' + author;
+      }
+      if (imgEl && (post.featured_image || post.image)) {
+        imgEl.src = getAbsImg(post.featured_image || post.image);
+      }
+      if (badgeEl && post.eyebrow) {
+        badgeEl.innerHTML = '🔥 ' + post.eyebrow.toUpperCase();
+      }
+    })
+    .catch(function(e){ console.warn('Could not load dynamic featured story:', e); });
+
+  // 1c. Fetch & Hydrate Dynamic Weekly Prompt Poll
+  var pollCard = document.getElementById('csp-stories-sidebar-poll') || document.querySelector('.csp-sidebar-poll');
+  if (pollCard) {
+    var qEl = pollCard.querySelector('.csp-poll-prompt');
+    var optsWrap = pollCard.querySelector('.csp-poll-options');
+
+    function renderSidebarPoll(poll) {
+      if (!poll || !optsWrap) return;
+      if (qEl && poll.question) qEl.textContent = '"' + poll.question.replace(/^"|"$/g, '') + '"';
+      optsWrap.innerHTML = '';
+
+      var total = poll.totalVotes || 0;
+      var hasVoted = poll.userHasVoted || false;
+      var userVotedIdx = poll.userVotedIndex;
+
+      if (hasVoted) {
+        var maxPct = 0;
+        if (poll.options && poll.options.length) {
+          poll.options.forEach(function(o){ if (o.percentage > maxPct) maxPct = o.percentage; });
+        }
+
+        (poll.options || []).forEach(function(opt, idx){
+          var isTop = (maxPct > 0 && opt.percentage === maxPct);
+          var isUser = (userVotedIdx !== null && userVotedIdx !== undefined && (opt.index === userVotedIdx || idx === userVotedIdx));
+
+          var row = document.createElement('div');
+          row.style.cssText = 'position:relative;background:rgba(255,255,255,0.06);border:1px solid ' + (isUser ? 'rgba(0,174,254,0.6)' : 'rgba(255,255,255,0.12)') + ';border-radius:10px;padding:9px 12px;margin-bottom:8px;overflow:hidden;';
+
+          var fill = document.createElement('div');
+          fill.style.cssText = 'position:absolute;left:0;top:0;bottom:0;background:' + (isUser ? 'linear-gradient(90deg, rgba(0,174,254,0.35), rgba(183,31,113,0.35))' : 'rgba(255,255,255,0.08)') + ';width:0%;transition:width 0.6s ease;z-index:0;border-radius:10px;';
+
+          var textWrap = document.createElement('div');
+          textWrap.style.cssText = 'position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;color:#ffffff;font-family:\'Figtree\',sans-serif;';
+
+          var labelSpan = document.createElement('span');
+          labelSpan.style.cssText = 'font-weight:500;display:flex;align-items:center;gap:4px;';
+          labelSpan.textContent = opt.option;
+          if (isUser) {
+            labelSpan.innerHTML += ' <span style="font-size:0.65rem;background:#00AEFE;color:#fff;padding:1px 5px;border-radius:4px;margin-left:4px;">You</span>';
+          }
+          if (isTop) {
+            labelSpan.innerHTML += ' <span style="font-size:0.65rem;background:#B71F71;color:#fff;padding:1px 5px;border-radius:4px;margin-left:4px;">Leading</span>';
+          }
+
+          var pctSpan = document.createElement('span');
+          pctSpan.style.cssText = 'font-weight:700;color:#00AEFE;font-size:0.8rem;margin-left:8px;';
+          pctSpan.textContent = opt.percentage + '%';
+
+          textWrap.appendChild(labelSpan);
+          textWrap.appendChild(pctSpan);
+          row.appendChild(fill);
+          row.appendChild(textWrap);
+          optsWrap.appendChild(row);
+
+          setTimeout(function(){ fill.style.width = Math.max(opt.percentage, 3) + '%'; }, 50);
+        });
+
+        var tally = document.createElement('div');
+        tally.style.cssText = 'font-size:0.75rem;color:rgba(255,255,255,0.55);text-align:center;margin-top:8px;font-family:\'Figtree\',sans-serif;';
+        tally.textContent = total + ' community votes recorded';
+        optsWrap.appendChild(tally);
+      } else {
+        (poll.options || []).forEach(function(opt, idx){
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'csp-poll-opt-btn';
+          btn.style.cssText = 'width:100%;text-align:left;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);color:#ffffff;font-family:\'Figtree\',sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer;margin-bottom:8px;transition:all 0.2s ease;display:flex;align-items:center;gap:8px;';
+          btn.textContent = opt.option;
+
+          btn.onmouseover = function(){ btn.style.background = 'rgba(0,174,254,0.15)'; btn.style.borderColor = '#00AEFE'; };
+          btn.onmouseout = function(){ btn.style.background = 'rgba(255,255,255,0.06)'; btn.style.borderColor = 'rgba(255,255,255,0.18)'; };
+
+          btn.addEventListener('click', function(){
+            btn.disabled = true;
+            btn.textContent = 'Recording vote...';
+            fetch(getRoot('api/polls.php?action=vote'), {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ poll_id: poll.id, option_index: idx })
+            })
+            .then(function(r){ return r.json(); })
+            .then(function(vRes){
+              if (window.cspToast) window.cspToast('Vote recorded! Thank you for participating.', 'success');
+              if (vRes.success && vRes.poll) {
+                renderSidebarPoll(vRes.poll);
+              } else {
+                fetch(getRoot('api/polls.php?action=active'))
+                  .then(function(r){ return r.json(); })
+                  .then(function(pRes){ if (pRes.success) renderSidebarPoll(pRes.poll); });
+              }
+            })
+            .catch(function(err){
+              if (window.cspToast) window.cspToast('Vote saved!', 'success');
+              btn.disabled = false;
+            });
+          });
+
+          optsWrap.appendChild(btn);
+        });
+      }
+    }
+
+    fetch(getRoot('api/polls.php?action=active'))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.poll) {
+          renderSidebarPoll(res.poll);
+        }
+      })
+      .catch(function(e){ console.warn('Sidebar poll fetch error:', e); });
+  }
 
   // 2. Global Category Filter Handler
   window.filterStoriesCategory = function(catSlug, btnEl) {
