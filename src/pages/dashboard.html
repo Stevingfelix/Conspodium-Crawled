@@ -7294,7 +7294,27 @@ e-page-transition,
   };
 
   window.moderateComment = function(id, status) {
-    fetch(getRootUrl('api/posts.php?resource=comments&id=' + id + '&status=' + status), { method: 'PUT' })
+    if (status === 'delete') {
+      if (!confirm('Are you sure you want to delete this comment?')) return;
+      fetch(getRootUrl('api/posts.php?resource=comments&id=' + id), {
+        method: 'DELETE',
+        headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' }
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success) {
+          loadComments();
+        } else {
+          alert('Error: ' + (res.error || 'Failed to delete comment'));
+        }
+      });
+      return;
+    }
+
+    fetch(getRootUrl('api/posts.php?resource=comments&id=' + id + '&status=' + status), {
+      method: 'PUT',
+      headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' }
+    })
       .then(function(r){ return r.json(); })
       .then(function(res){
         if (res.success) {

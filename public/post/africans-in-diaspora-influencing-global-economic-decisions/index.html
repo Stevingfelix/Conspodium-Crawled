@@ -4869,34 +4869,26 @@
 
     authorInputs.forEach(function(inp) {
       if (session && !cleared) {
-        inp.value = session.name;
-        inp.readOnly = true;
-        inp.style.background = '#f1f5f9';
-        inp.style.color = '#475569';
-        inp.style.cursor = 'not-allowed';
-      } else {
-        if (cleared) inp.value = '';
-        inp.readOnly = false;
-        inp.style.background = '#ffffff';
-        inp.style.color = '#0f172a';
-        inp.style.cursor = 'text';
+        if (!inp.value) inp.value = session.name;
+      } else if (cleared) {
+        inp.value = '';
       }
+      inp.readOnly = false;
+      inp.style.background = '#ffffff';
+      inp.style.color = '#0f172a';
+      inp.style.cursor = 'text';
     });
 
     emailInputs.forEach(function(inp) {
       if (session && !cleared) {
-        inp.value = session.email;
-        inp.readOnly = true;
-        inp.style.background = '#f1f5f9';
-        inp.style.color = '#475569';
-        inp.style.cursor = 'not-allowed';
-      } else {
-        if (cleared) inp.value = '';
-        inp.readOnly = false;
-        inp.style.background = '#ffffff';
-        inp.style.color = '#0f172a';
-        inp.style.cursor = 'text';
+        if (!inp.value) inp.value = session.email;
+      } else if (cleared) {
+        inp.value = '';
       }
+      inp.readOnly = false;
+      inp.style.background = '#ffffff';
+      inp.style.color = '#0f172a';
+      inp.style.cursor = 'text';
     });
 
     forms.forEach(function(formEl) {
@@ -4922,23 +4914,18 @@
       var emailInp = box.querySelector('input[type="email"]');
       if (nameInp && emailInp) {
         if (session && !cleared) {
-          nameInp.value = session.name;
-          nameInp.readOnly = true;
-          nameInp.style.background = '#e2e8f0';
-          nameInp.style.cursor = 'not-allowed';
-          emailInp.value = session.email;
-          emailInp.readOnly = true;
-          emailInp.style.background = '#e2e8f0';
-          emailInp.style.cursor = 'not-allowed';
-        } else {
-          if (cleared) { nameInp.value = ''; emailInp.value = ''; }
-          nameInp.readOnly = false;
-          nameInp.style.background = '#fff';
-          nameInp.style.cursor = 'text';
-          emailInp.readOnly = false;
-          emailInp.style.background = '#fff';
-          emailInp.style.cursor = 'text';
+          if (!nameInp.value) nameInp.value = session.name;
+          if (!emailInp.value) emailInp.value = session.email;
+        } else if (cleared) {
+          nameInp.value = '';
+          emailInp.value = '';
         }
+        nameInp.readOnly = false;
+        nameInp.style.background = '#fff';
+        nameInp.style.cursor = 'text';
+        emailInp.readOnly = false;
+        emailInp.style.background = '#fff';
+        emailInp.style.cursor = 'text';
       }
     });
   };
@@ -4955,8 +4942,8 @@
     var emailInput = document.getElementById('comm-email');
     var textInput = document.getElementById('comm-text');
 
-    var author = session ? session.name : ((authorInput && authorInput.value.trim()) ? authorInput.value.trim() : 'Anonymous Reader');
-    var email = session ? session.email : (emailInput ? emailInput.value.trim() : '');
+    var author = (authorInput && authorInput.value.trim()) ? authorInput.value.trim() : (session ? session.name : 'Anonymous Reader');
+    var email = (emailInput && emailInput.value.trim()) ? emailInput.value.trim() : (session ? session.email : '');
     var text = textInput ? textInput.value.trim() : '';
 
     if (!text) return false;

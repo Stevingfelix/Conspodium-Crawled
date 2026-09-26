@@ -152,11 +152,11 @@ if ($resource === 'comments') {
             if ($foundP) $realPostId = intval($foundP['id']);
         }
 
-        // Enforce cookie-level commenter session lock if set
-        if (!empty($_COOKIE['csp_user_comment_author'])) {
+        // Only fallback to cookie if author_name or author_email is empty
+        if (empty($authorName) && !empty($_COOKIE['csp_user_comment_author'])) {
             $authorName = csp_sanitize($_COOKIE['csp_user_comment_author']);
         }
-        if (!empty($_COOKIE['csp_user_comment_email'])) {
+        if (empty($authorEmail) && !empty($_COOKIE['csp_user_comment_email'])) {
             $authorEmail = trim($_COOKIE['csp_user_comment_email']);
         }
 
@@ -202,6 +202,12 @@ if ($resource === 'comments') {
         $id = intval($_GET['id'] ?? $input['id'] ?? 0);
         $status = csp_sanitize($_GET['status'] ?? $input['status'] ?? 'approved');
         if ($id > 0) {
+            if ($status === 'delete') {
+                $stmt = $pdo->prepare("DELETE FROM comments WHERE id = ?");
+                $stmt->execute([$id]);
+                echo json_encode(["success" => true, "message" => "Comment deleted successfully"]);
+                exit;
+            }
             $stmt = $pdo->prepare("UPDATE comments SET status = ? WHERE id = ?");
             $stmt->execute([$status, $id]);
             echo json_encode(["success" => true, "message" => "Comment status updated to " . $status]);

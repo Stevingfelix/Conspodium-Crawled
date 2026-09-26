@@ -5684,7 +5684,10 @@ min-width: 100px;
 
     function renderSidebarPoll(poll) {
       if (!poll || !optsWrap) return;
-      if (qEl && poll.question) qEl.textContent = '"' + poll.question.replace(/^"|"$/g, '') + '"';
+      if (qEl && poll.question) {
+        qEl.textContent = '"' + poll.question.replace(/^"|"$/g, '') + '"';
+        qEl.style.color = '#1e293b';
+      }
       optsWrap.innerHTML = '';
 
       var total = poll.totalVotes || 0;
@@ -5702,26 +5705,26 @@ min-width: 100px;
           var isUser = (userVotedIdx !== null && userVotedIdx !== undefined && (opt.index === userVotedIdx || idx === userVotedIdx));
 
           var row = document.createElement('div');
-          row.style.cssText = 'position:relative;background:rgba(255,255,255,0.06);border:1px solid ' + (isUser ? 'rgba(0,174,254,0.6)' : 'rgba(255,255,255,0.12)') + ';border-radius:10px;padding:9px 12px;margin-bottom:8px;overflow:hidden;';
+          row.style.cssText = 'position:relative;background:#f8fafc;border:1px solid ' + (isUser ? 'rgba(0,174,254,0.6)' : '#e2e8f0') + ';border-radius:10px;padding:9px 12px;margin-bottom:8px;overflow:hidden;';
 
           var fill = document.createElement('div');
-          fill.style.cssText = 'position:absolute;left:0;top:0;bottom:0;background:' + (isUser ? 'linear-gradient(90deg, rgba(0,174,254,0.35), rgba(183,31,113,0.35))' : 'rgba(255,255,255,0.08)') + ';width:0%;transition:width 0.6s ease;z-index:0;border-radius:10px;';
+          fill.style.cssText = 'position:absolute;left:0;top:0;bottom:0;background:' + (isUser ? 'linear-gradient(90deg, rgba(0,174,254,0.22), rgba(183,31,113,0.22))' : '#e2e8f0') + ';width:0%;transition:width 0.6s ease;z-index:0;border-radius:10px;';
 
           var textWrap = document.createElement('div');
-          textWrap.style.cssText = 'position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;color:#ffffff;font-family:\'Figtree\',sans-serif;';
+          textWrap.style.cssText = 'position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:#0f172a;font-family:\'Figtree\',sans-serif;';
 
           var labelSpan = document.createElement('span');
-          labelSpan.style.cssText = 'font-weight:500;display:flex;align-items:center;gap:4px;';
+          labelSpan.style.cssText = 'font-weight:600;display:flex;align-items:center;gap:4px;color:#1e293b;';
           labelSpan.textContent = opt.option;
           if (isUser) {
-            labelSpan.innerHTML += ' <span style="font-size:0.65rem;background:#00AEFE;color:#fff;padding:1px 5px;border-radius:4px;margin-left:4px;">You</span>';
+            labelSpan.innerHTML += ' <span style="font-size:0.65rem;background:#00AEFE;color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;font-weight:700;">You</span>';
           }
           if (isTop) {
-            labelSpan.innerHTML += ' <span style="font-size:0.65rem;background:#B71F71;color:#fff;padding:1px 5px;border-radius:4px;margin-left:4px;">Leading</span>';
+            labelSpan.innerHTML += ' <span style="font-size:0.65rem;background:#B71F71;color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;font-weight:700;">Leading</span>';
           }
 
           var pctSpan = document.createElement('span');
-          pctSpan.style.cssText = 'font-weight:700;color:#00AEFE;font-size:0.8rem;margin-left:8px;';
+          pctSpan.style.cssText = 'font-weight:700;color:#00AEFE;font-size:0.82rem;margin-left:8px;';
           pctSpan.textContent = opt.percentage + '%';
 
           textWrap.appendChild(labelSpan);
@@ -5734,7 +5737,7 @@ min-width: 100px;
         });
 
         var tally = document.createElement('div');
-        tally.style.cssText = 'font-size:0.75rem;color:rgba(255,255,255,0.55);text-align:center;margin-top:8px;font-family:\'Figtree\',sans-serif;';
+        tally.style.cssText = 'font-size:0.75rem;color:#64748b;text-align:center;margin-top:8px;font-family:\'Figtree\',sans-serif;font-weight:500;';
         tally.textContent = total + ' community votes recorded';
         optsWrap.appendChild(tally);
       } else {
@@ -5742,11 +5745,11 @@ min-width: 100px;
           var btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'csp-poll-opt-btn';
-          btn.style.cssText = 'width:100%;text-align:left;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);color:#ffffff;font-family:\'Figtree\',sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer;margin-bottom:8px;transition:all 0.2s ease;display:flex;align-items:center;gap:8px;';
+          btn.style.cssText = 'width:100%;text-align:left;padding:10px 14px;border-radius:10px;border:1px solid #cbd5e1;background:#f8fafc;color:#1e293b;font-family:\'Figtree\',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;margin-bottom:8px;transition:all 0.2s ease;display:flex;align-items:center;gap:8px;';
           btn.textContent = opt.option;
 
-          btn.onmouseover = function(){ btn.style.background = 'rgba(0,174,254,0.15)'; btn.style.borderColor = '#00AEFE'; };
-          btn.onmouseout = function(){ btn.style.background = 'rgba(255,255,255,0.06)'; btn.style.borderColor = 'rgba(255,255,255,0.18)'; };
+          btn.onmouseover = function(){ btn.style.background = 'rgba(0,174,254,0.08)'; btn.style.borderColor = '#00AEFE'; btn.style.color = '#00AEFE'; };
+          btn.onmouseout = function(){ btn.style.background = '#f8fafc'; btn.style.borderColor = '#cbd5e1'; btn.style.color = '#1e293b'; };
 
           btn.addEventListener('click', function(){
             btn.disabled = true;
