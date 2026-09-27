@@ -55,6 +55,8 @@ try {
     ");
     $recentMessages = $recentMessagesStmt->fetchAll();
 
+    $totalAttendees = $pdo->query("SELECT COUNT(*) as count FROM event_reminders")->fetch()['count'] ?? 0;
+
     echo json_encode([
         "success" => true,
         "stats" => [
@@ -64,7 +66,8 @@ try {
             "pendingSubmissions" => intval($pendingSubmissions),
             "totalMessages" => intval($totalMessages),
             "unreadMessages" => intval($unreadMessages),
-            "totalPollVotes" => intval($totalPollVotes)
+            "totalPollVotes" => intval($totalPollVotes),
+            "totalAttendees" => intval($totalAttendees)
         ],
         "topPosts" => $topPosts,
         "recentSubmissions" => $recentSubmissions,

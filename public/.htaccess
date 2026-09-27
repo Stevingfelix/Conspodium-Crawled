@@ -10,8 +10,9 @@ DirectoryIndex index.html index.php install.php
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
 
-    # 2. Allow API scripts, uploads, assets, and install wizard directly
-    RewriteCond %{REQUEST_URI} ^/(install\.php|api/|uploads/|wp-content/|wp-includes/|assets/|2026/) [NC]
+    # 2. Allow API scripts, uploads, assets, sitemaps, robots, and install wizard directly
+    RewriteRule ^sitemap\.xml$ api/sitemap.php [L]
+    RewriteCond %{REQUEST_URI} ^/(install\.php|api/|uploads/|wp-content/|wp-includes/|assets/|robots\.txt|sitemap\.xml|2026/) [NC]
     RewriteRule ^ - [L]
 
     # 3. Handle Root URL

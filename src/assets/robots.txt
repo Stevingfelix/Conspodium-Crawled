@@ -1,0 +1,26 @@
+# Robots.txt for Conspodium (https://conspodium.com)
+# Directives for Googlebot, Bingbot, and web crawlers
+
+User-agent: *
+Allow: /
+Allow: /stories/
+Allow: /post/
+Allow: /category/
+Allow: /about-us/
+Allow: /contact-us/
+Allow: /sponsorship/
+Allow: /advert/
+Allow: /submit-story/
+Allow: /forum/
+
+# Disallow private and administrative areas
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /data/
+Disallow: /scratch/
+Disallow: /tmp/
+Disallow: /install.php
+Disallow: /installation-guide.html
+
+# Sitemap Index
+Sitemap: https://conspodium.com/sitemap.xml

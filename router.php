@@ -15,6 +15,12 @@ if (strpos($uri, '/api/') === 0) {
     return true;
 }
 
+// 0b. Route /sitemap.xml to dynamic generator
+if ($uri === '/sitemap.xml' || $uri === '/sitemap') {
+    require __DIR__ . '/api/sitemap.php';
+    return true;
+}
+
 // 1. Direct file pass-through for existing static assets and PHP API scripts
 if ($uri !== '/' && file_exists($filePath) && !is_dir($filePath)) {
     return false;

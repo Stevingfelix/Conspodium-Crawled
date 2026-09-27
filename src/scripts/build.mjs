@@ -214,6 +214,61 @@ const POST_DATA = {
       <p>When I founded my first company at 24, connecting African artisans with European fashion houses, I realized our dual heritage is our greatest superpower. Bicultural entrepreneurs navigate international markets with nuance, leveraging deep cultural empathy to build sustainable global brands.</p>
       <p>By celebrating authentic craftsmanship and ethical trade practices, these leaders are redefining luxury and creative commerce on a global scale.</p>
     `
+  },
+  'in-conversation-with-dr-ngozi-eze': {
+    id: 42,
+    title: 'In Conversation with Dr. Ngozi Eze: Biotechnology, Indigenous Science, and African Data Sovereignty',
+    author_name: 'The Conspodium Dialogue Desk',
+    published_at: 'February 6, 2026',
+    reading_time: '9 min read',
+    views: 1250,
+    category_name: 'Innovation',
+    category_icon: '💡',
+    category_slug: 'innovation',
+    featured_image: '/wp-content/uploads/2026/01/couple-using-technology-while-traveling-city-scaled.jpg',
+    excerpt: '“Biotechnology is the next frontier of African liberation. We must own our science, our data, and our story.” — Dr. Ngozi Eze, MIT Media Lab.',
+    content: `
+      <div class="csp-interview-transcript-container">
+        <div class="csp-transcript-section">
+          <h3 style="color: #0f172a; margin-top: 10px; font-size: 1.35rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">1. The Dawn of African Biotechnology</h3>
+          
+          <p><strong><span style="color: #00AEFE;">Conspodium:</span></strong> Dr. Eze, thank you for joining us on Conspodium Dialogue. In your recent papers and keynote at the Pan-African Health Summit, you made a provocative statement: <em>"Biotechnology is the next frontier of African liberation. We must own our science, our data, and our story."</em> What does data and scientific ownership mean in practice for the continent and the diaspora today?</p>
+
+          <p><strong><span style="color: #B71F71;">Dr. Ngozi Eze:</span></strong> Thank you for having me. For decades, the global scientific model has treated Africa as a resource colony for biological discovery. International research groups extract genetic samples, endemic plant compounds, and clinical trial data, take them to Western labs, patent the synthesized derivatives, and then sell the therapies back to our people at exorbitant prices. When I speak about scientific liberation, I mean closing that extractive loop. We have the computational power, the molecular biologists, and the diaspora research networks to decode, sequence, and patent our own biomedical innovations right here.</p>
+
+          <blockquote style="border-left: 4px solid #B71F71; margin: 24px 0; padding: 16px 24px; background: #fdf2f8; font-style: italic; font-size: 1.05rem; color: #831843; border-radius: 0 8px 8px 0;">
+            "If we do not control the genomic repositories of the world’s most genetically diverse continent, we are surrendering the intellectual property of the next two centuries."
+          </blockquote>
+
+          <h3 style="color: #0f172a; margin-top: 32px; font-size: 1.35rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">2. Bridging Indigenous Knowledge Systems and Synthetic Biology</h3>
+
+          <p><strong><span style="color: #00AEFE;">Conspodium:</span></strong> Traditional African pharmacopeia has sustained communities for millennia, yet it has often been dismissed in mainstream academia. How is your team combining ancestral ethnobotanical records with contemporary machine learning and high-throughput screening?</p>
+
+          <p><strong><span style="color: #B71F71;">Dr. Ngozi Eze:</span></strong> Indigenous healers in Yorubaland, the Ethiopian highlands, and KwaZulu-Natal have documented sophisticated therapeutic properties for native flora for generations. At BioAfrica Labs, we don't treat this knowledge as folklore — we treat it as structured empirical evidence. Using transformer-based protein-folding models and mass spectrometry, we analyze the multi-compound synergy in these herbal formulations. We’re finding that traditional poly-herbal combinations often prevent drug resistance in pathogens far better than single-molecule synthetic drugs.</p>
+
+          <h3 style="color: #0f172a; margin-top: 32px; font-size: 1.35rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">3. The Role of the Global Diaspora: Brain Circulation over Brain Drain</h3>
+
+          <p><strong><span style="color: #00AEFE;">Conspodium:</span></strong> Many African scientists who trained abroad in Europe and North America struggle with the decision of whether to return permanently or build institutions abroad. How should the diaspora organize its scientific capital?</p>
+
+          <p><strong><span style="color: #B71F71;">Dr. Ngozi Eze:</span></strong> We must retire the binary notion of "brain drain" and replace it with <em>brain circulation</em>. A bioengineer in Boston or Stockholm can run joint computational pipelines with postdocs in Ibadan or Nairobi in real time. We can co-author grants, mentor graduate students, set up remote laboratory hubs, and direct diaspora angel capital into biotech startups across Africa. Distance is no longer a barrier; institutional alignment and governance are what matter.</p>
+
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin: 30px 0;">
+            <h4 style="margin-top: 0; color: #00AEFE; font-size: 1.1rem;">💡 Key Takeaways from Dr. Ngozi Eze:</h4>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8; color: #334155;">
+              <li><strong>Genomic Sovereignty:</strong> Establishing localized biobanks and open-source genomic sequencing infrastructure across African hubs.</li>
+              <li><strong>Ethnobotanical Patenting:</strong> Protecting intellectual property rights for local communities whose traditional medicine informs modern drug discovery.</li>
+              <li><strong>Diaspora R&amp;D Syndicates:</strong> Creating direct investment pipelines between diaspora researchers and continental laboratories.</li>
+            </ul>
+          </div>
+
+          <h3 style="color: #0f172a; margin-top: 32px; font-size: 1.35rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">4. Looking Ahead: Conspodium Readers' Call to Action</h3>
+
+          <p><strong><span style="color: #00AEFE;">Conspodium:</span></strong> What advice do you have for young African researchers, students, and diaspora founders eager to enter biotechnology and life sciences?</p>
+
+          <p><strong><span style="color: #B71F71;">Dr. Ngozi Eze:</span></strong> First, master both the computational and biological disciplines. The frontier of modern biology is written in Python, linear algebra, and RNA sequencing. Second, remain curious about your own environment. Africa is home to over 45,000 plant species and unmatched human genetic diversity. The answers to humanity’s most stubborn health puzzles are right in our soil and DNA. Own your science, tell your story with unapologetic excellence, and build together.</p>
+        </div>
+      </div>
+    `
   }
 };
 
@@ -244,7 +299,86 @@ for (const page of PAGES) {
     const pData = isFallback ? null : (POST_DATA[slug] || null);
 
     if (pData) {
-      html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${pData.title} — Conspodium</title>`);
+      const canonicalUrl = `https://conspodium.com/post/${slug}/`;
+      const postImageUrl = pData.featured_image.startsWith('http') ? pData.featured_image : `https://conspodium.com${pData.featured_image}`;
+      
+      html = html.replace(/<title[\s\S]*?<\/title>/i, `<title>${pData.title} — Conspodium | Premium Diaspora Magazine</title>`);
+      html = html.replace(/<meta name="description"[\s\S]*?>/i, `<meta name="description" content="${pData.excerpt.replace(/"/g, '&quot;')}">`);
+      html = html.replace(/<link rel="canonical"[\s\S]*?>/i, `<link rel="canonical" href="${canonicalUrl}">`);
+      
+      // Update Open Graph Tags
+      html = html.replace(/<meta property="og:title"[\s\S]*?>/i, `<meta property="og:title" content="${pData.title.replace(/"/g, '&quot;')}">`);
+      html = html.replace(/<meta property="og:description"[\s\S]*?>/i, `<meta property="og:description" content="${pData.excerpt.replace(/"/g, '&quot;')}">`);
+      html = html.replace(/<meta property="og:url"[\s\S]*?>/i, `<meta property="og:url" content="${canonicalUrl}">`);
+      html = html.replace(/<meta property="og:image"[\s\S]*?>/i, `<meta property="og:image" content="${postImageUrl}">`);
+
+      // Update Twitter Card Tags
+      html = html.replace(/<meta name="twitter:title"[\s\S]*?>/i, `<meta name="twitter:title" content="${pData.title.replace(/"/g, '&quot;')}">`);
+      html = html.replace(/<meta name="twitter:description"[\s\S]*?>/i, `<meta name="twitter:description" content="${pData.excerpt.replace(/"/g, '&quot;')}">`);
+      html = html.replace(/<meta name="twitter:image"[\s\S]*?>/i, `<meta name="twitter:image" content="${postImageUrl}">`);
+
+      // Update Schema.org NewsArticle & Breadcrumbs JSON-LD
+      const schemaJson = JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "NewsArticle",
+            "@id": `${canonicalUrl}#article`,
+            "isPartOf": { "@id": canonicalUrl },
+            "headline": pData.title,
+            "description": pData.excerpt,
+            "url": canonicalUrl,
+            "image": [postImageUrl],
+            "datePublished": pData.published_at,
+            "dateModified": pData.published_at,
+            "author": {
+              "@type": "Person",
+              "name": pData.author_name
+            },
+            "publisher": {
+              "@type": "NewsMediaOrganization",
+              "name": "Conspodium",
+              "url": "https://conspodium.com",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://conspodium.com/wp-content/uploads/2026/01/conspodium-loader.png"
+              }
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": canonicalUrl
+            },
+            "articleSection": pData.category_name
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": `${canonicalUrl}#breadcrumb`,
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://conspodium.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": pData.category_name,
+                "item": `https://conspodium.com/category/${pData.category_slug}/`
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": pData.title,
+                "item": canonicalUrl
+              }
+            ]
+          }
+        ]
+      }, null, 2);
+
+      html = html.replace(/<script type="application\/ld\+json" id="(post-schema-json|schema-article-jsonld)">[\s\S]*?<\/script>/i, `<script type="application/ld+json" id="schema-article-jsonld">\n${schemaJson}\n  </script>`);
+
       html = html.replace(/<h1 class="csp-post-title" id="post-title">[\s\S]*?<\/h1>/i, `<h1 class="csp-post-title" id="post-title">${pData.title}</h1>`);
       html = html.replace(/<strong id="post-author"[\s\S]*?<\/strong>/i, `<strong id="post-author" style="color:#0f172a;">${pData.author_name}</strong>`);
       html = html.replace(/<span id="post-date">[\s\S]*?<\/span>/i, `<span id="post-date">${pData.published_at}</span>`);
@@ -337,6 +471,94 @@ for (const page of PAGES) {
   await writeFile(outFile, html, 'utf8');
   console.log(`     ✓  ${page.id.padEnd(16)} → public/${page.out}`);
 }
+
+// Step 4 — Build Static Sitemap.xml
+process.stdout.write('\n  3. Generating static sitemap.xml... ');
+const today = new Date().toISOString().split('T')[0];
+let staticSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://conspodium.com/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://conspodium.com/stories/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://conspodium.com/about-us/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://conspodium.com/contact-us/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://conspodium.com/forum/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://conspodium.com/sponsorship/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://conspodium.com/advert/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://conspodium.com/submit-story/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+`;
+
+// Add Category URLs
+const staticCategories = [
+  'culture-heritage', 'innovation', 'art-entertainment', 'community', 'success-stories', 'news-features', 'events'
+];
+for (const cat of staticCategories) {
+  staticSitemap += `  <url>
+    <loc>https://conspodium.com/category/${cat}/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>\n`;
+}
+
+// Add Article URLs
+for (const [slug, item] of Object.entries(POST_DATA)) {
+  const imgUrl = item.featured_image.startsWith('http') ? item.featured_image : `https://conspodium.com${item.featured_image}`;
+  staticSitemap += `  <url>
+    <loc>https://conspodium.com/post/${slug}/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>${imgUrl}</image:loc>
+      <image:title>${item.title.replace(/&/g, '&amp;')}</image:title>
+    </image:image>
+  </url>\n`;
+}
+
+staticSitemap += `</urlset>\n`;
+await writeFile(join(PUBLIC, 'sitemap.xml'), staticSitemap, 'utf8');
+console.log('✓');
 
 console.log('\n✅ Build complete → public/');
 console.log('   Run: npm start  →  http://localhost:8080\n');

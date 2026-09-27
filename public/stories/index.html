@@ -1,9 +1,67 @@
 <!DOCTYPE html><html lang="en-US"><head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">			<title>
-			Stories – Conspodium I Premium Diaspora Magazine		</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="max-image-preview:large">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<title>Stories &amp; Features | Conspodium Magazine</title>
+	<meta name="description" content="Explore insightful articles, investigative features, and cultural narratives shaping the global pan-African diaspora across innovation, heritage, arts, and enterprise.">
+	<meta name="keywords" content="diaspora stories, pan-African journalism, African innovation, culture heritage, diaspora features, African thinkers, Conspodium articles">
+	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+	<link rel="canonical" href="https://conspodium.com/stories/">
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Conspodium Magazine">
+	<meta property="og:title" content="Stories &amp; Features | Conspodium Magazine">
+	<meta property="og:description" content="Explore insightful articles, investigative features, and cultural narratives shaping the global pan-African diaspora.">
+	<meta property="og:url" content="https://conspodium.com/stories/">
+	<meta property="og:image" content="https://conspodium.com/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg">
+	<meta property="og:locale" content="en_US">
+
+	<!-- Twitter Cards -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@conspodium">
+	<meta name="twitter:title" content="Stories &amp; Features | Conspodium Magazine">
+	<meta name="twitter:description" content="Explore insightful articles, investigative features, and cultural narratives shaping the global pan-African diaspora.">
+	<meta name="twitter:image" content="https://conspodium.com/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg">
+
+	<!-- Schema.org JSON-LD -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "CollectionPage",
+				"@id": "https://conspodium.com/stories/#webpage",
+				"url": "https://conspodium.com/stories/",
+				"name": "Stories & Features | Conspodium Magazine",
+				"description": "Explore insightful articles, investigative features, and cultural narratives shaping the global pan-African diaspora.",
+				"isPartOf": {
+					"@type": "WebSite",
+					"@id": "https://conspodium.com/#website",
+					"url": "https://conspodium.com/",
+					"name": "Conspodium"
+				}
+			},
+			{
+				"@type": "BreadcrumbList",
+				"@id": "https://conspodium.com/stories/#breadcrumb",
+				"itemListElement": [
+					{
+						"@type": "ListItem",
+						"position": 1,
+						"name": "Home",
+						"item": "https://conspodium.com/"
+					},
+					{
+						"@type": "ListItem",
+						"position": 2,
+						"name": "Stories Hub",
+						"item": "https://conspodium.com/stories/"
+					}
+				]
+			}
+		]
+	}
+	</script>
 	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
 	<title>Stories – Conspodium I Premium Diaspora Magazine</title>
 <link rel="alternate" type="application/rss+xml" title="Conspodium I Premium Diaspora Magazine » Feed" href="/feed/">
@@ -5662,13 +5720,10 @@ min-width: 100px;
     .catch(function(err){ console.error('Error loading categories:', err); });
 
   // 1b. Fetch & Hydrate Dynamic Featured Spotlight Story
-  fetch(getRoot('api/posts.php?featured=1&limit=1'))
+  fetch(getRoot('api/posts.php?spotlight=1'))
     .then(function(r){ return r.json(); })
     .then(function(res){
-      var post = null;
-      if (res.success && res.posts && res.posts.length > 0) {
-        post = res.posts[0];
-      }
+      var post = (res.success && res.post) ? res.post : null;
       if (!post) return;
 
       var titleEl = document.getElementById('csp-spotlight-title');
@@ -5682,21 +5737,22 @@ min-width: 100px;
       if (excerptEl && (post.excerpt || post.content)) {
         excerptEl.textContent = post.excerpt || (post.content.replace(/<[^>]*>?/gm, '').substring(0, 160) + '...');
       }
-      var postUrl = getRoot('post/' + post.slug + '/');
+      var slug = post.slug || post.id;
+      var postUrl = getRoot('post/' + slug + '/');
       if (linkEl) linkEl.href = postUrl;
       if (metaEl) {
-        var readTime = post.read_time ? (post.read_time + ' min read') : '6 min read';
+        var readTime = post.reading_time || (post.read_time ? (post.read_time + ' min read') : '6 min read');
         var author = post.author_name || post.author || 'Editorial Desk';
         metaEl.textContent = '⏱️ ' + readTime + ' · By ' + author;
       }
       if (imgEl && (post.featured_image || post.image)) {
         imgEl.src = getAbsImg(post.featured_image || post.image);
       }
-      if (badgeEl && post.eyebrow) {
-        badgeEl.innerHTML = '🔥 ' + post.eyebrow.toUpperCase();
+      if (badgeEl) {
+        badgeEl.innerHTML = '🔥 ' + (post.eyebrow || post.category_name || 'FEATURED SPOTLIGHT').toUpperCase();
       }
     })
-    .catch(function(e){ console.warn('Could not load dynamic featured story:', e); });
+    .catch(function(e){ console.warn('Could not load dynamic featured spotlight story:', e); });
 
   // 1c. Fetch & Hydrate Dynamic Weekly Prompt Poll
   var pollCard = document.getElementById('csp-stories-sidebar-poll') || document.querySelector('.csp-sidebar-poll');

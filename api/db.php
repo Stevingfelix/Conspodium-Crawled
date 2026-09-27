@@ -132,6 +132,7 @@ try {
             reading_time TEXT DEFAULT '5 min read',
             views INTEGER DEFAULT 0,
             is_featured INTEGER DEFAULT 0,
+            is_spotlight INTEGER DEFAULT 0,
             status TEXT DEFAULT 'published',
             published_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
@@ -214,6 +215,9 @@ try {
         $pdo->exec("ALTER TABLE posts ADD COLUMN is_featured INTEGER DEFAULT 0");
     } catch (Exception $e) {}
     try {
+        $pdo->exec("ALTER TABLE posts ADD COLUMN is_spotlight INTEGER DEFAULT 0");
+    } catch (Exception $e) {}
+    try {
         $pdo->exec("ALTER TABLE story_submissions ADD COLUMN category TEXT");
     } catch (Exception $e) {}
     try {
@@ -256,6 +260,7 @@ try {
             user_email TEXT NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_event_reminders_email_event ON event_reminders (user_email, event_name);
 
         CREATE TABLE IF NOT EXISTS admins (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1028,6 +1033,38 @@ try {
             date('Y-m-d H:i:s', strtotime('-18 hours'))
         ]);
     }
+}
+
+// ── UNCONDITIONAL RUNTIME MIGRATIONS & SCHEMA UPDATES ────────────────────────
+try {
+    $pdo->exec("
+        CREATE TABLE IF NOT EXISTS interviews (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            slug TEXT NOT NULL UNIQUE,
+            interviewee_name TEXT NOT NULL,
+            interviewee_role TEXT,
+            interviewee_photo TEXT,
+            interview_type TEXT DEFAULT 'past',
+            quote TEXT,
+            transcript_content TEXT,
+            audio_url TEXT,
+            link_type TEXT DEFAULT 'internal',
+            external_url TEXT,
+            event_date TEXT,
+            rsvp_link TEXT,
+            is_hero_slide INTEGER DEFAULT 0,
+            is_upcoming_featured INTEGER DEFAULT 0,
+            status TEXT DEFAULT 'published',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ");
+
+    try { $pdo->exec("ALTER TABLE posts ADD COLUMN is_spotlight INTEGER DEFAULT 0"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE posts ADD COLUMN is_featured INTEGER DEFAULT 0"); } catch (Exception $e) {}
+} catch (Throwable $e) {
+    error_log("Runtime Migration Error: " . $e->getMessage());
 }
 
 } catch (Throwable $e) {

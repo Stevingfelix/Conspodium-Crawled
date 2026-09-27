@@ -4,6 +4,9 @@ header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, X-Admin-Token, Authorization");
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
@@ -242,12 +245,29 @@ if ($method === 'GET') {
             SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
             FROM posts p
             LEFT JOIN categories c ON p.category_id = c.id
-            WHERE (p.status = 'published' OR p.status IS NULL OR p.status = '')
-            ORDER BY p.is_featured DESC, p.published_at DESC
+            WHERE p.is_spotlight = 1 AND (p.status = 'published' OR p.status IS NULL OR p.status = '')
             LIMIT 1
         ");
         $spotlight = $stmt->fetch();
-        echo json_encode(["success" => true, "post" => $spotlight]);
+
+        // Fallback to latest published if no custom spotlight is set
+        if (!$spotlight) {
+            $stmt = $pdo->query("
+                SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
+                FROM posts p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE (p.status = 'published' OR p.status IS NULL OR p.status = '')
+                ORDER BY p.published_at DESC
+                LIMIT 1
+            ");
+            $spotlight = $stmt->fetch();
+        }
+
+        echo json_encode([
+            "success" => true,
+            "post" => $spotlight,
+            "spotlight_post_id" => $spotlight ? intval($spotlight['id']) : null
+        ]);
         exit;
     }
 
@@ -393,8 +413,8 @@ if ($method === 'POST') {
         }
         
         if ($action === 'set_spotlight') {
-            $pdo->prepare("UPDATE posts SET is_featured = 0")->execute();
-            $stmt = $pdo->prepare("UPDATE posts SET is_featured = 1 WHERE id = ?");
+            $pdo->exec("UPDATE posts SET is_spotlight = 0");
+            $stmt = $pdo->prepare("UPDATE posts SET is_spotlight = 1 WHERE id = ?");
             $stmt->execute([$targetId]);
 
             $fetchStmt = $pdo->prepare("
@@ -408,7 +428,8 @@ if ($method === 'POST') {
 
             echo json_encode([
                 "success" => true,
-                "is_featured" => 1,
+                "is_spotlight" => 1,
+                "spotlight_post_id" => $targetId,
                 "post" => $updatedPost,
                 "message" => "Post successfully set as the active Featured Spotlight story!"
             ]);

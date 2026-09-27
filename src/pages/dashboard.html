@@ -2025,13 +2025,13 @@ e-page-transition,
           <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:16px;margin-bottom:20px;">
             <label style="font-weight:700;color:#0f172a;font-size:0.9rem;display:block;margin-bottom:10px;">Select Operating Mode:</label>
             <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
-              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.88rem;color:#0f172a;font-weight:600;">
-                <input type="radio" name="la_mode" value="auto" id="la-mode-auto" checked onchange="toggleLivingArchiveModeUI()" style="accent-color:var(--blue);width:16px;height:16px;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.88rem;color:#0f172a;font-weight:600;" onclick="var r = document.getElementById('la-mode-auto'); if(r){r.checked = true; toggleLivingArchiveModeUI();}">
+                <input type="radio" name="la_mode" value="auto" id="la-mode-auto" checked onchange="toggleLivingArchiveModeUI()" style="accent-color:var(--blue);width:16px;height:16px;cursor:pointer;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 Automatic Mode (Auto-calculates from database metrics, latest articles &amp; live discussions)
               </label>
-              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.88rem;color:#0f172a;font-weight:600;">
-                <input type="radio" name="la_mode" value="custom" id="la-mode-custom" onchange="toggleLivingArchiveModeUI()" style="accent-color:var(--blue);width:16px;height:16px;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.88rem;color:#0f172a;font-weight:600;" onclick="var r = document.getElementById('la-mode-custom'); if(r){r.checked = true; toggleLivingArchiveModeUI();}">
+                <input type="radio" name="la_mode" value="custom" id="la-mode-custom" onchange="toggleLivingArchiveModeUI()" style="accent-color:var(--blue);width:16px;height:16px;cursor:pointer;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 Custom / Manual Mode (Select articles from database or pin custom content)
               </label>
@@ -2039,8 +2039,20 @@ e-page-transition,
           </div>
 
           <div id="la-custom-fields-wrapper" style="display:none;">
+            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+              <div style="font-size:0.84rem;color:#1e40af;font-weight:600;display:flex;align-items:center;gap:8px;">
+                <span>✨ <strong>Custom Archive Slots:</strong> Pick articles from the dropdowns below or customize titles and links directly.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <input type="text" id="la-quick-search-input" onkeyup="filterLivingArchiveDropdowns(this.value)" placeholder="🔍 Quick filter articles in dropdowns..." style="padding:6px 12px;font-size:0.82rem;border-radius:8px;border:1px solid #93c5fd;background:#fff;width:240px;color:#0f172a;">
+              </div>
+            </div>
+
             <!-- Present Tab -->
             <h4 style="font-size:0.9rem;color:var(--blue);margin-bottom:12px;border-bottom:1px solid #e2e8f0;padding-bottom:6px;display:flex;align-items:center;gap:6px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Present Tab (Slots 1, 2, 3)
+            </h4>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               Present Tab (Slots 1, 2, 3)
             </h4>
@@ -2190,9 +2202,10 @@ e-page-transition,
             </div>
           </div>
 
-          <div style="margin-top:16px;">
-            <button type="submit" class="csp-btn-sm csp-btn-primary" style="padding:10px 24px;">Save Living Archive Settings</button>
-          </div>
+          <button type="button" id="btn-toggle-la-edit" class="csp-btn-sm csp-btn-secondary" style="height:42px;width:100%;justify-content:center;margin-top:16px;">
+            <svg class="csp-nav-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Edit Section
+          </button>
         </form>
       </div>
     </div>
@@ -2213,8 +2226,9 @@ e-page-transition,
             <button type="button" class="post-subtab-btn" id="btn-post-subtab-published" onclick="filterPostsSubTab('published')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#64748b;">Published (<span id="cnt-posts-published">0</span>)</button>
             <button type="button" class="post-subtab-btn" id="btn-post-subtab-draft" onclick="filterPostsSubTab('draft')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#64748b;">📝 Drafts (<span id="cnt-posts-draft">0</span>)</button>
           </div>
-          <button type="button" class="post-subtab-btn" id="btn-post-subtab-spotlight" onclick="filterPostsSubTab('spotlight')" style="padding:6px 16px;border-radius:20px;border:1px solid #f59e0b;background:#fffbeb;font-size:0.82rem;font-weight:700;cursor:pointer;color:#b45309;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s ease;">
+          <button type="button" class="post-subtab-btn" id="btn-post-subtab-spotlight" onclick="filterPostsSubTab('spotlight')" style="padding:8px 18px;border-radius:12px;border:1px solid #334155;background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);font-size:0.84rem;font-weight:700;cursor:pointer;color:#ffffff;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(15,23,42,0.18);transition:all 0.2s ease;" title="Configure the Featured Spotlight Hero Story (powers /stories/ top banner and Homepage Hero Slide 2)">
             ⭐ Featured Spotlight Story
+            <span id="badge-spotlight-status" style="font-size:0.72rem;background:#38bdf8;color:#0f172a;padding:2px 8px;border-radius:10px;font-weight:800;letter-spacing:0.02em;">Stories & Hero</span>
           </button>
         </div>
 
@@ -2230,7 +2244,8 @@ e-page-transition,
                   <th>Author</th>
                   <th>Published Date</th>
                   <th>Views</th>
-                  <th>Featured</th>
+                  <th>Hero Slider</th>
+                  <th>Spotlight Story</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -2255,7 +2270,11 @@ e-page-transition,
               <h4 style="margin:0 0 4px;font-size:1.15rem;color:#0f172a;font-weight:800;">Featured Spotlight Story Selection</h4>
               <p style="margin:0;font-size:0.85rem;color:#475569;max-width:620px;">Select any published article to immediately feature at the top of the <a href="/stories/" target="_blank" style="color:#0284c7;font-weight:600;text-decoration:none;">Stories Hub (/stories/) ↗</a>. Real-time live preview renders below.</p>
             </div>
-            <div style="display:flex;align-items:center;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <button type="button" onclick="filterPostsSubTab('all')" class="csp-btn-sm csp-btn-secondary" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;font-weight:600;cursor:pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                ← Back to Articles Table
+              </button>
               <a href="/stories/" target="_blank" class="csp-btn-sm csp-btn-secondary" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:8px 16px;font-weight:600;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 View Live Stories Page
@@ -3043,38 +3062,46 @@ e-page-transition,
 
     <!-- ── ATTENDEES BROADCAST / FOLLOW-UP EMAIL MODAL ── -->
     <div class="csp-modal-overlay" id="modal-attendees-email">
-      <div class="csp-modal" style="max-width:600px;">
-        <div class="csp-modal-header">
-          <h3 class="csp-modal-title" style="display:flex;align-items:center;gap:8px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Send Attendee Email
-          </h3>
-          <button type="button" class="csp-modal-close" onclick="closeModal('modal-attendees-email')">&times;</button>
+      <div class="csp-modal" style="max-width:580px;border-radius:18px;box-shadow:0 25px 60px -12px rgba(15,23,42,0.3);border:1px solid #e2e8f0;padding:26px 28px;">
+        <div class="csp-modal-header" style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(0,174,254,0.12);display:flex;align-items:center;justify-content:center;color:#00AEFE;flex-shrink:0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <h3 class="csp-modal-title" style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0;">Broadcast Attendee Email</h3>
+              <p style="font-size:0.78rem;color:#64748b;margin:2px 0 0;">Send updates, calendar links, or notes to event RSVPs.</p>
+            </div>
+          </div>
+          <button type="button" class="csp-modal-close" onclick="closeModal('modal-attendees-email')" style="font-size:1.6rem;line-height:1;color:#64748b;cursor:pointer;background:none;border:none;">&times;</button>
         </div>
         <form id="form-attendees-email" onsubmit="sendAttendeesBroadcast(event)">
-          <div class="csp-form-group" style="margin-bottom:14px;">
-            <label class="csp-label">Target Audience / Recipient *</label>
-            <select id="att-email-target-select" onchange="onAttendeesTargetSelectChange()" style="width:100%;padding:9px 12px;border:1px solid #cbd5e1;border-radius:8px;font-weight:600;color:#0f172a;background:#fff;font-size:0.88rem;outline:none;">
+          <div class="csp-form-group" style="margin-bottom:16px;">
+            <label class="csp-form-label">Target Audience / Recipient *</label>
+            <select id="att-email-target-select" class="csp-form-input" onchange="onAttendeesTargetSelectChange()" style="width:100%;cursor:pointer;">
               <option value="active">🎯 Active Event Attendees Only</option>
               <option value="all">🌐 All Historical Attendees (All Events)</option>
               <option value="custom">✉️ Specific Attendee Email Address</option>
             </select>
           </div>
-          <div class="csp-form-group" id="att-email-custom-wrapper" style="margin-bottom:14px;display:none;">
-            <label class="csp-label">Recipient Email Address *</label>
-            <input type="email" id="att-email-custom-recipient" class="csp-input" placeholder="attendee@example.com" />
+          <div class="csp-form-group" id="att-email-custom-wrapper" style="margin-bottom:16px;display:none;">
+            <label class="csp-form-label">Recipient Email Address *</label>
+            <input type="email" id="att-email-custom-recipient" class="csp-form-input" placeholder="attendee@example.com" />
           </div>
-          <div class="csp-form-group" style="margin-bottom:14px;">
-            <label class="csp-label">Subject *</label>
-            <input type="text" id="att-email-subject" class="csp-input" required placeholder="e.g. Important details & link for tomorrow's Live Discussion" />
+          <div class="csp-form-group" style="margin-bottom:16px;">
+            <label class="csp-form-label">Subject Line *</label>
+            <input type="text" id="att-email-subject" class="csp-form-input" required placeholder="e.g. Important details & Zoom link for tomorrow's Live Discussion" />
           </div>
-          <div class="csp-form-group" style="margin-bottom:18px;">
-            <label class="csp-label">Message Content *</label>
-            <textarea id="att-email-message" class="csp-textarea" rows="6" required placeholder="Write your follow-up message, meeting link, or post-event wrap-up notes here..."></textarea>
+          <div class="csp-form-group" style="margin-bottom:20px;">
+            <label class="csp-form-label" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Message Content (HTML Supported) *</span>
+              <span style="font-size:0.73rem;font-weight:400;color:#64748b;">Tags: {name}, {event_name}, {zoom_link}</span>
+            </label>
+            <textarea id="att-email-message" class="csp-form-textarea" rows="6" required placeholder="Write your follow-up message, meeting link, or post-event wrap-up notes here..." style="width:100%;line-height:1.6;font-family:inherit;"></textarea>
           </div>
-          <div style="display:flex;justify-content:flex-end;gap:10px;">
-            <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="closeModal('modal-attendees-email')">Cancel</button>
-            <button type="submit" id="btn-submit-att-email" class="csp-btn-sm csp-btn-primary" style="background:linear-gradient(135deg,#00AEFE,#007bb5);border:none;font-weight:600;">
+          <div style="display:flex;justify-content:flex-end;gap:10px;padding-top:12px;border-top:1px solid #f1f5f9;">
+            <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="closeModal('modal-attendees-email')" style="padding:8px 18px;font-size:0.85rem;">Cancel</button>
+            <button type="submit" id="btn-submit-att-email" class="csp-btn-sm csp-btn-primary" style="background:linear-gradient(135deg,#00AEFE,#007bb5);border:none;font-weight:600;padding:8px 22px;font-size:0.85rem;box-shadow:0 4px 14px rgba(0,174,254,0.35);">
               🚀 Send Email Broadcast
             </button>
           </div>
@@ -4126,6 +4153,11 @@ e-page-transition,
           contactBadge.style.display = res.stats.unreadMessages > 0 ? 'inline-block' : 'none';
         }
 
+        var attBadge = document.getElementById('sidebar-attendees-badge');
+        if (attBadge) {
+          attBadge.textContent = res.stats.totalAttendees || 0;
+        }
+
         var topTbody = document.getElementById('overview-top-posts-table');
         if(topTbody && res.topPosts) {
           topTbody.innerHTML = '';
@@ -4339,9 +4371,9 @@ e-page-transition,
     if (activeBtn) {
       activeBtn.classList.add('active');
       if (status === 'spotlight') {
-        activeBtn.style.color = '#b45309';
-        activeBtn.style.borderColor = '#f59e0b';
-        activeBtn.style.background = '#fef3c7';
+        activeBtn.style.color = '#ffffff';
+        activeBtn.style.borderColor = '#0f172a';
+        activeBtn.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)';
       } else {
         activeBtn.style.color = '#0f172a';
         activeBtn.style.borderColor = '#00AEFE';
@@ -4382,30 +4414,28 @@ e-page-transition,
     var statusBadge = document.getElementById('spotlight-active-status-badge');
     if (!selectEl) return;
 
-    var publishedPosts = allPostsRawCache.filter(function(p){ return p.status !== 'draft'; });
-
-    var selectHtml = '<option value="">-- Choose a Published Article --</option>';
-    publishedPosts.forEach(function(p){
-      var isFeat = (p.is_featured == 1);
-      selectHtml += `<option value="${p.id}" ${isFeat ? 'selected' : ''}>${isFeat ? '⭐ [ACTIVE SPOTLIGHT] ' : ''}${p.title} (${p.author_name || 'Editorial'})</option>`;
-    });
-    selectEl.innerHTML = selectHtml;
+    var publishedPosts = (allPostsRawCache || []).filter(function(p){ return p.status !== 'draft'; });
 
     fetch(getRootUrl('api/posts.php?spotlight=1'))
       .then(function(r){ return r.json(); })
       .then(function(res){
+        var activeId = (res.success && res.post) ? String(res.post.id) : null;
         if (res.success && res.post) {
           currentSpotlightPost = res.post;
-          if (selectEl) selectEl.value = res.post.id;
           if (statusBadge) {
             statusBadge.innerHTML = `<span style="color:#059669;font-weight:700;">🟢 Active: ${res.post.title.substring(0, 38)}...</span>`;
           }
+          var navBadge = document.getElementById('badge-spotlight-status');
+          if (navBadge) navBadge.textContent = 'Active: #' + res.post.id;
           updateSpotlightLivePreview(res.post);
-        } else if (publishedPosts.length > 0) {
-          currentSpotlightPost = publishedPosts[0];
-          updateSpotlightLivePreview(publishedPosts[0]);
-          if (statusBadge) statusBadge.innerHTML = '<span style="color:#64748b;">No spotlight set. Defaulting to newest.</span>';
         }
+
+        var selectHtml = '<option value="">-- Choose a Published Article --</option>';
+        publishedPosts.forEach(function(p){
+          var isSpotlight = (activeId && String(p.id) === activeId);
+          selectHtml += `<option value="${p.id}" ${isSpotlight ? 'selected' : ''}>${isSpotlight ? '⭐ [ACTIVE SPOTLIGHT] ' : ''}${p.title} (${p.author_name || 'Editorial'})</option>`;
+        });
+        selectEl.innerHTML = selectHtml;
       })
       .catch(function(e){
         if (publishedPosts.length > 0) {
@@ -4439,6 +4469,83 @@ e-page-transition,
     if (imgEl) imgEl.src = getAbsoluteImageUrl(post.featured_image || '/wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');
   }
 
+  window.togglePostFeatured = function(postId) {
+    if (!postId) return;
+    var token = localStorage.getItem('conspodium_admin_token') || localStorage.getItem('csp_admin_token') || '';
+    fetch(getRootUrl('api/posts.php?action=toggle_featured&id=' + postId), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Token': token
+      },
+      body: JSON.stringify({ id: parseInt(postId, 10) })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success) {
+        if (window.cspToast) window.cspToast(res.message || 'Hero slider feature toggled!', 'success');
+        if (postsCache) {
+          var found = postsCache.find(function(p){ return String(p.id) === String(postId); });
+          if (found) found.is_featured = res.is_featured;
+        }
+        if (allPostsRawCache) {
+          var foundRaw = allPostsRawCache.find(function(p){ return String(p.id) === String(postId); });
+          if (foundRaw) foundRaw.is_featured = res.is_featured;
+        }
+        renderPostsPage(currentPostsPage);
+      } else {
+        if (window.cspToast) window.cspToast('Failed to toggle hero feature: ' + (res.error || ''), 'danger');
+      }
+    })
+    .catch(function(e){
+      if (window.cspToast) window.cspToast('Network error toggling featured status.', 'danger');
+    });
+  };
+
+  window.setPostAsSpotlightDirect = function(postId) {
+    if (!postId) return;
+    var token = localStorage.getItem('conspodium_admin_token') || localStorage.getItem('csp_admin_token') || '';
+
+    fetch(getRootUrl('api/posts.php?action=set_spotlight&id=' + postId), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Token': token
+      },
+      body: JSON.stringify({ id: parseInt(postId, 10) })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success) {
+        if (window.cspToast) window.cspToast('⭐ Article set as Featured Spotlight Story!', 'success');
+        if (postsCache) {
+          postsCache.forEach(function(p){ p.is_spotlight = (String(p.id) === String(postId)) ? 1 : 0; });
+        }
+        if (allPostsRawCache) {
+          allPostsRawCache.forEach(function(p){ p.is_spotlight = (String(p.id) === String(postId)) ? 1 : 0; });
+        }
+        if (res.post) {
+          currentSpotlightPost = res.post;
+          var statusBadge = document.getElementById('spotlight-active-status-badge');
+          if (statusBadge) {
+            statusBadge.innerHTML = `<span style="color:#059669;font-weight:700;">🟢 Active: ${res.post.title.substring(0, 38)}...</span>`;
+          }
+          var selectEl = document.getElementById('spotlight-post-select');
+          if (selectEl) selectEl.value = res.post.id;
+          var navBadge = document.getElementById('badge-spotlight-status');
+          if (navBadge) navBadge.textContent = 'Active: #' + res.post.id;
+          updateSpotlightLivePreview(res.post);
+        }
+        renderPostsPage(currentPostsPage);
+      } else {
+        if (window.cspToast) window.cspToast('Failed to set spotlight: ' + (res.error || 'Unknown error'), 'danger');
+      }
+    })
+    .catch(function(err){
+      if (window.cspToast) window.cspToast('Network error updating spotlight.', 'danger');
+    });
+  };
+
   window.saveActiveSpotlight = function() {
     var selectEl = document.getElementById('spotlight-post-select');
     var saveBtn = document.getElementById('btn-save-spotlight');
@@ -4446,7 +4553,7 @@ e-page-transition,
     var postId = selectEl ? selectEl.value : null;
 
     if (!postId) {
-      cspToast('Please choose an article from the dropdown to feature.', 'warning');
+      if (window.cspToast) window.cspToast('Please choose an article from the dropdown to feature.', 'warning');
       return;
     }
 
@@ -4455,13 +4562,15 @@ e-page-transition,
       saveBtn.innerHTML = '⏳ Saving Spotlight...';
     }
 
-    fetch(getRootUrl('api/posts.php?action=set_spotlight'), {
+    var token = localStorage.getItem('conspodium_admin_token') || localStorage.getItem('csp_admin_token') || '';
+
+    fetch(getRootUrl('api/posts.php?action=set_spotlight&id=' + postId), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Admin-Token': adminToken || localStorage.getItem('csp_admin_token') || ''
+        'X-Admin-Token': token
       },
-      body: JSON.stringify({ id: postId })
+      body: JSON.stringify({ id: parseInt(postId, 10) })
     })
     .then(function(r){ return r.json(); })
     .then(function(res){
@@ -4470,13 +4579,25 @@ e-page-transition,
         saveBtn.innerHTML = '⭐ Save as Active Spotlight';
       }
       if (res.success) {
-        cspToast('🎉 Spotlight Story updated successfully! Stories hub is synced.', 'success');
-        if (statusBadge && res.post) {
-          statusBadge.innerHTML = `<span style="color:#059669;font-weight:700;">🟢 Active: ${res.post.title.substring(0, 38)}...</span>`;
+        if (window.cspToast) window.cspToast('🎉 Spotlight Story updated successfully! Stories hub & Slide 2 are synced.', 'success');
+        if (postsCache) {
+          postsCache.forEach(function(p){ p.is_spotlight = (String(p.id) === String(postId)) ? 1 : 0; });
         }
-        loadPosts(true);
+        if (allPostsRawCache) {
+          allPostsRawCache.forEach(function(p){ p.is_spotlight = (String(p.id) === String(postId)) ? 1 : 0; });
+        }
+        if (res.post) {
+          currentSpotlightPost = res.post;
+          if (statusBadge) {
+            statusBadge.innerHTML = `<span style="color:#059669;font-weight:700;">🟢 Active: ${res.post.title.substring(0, 38)}...</span>`;
+          }
+          var navBadge = document.getElementById('badge-spotlight-status');
+          if (navBadge) navBadge.textContent = 'Active: #' + res.post.id;
+          updateSpotlightLivePreview(res.post);
+        }
+        renderPostsPage(currentPostsPage);
       } else {
-        cspToast('Failed to update spotlight: ' + (res.error || 'Unknown error'), 'danger');
+        if (window.cspToast) window.cspToast('Failed to update spotlight: ' + (res.error || 'Unknown error'), 'danger');
       }
     })
     .catch(function(err){
@@ -4484,7 +4605,7 @@ e-page-transition,
         saveBtn.disabled = false;
         saveBtn.innerHTML = '⭐ Save as Active Spotlight';
       }
-      cspToast('Network error saving spotlight.', 'danger');
+      if (window.cspToast) window.cspToast('Network error updating spotlight.', 'danger');
     });
   };
 
@@ -4575,10 +4696,13 @@ e-page-transition,
         </button>
       ` : '';
 
+      var isHeroFeat = (p.is_featured == 1 || p.is_featured === true || p.is_featured === '1');
+      var isSpotlight = (currentSpotlightPost && String(currentSpotlightPost.id) === String(p.id));
+
       tbody.innerHTML += `
         <tr>
           <td style="text-align:center;"><input type="checkbox" class="post-cb" data-id="${p.id}" style="cursor:pointer;" /></td>
-          <td style="font-weight:600;max-width:320px;cursor:pointer;" onclick="openViewArticleModal(${p.id})">
+          <td style="font-weight:600;max-width:300px;cursor:pointer;" onclick="openViewArticleModal(${p.id})">
             <div style="display:flex;align-items:center;">
               ${imgThumb}
               <div>
@@ -4591,7 +4715,16 @@ e-page-transition,
           <td>${p.author_name}</td>
           <td>${pubDate}</td>
           <td>${(p.views || 0).toLocaleString()}</td>
-          <td>${p.is_featured ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.75rem;padding:4px 8px;white-space:nowrap;">⭐ Hero: Enabled</span>' : '<span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">Hero: Disabled</span>'}</td>
+          <td>
+            <button type="button" class="csp-btn-sm" onclick="togglePostFeatured(${p.id})" style="font-size:0.74rem;padding:4px 10px;border-radius:20px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:4px;${isHeroFeat ? 'background:#eff6ff;color:#1d4ed8;border:1px solid #93c5fd;' : 'background:#f8fafc;color:#64748b;border:1px solid #cbd5e1;'}" title="${isHeroFeat ? 'Click to remove from Homepage Hero rotating slides' : 'Click to append to Homepage Hero rotating slides'}">
+              ${isHeroFeat ? '⭐ In Hero' : '☆ Add to Hero'}
+            </button>
+          </td>
+          <td>
+            ${isSpotlight 
+              ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.74rem;padding:4px 10px;white-space:nowrap;background:#f0fdf4;color:#15803d;border:1px solid #86efac;font-weight:700;display:inline-flex;align-items:center;gap:4px;">🟢 Active</span>' 
+              : `<button type="button" class="csp-btn-sm" onclick="setPostAsSpotlightDirect(${p.id})" style="font-size:0.72rem;padding:3px 10px;border-radius:20px;color:#475569;background:#f8fafc;border:1px solid #cbd5e1;cursor:pointer;font-weight:600;transition:all 0.2s ease;" title="Set as Featured Spotlight Story (powers /stories/ top banner and Homepage Hero Slide 2)">Set Spotlight</button>`}
+          </td>
           <td>
             ${publishNowBtn}
             <button class="csp-btn-sm csp-btn-secondary" onclick="openViewArticleModal(${p.id})" style="margin-right:4px;">
@@ -8731,14 +8864,42 @@ e-page-transition,
     }
   });
 
-  function populateLivingArchivePostDropdowns() {
-    if (!allArticlesData || allArticlesData.length === 0) return;
+  window.filterLivingArchiveDropdowns = function(query) {
+    populateLivingArchivePostDropdowns(query);
+  };
+
+  function populateLivingArchivePostDropdowns(filterText) {
+    if (!allArticlesData || allArticlesData.length === 0) {
+      fetch(getRootUrl('api/posts.php?limit=100'))
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success && res.posts) {
+            allArticlesData = res.posts;
+            populateLivingArchivePostDropdowns(filterText);
+          }
+        })
+        .catch(function(e){ console.error('Error fetching articles for Living Archive:', e); });
+      return;
+    }
+
+    var q = (filterText || '').toLowerCase().trim();
+    var filtered = allArticlesData;
+    if (q) {
+      filtered = allArticlesData.filter(function(art){
+        return (art.title && art.title.toLowerCase().includes(q)) ||
+               (art.author_name && art.author_name.toLowerCase().includes(q)) ||
+               (art.category_name && art.category_name.toLowerCase().includes(q)) ||
+               String(art.id) === q;
+      });
+    }
+
     var tabs = ['pres', 'past', 'upc'];
-    var optionsHtml = '<option value="">-- Select Article from Database --</option>';
-    allArticlesData.forEach(function(art){
+    var optionsHtml = '<option value="">-- Select Article from Database (' + filtered.length + ' available) --</option>';
+    filtered.forEach(function(art){
       var titleEsc = art.title ? art.title.replace(/"/g, '&quot;') : ('Article #' + art.id);
       var author = art.author_name || 'Editorial Team';
-      optionsHtml += '<option value="' + art.id + '">' + titleEsc + ' (' + author + ')</option>';
+      var cat = art.category_name ? (' · ' + art.category_name) : '';
+      optionsHtml += '<option value="' + art.id + '">#' + art.id + ': ' + titleEsc + ' (' + author + cat + ')</option>';
     });
 
     tabs.forEach(function(tb){
@@ -8835,20 +8996,41 @@ e-page-transition,
     if (!form) return;
     var elems = form.querySelectorAll('input, textarea, select');
     elems.forEach(function(el){
+      if (el.name === 'la_mode' || el.id === 'la-quick-search-input') {
+        el.disabled = false;
+        el.style.cursor = (el.type === 'radio') ? 'pointer' : 'text';
+        el.style.opacity = '1';
+        return;
+      }
       el.disabled = disabled;
       if (disabled) {
-        el.style.backgroundColor = '#f1f5f9';
-        el.style.color = '#64748b';
+        if (el.type !== 'radio' && el.type !== 'checkbox') {
+          el.style.backgroundColor = '#f1f5f9';
+          el.style.color = '#64748b';
+          el.style.borderColor = '#cbd5e1';
+        }
         el.style.cursor = 'not-allowed';
-        el.style.opacity = '0.75';
-        el.style.borderColor = '#cbd5e1';
+        el.style.opacity = '0.7';
       } else {
-        el.style.backgroundColor = '#ffffff';
-        el.style.color = '#0f172a';
-        el.style.cursor = (el.tagName === 'SELECT' || el.type === 'checkbox') ? 'pointer' : 'text';
+        if (el.type !== 'radio' && el.type !== 'checkbox') {
+          el.style.backgroundColor = '#ffffff';
+          el.style.color = '#0f172a';
+          el.style.borderColor = '#00AEFE';
+        }
+        el.style.cursor = (el.tagName === 'SELECT' || el.type === 'checkbox' || el.type === 'radio') ? 'pointer' : 'text';
         el.style.opacity = '1';
-        el.style.borderColor = '#00AEFE';
       }
+    });
+
+    var labels = form.querySelectorAll('label');
+    labels.forEach(function(lbl){
+      if (lbl.querySelector('input[name="la_mode"]')) {
+        lbl.style.cursor = 'pointer';
+        lbl.style.opacity = '1';
+        return;
+      }
+      lbl.style.cursor = disabled ? 'not-allowed' : 'pointer';
+      lbl.style.opacity = disabled ? '0.75' : '1';
     });
 
     var removeBtns = form.querySelectorAll('.btn-remove-picker-img');
@@ -9006,11 +9188,17 @@ e-page-transition,
     loadLivingArchiveSettings();
   }
 
-  function toggleLivingArchiveModeUI() {
+  var isEditingLivingArchive = false;
+  window.toggleLivingArchiveModeUI = function() {
     var isCustom = document.getElementById('la-mode-custom') && document.getElementById('la-mode-custom').checked;
     var wrapper = document.getElementById('la-custom-fields-wrapper');
-    if (wrapper) wrapper.style.display = isCustom ? 'block' : 'none';
-  }
+    if (wrapper) {
+      wrapper.style.display = isCustom ? 'block' : 'none';
+      if (isCustom) {
+        populateLivingArchivePostDropdowns();
+      }
+    }
+  };
 
   function loadLivingArchiveSettings() {
     fetch(getRootUrl('api/homepage.php?action=get_all'))
@@ -9041,85 +9229,99 @@ e-page-transition,
           });
         }
         populateLivingArchivePostDropdowns();
+        toggleFormDisabled('form-sec-living-archive', !isEditingLivingArchive);
       })
       .catch(function(err){ console.error('Error loading Living Archive settings:', err); });
   }
 
-  var formLA = document.getElementById('form-sec-living-archive');
-  if (formLA) {
-    formLA.addEventListener('submit', function(e){
-      e.preventDefault();
-      var mode = document.querySelector('input[name="la_mode"]:checked') ? document.querySelector('input[name="la_mode"]:checked').value : 'auto';
-      
-      var customPayload = {
-        present: [
-          {
-            badge: document.getElementById('la-pres-1-badge').value,
-            title: document.getElementById('la-pres-1-title').value,
-            sub: document.getElementById('la-pres-1-sub').value,
-            url: document.getElementById('la-pres-1-url').value
-          },
-          {
-            badge: document.getElementById('la-pres-2-badge').value,
-            title: document.getElementById('la-pres-2-title').value,
-            sub: document.getElementById('la-pres-2-sub').value,
-            url: document.getElementById('la-pres-2-url').value
-          },
-          {
-            badge: document.getElementById('la-pres-3-badge').value,
-            title: document.getElementById('la-pres-3-title').value,
-            sub: document.getElementById('la-pres-3-sub').value,
-            url: document.getElementById('la-pres-3-url').value
-          }
-        ],
-        past: [
-          {
-            badge: document.getElementById('la-past-1-badge').value,
-            title: document.getElementById('la-past-1-title').value,
-            sub: document.getElementById('la-past-1-sub').value,
-            url: document.getElementById('la-past-1-url').value
-          },
-          {
-            badge: document.getElementById('la-past-2-badge').value,
-            title: document.getElementById('la-past-2-title').value,
-            sub: document.getElementById('la-past-2-sub').value,
-            url: document.getElementById('la-past-2-url').value
-          },
-          {
-            badge: document.getElementById('la-past-3-badge').value,
-            title: document.getElementById('la-past-3-title').value,
-            sub: document.getElementById('la-past-3-sub').value,
-            url: document.getElementById('la-past-3-url').value
-          }
-        ],
-        upcoming: [
-          {
-            badge: document.getElementById('la-upc-1-badge').value,
-            title: document.getElementById('la-upc-1-title').value,
-            sub: document.getElementById('la-upc-1-sub').value,
-            url: document.getElementById('la-upc-1-url').value
-          },
-          {
-            badge: document.getElementById('la-upc-2-badge').value,
-            title: document.getElementById('la-upc-2-title').value,
-            sub: document.getElementById('la-upc-2-sub').value,
-            url: document.getElementById('la-upc-2-url').value
-          },
-          {
-            badge: document.getElementById('la-upc-3-badge').value,
-            title: document.getElementById('la-upc-3-title').value,
-            sub: document.getElementById('la-upc-3-sub').value,
-            url: document.getElementById('la-upc-3-url').value
-          }
-        ]
-      };
+  var btnToggleLA = document.getElementById('btn-toggle-la-edit');
+  if (btnToggleLA) {
+    btnToggleLA.onclick = function() {
+      if (!isEditingLivingArchive) {
+        isEditingLivingArchive = true;
+        toggleFormDisabled('form-sec-living-archive', false);
+        btnToggleLA.textContent = '💾 Save Living Archive Settings';
+        btnToggleLA.className = 'csp-btn-sm csp-btn-primary';
+      } else {
+        var mode = document.querySelector('input[name="la_mode"]:checked') ? document.querySelector('input[name="la_mode"]:checked').value : 'auto';
+        
+        var customPayload = {
+          present: [
+            {
+              badge: document.getElementById('la-pres-1-badge') ? document.getElementById('la-pres-1-badge').value : '',
+              title: document.getElementById('la-pres-1-title') ? document.getElementById('la-pres-1-title').value : '',
+              sub: document.getElementById('la-pres-1-sub') ? document.getElementById('la-pres-1-sub').value : '',
+              url: document.getElementById('la-pres-1-url') ? document.getElementById('la-pres-1-url').value : ''
+            },
+            {
+              badge: document.getElementById('la-pres-2-badge') ? document.getElementById('la-pres-2-badge').value : '',
+              title: document.getElementById('la-pres-2-title') ? document.getElementById('la-pres-2-title').value : '',
+              sub: document.getElementById('la-pres-2-sub') ? document.getElementById('la-pres-2-sub').value : '',
+              url: document.getElementById('la-pres-2-url') ? document.getElementById('la-pres-2-url').value : ''
+            },
+            {
+              badge: document.getElementById('la-pres-3-badge') ? document.getElementById('la-pres-3-badge').value : '',
+              title: document.getElementById('la-pres-3-title') ? document.getElementById('la-pres-3-title').value : '',
+              sub: document.getElementById('la-pres-3-sub') ? document.getElementById('la-pres-3-sub').value : '',
+              url: document.getElementById('la-pres-3-url') ? document.getElementById('la-pres-3-url').value : ''
+            }
+          ],
+          past: [
+            {
+              badge: document.getElementById('la-past-1-badge') ? document.getElementById('la-past-1-badge').value : '',
+              title: document.getElementById('la-past-1-title') ? document.getElementById('la-past-1-title').value : '',
+              sub: document.getElementById('la-past-1-sub') ? document.getElementById('la-past-1-sub').value : '',
+              url: document.getElementById('la-past-1-url') ? document.getElementById('la-past-1-url').value : ''
+            },
+            {
+              badge: document.getElementById('la-past-2-badge') ? document.getElementById('la-past-2-badge').value : '',
+              title: document.getElementById('la-past-2-title') ? document.getElementById('la-past-2-title').value : '',
+              sub: document.getElementById('la-past-2-sub') ? document.getElementById('la-past-2-sub').value : '',
+              url: document.getElementById('la-past-2-url') ? document.getElementById('la-past-2-url').value : ''
+            },
+            {
+              badge: document.getElementById('la-past-3-badge') ? document.getElementById('la-past-3-badge').value : '',
+              title: document.getElementById('la-past-3-title') ? document.getElementById('la-past-3-title').value : '',
+              sub: document.getElementById('la-past-3-sub') ? document.getElementById('la-past-3-sub').value : '',
+              url: document.getElementById('la-past-3-url') ? document.getElementById('la-past-3-url').value : ''
+            }
+          ],
+          upcoming: [
+            {
+              badge: document.getElementById('la-upc-1-badge') ? document.getElementById('la-upc-1-badge').value : '',
+              title: document.getElementById('la-upc-1-title') ? document.getElementById('la-upc-1-title').value : '',
+              sub: document.getElementById('la-upc-1-sub') ? document.getElementById('la-upc-1-sub').value : '',
+              url: document.getElementById('la-upc-1-url') ? document.getElementById('la-upc-1-url').value : ''
+            },
+            {
+              badge: document.getElementById('la-upc-2-badge') ? document.getElementById('la-upc-2-badge').value : '',
+              title: document.getElementById('la-upc-2-title') ? document.getElementById('la-upc-2-title').value : '',
+              sub: document.getElementById('la-upc-2-sub') ? document.getElementById('la-upc-2-sub').value : '',
+              url: document.getElementById('la-upc-2-url') ? document.getElementById('la-upc-2-url').value : ''
+            },
+            {
+              badge: document.getElementById('la-upc-3-badge') ? document.getElementById('la-upc-3-badge').value : '',
+              title: document.getElementById('la-upc-3-title') ? document.getElementById('la-upc-3-title').value : '',
+              sub: document.getElementById('la-upc-3-sub') ? document.getElementById('la-upc-3-sub').value : '',
+              url: document.getElementById('la-upc-3-url') ? document.getElementById('la-upc-3-url').value : ''
+            }
+          ]
+        };
 
-      saveHomepageSection('living_archive_mode', mode, function(success){
-        if (success) {
-          saveHomepageSection('living_archive', customPayload);
-        }
-      });
-    });
+        saveHomepageSection('living_archive_mode', mode, function(success){
+          if (success) {
+            saveHomepageSection('living_archive', customPayload, function(ok){
+              if (ok) {
+                isEditingLivingArchive = false;
+                toggleFormDisabled('form-sec-living-archive', true);
+                btnToggleLA.innerHTML = '<svg class="csp-nav-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit Section';
+                btnToggleLA.className = 'csp-btn-sm csp-btn-secondary';
+              }
+            });
+          }
+        });
+      }
+    };
   }
 
   var formScholar = document.getElementById('form-sec-scholar');
@@ -9494,8 +9696,10 @@ e-page-transition,
     }
 
     // Update Sidebar badge & Card Counts
-    var badge = document.getElementById('badge-attendees-count');
-    if (badge) badge.textContent = activeCount;
+    var badge = document.getElementById('sidebar-attendees-badge');
+    if (badge) {
+      badge.textContent = cachedAttendees.length;
+    }
 
     var totalEl = document.getElementById('stat-attendees-total');
     if (totalEl) totalEl.textContent = activeCount;

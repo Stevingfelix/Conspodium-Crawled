@@ -8,6 +8,9 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-CSRF-Token");
 header("Content-Type: application/json");
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 if ($method === 'OPTIONS') {
@@ -36,8 +39,17 @@ if ($action === 'register_event' || $action === 'set_event_reminder') {
     $displayName = !empty($name) ? $name : explode('@', $email)[0];
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO event_reminders (event_name, event_date, user_name, user_email) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$eventName, $eventDate, $displayName, $email]);
+        $checkStmt = $pdo->prepare("SELECT id FROM event_reminders WHERE user_email = ? AND event_name = ? LIMIT 1");
+        $checkStmt->execute([$email, $eventName]);
+        $existing = $checkStmt->fetch();
+
+        if ($existing) {
+            $stmt = $pdo->prepare("UPDATE event_reminders SET user_name = ?, event_date = ?, created_at = CURRENT_TIMESTAMP WHERE id = ?");
+            $stmt->execute([$displayName, $eventDate, $existing['id']]);
+        } else {
+            $stmt = $pdo->prepare("INSERT INTO event_reminders (event_name, event_date, user_name, user_email) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$eventName, $eventDate, $displayName, $email]);
+        }
 
         // Also save to subscribers
         try {
