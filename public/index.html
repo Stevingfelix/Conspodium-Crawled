@@ -18550,7 +18550,7 @@
                       Virtual Session</span>
                   </div>
                 </div>
-                <p style="font-size:0.85rem;color:rgba(255,255,255,0.7);line-height:1.45;margin:0 0 20px;">
+                <p id="csp-cd-intro-desc" style="font-size:0.85rem;color:rgba(255,255,255,0.7);line-height:1.45;margin:0 0 20px;">
                   Reserve your seat below to get direct calendar invites and email updates for this session.
                 </p>
                 <form id="csp-cd-reg-form">
@@ -18590,26 +18590,56 @@
             var regForm = document.getElementById('csp-cd-reg-form');
             var formMsg = document.getElementById('csp-cd-form-msg');
 
-            function setRegisteredState() {
+            function setRegisteredState(registered) {
               if (regBtn) {
-                regBtn.disabled = true;
-                regBtn.className = 'csp-cd-cta-btn registered';
-                regBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> <span>Registered already for event</span>';
+                if (registered) {
+                  regBtn.disabled = true;
+                  regBtn.className = 'csp-cd-cta-btn registered';
+                  regBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> <span>Registered already for event</span>';
+                } else {
+                  regBtn.disabled = false;
+                  regBtn.className = 'csp-cd-cta-btn';
+                  regBtn.innerHTML = '<span>Reserve Your Seat 📅</span>';
+                }
               }
             }
 
             function checkUserRegistered(topic) {
               try {
-                var storageKey = 'csp_event_reg_' + btoa(topic || liveTopic);
-                if (localStorage.getItem(storageKey) === 'true') {
-                  isRegistered = true;
-                  setRegisteredState();
+                var storedEmail = localStorage.getItem('csp_event_registered_email');
+                if (!storedEmail) {
+                  isRegistered = false;
+                  setRegisteredState(false);
+                  return;
                 }
-              } catch (e) { }
+                var checkUrl = (window.getRootUrl ? window.getRootUrl('api/homepage.php?action=check_registration_status') : '/api/homepage.php?action=check_registration_status')
+                  + '&email=' + encodeURIComponent(storedEmail)
+                  + '&event_name=' + encodeURIComponent(topic || liveTopic || '');
+
+                fetch(checkUrl)
+                  .then(function (r) { return r.json(); })
+                  .then(function (res) {
+                    if (res && res.is_registered) {
+                      isRegistered = true;
+                      setRegisteredState(true);
+                    } else {
+                      // Removed from DB or database cleared -> unlock button automatically!
+                      try { localStorage.removeItem('csp_event_registered_email'); } catch (e) { }
+                      isRegistered = false;
+                      setRegisteredState(false);
+                    }
+                  })
+                  .catch(function () {
+                    setRegisteredState(false);
+                  });
+              } catch (e) {
+                setRegisteredState(false);
+              }
             }
 
             // 1. Fetch live discussion date & info dynamically from database
-            fetch(getRootUrl('api/homepage.php?action=get_live_discussion'))
+            var getLiveUrl = (window.getRootUrl ? window.getRootUrl('api/homepage.php?action=get_live_discussion') : '/api/homepage.php?action=get_live_discussion');
+            fetch(getLiveUrl)
               .then(function (r) { return r.json(); })
               .then(function (res) {
                 if (res.success && res.data) {
@@ -18703,7 +18733,7 @@
               var startDate = targetTime ? new Date(targetTime) : new Date();
               var endDate = new Date(startDate.getTime() + (60 * 60 * 1000));
               function iso(d) { return d.toISOString().replace(/-|:|\.\d{3}/g, ''); }
-              var icsData = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Conspodium//Live Discussion//EN\nBEGIN:VEVENT\nSUMMARY:Conspodium Live Discussion: " + liveTopic.replace(/\n/g, ' ') + "\nDESCRIPTION:Join pan-African leaders and scholars for an interactive live discussion on Conspodium.\nLOCATION:Conspodium Virtual Auditorium\nDTSTART:" + iso(startDate) + "\nDTEND:" + iso(endDate) + "\nEND:VEVENT\nEND:VCALENDAR";
+              var icsData = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Conspodium//Live Discussion//EN\r\nBEGIN:VEVENT\r\nSUMMARY:Conspodium Live Discussion: " + liveTopic.replace(/\r?\n/g, ' ') + "\r\nDESCRIPTION:Join pan-African leaders and scholars for an interactive live discussion on Conspodium.\r\nLOCATION:Conspodium Virtual Auditorium\r\nDTSTART:" + iso(startDate) + "\r\nDTEND:" + iso(endDate) + "\r\nEND:VEVENT\r\nEND:VCALENDAR";
               var blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
               var url = window.URL.createObjectURL(blob);
               var a = document.createElement('a');
@@ -18727,7 +18757,8 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Reserving Your Seat...';
 
-                fetch(getRootUrl('api/homepage.php?action=register_event'), {
+                var regUrl = (window.getRootUrl ? window.getRootUrl('api/homepage.php?action=register_event') : '/api/homepage.php?action=register_event');
+                fetch(regUrl, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
@@ -18739,13 +18770,13 @@
                 })
                   .then(function (r) { return r.json(); })
                   .then(function (res) {
-                    if (res.success) {
-                      // Save registration state locally
+                    if (res && res.success) {
+                      // Save registered email locally
                       try {
-                        localStorage.setItem('csp_event_reg_' + btoa(liveTopic), 'true');
+                        localStorage.setItem('csp_event_registered_email', email);
                       } catch (e) { }
                       isRegistered = true;
-                      setRegisteredState();
+                      setRegisteredState(true);
 
                       // Generate Google Calendar Link & Prepare ICS
                       var startDate = targetTime ? new Date(targetTime) : new Date();
@@ -18757,44 +18788,49 @@
                         + '&details=' + encodeURIComponent('Join pan-African leaders and scholars for an interactive live discussion on Conspodium.')
                         + '&location=' + encodeURIComponent('Conspodium Virtual Auditorium');
 
+                      var introDesc = document.getElementById('csp-cd-intro-desc');
+                      if (introDesc) introDesc.style.display = 'none';
                       regForm.style.display = 'none';
                       if (formMsg) {
                         formMsg.style.display = 'block';
-                        formMsg.innerHTML = '<div style="text-align:center;">' +
-                          '<div style="width:48px;height:48px;border-radius:50%;background:rgba(0,174,254,0.15);color:#00AEFE;font-size:1.6rem;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;border:1px solid rgba(0,174,254,0.3);">✓</div>' +
-                          '<h4 style="color:#ffffff;font-size:1.15rem;margin:0 0 6px;">Registration Confirmed!</h4>' +
-                          '<p style="font-size:0.82rem;color:rgba(255,255,255,0.7);margin:0 0 16px;line-height:1.45;">Welcome <strong>' + name.replace(/</g, '&lt;') + '</strong>! Add this event directly to your calendar below:</p>' +
-                          '<div style="display:flex;flex-direction:column;gap:10px;">' +
-                          '<a href="' + gCalUrl + '" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:#ffffff;color:#1a73e8;border-radius:50px;font-weight:700;font-size:0.86rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.2);">' +
+                        formMsg.innerHTML = '<div style="text-align:center;padding-top:4px;">' +
+                          '<h3 style="font-family:\'Merriweather\',serif;font-size:1.35rem;font-weight:700;color:#ffffff;margin:0 0 14px;letter-spacing:-0.01em;">Registration Confirmed</h3>' +
+                          '<div style="width:52px;height:52px;border-radius:50%;background:rgba(0,174,254,0.12);color:#00AEFE;font-size:1.8rem;display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;border:1.5px solid rgba(0,174,254,0.4);box-shadow:0 0 24px rgba(0,174,254,0.25);">✓</div>' +
+                          '<p style="font-size:0.86rem;color:rgba(255,255,255,0.8);margin:0 0 20px;line-height:1.5;">Welcome <strong>' + name.replace(/</g, '&lt;') + '</strong>! Add this event directly to your calendar below:</p>' +
+                          '<div style="display:flex;flex-direction:column;gap:12px;">' +
+                          '<a href="' + gCalUrl + '" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 20px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#ffffff;border-radius:50px;font-weight:700;font-size:0.9rem;text-decoration:none;box-shadow:0 8px 24px rgba(0,174,254,0.35);transition:transform 0.2s,box-shadow 0.2s;">' +
                           '<span>📅 Add to Google Calendar ↗</span>' +
                           '</a>' +
-                          '<button id="csp-ics-download-btn" type="button" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;background:rgba(255,255,255,0.08);color:#ffffff;border:1px solid rgba(255,255,255,0.2);border-radius:50px;font-weight:600;font-size:0.84rem;cursor:pointer;">' +
+                          '<button id="csp-ics-download-btn" type="button" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;background:rgba(255,255,255,0.08);color:#ffffff;border:1px solid rgba(255,255,255,0.22);border-radius:50px;font-weight:600;font-size:0.84rem;cursor:pointer;transition:all 0.2s;">' +
                           '<span>📥 Download .ics File (Apple / Outlook)</span>' +
+                          '</button>' +
+                          '<button id="csp-reg-done-btn" type="button" style="margin-top:6px;padding:8px;background:transparent;color:rgba(255,255,255,0.6);border:none;font-size:0.8rem;cursor:pointer;text-decoration:underline;">' +
+                          'Close window' +
                           '</button>' +
                           '</div>' +
                           '</div>';
 
                         var dlBtn = document.getElementById('csp-ics-download-btn');
                         if (dlBtn) dlBtn.addEventListener('click', triggerIcsDownload);
+
+                        var doneBtn = document.getElementById('csp-reg-done-btn');
+                        if (doneBtn && flexLayout) {
+                          doneBtn.addEventListener('click', function () {
+                            flexLayout.classList.remove('active');
+                          });
+                        }
                       }
 
-                      // Automatically prompt Google Calendar tab
-                      window.open(gCalUrl, '_blank');
-
-                      if (typeof cspToast === 'function') cspToast('Seat reserved & saved to dashboard!', 'success');
-
-                      // Close form panel after 4 seconds
-                      setTimeout(function () {
-                        if (flexLayout) flexLayout.classList.remove('active');
-                      }, 4000);
+                      if (window.cspToast) window.cspToast('Seat reserved & added to reminder list!', 'success');
                     } else {
-                      alert(res.error || 'Registration failed');
+                      alert((res && res.error) ? res.error : 'Registration failed');
                       submitBtn.disabled = false;
                       submitBtn.textContent = 'Register & Add to Calendar 📅';
                     }
                   })
                   .catch(function (err) {
                     console.error('Registration error:', err);
+                    alert('Could not submit registration. Please check your network connection.');
                     submitBtn.disabled = false;
                     submitBtn.textContent = 'Register & Add to Calendar 📅';
                   });
@@ -20466,11 +20502,11 @@
             data-widget_type="eael-dual-color-header.default">
             <div class="elementor-widget-container">
               <div class="eael-dual-header">
-                <h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-ad87566">How
+                <h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-ad87566" style="color: #ffffff !important;">How
                     It</span> <span
                     class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">Works</span>
                 </h2> <span class="subtext">
-                  <p>Getting your story published is easy. We guide you through every step of the journey.</p>
+                  <p style="color: rgba(255, 255, 255, 0.85) !important;">Getting your story published is easy. We guide you through every step of the journey.</p>
                 </span>
               </div>
 
@@ -20490,12 +20526,12 @@
                   <div class="ekit-wid-con">
                     <div
                       class="ekit-heading elementskit-section-title-wraper text_left   ekit_heading_tablet-   ekit_heading_mobile-">
-                      <h3 class="elementskit-section-subtitle  ">
+                      <h3 class="elementskit-section-subtitle" style="color: #00AEFE !important;">
                         01
                       </h3>
-                      <h2 class="ekit-heading--title elementskit-section-title ">Write Your Story</h2>
+                      <h2 class="ekit-heading--title elementskit-section-title" style="color: #ffffff !important;">Write Your Story</h2>
                       <div class="ekit-heading__description">
-                        <p>We would rather be thought of as a boutique of digital art than a factory which exceeds its
+                        <p style="color: rgba(255, 255, 255, 0.8) !important;">We would rather be thought of as a boutique of digital art than a factory which exceeds its
                           capacity.</p>
                       </div>
                     </div>
@@ -20511,12 +20547,12 @@
                   <div class="ekit-wid-con">
                     <div
                       class="ekit-heading elementskit-section-title-wraper text_left   ekit_heading_tablet-   ekit_heading_mobile-">
-                      <h3 class="elementskit-section-subtitle  ">
+                      <h3 class="elementskit-section-subtitle" style="color: #00AEFE !important;">
                         02
                       </h3>
-                      <h2 class="ekit-heading--title elementskit-section-title ">Review &amp; Polish</h2>
+                      <h2 class="ekit-heading--title elementskit-section-title" style="color: #ffffff !important;">Review &amp; Polish</h2>
                       <div class="ekit-heading__description">
-                        <p>Our editorial team works with you to refine and enhance your story for maximum impact.</p>
+                        <p style="color: rgba(255, 255, 255, 0.8) !important;">Our editorial team works with you to refine and enhance your story for maximum impact.</p>
                       </div>
                     </div>
                   </div>
@@ -20531,12 +20567,12 @@
                   <div class="ekit-wid-con">
                     <div
                       class="ekit-heading elementskit-section-title-wraper text_left   ekit_heading_tablet-   ekit_heading_mobile-">
-                      <h3 class="elementskit-section-subtitle  ">
+                      <h3 class="elementskit-section-subtitle" style="color: #00AEFE !important;">
                         03
                       </h3>
-                      <h2 class="ekit-heading--title elementskit-section-title ">Publish &amp; Share </h2>
+                      <h2 class="ekit-heading--title elementskit-section-title" style="color: #ffffff !important;">Publish &amp; Share </h2>
                       <div class="ekit-heading__description">
-                        <p>Your story goes live to our global audience of 50,000+ readers across 6 continents.</p>
+                        <p style="color: rgba(255, 255, 255, 0.8) !important;">Your story goes live to our global audience of 50,000+ readers across 6 continents.</p>
                       </div>
                     </div>
                   </div>
@@ -21117,10 +21153,10 @@
               <div class="elementor-widget-container">
                 <div class="eael-dual-header">
                   <h2 class="title eael-dch-title"><span
-                      class="eael-dch-title-text elementor-repeater-item-67ae5f4">Join Our Global </span> <span
+                      class="eael-dch-title-text elementor-repeater-item-67ae5f4" style="color: #ffffff !important;">Join Our Global </span> <span
                       class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">Community</span>
                   </h2> <span class="subtext">
-                    <p>Get weekly stories, exclusive insights, and updates from diaspora communities around the world.
+                    <p style="color: rgba(255, 255, 255, 0.85) !important;">Get weekly stories, exclusive insights, and updates from diaspora communities around the world.
                       Free forever.</p>
                   </span>
                 </div>

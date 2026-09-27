@@ -20,11 +20,11 @@ require_once __DIR__ . '/db.php';
 $action = $_GET['action'] ?? $_POST['action'] ?? 'get_all';
 
 // PUBLIC EVENT REGISTRATION (SAVED TO DATABASE event_reminders & subscribers)
-if ($action === 'register_event') {
+if ($action === 'register_event' || $action === 'set_event_reminder') {
     $rawInput = json_decode(file_get_contents("php://input"), true) ?: $_POST;
     $email = csp_sanitize($rawInput['email'] ?? $_POST['email'] ?? '');
     $name = csp_sanitize($rawInput['name'] ?? $_POST['name'] ?? '');
-    $eventName = csp_sanitize($rawInput['event_name'] ?? $_POST['event_name'] ?? 'Next Live Discussion Event');
+    $eventName = csp_sanitize($rawInput['event_name'] ?? $rawInput['event_title'] ?? $_POST['event_name'] ?? $_POST['event_title'] ?? 'Next Live Discussion Event');
     $eventDate = csp_sanitize($rawInput['event_date'] ?? $_POST['event_date'] ?? '');
 
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -56,14 +56,164 @@ if ($action === 'register_event') {
     exit();
 }
 
-// GET REGISTERED ATTENDEES (FOR DASHBOARD & STATS)
-if ($method === 'GET' && $action === 'get_event_reminders') {
+// CHECK REGISTRATION STATUS FOR VISITOR (SYNC WITH DATABASE)
+if ($action === 'check_registration_status') {
+    $email = csp_sanitize($_GET['email'] ?? $_POST['email'] ?? '');
+    $eventName = csp_sanitize($_GET['event_name'] ?? $_POST['event_name'] ?? '');
+    if (empty($email)) {
+        echo json_encode(["success" => true, "is_registered" => false]);
+        exit();
+    }
     try {
-        $stmt = $pdo->query("SELECT * FROM event_reminders ORDER BY id DESC LIMIT 50");
-        $reminders = $stmt->fetchAll();
+        if (!empty($eventName)) {
+            $stmt = $pdo->prepare("SELECT id FROM event_reminders WHERE user_email = ? AND (event_name = ? OR event_name = '' OR event_name IS NULL) LIMIT 1");
+            $stmt->execute([$email, $eventName]);
+        } else {
+            $stmt = $pdo->prepare("SELECT id FROM event_reminders WHERE user_email = ? LIMIT 1");
+            $stmt->execute([$email]);
+        }
+        $found = (bool)$stmt->fetch();
+        echo json_encode(["success" => true, "is_registered" => $found]);
+    } catch (Exception $e) {
+        echo json_encode(["success" => true, "is_registered" => false]);
+    }
+    exit();
+}
+
+// GET REGISTERED ATTENDEES (FOR DASHBOARD & STATS)
+if ($action === 'get_event_reminders') {
+    try {
+        $stmt = $pdo->query("SELECT id, user_name, user_email, event_name, event_date, created_at FROM event_reminders ORDER BY id DESC LIMIT 500");
+        $raw = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $reminders = array_map(function($r) {
+            return [
+                'id' => (int)$r['id'],
+                'name' => $r['user_name'] ?: 'Participant',
+                'user_name' => $r['user_name'] ?: 'Participant',
+                'email' => $r['user_email'] ?: '',
+                'user_email' => $r['user_email'] ?: '',
+                'event_title' => $r['event_name'] ?: 'Conspodium Live Discussion',
+                'event_name' => $r['event_name'] ?: 'Conspodium Live Discussion',
+                'event_date' => $r['event_date'] ?: '',
+                'created_at' => $r['created_at'] ?: ''
+            ];
+        }, $raw);
         $countStmt = $pdo->query("SELECT COUNT(*) as count FROM event_reminders");
-        $total = $countStmt->fetch()['count'];
-        echo json_encode(["success" => true, "total" => $total, "reminders" => $reminders]);
+        $total = (int)$countStmt->fetch()['count'];
+        echo json_encode(["success" => true, "total" => $total, "data" => $reminders, "reminders" => $reminders]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "error" => $e->getMessage()]);
+    }
+    exit();
+}
+
+// DELETE SINGLE EVENT ATTENDEE
+if ($action === 'delete_event_reminder') {
+    $rawInput = json_decode(file_get_contents("php://input"), true) ?: $_POST;
+    $id = (int)($rawInput['id'] ?? $_GET['id'] ?? 0);
+    if ($id <= 0) {
+        http_response_code(400);
+        echo json_encode(["success" => false, "error" => "Valid attendee ID is required."]);
+        exit();
+    }
+    try {
+        $stmt = $pdo->prepare("DELETE FROM event_reminders WHERE id = ?");
+        $stmt->execute([$id]);
+        echo json_encode(["success" => true, "message" => "Attendee removed successfully."]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "error" => $e->getMessage()]);
+    }
+    exit();
+}
+
+// CLEAR ALL EVENT ATTENDEES
+if ($action === 'clear_all_event_reminders') {
+    try {
+        $pdo->exec("DELETE FROM event_reminders");
+        echo json_encode(["success" => true, "message" => "All registered attendees cleared successfully."]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "error" => $e->getMessage()]);
+    }
+    exit();
+}
+
+// SEND FOLLOW-UP EMAIL BROADCAST TO ATTENDEES
+if ($action === 'send_attendees_email') {
+    $rawInput = json_decode(file_get_contents("php://input"), true) ?: $_POST;
+    $subject = csp_sanitize($rawInput['subject'] ?? 'Update on Upcoming Live Discussion');
+    $message = $rawInput['message'] ?? '';
+    $recipientEmail = csp_sanitize($rawInput['recipient_email'] ?? '');
+    $audienceMode = $rawInput['audience_mode'] ?? 'active';
+    $selectedIds = $rawInput['selected_ids'] ?? [];
+
+    if (empty($message)) {
+        http_response_code(400);
+        echo json_encode(["success" => false, "error" => "Email message body is required."]);
+        exit();
+    }
+
+    try {
+        // Get active event details
+        $stmtLive = $pdo->query("SELECT * FROM live_discussions WHERE is_active = 1 ORDER BY id DESC LIMIT 1");
+        $live = $stmtLive->fetch() ?: [
+            'topic' => 'The Future of African Democracy',
+            'zoom_link' => 'https://zoom.us/j/conspodium-live',
+            'discussion_date' => date('Y-m-d H:i:s', strtotime('+5 days 18:00:00'))
+        ];
+
+        $attendees = [];
+        if (!empty($recipientEmail) && filter_var($recipientEmail, FILTER_VALIDATE_EMAIL)) {
+            // Single recipient mode
+            $stmt = $pdo->prepare("SELECT * FROM event_reminders WHERE user_email = ? LIMIT 1");
+            $stmt->execute([$recipientEmail]);
+            $single = $stmt->fetch();
+            if ($single) {
+                $attendees = [$single];
+            } else {
+                $attendees = [['user_email' => $recipientEmail, 'user_name' => explode('@', $recipientEmail)[0], 'event_name' => $live['topic']]];
+            }
+        } elseif (!empty($selectedIds) && is_array($selectedIds)) {
+            $inClause = implode(',', array_map('intval', $selectedIds));
+            $stmt = $pdo->query("SELECT * FROM event_reminders WHERE id IN ($inClause)");
+            $attendees = $stmt->fetchAll();
+        } elseif ($audienceMode === 'active' && !empty($live['topic'])) {
+            $stmt = $pdo->prepare("SELECT * FROM event_reminders WHERE event_name = ? ORDER BY id DESC");
+            $stmt->execute([$live['topic']]);
+            $attendees = $stmt->fetchAll();
+            // If none matched exact topic (e.g. legacy), fallback to all
+            if (empty($attendees)) {
+                $stmtAll = $pdo->query("SELECT * FROM event_reminders ORDER BY id DESC");
+                $attendees = $stmtAll->fetchAll();
+            }
+        } else {
+            $stmt = $pdo->query("SELECT * FROM event_reminders ORDER BY id DESC");
+            $attendees = $stmt->fetchAll();
+        }
+
+        $sentCount = 0;
+        foreach ($attendees as $att) {
+            $email = $att['user_email'];
+            $name = $att['user_name'] ?? 'Valued Attendee';
+            if (empty($email)) continue;
+
+            $customBody = str_replace(
+                ['{name}', '{event_name}', '{zoom_link}', '{event_date}'],
+                [$name, $att['event_name'] ?: ($live['topic'] ?? ''), $live['zoom_link'] ?? '', $live['discussion_date'] ?? ''],
+                $message
+            );
+
+            @mail($email, $subject, $customBody, "From: Conspodium Events <events@conspodium.com>\r\nContent-Type: text/html; charset=UTF-8");
+            $sentCount++;
+        }
+
+        echo json_encode([
+            "success" => true,
+            "message" => "Follow-up email dispatched successfully to {$sentCount} attendee(s).",
+            "sent_count" => $sentCount
+        ]);
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(["success" => false, "error" => $e->getMessage()]);

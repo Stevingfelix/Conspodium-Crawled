@@ -211,6 +211,9 @@ try {
         $pdo->exec("ALTER TABLE posts ADD COLUMN status TEXT DEFAULT 'published'");
     } catch (Exception $e) {}
     try {
+        $pdo->exec("ALTER TABLE posts ADD COLUMN is_featured INTEGER DEFAULT 0");
+    } catch (Exception $e) {}
+    try {
         $pdo->exec("ALTER TABLE story_submissions ADD COLUMN category TEXT");
     } catch (Exception $e) {}
     try {

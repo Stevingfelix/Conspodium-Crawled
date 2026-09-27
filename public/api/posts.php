@@ -159,6 +159,9 @@ if ($resource === 'comments') {
         if (empty($authorEmail) && !empty($_COOKIE['csp_user_comment_email'])) {
             $authorEmail = trim($_COOKIE['csp_user_comment_email']);
         }
+        if (empty($authorName)) {
+            $authorName = 'Anonymous Reader';
+        }
 
         $stmt = $pdo->prepare("INSERT INTO comments (post_id, parent_id, author_name, author_email, content, status) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->execute([$realPostId, $parentId, $authorName, $authorEmail, $content, $status]);

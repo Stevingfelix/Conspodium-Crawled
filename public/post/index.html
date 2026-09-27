@@ -4878,26 +4878,34 @@
 
     authorInputs.forEach(function(inp) {
       if (session && !cleared) {
-        if (!inp.value) inp.value = session.name;
-      } else if (cleared) {
-        inp.value = '';
+        inp.value = session.name;
+        inp.readOnly = true;
+        inp.style.background = '#f8fafc';
+        inp.style.color = '#334155';
+        inp.style.cursor = 'default';
+      } else {
+        if (cleared) inp.value = '';
+        inp.readOnly = false;
+        inp.style.background = '#ffffff';
+        inp.style.color = '#0f172a';
+        inp.style.cursor = 'text';
       }
-      inp.readOnly = false;
-      inp.style.background = '#ffffff';
-      inp.style.color = '#0f172a';
-      inp.style.cursor = 'text';
     });
 
     emailInputs.forEach(function(inp) {
       if (session && !cleared) {
-        if (!inp.value) inp.value = session.email;
-      } else if (cleared) {
-        inp.value = '';
+        inp.value = session.email || '';
+        inp.readOnly = true;
+        inp.style.background = '#f8fafc';
+        inp.style.color = '#334155';
+        inp.style.cursor = 'default';
+      } else {
+        if (cleared) inp.value = '';
+        inp.readOnly = false;
+        inp.style.background = '#ffffff';
+        inp.style.color = '#0f172a';
+        inp.style.cursor = 'text';
       }
-      inp.readOnly = false;
-      inp.style.background = '#ffffff';
-      inp.style.color = '#0f172a';
-      inp.style.cursor = 'text';
     });
 
     forms.forEach(function(formEl) {
@@ -4910,7 +4918,7 @@
           formEl.insertBefore(existingBadge, formEl.firstChild);
         }
         existingBadge.innerHTML = '<span>🔒 Commenting as <strong>' + session.name + '</strong>' + (session.email ? ' (' + session.email + ')' : '') + '</span>' +
-          '<button type="button" onclick="window.cspClearCommenterSession()" style="background:none;border:none;color:#00AEFE;font-weight:600;font-size:0.78rem;cursor:pointer;text-decoration:underline;">Switch</button>';
+          '<button type="button" onclick="window.cspClearCommenterSession()" style="background:none;border:none;color:#00AEFE;font-weight:700;font-size:0.8rem;cursor:pointer;text-decoration:underline;">Switch</button>';
       } else {
         if (existingBadge && existingBadge.parentNode) {
           existingBadge.parentNode.removeChild(existingBadge);
@@ -4923,18 +4931,26 @@
       var emailInp = box.querySelector('input[type="email"]');
       if (nameInp && emailInp) {
         if (session && !cleared) {
-          if (!nameInp.value) nameInp.value = session.name;
-          if (!emailInp.value) emailInp.value = session.email;
-        } else if (cleared) {
-          nameInp.value = '';
-          emailInp.value = '';
+          nameInp.value = session.name;
+          nameInp.readOnly = true;
+          nameInp.style.background = '#f8fafc';
+          nameInp.style.cursor = 'default';
+          emailInp.value = session.email || '';
+          emailInp.readOnly = true;
+          emailInp.style.background = '#f8fafc';
+          emailInp.style.cursor = 'default';
+        } else {
+          if (cleared) {
+            nameInp.value = '';
+            emailInp.value = '';
+          }
+          nameInp.readOnly = false;
+          nameInp.style.background = '#fff';
+          nameInp.style.cursor = 'text';
+          emailInp.readOnly = false;
+          emailInp.style.background = '#fff';
+          emailInp.style.cursor = 'text';
         }
-        nameInp.readOnly = false;
-        nameInp.style.background = '#fff';
-        nameInp.style.cursor = 'text';
-        emailInp.readOnly = false;
-        emailInp.style.background = '#fff';
-        emailInp.style.cursor = 'text';
       }
     });
   };

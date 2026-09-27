@@ -1612,6 +1612,13 @@ e-page-transition,
       Homepage Manager
     </div>
   </div>
+  <div class="csp-nav-item" data-tab="attendees">
+    <div>
+      <svg class="csp-nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Event Attendees
+    </div>
+    <span class="csp-badge" id="sidebar-attendees-badge" style="background:#00AEFE;color:#fff;">0</span>
+  </div>
   <div class="csp-nav-item" data-tab="polls">
     <div>
       <svg class="csp-nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
@@ -1931,9 +1938,9 @@ e-page-transition,
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
               Registered Attendees: <strong id="live-attendees-count" style="color:#00AEFE;font-size:0.95rem;">0</strong>
             </span>
-            <button type="button" onclick="viewLiveAttendees()" style="background:linear-gradient(135deg,#00AEFE,#B71F71);color:#ffffff;border:none;border-radius:50px;font-weight:600;padding:8px 18px;font-size:0.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,174,254,0.3);transition:all 0.2s;">
+            <button type="button" onclick="switchTab('attendees')" style="background:linear-gradient(135deg,#00AEFE,#B71F71);color:#ffffff;border:none;border-radius:50px;font-weight:600;padding:8px 18px;font-size:0.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,174,254,0.3);transition:all 0.2s;">
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              View Registered Attendees
+              Manage Attendees &amp; Follow-ups →
             </button>
           </div>
         </div>
@@ -2423,6 +2430,98 @@ e-page-transition,
             </thead>
             <tbody id="contact-cms-table">
               <tr><td colspan="6">Loading contact inquiries...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB 3.6: EVENT ATTENDEES ── -->
+    <div class="csp-tab-pane" id="tab-attendees">
+      
+      <!-- Top Action Banner -->
+      <div class="csp-card" style="margin-bottom:20px;padding:22px 26px;background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);color:#ffffff;border-radius:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <div>
+          <h3 style="font-family:'Merriweather',serif;color:#ffffff;margin-bottom:6px;font-size:1.2rem;display:flex;align-items:center;gap:10px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Live Discussion Attendees &amp; RSVPs
+          </h3>
+          <p style="font-size:0.85rem;color:#94a3b8;margin:0;">Manage confirmed seats, export attendee lists, or broadcast follow-up emails and session links.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" class="csp-btn-sm csp-btn-primary" onclick="openAttendeesEmailModal()" style="font-weight:600;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#00AEFE,#007bb5);border:none;box-shadow:0 4px 12px rgba(0,174,254,0.3);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Send Follow-up Email
+          </button>
+          <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="exportAttendeesCSV()" style="background:rgba(255,255,255,0.1);color:#ffffff;border-color:rgba(255,255,255,0.2);font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+            📥 Export CSV
+          </button>
+          <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="copyAllAttendeeEmails()" style="background:rgba(255,255,255,0.1);color:#ffffff;border-color:rgba(255,255,255,0.2);font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+            📋 Copy Emails
+          </button>
+          <button type="button" class="csp-btn-sm csp-btn-danger" onclick="clearAllAttendees()" style="background:rgba(239,68,68,0.18);border-color:rgba(239,68,68,0.35);color:#fca5a5;font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+            🗑️ Clear All
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Stats Grid -->
+      <div class="csp-grid-3" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;">
+        <div class="csp-card" style="padding:18px 22px;border-left:4px solid #00AEFE;">
+          <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);font-weight:700;margin-bottom:6px;">Total Registered Attendees</div>
+          <div style="font-size:1.8rem;font-weight:800;color:#0f172a;" id="stat-attendees-total">0</div>
+          <div style="font-size:0.75rem;color:#64748b;margin-top:4px;" id="stat-attendees-subtext">0 for active session</div>
+        </div>
+        <div class="csp-card" style="padding:18px 22px;border-left:4px solid #10b981;">
+          <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);font-weight:700;margin-bottom:6px;">Active Live Topic</div>
+          <div style="font-size:0.95rem;font-weight:700;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="stat-attendees-topic">Loading live event...</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px;">
+            <span style="font-size:0.75rem;color:#10b981;font-weight:600;">● Active on Homepage</span>
+            <span style="font-size:0.75rem;color:#64748b;" id="stat-attendees-speaker">Speaker: Panel</span>
+          </div>
+        </div>
+        <div class="csp-card" style="padding:18px 22px;border-left:4px solid #8b5cf6;">
+          <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);font-weight:700;margin-bottom:6px;">Event Date &amp; Time</div>
+          <div style="font-size:0.95rem;font-weight:700;color:#0f172a;" id="stat-attendees-date">Loading schedule...</div>
+          <div style="font-size:0.75rem;color:#64748b;margin-top:4px;" id="stat-attendees-location">Platform: Zoom / Virtual Room</div>
+        </div>
+      </div>
+
+      <!-- Attendees Table Card -->
+      <div class="csp-card" style="padding:22px;">
+        <div class="csp-card-header" style="margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <span class="csp-card-header-title" style="display:flex;align-items:center;gap:8px;font-weight:700;color:#0f172a;">
+            <svg class="csp-sec-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Registered Attendee Roster
+          </span>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <label for="attendees-event-filter" style="font-size:0.76rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Event:</label>
+              <select id="attendees-event-filter" onchange="onAttendeesEventFilterChange()" style="padding:7px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:0.82rem;background:#ffffff;font-weight:600;color:#0f172a;outline:none;cursor:pointer;">
+                <option value="active">Active Live Discussion</option>
+                <option value="all">All Events (All-Time)</option>
+              </select>
+            </div>
+            <input type="text" id="attendees-search-input" placeholder="🔍 Search by name or email..." oninput="filterAttendeesTable()" style="padding:7px 14px;border:1px solid #cbd5e1;border-radius:8px;font-size:0.83rem;min-width:200px;outline:none;" />
+            <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="loadAttendeesTab(true)" style="font-size:0.8rem;padding:7px 14px;">🔄 Refresh</button>
+          </div>
+        </div>
+
+        <div class="csp-table-wrapper" style="overflow-x:auto;">
+          <table class="csp-table">
+            <thead>
+              <tr>
+                <th style="width:30px;">#</th>
+                <th>Attendee</th>
+                <th>Email Address</th>
+                <th>Discussion Topic</th>
+                <th>Registered Date</th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="attendees-table-body">
+              <tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text-muted);">Loading registered attendees...</td></tr>
             </tbody>
           </table>
         </div>
@@ -2938,6 +3037,47 @@ e-page-transition,
           </div>
 
           <button type="submit" class="csp-btn-sm csp-btn-primary" style="height:44px;width:100%;justify-content:center;margin-top:12px;">Save Scholar Card</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ── ATTENDEES BROADCAST / FOLLOW-UP EMAIL MODAL ── -->
+    <div class="csp-modal-overlay" id="modal-attendees-email">
+      <div class="csp-modal" style="max-width:600px;">
+        <div class="csp-modal-header">
+          <h3 class="csp-modal-title" style="display:flex;align-items:center;gap:8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Send Attendee Email
+          </h3>
+          <button type="button" class="csp-modal-close" onclick="closeModal('modal-attendees-email')">&times;</button>
+        </div>
+        <form id="form-attendees-email" onsubmit="sendAttendeesBroadcast(event)">
+          <div class="csp-form-group" style="margin-bottom:14px;">
+            <label class="csp-label">Target Audience / Recipient *</label>
+            <select id="att-email-target-select" onchange="onAttendeesTargetSelectChange()" style="width:100%;padding:9px 12px;border:1px solid #cbd5e1;border-radius:8px;font-weight:600;color:#0f172a;background:#fff;font-size:0.88rem;outline:none;">
+              <option value="active">🎯 Active Event Attendees Only</option>
+              <option value="all">🌐 All Historical Attendees (All Events)</option>
+              <option value="custom">✉️ Specific Attendee Email Address</option>
+            </select>
+          </div>
+          <div class="csp-form-group" id="att-email-custom-wrapper" style="margin-bottom:14px;display:none;">
+            <label class="csp-label">Recipient Email Address *</label>
+            <input type="email" id="att-email-custom-recipient" class="csp-input" placeholder="attendee@example.com" />
+          </div>
+          <div class="csp-form-group" style="margin-bottom:14px;">
+            <label class="csp-label">Subject *</label>
+            <input type="text" id="att-email-subject" class="csp-input" required placeholder="e.g. Important details & link for tomorrow's Live Discussion" />
+          </div>
+          <div class="csp-form-group" style="margin-bottom:18px;">
+            <label class="csp-label">Message Content *</label>
+            <textarea id="att-email-message" class="csp-textarea" rows="6" required placeholder="Write your follow-up message, meeting link, or post-event wrap-up notes here..."></textarea>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:10px;">
+            <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="closeModal('modal-attendees-email')">Cancel</button>
+            <button type="submit" id="btn-submit-att-email" class="csp-btn-sm csp-btn-primary" style="background:linear-gradient(135deg,#00AEFE,#007bb5);border:none;font-weight:600;">
+              🚀 Send Email Broadcast
+            </button>
+          </div>
         </form>
       </div>
     </div>
@@ -9240,9 +9380,417 @@ e-page-transition,
     }, 300);
   });
 
+  // ── LIVE DISCUSSION ATTENDEES MODULE ──
+  var cachedAttendees = [];
+  var cachedActiveDiscussion = null;
+
+  window.switchTab = function(tabName) {
+    var navItem = document.querySelector('.csp-nav-item[data-tab="' + tabName + '"]');
+    if (navItem) {
+      navItem.click();
+    }
+  };
+
+  window.loadAttendeesTab = function(showToast) {
+    var tbody = document.getElementById('attendees-table-body');
+    if (!tbody) return;
+    
+    // Fetch attendees list and live discussion details concurrently
+    Promise.all([
+      fetch('/api/homepage.php?action=get_event_reminders').then(function(r){ return r.json(); }),
+      fetch('/api/homepage.php?action=get_live_discussion').then(function(r){ return r.json(); })
+    ]).then(function(results){
+      var remRes = results[0];
+      var liveRes = results[1];
+
+      // Update active live topic, speaker, date & time cards dynamically
+      if (liveRes && liveRes.data) {
+        cachedActiveDiscussion = liveRes.data;
+        var d = liveRes.data;
+        var topicEl = document.getElementById('stat-attendees-topic');
+        var dateEl = document.getElementById('stat-attendees-date');
+        var locEl = document.getElementById('stat-attendees-location');
+        var speakerEl = document.getElementById('stat-attendees-speaker');
+
+        var activeTopic = d.topic || 'Conspodium Live Discussion';
+        if (topicEl) topicEl.textContent = activeTopic;
+        if (speakerEl) speakerEl.textContent = d.speaker_name ? ('Speaker: ' + d.speaker_name) : 'Featured Discussion';
+        
+        if (dateEl) {
+          if (d.discussion_date) {
+            try {
+              var dt = new Date(d.discussion_date.replace(' ', 'T'));
+              if (!isNaN(dt.getTime())) {
+                var dateFormatted = dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+                var timeFormatted = dt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                dateEl.textContent = dateFormatted + ' • ' + timeFormatted;
+              } else {
+                dateEl.textContent = d.discussion_date;
+              }
+            } catch(e) {
+              dateEl.textContent = d.discussion_date;
+            }
+          } else {
+            dateEl.textContent = 'Scheduled Live Session';
+          }
+        }
+
+        if (locEl) {
+          locEl.textContent = (d.zoom_link && d.zoom_link.includes('http')) ? 'Platform: Zoom Live Room' : 'Platform: Virtual Live Room';
+        }
+      }
+
+      if (remRes && remRes.data) {
+        cachedAttendees = remRes.data;
+        populateEventFilterDropdown();
+        applyAttendeesFilters();
+
+        if (showToast) {
+          cspToast('Refreshed attendee roster (' + cachedAttendees.length + ' total attendees)', 'success');
+        }
+      } else {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text-muted);">No attendees found.</td></tr>';
+      }
+    }).catch(function(err){
+      console.error('Error loading attendees:', err);
+      if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:#ef4444;">Failed to load attendees. Please try again.</td></tr>';
+    });
+  };
+
+  function populateEventFilterDropdown() {
+    var filterSelect = document.getElementById('attendees-event-filter');
+    if (!filterSelect) return;
+
+    var currentVal = filterSelect.value || 'active';
+    var activeTopic = (cachedActiveDiscussion && cachedActiveDiscussion.topic) ? cachedActiveDiscussion.topic.trim() : '';
+
+    var activeCount = 0;
+    var pastTopicsMap = {};
+
+    cachedAttendees.forEach(function(a) {
+      var t = (a.event_title || 'Conspodium Live Discussion').trim();
+      if (activeTopic && t.toLowerCase() === activeTopic.toLowerCase()) {
+        activeCount++;
+      } else {
+        pastTopicsMap[t] = (pastTopicsMap[t] || 0) + 1;
+      }
+    });
+
+    var html = '';
+    var activeLabel = activeTopic ? ('Active: ' + (activeTopic.length > 28 ? activeTopic.substring(0, 25) + '...' : activeTopic) + ' (' + activeCount + ')') : ('Active Live Discussion (' + activeCount + ')');
+    html += '<option value="active">' + escapeHtml(activeLabel) + '</option>';
+    html += '<option value="all">All Events &amp; Sessions (' + cachedAttendees.length + ')</option>';
+
+    Object.keys(pastTopicsMap).forEach(function(pTopic) {
+      var shortTopic = pTopic.length > 30 ? pTopic.substring(0, 27) + '...' : pTopic;
+      html += '<option value="topic:' + escapeHtml(pTopic) + '">Past: ' + escapeHtml(shortTopic) + ' (' + pastTopicsMap[pTopic] + ')</option>';
+    });
+
+    filterSelect.innerHTML = html;
+    if (filterSelect.querySelector('option[value="' + currentVal + '"]')) {
+      filterSelect.value = currentVal;
+    } else {
+      filterSelect.value = 'active';
+    }
+
+    // Update Sidebar badge & Card Counts
+    var badge = document.getElementById('badge-attendees-count');
+    if (badge) badge.textContent = activeCount;
+
+    var totalEl = document.getElementById('stat-attendees-total');
+    if (totalEl) totalEl.textContent = activeCount;
+
+    var subtextEl = document.getElementById('stat-attendees-subtext');
+    if (subtextEl) subtextEl.textContent = activeCount + ' for active event (' + cachedAttendees.length + ' all-time)';
+  }
+
+  window.onAttendeesEventFilterChange = function() {
+    applyAttendeesFilters();
+  };
+
+  function getFilteredAttendees() {
+    var filterSelect = document.getElementById('attendees-event-filter');
+    var filterMode = filterSelect ? filterSelect.value : 'active';
+    var activeTopic = (cachedActiveDiscussion && cachedActiveDiscussion.topic) ? cachedActiveDiscussion.topic.trim().toLowerCase() : '';
+
+    var list = cachedAttendees;
+    if (filterMode === 'active' && activeTopic) {
+      list = cachedAttendees.filter(function(a) {
+        var t = (a.event_title || '').trim().toLowerCase();
+        return t === activeTopic || !t;
+      });
+    } else if (filterMode.startsWith('topic:')) {
+      var targetTopic = filterMode.replace('topic:', '').trim().toLowerCase();
+      list = cachedAttendees.filter(function(a) {
+        return (a.event_title || '').trim().toLowerCase() === targetTopic;
+      });
+    }
+
+    var q = (document.getElementById('attendees-search-input')?.value || '').toLowerCase().trim();
+    if (q) {
+      list = list.filter(function(a) {
+        return (a.name && a.name.toLowerCase().includes(q)) ||
+               (a.email && a.email.toLowerCase().includes(q)) ||
+               (a.event_title && a.event_title.toLowerCase().includes(q));
+      });
+    }
+
+    return list;
+  }
+
+  function applyAttendeesFilters() {
+    var filtered = getFilteredAttendees();
+    renderAttendeesTable(filtered);
+  }
+
+  window.filterAttendeesTable = function() {
+    applyAttendeesFilters();
+  };
+
+  function renderAttendeesTable(list) {
+    var tbody = document.getElementById('attendees-table-body');
+    if (!tbody) return;
+
+    if (!list || list.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:38px 20px;color:var(--text-muted);">' +
+        '<div style="font-size:2rem;margin-bottom:8px;">👥</div>' +
+        '<div style="font-weight:700;color:#0f172a;margin-bottom:4px;font-size:1rem;">No Attendees Found for this Selection</div>' +
+        '<div style="font-size:0.83rem;">When visitors RSVP to the Live Discussion on the homepage, their registration details and date will appear here.</div>' +
+        '</td></tr>';
+      return;
+    }
+
+    var html = '';
+    list.forEach(function(att, idx) {
+      var name = (att.name && att.name.trim()) ? att.name : 'Participant';
+      var email = att.email || '';
+      var topic = att.event_title || 'Conspodium Live Discussion';
+      var dateStr = att.created_at ? new Date(att.created_at.replace(' ', 'T')).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recently';
+
+      html += '<tr style="transition:background 0.15s;">' +
+        '<td style="color:var(--text-muted);font-size:0.82rem;font-weight:600;">' + (idx + 1) + '</td>' +
+        '<td>' +
+          '<div style="display:flex;align-items:center;gap:10px;">' +
+            '<div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#00AEFE,#007bb5);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;">' +
+              name.charAt(0).toUpperCase() +
+            '</div>' +
+            '<div>' +
+              '<div style="font-weight:600;color:#0f172a;font-size:0.88rem;">' + escapeHtml(name) + '</div>' +
+            '</div>' +
+          '</div>' +
+        '</td>' +
+        '<td><a href="mailto:' + encodeURIComponent(email) + '" style="color:#00AEFE;text-decoration:none;font-size:0.85rem;font-weight:500;">' + escapeHtml(email) + '</a></td>' +
+        '<td style="font-size:0.83rem;color:#334155;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="' + escapeHtml(topic) + '">' + escapeHtml(topic) + '</td>' +
+        '<td style="font-size:0.8rem;color:#64748b;"><span style="font-weight:500;">' + dateStr + '</span></td>' +
+        '<td><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;background:rgba(16,185,129,0.12);color:#059669;">● Confirmed</span></td>' +
+        '<td style="text-align:right;">' +
+          '<div style="display:inline-flex;align-items:center;gap:6px;">' +
+            '<button type="button" class="csp-btn-sm csp-btn-secondary" onclick="openAttendeesEmailModal(\'' + escapeHtml(email) + '\')" title="Send direct email" style="padding:4px 9px;font-size:0.78rem;">' +
+              '✉️ Email' +
+            '</button>' +
+            '<button type="button" class="csp-btn-sm csp-btn-danger" onclick="deleteAttendee(' + att.id + ')" title="Remove attendee" style="padding:4px 8px;font-size:0.78rem;">' +
+              '🗑️' +
+            '</button>' +
+          '</div>' +
+        '</td>' +
+      '</tr>';
+    });
+
+    tbody.innerHTML = html;
+  }
+
+  window.exportAttendeesCSV = function() {
+    var toExport = getFilteredAttendees();
+    if (!toExport || toExport.length === 0) {
+      cspToast('No attendees to export in this view.', 'info');
+      return;
+    }
+    var csvRows = [
+      ['ID', 'Name', 'Email', 'Event Topic', 'Registration Date', 'Status']
+    ];
+    toExport.forEach(function(a) {
+      csvRows.push([
+        a.id,
+        '"' + (a.name || '').replace(/"/g, '""') + '"',
+        '"' + (a.email || '').replace(/"/g, '""') + '"',
+        '"' + (a.event_title || '').replace(/"/g, '""') + '"',
+        '"' + (a.created_at || '') + '"',
+        'Confirmed'
+      ]);
+    });
+    var csvContent = 'data:text/csv;charset=utf-8,' + csvRows.map(function(e){ return e.join(','); }).join('\n');
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'conspodium_live_discussion_attendees_' + new Date().toISOString().slice(0,10) + '.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    cspToast('Exported ' + toExport.length + ' attendee record(s) to CSV!', 'success');
+  };
+
+  window.copyAllAttendeeEmails = function() {
+    var toCopy = getFilteredAttendees();
+    if (!toCopy || toCopy.length === 0) {
+      cspToast('No attendee emails to copy in this view.', 'info');
+      return;
+    }
+    var emails = toCopy.map(function(a){ return a.email; }).filter(Boolean).join(', ');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(emails).then(function(){
+        cspToast('Copied ' + toCopy.length + ' email address(es) to clipboard!', 'success');
+      });
+    } else {
+      var textarea = document.createElement('textarea');
+      textarea.value = emails;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      cspToast('Copied ' + toCopy.length + ' email address(es) to clipboard!', 'success');
+    }
+  };
+
+  window.deleteAttendee = function(id) {
+    if (!confirm('Are you sure you want to remove this attendee from the list?')) return;
+    fetch('/api/homepage.php?action=delete_event_reminder', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res && res.success) {
+        cspToast('Attendee removed successfully', 'success');
+        loadAttendeesTab();
+      } else {
+        cspToast((res && res.message) || 'Failed to remove attendee', 'error');
+      }
+    })
+    .catch(function(err){
+      cspToast('Error deleting attendee', 'error');
+    });
+  };
+
+  window.clearAllAttendees = function() {
+    if (cachedAttendees.length === 0) {
+      cspToast('Attendee list is already empty.', 'info');
+      return;
+    }
+    if (!confirm('Are you sure you want to clear ALL ' + cachedAttendees.length + ' registered attendees? This action cannot be undone.')) return;
+    fetch('/api/homepage.php?action=clear_all_event_reminders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res && res.success) {
+        cspToast('All attendee entries cleared!', 'success');
+        loadAttendeesTab();
+      } else {
+        cspToast((res && res.message) || 'Failed to clear attendees', 'error');
+      }
+    })
+    .catch(function(err){
+      cspToast('Error clearing attendees', 'error');
+    });
+  };
+
+  window.onAttendeesTargetSelectChange = function() {
+    var select = document.getElementById('att-email-target-select');
+    var customWrap = document.getElementById('att-email-custom-wrapper');
+    if (select && customWrap) {
+      customWrap.style.display = (select.value === 'custom') ? 'block' : 'none';
+    }
+  };
+
+  window.openAttendeesEmailModal = function(singleEmail) {
+    var targetSelect = document.getElementById('att-email-target-select');
+    var customInput = document.getElementById('att-email-custom-recipient');
+    var subjInput = document.getElementById('att-email-subject');
+    var msgInput = document.getElementById('att-email-message');
+    
+    if (singleEmail) {
+      if (targetSelect) targetSelect.value = 'custom';
+      if (customInput) customInput.value = singleEmail;
+    } else {
+      if (targetSelect) targetSelect.value = 'active';
+      if (customInput) customInput.value = '';
+    }
+
+    onAttendeesTargetSelectChange();
+
+    if (subjInput) subjInput.value = '';
+    if (msgInput) msgInput.value = '';
+
+    openModal('modal-attendees-email');
+  };
+
+  window.sendAttendeesBroadcast = function(e) {
+    e.preventDefault();
+    var targetSelect = document.getElementById('att-email-target-select');
+    var customInput = document.getElementById('att-email-custom-recipient');
+    var subjInput = document.getElementById('att-email-subject');
+    var msgInput = document.getElementById('att-email-message');
+    var btn = document.getElementById('btn-submit-att-email');
+
+    var subject = subjInput.value.trim();
+    var message = msgInput.value.trim();
+    var mode = targetSelect ? targetSelect.value : 'active';
+    var recipient_email = (mode === 'custom') ? customInput.value.trim() : null;
+
+    if (!subject || !message) {
+      cspToast('Please enter both subject and message content.', 'error');
+      return;
+    }
+
+    if (mode === 'custom' && (!recipient_email || !recipient_email.includes('@'))) {
+      cspToast('Please enter a valid recipient email address.', 'error');
+      return;
+    }
+
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = 'Sending...';
+    }
+
+    fetch('/api/homepage.php?action=send_attendees_email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        subject: subject,
+        message: message,
+        recipient_email: recipient_email,
+        audience_mode: mode,
+        active_topic: cachedActiveDiscussion ? cachedActiveDiscussion.topic : ''
+      })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '🚀 Send Email Broadcast';
+      }
+      if (res && res.success) {
+        closeModal('modal-attendees-email');
+        cspToast(res.message || 'Email broadcast sent successfully!', 'success');
+      } else {
+        cspToast((res && res.message) || 'Failed to send email broadcast.', 'error');
+      }
+    })
+    .catch(function(err){
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '🚀 Send Email Broadcast';
+      }
+      cspToast('Network error sending email.', 'error');
+    });
+  };
+
   // Update main tab click dispatcher to trigger Phase 2.2 loaders
   document.querySelectorAll('.csp-nav-item[data-tab]').forEach(function(t){
     t.addEventListener('click', function(){
+      if (t.dataset.tab === 'attendees') loadAttendeesTab();
       if (t.dataset.tab === 'newsletter') { loadSubscribers(); loadCampaigns(); }
       if (t.dataset.tab === 'comments') loadComments();
       if (t.dataset.tab === 'forum') loadForumThreads();
@@ -9251,7 +9799,10 @@ e-page-transition,
   });
 
   // Initial Load
-  document.addEventListener('DOMContentLoaded', checkAuthSession);
+  document.addEventListener('DOMContentLoaded', function(){
+    checkAuthSession();
+    loadAttendeesTab();
+  });
 })();
 </script>
 </body>
