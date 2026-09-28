@@ -257,6 +257,24 @@ if ($method === 'GET' && $action === 'get_live_discussion') {
     exit();
 }
 
+// GET ALL LIVE DISCUSSIONS HISTORY
+if ($method === 'GET' && $action === 'get_live_discussions_history') {
+    try {
+        $stmtHistory = $pdo->query("
+            SELECT ld.*, 
+                   (SELECT COUNT(*) FROM event_reminders er WHERE er.event_name LIKE '%' || ld.topic || '%' OR er.event_date = ld.discussion_date) as attendee_count
+            FROM live_discussions ld 
+            ORDER BY ld.id DESC
+        ");
+        $history = $stmtHistory->fetchAll();
+        echo json_encode(["success" => true, "data" => $history]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "error" => $e->getMessage()]);
+    }
+    exit();
+}
+
 // GET FEATURED INTERVIEW
 if ($method === 'GET' && $action === 'get_featured_interview') {
     try {

@@ -271,6 +271,35 @@ if ($method === 'GET') {
         exit;
     }
 
+    if (isset($_GET['hero_slide4']) || ($_GET['action'] ?? '') === 'get_hero_slide4') {
+        $stmt = $pdo->query("
+            SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
+            FROM posts p
+            LEFT JOIN categories c ON p.category_id = c.id
+            WHERE p.is_hero_slide4 = 1 AND (p.status = 'published' OR p.status IS NULL OR p.status = '')
+            LIMIT 1
+        ");
+        $heroPost = $stmt->fetch();
+
+        if (!$heroPost) {
+            $stmt = $pdo->query("
+                SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
+                FROM posts p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE (c.slug = 'interview-transcripts' OR c.name LIKE '%interview%') AND (p.status = 'published' OR p.status IS NULL OR p.status = '')
+                ORDER BY p.published_at DESC
+                LIMIT 1
+            ");
+            $heroPost = $stmt->fetch();
+        }
+
+        echo json_encode([
+            "success" => true,
+            "post" => $heroPost
+        ]);
+        exit;
+    }
+
     $slugOrId = $_GET['slug'] ?? $_GET['id'] ?? null;
 
     if ($slugOrId) {
@@ -339,10 +368,20 @@ if ($method === 'GET') {
     }
 
     if ($search) {
-        $sql .= " AND (p.title LIKE ? OR p.excerpt LIKE ? OR p.content LIKE ?)";
-        $params[] = "%$search%";
-        $params[] = "%$search%";
-        $params[] = "%$search%";
+        $cleanSearch = trim(preg_replace('/[^a-zA-Z0-9]+/', ' ', $search));
+        $tokens = array_filter(explode(' ', $cleanSearch));
+        if (empty($tokens)) {
+            $tokens = [$search];
+        }
+
+        foreach ($tokens as $token) {
+            $sql .= " AND (p.title LIKE ? OR p.excerpt LIKE ? OR p.content LIKE ? OR p.author_name LIKE ? OR c.name LIKE ?)";
+            $params[] = "%$token%";
+            $params[] = "%$token%";
+            $params[] = "%$token%";
+            $params[] = "%$token%";
+            $params[] = "%$token%";
+        }
     }
 
     if ($featured === '1' || $featured === 'true') {
@@ -383,10 +422,20 @@ if ($method === 'GET') {
     }
 
     if ($search) {
-        $countSql .= " AND (p.title LIKE ? OR p.excerpt LIKE ? OR p.content LIKE ?)";
-        $countParams[] = "%$search%";
-        $countParams[] = "%$search%";
-        $countParams[] = "%$search%";
+        $cleanSearch = trim(preg_replace('/[^a-zA-Z0-9]+/', ' ', $search));
+        $tokens = array_filter(explode(' ', $cleanSearch));
+        if (empty($tokens)) {
+            $tokens = [$search];
+        }
+
+        foreach ($tokens as $token) {
+            $countSql .= " AND (p.title LIKE ? OR p.excerpt LIKE ? OR p.content LIKE ? OR p.author_name LIKE ? OR c.name LIKE ?)";
+            $countParams[] = "%$token%";
+            $countParams[] = "%$token%";
+            $countParams[] = "%$token%";
+            $countParams[] = "%$token%";
+            $countParams[] = "%$token%";
+        }
     }
 
     if ($featured === '1' || $featured === 'true') {
@@ -479,11 +528,16 @@ if ($method === 'POST') {
         $slug .= '-' . substr(time(), -4);
     }
 
+    $isHeroSlide4 = isset($input['isHeroSlide4']) ? ($input['isHeroSlide4'] ? 1 : 0) : (isset($input['is_hero_slide4']) ? ($input['is_hero_slide4'] ? 1 : 0) : 0);
+    if ($isHeroSlide4 === 1) {
+        $pdo->exec("UPDATE posts SET is_hero_slide4 = 0");
+    }
+
     $stmt = $pdo->prepare("
-        INSERT INTO posts (title, slug, eyebrow, excerpt, content, category_id, author_name, author_avatar, featured_image, reading_time, views, is_featured, status, published_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?)
+        INSERT INTO posts (title, slug, eyebrow, excerpt, content, category_id, author_name, author_avatar, featured_image, reading_time, views, is_featured, is_hero_slide4, status, published_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?)
     ");
-    $stmt->execute([$title, $slug, $eyebrow, $excerpt, $content, $categoryId, $authorName, $authorAvatar, $featuredImage, $readingTime, $isFeatured, $status, $publishedAt]);
+    $stmt->execute([$title, $slug, $eyebrow, $excerpt, $content, $categoryId, $authorName, $authorAvatar, $featuredImage, $readingTime, $isFeatured, $isHeroSlide4, $status, $publishedAt]);
 
     echo json_encode([
         "success" => true,
@@ -514,10 +568,15 @@ if ($method === 'PUT') {
     }
 
     $status = isset($input['status']) ? trim($input['status']) : ($existing['status'] ?? 'published');
+    $isHeroSlide4 = isset($input['isHeroSlide4']) ? ($input['isHeroSlide4'] ? 1 : 0) : (isset($input['is_hero_slide4']) ? ($input['is_hero_slide4'] ? 1 : 0) : intval($existing['is_hero_slide4'] ?? 0));
+
+    if ($isHeroSlide4 === 1) {
+        $pdo->exec("UPDATE posts SET is_hero_slide4 = 0");
+    }
 
     $stmt = $pdo->prepare("
         UPDATE posts
-        SET title = ?, slug = ?, eyebrow = ?, excerpt = ?, content = ?, category_id = ?, author_name = ?, author_avatar = ?, featured_image = ?, reading_time = ?, is_featured = ?, status = ?
+        SET title = ?, slug = ?, eyebrow = ?, excerpt = ?, content = ?, category_id = ?, author_name = ?, author_avatar = ?, featured_image = ?, reading_time = ?, is_featured = ?, is_hero_slide4 = ?, status = ?
         WHERE id = ?
     ");
     $stmt->execute([
@@ -532,6 +591,7 @@ if ($method === 'PUT') {
         $input['featuredImage'] ?? $existing['featured_image'],
         $input['readingTime'] ?? $existing['reading_time'],
         isset($input['isFeatured']) ? ($input['isFeatured'] ? 1 : 0) : $existing['is_featured'],
+        $isHeroSlide4,
         $status,
         $id
     ]);

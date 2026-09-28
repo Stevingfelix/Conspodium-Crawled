@@ -18,18 +18,20 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS
 }
 
 try {
-    // Extract requested path from Vercel rewrite parameter or request URI
-    $rawPath = $_GET['__vercel_path'] ?? $_SERVER['REQUEST_URI'] ?? '';
+    if (!empty($_SERVER['QUERY_STRING'])) {
+        parse_str($_SERVER['QUERY_STRING'], $queryGet);
+        foreach ($queryGet as $k => $v) {
+            $_GET[$k] = $v;
+        }
+    }
 
-    // If __vercel_path contains query string (e.g. auth.php?action=login), parse query params into $_GET
+    $rawPath = $_GET['__vercel_path'] ?? $_SERVER['REQUEST_URI'] ?? '';
     if (strpos($rawPath, '?') !== false) {
         $queryString = parse_url($rawPath, PHP_URL_QUERY);
         if ($queryString) {
             parse_str($queryString, $extraGet);
             foreach ($extraGet as $k => $v) {
-                if (!isset($_GET[$k])) {
-                    $_GET[$k] = $v;
-                }
+                $_GET[$k] = $v;
             }
         }
     }

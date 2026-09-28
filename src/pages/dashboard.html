@@ -1938,10 +1938,16 @@ e-page-transition,
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
               Registered Attendees: <strong id="live-attendees-count" style="color:#00AEFE;font-size:0.95rem;">0</strong>
             </span>
-            <button type="button" onclick="switchTab('attendees')" style="background:linear-gradient(135deg,#00AEFE,#B71F71);color:#ffffff;border:none;border-radius:50px;font-weight:600;padding:8px 18px;font-size:0.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,174,254,0.3);transition:all 0.2s;">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              Manage Attendees &amp; Follow-ups →
-            </button>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <button type="button" onclick="openPastEventsHistoryModal()" class="csp-btn-sm csp-btn-secondary" style="height:36px;font-size:0.82rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;border-radius:50px;">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                📜 View Past Events History
+              </button>
+              <button type="button" onclick="switchTab('attendees')" style="background:linear-gradient(135deg,#00AEFE,#B71F71);color:#ffffff;border:none;border-radius:50px;font-weight:600;padding:8px 18px;font-size:0.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,174,254,0.3);transition:all 0.2s;">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Manage Attendees &amp; Follow-ups →
+              </button>
+            </div>
           </div>
         </div>
 
@@ -2220,16 +2226,29 @@ e-page-transition,
           </span>
           <button id="btn-bulk-delete-posts" class="csp-btn-sm csp-btn-danger" style="display:none;font-size:0.78rem;padding:6px 14px;">Delete Selected (<span id="count-selected-posts">0</span>)</button>
         </div>
-        <div style="padding:12px 20px;border-bottom:1px solid #e2e8f0;background:#f8fafc;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:space-between;">
+        <div style="padding:12px 20px;border-bottom:1px solid #e2e8f0;background:#f8fafc;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;">
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
             <button type="button" class="post-subtab-btn active" id="btn-post-subtab-all" onclick="filterPostsSubTab('all')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#0f172a;">All Articles (<span id="cnt-posts-all">0</span>)</button>
             <button type="button" class="post-subtab-btn" id="btn-post-subtab-published" onclick="filterPostsSubTab('published')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#64748b;">Published (<span id="cnt-posts-published">0</span>)</button>
             <button type="button" class="post-subtab-btn" id="btn-post-subtab-draft" onclick="filterPostsSubTab('draft')" style="padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;background:#ffffff;font-size:0.82rem;font-weight:600;cursor:pointer;color:#64748b;">📝 Drafts (<span id="cnt-posts-draft">0</span>)</button>
           </div>
-          <button type="button" class="post-subtab-btn" id="btn-post-subtab-spotlight" onclick="filterPostsSubTab('spotlight')" style="padding:8px 18px;border-radius:12px;border:1px solid #334155;background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);font-size:0.84rem;font-weight:700;cursor:pointer;color:#ffffff;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(15,23,42,0.18);transition:all 0.2s ease;" title="Configure the Featured Spotlight Hero Story (powers /stories/ top banner and Homepage Hero Slide 2)">
-            ⭐ Featured Spotlight Story
-            <span id="badge-spotlight-status" style="font-size:0.72rem;background:#38bdf8;color:#0f172a;padding:2px 8px;border-radius:10px;font-weight:800;letter-spacing:0.02em;">Stories & Hero</span>
-          </button>
+          
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <!-- Article Live Search Bar -->
+            <div style="position:relative;width:260px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="manage-posts-search-input" oninput="onManagePostsSearchInput()" placeholder="Search title, author, category..." style="width:100%;padding:7px 30px 7px 34px;border:1px solid #cbd5e1;border-radius:20px;font-size:0.83rem;background:#ffffff;color:#0f172a;outline:none;transition:all 0.2s ease;box-shadow:0 1px 2px rgba(0,0,0,0.03);" onfocus="this.style.borderColor='#00AEFE';this.style.boxShadow='0 0 0 3px rgba(0,174,254,0.15)';" onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='0 1px 2px rgba(0,0,0,0.03)';" />
+              <button type="button" id="btn-clear-manage-posts-search" onclick="clearManagePostsSearch()" style="display:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#94a3b8;font-size:0.8rem;cursor:pointer;padding:2px 4px;font-weight:700;" title="Clear search">✕</button>
+            </div>
+
+            <button type="button" class="post-subtab-btn" id="btn-post-subtab-spotlight" onclick="filterPostsSubTab('spotlight')" style="padding:8px 18px;border-radius:12px;border:1px solid #334155;background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);font-size:0.84rem;font-weight:700;cursor:pointer;color:#ffffff;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(15,23,42,0.18);transition:all 0.2s ease;" title="Configure the Featured Spotlight Hero Story (powers /stories/ top banner and Homepage Hero Slide 2)">
+              ⭐ Featured Spotlight Story
+              <span id="badge-spotlight-status" style="font-size:0.72rem;background:#38bdf8;color:#0f172a;padding:2px 8px;border-radius:10px;font-weight:800;letter-spacing:0.02em;">Stories & Hero</span>
+            </button>
+          </div>
         </div>
 
         <!-- Table View for All / Published / Drafts -->
@@ -2244,13 +2263,11 @@ e-page-transition,
                   <th>Author</th>
                   <th>Published Date</th>
                   <th>Views</th>
-                  <th>Hero Slider</th>
-                  <th>Spotlight Story</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody id="posts-cms-table">
-                <tr><td colspan="8">Loading articles...</td></tr>
+                <tr><td colspan="7">Loading articles...</td></tr>
               </tbody>
             </table>
           </div>
@@ -2468,6 +2485,9 @@ e-page-transition,
           <p style="font-size:0.85rem;color:#94a3b8;margin:0;">Manage confirmed seats, export attendee lists, or broadcast follow-up emails and session links.</p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="openPastEventsHistoryModal()" style="background:rgba(255,255,255,0.1);color:#ffffff;border-color:rgba(255,255,255,0.2);font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+            📜 Past Events History
+          </button>
           <button type="button" class="csp-btn-sm csp-btn-primary" onclick="openAttendeesEmailModal()" style="font-weight:600;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#00AEFE,#007bb5);border:none;box-shadow:0 4px 12px rgba(0,174,254,0.3);">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Send Follow-up Email
@@ -2947,17 +2967,21 @@ e-page-transition,
             <label class="csp-form-label">Discussion Title / Topic Question *</label>
             <input type="text" id="adm-th-title" class="csp-form-input" placeholder="e.g. Policy Brief: Strategic Diaspora Investment Funds for 2026" required>
           </div>
-          <div class="csp-form-group">
+          <div class="csp-form-group" style="position:relative;">
             <label class="csp-form-label">Forum Category *</label>
-            <select id="adm-th-category" class="csp-form-select" required>
-              <option value="General Discussion">General Discussion</option>
-              <option value="African Diaspora Matters">African Diaspora Matters</option>
-              <option value="Diaspora Insights & Analysis">Diaspora Insights & Analysis</option>
-              <option value="Culture & Heritage">Culture & Heritage</option>
-              <option value="Innovation">Innovation</option>
-              <option value="Art & Entertainment">Art & Entertainment</option>
-              <option value="Community">Community</option>
-            </select>
+            <input type="hidden" id="adm-th-category" required value="General Discussion">
+            <div class="custom-cat-picker-wrapper" style="position:relative;">
+              <button type="button" id="adm-th-cat-picker-trigger" class="csp-form-input" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.88rem;color:#0f172a;transition:all 0.2s ease;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+                <span style="display:flex;align-items:center;gap:10px;">
+                  <span id="adm-th-cat-trigger-badge" style="width:30px;height:30px;border-radius:8px;background:rgba(139,92,246,0.12);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  </span>
+                  <span id="adm-th-cat-trigger-text" style="font-size:0.88rem;font-weight:600;color:#0f172a;">General Discussion</span>
+                </span>
+                <span style="font-size:0.75rem;color:#64748b;">▼</span>
+              </button>
+              <div id="adm-th-cat-picker-popover" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:999999;background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;box-shadow:0 14px 36px rgba(15,23,42,0.18);padding:6px;max-height:260px;overflow-y:auto;"></div>
+            </div>
           </div>
           <div class="csp-form-row">
             <div class="csp-form-group">
@@ -3106,6 +3130,35 @@ e-page-transition,
             </button>
           </div>
         </form>
+      </div>
+    </div>
+
+    <!-- Past Events History Modal -->
+    <div class="csp-modal-overlay" id="modal-past-events-history">
+      <div class="csp-modal" style="max-width:850px;width:92%;">
+        <div class="csp-modal-header" style="align-items:center;margin-bottom:16px;">
+          <div>
+            <h3 class="csp-modal-title" style="display:flex;align-items:center;gap:8px;">
+              <svg width="20" height="20" fill="none" stroke="#00AEFE" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Past Live Discussion Events History
+            </h3>
+            <p style="font-size:0.8rem;color:#64748b;margin-top:2px;margin-bottom:0;">Browse all archived live discussion topics, featured speakers, dates, and total registrants.</p>
+          </div>
+          <button type="button" class="csp-modal-close" onclick="closeModal('modal-past-events-history')">&times;</button>
+        </div>
+
+        <div style="margin-bottom:16px;display:flex;gap:10px;align-items:center;background:#f8fafc;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;">
+          <svg width="16" height="16" fill="none" stroke="#64748b" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="past-events-search-input" placeholder="Search past events by topic, speaker name..." style="border:none;background:transparent;outline:none;width:100%;font-size:0.88rem;color:#0f172a;" oninput="filterPastEventsHistoryTable()">
+        </div>
+
+        <div id="past-events-history-list" style="max-height:420px;overflow-y:auto;border:1px solid #e2e8f0;border-radius:10px;padding:4px;">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;margin-top:16px;padding-top:12px;border-top:1px solid #f1f5f9;">
+          <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="closeModal('modal-past-events-history')" style="padding:8px 20px;font-size:0.85rem;border-radius:50px;">Close Window</button>
+        </div>
       </div>
     </div>
 
@@ -3570,11 +3623,29 @@ e-page-transition,
           <label class="csp-form-label">Article Sub-Tag / Badge</label>
           <input type="text" id="post-eyebrow" class="csp-form-input" placeholder="e.g. Featured Story, Policy Analysis">
         </div>
-        <div class="csp-form-group">
+        <div class="csp-form-group" style="position:relative;">
           <label class="csp-form-label">Category *</label>
-          <select id="post-category" class="csp-form-select" required>
-            <option value="">Select Category</option>
-          </select>
+          <input type="hidden" id="post-category" required value="">
+          <div class="custom-cat-picker-wrapper" style="position:relative;">
+            <button type="button" id="post-cat-picker-trigger" class="csp-form-input" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.88rem;color:#0f172a;transition:all 0.2s ease;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+              <span style="display:flex;align-items:center;gap:10px;">
+                <span id="post-cat-trigger-badge" style="width:30px;height:30px;border-radius:8px;background:rgba(2,132,199,0.12);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </span>
+                <span id="post-cat-trigger-text" style="font-size:0.88rem;font-weight:600;color:#64748b;">Select Category</span>
+              </span>
+              <span style="font-size:0.75rem;color:#64748b;">▼</span>
+            </button>
+            <div id="post-cat-picker-popover" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:999999;background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;box-shadow:0 14px 36px rgba(15,23,42,0.18);padding:6px;max-height:260px;overflow-y:auto;"></div>
+          </div>
+          
+          <!-- Dynamic Hero Slide 4 Spotlight Toggle (Appears ONLY when Interview Transcripts is selected) -->
+          <div id="wrapper-hero-slide4" style="display:none;margin-top:10px;padding:10px 14px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;transition:all 0.2s ease;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <input type="checkbox" id="post-is-hero-slide4" style="width:18px;height:18px;accent-color:var(--blue);cursor:pointer;">
+              <label for="post-is-hero-slide4" style="font-size:0.85rem;color:#0284c7;cursor:pointer;font-weight:600;">🎙️ Pin as Featured Interview Spotlight for Homepage Hero Slide 4</label>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -3583,7 +3654,7 @@ e-page-transition,
           <label class="csp-form-label">Publication Date</label>
           <input type="datetime-local" id="post-pub-date" class="csp-form-input">
         </div>
-        <div class="csp-form-group" style="display:flex;align-items:center;gap:10px;margin-top:24px;">
+        <div class="csp-form-group" id="wrapper-is-featured" style="display:flex;align-items:center;gap:10px;margin-top:24px;">
           <input type="checkbox" id="post-is-featured" style="width:20px;height:20px;accent-color:var(--blue);">
           <label for="post-is-featured" style="font-size:0.88rem;color:#0f172a;cursor:pointer;font-weight:600;">⭐ Feature in Hero Slider</label>
         </div>
@@ -3827,11 +3898,21 @@ e-page-transition,
           <label class="csp-form-label">Article Title</label>
           <input type="text" id="approve-title" class="csp-form-input" required placeholder="Article Title">
         </div>
-        <div class="csp-form-group" style="margin:0;">
+        <div class="csp-form-group" style="margin:0;position:relative;">
           <label class="csp-form-label">Assign Category</label>
-          <select id="approve-category" class="csp-form-select" required>
-            <option value="">Select Category</option>
-          </select>
+          <input type="hidden" id="approve-category" required value="">
+          <div class="custom-cat-picker-wrapper" style="position:relative;">
+            <button type="button" id="approve-cat-picker-trigger" class="csp-form-input" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.88rem;color:#0f172a;transition:all 0.2s ease;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+              <span style="display:flex;align-items:center;gap:10px;">
+                <span id="approve-cat-trigger-badge" style="width:30px;height:30px;border-radius:8px;background:rgba(2,132,199,0.12);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </span>
+                <span id="approve-cat-trigger-text" style="font-size:0.88rem;font-weight:600;color:#64748b;">Select Category</span>
+              </span>
+              <span style="font-size:0.75rem;color:#64748b;">▼</span>
+            </button>
+            <div id="approve-cat-picker-popover" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:999999;background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;box-shadow:0 14px 36px rgba(15,23,42,0.18);padding:6px;max-height:260px;overflow-y:auto;"></div>
+          </div>
         </div>
       </div>
 
@@ -4116,22 +4197,370 @@ e-page-transition,
     }
   });
 
+  // Smart Search Matcher: Tokenized, case-insensitive, punctuation-agnostic search
+  window.smartSearchMatch = function(targetFields, queryRaw) {
+    if (!queryRaw || !String(queryRaw).trim()) return true;
+
+    var queryStr = String(queryRaw).toLowerCase().trim();
+    if (!queryStr) return true;
+
+    var compactQuery = queryStr.replace(/[^a-z0-9]/g, '');
+    var queryTokens = queryStr.replace(/[^a-z0-9]/g, ' ').replace(/\s+/g, ' ').trim().split(' ');
+
+    var targetList = Array.isArray(targetFields) ? targetFields : [targetFields];
+    var combinedTargetText = targetList.map(function(f){ return String(f || ''); }).join(' ').toLowerCase();
+
+    var normalizedTargetText = combinedTargetText.replace(/[^a-z0-9]/g, ' ').replace(/\s+/g, ' ').trim();
+    var compactTargetText = combinedTargetText.replace(/[^a-z0-9]/g, '');
+
+    // 1. Direct Compact Match (e.g. "dralban" matches "inconversationwithdralban...")
+    if (compactQuery && compactTargetText.includes(compactQuery)) {
+      return true;
+    }
+
+    // 2. Tokenized Multi-word Match (ALL tokens in query must appear in target text)
+    return queryTokens.every(function(token) {
+      if (!token) return true;
+      var compactToken = token.replace(/[^a-z0-9]/g, '');
+      return normalizedTargetText.includes(token) || (compactToken && compactTargetText.includes(compactToken));
+    });
+  };
+
+  var CATEGORY_FLATICON_SVGS = {
+    'bar-chart': { name: 'Analytics & Insights', stroke: '#6366f1', bg: 'rgba(99,102,241,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' },
+    'globe': { name: 'African Diaspora', stroke: '#0284c7', bg: 'rgba(2,132,199,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' },
+    'heritage': { name: 'Culture & Heritage', stroke: '#00AEFE', bg: 'rgba(0,174,254,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg>' },
+    'lightbulb': { name: 'Innovation & Tech', stroke: '#B71F71', bg: 'rgba(183,31,113,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B71F71" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg>' },
+    'palette': { name: 'Art & Entertainment', stroke: '#8b5cf6', bg: 'rgba(139,92,246,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>' },
+    'users': { name: 'Community Network', stroke: '#10b981', bg: 'rgba(16,185,129,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' },
+    'star': { name: 'Success Stories', stroke: '#f59e0b', bg: 'rgba(245,158,11,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' },
+    'scales': { name: 'Policy & Governance', stroke: '#64748b', bg: 'rgba(100,116,139,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1zM2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1zM7 21h10M12 3v18M3 7h18"/></svg>' },
+    'briefcase': { name: 'Business & Trade', stroke: '#0f172a', bg: 'rgba(15,23,42,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>' },
+    'plane': { name: 'Mobility & Travel', stroke: '#3b82f6', bg: 'rgba(59,130,246,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.8-.2-1.6.3-1.8 1.1-.2.8.2 1.6 1 1.9l6 3.5-4 4-2.5-.5c-.4-.1-.8.1-1 .4l-.8.8c-.3.3-.3.8 0 1.1l2.5 2.5c.3.3.8.3 1.1 0l.8-.8c.3-.2.5-.6.4-1l-.5-2.5 4-4 3.5 6c.3.8 1.1 1.2 1.9 1 .8-.2 1.3-1 1.1-1.8z"/></svg>' },
+    'heart-pulse': { name: 'Health & Medical', stroke: '#ef4444', bg: 'rgba(239,68,68,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>' },
+    'graduation-cap': { name: 'Education & Youth', stroke: '#059669', bg: 'rgba(5,150,105,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>' },
+    'newspaper': { name: 'News & Media', stroke: '#475569', bg: 'rgba(71,85,105,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M18 18h-8M18 10h-8"/></svg>' },
+    'message-square': { name: 'Forum & Discussions', stroke: '#8b5cf6', bg: 'rgba(139,92,246,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' },
+    'rocket': { name: 'Startups & Growth', stroke: '#ec4899', bg: 'rgba(236,72,153,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-3.05 11a22.35 22.35 0 0 1-3.95 2z"/></svg>' },
+    'trophy': { name: 'Leadership & Awards', stroke: '#eab308', bg: 'rgba(234,179,8,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22h10c0-1.76-.85-3.25-2.03-3.79-.5-.23-.97-.66-.97-1.21v-2.34"/><path d="M18 4H6v7a6 6 0 0 0 12 0V4z"/></svg>' },
+    'mic': { name: 'Voice & Podcasts', stroke: '#d97706', bg: 'rgba(217,119,6,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8"/></svg>' },
+    'map-pin': { name: 'Tourism & Location', stroke: '#06b6d4', bg: 'rgba(6,182,212,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' },
+    'book-open': { name: 'Literature & Research', stroke: '#0284c7', bg: 'rgba(2,132,199,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>' },
+    'camera': { name: 'Media & Film', stroke: '#8b5cf6', bg: 'rgba(139,92,246,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>' },
+    'music': { name: 'Music & Sound', stroke: '#ec4899', bg: 'rgba(236,72,153,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>' },
+    'dollar-sign': { name: 'Banking & Finance', stroke: '#10b981', bg: 'rgba(16,185,129,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>' },
+    'target': { name: 'Strategy & Goals', stroke: '#ef4444', bg: 'rgba(239,68,68,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>' },
+    'cpu': { name: 'AI & Deep Tech', stroke: '#3b82f6', bg: 'rgba(59,130,246,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>' },
+    'shield-check': { name: 'Security & Sovereignty', stroke: '#059669', bg: 'rgba(5,150,105,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>' },
+    'compass': { name: 'Navigation & Vision', stroke: '#00AEFE', bg: 'rgba(0,174,254,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>' },
+    'feather': { name: 'Journalism & Writing', stroke: '#B71F71', bg: 'rgba(183,31,113,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B71F71" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L3 13v5h5l9.24-9.24z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>' },
+    'flame': { name: 'Trending & Viral', stroke: '#f97316', bg: 'rgba(249,115,22,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17c1.38 0 2.5-1.12 2.5-2.5 0-1.07-.42-1.54-1.39-2.58C11.17 10.9 10 9.5 10 8c0 1.25-.8 2-2 3-1.04.87-1.5 1.77-1.5 2.76 0 .25.04.49.1.74z"/><path d="M12 2c1.47 3.34 4.5 5.5 4.5 10.5a6.5 6.5 0 1 1-13 0c0-3.37 2.2-6.2 4.5-8.5.5 1.5 1.5 3 4 3 0-1.5.5-3.5 0-5z"/></svg>' },
+    'handshake': { name: 'Partnerships & Alliances', stroke: '#6366f1', bg: 'rgba(99,102,241,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.4-.4.4-1 0-1.4l-2.2-2.2c-.4-.4-1-.4-1.4 0L2 17"/><path d="M15 9h-2a2 2 0 1 0 0 4h3c.6 0 1.1-.2 1.4-.6L21 7"/><path d="m17 3-1.6 1.4c-.4.4-.4 1 0 1.4l2.2 2.2c.4.4 1 .4 1.4 0L22 7"/></svg>' },
+    'layers': { name: 'Infrastructure & Tech Stack', stroke: '#475569', bg: 'rgba(71,85,105,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>' },
+    'zap': { name: 'Energy & Acceleration', stroke: '#eab308', bg: 'rgba(234,179,8,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' },
+    'pie-chart': { name: 'Demographics & Stats', stroke: '#06b6d4', bg: 'rgba(6,182,212,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>' },
+    'gift': { name: 'Philanthropy & NGO', stroke: '#ec4899', bg: 'rgba(236,72,153,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>' },
+    'tv': { name: 'Broadcasting & Cinema', stroke: '#64748b', bg: 'rgba(100,116,139,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>' },
+    'bookmark': { name: 'Archives & Heritage Docs', stroke: '#0284c7', bg: 'rgba(2,132,199,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>' },
+    'coffee': { name: 'Lifestyle & Networking', stroke: '#d97706', bg: 'rgba(217,119,6,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>' }
+  };
+
   var categoriesCache = [];
 
-  function loadCategoriesSelect() {
-    fetch(getRootUrl('api/posts.php?resource=categories'))
+  function getCategoryIconObject(cat) {
+    if (!cat) return CATEGORY_FLATICON_SVGS['globe'];
+    if (typeof cat === 'string') {
+      cat = { icon: cat, name: cat, slug: cat };
+    }
+    var iconKey = ((cat && (cat.icon || cat.category_icon)) || '').toLowerCase();
+    var slug = ((cat && (cat.slug || cat.category_slug)) || '').toLowerCase();
+    var name = ((cat && (cat.name || cat.category_name)) || '').toLowerCase();
+
+    if (CATEGORY_FLATICON_SVGS && CATEGORY_FLATICON_SVGS[iconKey]) {
+      return CATEGORY_FLATICON_SVGS[iconKey];
+    }
+    if (iconKey.includes('newspaper') || slug.includes('interview') || name.includes('interview') || name.includes('newspaper') || name.includes('transcript')) {
+      return CATEGORY_FLATICON_SVGS['newspaper'];
+    }
+    if (iconKey.includes('bar-chart') || iconKey.includes('📊') || slug.includes('insight') || name.includes('insight') || name.includes('analysis')) {
+      return CATEGORY_FLATICON_SVGS['bar-chart'];
+    }
+    if (iconKey.includes('heritage') || iconKey.includes('🏛') || slug.includes('culture') || name.includes('culture')) {
+      return CATEGORY_FLATICON_SVGS['heritage'];
+    }
+    if (iconKey.includes('lightbulb') || iconKey.includes('💡') || slug.includes('innovation') || name.includes('innovation')) {
+      return CATEGORY_FLATICON_SVGS['lightbulb'];
+    }
+    if (iconKey.includes('palette') || iconKey.includes('🎨') || slug.includes('art') || name.includes('art') || name.includes('entertainment')) {
+      return CATEGORY_FLATICON_SVGS['palette'];
+    }
+    if (iconKey.includes('users') || iconKey.includes('👥') || slug.includes('community') || name.includes('community')) {
+      return CATEGORY_FLATICON_SVGS['users'];
+    }
+    if (iconKey.includes('star') || iconKey.includes('🌟') || slug.includes('success') || name.includes('success') || name.includes('story')) {
+      return CATEGORY_FLATICON_SVGS['star'];
+    }
+    if (iconKey.includes('globe') || iconKey.includes('🌍') || iconKey.includes('🌐') || slug.includes('diaspora') || name.includes('diaspora') || name.includes('matters')) {
+      return CATEGORY_FLATICON_SVGS['globe'];
+    }
+    return CATEGORY_FLATICON_SVGS['globe'];
+  }
+
+  function setupCustomCategoryPicker(config) {
+    var inputEl = document.getElementById(config.inputId);
+    var triggerEl = document.getElementById(config.triggerId);
+    var popoverEl = document.getElementById(config.popoverId);
+    var badgeEl = document.getElementById(config.badgeId);
+    var textEl = document.getElementById(config.textId);
+
+    if (!inputEl || !triggerEl || !popoverEl || !badgeEl || !textEl) return;
+
+    var categories = config.categories || categoriesCache || [];
+    var curVal = inputEl.value;
+
+    popoverEl.innerHTML = '';
+
+    var items = [];
+    if (config.allowGeneral) {
+      items.push({ id: 'General Discussion', name: 'General Discussion', icon: 'message-square', slug: 'general-discussion' });
+    }
+    categories.forEach(function(c){ items.push(c); });
+
+    items.forEach(function(cat){
+      var catVal = (config.valueMode === 'name') ? cat.name : String(cat.id);
+      var isSelected = String(curVal) === String(catVal);
+      var iconObj = getCategoryIconObject(cat);
+
+      var itemDiv = document.createElement('div');
+      itemDiv.className = 'custom-cat-option';
+      itemDiv.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;cursor:pointer;transition:all 0.15s ease;margin-bottom:2px;background:' + (isSelected ? '#f0f9ff' : 'transparent') + ';';
+      
+      itemDiv.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="width:30px;height:30px;border-radius:8px;background:${iconObj.bg};display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+            ${iconObj.svg}
+          </span>
+          <span style="font-weight:600;font-size:0.86rem;color:#0f172a;">${cat.name}</span>
+        </div>
+        ${isSelected ? '<span style="font-weight:700;color:#0284c7;font-size:0.85rem;">✓</span>' : ''}
+      `;
+
+      itemDiv.onmouseenter = function(){ if (!isSelected) itemDiv.style.background = '#f8fafc'; };
+      itemDiv.onmouseleave = function(){ if (!isSelected) itemDiv.style.background = 'transparent'; };
+
+      itemDiv.onclick = function(e){
+        e.stopPropagation();
+        setCustomCategoryPickerValue(config.inputId, catVal, categories, config);
+        popoverEl.style.display = 'none';
+      };
+
+      popoverEl.appendChild(itemDiv);
+    });
+
+    // Toggle popover
+    triggerEl.onclick = function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var isHidden = popoverEl.style.display === 'none' || !popoverEl.style.display;
+      
+      document.querySelectorAll('.custom-cat-picker-wrapper div[id$="-popover"]').forEach(function(p){
+        p.style.display = 'none';
+      });
+
+      popoverEl.style.display = isHidden ? 'block' : 'none';
+    };
+
+    setCustomCategoryPickerValue(config.inputId, curVal, categories, config);
+  }
+
+  function setCustomCategoryPickerValue(inputId, value, categoriesList, config) {
+    var inputEl = document.getElementById(inputId);
+    if (!inputEl) return;
+    inputEl.value = value || '';
+
+    var triggerId = config ? config.triggerId : inputId.replace('-category', '-cat-picker-trigger');
+    var badgeId = config ? config.badgeId : inputId.replace('-category', '-cat-trigger-badge');
+    var textId = config ? config.textId : inputId.replace('-category', '-cat-trigger-text');
+
+    var badgeEl = document.getElementById(badgeId);
+    var textEl = document.getElementById(textId);
+
+    var list = categoriesList || categoriesCache || [];
+    var matchedCat = null;
+
+    if (value) {
+      list.forEach(function(c){
+        if (String(c.id) === String(value) || String(c.name) === String(value)) {
+          matchedCat = c;
+        }
+      });
+      if (!matchedCat && value === 'General Discussion') {
+        matchedCat = { name: 'General Discussion', icon: 'message-square' };
+      }
+    }
+
+    if (matchedCat) {
+      var iconObj = getCategoryIconObject(matchedCat);
+      if (badgeEl) {
+        badgeEl.style.background = iconObj.bg;
+        badgeEl.innerHTML = iconObj.svg;
+      }
+      if (textEl) {
+        textEl.textContent = matchedCat.name;
+        textEl.style.color = '#0f172a';
+      }
+    } else {
+      var defaultIcon = getCategoryIconObject('globe');
+      if (badgeEl) {
+        badgeEl.style.background = defaultIcon.bg;
+        badgeEl.innerHTML = defaultIcon.svg;
+      }
+      if (textEl) {
+        textEl.textContent = 'Select Category';
+        textEl.style.color = '#64748b';
+      }
+    }
+
+    // Dynamic Hero Slide 4 Toggle & Sub-Tag Lock Guard for Post Editor
+    if (inputId === 'post-category') {
+      var slide4Wrap = document.getElementById('wrapper-hero-slide4');
+      var postEyebrow = document.getElementById('post-eyebrow');
+      var isInterviewCat = false;
+
+      if (matchedCat) {
+        var cName = (matchedCat.name || '').toLowerCase();
+        var cSlug = (matchedCat.slug || '').toLowerCase();
+        var cIcon = (matchedCat.icon || '').toLowerCase();
+        if (cSlug === 'interview-transcripts' || cName.includes('interview') || cName.includes('transcript') || cIcon === 'newspaper') {
+          isInterviewCat = true;
+        }
+      }
+
+      var genFeaturedWrap = document.getElementById('wrapper-is-featured');
+      var genFeaturedCb = document.getElementById('post-is-featured');
+
+      if (isInterviewCat) {
+        if (slide4Wrap) slide4Wrap.style.display = 'block';
+        if (genFeaturedWrap) genFeaturedWrap.style.display = 'none';
+        if (genFeaturedCb) genFeaturedCb.checked = false;
+
+        if (postEyebrow) {
+          postEyebrow.value = 'Exclusive Interview';
+          postEyebrow.readOnly = true;
+          postEyebrow.style.background = '#f1f5f9';
+          postEyebrow.style.color = '#475569';
+          postEyebrow.style.cursor = 'not-allowed';
+        }
+      } else {
+        if (slide4Wrap) slide4Wrap.style.display = 'none';
+        if (genFeaturedWrap) genFeaturedWrap.style.display = 'flex';
+
+        var slide4Cb = document.getElementById('post-is-hero-slide4');
+        if (slide4Cb) slide4Cb.checked = false;
+
+        if (postEyebrow) {
+          postEyebrow.readOnly = false;
+          postEyebrow.style.background = '#ffffff';
+          postEyebrow.style.color = '#0f172a';
+          postEyebrow.style.cursor = 'text';
+          if (postEyebrow.value === 'Exclusive Interview') {
+            postEyebrow.value = '';
+          }
+        }
+      }
+    }
+  }
+
+  function syncHeroCheckboxesState() {
+    var genFeaturedWrap = document.getElementById('wrapper-is-featured');
+    var genFeaturedCb = document.getElementById('post-is-featured');
+    var catValInput = document.getElementById('post-category');
+
+    if (!genFeaturedWrap || !genFeaturedCb) return;
+
+    var catVal = catValInput ? catValInput.value : '';
+    var isInterviewCat = false;
+
+    if (categoriesCache && categoriesCache.length > 0) {
+      categoriesCache.forEach(function(c){
+        if (String(c.id) === String(catVal) || String(c.name) === String(catVal)) {
+          var cName = (c.name || '').toLowerCase();
+          var cSlug = (c.slug || '').toLowerCase();
+          var cIcon = (c.icon || '').toLowerCase();
+          if (cSlug === 'interview-transcripts' || cName.includes('interview') || cName.includes('transcript') || cIcon === 'newspaper') {
+            isInterviewCat = true;
+          }
+        }
+      });
+    }
+
+    if (isInterviewCat) {
+      genFeaturedWrap.style.display = 'none';
+      genFeaturedCb.checked = false;
+    } else {
+      genFeaturedWrap.style.display = 'flex';
+    }
+  }
+
+  // Global document click handler to close popovers when clicking outside
+  document.addEventListener('click', function(e){
+    if (!e.target.closest('.custom-cat-picker-wrapper')) {
+      document.querySelectorAll('.custom-cat-picker-wrapper div[id$="-popover"]').forEach(function(p){
+        p.style.display = 'none';
+      });
+    }
+  });
+
+  function loadCategoriesSelect(callback) {
+    fetch(getRootUrl('api/categories.php'))
       .then(function(r){ return r.json(); })
       .then(function(res){
-        if(!res.success) return;
-        categoriesCache = res.categories;
-        var selects = [document.getElementById('post-category'), document.getElementById('approve-category')];
-        selects.forEach(function(sel){
-          if(!sel) return;
-          sel.innerHTML = '<option value="">Select Category</option>';
-          res.categories.forEach(function(c){
-            sel.innerHTML += '<option value="' + c.id + '">' + c.icon + ' ' + c.name + '</option>';
-          });
+        var list = res.categories || res.data || [];
+        if (!Array.isArray(list)) {
+          if (typeof callback === 'function') callback([]);
+          return;
+        }
+        categoriesCache = list;
+        
+        // 1. Post Editor Category Picker
+        setupCustomCategoryPicker({
+          inputId: 'post-category',
+          triggerId: 'post-cat-picker-trigger',
+          popoverId: 'post-cat-picker-popover',
+          badgeId: 'post-cat-trigger-badge',
+          textId: 'post-cat-trigger-text',
+          valueMode: 'id',
+          categories: list
         });
+
+        // 2. Approve Submission Category Picker
+        setupCustomCategoryPicker({
+          inputId: 'approve-category',
+          triggerId: 'approve-cat-picker-trigger',
+          popoverId: 'approve-cat-picker-popover',
+          badgeId: 'approve-cat-trigger-badge',
+          textId: 'approve-cat-trigger-text',
+          valueMode: 'id',
+          categories: list
+        });
+
+        // 3. Admin Forum Thread Category Picker
+        setupCustomCategoryPicker({
+          inputId: 'adm-th-category',
+          triggerId: 'adm-th-cat-picker-trigger',
+          popoverId: 'adm-th-cat-picker-popover',
+          badgeId: 'adm-th-cat-trigger-badge',
+          textId: 'adm-th-cat-trigger-text',
+          valueMode: 'name',
+          allowGeneral: true,
+          categories: list
+        });
+
+        if (typeof callback === 'function') callback(list);
+      })
+      .catch(function(err){
+        console.error('Error loading categories:', err);
+        if (typeof callback === 'function') callback([]);
       });
   }
 
@@ -4623,15 +5052,40 @@ e-page-transition,
     if (elPub) elPub.textContent = cntPublished;
     if (elDft) elDft.textContent = cntDraft;
 
+    var searchVal = (document.getElementById('manage-posts-search-input')?.value || '').toLowerCase().trim();
+    var clearBtn = document.getElementById('btn-clear-manage-posts-search');
+    if (clearBtn) clearBtn.style.display = searchVal ? 'block' : 'none';
+
+    var filtered = allPostsRawCache;
+
     if (currentPostSubTab === 'published') {
-      postsCache = allPostsRawCache.filter(function(p){ return p.status !== 'draft'; });
+      filtered = filtered.filter(function(p){ return p.status !== 'draft'; });
     } else if (currentPostSubTab === 'draft') {
-      postsCache = allPostsRawCache.filter(function(p){ return p.status === 'draft'; });
-    } else {
-      postsCache = allPostsRawCache;
+      filtered = filtered.filter(function(p){ return p.status === 'draft'; });
     }
-    renderPostsPage(targetPage || currentPostsPage || 1);
+
+    if (searchVal) {
+      filtered = filtered.filter(function(p){
+        return smartSearchMatch([p.title, p.author_name, p.category_name, p.excerpt, p.id], searchVal);
+      });
+    }
+
+    postsCache = filtered;
+    renderPostsPage(targetPage || 1);
   }
+
+  window.onManagePostsSearchInput = function() {
+    currentPostsPage = 1;
+    applyPostsSubTabFiltering(1);
+  };
+
+  window.clearManagePostsSearch = function() {
+    var searchInput = document.getElementById('manage-posts-search-input');
+    if (searchInput) {
+      searchInput.value = '';
+      onManagePostsSearchInput();
+    }
+  };
 
   window.publishDraftPost = function(id) {
     fetch(getRootUrl('api/posts.php?id=' + id), {
@@ -4678,7 +5132,11 @@ e-page-transition,
     updatePostsBulkDeleteState();
 
     if (total === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">No articles found for this filter view.</td></tr>';
+      var sVal = document.getElementById('manage-posts-search-input')?.value;
+      var msg = sVal 
+        ? `<div style="font-size:1.05rem;font-weight:700;color:#0f172a;margin-bottom:4px;">🔍 No articles matching "${sVal.replace(/"/g, '&quot;')}"</div><div style="font-size:0.82rem;color:#64748b;">Try refining your search terms or clearing the search box.</div>`
+        : `No articles found for this filter view.`;
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:28px 20px;color:var(--text-muted);">${msg}</td></tr>`;
       if (info) info.textContent = 'Showing 0 of 0 articles';
       if (btns) btns.innerHTML = '';
       return;
@@ -4696,8 +5154,10 @@ e-page-transition,
         </button>
       ` : '';
 
-      var isHeroFeat = (p.is_featured == 1 || p.is_featured === true || p.is_featured === '1');
-      var isSpotlight = (currentSpotlightPost && String(currentSpotlightPost.id) === String(p.id));
+      var catIconObj = getCategoryIconObject(p);
+      var catSvgSmall = (catIconObj && catIconObj.svg) ? catIconObj.svg.replace('width="22"', 'width="15"').replace('height="22"', 'height="15"') : '';
+      var catBgCol = (catIconObj && catIconObj.bg) ? catIconObj.bg : 'rgba(2,132,199,0.12)';
+      var catDisplayName = p.category_name || (catIconObj ? catIconObj.name : 'Unassigned');
 
       tbody.innerHTML += `
         <tr>
@@ -4711,20 +5171,17 @@ e-page-transition,
               </div>
             </div>
           </td>
-          <td>${p.category_icon || '🏷️'} ${p.category_name || 'Unassigned'}</td>
+          <td>
+            <div style="display:inline-flex;align-items:center;gap:8px;">
+              <span style="width:26px;height:26px;border-radius:7px;background:${catBgCol};display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+                ${catSvgSmall}
+              </span>
+              <span style="font-weight:600;color:#0f172a;font-size:0.86rem;">${catDisplayName}</span>
+            </div>
+          </td>
           <td>${p.author_name}</td>
           <td>${pubDate}</td>
           <td>${(p.views || 0).toLocaleString()}</td>
-          <td>
-            <button type="button" class="csp-btn-sm" onclick="togglePostFeatured(${p.id})" style="font-size:0.74rem;padding:4px 10px;border-radius:20px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:4px;${isHeroFeat ? 'background:#eff6ff;color:#1d4ed8;border:1px solid #93c5fd;' : 'background:#f8fafc;color:#64748b;border:1px solid #cbd5e1;'}" title="${isHeroFeat ? 'Click to remove from Homepage Hero rotating slides' : 'Click to append to Homepage Hero rotating slides'}">
-              ${isHeroFeat ? '⭐ In Hero' : '☆ Add to Hero'}
-            </button>
-          </td>
-          <td>
-            ${isSpotlight 
-              ? '<span class="csp-status-badge csp-status-approved" style="font-size:0.74rem;padding:4px 10px;white-space:nowrap;background:#f0fdf4;color:#15803d;border:1px solid #86efac;font-weight:700;display:inline-flex;align-items:center;gap:4px;">🟢 Active</span>' 
-              : `<button type="button" class="csp-btn-sm" onclick="setPostAsSpotlightDirect(${p.id})" style="font-size:0.72rem;padding:3px 10px;border-radius:20px;color:#475569;background:#f8fafc;border:1px solid #cbd5e1;cursor:pointer;font-weight:600;transition:all 0.2s ease;" title="Set as Featured Spotlight Story (powers /stories/ top banner and Homepage Hero Slide 2)">Set Spotlight</button>`}
-          </td>
           <td>
             ${publishNowBtn}
             <button class="csp-btn-sm csp-btn-secondary" onclick="openViewArticleModal(${p.id})" style="margin-right:4px;">
@@ -4937,6 +5394,10 @@ e-page-transition,
       cleaned = txt.value;
     } catch(e){}
 
+    // Unwrap custom interview transcript container DIVs for Quill editor compatibility
+    cleaned = cleaned.replace(/^[\s\n]*<div class="csp-interview-transcript-container">[\s\n]*<div class="csp-transcript-section">([\s\S]*?)<\/div>[\s\n]*<\/div>[\s\n]*$/i, '$1');
+    cleaned = cleaned.replace(/^[\s\n]*<div class="csp-transcript-section">([\s\S]*?)<\/div>[\s\n]*$/i, '$1');
+
     if (!/<[a-z][\s\S]*>/i.test(cleaned)) {
       var paragraphs = cleaned.split(/\n\s*\n/);
       cleaned = paragraphs.map(function(p){
@@ -4996,36 +5457,61 @@ e-page-transition,
   });
 
   function openPostModal(post) {
-    document.getElementById('form-post-editor').reset();
-    document.getElementById('edit-post-id').value = '';
+    var targetCategoryId = post ? (post.category_id || '') : '';
 
-    if(post) {
-      document.getElementById('modal-post-title').textContent = 'Edit Article';
-      document.getElementById('edit-post-id').value = post.id;
-      document.getElementById('post-title').value = post.title || '';
-      document.getElementById('post-eyebrow').value = post.eyebrow || '';
-      document.getElementById('post-excerpt').value = post.excerpt || '';
-      quill.root.innerHTML = cleanRawEscapedContent(post.content || '');
-      document.getElementById('post-category').value = post.category_id || '';
-      document.getElementById('post-author').value = post.author_name || '';
-      document.getElementById('post-reading-time').value = post.reading_time || '';
-      document.getElementById('post-is-featured').checked = !!post.is_featured;
+    var populateModal = function() {
+      document.getElementById('form-post-editor').reset();
+      document.getElementById('edit-post-id').value = '';
 
-      if (post.published_at) {
-        var dStr = post.published_at.replace(' ', 'T');
-        document.getElementById('post-pub-date').value = dStr.length >= 16 ? dStr.substring(0, 16) : dStr;
+      if(post) {
+        document.getElementById('modal-post-title').textContent = 'Edit Article';
+        document.getElementById('edit-post-id').value = post.id;
+        document.getElementById('post-title').value = post.title || '';
+        document.getElementById('post-eyebrow').value = post.eyebrow || '';
+        document.getElementById('post-excerpt').value = post.excerpt || '';
+        
+        var cleanedContent = cleanRawEscapedContent(post.content || '');
+        if (quill && quill.clipboard && typeof quill.clipboard.dangerouslyPasteHTML === 'function') {
+          quill.clipboard.dangerouslyPasteHTML(0, cleanedContent);
+        } else if (quill) {
+          quill.root.innerHTML = cleanedContent;
+        }
+        if (document.getElementById('post-category')) {
+          setCustomCategoryPickerValue('post-category', targetCategoryId, categoriesCache, {
+            triggerId: 'post-cat-picker-trigger',
+            badgeId: 'post-cat-trigger-badge',
+            textId: 'post-cat-trigger-text'
+          });
+        }
+        document.getElementById('post-author').value = post.author_name || '';
+        document.getElementById('post-reading-time').value = post.reading_time || '';
+        document.getElementById('post-is-featured').checked = !!post.is_featured;
+        if (document.getElementById('post-is-hero-slide4')) {
+          document.getElementById('post-is-hero-slide4').checked = !!post.is_hero_slide4;
+        }
+        syncHeroCheckboxesState();
+
+        if (post.published_at) {
+          var dStr = post.published_at.replace(' ', 'T');
+          document.getElementById('post-pub-date').value = dStr.length >= 16 ? dStr.substring(0, 16) : dStr;
+        } else {
+          document.getElementById('post-pub-date').value = '';
+        }
+
+        updateImageUIState(post.featured_image || '');
       } else {
-        document.getElementById('post-pub-date').value = '';
+        document.getElementById('modal-post-title').textContent = 'Create New Article';
+        quill.root.innerHTML = '';
+        document.getElementById('post-pub-date').value = new Date().toISOString().substring(0, 16);
+        updateImageUIState('');
       }
+      openModal('modal-post');
+    };
 
-      updateImageUIState(post.featured_image || '');
-    } else {
-      document.getElementById('modal-post-title').textContent = 'Create New Article';
-      quill.root.innerHTML = '';
-      document.getElementById('post-pub-date').value = new Date().toISOString().substring(0, 16);
-      updateImageUIState('');
-    }
-    openModal('modal-post');
+    // Load fresh categories from DB every time so new categories appear immediately
+    loadCategoriesSelect(function(){
+      populateModal();
+    });
   }
 
   window.editPost = function(id) {
@@ -5110,6 +5596,7 @@ e-page-transition,
       readingTime: document.getElementById('post-reading-time').value,
       featuredImage: document.getElementById('post-img-url').value,
       isFeatured: document.getElementById('post-is-featured').checked,
+      isHeroSlide4: document.getElementById('post-is-hero-slide4') ? (document.getElementById('post-is-hero-slide4').checked ? 1 : 0) : 0,
       publishedAt: document.getElementById('post-pub-date').value
     };
 
@@ -5543,15 +6030,13 @@ e-page-transition,
       contentInput.value = s.content || '';
     }
 
-    var catSelect = document.getElementById('approve-category');
     var catToFind = userCat || (s ? s.category : '');
-    if (catSelect && catToFind) {
-      for (var i = 0; i < catSelect.options.length; i++) {
-        if (catSelect.options[i].text.toLowerCase().trim() === catToFind.toLowerCase().trim()) {
-          catSelect.selectedIndex = i;
-          break;
-        }
-      }
+    if (catToFind) {
+      setCustomCategoryPickerValue('approve-category', catToFind, categoriesCache, {
+        triggerId: 'approve-cat-picker-trigger',
+        badgeId: 'approve-cat-trigger-badge',
+        textId: 'approve-cat-trigger-text'
+      });
     }
 
     // Default stock photos for categories if author submission image is missing
@@ -8324,7 +8809,8 @@ e-page-transition,
     };
   }
 
-  var CATEGORY_FLATICON_SVGS = {
+  // Secondary definition fallback (main map defined near top of script)
+  var _UNUSED_CATEGORY_FLATICON_SVGS = {
     'bar-chart': { name: 'Analytics & Insights', stroke: '#6366f1', bg: 'rgba(99,102,241,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' },
     'globe': { name: 'African Diaspora', stroke: '#0284c7', bg: 'rgba(2,132,199,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' },
     'heritage': { name: 'Culture & Heritage', stroke: '#00AEFE', bg: 'rgba(0,174,254,0.12)', svg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg>' },
@@ -8574,7 +9060,10 @@ e-page-transition,
     })
     .then(function(r){ return r.json(); })
     .then(function(res){
-      if (res.success) { loadCategoriesManager(); }
+      if (res.success) {
+        loadCategoriesManager();
+        loadCategoriesSelect();
+      }
       else { alert(res.error || 'Failed to delete category'); }
     });
   };
@@ -8605,6 +9094,7 @@ e-page-transition,
           alert('🎉 Category saved successfully!');
           modalCategory.classList.remove('active');
           loadCategoriesManager();
+          loadCategoriesSelect();
         } else { alert(res.error || 'Failed to save category'); }
       });
     };
@@ -8801,13 +9291,13 @@ e-page-transition,
 
   window.onSearchFeaturedTyping = function(val) {
     var dropdown = document.getElementById('featured-search-dropdown');
-    var q = (val || '').toLowerCase().trim();
+    var q = (val || '').trim();
     if (!q) {
       dropdown.style.display = 'none';
       return;
     }
     var matches = allArticlesData.filter(function(a){
-      return a.title.toLowerCase().includes(q) || String(a.id).includes(q);
+      return smartSearchMatch([a.title, a.id], q);
     });
     if (matches.length === 0) {
       dropdown.innerHTML = '<div style="padding:10px;font-size:0.82rem;color:#64748b;">No matching articles found</div>';
@@ -8828,13 +9318,13 @@ e-page-transition,
 
   window.onSearchTrendingTyping = function(val) {
     var dropdown = document.getElementById('trending-search-dropdown');
-    var q = (val || '').toLowerCase().trim();
+    var q = (val || '').trim();
     if (!q) {
       dropdown.style.display = 'none';
       return;
     }
     var matches = allArticlesData.filter(function(a){
-      return a.title.toLowerCase().includes(q) || String(a.id).includes(q);
+      return smartSearchMatch([a.title, a.id], q);
     });
     if (matches.length === 0) {
       dropdown.innerHTML = '<div style="padding:10px;font-size:0.82rem;color:#64748b;">No matching articles found</div>';
@@ -9833,6 +10323,118 @@ e-page-transition,
     cspToast('Exported ' + toExport.length + ' attendee record(s) to CSV!', 'success');
   };
 
+  // --- PAST EVENTS HISTORY HANDLERS ---
+  var cachedPastEventsHistory = [];
+
+  window.openPastEventsHistoryModal = function() {
+    openModal('modal-past-events-history');
+    var listEl = document.getElementById('past-events-history-list');
+    if (listEl) {
+      listEl.innerHTML = '<div style="padding:40px;text-align:center;color:#64748b;font-size:0.9rem;"><div class="csp-spinner" style="margin:0 auto 12px;"></div>Loading events history...</div>';
+    }
+    
+    fetch('/api/homepage.php?action=get_live_discussions_history')
+      .then(function(res){ return res.json(); })
+      .then(function(res){
+        if (res.success && Array.isArray(res.data)) {
+          cachedPastEventsHistory = res.data;
+          renderPastEventsHistoryTable(cachedPastEventsHistory);
+        } else {
+          if (listEl) listEl.innerHTML = '<div style="padding:30px;text-align:center;color:#ef4444;">Failed to load events history.</div>';
+        }
+      })
+      .catch(function(err){
+        if (listEl) listEl.innerHTML = '<div style="padding:30px;text-align:center;color:#ef4444;">Error loading events: ' + err.message + '</div>';
+      });
+  };
+
+  window.filterPastEventsHistoryTable = function() {
+    var q = (document.getElementById('past-events-search-input')?.value || '').trim().toLowerCase();
+    if (!q) {
+      renderPastEventsHistoryTable(cachedPastEventsHistory);
+      return;
+    }
+    var filtered = cachedPastEventsHistory.filter(function(ev) {
+      var topic = (ev.topic || '').toLowerCase();
+      var speaker = (ev.speaker_name || '').toLowerCase();
+      var role = (ev.speaker_role || '').toLowerCase();
+      return topic.indexOf(q) !== -1 || speaker.indexOf(q) !== -1 || role.indexOf(q) !== -1;
+    });
+    renderPastEventsHistoryTable(filtered);
+  };
+
+  function renderPastEventsHistoryTable(events) {
+    var listEl = document.getElementById('past-events-history-list');
+    if (!listEl) return;
+    if (!events || events.length === 0) {
+      listEl.innerHTML = '<div style="padding:40px;text-align:center;color:#64748b;font-size:0.9rem;">No past events found in history log.</div>';
+      return;
+    }
+
+    var html = '<table class="csp-table" style="width:100%;font-size:0.85rem;">' +
+      '<thead><tr style="background:#f8fafc;">' +
+      '<th style="padding:10px 14px;">Status</th>' +
+      '<th style="padding:10px 14px;">Topic Title &amp; Details</th>' +
+      '<th style="padding:10px 14px;">Speaker</th>' +
+      '<th style="padding:10px 14px;">Event Date</th>' +
+      '<th style="padding:10px 14px;text-align:center;">Registrants</th>' +
+      '<th style="padding:10px 14px;text-align:right;">Actions</th>' +
+      '</tr></thead><tbody>';
+
+    events.forEach(function(ev) {
+      var isActive = parseInt(ev.is_active || 0) === 1;
+      var statusBadge = isActive
+        ? '<span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-weight:600;font-size:0.75rem;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;background:#22c55e;border-radius:50%;"></span> Active</span>'
+        : '<span style="background:#f1f5f9;color:#64748b;padding:3px 10px;border-radius:20px;font-weight:500;font-size:0.75rem;">Past Event</span>';
+
+      var dateFormatted = ev.discussion_date ? new Date(ev.discussion_date.replace(' ', 'T')).toLocaleString(undefined, {
+        month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      }) : 'N/A';
+
+      var attendeeCount = ev.attendee_count || 0;
+      var safeEvJson = JSON.stringify(ev).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+
+      html += '<tr style="border-bottom:1px solid #f1f5f9;">' +
+        '<td style="padding:12px 14px;vertical-align:middle;">' + statusBadge + '</td>' +
+        '<td style="padding:12px 14px;vertical-align:middle;max-width:240px;">' +
+          '<div style="font-weight:600;color:#0f172a;line-height:1.3;margin-bottom:3px;">' + escapeHtml(ev.topic || 'Untitled Event') + '</div>' +
+          (ev.zoom_link ? '<a href="' + escapeHtml(ev.zoom_link) + '" target="_blank" style="color:#00AEFE;font-size:0.75rem;text-decoration:none;display:inline-flex;align-items:center;gap:3px;"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Zoom / Link</a>' : '') +
+        '</td>' +
+        '<td style="padding:12px 14px;vertical-align:middle;">' +
+          '<div style="font-weight:500;color:#334155;">' + escapeHtml(ev.speaker_name || 'N/A') + '</div>' +
+          '<div style="font-size:0.75rem;color:#94a3b8;">' + escapeHtml(ev.speaker_role || '') + '</div>' +
+        '</td>' +
+        '<td style="padding:12px 14px;vertical-align:middle;white-space:nowrap;color:#475569;">' + dateFormatted + '</td>' +
+        '<td style="padding:12px 14px;vertical-align:middle;text-align:center;">' +
+          '<span style="font-weight:700;color:#00AEFE;font-size:0.92rem;">' + attendeeCount + '</span>' +
+        '</td>' +
+        '<td style="padding:12px 14px;vertical-align:middle;text-align:right;white-space:nowrap;">' +
+          '<button type="button" class="csp-btn-sm csp-btn-secondary" style="padding:4px 10px;font-size:0.75rem;border-radius:6px;" onclick=\'loadEventIntoForm(' + safeEvJson + ')\'>Re-use Details</button>' +
+        '</td>' +
+        '</tr>';
+    });
+
+    html += '</tbody></table>';
+    listEl.innerHTML = html;
+  }
+
+  window.loadEventIntoForm = function(ev) {
+    if (!ev) return;
+    if (confirm('Load this event into the Live Discussion form?')) {
+      document.getElementById('live-topic').value = ev.topic || '';
+      document.getElementById('live-speaker-name').value = ev.speaker_name || '';
+      document.getElementById('live-speaker-role').value = ev.speaker_role || '';
+      if (ev.discussion_date) {
+        document.getElementById('live-date').value = ev.discussion_date.replace(' ', 'T').substring(0, 16);
+      }
+      if (ev.zoom_link) {
+        document.getElementById('live-zoom').value = ev.zoom_link;
+      }
+      closeModal('modal-past-events-history');
+      cspToast('Event details loaded into form. Edit if needed and save.', 'success');
+    }
+  };
+
   window.copyAllAttendeeEmails = function() {
     var toCopy = getFilteredAttendees();
     if (!toCopy || toCopy.length === 0) {
@@ -10006,6 +10608,7 @@ e-page-transition,
   document.addEventListener('DOMContentLoaded', function(){
     checkAuthSession();
     loadAttendeesTab();
+    loadCategoriesSelect();
   });
 })();
 </script>

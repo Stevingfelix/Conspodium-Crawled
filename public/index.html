@@ -22477,6 +22477,46 @@
           });
       }
 
+      function loadHeroSlide4DynamicContent() {
+        var url = window.getRootUrl ? window.getRootUrl('api/posts.php?action=get_hero_slide4') : './api/posts.php?action=get_hero_slide4';
+        fetch(url)
+          .then(function (r) { return r.json(); })
+          .then(function (res) {
+            if (res.success && res.post) {
+              var p = res.post;
+              var slide4 = document.querySelector('.csp-hero-slide[data-slide="3"]');
+              if (slide4) {
+                var bg = slide4.querySelector('.csp-hero-bg');
+                var title = slide4.querySelector('.csp-hero-title');
+                var sub = slide4.querySelector('.csp-hero-sub');
+                var btn = slide4.querySelector('.csp-hero-btn-primary');
+
+                if (bg && p.featured_image) {
+                  var imgUrl = getAbsoluteImageUrl(p.featured_image);
+                  bg.style.backgroundImage = 'url("' + imgUrl + '")';
+                }
+                if (title && p.title) {
+                  if (p.title.includes('In Conversation with')) {
+                    var parts = p.title.split(':');
+                    var headlineMain = parts[0].replace('In Conversation with', '').trim();
+                    title.innerHTML = 'In Conversation with<br><em>' + headlineMain + '</em>';
+                  } else {
+                    title.innerHTML = p.title;
+                  }
+                }
+                if (sub && p.excerpt) {
+                  var exc = p.excerpt.trim();
+                  sub.textContent = exc.startsWith('“') || exc.startsWith('"') ? exc : '"' + exc + '"';
+                }
+                if (btn && p.slug) {
+                  btn.href = './post/' + p.slug + '/';
+                }
+              }
+            }
+          })
+          .catch(function (err) { });
+      }
+
       // Initial setup
       function init() {
         fetchPayConfig();
@@ -22484,6 +22524,7 @@
         wireEventButtons();
         wireWeeklyPoll();
         loadHomepageDynamicContent();
+        loadHeroSlide4DynamicContent();
       }
 
       if (document.readyState === 'loading') {

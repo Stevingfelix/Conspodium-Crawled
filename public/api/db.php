@@ -245,6 +245,9 @@ try {
         $pdo->exec("ALTER TABLE categories ADD COLUMN display_order INTEGER DEFAULT 0");
     } catch (Exception $e) {}
     try {
+        $pdo->exec("ALTER TABLE posts ADD COLUMN is_hero_slide4 INTEGER DEFAULT 0");
+    } catch (Exception $e) {}
+    try {
         $pdo->exec("ALTER TABLE event_reminders ADD COLUMN user_name TEXT");
     } catch (Exception $e) {}
     try {
@@ -261,6 +264,7 @@ try {
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
         CREATE UNIQUE INDEX IF NOT EXISTS idx_event_reminders_email_event ON event_reminders (user_email, event_name);
+        CREATE VIEW IF NOT EXISTS event_registrations AS SELECT * FROM event_reminders;
 
         CREATE TABLE IF NOT EXISTS admins (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -415,7 +419,8 @@ try {
             ['Community', 'community', '👥', 'Stories connecting Africans in Diaspora across the globe.', '/wp-content/uploads/2026/01/AF3-1-png-300x171.jpg'],
             ['Success Stories', 'success-stories', '🌟', 'Growth, Success, leadership, and diaspora impact.', '/wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-300x200.jpg'],
             ['African Diaspora Matters', 'african-diaspora-matters', '🌍', 'Crucial issues, policy debates, and global diaspora developments.', '/uploads/cat_diaspora_matters.png'],
-            ['Diaspora Insights & Analysis', 'diaspora-insights-analysis', '📊', 'In-depth research, economic reports, and diaspora market analysis.', '/uploads/cat_diaspora_insights.png']
+            ['Diaspora Insights & Analysis', 'diaspora-insights-analysis', '📊', 'In-depth research, economic reports, and diaspora market analysis.', '/uploads/cat_diaspora_insights.png'],
+            ['Interview Transcripts', 'interview-transcripts', 'newspaper', 'Recorded conversations, interviews, and firsthand insights captured in written form.', '/uploads/upload_1790517243_4ee674fe.jpg']
         ];
 
         foreach ($categoriesConfig as $cat) {
@@ -426,6 +431,15 @@ try {
                 $stmtCatUp->execute([$cat[4], $cat[2], $cat[3], $cat[1]]);
             }
         }
+
+        // Link Dr. Ngozi Eze post to Interview Transcripts category and set as Hero Slide 4
+        try {
+            $getCatId = $pdo->query("SELECT id FROM categories WHERE slug = 'interview-transcripts'")->fetch();
+            if ($getCatId) {
+                $catId = intval($getCatId['id']);
+                $pdo->exec("UPDATE posts SET category_id = {$catId}, is_hero_slide4 = 1 WHERE slug LIKE '%ngozi-eze%' OR title LIKE '%Ngozi Eze%'");
+            }
+        } catch (Exception $e) {}
     } catch (Exception $e) {}
 
     // Seed 3 Scholar Spotlight cards if missing or empty
