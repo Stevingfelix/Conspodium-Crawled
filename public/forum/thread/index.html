@@ -209,6 +209,7 @@
   .she-header-yes,
   .elementor-element-2d9e131,
   .she-header,
+  .elementor-1969,
   .elementor-1969 .elementor-element.elementor-element-2d9e131 {
     position: absolute !important;
     top: 0 !important;
@@ -225,7 +226,7 @@
     -webkit-backdrop-filter: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
-    transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease !important;
+    transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease !important;
   }
 
   /* Remove Elementor default dark background on header container in normal state */
@@ -236,21 +237,27 @@
     box-shadow: none !important;
   }
 
-  /* Scrolled Sticky Header State: DARK NAVY GLASS BACKGROUND */
+  /* Scrolled Sticky Header State: DARK NAVY GLASS BLUR BACKGROUND */
   .elementor-location-header.is-sticky,
   .she-header-yes.is-sticky,
   .elementor-element-2d9e131.is-sticky,
   .she-header.is-sticky,
+  .elementor-1969.is-sticky,
   body.header-is-sticky .elementor-location-header,
   body.header-is-sticky .she-header-yes,
-  body.header-is-sticky .elementor-element-2d9e131 {
+  body.header-is-sticky .elementor-element-2d9e131,
+  body.header-is-sticky .elementor-1969 {
     position: fixed !important;
     top: 0 !important;
-    background: rgba(6, 16, 34, 0.94) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    background: rgba(6, 16, 34, 0.85) !important;
+    background-color: rgba(6, 16, 34, 0.85) !important;
     backdrop-filter: blur(20px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
     border-bottom: 1px solid rgba(0, 174, 254, 0.25) !important;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
   }
 
   /* ── UNIVERSAL HEADER TYPOGRAPHY (ALL PAGES): Crisp Inter Sans-Serif Font ─── */
@@ -486,23 +493,17 @@
 
   
   
-  /* ── Full Transparent Header Over Hero ── */
-  .elementor-location-header,
-  .elementor-1969,
-  .elementor-1969 .elementor-section-wrap,
-  .elementor-1969 .elementor-element-2d9e131:not(.is-sticky):not(.header-sticky) {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    z-index: 9999 !important;
+  /* ── Full Transparent Header Over Hero (Normal Un-scrolled State Only) ── */
+  body:not(.header-is-sticky) .elementor-location-header:not(.is-sticky),
+  body:not(.header-is-sticky) .elementor-1969:not(.is-sticky),
+  body:not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-section-wrap,
+  body:not(.header-is-sticky) .elementor-1969 .elementor-element-2d9e131:not(.is-sticky):not(.header-sticky) {
     background: transparent !important;
     background-color: transparent !important;
     box-shadow: none !important;
   }
 
-  .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky):not(.header-sticky),
-  .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky):not(.header-sticky) > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+  body:not(.header-is-sticky) .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky):not(.header-sticky) > .elementor-motion-effects-container > .elementor-motion-effects-layer {
     background: transparent !important;
     background-color: transparent !important;
     box-shadow: none !important;
@@ -3754,12 +3755,15 @@
 
     // 4.5 Dynamic Sticky Header Scroll Toggler
     function initStickyHeader() {
-      var headers = document.querySelectorAll('.elementor-location-header, .she-header, .elementor-element-2d9e131, .elementor-1969');
-      var toggles = document.querySelectorAll('.elementor-menu-toggle');
+      var headerSelector = '.elementor-location-header, .she-header, .elementor-element-2d9e131, .elementor-1969';
+      var togglesSelector = '.elementor-menu-toggle';
 
       function handleHeaderScroll() {
         var scrollPos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-        var isScrolled = scrollPos > 15;
+        var isScrolled = scrollPos > 12;
+        var headers = document.querySelectorAll(headerSelector);
+        var toggles = document.querySelectorAll(togglesSelector);
+
         headers.forEach(function (h) {
           if (isScrolled) {
             h.classList.add('is-sticky');
@@ -3783,6 +3787,7 @@
 
       window.addEventListener('scroll', handleHeaderScroll, { passive: true });
       window.addEventListener('touchmove', handleHeaderScroll, { passive: true });
+      window.addEventListener('wheel', handleHeaderScroll, { passive: true });
       window.addEventListener('resize', handleHeaderScroll, { passive: true });
       handleHeaderScroll();
     }
