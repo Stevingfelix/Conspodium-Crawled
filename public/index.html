@@ -12062,7 +12062,6 @@
   [style*="background:#0f172a"] .subtext span,
   [style*="background-color: #030712"] .subtext,
   [style*="background-color: #030712"] .subtext p,
-  [style*="background-color: #030712"] .subtext span,
   [style*="background:#030712"] .subtext,
   [style*="background:#030712"] .subtext p,
   [style*="background:#030712"] .subtext span {
@@ -12070,6 +12069,22 @@
     font-size: 0.95rem !important;
     line-height: 1.6 !important;
     font-weight: 400 !important;
+  }
+
+  /* ── HERO SLIDER & HERO SECTIONS SUBHEADLINES STRICT CENTERING FIX ── */
+  .csp-hero-content,
+  .csp-hero-content *,
+  .csp-hero-sub,
+  p.csp-hero-sub,
+  .csp-hero-slide .csp-hero-sub,
+  .csp-hero-content .csp-hero-sub,
+  #csp-hero-slides-wrapper .csp-hero-sub,
+  .csp-hero-slide p.csp-hero-sub,
+  #csp-hero-slide-spotlight-sub {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
   }
 
   /* ── GLASSMORPHIC BACK-TO-TOP FLOATING BUTTON ──────────────────────────── */
@@ -16777,8 +16792,10 @@
           margin-top: 18px !important;
           margin-bottom: 0 !important;
           max-width: 620px;
-          margin-left: auto;
-          margin-right: auto;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          text-align: center !important;
+          display: block !important;
           transform: translateY(28px);
           opacity: 0;
           transition: transform 0.75s 0.5s ease, opacity 0.75s 0.5s ease;
