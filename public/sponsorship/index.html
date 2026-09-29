@@ -572,11 +572,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
   /* ── UNIVERSAL STICKY HEADER FOR ALL PAGES (DESKTOP & MOBILE) ─── */
   .elementor-location-header,
-  .she-header-yes,
-  .elementor-element-2d9e131,
-  .she-header,
-  .elementor-1969,
-  .elementor-1969 .elementor-element.elementor-element-2d9e131 {
+  .elementor-1969 {
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
@@ -585,6 +581,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     max-width: 100% !important;
     z-index: 999999 !important;
     margin: 0 !important;
+    padding: 0 !important;
     box-sizing: border-box !important;
     background: transparent !important;
     background-color: transparent !important;
@@ -592,27 +589,16 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     -webkit-backdrop-filter: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
-    transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease !important;
+    transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
   }
 
-  /* Remove Elementor default dark background on header container in normal state */
-  .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky):not(.elementor-motion-effects-element-type-background),
-  .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky) > .elementor-motion-effects-container > .elementor-motion-effects-layer {
-    background: transparent !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
-  }
-
-  /* Scrolled Sticky Header State: DARK NAVY GLASS BLUR BACKGROUND */
+  /* Scrolled Sticky Header State: DARK NAVY FROSTED GLASS BLUR BACKGROUND */
   .elementor-location-header.is-sticky,
-  .she-header-yes.is-sticky,
-  .elementor-element-2d9e131.is-sticky,
-  .she-header.is-sticky,
   .elementor-1969.is-sticky,
   body.header-is-sticky .elementor-location-header,
-  body.header-is-sticky .she-header-yes,
-  body.header-is-sticky .elementor-element-2d9e131,
-  body.header-is-sticky .elementor-1969 {
+  body.header-is-sticky .elementor-1969,
+  .she-header-yes.is-sticky,
+  .elementor-element-2d9e131.is-sticky {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
@@ -624,6 +610,102 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
     border-bottom: 1px solid rgba(0, 174, 254, 0.25) !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+    z-index: 999999 !important;
+  }
+
+  /* ── HEADER CONTAINER FLEX LAYOUT & MENU CENTERING ────────────────────────── */
+  .elementor-1969 .elementor-element.elementor-element-2d9e131,
+  .elementor-element-2d9e131 {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 8px 32px !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+  }
+
+  @media (min-width: 1025px) {
+    /* Left Logo Column */
+    .elementor-1969 .elementor-element.elementor-element-f22f163,
+    .elementor-element-f22f163 {
+      flex: 0 0 190px !important;
+      width: 190px !important;
+      max-width: 190px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+    }
+
+    .elementor-element-738d6a4,
+    .elementor-element-738d6a4 .elementor-widget-container {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+
+    .elementor-element-738d6a4 img {
+      max-height: 50px !important;
+      width: auto !important;
+      display: block !important;
+    }
+
+    /* Container holding Centered Menu + Submit Story Button */
+    .elementor-1969 .elementor-element.elementor-element-adf27cc,
+    .elementor-element-adf27cc {
+      flex: 1 1 auto !important;
+      width: auto !important;
+      max-width: calc(100% - 190px) !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      margin-left: 0 !important;
+    }
+
+    /* Centered Navigation Menu in middle of container */
+    .elementor-1969 .elementor-element.elementor-element-c6b6140,
+    .elementor-element-c6b6140 {
+      flex: 1 1 auto !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 0 auto !important;
+      text-align: center !important;
+    }
+
+    .elementor-element-c6b6140 .elementor-widget-container,
+    .elementor-element-c6b6140 .elementor-nav-menu--main,
+    .elementor-element-c6b6140 ul.elementor-nav-menu {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 0 auto !important;
+      padding: 0 !important;
+      list-style: none !important;
+      gap: 2px !important;
+      width: auto !important;
+    }
+
+    .elementor-nav-menu a.elementor-item {
+      padding: 8px 12px !important;
+      white-space: nowrap !important;
+    }
+
+    /* Submit Story CTA anchored to the right */
+    .elementor-1969 .elementor-element.elementor-element-36265fd,
+    .elementor-element-36265fd {
+      flex: 0 0 190px !important;
+      width: 190px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      margin-left: auto !important;
+    }
   }
 
   /* ── UNIVERSAL HEADER TYPOGRAPHY (ALL PAGES): Crisp Inter Sans-Serif Font ─── */
