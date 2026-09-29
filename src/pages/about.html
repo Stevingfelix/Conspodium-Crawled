@@ -1634,26 +1634,52 @@ e-page-transition,
   align-items: center;
 }
 
-/* Background Top-Right Cool Cyan Blob */
+/* Background Top-Right Cool Cyan Morphing & Floating Blob */
 .csp-arch-blob-accent {
   position: absolute;
-  top: -24px;
-  right: -24px;
-  width: 190px;
-  height: 210px;
-  background: linear-gradient(135deg, rgba(0, 174, 254, 0.55) 0%, rgba(56, 189, 248, 0.35) 100%);
+  top: -32px;
+  right: -32px;
+  width: 220px;
+  height: 235px;
+  background: linear-gradient(135deg, rgba(0, 174, 254, 0.65) 0%, rgba(56, 189, 248, 0.45) 50%, rgba(14, 165, 233, 0.3) 100%);
   border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
   z-index: 1;
-  opacity: 0.85;
-  filter: blur(2px);
-  box-shadow: 0 12px 40px rgba(0, 174, 254, 0.22);
-  transition: transform 0.5s ease;
-  animation: cspBlobSway 10s ease-in-out infinite alternate;
+  opacity: 0.9;
+  filter: blur(1px);
+  box-shadow: 0 16px 50px rgba(0, 174, 254, 0.35);
+  animation: cspBlobMorph 8s ease-in-out infinite alternate, cspBlobFloat 6s ease-in-out infinite alternate;
+  will-change: border-radius, transform;
 }
 
-@keyframes cspBlobSway {
-  0% { transform: scale(1) rotate(0deg); }
-  100% { transform: scale(1.05) rotate(6deg); }
+@keyframes cspBlobMorph {
+  0% {
+    border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
+    transform: rotate(0deg) scale(1);
+  }
+  33% {
+    border-radius: 58% 42% 38% 62% / 40% 55% 45% 60%;
+    transform: rotate(120deg) scale(1.08);
+  }
+  66% {
+    border-radius: 35% 65% 55% 45% / 60% 35% 65% 40%;
+    transform: rotate(240deg) scale(0.96);
+  }
+  100% {
+    border-radius: 60% 40% 45% 55% / 50% 60% 40% 50%;
+    transform: rotate(360deg) scale(1.05);
+  }
+}
+
+@keyframes cspBlobFloat {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-10px, -14px);
+  }
+  100% {
+    transform: translate(8px, -6px);
+  }
 }
 
 /* Arch Frame */
@@ -1701,11 +1727,12 @@ e-page-transition,
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(0, 174, 254, 0.2) 0%, rgba(14, 165, 233, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(0, 174, 254, 0.25) 0%, rgba(14, 165, 233, 0.15) 100%);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 174, 254, 0.3);
+  border: 1px solid rgba(0, 174, 254, 0.35);
   opacity: 0.95;
+  animation: cspPulseGlow 4s ease-in-out infinite alternate;
 }
 
 .csp-arch-circle-ring {
@@ -1715,8 +1742,19 @@ e-page-transition,
   width: 116px;
   height: 116px;
   border-radius: 50%;
-  border: 1.5px solid #00AEFE;
-  opacity: 0.65;
+  border: 1.5px dashed #00AEFE;
+  opacity: 0.75;
+  animation: cspRingSpin 20s linear infinite;
+}
+
+@keyframes cspRingSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cspPulseGlow {
+  0% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 15px rgba(0, 174, 254, 0.1); }
+  100% { transform: scale(1.08); opacity: 1; box-shadow: 0 0 30px rgba(0, 174, 254, 0.3); }
 }
 
 /* ── RIGHT COLUMN: Stacked Metrics ── */
