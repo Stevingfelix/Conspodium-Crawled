@@ -5078,17 +5078,18 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 /* =========================================================
    EDITORIAL ARCH HERO SECTION (ABOUT US)
-   Inspired by Minimalist Organic Editorial Aesthetics
+   Cool Modern Editorial Aesthetic
    ========================================================= */
 .csp-arch-hero {
   position: relative;
-  background-color: #FAF5EE;
+  background-color: #f8fafc;
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(248, 184, 92, 0.09) 0%, transparent 45%),
-    radial-gradient(circle at 90% 80%, rgba(232, 122, 93, 0.07) 0%, transparent 50%);
+    radial-gradient(circle at 12% 18%, rgba(0, 174, 254, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 88% 82%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 40%, rgba(241, 245, 249, 0.6) 0%, transparent 70%);
   padding: 130px 5% 85px;
   overflow: hidden;
-  border-bottom: 1px solid #ECE3D4;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .csp-arch-hero-container {
@@ -5110,14 +5111,20 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 }
 
 .csp-arch-hero-kicker {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: 'Inter', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #B71F71;
-  margin-bottom: 16px;
+  color: #00AEFE;
+  background: rgba(0, 174, 254, 0.08);
+  border: 1px solid rgba(0, 174, 254, 0.25);
+  padding: 6px 16px;
+  border-radius: 50px;
+  margin-bottom: 20px;
 }
 
 .csp-arch-hero-title {
@@ -5125,7 +5132,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   font-size: clamp(2.35rem, 3.5vw, 3.4rem);
   line-height: 1.15;
   font-weight: 800;
-  color: #221610;
+  color: #0f172a;
   letter-spacing: -0.025em;
   margin: 0 0 22px 0;
 }
@@ -5134,7 +5141,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   font-family: 'Playfair Display', 'Cardo', 'Merriweather', Georgia, serif;
   font-style: italic;
   font-weight: 800;
-  color: #B71F71;
+  color: #00AEFE;
   background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -5145,7 +5152,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   font-family: 'Inter', -apple-system, sans-serif;
   font-size: 0.98rem;
   line-height: 1.75;
-  color: #5A4E46;
+  color: #64748b;
   margin: 0 0 32px 0;
   max-width: 400px;
 }
@@ -5160,22 +5167,22 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   align-items: center;
   justify-content: center;
   padding: 15px 38px;
-  background: #221610;
+  background: #00AEFE;
   color: #ffffff !important;
   font-family: 'Playfair Display', 'Cardo', 'Inter', serif;
   font-size: 1.02rem;
   font-weight: 600;
   text-decoration: none !important;
   border-radius: 999px 999px 4px 999px;
-  box-shadow: 0 10px 25px rgba(34, 22, 16, 0.22);
+  box-shadow: 0 10px 25px rgba(0, 174, 254, 0.35);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .csp-arch-hero-btn:hover {
   transform: translateY(-3px) scale(1.02);
-  background: #B71F71;
-  box-shadow: 0 14px 30px rgba(183, 31, 113, 0.35);
+  background: #0096db;
+  box-shadow: 0 14px 32px rgba(0, 174, 254, 0.5);
   color: #ffffff !important;
   border-radius: 999px 999px 12px 999px;
 }
@@ -5203,17 +5210,19 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   align-items: center;
 }
 
-/* Background Top-Right Amber Blob */
+/* Background Top-Right Cool Cyan Blob */
 .csp-arch-blob-accent {
   position: absolute;
   top: -24px;
   right: -24px;
   width: 190px;
   height: 210px;
-  background: #F8B85C;
+  background: linear-gradient(135deg, rgba(0, 174, 254, 0.55) 0%, rgba(56, 189, 248, 0.35) 100%);
   border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
   z-index: 1;
-  opacity: 0.95;
+  opacity: 0.85;
+  filter: blur(2px);
+  box-shadow: 0 12px 40px rgba(0, 174, 254, 0.22);
   transition: transform 0.5s ease;
   animation: cspBlobSway 10s ease-in-out infinite alternate;
 }
@@ -5232,8 +5241,9 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   height: 460px;
   border-radius: 200px 200px 24px 24px;
   overflow: hidden;
-  box-shadow: 0 24px 50px rgba(34, 22, 16, 0.12);
-  background: #EAE1D2;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12), 0 0 30px rgba(0, 174, 254, 0.12);
+  border: 1.5px solid rgba(0, 174, 254, 0.2);
+  background: #e2e8f0;
 }
 
 .csp-arch-img {
@@ -5267,8 +5277,11 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  background: #FDBA9F;
-  opacity: 0.92;
+  background: linear-gradient(135deg, rgba(0, 174, 254, 0.2) 0%, rgba(14, 165, 233, 0.1) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 174, 254, 0.3);
+  opacity: 0.95;
 }
 
 .csp-arch-circle-ring {
@@ -5278,8 +5291,8 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   width: 116px;
   height: 116px;
   border-radius: 50%;
-  border: 1.5px solid #E87A5D;
-  opacity: 0.75;
+  border: 1.5px solid #00AEFE;
+  opacity: 0.65;
 }
 
 /* ── RIGHT COLUMN: Stacked Metrics ── */
@@ -5300,7 +5313,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   font-family: 'Playfair Display', 'Cardo', 'Merriweather', serif;
   font-size: 2.3rem;
   font-weight: 800;
-  color: #221610;
+  color: #0f172a;
   line-height: 1;
   margin-bottom: 6px;
 }
@@ -5311,7 +5324,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #6E5F55;
+  color: #64748b;
   line-height: 1.4;
 }
 
@@ -6285,7 +6298,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       <!-- Minimalist Wavy Vector Path -->
       <div class="csp-arch-hero-squiggle" aria-hidden="true">
         <svg viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 38C28 14 52 52 76 28C100 4 124 48 148 24C172 0 196 42 220 18C228 10 236 12 240 16" stroke="#E5B26E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 38C28 14 52 52 76 28C100 4 124 48 148 24C172 0 196 42 220 18C228 10 236 12 240 16" stroke="#00AEFE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
         </svg>
       </div>
     </div>
