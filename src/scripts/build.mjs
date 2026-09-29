@@ -404,7 +404,7 @@ for (const page of PAGES) {
       categoriesList.forEach(cat => {
         const isActive = (cat.slug === pData.category_slug);
         const styleAttr = isActive 
-          ? 'padding:10px 22px;border-radius:50px;border:none;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;'
+          ? 'padding:10px 22px;border-radius:50px;border:none;background:#00AEFE;color:#fff;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;'
           : 'padding:10px 22px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.85rem;text-decoration:none;white-space:nowrap;';
         catTabsHtml += `<a href="${cat.url}" class="csp-cat-tab${isActive ? ' active' : ''}" style="${styleAttr}">${cat.icon} ${cat.name}</a>\n        `;
       });

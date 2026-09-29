@@ -413,7 +413,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400..900&display=swap" rel="stylesheet">
 <style>/* conspodium-fix-preloader */
-#sl-preloader { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
+#sl-preloader, e-page-transition, .e-page-transition--entering { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
 </style>
 <style id="csp-header-fixes">
 /* Apply Merienda font to ALL gradient colored text across all section titles and custom sections */
@@ -1456,1098 +1456,1674 @@ e-page-transition,
 <!-- CSP_HEADER_FIXES_END -->
 
 </head>
-<body class="wp-singular page-template page-template-elementor_header_footer page page-id-973 wp-custom-logo wp-embed-responsive wp-theme-twentytwentyfour ehf-template-twentytwentyfour ehf-stylesheet-twentytwentyfour jkit-color-scheme elementor-default elementor-template-full-width elementor-kit-9 elementor-page elementor-page-973 e--ua-blink e--ua-mac e--ua-webkit sticky-menu yes-is-sticky" data-elementor-device-mode="desktop"><style id="safelayout-cute-preloader-css" data-no-optimize="1" data-no-minify="1">#sl-preloader {height: 100vh;left: 0;max-height: 100%;max-width: 100%;pointer-events: none;position: fixed;top: 0;width: 100vw;z-index: 9999999;}.sl-pl-close-icon {border: 1px solid blue;cursor: pointer;fill: red;height: 30px;stroke-linecap: round;stroke-width: 0.5px;stroke: blue;width: 30px;}#sl-pl-close-button {display: none;pointer-events: auto;position: absolute;right: 10px;top: 10px;z-index: 999;}.sl-pl-loaded .sl-pl-spin,.sl-pl-loaded .sl-pl-text,.sl-pl-loaded .sl-pl-custom,.sl-pl-loaded #sl-pl-canvas,.sl-pl-loaded #sl-pl-counter,.sl-pl-loaded #sl-pl-close-button,.sl-pl-loaded .sl-pl-bar-container,.sl-pl-loaded .sl-pl-brand-container {opacity: 0;transition: opacity 0.5s ease-out 0s;}.sl-pl-back {pointer-events: auto;position: fixed;transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;}.sl-pl-back-ellipse-top {height: 100%;left: 0;top: 0;width: 100%;}.sl-pl-back-ellipse-top {clip-path: ellipse(150% 150% at 0 0);-webkit-clip-path: ellipse(150% 150% at 0 0);}.sl-pl-loaded .sl-pl-back-ellipse-top {clip-path: ellipse(0 0 at 0 0);-webkit-clip-path: ellipse(0 0 at 0 0);}#sl-pl-canvas {height: 100%;isolation: isolate;left: 0;overflow: hidden;pointer-events: auto;position: absolute;top: 0;width: 100%;}#sl-pl-canvas div {animation: sl-pl-rising-squares 18s linear infinite;position:absolute;border-radius: 20%;mix-blend-mode: plus-lighter;bottom: -200px;}#sl-pl-canvas div:nth-child(1) {width: 80px;height: 80px;background: #5f9cec;animation-delay: -3s;}#sl-pl-canvas div:nth-child(2) {width: 96px;height: 96px;background: #ed5464;animation-duration: 12s;left: 10%;animation-delay: 2s;}#sl-pl-canvas div:nth-child(3) {width: 80px;height: 80px;background: #ffce52;animation-delay: 2s;left: 30%;}#sl-pl-canvas div:nth-child(4) {width: 48px;height: 48px;background: #828d31;animation-delay: 4s;left: 35%;animation-duration: 12s;}#sl-pl-canvas div:nth-child(5) {width: 40px;height: 40px;background: #CDDC39;left: 50%;animation-duration: 12s;}#sl-pl-canvas div:nth-child(6) {width: 200px;height: 200px;background: #4acfae;animation-delay: 6s;left: 50%;}#sl-pl-canvas div:nth-child(7) {width: 32px;height: 32px;background: #f00;animation-delay: 6s;left: 66%;animation-duration: 14s;}#sl-pl-canvas div:nth-child(8) {width: 10px;height: 10px;background: #5f9cec;animation-delay: 2s;left: 60%;animation-duration: 10s;}#sl-pl-canvas div:nth-child(9) {width: 24px;height: 24px;background: #2196F3;animation-delay: -3s;left: 80%;}#sl-pl-canvas div:nth-child(10) {width: 100px;height: 100px;background: #FFC107;animation-delay: 8s;left: 88%;animation-duration: 14s;}@keyframes sl-pl-rising-squares {0%{transform: translateY(0) rotate(0deg);opacity: .9;}100%{transform: translateY(-1000px) rotate(720deg);opacity: 0.1;}}.sl-pl-spin-container {left: 50%;position: absolute;text-align: center;top: 50%;transform: translate(-50%, -50%);-webkit-transform: translate(-50%, -50%);width: 100%;}.sl-pl-spin {display: inline-block;height: 50px;position: relative;width: 50px;}.sl-pl-icon-effect {display: inline-block;height: 0;position: absolute;visibility: hidden;width: 0;}.sl-pl-custom {display: inline-block;height: auto;max-width: 100%;}.sl-pl-brand {display: inline-block;height: auto;max-width: 100%;}.sl-pl-brand-container div {display: inline-block;}.sl-pl-brand-container,.sl-pl-brand-container div {perspective: 200px;-webkit-perspective: 200px;position: relative;text-align: center;}#sl-pl-brand-parent {width: 100%;}#sl-pl-brand-bounce {animation: sl-pl-bounce-anim 1.2s linear infinite;-webkit-animation: sl-pl-bounce-anim 1.2s linear infinite;transform-origin: 50% 100%;-webkit-transform-origin: 50% 100%;}@-webkit-keyframes sl-pl-bounce-anim {0% {-webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);-webkit-transform: translate(0, 0) scale(1, 1);}40% {-webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);-webkit-transform: translate(0, -150%) scale(0.8, 1.2);}70% {-webkit-transform: scale(1, 1);}85% {-webkit-transform: translate(0, 0) scale(1.4, 0.6);}95% {-webkit-transform: scale(1, 1);}}@keyframes sl-pl-bounce-anim {0% {animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);transform: translate(0, 0) scale(1, 1);}40% {animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);transform: translate(0, -150%) scale(0.8, 1.2);}70% {transform: scale(1, 1);}85% {transform: translate(0, 0) scale(1.4, 0.6);}95% {transform: scale(1, 1);}}.sl-pl-back{opacity: 1;background: #101010 !important;}.sl-pl-brand-container{margin-top: 0px !important;margin-bottom: 0px !important;}</style><div id="sl-preloader"><div class="sl-pl-back sl-pl-back-ellipse-top"></div><div id="sl-pl-canvas"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div id="sl-pl-close-button"><svg class="sl-pl-close-icon" viewBox="0 0 50 50"><path d="M10 7A3 3 0 0 0 7.879 7.879 3 3 0 0 0 7.879 12.12L20.76 25 7.879 37.88A3 3 0 0 0 7.879 42.12 3 3 0 0 0 12.12 42.12L25 29.24 37.88 42.12A3 3 0 0 0 42.12 42.12 3 3 0 0 0 42.12 37.88L29.24 25 42.12 12.12A3 3 0 0 0 42.12 7.879 3 3 0 0 0 37.88 7.879L25 20.76 12.12 7.879A3 3 0 0 0 10 7Z"></path></svg></div><div class="sl-pl-spin-container"><div class="sl-pl-brand-container"><img style="aspect-ratio: 100 / 100" width="100" height="100" data-no-lazy="1" class="skip-lazy sl-pl-brand" alt="conspodium loader" src="../wp-content/uploads/2026/01/conspodium-loader.png" id="sl-pl-brand-bounce"></div></div></div>
-		<e-page-transition preloader-type="animation" preloader-animation-type="circle" class="e-page-transition--entering" exclude="^https\:\/\/conspodium\.com\/wp\-admin\/">
-			<e-preloader type="circle"><style>e-preloader{--default-duartion: 1000ms;--duration: var( --e-preloader-animation-duration, var( --default-duration ) );display:block;font-size:var(--e-preloader-size)}e-preloader[type=circle],e-preloader[type=circle-dashed],e-preloader[type=spinners]{--e-preloader-animation: e-preloader-spin;height:1em;width:1em;border:.1em solid var(--e-preloader-color);border-top-color:rgba(0,0,0,0);border-radius:100%;animation:var(--duration) var(--e-preloader-animation) linear infinite}e-preloader[type=circle-dashed]{border:.1em solid rgba(255,255,255,.3);border-top-color:var(--e-preloader-color)}e-preloader[type=spinners]{border-bottom-color:rgba(0,0,0,0)}e-preloader[type=bouncing-dots],e-preloader[type=pulsing-dots]{display:flex;gap:1em}e-preloader[type=bouncing-dots] i,e-preloader[type=pulsing-dots] i{height:1em;width:1em;border-radius:100%;background-color:var(--e-preloader-color)}e-preloader[type=bouncing-dots] i:nth-child(2),e-preloader[type=pulsing-dots] i:nth-child(2){animation-delay:var(--delay)}e-preloader[type=bouncing-dots] i:nth-child(3),e-preloader[type=pulsing-dots] i:nth-child(3){animation-delay:calc(var(--delay)*2)}e-preloader[type=bouncing-dots] i:nth-child(4),e-preloader[type=pulsing-dots] i:nth-child(4){animation-delay:calc(var(--delay)*3)}e-preloader[type=bouncing-dots] i{--delay: calc( var( --duration ) / 10 );animation:var(--duration) e-preloader-bounce linear infinite}e-preloader[type=pulsing-dots] i{--delay: calc( var( --duration ) / 6 );animation:var(--duration) e-preloader-pulsing-dots linear infinite}e-preloader[type=pulse]{height:1em;width:1em;position:relative}e-preloader[type=pulse]::before,e-preloader[type=pulse]::after{content:"";position:absolute;inset:0;border:.05em solid var(--e-preloader-color);border-radius:100%;animation:1.2s e-preloader-pulse infinite both ease-out}e-preloader[type=pulse]::after{animation-delay:.6s}e-preloader[type=overlap]{height:1em;width:1em;position:relative}e-preloader[type=overlap]::before,e-preloader[type=overlap]::after{content:"";inset:0;position:absolute;background:var(--e-preloader-color);border-radius:100%;opacity:.5;animation:2s e-preloader-overlap infinite both ease-in-out}e-preloader[type=overlap]::after{animation-delay:-1s;animation-direction:reverse}e-preloader[type=nested-spinners],e-preloader[type=opposing-nested-spinners],e-preloader[type=opposing-nested-rings]{height:1em;width:1em;position:relative}e-preloader[type=nested-spinners]::before,e-preloader[type=nested-spinners]::after,e-preloader[type=opposing-nested-spinners]::before,e-preloader[type=opposing-nested-spinners]::after,e-preloader[type=opposing-nested-rings]::before,e-preloader[type=opposing-nested-rings]::after{content:"";display:block;position:absolute;border-radius:100%;border:.1em solid var(--e-preloader-color);border-top-color:rgba(0,0,0,0);animation:var(--duration) e-preloader-spin linear infinite}e-preloader[type=nested-spinners]::before,e-preloader[type=opposing-nested-spinners]::before,e-preloader[type=opposing-nested-rings]::before{inset:-0.3em}e-preloader[type=nested-spinners]::after,e-preloader[type=opposing-nested-spinners]::after,e-preloader[type=opposing-nested-rings]::after{animation-duration:calc(var(--duration) - .2s);inset:0;opacity:.5}e-preloader[type=nested-spinners]::before,e-preloader[type=nested-spinners]::after,e-preloader[type=opposing-nested-spinners]::before,e-preloader[type=opposing-nested-spinners]::after{border-bottom-color:rgba(0,0,0,0)}e-preloader[type=opposing-nested-rings]::after,e-preloader[type=opposing-nested-spinners]::after{animation-direction:reverse}e-preloader[type=progress-bar],e-preloader[type=two-way-progress-bar],e-preloader[type=repeating-bar]{--e-preloader-animation: e-preloader-progress-bar;height:.05em;width:5em;max-width:50vw;background:var(--e-preloader-color);animation:var(--duration) var(--e-preloader-animation) linear infinite both}e-preloader[type=progress-bar]{transform-origin:0 50%}e-preloader[type=repeating-bar]{--e-preloader-animation: e-preloader-repeating-bar}@media(prefers-reduced-motion: reduce){e-preloader{display:none}}@keyframes e-preloader-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes e-preloader-bounce{0%,40%,100%{transform:translateY(0)}20%{transform:translateY(-80%)}}@keyframes e-preloader-pulsing-dots{0%,40%,100%{transform:scale(1)}20%{transform:scale(1.5)}}@keyframes e-preloader-pulse{from{transform:scale(0);opacity:1}to{transform:scale(1);opacity:0}}@keyframes e-preloader-overlap{0%,100%{transform:scale(0.2)}50%{transform:scale(1)}}@keyframes e-preloader-progress-bar{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}@keyframes e-preloader-repeating-bar{0%{transform:scaleX(0);transform-origin:0 50%}49%{transform-origin:0 50%}50%{transform:scaleX(1);transform-origin:100% 50%}100%{transform:scaleX(0);transform-origin:100% 50%}}</style></e-preloader>
-		<style>e-page-transition{--preloader-fade-duration: .5s;--preloader-delay: calc( var( --e-page-transition-animation-duration, 0s ) + var( --e-preloader-delay, 0s ) );--page-transition-delay: var( --preloader-fade-duration );position:fixed;inset:0;display:grid;place-items:center;z-index:10000;background:#fff;animation-fill-mode:both;animation-duration:var(--e-page-transition-animation-duration)}e-page-transition[disabled]{display:none}e-page-transition e-preloader,e-page-transition .e-page-transition--preloader{opacity:0}e-page-transition .e-page-transition--preloader{position:absolute;font-size:var(--e-preloader-size);color:var(--e-preloader-color);fill:var(--e-preloader-color);width:var(--e-preloader-width);max-width:var(--e-preloader-max-width);transform:rotate(var(--e-preloader-rotate, 0deg));animation-name:var(--e-preloader-animation);animation-duration:var(--e-preloader-animation-duration, 1000ms);animation-iteration-count:infinite;animation-timing-function:linear}e-page-transition svg.e-page-transition--preloader{width:var(--e-preloader-size)}.e-page-transition--entering{animation-name:var(--e-page-transition-entrance-animation);animation-delay:var(--preloader-fade-duration, 0s)}.e-page-transition--entering e-preloader,.e-page-transition--entering .e-page-transition--preloader{animation:var(--e-preloader-animation, none) var(--e-preloader-animation-duration, 0s) linear infinite,e-page-transition-fade-out var(--preloader-fade-duration) both;transition:none}.e-page-transition--exiting{animation-name:var(--e-page-transition-exit-animation)}.e-page-transition--exiting e-preloader,.e-page-transition--exiting .e-page-transition--preloader{opacity:var(--e-preloader-opacity, 1);transition:var(--preloader-fade-duration) all;transition-delay:var(--preloader-delay, 0s)}.e-page-transition--entered:not(.e-page-transition--preview){display:none}.e-page-transition--preview{animation-fill-mode:initial}.e-page-transition--preview.e-page-transition--entered e-preloader,.e-page-transition--preview.e-page-transition--entered .e-page-transition--preloader{opacity:var(--e-preloader-opacity, 1)}@media(prefers-reduced-motion: reduce){e-page-transition{display:none}}@keyframes e-page-transition-fade-in{from{opacity:0}to{opacity:1}}@keyframes e-page-transition-fade-in-down{from{opacity:0;transform:translate3d(0, -100%, 0)}to{opacity:1;transform:none}}@keyframes e-page-transition-fade-in-left{from{opacity:0;transform:translate3d(-100%, 0, 0)}to{opacity:1;transform:none}}@keyframes e-page-transition-fade-in-right{from{opacity:0;transform:translate3d(100%, 0, 0)}to{opacity:1;transform:none}}@keyframes e-page-transition-fade-in-up{from{opacity:0;transform:translate3d(0, 100%, 0)}to{opacity:1;transform:none}}@keyframes e-page-transition-zoom-in{from{opacity:0;transform:scale3d(0.3, 0.3, 0.3)}50%{opacity:1}}@keyframes e-page-transition-slide-in-down{from{transform:translate3d(0, -100%, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}@keyframes e-page-transition-slide-in-left{from{transform:translate3d(-100%, 0, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}@keyframes e-page-transition-slide-in-right{from{transform:translate3d(100%, 0, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}@keyframes e-page-transition-slide-in-up{from{transform:translate3d(0, 100%, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}@keyframes e-page-transition-fade-out{from{opacity:1}to{opacity:0}}@keyframes e-page-transition-fade-out-up{from{opacity:1;transform:none}to{opacity:0;transform:translate3d(0, -100%, 0)}}@keyframes e-page-transition-fade-out-left{from{opacity:1;transform:none}to{opacity:0;transform:translate3d(-100%, 0, 0)}}@keyframes e-page-transition-fade-out-right{from{opacity:1;transform:none}to{opacity:0;transform:translate3d(100%, 0, 0)}}@keyframes e-page-transition-fade-out-down{from{opacity:1;transform:none}to{opacity:0;transform:translate3d(0, 100%, 0)}}@keyframes e-page-transition-slide-out-up{from{transform:translate3d(0, 0, 0)}to{transform:translate3d(0, -100%, 0);visibility:visible}}@keyframes e-page-transition-slide-out-left{from{transform:translate3d(0, 0, 0)}to{transform:translate3d(-100%, 0, 0);visibility:visible}}@keyframes e-page-transition-slide-out-right{from{transform:translate3d(0, 0, 0)}to{transform:translate3d(100%, 0, 0);visibility:visible}}@keyframes e-page-transition-slide-out-down{from{transform:translate3d(0, 0, 0)}to{transform:translate3d(0, 100%, 0);visibility:visible}}@keyframes e-page-transition-zoom-out{from{opacity:1}50%{opacity:0;transform:scale3d(0.3, 0.3, 0.3)}}</style>
-					</e-page-transition>
-				
+<body class="wp-singular page-template page-template-elementor_header_footer page page-id-973 wp-custom-logo wp-embed-responsive wp-theme-twentytwentyfour ehf-template-twentytwentyfour ehf-stylesheet-twentytwentyfour jkit-color-scheme elementor-default elementor-template-full-width elementor-kit-9 elementor-page elementor-page-973 e--ua-blink e--ua-mac e--ua-webkit sticky-menu yes-is-sticky" data-elementor-device-mode="desktop">
+
   <!-- INCLUDE:wp-header.html -->
 
-				<div data-elementor-type="wp-page" data-elementor-id="973" class="elementor elementor-973">
-				<div class="elementor-element elementor-element-4d857de7 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="4d857de7" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-		<div class="elementor-element elementor-element-75d32a27 e-flex e-con-boxed e-con e-child adv-sticky-elementor" data-id="75d32a27" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-		<div class="elementor-element elementor-element-1849415 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="1849415" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-		<div class="elementor-element elementor-element-9c06f16 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="9c06f16" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-c29a09e elementor-widget elementor-widget-ucaddon_blob_shapes" data-id="c29a09e" data-element_type="widget" data-e-type="widget" data-widget_type="ucaddon_blob_shapes.default">
-				<div class="elementor-widget-container">
-					
-<!-- start Blob Shapes -->
-<style>/* widget: Blob Shapes */
+<style>
+/* =========================================================
+   CONSPODIUM EDITORIAL MAGAZINE - ABOUT US DESIGN SYSTEM
+   Bespoke, Anti-Slop Modern UI/UX Architecture
+   ========================================================= */
 
-#uc_blob_shapes_elementor_c29a09e{
-  mix-blend-mode: overlay;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-position:center center;
-  opacity: 100%; 
+.csp-about-page {
+  --csp-bg-dark: #090d16;
+  --csp-bg-dark-subtle: #0f172a;
+  --csp-bg-light: #f8fafc;
+  --csp-bg-card: #ffffff;
+  --csp-border-dark: rgba(255, 255, 255, 0.12);
+  --csp-border-light: #e2e8f0;
+  --csp-text-dark-primary: #ffffff;
+  --csp-text-dark-secondary: #94a3b8;
+  --csp-text-light-primary: #0f172a;
+  --csp-text-light-secondary: #475569;
+  --csp-accent-blue: #00aefe;
+  --csp-accent-magenta: #b71f71;
+  --csp-font-serif: 'Cardo', 'Merriweather', Georgia, serif;
+  --csp-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-#uc_blob_shapes_elementor_c29a09e_justification #uc_blob_shapes_elementor_c29a09e_justification-inner{
-  position: absolute;
-  background-position:center center;
-  top: 0;
-  left: 0;
-  z-index: 1;
+/* --- UNIVERSAL GRADIENT HEADING SPAN --- */
+.csp-gradient-text-span,
+.csp-hero-headline em,
+.csp-essay-title span,
+.csp-pillars-section-title span,
+.csp-roster-title span,
+.csp-statement-title span {
+  font-family: 'Merienda', 'Cardo', cursive, serif !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  display: inline-block;
+}
+
+/* =========================================================
+   EDITORIAL ARCH HERO SECTION (ABOUT US)
+   Inspired by Minimalist Organic Editorial Aesthetics
+   ========================================================= */
+.csp-arch-hero {
+  position: relative;
+  background-color: #FAF5EE;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(248, 184, 92, 0.09) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(232, 122, 93, 0.07) 0%, transparent 50%);
+  padding: 130px 5% 85px;
+  overflow: hidden;
+  border-bottom: 1px solid #ECE3D4;
+}
+
+.csp-arch-hero-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── LEFT COLUMN: Text & Actions ── */
+.csp-arch-hero-left {
+  flex: 1 1 38%;
+  max-width: 440px;
+  position: relative;
+}
+
+.csp-arch-hero-kicker {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #B71F71;
+  margin-bottom: 16px;
+}
+
+.csp-arch-hero-title {
+  font-family: 'Playfair Display', 'Cardo', 'Merriweather', Georgia, serif;
+  font-size: clamp(2.35rem, 3.5vw, 3.4rem);
+  line-height: 1.15;
+  font-weight: 800;
+  color: #221610;
+  letter-spacing: -0.025em;
+  margin: 0 0 22px 0;
+}
+
+.csp-arch-hero-title em {
+  font-family: 'Playfair Display', 'Cardo', 'Merriweather', Georgia, serif;
+  font-style: italic;
+  font-weight: 800;
+  color: #B71F71;
+  background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.csp-arch-hero-text {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: #5A4E46;
+  margin: 0 0 32px 0;
+  max-width: 400px;
+}
+
+.csp-arch-hero-actions {
+  margin-bottom: 28px;
+}
+
+/* Organic Asymmetric Chat-Bubble Pill Button (Pointed Bottom-Right) */
+.csp-arch-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 38px;
+  background: #221610;
+  color: #ffffff !important;
+  font-family: 'Playfair Display', 'Cardo', 'Inter', serif;
+  font-size: 1.02rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  border-radius: 999px 999px 4px 999px;
+  box-shadow: 0 10px 25px rgba(34, 22, 16, 0.22);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+}
+
+.csp-arch-hero-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: #B71F71;
+  box-shadow: 0 14px 30px rgba(183, 31, 113, 0.35);
+  color: #ffffff !important;
+  border-radius: 999px 999px 12px 999px;
+}
+
+/* Minimalist Squiggle */
+.csp-arch-hero-squiggle {
+  width: 180px;
+  height: 45px;
+  opacity: 0.85;
+}
+
+.csp-arch-hero-squiggle svg {
   width: 100%;
   height: 100%;
+  display: block;
+}
+
+/* ── CENTER COLUMN: Focal Arch & Shapes ── */
+.csp-arch-hero-center {
+  flex: 1 1 44%;
+  max-width: 420px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Background Top-Right Amber Blob */
+.csp-arch-blob-accent {
+  position: absolute;
+  top: -24px;
+  right: -24px;
+  width: 190px;
+  height: 210px;
+  background: #F8B85C;
+  border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
+  z-index: 1;
+  opacity: 0.95;
+  transition: transform 0.5s ease;
+  animation: cspBlobSway 10s ease-in-out infinite alternate;
+}
+
+@keyframes cspBlobSway {
+  0% { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.05) rotate(6deg); }
+}
+
+/* Arch Frame */
+.csp-arch-frame {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 350px;
+  height: 460px;
+  border-radius: 200px 200px 24px 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 50px rgba(34, 22, 16, 0.12);
+  background: #EAE1D2;
+}
+
+.csp-arch-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.csp-arch-frame:hover .csp-arch-img {
+  transform: scale(1.04);
+}
+
+/* Bottom-Left Overlapping Badge & Wireframe Ring */
+.csp-arch-badge-group {
+  position: absolute;
+  bottom: -28px;
+  left: -20px;
+  width: 130px;
+  height: 130px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.csp-arch-circle-solid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #FDBA9F;
+  opacity: 0.92;
+}
+
+.csp-arch-circle-ring {
+  position: absolute;
+  bottom: 12px;
+  left: -8px;
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  border: 1.5px solid #E87A5D;
+  opacity: 0.75;
+}
+
+/* ── RIGHT COLUMN: Stacked Metrics ── */
+.csp-arch-hero-right {
+  flex: 0 0 18%;
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.csp-arch-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.csp-arch-stat-num {
+  font-family: 'Playfair Display', 'Cardo', 'Merriweather', serif;
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #221610;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.csp-arch-stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6E5F55;
+  line-height: 1.4;
+}
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+@media (max-width: 1024px) {
+  .csp-arch-hero-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 48px;
+  }
+  .csp-arch-hero-left {
+    max-width: 580px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .csp-arch-hero-text {
+    margin: 0 auto 28px;
+  }
+  .csp-arch-hero-right {
+    flex: 1 1 100%;
+    max-width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .csp-arch-hero {
+    padding: 105px 5% 55px;
+  }
+  .csp-arch-frame {
+    max-width: 280px;
+    height: 370px;
+    border-radius: 160px 160px 20px 20px;
+  }
+  .csp-arch-blob-accent {
+    width: 140px;
+    height: 150px;
+    top: -16px;
+    right: -16px;
+  }
+  .csp-arch-badge-group {
+    width: 90px;
+    height: 90px;
+    bottom: -18px;
+    left: -12px;
+  }
+  .csp-arch-circle-solid {
+    width: 80px;
+    height: 80px;
+  }
+  .csp-arch-circle-ring {
+    width: 84px;
+    height: 84px;
+  }
+  .csp-arch-hero-right {
+    flex-direction: column;
+    gap: 22px;
+  }
+}
+.csp-hero-editorial {
+  position: relative;
+  background: #090d16;
+  color: #ffffff;
+  padding: 140px 6% 90px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: 'Inter', sans-serif;
+}
+
+.csp-hero-editorial-grid {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 60px;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .csp-hero-editorial-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.csp-hero-kicker {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #00aefe;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.csp-hero-kicker::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: #00aefe;
+}
+
+.csp-hero-headline {
+  font-family: 'Cardo', 'Merriweather', serif;
+  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+  line-height: 1.12;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-bottom: 28px;
+  color: #ffffff;
+}
+
+.csp-hero-lead {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: #94a3b8;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.csp-hero-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.csp-metric-num {
+  font-family: 'Cardo', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.csp-metric-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  margin-top: 6px;
+}
+
+.csp-hero-frame {
+  position: relative;
+}
+
+.csp-hero-img-box {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.csp-hero-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  aspect-ratio: 4/3;
+  filter: contrast(1.05) brightness(0.95);
+}
+
+.csp-hero-caption-card {
+  position: absolute;
+  bottom: -24px;
+  left: -24px;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 20px 24px;
+  border-radius: 4px;
+  max-width: 320px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 640px) {
+  .csp-hero-caption-card {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    margin-top: 16px;
+    max-width: 100%;
+  }
+}
+
+.csp-hero-caption-title {
+  font-family: 'Cardo', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.csp-hero-caption-sub {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+/* READ MORE BUTTON & TEAM MEMBER MODAL STYLES (Structured Rectangular Tag) */
+.csp-read-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 8px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #00aefe;
+  background: rgba(0, 174, 254, 0.08);
+  border: 1px solid rgba(0, 174, 254, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.csp-read-more-btn:hover {
+  background: #00aefe;
+  color: #ffffff;
+  border-color: #00aefe;
+  box-shadow: 0 6px 18px rgba(0, 174, 254, 0.4);
+  transform: translateY(-2px);
+  border-radius: 4px;
+}
+
+.csp-team-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(4, 9, 20, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.csp-team-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.csp-team-modal-card {
+  position: relative;
+  background: #061022;
+  border: 1px solid rgba(0, 174, 254, 0.4);
+  border-radius: 20px;
+  max-width: 680px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 36px 32px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 174, 254, 0.2);
+  transform: scale(0.92);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #ffffff;
+}
+
+.csp-team-modal-overlay.active .csp-team-modal-card {
+  transform: scale(1);
+}
+
+.csp-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.csp-modal-close:hover {
+  background: #b71f71;
+  border-color: #b71f71;
+}
+
+.csp-modal-header-flex {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.csp-modal-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid rgba(0, 174, 254, 0.5);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.csp-modal-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #00aefe;
+  background: rgba(0, 174, 254, 0.12);
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.csp-modal-name {
+  font-family: 'Cardo', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 4px 0 2px;
+}
+
+.csp-modal-role {
+  font-size: 0.88rem;
+  color: #94a3b8;
+}
+
+.csp-modal-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 174, 254, 0.4), rgba(183, 31, 113, 0.4), transparent);
+  margin: 24px 0;
+}
+
+.csp-modal-bio-text {
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+  white-space: pre-line;
+}
+
+/* MARQUEE TICKER */
+.csp-ticker-strip {
+  background: #0f172a;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 16px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.csp-ticker-track {
+  display: inline-flex;
+  gap: 40px;
+  animation: cspTicker 30s linear infinite;
+}
+
+.csp-ticker-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.csp-ticker-item::after {
+  content: '◆';
+  font-size: 0.5rem;
+  color: #00aefe;
+}
+
+@keyframes cspTicker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* --- SECTION 2: PUBLISHER'S MANIFESTO & ESSAY --- */
+.csp-manifesto-sec {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 60%, #f1f5f9 100%);
+  color: #0f172a;
+  padding: 120px 6%;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.csp-manifesto-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.csp-manifesto-wrapper {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 70px;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .csp-manifesto-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .csp-pub-sidebar {
+    position: static !important;
+    top: auto !important;
+    margin-bottom: 24px;
+    z-index: 1 !important;
+  }
+  .csp-pub-portrait-card {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+.csp-pub-sidebar {
+  position: relative;
+  top: auto;
+}
+
+.csp-pub-portrait-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.06);
+}
+
+.csp-pub-portrait-img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  display: block;
+}
+
+.csp-pub-meta {
+  padding: 0 8px 8px;
+}
+
+.csp-pub-name {
+  font-family: 'Cardo', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.csp-pub-role {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #00aefe;
+}
+
+.csp-essay-content {
+  font-family: 'Inter', sans-serif;
+}
+
+.csp-essay-title {
+  font-family: 'Cardo', serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  line-height: 1.25;
+  font-weight: 400;
+  color: #0f172a;
+  margin-bottom: 28px;
+}
+
+.csp-essay-pullquote {
+  font-family: 'Cardo', serif;
+  font-size: 1.35rem;
+  line-height: 1.65;
+  font-style: italic;
+  color: #1e293b;
+  border-left: 3px solid #00aefe;
+  padding-left: 24px;
+  margin: 32px 0 0;
+}
+
+/* Glassmorphism Core Pillars Grid */
+.csp-pillars-glass-wrapper {
+  margin-top: 80px;
+  padding-top: 60px;
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.csp-pillars-section-title {
+  font-family: 'Cardo', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.25;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.csp-pillars-glass-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@media (max-width: 992px) {
+  .csp-pillars-glass-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.csp-pillar-glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 16px;
+  padding: 36px 30px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.csp-pillar-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #00aefe, #0077ff);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.csp-pillar-glass-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(0, 174, 254, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 174, 254, 0.1), inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.csp-pillar-glass-card:hover::before {
+  opacity: 1;
+}
+
+.csp-pillar-glass-num {
+  font-family: 'Cardo', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #00aefe;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.csp-pillar-glass-heading {
+  font-family: 'Cardo', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+
+.csp-pillar-glass-body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #475569;
+}
+
+/* --- SECTION 3: EDITORIAL ROSTER & LEADERSHIP (AWWWARDS-TIER SPREAD) --- */
+.csp-roster-sec {
+  background: #090d16;
+  color: #ffffff;
+  padding: 130px 6%;
+  font-family: 'Inter', sans-serif;
+}
+
+.csp-roster-container {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.csp-roster-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: end;
+  margin-bottom: 70px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 900px) {
+  .csp-roster-head {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.csp-roster-title {
+  font-family: 'Cardo', serif;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.csp-roster-sub {
+  font-size: 1.05rem;
+  color: #94a3b8;
+  line-height: 1.7;
+}
+
+/* FEATURED LEADERSHIP SPREAD (2 FOUNDING LEADERS) */
+.csp-featured-leadership {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+@media (max-width: 900px) {
+  .csp-featured-leadership {
+    grid-template-columns: 1fr;
+  }
+}
+
+.csp-leader-card {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: stretch;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .csp-leader-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.csp-leader-card:hover {
+  border-color: rgba(0, 174, 254, 0.4);
+  transform: translateY(-4px);
+}
+
+.csp-leader-img-box {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  position: relative;
+  overflow: hidden;
+  background: #0f172a;
   display: flex;
 }
 
-#uc_blob_shapes_elementor_c29a09e_justification #uc_blob_shapes_elementor_c29a09e_justification-inner .ue_blob_inside{
-	width: 100%;
-}
-
-#uc_blob_shapes_elementor_c29a09e_justification #uc_blob_shapes_elementor_c29a09e_justification-inner .blob{
-  background-position:center center;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-color: #000;
-}
-
-#uc_blob_shapes_elementor_c29a09e_justification{
-  display:flex;
-  min-height:1px;
-  position: relative;
-}
-
-#uc_blob_shapes_elementor_c29a09e .ue-blob-link{
-  display:block;
-}
-
-#uc_blob_shapes_elementor_c29a09e_justification .ue_blob_inside {
-  position: relative;
-  z-index: 2;
-  overflow:hidden;
+.csp-leader-img {
   width: 100%;
-  clip-path: animated;
-  -webkit-clip-path: animated;
-  background:linear-gradient(45deg, #00AEFE 0%, 50%, #A2007DC7 100%); 
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
 
-#uc_blob_shapes_elementor_c29a09e_size{
-  animation-name: animated;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-timing-function: linear;
-  clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
-   -webkit-clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
+.csp-leader-img-ernest {
+  object-position: 75% 15% !important;
 }
 
-@keyframes animated {
-  0% {
-   clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
-   -webkit-clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
+.csp-leader-img-ebere {
+  object-position: center 10% !important;
+}
+
+.csp-leader-info {
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.csp-leader-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #00aefe;
+  margin-bottom: 10px;
+}
+
+.csp-leader-name {
+  font-family: 'Cardo', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.csp-leader-role {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 14px;
+}
+
+.csp-leader-bio {
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ROSTER LIST (EDITORIAL STAFF & TRUSTEES) */
+.csp-roster-grid-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@media (max-width: 1024px) {
+  .csp-roster-grid-list {
+    grid-template-columns: repeat(2, 1fr);
   }
-  50% {
-    clip-path: polygon(98.400% 19.800%, 99.300% 22.300%, 99.800% 24.900%, 100.000% 27.600%, 99.900% 30.400%, 99.600% 33.200%, 99.000% 36.100%, 98.200% 39.000%, 97.300% 42.000%, 96.200% 45.000%, 95.000% 48.000%, 93.700% 51.000%, 92.400% 54.000%, 91.100% 57.000%, 89.800% 60.000%, 88.500% 63.000%, 87.200% 65.900%, 86.000% 68.800%, 84.900% 71.600%, 83.900% 74.300%, 82.900% 77.000%, 81.900% 79.600%, 80.900% 82.100%, 80.000% 84.400%, 79.000% 86.600%, 78.000% 88.700%, 77.000% 90.600%, 75.900% 92.400%, 74.800% 94.000%, 73.600% 95.400%, 72.300% 96.600%, 70.900% 97.600%, 69.400% 98.400%, 67.800% 99.000%, 66.100% 99.400%, 64.200% 99.600%, 62.200% 99.600%, 60.100% 99.500%, 58.000% 99.200%, 55.800% 98.800%, 53.500% 98.200%, 51.100% 97.500%, 48.700% 96.700%, 46.200% 95.800%, 43.700% 94.900%, 41.100% 93.900%, 38.500% 92.900%, 35.900% 91.800%, 33.300% 90.700%, 30.700% 89.600%, 28.100% 88.500%, 25.500% 87.400%, 23.000% 86.300%, 20.500% 85.100%, 18.100% 83.900%, 15.800% 82.700%, 13.600% 81.400%, 11.500% 80.100%, 9.500% 78.700%, 7.700% 77.300%, 6.000% 75.800%, 4.500% 74.200%, 3.200% 72.500%, 2.100% 70.800%, 1.400% 69.400%, 0.700% 67.500%, 0.300% 65.500%, 0.100% 63.400%, 0.000% 61.200%, 0.200% 59.000%, 0.600% 56.700%, 1.100% 54.400%, 1.800% 52.000%, 2.700% 49.600%, 3.700% 47.100%, 4.900% 44.600%, 6.200% 42.000%, 7.600% 39.400%, 9.200% 36.800%, 10.900% 34.200%, 12.700% 31.600%, 14.600% 29.000%, 16.600% 26.400%, 18.700% 23.800%, 20.900% 21.300%, 23.100% 18.800%, 25.400% 16.400%, 27.800% 14.100%, 30.300% 11.900%, 32.900% 9.800%, 35.600% 7.900%, 38.400% 6.200%, 41.300% 4.600%, 44.300% 3.200%, 47.400% 2.100%, 50.600% 1.200%, 53.900% 0.600%, 57.200% 0.200%, 60.500% 0.000%, 63.900% 0.100%, 67.300% 0.500%, 70.700% 1.100%, 74.100% 1.900%, 77.400% 2.900%, 80.600% 4.100%, 83.600% 5.500%, 86.500% 7.100%, 89.200% 8.900%, 91.600% 10.800%, 93.800% 12.800%, 95.700% 15.000%, 97.300% 17.300%, 98.400% 19.800%);
-   -webkit-clip-path: polygon(98.400% 19.800%, 99.300% 22.300%, 99.800% 24.900%, 100.000% 27.600%, 99.900% 30.400%, 99.600% 33.200%, 99.000% 36.100%, 98.200% 39.000%, 97.300% 42.000%, 96.200% 45.000%, 95.000% 48.000%, 93.700% 51.000%, 92.400% 54.000%, 91.100% 57.000%, 89.800% 60.000%, 88.500% 63.000%, 87.200% 65.900%, 86.000% 68.800%, 84.900% 71.600%, 83.900% 74.300%, 82.900% 77.000%, 81.900% 79.600%, 80.900% 82.100%, 80.000% 84.400%, 79.000% 86.600%, 78.000% 88.700%, 77.000% 90.600%, 75.900% 92.400%, 74.800% 94.000%, 73.600% 95.400%, 72.300% 96.600%, 70.900% 97.600%, 69.400% 98.400%, 67.800% 99.000%, 66.100% 99.400%, 64.200% 99.600%, 62.200% 99.600%, 60.100% 99.500%, 58.000% 99.200%, 55.800% 98.800%, 53.500% 98.200%, 51.100% 97.500%, 48.700% 96.700%, 46.200% 95.800%, 43.700% 94.900%, 41.100% 93.900%, 38.500% 92.900%, 35.900% 91.800%, 33.300% 90.700%, 30.700% 89.600%, 28.100% 88.500%, 25.500% 87.400%, 23.000% 86.300%, 20.500% 85.100%, 18.100% 83.900%, 15.800% 82.700%, 13.600% 81.400%, 11.500% 80.100%, 9.500% 78.700%, 7.700% 77.300%, 6.000% 75.800%, 4.500% 74.200%, 3.200% 72.500%, 2.100% 70.800%, 1.400% 69.400%, 0.700% 67.500%, 0.300% 65.500%, 0.100% 63.400%, 0.000% 61.200%, 0.200% 59.000%, 0.600% 56.700%, 1.100% 54.400%, 1.800% 52.000%, 2.700% 49.600%, 3.700% 47.100%, 4.900% 44.600%, 6.200% 42.000%, 7.600% 39.400%, 9.200% 36.800%, 10.900% 34.200%, 12.700% 31.600%, 14.600% 29.000%, 16.600% 26.400%, 18.700% 23.800%, 20.900% 21.300%, 23.100% 18.800%, 25.400% 16.400%, 27.800% 14.100%, 30.300% 11.900%, 32.900% 9.800%, 35.600% 7.900%, 38.400% 6.200%, 41.300% 4.600%, 44.300% 3.200%, 47.400% 2.100%, 50.600% 1.200%, 53.900% 0.600%, 57.200% 0.200%, 60.500% 0.000%, 63.900% 0.100%, 67.300% 0.500%, 70.700% 1.100%, 74.100% 1.900%, 77.400% 2.900%, 80.600% 4.100%, 83.600% 5.500%, 86.500% 7.100%, 89.200% 8.900%, 91.600% 10.800%, 93.800% 12.800%, 95.700% 15.000%, 97.300% 17.300%, 98.400% 19.800%);
+}
+
+@media (max-width: 640px) {
+  .csp-roster-grid-list {
+    grid-template-columns: 1fr;
   }
-  100% {
-    clip-path: polygon(96.500% 13.800%, 97.700% 15.900%, 98.600% 18.100%, 99.300% 20.500%, 99.700% 23.000%, 99.900% 25.600%, 99.900% 28.300%, 99.700% 31.100%, 99.500% 34.000%, 99.000% 36.900%, 98.400% 39.900%, 97.700% 42.900%, 96.900% 45.900%, 96.000% 49.000%, 95.100% 52.100%, 94.100% 55.200%, 93.100% 58.200%, 92.100% 61.200%, 91.100% 64.100%, 90.100% 67.000%, 89.100% 69.800%, 88.000% 72.600%, 86.900% 75.300%, 85.700% 77.900%, 84.500% 80.400%, 83.200% 82.800%, 81.800% 85.100%, 80.300% 87.200%, 78.700% 89.200%, 77.000% 91.000%, 75.200% 92.700%, 73.300% 94.200%, 71.200% 95.600%, 69.000% 96.800%, 66.700% 97.800%, 64.300% 98.600%, 61.800% 99.200%, 59.200% 99.700%, 56.500% 100.000%, 53.800% 100.100%, 51.000% 100.100%, 48.200% 99.900%, 45.400% 99.600%, 42.600% 99.100%, 39.800% 98.500%, 37.000% 97.700%, 34.300% 96.800%, 31.700% 95.700%, 29.100% 94.500%, 26.600% 93.100%, 24.200% 91.600%, 21.900% 90.000%, 19.700% 88.300%, 17.600% 86.500%, 15.600% 84.500%, 13.700% 82.400%, 11.900% 80.300%, 10.300% 78.100%, 8.800% 75.800%, 7.400% 73.400%, 6.100% 70.900%, 4.900% 68.400%, 3.800% 65.800%, 2.800% 63.100%, 2.000% 60.400%, 1.300% 57.600%, 0.700% 54.800%, 0.200% 52.000%, -0.100% 49.200%, -0.300% 46.400%, 0.000% 43.300%, 0.100% 40.500%, 0.300% 37.700%, 0.700% 35.000%, 1.200% 32.300%, 1.900% 29.700%, 2.800% 27.200%, 3.800% 24.700%, 5.000% 22.300%, 6.400% 20.000%, 8.000% 17.900%, 9.800% 15.900%, 11.700% 14.000%, 13.800% 12.200%, 16.100% 10.500%, 18.500% 9.000%, 21.000% 7.600%, 23.700% 6.300%, 26.500% 5.100%, 29.400% 4.100%, 32.400% 3.200%, 35.500% 2.400%, 38.700% 1.700%, 41.900% 1.100%, 45.200% 0.600%, 48.500% 0.300%, 51.900% 0.100%, 55.300% 0.000%, 58.700% 0.000%, 62.100% 0.100%, 65.500% 0.300%, 68.800% 0.700%, 72.100% 1.200%, 75.300% 1.800%, 78.400% 2.600%, 81.300% 3.500%, 84.100% 4.500%, 86.700% 5.700%, 89.100% 7.000%, 91.300% 8.500%, 93.300% 10.100%, 95.000% 11.900%, 96.500% 13.800%);
-   -webkit-clip-path: polygon(96.500% 13.800%, 97.700% 15.900%, 98.600% 18.100%, 99.300% 20.500%, 99.700% 23.000%, 99.900% 25.600%, 99.900% 28.300%, 99.700% 31.100%, 99.500% 34.000%, 99.000% 36.900%, 98.400% 39.900%, 97.700% 42.900%, 96.900% 45.900%, 96.000% 49.000%, 95.100% 52.100%, 94.100% 55.200%, 93.100% 58.200%, 92.100% 61.200%, 91.100% 64.100%, 90.100% 67.000%, 89.100% 69.800%, 88.000% 72.600%, 86.900% 75.300%, 85.700% 77.900%, 84.500% 80.400%, 83.200% 82.800%, 81.800% 85.100%, 80.300% 87.200%, 78.700% 89.200%, 77.000% 91.000%, 75.200% 92.700%, 73.300% 94.200%, 71.200% 95.600%, 69.000% 96.800%, 66.700% 97.800%, 64.300% 98.600%, 61.800% 99.200%, 59.200% 99.700%, 56.500% 100.000%, 53.800% 100.100%, 51.000% 100.100%, 48.200% 99.900%, 45.400% 99.600%, 42.600% 99.100%, 39.800% 98.500%, 37.000% 97.700%, 34.300% 96.800%, 31.700% 95.700%, 29.100% 94.500%, 26.600% 93.100%, 24.200% 91.600%, 21.900% 90.000%, 19.700% 88.300%, 17.600% 86.500%, 15.600% 84.500%, 13.700% 82.400%, 11.900% 80.300%, 10.300% 78.100%, 8.800% 75.800%, 7.400% 73.400%, 6.100% 70.900%, 4.900% 68.400%, 3.800% 65.800%, 2.800% 63.100%, 2.000% 60.400%, 1.300% 57.600%, 0.700% 54.800%, 0.200% 52.000%, -0.100% 49.200%, -0.300% 46.400%, 0.000% 43.300%, 0.100% 40.500%, 0.300% 37.700%, 0.700% 35.000%, 1.200% 32.300%, 1.900% 29.700%, 2.800% 27.200%, 3.800% 24.700%, 5.000% 22.300%, 6.400% 20.000%, 8.000% 17.900%, 9.800% 15.900%, 11.700% 14.000%, 13.800% 12.200%, 16.100% 10.500%, 18.500% 9.000%, 21.000% 7.600%, 23.700% 6.300%, 26.500% 5.100%, 29.400% 4.100%, 32.400% 3.200%, 35.500% 2.400%, 38.700% 1.700%, 41.900% 1.100%, 45.200% 0.600%, 48.500% 0.300%, 51.900% 0.100%, 55.300% 0.000%, 58.700% 0.000%, 62.100% 0.100%, 65.500% 0.300%, 68.800% 0.700%, 72.100% 1.200%, 75.300% 1.800%, 78.400% 2.600%, 81.300% 3.500%, 84.100% 4.500%, 86.700% 5.700%, 89.100% 7.000%, 91.300% 8.500%, 93.300% 10.100%, 95.000% 11.900%, 96.500% 13.800%);
+}
+
+.csp-roster-item-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  transition: all 0.3s ease;
+}
+
+.csp-roster-item-card:hover {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.csp-roster-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.csp-roster-item-name {
+  font-family: 'Cardo', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.csp-roster-item-role {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #00aefe;
+  margin-bottom: 8px;
+}
+
+.csp-roster-item-bio {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* --- SECTION 4: GLOBAL MATRIX & HUBS --- */
+.csp-matrix-sec {
+  background: #05080e;
+  color: #ffffff;
+  padding: 120px 6%;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: 'Inter', sans-serif;
+}
+
+.csp-matrix-container {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.csp-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 900px) {
+  .csp-matrix-grid {
+    grid-template-columns: 1fr;
   }
-}	 
-	
-
-
-#uc_blob_shapes_elementor_c29a09e {
-  	aspect-ratio: 1 / 1; 
-    width:100%;
-  	
 }
 
-.ue-blob-text-holder{
-  position:absolute;
-  top:0px;
-  left:0px;
-  right:0px;
-  bottom:0px;
-  width:100%;
-  height:100%;
-  z-index:2;
-  display:flex;
-  justify-content:center;
-  flex-direction:column;
+.csp-matrix-cell {
+  background: #080c16;
+  padding: 36px 30px;
+  transition: background 0.3s ease;
 }
 
-.ue_blob_inside{
-  position:relative;
+.csp-matrix-cell:hover {
+  background: #0f172a;
 }
 
+.csp-matrix-code {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #00aefe;
+  margin-bottom: 12px;
+}
+
+.csp-matrix-city {
+  font-family: 'Cardo', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.csp-matrix-region {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+/* --- SECTION 5: STATEMENT CTA --- */
+.csp-statement-cta {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 120px 6%;
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+  font-family: 'Inter', sans-serif;
+}
+
+.csp-statement-box {
+  max-width: 840px;
+  margin: 0 auto;
+}
+
+.csp-statement-title {
+  font-family: 'Cardo', serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #0f172a;
+  margin-bottom: 24px;
+}
+
+.csp-statement-desc {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: #475569;
+  margin-bottom: 40px;
+}
+
+.csp-cta-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.csp-btn-solid-dark,
+.csp-btn-primary-gradient {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #00AEFE 0%, #007bb5 100%);
+  color: #ffffff !important;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 14px 34px;
+  border-radius: 999px 999px 4px 999px;
+  text-decoration: none !important;
+  box-shadow: 0 8px 24px rgba(0, 174, 254, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.csp-btn-solid-dark:hover,
+.csp-btn-primary-gradient:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 32px rgba(0, 174, 254, 0.5);
+  background: linear-gradient(135deg, #00b9ff 0%, #0088cb 100%);
+  color: #ffffff !important;
+  border-radius: 999px 999px 12px 999px;
+}
+
+.csp-btn-outline-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: transparent;
+  color: #111827 !important;
+  border: 1.5px solid #d1d5db;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 13px 32px;
+  border-radius: 50px;
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.csp-btn-outline-dark:hover {
+  border-color: #111827;
+  background: rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+  border-radius: 50px;
+}
 </style>
 
-<div id="uc_blob_shapes_elementor_c29a09e_justification" class="ue-blob-wrapper" role="group">
-  
-  <div id="uc_blob_shapes_elementor_c29a09e_size" class="ue_blob_inside">
-  
-    	
-        
-      <div id="uc_blob_shapes_elementor_c29a09e" style="background-image:url(../wp-content/uploads/2026/01/couple-using-technology-while-traveling-city-scaled.jpg)" class="blob" role="presentation"></div>
-        
-      <div class="ue-blob-text-holder">
-                            </div>
-        
+<!-- =========================================================
+     1. BESPOKE EDITORIAL ARCH HERO SECTION
+     ========================================================= -->
+<section class="csp-arch-hero" id="about-hero">
+  <div class="csp-arch-hero-container">
+    <!-- Left Column: Headline, Narrative & CTA -->
+    <div class="csp-arch-hero-left">
+      <span class="csp-arch-hero-kicker">Who We Are</span>
+      <h1 class="csp-arch-hero-title">
+        We are Africa's <br>
+        <em>intellectual platform</em> <br>
+        for the diaspora
+      </h1>
+      <p class="csp-arch-hero-text">
+        Conspodium is a living digital magazine, intellectual archive, and interactive community connecting pan-African diaspora leaders, innovators, and creators across 120+ nations.
+      </p>
+      <div class="csp-arch-hero-actions">
+        <a href="#publisher-manifesto" class="csp-arch-hero-btn">Explore Mission</a>
+      </div>
+      <!-- Minimalist Wavy Vector Path -->
+      <div class="csp-arch-hero-squiggle" aria-hidden="true">
+        <svg viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 38C28 14 52 52 76 28C100 4 124 48 148 24C172 0 196 42 220 18C228 10 236 12 240 16" stroke="#E5B26E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Center Column: Focal Arch Portal with Abstract Accents -->
+    <div class="csp-arch-hero-center">
+      <!-- Background Fluid Blob Accent (Top-Right) -->
+      <div class="csp-arch-blob-accent" aria-hidden="true"></div>
       
-  </div>
-  
-    
-</div>
-<!-- end Blob Shapes -->				</div>
-				</div>
-				</div>
-		<div class="elementor-element elementor-element-40d2cd7 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="40d2cd7" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-00fa2a3 sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="00fa2a3" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">WHO WE ARE</h2>				</div>
-				</div>
-				<div class="elementor-element elementor-element-72fb61b eael-dual-header-content-align-left eael-dual-header-content-mobile-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="72fb61b" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
-				<div class="elementor-widget-container">
-								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4">Amplifying Diaspora Voices And Preserving</span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">Collective Memory.</span> </h2>					<span class="subtext"><p>Conspodium is more than a publication—it’s a movement. A space where the journeys of Nigerians&nbsp; in the diaspora are captured, honored and shared.</p></span>
-							</div>
-
-						</div>
-				</div>
-				<div class="elementor-element elementor-element-7fd0465 elementor-align-left sticky-ekit-buttonstyle elementor-widget__width-initial elementor-align--mobilecenter elementor-widget elementor-widget-elementskit-button animated fadeIn" data-id="7fd0465" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}" data-widget_type="elementskit-button.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		<div class="ekit-btn-wraper">
-							<a href="../submit-story" class="elementskit-btn  whitespace--normal" id="">
-					Submit Your Story<i class="jki jki-arrow-right-solid"></i>				</a>
-					</div>
-        </div>				</div>
-				</div>
-				</div>
-				</div>
-					</div>
-				</div>
-					</div>
-				</div>
-		<div class="elementor-element elementor-element-ad32725 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="ad32725" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-		<div class="elementor-element elementor-element-4494660 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="4494660" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-9ebd914 eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="9ebd914" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
-				<div class="elementor-widget-container">
-								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4">A Message from</span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">Our Publisher</span> </h2>					<span class="subtext"><p>To every Conspodium contributor: we extend our deepest gratitude. Thank you not just for your willingness to share, but for your unwavering belief in our vision.</p><p>We understand the realities of diaspora life—demanding schedules, competing responsibilities, and precious creative time. Because of this understanding, we have evolved.</p><p>Your contributions are no longer confined to lengthy, polished articles. We now welcome diverse formats: voice notes, interviews, personal reflections, or even content you’ve already shared elsewhere. We’ve also moved from rigid deadlines to flexible content windows.</p><p>Your voice matters deeply, irrespective of its length or format. Conspodium’s essence lies not in speed, but in fostering meaning, celebrating authenticity, and preserving our collective memory as a diaspora.</p><p>This is a journey we are on together. We are committed to building Conspodium with you, not demanding from you.</p><p><em><strong>Ernest Ngadiuba</strong></em><br><em><strong>Publisher, Conspodium</strong></em></p></span>
-							</div>
-
-						</div>
-				</div>
-				</div>
-					</div>
-				</div>
-		<div class="elementor-element elementor-element-20c8ca7 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="20c8ca7" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-		<div class="elementor-element elementor-element-de27947 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="de27947" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-4b9646e eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="4b9646e" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
-				<div class="elementor-widget-container">
-								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4">What Defines</span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">Us</span> </h2>					<span class="subtext"><p>We’re dedicated to telling the stories of diaspora communities worldwide, celebrating the richness of cultures that span continents and generations.</p></span>
-							</div>
-
-						</div>
-				</div>
-		<div class="elementor-element elementor-element-21a94f6 e-grid e-con-full e-con e-child adv-sticky-elementor" data-id="21a94f6" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-f9b5e73 ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="f9b5e73" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
-        <div class="elementskit-infobox text-center text- icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon icon icon-target-2"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Our Mission                </h3>
-                        		  	<p>To provide a premium platform that amplifies the voices, stories, and achievements of diaspora communities worldwide. We believe every story deserves to be heard, and we're committed to publishing the narratives that shape our global culture with integrity, authenticity, and excellence.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-c36b244 ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="c36b244" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
-
-        <div class="elementskit-infobox text-center text- icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon far fa-eye"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Our Vision                </h3>
-                        		  	<p>To become the world's leading media platform for diaspora communities—a trusted source where global citizens find inspiration, connection, and representation. We envision a world where diaspora stories are celebrated, not overlooked; where cultural identity is a source of pride and unity.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				</div>
-
-<!-- CSP_SECTION_ABOUT_STATS_START -->
-<div class="csp-about-stats-sec" style="padding:60px 0;background:linear-gradient(180deg,#f8fafc 0%,#ffffff 100%);border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;margin:40px 0;">
-  <div style="max-width:1200px;margin:0 auto;padding:0 24px;text-align:center;">
-    <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.15em;color:#00AEFE;text-transform:uppercase;margin:0 0 10px;">Our Impact in Numbers</p>
-    <h2 style="font-family:'Merriweather',serif;font-size:clamp(1.75rem,3vw,2.4rem);color:#0f172a;margin:0 0 40px;">Connecting <span style="font-family:'Merienda',cursive;color:#B71F71;">Global Communities</span></h2>
-    
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;" class="csp-about-stats-grid">
-      <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:32px 20px;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(0,174,254,0.1);color:#00AEFE;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 16px;">🌐</div>
-        <div style="font-family:'Merienda',cursive,sans-serif;font-size:2.2rem;font-weight:700;color:#0f172a;margin-bottom:6px;">50,000+</div>
-        <div style="font-size:0.85rem;font-weight:600;color:#64748b;">Engaged Monthly Readers</div>
+      <!-- Arch Portal Frame -->
+      <div class="csp-arch-frame">
+        <img src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Pan-African Diaspora Community Leaders" class="csp-arch-img" />
       </div>
-      <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:32px 20px;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(183,31,113,0.1);color:#B71F71;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 16px;">📍</div>
-        <div style="font-family:'Merienda',cursive,sans-serif;font-size:2.2rem;font-weight:700;color:#0f172a;margin-bottom:6px;">45+</div>
-        <div style="font-size:0.85rem;font-weight:600;color:#64748b;">Countries Connected</div>
+
+      <!-- Bottom-Left Geometry: Overlapping Coral Circle & Wireframe Ring -->
+      <div class="csp-arch-badge-group" aria-hidden="true">
+        <div class="csp-arch-circle-solid"></div>
+        <div class="csp-arch-circle-ring"></div>
       </div>
-      <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:32px 20px;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(0,174,254,0.1);color:#00AEFE;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 16px;">✍️</div>
-        <div style="font-family:'Merienda',cursive,sans-serif;font-size:2.2rem;font-weight:700;color:#0f172a;margin-bottom:6px;">120+</div>
-        <div style="font-size:0.85rem;font-weight:600;color:#64748b;">Published Diaspora Authors</div>
+    </div>
+
+    <!-- Right Column: Vertical Impact Metrics -->
+    <div class="csp-arch-hero-right">
+      <div class="csp-arch-stat-item">
+        <span class="csp-arch-stat-num">120+</span>
+        <span class="csp-arch-stat-label">Global Nations</span>
       </div>
-      <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:32px 20px;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(183,31,113,0.1);color:#B71F71;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 16px;">🌍</div>
-        <div style="font-family:'Merienda',cursive,sans-serif;font-size:2.2rem;font-weight:700;color:#0f172a;margin-bottom:6px;">6</div>
-        <div style="font-size:0.85rem;font-weight:600;color:#64748b;">Continents Represented</div>
+      <div class="csp-arch-stat-item">
+        <span class="csp-arch-stat-num">50K+</span>
+        <span class="csp-arch-stat-label">Monthly Readers</span>
+      </div>
+      <div class="csp-arch-stat-item">
+        <span class="csp-arch-stat-num">100%</span>
+        <span class="csp-arch-stat-label">Pan-African Voices</span>
       </div>
     </div>
   </div>
-</div>
-<!-- CSP_SECTION_ABOUT_STATS_END -->
-				<div class="elementor-element elementor-element-7608d09 elementor-blockquote--skin-quotation elementor-blockquote--align-center elementor-blockquote--button-color-official elementor-widget elementor-widget-blockquote" data-id="7608d09" data-element_type="widget" data-e-type="widget" data-widget_type="blockquote.default">
-				<div class="elementor-widget-container">
-							<blockquote class="elementor-blockquote">
-			<p class="elementor-blockquote__content">
-				"Built for those who crossed oceans but never lost their echo"			</p>
-							<div class="e-q-footer">
-											<cite class="elementor-blockquote__author">The Conspodium Team</cite>
-														</div>
-					</blockquote>
-						</div>
-				</div>
-				<div class="elementor-element elementor-element-0a85ceb elementor-hidden-tablet elementor-widget elementor-widget-spacer" data-id="0a85ceb" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
-				<div class="elementor-widget-container">
-							<div class="elementor-spacer">
-			<div class="elementor-spacer-inner"></div>
-		</div>
-						</div>
-				</div>
-				</div>
-					</div>
-				</div>
-		<div class="elementor-element elementor-element-598a9a85 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="598a9a85" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-				<div class="elementor-element elementor-element-0a0c343 eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="0a0c343" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
-				<div class="elementor-widget-container">
-								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4">Our Core </span> <span class="eael-dch-title-text elementor-repeater-item-ec69b67 eael-dch-title-gradient">Values</span> </h2>					<span class="subtext"><p>The principles that guide everything we do</p></span>
-							</div>
+</section>
 
-						</div>
-				</div>
-		<div class="elementor-element elementor-element-cb34468 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="cb34468" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-		<div class="elementor-element elementor-element-f7a452d e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="f7a452d" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-002b3a8 elementor-widget elementor-widget-ucaddon_blob_shapes" data-id="002b3a8" data-element_type="widget" data-e-type="widget" data-widget_type="ucaddon_blob_shapes.default">
-				<div class="elementor-widget-container">
-					
-<!-- start Blob Shapes -->
-<style>/* widget: Blob Shapes */
+<!-- =========================================================
+     2. PUBLISHER'S MANIFESTO & EDITORIAL ESSAY
+     ========================================================= -->
+<section class="csp-manifesto-sec" id="publisher-manifesto">
+  <div class="csp-manifesto-container">
+    <div class="csp-manifesto-wrapper">
+      <aside class="csp-pub-sidebar">
+        <div class="csp-pub-portrait-card">
+          <img src="../wp-content/uploads/2026/01/publisher-portrait.jpg" alt="Ernest Ngadiuba - Publisher, Conspodium" class="csp-pub-portrait-img" />
+          <div class="csp-pub-meta">
+            <div class="csp-pub-name">Ernest Ngadiuba</div>
+            <div class="csp-pub-role">Publisher, Conspodium</div>
+          </div>
+        </div>
+      </aside>
 
-#uc_blob_shapes_elementor_002b3a8{
-  mix-blend-mode: overlay;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-position:center center;
-  opacity: 100%; 
-}
-
-#uc_blob_shapes_elementor_002b3a8_justification #uc_blob_shapes_elementor_002b3a8_justification-inner{
-  position: absolute;
-  background-position:center center;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-
-#uc_blob_shapes_elementor_002b3a8_justification #uc_blob_shapes_elementor_002b3a8_justification-inner .ue_blob_inside{
-	width: 100%;
-}
-
-#uc_blob_shapes_elementor_002b3a8_justification #uc_blob_shapes_elementor_002b3a8_justification-inner .blob{
-  background-position:center center;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-color: #000;
-}
-
-#uc_blob_shapes_elementor_002b3a8_justification{
-  display:flex;
-  min-height:1px;
-  position: relative;
-}
-
-#uc_blob_shapes_elementor_002b3a8 .ue-blob-link{
-  display:block;
-}
-
-#uc_blob_shapes_elementor_002b3a8_justification .ue_blob_inside {
-  position: relative;
-  z-index: 2;
-  overflow:hidden;
-  width: 100%;
-  clip-path: animated;
-  -webkit-clip-path: animated;
-  background:linear-gradient(45deg, #00AEFE 0%, 22%, #A2007D80 60%); 
-}
-
-#uc_blob_shapes_elementor_002b3a8_size{
-  animation-name: animated;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-timing-function: linear;
-  clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
-   -webkit-clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
-}
-
-@keyframes animated {
-  0% {
-   clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
-   -webkit-clip-path: polygon(83.200% 25.800%, 85.100% 28.100%, 86.900% 30.400%, 88.600% 32.700%, 90.200% 35.000%, 91.800% 37.300%, 93.200% 39.600%, 94.500% 41.900%, 95.800% 44.100%, 96.900% 46.400%, 97.800% 48.700%, 98.600% 51.000%, 99.300% 53.300%, 99.800% 55.700%, 100.000% 58.100%, 100.100% 60.500%, 100.000% 63.000%, 99.700% 65.400%, 99.200% 67.800%, 98.500% 70.200%, 97.600% 72.600%, 96.500% 75.000%, 95.200% 77.400%, 93.700% 79.700%, 92.100% 81.900%, 90.300% 84.000%, 88.300% 86.100%, 86.200% 88.100%, 84.000% 89.900%, 81.600% 91.600%, 79.100% 93.200%, 76.500% 94.600%, 73.800% 95.800%, 71.000% 96.900%, 68.000% 97.900%, 65.000% 98.600%, 61.900% 99.200%, 58.800% 99.600%, 55.700% 99.800%, 52.600% 99.900%, 49.500% 99.800%, 46.400% 99.600%, 43.400% 99.200%, 40.400% 98.600%, 37.500% 97.900%, 34.700% 97.000%, 32.000% 96.000%, 29.400% 94.800%, 27.000% 93.500%, 24.700% 92.000%, 22.300% 90.500%, 20.400% 88.800%, 18.600% 87.000%, 16.900% 85.100%, 15.400% 83.000%, 14.000% 80.800%, 12.600% 78.600%, 11.400% 76.300%, 10.200% 74.000%, 8.900% 71.300%, 8.000% 68.800%, 7.100% 66.300%, 6.200% 63.800%, 5.400% 61.200%, 4.600% 58.600%, 3.800% 55.900%, 3.100% 53.200%, 2.400% 50.500%, 1.700% 47.800%, 1.100% 45.200%, 0.700% 42.500%, 0.400% 39.900%, 0.200% 37.300%, 0.000% 34.700%, 0.100% 32.200%, 0.300% 29.700%, 0.700% 27.300%, 1.300% 24.900%, 2.100% 22.600%, 3.100% 20.300%, 4.300% 18.100%, 5.800% 16.000%, 7.500% 14.000%, 9.400% 12.100%, 11.500% 10.300%, 13.800% 8.600%, 16.200% 7.000%, 18.800% 5.600%, 21.500% 4.300%, 24.300% 3.100%, 27.200% 2.200%, 30.100% 1.400%, 33.100% 0.800%, 36.000% 0.400%, 38.900% 0.200%, 41.800% 0.200%, 44.600% 0.400%, 47.400% 0.800%, 50.200% 1.500%, 52.900% 2.400%, 55.500% 3.400%, 58.100% 4.600%, 60.600% 6.000%, 63.100% 7.600%, 65.500% 9.200%, 67.800% 11.000%, 70.100% 12.900%, 72.300% 14.900%, 74.500% 17.000%, 76.600% 19.200%, 78.600% 21.400%, 80.700% 23.600%, 83.200% 25.800%);
-  }
-  50% {
-    clip-path: polygon(98.400% 19.800%, 99.300% 22.300%, 99.800% 24.900%, 100.000% 27.600%, 99.900% 30.400%, 99.600% 33.200%, 99.000% 36.100%, 98.200% 39.000%, 97.300% 42.000%, 96.200% 45.000%, 95.000% 48.000%, 93.700% 51.000%, 92.400% 54.000%, 91.100% 57.000%, 89.800% 60.000%, 88.500% 63.000%, 87.200% 65.900%, 86.000% 68.800%, 84.900% 71.600%, 83.900% 74.300%, 82.900% 77.000%, 81.900% 79.600%, 80.900% 82.100%, 80.000% 84.400%, 79.000% 86.600%, 78.000% 88.700%, 77.000% 90.600%, 75.900% 92.400%, 74.800% 94.000%, 73.600% 95.400%, 72.300% 96.600%, 70.900% 97.600%, 69.400% 98.400%, 67.800% 99.000%, 66.100% 99.400%, 64.200% 99.600%, 62.200% 99.600%, 60.100% 99.500%, 58.000% 99.200%, 55.800% 98.800%, 53.500% 98.200%, 51.100% 97.500%, 48.700% 96.700%, 46.200% 95.800%, 43.700% 94.900%, 41.100% 93.900%, 38.500% 92.900%, 35.900% 91.800%, 33.300% 90.700%, 30.700% 89.600%, 28.100% 88.500%, 25.500% 87.400%, 23.000% 86.300%, 20.500% 85.100%, 18.100% 83.900%, 15.800% 82.700%, 13.600% 81.400%, 11.500% 80.100%, 9.500% 78.700%, 7.700% 77.300%, 6.000% 75.800%, 4.500% 74.200%, 3.200% 72.500%, 2.100% 70.800%, 1.400% 69.400%, 0.700% 67.500%, 0.300% 65.500%, 0.100% 63.400%, 0.000% 61.200%, 0.200% 59.000%, 0.600% 56.700%, 1.100% 54.400%, 1.800% 52.000%, 2.700% 49.600%, 3.700% 47.100%, 4.900% 44.600%, 6.200% 42.000%, 7.600% 39.400%, 9.200% 36.800%, 10.900% 34.200%, 12.700% 31.600%, 14.600% 29.000%, 16.600% 26.400%, 18.700% 23.800%, 20.900% 21.300%, 23.100% 18.800%, 25.400% 16.400%, 27.800% 14.100%, 30.300% 11.900%, 32.900% 9.800%, 35.600% 7.900%, 38.400% 6.200%, 41.300% 4.600%, 44.300% 3.200%, 47.400% 2.100%, 50.600% 1.200%, 53.900% 0.600%, 57.200% 0.200%, 60.500% 0.000%, 63.900% 0.100%, 67.300% 0.500%, 70.700% 1.100%, 74.100% 1.900%, 77.400% 2.900%, 80.600% 4.100%, 83.600% 5.500%, 86.500% 7.100%, 89.200% 8.900%, 91.600% 10.800%, 93.800% 12.800%, 95.700% 15.000%, 97.300% 17.300%, 98.400% 19.800%);
-   -webkit-clip-path: polygon(98.400% 19.800%, 99.300% 22.300%, 99.800% 24.900%, 100.000% 27.600%, 99.900% 30.400%, 99.600% 33.200%, 99.000% 36.100%, 98.200% 39.000%, 97.300% 42.000%, 96.200% 45.000%, 95.000% 48.000%, 93.700% 51.000%, 92.400% 54.000%, 91.100% 57.000%, 89.800% 60.000%, 88.500% 63.000%, 87.200% 65.900%, 86.000% 68.800%, 84.900% 71.600%, 83.900% 74.300%, 82.900% 77.000%, 81.900% 79.600%, 80.900% 82.100%, 80.000% 84.400%, 79.000% 86.600%, 78.000% 88.700%, 77.000% 90.600%, 75.900% 92.400%, 74.800% 94.000%, 73.600% 95.400%, 72.300% 96.600%, 70.900% 97.600%, 69.400% 98.400%, 67.800% 99.000%, 66.100% 99.400%, 64.200% 99.600%, 62.200% 99.600%, 60.100% 99.500%, 58.000% 99.200%, 55.800% 98.800%, 53.500% 98.200%, 51.100% 97.500%, 48.700% 96.700%, 46.200% 95.800%, 43.700% 94.900%, 41.100% 93.900%, 38.500% 92.900%, 35.900% 91.800%, 33.300% 90.700%, 30.700% 89.600%, 28.100% 88.500%, 25.500% 87.400%, 23.000% 86.300%, 20.500% 85.100%, 18.100% 83.900%, 15.800% 82.700%, 13.600% 81.400%, 11.500% 80.100%, 9.500% 78.700%, 7.700% 77.300%, 6.000% 75.800%, 4.500% 74.200%, 3.200% 72.500%, 2.100% 70.800%, 1.400% 69.400%, 0.700% 67.500%, 0.300% 65.500%, 0.100% 63.400%, 0.000% 61.200%, 0.200% 59.000%, 0.600% 56.700%, 1.100% 54.400%, 1.800% 52.000%, 2.700% 49.600%, 3.700% 47.100%, 4.900% 44.600%, 6.200% 42.000%, 7.600% 39.400%, 9.200% 36.800%, 10.900% 34.200%, 12.700% 31.600%, 14.600% 29.000%, 16.600% 26.400%, 18.700% 23.800%, 20.900% 21.300%, 23.100% 18.800%, 25.400% 16.400%, 27.800% 14.100%, 30.300% 11.900%, 32.900% 9.800%, 35.600% 7.900%, 38.400% 6.200%, 41.300% 4.600%, 44.300% 3.200%, 47.400% 2.100%, 50.600% 1.200%, 53.900% 0.600%, 57.200% 0.200%, 60.500% 0.000%, 63.900% 0.100%, 67.300% 0.500%, 70.700% 1.100%, 74.100% 1.900%, 77.400% 2.900%, 80.600% 4.100%, 83.600% 5.500%, 86.500% 7.100%, 89.200% 8.900%, 91.600% 10.800%, 93.800% 12.800%, 95.700% 15.000%, 97.300% 17.300%, 98.400% 19.800%);
-  }
-  100% {
-    clip-path: polygon(96.500% 13.800%, 97.700% 15.900%, 98.600% 18.100%, 99.300% 20.500%, 99.700% 23.000%, 99.900% 25.600%, 99.900% 28.300%, 99.700% 31.100%, 99.500% 34.000%, 99.000% 36.900%, 98.400% 39.900%, 97.700% 42.900%, 96.900% 45.900%, 96.000% 49.000%, 95.100% 52.100%, 94.100% 55.200%, 93.100% 58.200%, 92.100% 61.200%, 91.100% 64.100%, 90.100% 67.000%, 89.100% 69.800%, 88.000% 72.600%, 86.900% 75.300%, 85.700% 77.900%, 84.500% 80.400%, 83.200% 82.800%, 81.800% 85.100%, 80.300% 87.200%, 78.700% 89.200%, 77.000% 91.000%, 75.200% 92.700%, 73.300% 94.200%, 71.200% 95.600%, 69.000% 96.800%, 66.700% 97.800%, 64.300% 98.600%, 61.800% 99.200%, 59.200% 99.700%, 56.500% 100.000%, 53.800% 100.100%, 51.000% 100.100%, 48.200% 99.900%, 45.400% 99.600%, 42.600% 99.100%, 39.800% 98.500%, 37.000% 97.700%, 34.300% 96.800%, 31.700% 95.700%, 29.100% 94.500%, 26.600% 93.100%, 24.200% 91.600%, 21.900% 90.000%, 19.700% 88.300%, 17.600% 86.500%, 15.600% 84.500%, 13.700% 82.400%, 11.900% 80.300%, 10.300% 78.100%, 8.800% 75.800%, 7.400% 73.400%, 6.100% 70.900%, 4.900% 68.400%, 3.800% 65.800%, 2.800% 63.100%, 2.000% 60.400%, 1.300% 57.600%, 0.700% 54.800%, 0.200% 52.000%, -0.100% 49.200%, -0.300% 46.400%, 0.000% 43.300%, 0.100% 40.500%, 0.300% 37.700%, 0.700% 35.000%, 1.200% 32.300%, 1.900% 29.700%, 2.800% 27.200%, 3.800% 24.700%, 5.000% 22.300%, 6.400% 20.000%, 8.000% 17.900%, 9.800% 15.900%, 11.700% 14.000%, 13.800% 12.200%, 16.100% 10.500%, 18.500% 9.000%, 21.000% 7.600%, 23.700% 6.300%, 26.500% 5.100%, 29.400% 4.100%, 32.400% 3.200%, 35.500% 2.400%, 38.700% 1.700%, 41.900% 1.100%, 45.200% 0.600%, 48.500% 0.300%, 51.900% 0.100%, 55.300% 0.000%, 58.700% 0.000%, 62.100% 0.100%, 65.500% 0.300%, 68.800% 0.700%, 72.100% 1.200%, 75.300% 1.800%, 78.400% 2.600%, 81.300% 3.500%, 84.100% 4.500%, 86.700% 5.700%, 89.100% 7.000%, 91.300% 8.500%, 93.300% 10.100%, 95.000% 11.900%, 96.500% 13.800%);
-   -webkit-clip-path: polygon(96.500% 13.800%, 97.700% 15.900%, 98.600% 18.100%, 99.300% 20.500%, 99.700% 23.000%, 99.900% 25.600%, 99.900% 28.300%, 99.700% 31.100%, 99.500% 34.000%, 99.000% 36.900%, 98.400% 39.900%, 97.700% 42.900%, 96.900% 45.900%, 96.000% 49.000%, 95.100% 52.100%, 94.100% 55.200%, 93.100% 58.200%, 92.100% 61.200%, 91.100% 64.100%, 90.100% 67.000%, 89.100% 69.800%, 88.000% 72.600%, 86.900% 75.300%, 85.700% 77.900%, 84.500% 80.400%, 83.200% 82.800%, 81.800% 85.100%, 80.300% 87.200%, 78.700% 89.200%, 77.000% 91.000%, 75.200% 92.700%, 73.300% 94.200%, 71.200% 95.600%, 69.000% 96.800%, 66.700% 97.800%, 64.300% 98.600%, 61.800% 99.200%, 59.200% 99.700%, 56.500% 100.000%, 53.800% 100.100%, 51.000% 100.100%, 48.200% 99.900%, 45.400% 99.600%, 42.600% 99.100%, 39.800% 98.500%, 37.000% 97.700%, 34.300% 96.800%, 31.700% 95.700%, 29.100% 94.500%, 26.600% 93.100%, 24.200% 91.600%, 21.900% 90.000%, 19.700% 88.300%, 17.600% 86.500%, 15.600% 84.500%, 13.700% 82.400%, 11.900% 80.300%, 10.300% 78.100%, 8.800% 75.800%, 7.400% 73.400%, 6.100% 70.900%, 4.900% 68.400%, 3.800% 65.800%, 2.800% 63.100%, 2.000% 60.400%, 1.300% 57.600%, 0.700% 54.800%, 0.200% 52.000%, -0.100% 49.200%, -0.300% 46.400%, 0.000% 43.300%, 0.100% 40.500%, 0.300% 37.700%, 0.700% 35.000%, 1.200% 32.300%, 1.900% 29.700%, 2.800% 27.200%, 3.800% 24.700%, 5.000% 22.300%, 6.400% 20.000%, 8.000% 17.900%, 9.800% 15.900%, 11.700% 14.000%, 13.800% 12.200%, 16.100% 10.500%, 18.500% 9.000%, 21.000% 7.600%, 23.700% 6.300%, 26.500% 5.100%, 29.400% 4.100%, 32.400% 3.200%, 35.500% 2.400%, 38.700% 1.700%, 41.900% 1.100%, 45.200% 0.600%, 48.500% 0.300%, 51.900% 0.100%, 55.300% 0.000%, 58.700% 0.000%, 62.100% 0.100%, 65.500% 0.300%, 68.800% 0.700%, 72.100% 1.200%, 75.300% 1.800%, 78.400% 2.600%, 81.300% 3.500%, 84.100% 4.500%, 86.700% 5.700%, 89.100% 7.000%, 91.300% 8.500%, 93.300% 10.100%, 95.000% 11.900%, 96.500% 13.800%);
-  }
-}	 
-	
-
-
-#uc_blob_shapes_elementor_002b3a8 {
-  	aspect-ratio: 1 / 1; 
-    width:100%;
-  	
-}
-
-.ue-blob-text-holder{
-  position:absolute;
-  top:0px;
-  left:0px;
-  right:0px;
-  bottom:0px;
-  width:100%;
-  height:100%;
-  z-index:2;
-  display:flex;
-  justify-content:center;
-  flex-direction:column;
-}
-
-.ue_blob_inside{
-  position:relative;
-}
-
-</style>
-
-<div id="uc_blob_shapes_elementor_002b3a8_justification" class="ue-blob-wrapper" role="group">
-  
-  <div id="uc_blob_shapes_elementor_002b3a8_size" class="ue_blob_inside">
-  
-    	
+      <article class="csp-essay-content">
+        <div class="csp-hero-kicker" style="margin-bottom: 12px; color: #00aefe;">PUBLISHER'S LETTER</div>
+        <h2 class="csp-essay-title">
+          A Message from <span class="csp-gradient-text-span">Our Publisher</span>
+        </h2>
         
-      <div id="uc_blob_shapes_elementor_002b3a8" style="background-image:url(../wp-content/uploads/2026/01/tourist-carrying-luggage-scaled.jpg)" class="blob" role="presentation"></div>
-        
-      <div class="ue-blob-text-holder">
-                            </div>
-        
-      
+        <div class="csp-publisher-paragraphs">
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #475569; margin-bottom: 20px;">
+            To every Conspodium contributor: we extend our deepest gratitude. Thank you not just for your willingness to share, but for your unwavering belief in our vision.
+          </p>
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #475569; margin-bottom: 20px;">
+            We understand the realities of diaspora life—demanding schedules, competing responsibilities, and precious creative time. Because of this understanding, we have evolved.
+          </p>
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #475569; margin-bottom: 20px;">
+            Your contributions are no longer confined to lengthy, polished articles. We now welcome diverse formats: voice notes, interviews, personal reflections, or even content you've already shared elsewhere. We've also moved from rigid deadlines to flexible content windows.
+          </p>
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #475569; margin-bottom: 20px;">
+            Your voice matters deeply, irrespective of its length or format. Conspodium's essence lies not in speed, but in fostering meaning, celebrating authenticity, and preserving our collective memory as a diaspora.
+          </p>
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #475569; margin-bottom: 20px;">
+            This is a journey we are on together. We are committed to building Conspodium with you, not demanding from you.
+          </p>
+        </div>
+
+        <blockquote class="csp-essay-pullquote">
+          “We do not just publish stories—we build an enduring chronicle of African leadership, intellectual independence, and transcontinental heritage.”
+        </blockquote>
+      </article>
+    </div>
+
+    <!-- GLASSMORPHISM CARDS FOR CORE PILLARS BELOW -->
+    <div class="csp-pillars-glass-wrapper">
+      <h3 class="csp-pillars-section-title">What Defines <span class="csp-gradient-text-span">Conspodium</span></h3>
+      <div class="csp-pillars-glass-grid">
+        <div class="csp-pillar-glass-card">
+          <div class="csp-pillar-glass-num">01</div>
+          <h4 class="csp-pillar-glass-heading">Authentic Editorial Sovereignty</h4>
+          <p class="csp-pillar-glass-body">
+            Independent journalism free from sensationalism. We bring academic rigor, investigative depth, and cultural nuance to every feature we produce.
+          </p>
+        </div>
+
+        <div class="csp-pillar-glass-card">
+          <div class="csp-pillar-glass-num">02</div>
+          <h4 class="csp-pillar-glass-heading">Championing Next-Gen Innovators</h4>
+          <p class="csp-pillar-glass-body">
+            From tech founders in Lagos and London to researchers at leading global universities, we highlight the architects of tomorrow's economy.
+          </p>
+        </div>
+
+        <div class="csp-pillar-glass-card">
+          <div class="csp-pillar-glass-num">03</div>
+          <h4 class="csp-pillar-glass-heading">Transcontinental Diaspora Synergy</h4>
+          <p class="csp-pillar-glass-body">
+            Bridging Africa with its global diaspora in North America, Europe, and the Caribbean to foster collaboration and economic exchange.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
-  
-    
+</section>
+
+<!-- =========================================================
+     3. EDITORIAL ROSTER & BOARD OF TRUSTEES (EDITORIAL SPREAD)
+     ========================================================= -->
+<section class="csp-roster-sec">
+  <div class="csp-roster-container">
+    <div class="csp-roster-head">
+      <div>
+        <div class="csp-hero-kicker" style="margin-bottom: 12px;">LEADERSHIP &amp; GOVERNANCE</div>
+        <h2 class="csp-roster-title">Editorial Roster &amp; <span class="csp-gradient-text-span">Board of Trustees</span></h2>
+      </div>
+      <div>
+        <p class="csp-roster-sub">
+          Meet the investigative editors, strategic leaders, design artists, and advisory board members driving Conspodium's editorial vision across continents.
+        </p>
+      </div>
+    </div>
+
+    <!-- Featured Leadership Spread (2 Leaders) -->
+    <div class="csp-featured-leadership">
+      <div class="csp-leader-card">
+        <div class="csp-leader-img-box">
+          <img src="../wp-content/uploads/2026/01/publisher-portrait.jpg" alt="Ernest Ngadiuba" class="csp-leader-img csp-leader-img-ernest" loading="lazy" />
+        </div>
+        <div class="csp-leader-info">
+          <div class="csp-leader-badge">FOUNDER &amp; CEO</div>
+          <h3 class="csp-leader-name">Ernest Ngadiuba</h3>
+          <div class="csp-leader-role">Chief Executive Officer</div>
+          <p class="csp-leader-bio">
+            Visionary leader committed to re-engineering African media, driving global narrative sovereignty, and expanding Conspodium across digital ecosystems.
+          </p>
+          <button class="csp-read-more-btn" onclick="openTeamModal(0)">Read Bio &rarr;</button>
+        </div>
+      </div>
+
+      <div class="csp-leader-card">
+        <div class="csp-leader-img-box">
+          <img src="../wp-content/uploads/2026/01/bere-new.png" alt="Dr. Ebere Agugbue Nweze" class="csp-leader-img csp-leader-img-ebere" loading="lazy" />
+        </div>
+        <div class="csp-leader-info">
+          <div class="csp-leader-badge">EDITOR-IN-CHIEF</div>
+          <h3 class="csp-leader-name">Dr. Ebere Agugbue Nweze</h3>
+          <div class="csp-leader-role">Vice President &amp; Editor-in-Chief</div>
+          <p class="csp-leader-bio">
+            Renowned editorial director overseeing investigative journalism, academic rigor, and global content standards for Conspodium magazine.
+          </p>
+          <button class="csp-read-more-btn" onclick="openTeamModal(1)">Read Bio &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6-Member Editorial & Board Roster Grid -->
+    <div class="csp-roster-grid-list">
+      <div class="csp-roster-item-card">
+        <img src="../wp-content/uploads/2026/01/3.png" alt="Kemi Bamiro" class="csp-roster-avatar" loading="lazy" />
+        <div>
+          <h4 class="csp-roster-item-name">Kemi Bamiro</h4>
+          <div class="csp-roster-item-role">Project Co-ordinator</div>
+          <p class="csp-roster-item-bio">Managing strategic initiatives, event logistics, and multi-hub operational alignment across UK &amp; Africa chapters.</p>
+          <button class="csp-read-more-btn" onclick="openTeamModal(2)">Read Bio &rarr;</button>
+        </div>
+      </div>
+
+      <div class="csp-roster-item-card">
+        <img src="../wp-content/uploads/2026/01/7.png" alt="Ajah Okorie" class="csp-roster-avatar" loading="lazy" />
+        <div>
+          <h4 class="csp-roster-item-name">Ajah Okorie</h4>
+          <div class="csp-roster-item-role">Managing Editor</div>
+          <p class="csp-roster-item-bio">Directing daily newsroom operations, feature investigations, and content syndication across digital and print publications.</p>
+          <button class="csp-read-more-btn" onclick="openTeamModal(3)">Read Bio &rarr;</button>
+        </div>
+      </div>
+
+      <div class="csp-roster-item-card">
+        <img src="../wp-content/uploads/2026/01/tony.jpg" alt="Tony-Geoffrey" class="csp-roster-avatar" loading="lazy" />
+        <div>
+          <h4 class="csp-roster-item-name">Tony-Geoffrey</h4>
+          <div class="csp-roster-item-role">Lead Design Artist</div>
+          <p class="csp-roster-item-bio">Crafting bespoke editorial typography, visual identities, and layout spreads for high-impact print and digital editions.</p>
+          <button class="csp-read-more-btn" onclick="openTeamModal(4)">Read Bio &rarr;</button>
+        </div>
+      </div>
+
+      <div class="csp-roster-item-card">
+        <img src="../wp-content/uploads/2026/01/WhatsApp-Image-2025-12-05-at-18.42.01_5276bc5a.jpg" alt="Basil Chinatu Chukwuezi" class="csp-roster-avatar" loading="lazy" />
+        <div>
+          <h4 class="csp-roster-item-name">Basil Chinatu Chukwuezi</h4>
+          <div class="csp-roster-item-role">Board Trustee</div>
+          <p class="csp-roster-item-bio">Guiding corporate governance, strategic policy, and institutional partnerships across the Pan-African landscape.</p>
+          <button class="csp-read-more-btn" onclick="openTeamModal(5)">Read Bio &rarr;</button>
+        </div>
+      </div>
+
+      <div class="csp-roster-item-card">
+        <img src="../wp-content/uploads/2026/02/WhatsApp-Image-2026-02-25-at-00.29.42.jpeg" alt="Adeyemi Peter" class="csp-roster-avatar" loading="lazy" />
+        <div>
+          <h4 class="csp-roster-item-name">Adeyemi Peter</h4>
+          <div class="csp-roster-item-role">Lead Digital Architect</div>
+          <p class="csp-roster-item-bio">Architecting next-generation digital web experiences, interactive features, and high-performance publishing platforms.</p>
+          <button class="csp-read-more-btn" onclick="openTeamModal(6)">Read Bio &rarr;</button>
+        </div>
+      </div>
+
+      <div class="csp-roster-item-card">
+        <img src="../wp-content/uploads/2026/04/unnamed.png" alt="Hon. Carroll Igboanugo" class="csp-roster-avatar" loading="lazy" />
+        <div>
+          <h4 class="csp-roster-item-name">Hon. Carroll Igboanugo</h4>
+          <div class="csp-roster-item-role">Board Trustee &amp; Senior Advisor</div>
+          <p class="csp-roster-item-bio">Advising on public policy, international affairs, and strategic alignment between African leadership and global networks.</p>
+          <button class="csp-read-more-btn" onclick="openTeamModal(7)">Read Bio &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     4. GLOBAL PUBLISHING MATRIX
+     ========================================================= -->
+<section class="csp-matrix-sec">
+  <div class="csp-matrix-container">
+    <div style="margin-bottom: 50px;">
+      <div class="csp-hero-kicker" style="margin-bottom: 12px;">GLOBAL FOOTPRINT</div>
+      <h2 class="csp-roster-title" style="font-size: clamp(2rem, 3.5vw, 3rem);">Global Publishing <span class="csp-gradient-text-span">Matrix</span></h2>
+    </div>
+
+    <div class="csp-matrix-grid">
+      <div class="csp-matrix-cell">
+        <div class="csp-matrix-code">HUB 01 // LON</div>
+        <h3 class="csp-matrix-city">London, UK</h3>
+        <p class="csp-matrix-region">European Editorial Headquarters &amp; Publishing Desk</p>
+      </div>
+
+      <div class="csp-matrix-cell">
+        <div class="csp-matrix-code">HUB 02 // LOS</div>
+        <h3 class="csp-matrix-city">Lagos &amp; Abuja</h3>
+        <p class="csp-matrix-region">West African Newsroom &amp; Bureau Desk</p>
+      </div>
+
+      <div class="csp-matrix-cell">
+        <div class="csp-matrix-code">HUB 03 // NYC</div>
+        <h3 class="csp-matrix-city">New York</h3>
+        <p class="csp-matrix-region">Americas Syndication &amp; Media Partnerships</p>
+      </div>
+
+      <div class="csp-matrix-cell">
+        <div class="csp-matrix-code">HUB 04 // JNB</div>
+        <h3 class="csp-matrix-city">Johannesburg</h3>
+        <p class="csp-matrix-region">Southern Africa Investigative Bureau</p>
+      </div>
+
+      <div class="csp-matrix-cell">
+        <div class="csp-matrix-code">HUB 05 // NBO</div>
+        <h3 class="csp-matrix-city">Nairobi</h3>
+        <p class="csp-matrix-region">East Africa Innovation &amp; Tech Desk</p>
+      </div>
+
+      <div class="csp-matrix-cell">
+        <div class="csp-matrix-code">HUB 06 // KIN</div>
+        <h3 class="csp-matrix-city">Kingston</h3>
+        <p class="csp-matrix-region">Caribbean Culture &amp; Heritage Desk</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     5. STATEMENT CTA BLOCK
+     ========================================================= -->
+<section class="csp-statement-cta">
+  <div class="csp-statement-box">
+    <h2 class="csp-statement-title">Shape the Narrative <span class="csp-gradient-text-span">With Us</span></h2>
+    <p class="csp-statement-desc">
+      Whether you are an investigative journalist, institutional partner, or reader with an extraordinary story — join the movement elevating global African &amp; Diaspora intellect.
+    </p>
+    <div class="csp-cta-btn-group">
+      <a href="../submit-story/" class="csp-btn-primary-gradient">
+        <span>Submit a Story</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="../sponsorship/" class="csp-btn-outline-dark">Partner With Us</a>
+    </div>
+  </div>
+</section>
+
 </div>
-<!-- end Blob Shapes -->				</div>
-				</div>
-				</div>
-		<div class="elementor-element elementor-element-cfd2112 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="cfd2112" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-		<div class="elementor-element elementor-element-1cab039 e-grid e-con-full e-con e-child adv-sticky-elementor" data-id="1cab039" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-2ccb907 ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="2ccb907" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
 
-        <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon fas fa-globe-africa"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Global Reach                </h3>
-                        		  	<p>Connecting diaspora communities across 6 continents with stories that resonate worldwide.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-a0e3a65 ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="a0e3a65" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
+<!-- TEAM MEMBER DETAIL MODAL POPUP -->
+<div id="csp-team-modal-overlay" class="csp-team-modal-overlay" onclick="handleModalOverlayClick(event)">
+  <div class="csp-team-modal-card">
+    <button class="csp-modal-close" onclick="closeTeamModal()">&times;</button>
+    <div class="csp-modal-body">
+      <div class="csp-modal-header-flex">
+        <img id="csp-modal-img" src="" alt="" class="csp-modal-avatar" />
+        <div>
+          <span id="csp-modal-badge" class="csp-modal-badge"></span>
+          <h3 id="csp-modal-name" class="csp-modal-name"></h3>
+          <div id="csp-modal-role" class="csp-modal-role"></div>
+        </div>
+      </div>
+      <div class="csp-modal-divider"></div>
+      <div id="csp-modal-bio" class="csp-modal-bio-text"></div>
+    </div>
+  </div>
+</div>
 
-        <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon jki jki-hands-helping-solid"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Community First                </h3>
-                        		  	<p>Built by and for the diaspora, ensuring authentic representation in every story.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-5df1df9 ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="5df1df9" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
+<script>
+window.cspTeamData = [
+  {
+    name: "Ernest Ngadiuba",
+    badge: "FOUNDER & CEO",
+    role: "Founder & Chief Executive Officer",
+    img: "../wp-content/uploads/2026/01/publisher-portrait.jpg",
+    bio: "Ernest Ngadiuba is a Stockholm-based business consultant, entrepreneur, and strategic leader specializing in international affairs and strategic planning. He provides client-centred, results-driven guidance to individuals and businesses navigating complex legal, administrative, and relocation processes in Sweden and beyond.\n\nHe currently serves as a Diaspora Policy Development Analyst and is the CEO and Founder of Conspodium, an initiative focused on chronicling and strategically engaging the Nigerian diaspora by translating policy into practical action and fostering multicultural exchange. With a strong background in business administration, his work centers on strategic analysis, cross-cultural bridge-building, and opportunity creation across global contexts.\n\nIn addition to consultancy, he is actively involved in creative and cultural initiatives—including event planning, scriptwriting, and fashion—blending African and Swedish perspectives and reinforcing his commitment to diversity and global connectivity."
+  },
+  {
+    name: "Dr. Ebere Agugbue Nweze (PhD)",
+    badge: "EDITOR-IN-CHIEF",
+    role: "Vice President & Editor-in-Chief",
+    img: "../wp-content/uploads/2026/01/bere-new.png",
+    bio: "Ebere Agugbue Nweze (PhD) is the founding Editor-in-Chief of Conspodium, a writer, scholar, and advocate for cultural continuity with a strong focus on the African/Nigerian diaspora. Her editorial vision is grounded in the belief that diaspora stories are collective narratives of identity, innovation, and resilience, not just individual experiences.\n\nWith a distinguished academic background, she bridges scholarship and lived experience through human-centred storytelling. Her work—including the acclaimed novels Urunwa’s War and Unknotted as well as research-based publications—celebrates both the home front and the diaspora as vital forces for cultural preservation and national renewal, positioning the diaspora as an ongoing dialogue with home rather than a separation from it."
+  },
+  {
+    name: "Kemi Bamiro",
+    badge: "PROJECT CO-ORDINATOR",
+    role: "Project Co-ordinator",
+    img: "../wp-content/uploads/2026/01/3.png",
+    bio: "Kemi Bamiro is a self-motivated and resourceful professional with a strong analytical mindset, excellent negotiation skills, and a detail-oriented approach. She has over 10 years of experience across IT service delivery, product and project management, IT business partnering, and sales and after-sales support.\n\nKemi holds a first degree in Computer Science and a Master’s degree in Business Administration, complemented by multiple professional certifications including ITIL, APRA, Microsoft Azure AI, Six Sigma, Scrum Professional, and Power BI. She is also a trained Project Coordinator, Agile Scrum Product Owner, and Data Analyst, bringing a well-rounded blend of technical, business, and delivery expertise."
+  },
+  {
+    name: "Ajah Okorie",
+    badge: "MANAGING EDITOR",
+    role: "Managing Editor",
+    img: "../wp-content/uploads/2026/01/7.png",
+    bio: "Ajah Cyprian Okorie is a seasoned writer, journalist, and public commentator dedicated to telling stories that connect people and places. He previously served as a Senior Correspondent with Newsstar Newspaper and National Daily in Lagos, covering politics, culture, and human-interest issues across Nigeria.\n\nNow the Founder and Publisher of The African Chronicles News, he continues to amplify African and diaspora perspectives. At Conspodium Chronicle, he brings insightful storytelling and sharp commentary to explore the human dimensions of the Nigerian diaspora experience."
+  },
+  {
+    name: "Tony-Geoffrey",
+    badge: "LEAD DESIGN ARTIST",
+    role: "Graphic Designer / Layout Artist",
+    img: "../wp-content/uploads/2026/01/tony.jpg",
+    bio: "Tony Geoffrey is a passionate website and graphic designer with a strong eye for detail, innovation, and visual storytelling. He holds an HND in Metallurgical and Materials Engineering from the Federal Polytechnic, Idah, which underpins his analytical and problem-solving approach to design.\n\nBlending technical precision with artistic vision, he creates digital experiences that are both visually engaging and functionally seamless. Driven by collaboration and continuous learning, Tony thrives in creative team environments and is committed to pushing the boundaries of design and technology to deliver meaningful digital solutions."
+  },
+  {
+    name: "Basil Chinatu Chukwuezi",
+    badge: "BOARD TRUSTEE",
+    role: "Board Trustee",
+    img: "../wp-content/uploads/2026/01/WhatsApp-Image-2025-12-05-at-18.42.01_5276bc5a.jpg",
+    bio: "Basil Chukwuezi is a seasoned sales, credit, marketing, and relationship management professional with over 25 years of experience across insurance, media, manufacturing, and banking. His career spans roles in journalism with The Guardian Newspapers (Arts and Culture) and impactful stints at Unilever, Fidelity Bank, Gulf Bank, First Bank, and United Bank for Africa Plc, before founding his own company providing real estate services to banking and oil and gas clients.\n\nHe holds a BA in Theatre Arts from the University of Calabar, an Executive MBA from ESUT Business School, Lagos, and an MDiv from West Africa Theological Seminary. Basil serves as a member of the Editorial Board/Board of Trustees, contributing deep cross-industry insight and leadership."
+  },
+  {
+    name: "Adeyemi Peter",
+    badge: "LEAD DIGITAL ARCHITECT",
+    role: "Lead Digital Architect & Web Designer",
+    img: "../wp-content/uploads/2026/02/WhatsApp-Image-2026-02-25-at-00.29.42.jpeg",
+    bio: "Adeyemi Peter is an experienced web designer and digital architect specializing in modern frontend engineering, user interface design, and high-performance digital publishing platforms.\n\nWith extensive expertise in responsive web design, performance optimization, and custom web architecture, he is responsible for engineering Conspodium's digital presence across global networks, ensuring an immersive, fast, and accessible reading experience."
+  },
+  {
+    name: "Hon. Carroll Igboanugo",
+    badge: "BOARD TRUSTEE & SENIOR ADVISOR",
+    role: "Board Trustee & Senior Advisor",
+    img: "../wp-content/uploads/2026/04/unnamed.png",
+    bio: "Hon. Carroll Igboanugo is a distinguished communication strategist, political mobiliser, and philanthropist whose career has been defined by a singular conviction: that the Nigerian Diaspora possesses an immense, yet under-utilised, reservoir of soft power capable of reshaping national narratives and driving transformative development.\n\nA thoroughbred socio-political analyst with deep expertise in business administration and entrepreneurship, Carroll has spent over a decade operating at the intersection of Diaspora advocacy, political strategy, and grassroots empowerment. From her base in Ireland, she has consistently demonstrated that distance from the homeland is no barrier to meaningful impact — serving as a frontline mobiliser during the 2015 Goodluck Jonathan campaign, leading Worldwide Publicity for the Atiku/Obi PDP Voice in Ireland during the 2019 electoral cycle, and emerging as a prominent vanguard of the Renewed Hope Agenda in support of President Bola Ahmed Tinubu.\n\nBeyond the political arena, Carroll is a passionate humanitarian who has quietly sponsored scholarships for underprivileged children, intervened in trafficking and juvenile welfare cases, and provided sustained support to women, the elderly, and vulnerable communities across Nigeria. Widely known as 'The People's Person,' she embodies the citizenry diplomacy that Conspodium champions — the belief that every Diaspora voice carries weight and every act of service echoes across borders.\n\nCarroll joins the Conspodium Board with a formidable network spanning political corridors, business circles, and community organisations across Europe and Nigeria. Her proven capacity as a power broker, fund-raiser, and coalition builder makes her a strategic asset for amplifying the magazine's mission of documenting, celebrating, and leveraging Diaspora excellence."
+  }
+];
 
-        <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon fas fa-newspaper"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Quality Content                </h3>
-                        		  	<p>Premium editorial standards for print and digital publications.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-a8f8efb ekit-equal-height-enable elementor-widget elementor-widget-elementskit-icon-box" data-id="a8f8efb" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-icon-box.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">        <!-- link opening -->
-                <!-- end link opening -->
+function openTeamModal(index) {
+  var data = window.cspTeamData[index];
+  if (!data) return;
+  document.getElementById('csp-modal-img').src = data.img;
+  document.getElementById('csp-modal-badge').innerText = data.badge;
+  document.getElementById('csp-modal-name').innerText = data.name;
+  document.getElementById('csp-modal-role').innerText = data.role;
+  document.getElementById('csp-modal-bio').innerText = data.bio;
+  
+  var overlay = document.getElementById('csp-team-modal-overlay');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
 
-        <div class="elementskit-infobox text-center text-center icon-top-align elementor-animation-   ">
-                    <div class="elementskit-box-header elementor-animation-">
-                <div class="elementskit-info-box-icon  ">
-                    <i aria-hidden="true" class="elementkit-infobox-icon jki jki-valentines-heart-light"></i>
-                </div>
-          </div>
-                        <div class="box-body">
-                            <h3 class="elementskit-info-box-title">
-                    Cultural Pride                </h3>
-                        		  	<p>Celebrating heritage while embracing the fusion of cultures.</p>
-                                </div>
-        
-        
-                </div>
-        </div>				</div>
-				</div>
-				</div>
-				</div>
-				</div>
-					</div>
-				</div>
-		<div class="elementor-element elementor-element-10d85e67 e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="10d85e67" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-		<div class="elementor-element elementor-element-4864a403 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="4864a403" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;background_motion_fx_motion_fx_scrolling&quot;:&quot;yes&quot;,&quot;background_motion_fx_devices&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-7e59c6ba eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="7e59c6ba" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
-				<div class="elementor-widget-container">
-								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4">Meet Our</span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient"> Team</span> </h2>					<span class="subtext"><p>The passionate individuals behind Conspodium</p></span>
-							</div>
+function closeTeamModal() {
+  var overlay = document.getElementById('csp-team-modal-overlay');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
 
-						</div>
-				</div>
-		<div class="elementor-element elementor-element-fbf6585 e-con-full e-grid e-con e-child adv-sticky-elementor" data-id="fbf6585" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-65e0d8be elementor-widget elementor-widget-elementskit-team" data-id="65e0d8be" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-team.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		 <div class="profile-square-v"> 						
-		<div class="profile-card elementor-animation- text-center ekit-team-style-centered_style">
-							<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_65e0d8be_973" class="ekit-team-popup">
-			
-				<div class="profile-header ekit-team-img " data-toggle="modal" data-target="ekit_team_modal_#65e0d8be_973">
-					<img decoding="async" width="500" height="500" src="../wp-content/uploads/2026/01/1.png" class="attachment-full size-full wp-image-1397" alt=""  sizes="(max-width: 500px) 100vw, 500px">				</div><!-- .profile-header END -->
-							</a>
-			
-
-				<div class="profile-body">
-					
-					<h2 class="profile-title">
-											<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_65e0d8be_973" class="ekit-team-popup">
-						Ernest Ngadiuba						</a>
-											</h2>
-					<p class="profile-designation"> Founder &amp; CEO</p>
-									</div><!-- .profile-body END -->
-
-								</div>
-				 </div> 			
-			
-					<div class="zoom-anim-dialog mfp-hide elementskit-team-popup team-popup-id-65e0d8be" id="ekit_team_modal_65e0d8be_973" tabindex="-1" role="dialog" aria-modal="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<button type="button" class="ekit-team-modal-close">
-							<i aria-hidden="true" class="fas fa-times"></i>						</button>
-
-						<div class="modal-body">
-															<div class="ekit-team-modal-img">
-									<img decoding="async" width="500" height="500" src="../wp-content/uploads/2026/01/1.png" class="attachment-full size-full wp-image-1397" alt=""  sizes="(max-width: 500px) 100vw, 500px">								</div>
-							
-							<div class="ekit-team-modal-info has-img">
-								<h2 class="ekit-team-modal-title">Ernest Ngadiuba</h2>
-								<p class="ekit-team-modal-position"> Founder &amp; CEO</p>
-
-								<div class="ekit-team-modal-content">
-									Ernest Ngadiuba is a Stockholm-based business consultant, entrepreneur, and strategic leader specializing in international affairs and strategic planning. He provides client-centred, results-driven guidance to individuals and businesses navigating complex legal, administrative, and relocation processes in Sweden and beyond. He currently serves as a Diaspora Policy Development Analyst and is the CEO and Founder of Conspodium, an initiative focused on chronicling and strategically engaging the Nigerian diaspora by translating policy into practical action and fostering multicultural exchange. With a strong background in business administration, his work centers on strategic analysis, cross-cultural bridge-building, and opportunity creation across global contexts. In addition to consultancy, he is actively involved in creative and cultural initiatives—including event planning, scriptwriting, and fashion—blending African and Swedish perspectives and reinforcing his commitment to diversity and global connectivity.								</div>
-
-																	<ul class="ekit-team-modal-list">
-																					<li><strong>Phone:</strong><a href="tel:+1 (859) 254-6589">+1 (859) 254-6589</a></li>
-										
-																					<li><strong>Email:</strong><a href="mailto:info@example.com">info@example.com</a></li>
-																			</ul>
-								
-															</div>
-						</div>
-					</div>
-				</div>
-			</div>
-				</div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-fec9253 elementor-widget elementor-widget-elementskit-team" data-id="fec9253" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-team.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		 <div class="profile-square-v"> 						
-		<div class="profile-card elementor-animation- text-center ekit-team-style-centered_style">
-							<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_fec9253_973" class="ekit-team-popup">
-			
-				<div class="profile-header ekit-team-img " data-toggle="modal" data-target="ekit_team_modal_#fec9253_973">
-					<img loading="lazy" decoding="async" width="500" height="500" src="../wp-content/uploads/2026/01/bere-new.png" class="attachment-full size-full wp-image-1400" alt=""  sizes="(max-width: 500px) 100vw, 500px">				</div><!-- .profile-header END -->
-							</a>
-			
-
-				<div class="profile-body">
-					
-					<h2 class="profile-title">
-											<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_fec9253_973" class="ekit-team-popup">
-						Ebere Agugbue Nweze (PhD) 						</a>
-											</h2>
-					<p class="profile-designation">Editor-in-Chief</p>
-									</div><!-- .profile-body END -->
-
-								</div>
-				 </div> 			
-			
-					<div class="zoom-anim-dialog mfp-hide elementskit-team-popup team-popup-id-fec9253" id="ekit_team_modal_fec9253_973" tabindex="-1" role="dialog" aria-modal="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<button type="button" class="ekit-team-modal-close">
-							<i aria-hidden="true" class="fas fa-times"></i>						</button>
-
-						<div class="modal-body">
-															<div class="ekit-team-modal-img">
-									<img loading="lazy" decoding="async" width="500" height="500" src="../wp-content/uploads/2026/01/bere-new.png" class="attachment-full size-full wp-image-1400" alt=""  sizes="(max-width: 500px) 100vw, 500px">								</div>
-							
-							<div class="ekit-team-modal-info has-img">
-								<h2 class="ekit-team-modal-title">Ebere Agugbue Nweze (PhD) </h2>
-								<p class="ekit-team-modal-position">Editor-in-Chief</p>
-
-								<div class="ekit-team-modal-content">
-									Ebere Agugbue Nweze (PhD) is the founding Editor-in-Chief of Conspodium, a writer, scholar, and advocate for cultural continuity with a strong focus on the African/Nigerian diaspora. Her editorial vision is grounded in the belief that diaspora stories are collective narratives of identity, innovation, and resilience, not just individual experiences. With a distinguished academic background, she bridges scholarship and lived experience through human-centred storytelling. Her work—including the acclaimed novels Urunwa’s War and Unknotted as well as research-based publications—celebrates both the home front and the diaspora as vital forces for cultural preservation and national renewal, positioning the diaspora as an ongoing dialogue with home rather than a separation from it.								</div>
-
-																	<ul class="ekit-team-modal-list">
-																					<li><strong>Phone:</strong><a href="tel:+1 (859) 254-6589">+1 (859) 254-6589</a></li>
-										
-																					<li><strong>Email:</strong><a href="mailto:info@example.com">info@example.com</a></li>
-																			</ul>
-								
-															</div>
-						</div>
-					</div>
-				</div>
-			</div>
-				</div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-0c324f4 elementor-widget elementor-widget-elementskit-team" data-id="0c324f4" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-team.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		 <div class="profile-square-v"> 						
-		<div class="profile-card elementor-animation- text-center ekit-team-style-centered_style">
-							<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_0c324f4_973" class="ekit-team-popup">
-			
-				<div class="profile-header ekit-team-img " data-toggle="modal" data-target="ekit_team_modal_#0c324f4_973">
-					<img loading="lazy" decoding="async" width="500" height="500" src="../wp-content/uploads/2026/01/3.png" class="attachment-full size-full wp-image-1398" alt=""  sizes="(max-width: 500px) 100vw, 500px">				</div><!-- .profile-header END -->
-							</a>
-			
-
-				<div class="profile-body">
-					
-					<h2 class="profile-title">
-											<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_0c324f4_973" class="ekit-team-popup">
-						Kemi Bamiro 						</a>
-											</h2>
-					<p class="profile-designation">Project Co-ordinator</p>
-									</div><!-- .profile-body END -->
-
-								</div>
-				 </div> 			
-			
-					<div class="zoom-anim-dialog mfp-hide elementskit-team-popup team-popup-id-0c324f4" id="ekit_team_modal_0c324f4_973" tabindex="-1" role="dialog" aria-modal="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<button type="button" class="ekit-team-modal-close">
-							<i aria-hidden="true" class="fas fa-times"></i>						</button>
-
-						<div class="modal-body">
-															<div class="ekit-team-modal-img">
-									<img loading="lazy" decoding="async" width="500" height="500" src="../wp-content/uploads/2026/01/3.png" class="attachment-full size-full wp-image-1398" alt=""  sizes="(max-width: 500px) 100vw, 500px">								</div>
-							
-							<div class="ekit-team-modal-info has-img">
-								<h2 class="ekit-team-modal-title">Kemi Bamiro </h2>
-								<p class="ekit-team-modal-position">Project Co-ordinator</p>
-
-								<div class="ekit-team-modal-content">
-									Kemi Bamiro is a self-motivated and resourceful professional with a strong analytical mindset, excellent negotiation skills, and a detail-oriented approach. She has over 10 years of experience across IT service delivery, product and project management, IT business partnering, and sales and after-sales support. Kemi holds a first degree in Computer Science and a Master’s degree in Business Administration, complemented by multiple professional certifications including ITIL, APRA, Microsoft Azure AI, Six Sigma, Scrum Professional, and Power BI. She is also a trained Project Coordinator, Agile Scrum Product Owner, and Data Analyst, bringing a well-rounded blend of technical, business, and delivery expertise.								</div>
-
-																	<ul class="ekit-team-modal-list">
-																					<li><strong>Phone:</strong><a href="tel:+1 (859) 254-6589">+1 (859) 254-6589</a></li>
-										
-																					<li><strong>Email:</strong><a href="mailto:info@example.com">info@example.com</a></li>
-																			</ul>
-								
-															</div>
-						</div>
-					</div>
-				</div>
-			</div>
-				</div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-d99064a elementor-widget elementor-widget-elementskit-team" data-id="d99064a" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-team.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		 <div class="profile-square-v"> 						
-		<div class="profile-card elementor-animation- text-center ekit-team-style-centered_style">
-							<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_d99064a_973" class="ekit-team-popup">
-			
-				<div class="profile-header ekit-team-img " data-toggle="modal" data-target="ekit_team_modal_#d99064a_973">
-					<img loading="lazy" decoding="async" width="500" height="500" src="../wp-content/uploads/2026/01/7.png" class="attachment-full size-full wp-image-1399" alt=""  sizes="(max-width: 500px) 100vw, 500px">				</div><!-- .profile-header END -->
-							</a>
-			
-
-				<div class="profile-body">
-					
-					<h2 class="profile-title">
-											<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_d99064a_973" class="ekit-team-popup">
-						Ajah Okorie 						</a>
-											</h2>
-					<p class="profile-designation">Managing Editor</p>
-									</div><!-- .profile-body END -->
-
-								</div>
-				 </div> 			
-			
-					<div class="zoom-anim-dialog mfp-hide elementskit-team-popup team-popup-id-d99064a" id="ekit_team_modal_d99064a_973" tabindex="-1" role="dialog" aria-modal="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<button type="button" class="ekit-team-modal-close">
-							<i aria-hidden="true" class="fas fa-times"></i>						</button>
-
-						<div class="modal-body">
-															<div class="ekit-team-modal-img">
-									<img loading="lazy" decoding="async" width="500" height="500" src="../wp-content/uploads/2026/01/7.png" class="attachment-full size-full wp-image-1399" alt=""  sizes="(max-width: 500px) 100vw, 500px">								</div>
-							
-							<div class="ekit-team-modal-info has-img">
-								<h2 class="ekit-team-modal-title">Ajah Okorie </h2>
-								<p class="ekit-team-modal-position">Managing Editor</p>
-
-								<div class="ekit-team-modal-content">
-									Ajah Cyprian Okorie is a seasoned writer, journalist, and public commentator dedicated to telling stories that connect people and places. He previously served as a Senior Correspondent with Newsstar Newspaper and National Daily in Lagos, covering politics, culture, and human-interest issues across Nigeria. Now the Founder and Publisher of The African Chronicles News, he continues to amplify African and diaspora perspectives. At Conspodium Chronicle, he brings insightful storytelling and sharp commentary to explore the human dimensions of the Nigerian diaspora experience.								</div>
-
-																	<ul class="ekit-team-modal-list">
-																					<li><strong>Phone:</strong><a href="tel:+1 (859) 254-6589">+1 (859) 254-6589</a></li>
-										
-																					<li><strong>Email:</strong><a href="mailto:info@example.com">info@example.com</a></li>
-																			</ul>
-								
-															</div>
-						</div>
-					</div>
-				</div>
-			</div>
-				</div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-7960df5 elementor-widget elementor-widget-elementskit-team" data-id="7960df5" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-team.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		 <div class="profile-square-v"> 						
-		<div class="profile-card elementor-animation- text-center ekit-team-style-centered_style">
-							<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_7960df5_973" class="ekit-team-popup">
-			
-				<div class="profile-header ekit-team-img " data-toggle="modal" data-target="ekit_team_modal_#7960df5_973">
-					<img loading="lazy" decoding="async" width="702" height="740" src="../wp-content/uploads/2026/01/tony.jpg" class="attachment-full size-full wp-image-1401" alt=""  sizes="(max-width: 702px) 100vw, 702px">				</div><!-- .profile-header END -->
-							</a>
-			
-
-				<div class="profile-body">
-					
-					<h2 class="profile-title">
-											<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_7960df5_973" class="ekit-team-popup">
-						Tony-Geoffrey 						</a>
-											</h2>
-					<p class="profile-designation">Graphic Designer/ Layout Artist</p>
-									</div><!-- .profile-body END -->
-
-								</div>
-				 </div> 			
-			
-					<div class="zoom-anim-dialog mfp-hide elementskit-team-popup team-popup-id-7960df5" id="ekit_team_modal_7960df5_973" tabindex="-1" role="dialog" aria-modal="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<button type="button" class="ekit-team-modal-close">
-							<i aria-hidden="true" class="fas fa-times"></i>						</button>
-
-						<div class="modal-body">
-															<div class="ekit-team-modal-img">
-									<img loading="lazy" decoding="async" width="702" height="740" src="../wp-content/uploads/2026/01/tony.jpg" class="attachment-full size-full wp-image-1401" alt=""  sizes="(max-width: 702px) 100vw, 702px">								</div>
-							
-							<div class="ekit-team-modal-info has-img">
-								<h2 class="ekit-team-modal-title">Tony-Geoffrey </h2>
-								<p class="ekit-team-modal-position">Graphic Designer/ Layout Artist</p>
-
-								<div class="ekit-team-modal-content">
-									Tony Geoffrey is a passionate website and graphic designer with a strong eye for detail, innovation, and visual storytelling. He holds an HND in Metallurgical and Materials Engineering from the Federal Polytechnic, Idah, which underpins his analytical and problem-solving approach to design. Blending technical precision with artistic vision, he creates digital experiences that are both visually engaging and functionally seamless. Driven by collaboration and continuous learning, Tony thrives in creative team environments and is committed to pushing the boundaries of design and technology to deliver meaningful digital solutions.								</div>
-
-																	<ul class="ekit-team-modal-list">
-																					<li><strong>Phone:</strong><a href="tel:+1 (859) 254-6589">+1 (859) 254-6589</a></li>
-										
-																					<li><strong>Email:</strong><a href="mailto:info@example.com">info@example.com</a></li>
-																			</ul>
-								
-															</div>
-						</div>
-					</div>
-				</div>
-			</div>
-				</div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-2a34abe elementor-widget elementor-widget-elementskit-team" data-id="2a34abe" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-team.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		 <div class="profile-square-v"> 						
-		<div class="profile-card elementor-animation- text-center ekit-team-style-centered_style">
-							<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_2a34abe_973" class="ekit-team-popup">
-			
-				<div class="profile-header ekit-team-img " data-toggle="modal" data-target="ekit_team_modal_#2a34abe_973">
-					<img loading="lazy" decoding="async" width="499" height="500" src="../wp-content/uploads/2026/01/WhatsApp-Image-2025-12-05-at-18.42.01_5276bc5a.jpg" class="attachment-full size-full wp-image-1402" alt=""  sizes="(max-width: 499px) 100vw, 499px">				</div><!-- .profile-header END -->
-							</a>
-			
-
-				<div class="profile-body">
-					
-					<h2 class="profile-title">
-											<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_2a34abe_973" class="ekit-team-popup">
-						Basil Chinatu Chukwuezi						</a>
-											</h2>
-					<p class="profile-designation">Board Member</p>
-									</div><!-- .profile-body END -->
-
-								</div>
-				 </div> 			
-			
-					<div class="zoom-anim-dialog mfp-hide elementskit-team-popup team-popup-id-2a34abe" id="ekit_team_modal_2a34abe_973" tabindex="-1" role="dialog" aria-modal="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<button type="button" class="ekit-team-modal-close">
-							<i aria-hidden="true" class="fas fa-times"></i>						</button>
-
-						<div class="modal-body">
-															<div class="ekit-team-modal-img">
-									<img loading="lazy" decoding="async" width="499" height="500" src="../wp-content/uploads/2026/01/WhatsApp-Image-2025-12-05-at-18.42.01_5276bc5a.jpg" class="attachment-full size-full wp-image-1402" alt=""  sizes="(max-width: 499px) 100vw, 499px">								</div>
-							
-							<div class="ekit-team-modal-info has-img">
-								<h2 class="ekit-team-modal-title">Basil Chinatu Chukwuezi</h2>
-								<p class="ekit-team-modal-position">Board Member</p>
-
-								<div class="ekit-team-modal-content">
-									Basil Chukwuezi is a seasoned sales, credit, marketing, and relationship management professional with over 25 years of experience across insurance, media, manufacturing, and banking. His career spans roles in journalism with The Guardian Newspapers (Arts and Culture) and impactful stints at Unilever, Fidelity Bank, Gulf Bank, First Bank, and United Bank for Africa Plc, before founding his own company providing real estate services to banking and oil and gas clients. He holds a BA in Theatre Arts from the University of Calabar, an Executive MBA from ESUT Business School, Lagos, and an MDiv from West Africa Theological Seminary. Basil serves as a member of the Editorial Board/Board of Trustees, contributing deep cross-industry insight and leadership.								</div>
-
-																	<ul class="ekit-team-modal-list">
-																					<li><strong>Phone:</strong><a href="tel:+1 (859) 254-6589">+1 (859) 254-6589</a></li>
-										
-																					<li><strong>Email:</strong><a href="mailto:info@example.com">info@example.com</a></li>
-																			</ul>
-								
-															</div>
-						</div>
-					</div>
-				</div>
-			</div>
-				</div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-c595129 elementor-widget elementor-widget-elementskit-team" data-id="c595129" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-team.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		 <div class="profile-square-v"> 						
-		<div class="profile-card elementor-animation- text-center ekit-team-style-centered_style">
-							<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_c595129_973" class="ekit-team-popup">
-			
-				<div class="profile-header ekit-team-img " data-toggle="modal" data-target="ekit_team_modal_#c595129_973">
-					<img loading="lazy" decoding="async" width="1080" height="1080" src="../wp-content/uploads/2026/02/WhatsApp-Image-2026-02-25-at-00.29.42.jpeg" class="attachment-full size-full wp-image-2457" alt=""  sizes="(max-width: 1080px) 100vw, 1080px">				</div><!-- .profile-header END -->
-							</a>
-			
-
-				<div class="profile-body">
-					
-					<h2 class="profile-title">
-											<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_c595129_973" class="ekit-team-popup">
-						Adeyemi Peter						</a>
-											</h2>
-					<p class="profile-designation">Website Designer</p>
-									</div><!-- .profile-body END -->
-
-								</div>
-				 </div> 			
-			
-					<div class="zoom-anim-dialog mfp-hide elementskit-team-popup team-popup-id-c595129" id="ekit_team_modal_c595129_973" tabindex="-1" role="dialog" aria-modal="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<button type="button" class="ekit-team-modal-close">
-							<i aria-hidden="true" class="fas fa-times"></i>						</button>
-
-						<div class="modal-body">
-															<div class="ekit-team-modal-img">
-									<img loading="lazy" decoding="async" width="1080" height="1080" src="../wp-content/uploads/2026/02/WhatsApp-Image-2026-02-25-at-00.29.42.jpeg" class="attachment-full size-full wp-image-2457" alt=""  sizes="(max-width: 1080px) 100vw, 1080px">								</div>
-							
-							<div class="ekit-team-modal-info has-img">
-								<h2 class="ekit-team-modal-title">Adeyemi Peter</h2>
-								<p class="ekit-team-modal-position">Website Designer</p>
-
-								<div class="ekit-team-modal-content">
-									Basil Chukwuezi is a seasoned sales, credit, marketing, and relationship management professional with over 25 years of experience across insurance, media, manufacturing, and banking. His career spans roles in journalism with The Guardian Newspapers (Arts and Culture) and impactful stints at Unilever, Fidelity Bank, Gulf Bank, First Bank, and United Bank for Africa Plc, before founding his own company providing real estate services to banking and oil and gas clients. He holds a BA in Theatre Arts from the University of Calabar, an Executive MBA from ESUT Business School, Lagos, and an MDiv from West Africa Theological Seminary. Basil serves as a member of the Editorial Board/Board of Trustees, contributing deep cross-industry insight and leadership.								</div>
-
-																	<ul class="ekit-team-modal-list">
-																					<li><strong>Phone:</strong><a href="tel:+1 (859) 254-6589">+1 (859) 254-6589</a></li>
-										
-																					<li><strong>Email:</strong><a href="mailto:info@example.com">info@example.com</a></li>
-																			</ul>
-								
-															</div>
-						</div>
-					</div>
-				</div>
-			</div>
-				</div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-9f6ea4d elementor-widget elementor-widget-elementskit-team" data-id="9f6ea4d" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-team.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		 <div class="profile-square-v"> 						
-		<div class="profile-card elementor-animation- text-center ekit-team-style-centered_style">
-							<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_9f6ea4d_973" class="ekit-team-popup">
-			
-				<div class="profile-header ekit-team-img " data-toggle="modal" data-target="ekit_team_modal_#9f6ea4d_973">
-					<img loading="lazy" decoding="async" width="404" height="512" src="../wp-content/uploads/2026/04/unnamed.png" class="attachment-full size-full wp-image-2470" alt=""  sizes="(max-width: 404px) 100vw, 404px">				</div><!-- .profile-header END -->
-							</a>
-			
-
-				<div class="profile-body">
-					
-					<h2 class="profile-title">
-											<a aria-label="profile" href="javascript:void(0)" data-mfp-src="#ekit_team_modal_9f6ea4d_973" class="ekit-team-popup">
-						Hon. Carroll Igboanugo						</a>
-											</h2>
-					<p class="profile-designation">Board Member</p>
-									</div><!-- .profile-body END -->
-
-								</div>
-				 </div> 			
-			
-					<div class="zoom-anim-dialog mfp-hide elementskit-team-popup team-popup-id-9f6ea4d" id="ekit_team_modal_9f6ea4d_973" tabindex="-1" role="dialog" aria-modal="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<button type="button" class="ekit-team-modal-close">
-							<i aria-hidden="true" class="fas fa-times"></i>						</button>
-
-						<div class="modal-body">
-															<div class="ekit-team-modal-img">
-									<img loading="lazy" decoding="async" width="404" height="512" src="../wp-content/uploads/2026/04/unnamed.png" class="attachment-full size-full wp-image-2470" alt=""  sizes="(max-width: 404px) 100vw, 404px">								</div>
-							
-							<div class="ekit-team-modal-info has-img">
-								<h2 class="ekit-team-modal-title">Hon. Carroll Igboanugo</h2>
-								<p class="ekit-team-modal-position">Board Member</p>
-
-								<div class="ekit-team-modal-content">
-									Hon. Carroll Igboanugo is a distinguished communication strategist, political mobiliser, and philanthropist whose career has been defined by a singular conviction: that the Nigerian Diaspora possesses an immense, yet under-utilised, reservoir of soft power capable of reshaping national narratives and driving transformative development.
-
-A thoroughbred socio-political analyst with deep expertise in business administration and entrepreneurship, Carroll has spent over a decade operating at the intersection of Diaspora advocacy, political strategy, and grassroots empowerment. From her base in Ireland, she has consistently demonstrated that distance from the homeland is no barrier to meaningful impact — serving as a frontline mobiliser during the 2015 Goodluck Jonathan campaign, leading Worldwide Publicity for the Atiku/Obi PDP Voice in Ireland during the 2019 electoral cycle, and emerging as a prominent vanguard of the Renewed Hope Agenda in support of President Bola Ahmed Tinubu.
-
-Beyond the political arena, Carroll is a passionate humanitarian who has quietly sponsored scholarships for underprivileged children, intervened in trafficking and juvenile welfare cases, and provided sustained support to women, the elderly, and vulnerable communities across Nigeria. Widely known as "The People's Person," she embodies the citizenry diplomacy that Conspodium champions — the belief that every Diaspora voice carries weight and every act of service echoes across borders.
-
-Carroll joins the Conspodium Board with a formidable network spanning political corridors, business circles, and community organisations across Europe and Nigeria. Her proven capacity as a power broker, fund-raiser, and coalition builder makes her a strategic asset for amplifying the magazine's mission of documenting, celebrating, and leveraging Diaspora excellence. She brings not only influence but a deeply personal commitment to the idea that the stories of Nigerians abroad must be told, preserved, and deployed as instruments of national pride and global connection.								</div>
-
-																	<ul class="ekit-team-modal-list">
-																					<li><strong>Phone:</strong><a href="tel:+1 (859) 254-6589">+1 (859) 254-6589</a></li>
-										
-																					<li><strong>Email:</strong><a href="mailto:info@example.com">info@example.com</a></li>
-																			</ul>
-								
-															</div>
-						</div>
-					</div>
-				</div>
-			</div>
-				</div>				</div>
-				</div>
-				</div>
-				<div class="elementor-element elementor-element-180693ef elementor-widget elementor-widget-spacer" data-id="180693ef" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
-				<div class="elementor-widget-container">
-							<div class="elementor-spacer">
-			<div class="elementor-spacer-inner"></div>
-		</div>
-						</div>
-				</div>
-		<div class="elementor-element elementor-element-73830d1b e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="73830d1b" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-		<div class="elementor-element elementor-element-8f64007 e-grid e-con-boxed e-con e-child adv-sticky-elementor" data-id="8f64007" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-				<div class="elementor-element elementor-element-2f0aca11 elementor-widget elementor-widget-elementskit-funfact" data-id="2f0aca11" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-funfact.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">
-		<div class="elementskit-funfact text-center     ">
-			
-			<div class="elementskit-funfact-inner ">
-				
-				<div class="funfact-content">
-					<div class="number-percentage-wraper">
-												<span class="number-percentage" data-value="50000" data-animation-duration="500" data-style="static">0</span>
-						+											</div>
-
-					<h3 class="funfact-title">Newletter Subscribers</h3>								</div>
-		</div>
-		</div>
+function handleModalOverlayClick(e) {
+  if (e.target.id === 'csp-team-modal-overlay') {
+    closeTeamModal();
+  }
+}
+</script>
 
 
-		</div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-6ad701b6 elementor-widget elementor-widget-elementskit-funfact" data-id="6ad701b6" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-funfact.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">
-		<div class="elementskit-funfact text-center     ">
-			
-			<div class="elementskit-funfact-inner ">
-				
-				<div class="funfact-content">
-					<div class="number-percentage-wraper">
-												<span class="number-percentage" data-value="25000" data-animation-duration="500" data-style="static">0</span>
-						+											</div>
-
-					<h3 class="funfact-title">Magazine Readers per Edition</h3>								</div>
-		</div>
-		</div>
 
 
-		</div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-3bd8e362 elementor-widget elementor-widget-elementskit-funfact" data-id="3bd8e362" data-element_type="widget" data-e-type="widget" data-widget_type="elementskit-funfact.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">
-		<div class="elementskit-funfact text-center     ">
-			
-			<div class="elementskit-funfact-inner ">
-				
-				<div class="funfact-content">
-					<div class="number-percentage-wraper">
-												<span class="number-percentage" data-value="100000" data-animation-duration="1000" data-style="static">0</span>
-						+											</div>
-
-					<h3 class="funfact-title">Monthly Website Visitors</h3>								</div>
-		</div>
-		</div>
 
 
-		</div>				</div>
-				</div>
-					</div>
-				</div>
-				<div class="elementor-element elementor-element-3fa694ac sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="3fa694ac" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">We also have a very active community on social media and on whatsapp.</h2>				</div>
-				</div>
-				</div>
-				<div class="elementor-element elementor-element-7341c3a4 elementor-hidden-tablet elementor-widget elementor-widget-spacer" data-id="7341c3a4" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
-				<div class="elementor-widget-container">
-							<div class="elementor-spacer">
-			<div class="elementor-spacer-inner"></div>
-		</div>
-						</div>
-				</div>
-				</div>
-					</div>
-				</div>
-		<div class="elementor-element elementor-element-d0d1d4a e-flex e-con-boxed e-con e-parent adv-sticky-elementor" data-id="d0d1d4a" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-		<div class="elementor-element elementor-element-516708b e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="516708b" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;background_motion_fx_motion_fx_scrolling&quot;:&quot;yes&quot;,&quot;background_motion_fx_devices&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-efce8cd sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="efce8cd" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">JOIN THE MOVEMENT</h2>				</div>
-				</div>
-				<div class="elementor-element elementor-element-ddc022c eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="ddc022c" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
-				<div class="elementor-widget-container">
-								<div class="eael-dual-header">
-				<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-67ae5f4">Be Part of Our</span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient"> Story</span> </h2>					<span class="subtext"><p>Whether you’re a reader, writer, or brand partner, there’s a place for you in the Conspodium community.</p></span>
-							</div>
-
-						</div>
-				</div>
-		<div class="elementor-element elementor-element-88946c5 e-con-full e-grid e-con e-child adv-sticky-elementor" data-id="88946c5" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-978aa39 elementor-align-left sticky-ekit-buttonstyle elementor-widget__width-initial elementor-invisible elementor-widget elementor-widget-elementskit-button" data-id="978aa39" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}" data-widget_type="elementskit-button.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		<div class="ekit-btn-wraper">
-							<a href="../submit-story" class="elementskit-btn  whitespace--normal" id="">
-					Submit Your Story<i class="jki jki-arrow-right-solid"></i>				</a>
-					</div>
-        </div>				</div>
-				</div>
-				<div class="elementor-element elementor-element-814ae4e elementor-align-left sticky-ekit-buttonstyle elementor-widget__width-initial elementor-invisible elementor-widget elementor-widget-elementskit-button" data-id="814ae4e" data-element_type="widget" data-e-type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}" data-widget_type="elementskit-button.default">
-				<div class="elementor-widget-container">
-					<div class="ekit-wid-con">		<div class="ekit-btn-wraper">
-							<a href="../contact-us" class="elementskit-btn  whitespace--normal" id="">
-					Get In Touch<i class="far fa-calendar-alt"></i>				</a>
-					</div>
-        </div>				</div>
-				</div>
-				</div>
-				<div class="elementor-element elementor-element-b40eff3 elementor-widget elementor-widget-spacer" data-id="b40eff3" data-element_type="widget" data-e-type="widget" data-widget_type="spacer.default">
-				<div class="elementor-widget-container">
-							<div class="elementor-spacer">
-			<div class="elementor-spacer-inner"></div>
-		</div>
-						</div>
-				</div>
-				</div>
-					</div>
-				</div>
-				</div>
 				
   <!-- INCLUDE:wp-footer.html -->
 

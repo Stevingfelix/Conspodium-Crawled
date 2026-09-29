@@ -1584,8 +1584,9 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   .elementor-location-header,
   .she-header-yes,
   .elementor-element-2d9e131,
-  .she-header {
-    position: sticky !important;
+  .she-header,
+  .elementor-1969 .elementor-element.elementor-element-2d9e131 {
+    position: absolute !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
@@ -1594,32 +1595,146 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     z-index: 999999 !important;
     margin: 0 !important;
     box-sizing: border-box !important;
-    transition: background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease !important;
-  }
-
-  /* ── INNER PAGES (body:not(.home)): Sticky Header Background & Text Colors ─── */
-  body:not(.home) .elementor-location-header,
-  body:not(.home) .she-header-yes,
-  body:not(.home) .elementor-element-2d9e131 {
     background: transparent !important;
     background-color: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
+    transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease !important;
   }
 
-  /* Inner pages scrolled sticky state */
-  body:not(.home) .elementor-location-header.is-sticky,
-  body:not(.home) .she-header-yes.is-sticky,
-  body:not(.home) .elementor-element-2d9e131.is-sticky {
+  /* Remove Elementor default dark background on header container in normal state */
+  .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky):not(.elementor-motion-effects-element-type-background),
+  .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky) > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Scrolled Sticky Header State: DARK NAVY GLASS BACKGROUND */
+  .elementor-location-header.is-sticky,
+  .she-header-yes.is-sticky,
+  .elementor-element-2d9e131.is-sticky,
+  .she-header.is-sticky,
+  body.header-is-sticky .elementor-location-header,
+  body.header-is-sticky .she-header-yes,
+  body.header-is-sticky .elementor-element-2d9e131 {
     position: fixed !important;
     top: 0 !important;
-    background: rgba(6, 16, 34, 0.92) !important;
-    backdrop-filter: blur(16px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+    background: rgba(6, 16, 34, 0.94) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(0, 174, 254, 0.25) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* ── UNIVERSAL HEADER TYPOGRAPHY (ALL PAGES): Crisp Inter Sans-Serif Font ─── */
+  .elementor-location-header .elementor-nav-menu a.elementor-item,
+  .elementor-1969 .elementor-nav-menu .elementor-item,
+  .elementor-nav-menu a.elementor-item,
+  .elementor-nav-menu .elementor-item,
+  .elementor-item,
+  .menu-item a {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+    letter-spacing: 0.01em !important;
+  }
+
+  .elementor-location-header .elementor-button,
+  .elementor-1969 .elementor-button,
+  .elementor-1969 .elementor-element-36265fd .elementor-button,
+  .csp-header-submit-btn {
+    font-family: 'Merriweather', Georgia, serif !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+  }
+
+  .elementor-location-header .elementor-button-content-wrapper,
+  .elementor-1969 .elementor-element-36265fd .elementor-button-content-wrapper,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button-content-wrapper,
+  .elementor-element-36265fd .elementor-button-content-wrapper,
+  .csp-header-submit-btn .elementor-button-content-wrapper {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  /* ── NORMAL STATE (TOP OF PAGE ON LIGHT HERO PAGES): Crisp Dark Links ─── */
+  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-nav-menu a.elementor-item,
+  body:not(.home):not(.forum-page) .she-header-yes:not(.is-sticky) .elementor-nav-menu a.elementor-item,
+  body:not(.home):not(.forum-page) .elementor-element-2d9e131:not(.is-sticky) .elementor-nav-menu a.elementor-item,
+  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-nav-menu .menu-item a,
+  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-item {
+    color: #0f172a !important;
+    fill: #0f172a !important;
+    text-shadow: none !important;
+  }
+
+  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-nav-menu a.elementor-item:hover,
+  body:not(.home):not(.forum-page) .she-header-yes:not(.is-sticky) .elementor-nav-menu a.elementor-item:hover {
+    color: #00AEFE !important;
+    fill: #00AEFE !important;
+    text-shadow: none !important;
+  }
+
+  /* Normal State Mobile Menu Hamburger Toggle Icon (Un-scrolled on light hero pages) */
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle i {
+    color: #0f172a !important;
+    fill: #0f172a !important;
+  }
+
+  /* ── SCROLLED STICKY STATE: Crisp White Text Links over Dark Navy Glass ─── */
+  .elementor-location-header.is-sticky .elementor-nav-menu a.elementor-item,
+  .she-header-yes.is-sticky .elementor-nav-menu a.elementor-item,
+  .elementor-element-2d9e131.is-sticky .elementor-nav-menu a.elementor-item,
+  .is-sticky .elementor-nav-menu a.elementor-item,
+  .is-sticky .elementor-nav-menu .menu-item a,
+  .is-sticky .elementor-item,
+  body.header-is-sticky .elementor-nav-menu a.elementor-item,
+  body.header-is-sticky .elementor-item {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    text-shadow: none !important;
+  }
+
+  .elementor-location-header.is-sticky .elementor-nav-menu a.elementor-item:hover,
+  .she-header-yes.is-sticky .elementor-nav-menu a.elementor-item:hover,
+  .is-sticky .elementor-nav-menu a.elementor-item:hover,
+  .is-sticky .elementor-item:hover,
+  body.header-is-sticky .elementor-nav-menu a.elementor-item:hover {
+    color: #00AEFE !important;
+    fill: #00AEFE !important;
+    text-shadow: none !important;
+  }
+
+  /* Scrolled Sticky State Mobile Hamburger Toggle Icon (Bright Crisp White on Dark Navy Glass) */
+  body.header-is-sticky .elementor-menu-toggle,
+  body.header-is-sticky .elementor-menu-toggle i,
+  body.header-is-sticky .elementor-menu-toggle svg,
+  body.header-is-sticky .elementor-menu-toggle path,
+  body.header-is-sticky .elementor-1969 .elementor-menu-toggle,
+  body.header-is-sticky .elementor-1969 .elementor-menu-toggle i,
+  body.header-is-sticky .elementor-element-27c23fa .elementor-menu-toggle,
+  body.header-is-sticky .elementor-element-27c23fa .elementor-menu-toggle i,
+  .is-sticky .elementor-menu-toggle,
+  .is-sticky .elementor-menu-toggle i,
+  .is-sticky .elementor-menu-toggle svg,
+  .is-sticky .elementor-menu-toggle path,
+  .elementor-location-header.is-sticky .elementor-menu-toggle,
+  .elementor-location-header.is-sticky .elementor-menu-toggle i,
+  .elementor-element-2d9e131.is-sticky .elementor-menu-toggle,
+  .elementor-element-2d9e131.is-sticky .elementor-menu-toggle i {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
   }
 
   /* ── HERO OVERLAY PAGES (body.home, body.forum-page, body.elementor-page-977): Transparent on top, Dark Glass on scroll ─── */
@@ -2122,11 +2237,12 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   #csp-back-to-top:hover {
-    background: linear-gradient(135deg, #00AEFE, #B71F71);
-    color: #ffffff;
-    border-color: transparent;
-    transform: translateY(-4px) scale(1.06);
-    box-shadow: 0 14px 35px rgba(0, 174, 254, 0.4);
+    background: #00AEFE !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    border-color: #00AEFE !important;
+    transform: translateY(-4px) scale(1.06) !important;
+    box-shadow: 0 14px 35px rgba(0, 174, 254, 0.5) !important;
   }
 
   @media (max-width: 767px) {
@@ -2231,13 +2347,13 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   /* ── NAV TEXT: Normal State vs Sticky State ──────────────────────────────── */
-  /* Homepage & Forum Hero page normal state: white text & toggle over dark hero */
+  /* Homepage & Forum Hero page normal state: crisp white text & toggle over dark hero */
   body.home .elementor-1969 .elementor-nav-menu--main .elementor-item,
   body.forum-page .elementor-1969 .elementor-nav-menu--main .elementor-item,
   body.forum-page .elementor-item {
     color: #ffffff !important;
     fill: #ffffff !important;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
+    text-shadow: none !important;
   }
 
   body.home .elementor-1969 .elementor-menu-toggle,
@@ -2248,11 +2364,11 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     fill: #ffffff !important;
   }
 
-  /* Inner pages normal state (un-scrolled): dark text over light page background */
-  body:not(.home):not(.forum-page) .elementor-1969 .elementor-nav-menu--main .elementor-item,
-  body:not(.home):not(.forum-page) .elementor-item {
-    color: #0f172a !important;
-    fill: #0f172a !important;
+  /* Inner pages normal state (un-scrolled): bright white text over dark header */
+  body .elementor-1969 .elementor-nav-menu--main .elementor-item,
+  body .elementor-item {
+    color: #ffffff !important;
+    fill: #ffffff !important;
   }
 
   /* Mobile logo size constraints (only on mobile, hidden on desktop) */
@@ -2274,13 +2390,13 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     }
   }
 
-  body:not(.home):not(.forum-page) .elementor-1969 .elementor-menu-toggle,
-  body:not(.home):not(.forum-page) .elementor-1969 .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page) .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page) .elementor-menu-toggle:before,
-  body:not(.home):not(.forum-page) .elementor-menu-toggle:after,
-  body:not(.home):not(.forum-page) .elementor-menu-toggle i:after {
+  /* Normal un-scrolled state for light hero pages (Dark Icon) */
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle i {
     color: #0f172a !important;
     fill: #0f172a !important;
     stroke: #0f172a !important;
@@ -2510,7 +2626,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
   /* Submit Story Pill Button inside Modal */
   .csp-modal-card a.csp-modal-cta {
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    background: #00AEFE !important;
     color: #ffffff !important;
     fill: #ffffff !important;
     font-family: 'Merriweather', Georgia, serif !important;
@@ -2530,7 +2646,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   .csp-modal-card a.csp-modal-cta:hover {
-    background: linear-gradient(110deg, #B71F71 0%, #00AEFE 100%) !important;
+    background: #0096db !important;
     transform: translateY(-2px) scale(1.03) !important;
     box-shadow: 0 8px 30px rgba(0, 174, 254, 0.55) !important;
     color: #ffffff !important;
@@ -2616,25 +2732,200 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     color: #ffffff !important;
   }
 
-  /* ── GLOBAL PILL BUTTON STYLING ───────────────────────────────────────────── */
+  /* ── GLOBAL SEMANTIC BUTTON HIERARCHY ───────────────────────────────────── */
   .elementor-button,
   .elementor-price-table__button,
   .elementskit-btn,
-  .csp-hero-btn-primary,
   .csp-hero-btn-secondary,
+  .csp-btn-outline-dark,
   .wp-block-button__link,
   input[type="submit"],
   button[type="submit"],
   .csp-modal-cta {
     border-radius: 50px !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
+  /* Tier 1: Signature Primary Buttons & CTAs (Solid Conspodium Blue) */
+  .csp-hero-btn-primary,
+  .csp-arch-hero-btn,
+  .csp-btn-primary-gradient,
+  .csp-btn-solid-dark,
+  .elementskit-btn,
+  .ekit-btn-wraper .elementskit-btn,
+  .elementor-widget-elementskit-button .elementskit-btn,
+  .elementor-element .elementskit-btn,
+  .elementor-element-27fe09ce .elementskit-btn,
+  .elementor-element-188a988c .elementskit-btn,
+  .elementor-element-c6a871e .elementskit-btn,
+  .elementor-element-ba7f8bc .elementskit-btn,
+  .elementor-element-170b1e1a .elementskit-btn,
+  .elementor-element-7972d6e7 .elementskit-btn,
+  .elementor-element-f180e55 .elementskit-btn,
+  .elementor-element-36265fd .elementor-button,
+  .elementor-979 .elementor-element.elementor-element-170b1e1a .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-27fe09ce .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-188a988c .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-ba7f8bc .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn,
+  .elementor-1468 .elementor-element.elementor-element-7972d6e7 .elementskit-btn,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button,
+  a.elementskit-btn[href*="submit-story"],
+  a.elementor-button[href*="submit-story"],
+  a.elementskit-btn[href*="forum"],
+  a.elementor-button[href*="forum"],
+  a.elementskit-btn[href*="about-us"],
+  a.elementskit-btn[href*="advert"],
+  a.elementskit-btn[href*="sponsorship"],
+  a.elementor-button[href*="about-us"],
+  a.elementor-button[href*="advert"],
+  a.elementor-button[href*="sponsorship"],
+  .csp-btn-voice,
+  .elementor-price-table__button,
+  .elementor-widget-price-table .elementor-price-table__button,
+  .elementor-element-c424d68 .elementor-price-table__button,
+  .elementor-element-c439157 .elementor-price-table__button,
+  .elementor-element-53118d9 .elementor-price-table__button,
+  .elementor-979 .elementor-element.elementor-element-c424d68 .elementor-price-table__button,
+  .elementor-979 .elementor-element.elementor-element-c439157 .elementor-price-table__button,
+  .elementor-979 .elementor-element.elementor-element-53118d9 .elementor-price-table__button,
+  .elementor-price-table__ribbon-inner,
+  .elementor-widget-price-table .elementor-price-table__ribbon-inner,
+  .elementor-element-c439157 .elementor-price-table__ribbon-inner,
+  .elementor-element-53118d9 .elementor-price-table__ribbon-inner,
+  .elementor-979 .elementor-element.elementor-element-c439157 .elementor-price-table__ribbon-inner,
+  .elementor-979 .elementor-element.elementor-element-53118d9 .elementor-price-table__ribbon-inner {
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    border-radius: 50px !important;
+    box-shadow: 0 6px 20px rgba(0, 174, 254, 0.35) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  /* Stats counter numbers - solid Conspodium blue */
+  .csp-stat-num {
+    color: #00AEFE !important;
+    background: none !important;
+    background-image: none !important;
+    -webkit-text-fill-color: #00AEFE !important;
+  }
+
+  /* ── SIGNATURE CHAT-BUBBLE PILL (HERO & HEADER SUBMIT STORY BUTTONS) ── */
+  .csp-hero-btn-primary,
+  .csp-arch-hero-btn,
+  .csp-btn-primary-gradient,
+  .csp-btn-solid-dark,
+  .csp-header-submit-btn,
+  .elementor-location-header .elementor-button,
+  .elementor-1969 .elementor-element-36265fd .elementor-button,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button,
+  .elementor-element-36265fd .elementor-button,
+  a.elementor-button[href*="submit-story"],
+  a.elementskit-btn[href*="submit-story"],
+  .csp-btn-voice {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    font-family: 'Merriweather', Georgia, serif !important;
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    padding: 12px 24px !important;
+    border-radius: 999px 999px 4px 999px !important;
+    box-shadow: 0 6px 24px rgba(0, 174, 254, 0.38) !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, filter 0.25s ease, border-radius 0.25s ease, background-color 0.25s ease !important;
+    white-space: nowrap !important;
+  }
+
+  .csp-hero-btn-primary:hover,
+  .csp-arch-hero-btn:hover,
+  .csp-btn-primary-gradient:hover,
+  .csp-btn-solid-dark:hover,
+  .csp-header-submit-btn:hover,
+  .elementor-location-header .elementor-button:hover,
+  .elementor-1969 .elementor-element-36265fd .elementor-button:hover,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button:hover,
+  .elementor-element-36265fd .elementor-button:hover,
+  a.elementor-button[href*="submit-story"]:hover,
+  a.elementskit-btn[href*="submit-story"]:hover,
+  .csp-btn-voice:hover {
+    background: #0096db !important;
+    background-color: #0096db !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    border-radius: 999px 999px 12px 999px !important;
+    box-shadow: 0 10px 32px rgba(0, 174, 254, 0.5) !important;
+    filter: brightness(1.08) !important;
+  }
+
+  .elementskit-btn:hover,
+  .ekit-btn-wraper .elementskit-btn:hover,
+  .elementor-widget-elementskit-button .elementskit-btn:hover,
+  .elementor-element .elementskit-btn:hover,
+  .elementor-element-27fe09ce .elementskit-btn:hover,
+  .elementor-element-188a988c .elementskit-btn:hover,
+  .elementor-element-c6a871e .elementskit-btn:hover,
+  .elementor-element-ba7f8bc .elementskit-btn:hover,
+  .elementor-element-170b1e1a .elementskit-btn:hover,
+  .elementor-element-7972d6e7 .elementskit-btn:hover,
+  .elementor-element-f180e55 .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-170b1e1a .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-27fe09ce .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-188a988c .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-ba7f8bc .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn:hover,
+  .elementor-1468 .elementor-element.elementor-element-7972d6e7 .elementskit-btn:hover,
+  a.elementskit-btn[href*="forum"]:hover,
+  a.elementor-button[href*="forum"]:hover,
+  a.elementskit-btn[href*="about-us"]:hover,
+  a.elementskit-btn[href*="advert"]:hover,
+  a.elementskit-btn[href*="sponsorship"]:hover,
+  a.elementor-button[href*="about-us"]:hover,
+  a.elementor-button[href*="advert"]:hover,
+  a.elementor-button[href*="sponsorship"]:hover,
+  .elementor-price-table__button:hover,
+  .elementor-widget-price-table .elementor-price-table__button:hover,
+  .elementor-element-c424d68 .elementor-price-table__button:hover,
+  .elementor-element-c439157 .elementor-price-table__button:hover,
+  .elementor-element-53118d9 .elementor-price-table__button:hover,
+  .elementor-979 .elementor-element.elementor-element-c424d68 .elementor-price-table__button:hover,
+  .elementor-979 .elementor-element.elementor-element-c439157 .elementor-price-table__button:hover,
+  .elementor-979 .elementor-element.elementor-element-53118d9 .elementor-price-table__button:hover {
+    background: #0096db !important;
+    background-color: #0096db !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 10px 28px rgba(0, 174, 254, 0.5) !important;
+  }
+
+  /* Tier 3: Directory, Card Links & Tags (Structured Tag 4px) */
+  .csp-read-more-btn,
+  .jeg_readmore,
+  .csp-card-read-btn,
+  .csp-tag-btn {
+    border-radius: 4px !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
 
   .elementskit-btn,
   .elementor-element-170b1e1a .elementskit-btn,
-  .elementor-element-7972d6e7 .elementskit-btn,
-  .csp-cat-card-btn,
-  a.csp-cat-card-btn {
+  .elementor-element-7972d6e7 .elementskit-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2645,16 +2936,13 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     font-size: 15px !important;
     font-weight: 700 !important;
     line-height: 1.2 !important;
-    border-radius: 50px !important;
     box-sizing: border-box !important;
   }
 
   @media (max-width: 767px) {
-
     .elementskit-btn,
     .elementor-element-170b1e1a .elementskit-btn,
-    .elementor-element-7972d6e7 .elementskit-btn,
-    .csp-cat-card-btn {
+    .elementor-element-7972d6e7 .elementskit-btn {
       width: 100% !important;
       max-width: 260px !important;
       min-width: unset !important;
@@ -2723,33 +3011,90 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     line-height: 1.55 !important;
   }
 
+  /* Secondary / Card Action Pills (Grey text + Grey outline, Conspodium Blue on Hover) */
   .csp-cat-card-btn,
-  a.csp-cat-card-btn {
+  a.csp-cat-card-btn,
+  .csp-scholar-btn,
+  a.csp-scholar-btn,
+  .csp-card-footer-row .csp-cat-card-btn,
+  .elementskit-info-image-box .elementskit-btn,
+  .elementskit-info-image-box .ekit-btn-wraper .elementskit-btn,
+  .elementor-element-7ad4723a .elementskit-info-image-box .elementskit-btn,
+  .elementor-2245 .elementor-element .elementskit-info-image-box .elementskit-btn,
+  .elementor-6 .elementor-element .elementskit-info-image-box .elementskit-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 12px 38px !important;
+    gap: 8px !important;
+    padding: 11px 28px !important;
     border-radius: 50px !important;
-    background: #ffffff !important;
-    border: 1.5px solid #00AEFE !important;
-    color: #00AEFE !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #64748b !important;
+    fill: #64748b !important;
     text-decoration: none !important;
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif !important;
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.02em !important;
-    box-shadow: 0 4px 12px rgba(0, 174, 254, 0.12) !important;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+    font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    cursor: pointer !important;
+  }
+
+  .elementskit-info-image-box .elementskit-btn svg,
+  .elementskit-info-image-box .elementskit-btn svg path,
+  .csp-cat-card-btn svg,
+  .csp-cat-card-btn svg path,
+  .csp-scholar-btn svg,
+  .csp-scholar-btn svg path {
+    stroke: #64748b !important;
+    fill: none !important;
+    color: #64748b !important;
+    transition: stroke 0.3s ease, fill 0.3s ease, color 0.3s ease !important;
   }
 
   .csp-cat-card-btn:hover,
   a.csp-cat-card-btn:hover,
-  .csp-cat-card:hover .csp-cat-card-btn {
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  .csp-scholar-btn:hover,
+  a.csp-scholar-btn:hover,
+  .csp-cat-card:hover .csp-cat-card-btn,
+  .csp-scholar-card:hover .csp-scholar-btn,
+  .csp-card-footer-row .csp-cat-card-btn:hover,
+  .elementskit-info-image-box .elementskit-btn:hover,
+  .elementskit-info-image-box:hover .elementskit-btn,
+  .elementskit-info-image-box .ekit-btn-wraper .elementskit-btn:hover,
+  .elementor-element-7ad4723a .elementskit-info-image-box .elementskit-btn:hover,
+  .elementor-2245 .elementor-element .elementskit-info-image-box .elementskit-btn:hover,
+  .elementor-2245 .elementor-element .elementskit-info-image-box:hover .elementskit-btn,
+  .elementor-6 .elementor-element .elementskit-info-image-box .elementskit-btn:hover,
+  .elementor-6 .elementor-element .elementskit-info-image-box:hover .elementskit-btn {
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
+    border-color: #00AEFE !important;
     color: #ffffff !important;
-    border-color: transparent !important;
-    transform: translateY(-2px) scale(1.05) !important;
-    box-shadow: 0 8px 24px rgba(0, 174, 254, 0.45) !important;
+    fill: #ffffff !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 8px 22px rgba(0, 174, 254, 0.38) !important;
+  }
+
+  .elementskit-info-image-box:hover .elementskit-btn svg,
+  .elementskit-info-image-box:hover .elementskit-btn svg path,
+  .elementskit-info-image-box .elementskit-btn:hover svg,
+  .elementskit-info-image-box .elementskit-btn:hover svg path,
+  .csp-cat-card:hover .csp-cat-card-btn svg,
+  .csp-cat-card:hover .csp-cat-card-btn svg path,
+  .csp-cat-card-btn:hover svg,
+  .csp-cat-card-btn:hover svg path,
+  .csp-scholar-card:hover .csp-scholar-btn svg,
+  .csp-scholar-card:hover .csp-scholar-btn svg path,
+  .csp-scholar-btn:hover svg,
+  .csp-scholar-btn:hover svg path {
+    stroke: #ffffff !important;
+    color: #ffffff !important;
   }
 
   /* ── FLAT AUTHOR SVG ICON HOVER STYLING ────────────────────────────────── */
@@ -3019,13 +3364,16 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   .csp-confirm-primary-btn {
-    background: linear-gradient(135deg, #00AEFE, #B71F71);
-    color: #ffffff;
-    box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35);
+    background: #00AEFE !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35) !important;
   }
 
   .csp-confirm-primary-btn:hover {
-    opacity: 0.9;
+    background: #0096db !important;
+    background-image: none !important;
+    opacity: 1 !important;
   }
 
   /* ── 2-COLUMN MAGAZINE SIDEBAR & GRID LAYOUT ───────────────────────────── */
@@ -3260,9 +3608,15 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     margin-right: 8px !important;
   }
 
-  .elementor-price-table__button {
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  .elementor-price-table__button,
+  .elementor-element-c439157 .elementor-price-table__button,
+  .elementor-element-c424d68 .elementor-price-table__button,
+  .elementor-element-53118d9 .elementor-price-table__button {
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
     color: #ffffff !important;
+    fill: #ffffff !important;
     border-radius: 50px !important;
     font-weight: 600 !important;
     box-shadow: 0 6px 20px rgba(0, 174, 254, 0.3) !important;
@@ -3271,13 +3625,25 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     margin-top: 16px !important;
   }
 
-  .elementor-price-table__button:hover {
+  .elementor-price-table__button:hover,
+  .elementor-element-c439157 .elementor-price-table__button:hover,
+  .elementor-element-c424d68 .elementor-price-table__button:hover,
+  .elementor-element-53118d9 .elementor-price-table__button:hover {
+    background: #0096db !important;
+    background-color: #0096db !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
     transform: translateY(-2px) scale(1.02) !important;
     box-shadow: 0 10px 28px rgba(0, 174, 254, 0.45) !important;
   }
 
-  .elementor-price-table__ribbon-inner {
-    background: linear-gradient(110deg, #00AEFE, #B71F71) !important;
+  .elementor-price-table__ribbon-inner,
+  .elementor-element-c439157 .elementor-price-table__ribbon-inner,
+  .elementor-element-53118d9 .elementor-price-table__ribbon-inner {
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
     color: #ffffff !important;
     font-weight: 700 !important;
   }
@@ -3308,7 +3674,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   form#fluentform_1 .ff-btn-submit {
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    background: #00AEFE !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 50px !important;
@@ -3320,6 +3686,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   form#fluentform_1 .ff-btn-submit:hover {
+    background: #0096db !important;
     transform: translateY(-2px) scale(1.02) !important;
     box-shadow: 0 10px 28px rgba(0, 174, 254, 0.5) !important;
   }
@@ -3396,7 +3763,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   .csp-newsletter-sub-form button,
   .csp-sidebar-newsletter button {
     font-family: 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    background: #00AEFE !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 50px !important;
@@ -3509,7 +3876,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     gap: 8px;
     padding: 12px 26px;
     border-radius: 50px;
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
+    background: #00AEFE;
     color: #fff;
     font-family: 'Merriweather', serif;
     font-weight: 600;
@@ -4180,7 +4547,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
               card.innerHTML = imgHtml +
                 '<div style="padding:4px 20px 24px;">' +
                 titleHtml +
-                '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
+                '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:#00AEFE;color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
                 '</div>';
 
               card.appendChild(closeBtn);
@@ -4222,7 +4589,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
         '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(0,174,254,0.2),rgba(183,31,113,0.2));border:1px solid rgba(0,174,254,0.4);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;">🎉</div>' +
         '<h3 style="font-family:\'Merriweather\',serif;font-size:1.3rem;color:#ffffff;margin-bottom:10px;line-height:1.3;">' + (title || 'Submission Successful!') + '</h3>' +
         '<p style="font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.6;margin-bottom:24px;">' + (message || 'Thank you! Your information has been received.') + '</p>' +
-        '<button id="csp-success-modal-btn" style="padding:12px 32px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border:none;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Got It →</button>';
+        '<button id="csp-success-modal-btn" style="padding:12px 32px;background:#00AEFE;color:#fff;border:none;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Got It →</button>';
 
       card.appendChild(closeBtn);
       modal.appendChild(card);
@@ -4310,7 +4677,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #00AEFE, #B71F71);
+    background: #00AEFE;
     border: none;
     color: #fff;
     font-size: 1rem;
@@ -4599,16 +4966,24 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
     // 4.5 Dynamic Sticky Header Scroll Toggler
     function initStickyHeader() {
-      var headers = document.querySelectorAll('.elementor-location-header, .she-header, .elementor-element-2d9e131');
-      if (!headers.length) return;
+      var headers = document.querySelectorAll('.elementor-location-header, .she-header, .elementor-element-2d9e131, .elementor-1969');
+      var toggles = document.querySelectorAll('.elementor-menu-toggle');
 
       function handleHeaderScroll() {
-        var isScrolled = window.scrollY > 15;
+        var scrollPos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        var isScrolled = scrollPos > 15;
         headers.forEach(function (h) {
           if (isScrolled) {
             h.classList.add('is-sticky');
           } else {
             h.classList.remove('is-sticky');
+          }
+        });
+        toggles.forEach(function (t) {
+          if (isScrolled) {
+            t.classList.add('is-sticky');
+          } else {
+            t.classList.remove('is-sticky');
           }
         });
         if (isScrolled) {
@@ -4619,6 +4994,8 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       }
 
       window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+      window.addEventListener('touchmove', handleHeaderScroll, { passive: true });
+      window.addEventListener('resize', handleHeaderScroll, { passive: true });
       handleHeaderScroll();
     }
 
@@ -4797,9 +5174,15 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   .csp-sub-modal-btn.info {
-    background: linear-gradient(135deg, #00AEFE, #B71F71);
-    color: #ffffff;
-    box-shadow: 0 10px 24px rgba(0, 174, 254, 0.4);
+    background: #00AEFE !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 24px rgba(0, 174, 254, 0.4) !important;
+  }
+
+  .csp-sub-modal-btn.info:hover {
+    background: #0096db !important;
+    background-image: none !important;
   }
 </style>
 <script>
@@ -5081,7 +5464,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     padding: 9px 20px !important;
     border-radius: 50px !important;
     border: none !important;
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    background: #00AEFE !important;
     color: #fff !important;
     font-weight: 700 !important;
     font-size: 0.82rem !important;
@@ -5478,12 +5861,14 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 				<div class="elementor-element elementor-element-36265fd elementor-align-right sticky-button-prefixstyle elementor-widget-mobile__width-initial elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-button" data-id="36265fd" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
 					<div class="elementor-widget-container">
 						<div class="elementor-button-wrapper">
-							<a class="elementor-button elementor-button-link elementor-size-sm" href="/submit-story/">
+							<a class="elementor-button elementor-button-link elementor-size-sm csp-header-submit-btn" href="/submit-story/">
 								<span class="elementor-button-content-wrapper">
-									<span class="elementor-button-icon">
-										<i aria-hidden="true" class="jki jki-long-arrow-alt-right-solid"></i>
-									</span>
 									<span class="elementor-button-text">Submit Story</span>
+									<span class="elementor-button-icon" style="margin-left: 6px; display: inline-flex; align-items: center;">
+										<svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align: middle;">
+											<path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+									</span>
 								</span>
 							</a>
 						</div>

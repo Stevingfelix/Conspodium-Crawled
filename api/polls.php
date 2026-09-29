@@ -15,7 +15,12 @@ require_once __DIR__ . '/auth_guard.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? '';
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
-$userIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+$rawIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+$userIp = trim(explode(',', $rawIp)[0]);
+$ipList = [$userIp];
+if ($userIp === '::1' || $userIp === '127.0.0.1' || $userIp === 'localhost') {
+    $ipList = ['::1', '127.0.0.1', 'localhost'];
+}
 
 // ── GET ACTIVE POLL (PUBLIC) ──────────────────────────────────────────────────
 if ($method === 'GET' && ($action === 'active' || empty($action))) {
@@ -53,8 +58,9 @@ if ($method === 'GET' && ($action === 'active' || empty($action))) {
         $results[] = ["option" => $optText, "index" => $idx, "count" => $count, "percentage" => $pct];
     }
 
-    $checkIp = $pdo->prepare("SELECT option_index FROM poll_votes WHERE poll_id = ? AND voter_ip = ? ORDER BY id DESC LIMIT 1");
-    $checkIp->execute([$poll['id'], $userIp]);
+    $inPlaceholders = implode(',', array_fill(0, count($ipList), '?'));
+    $checkIp = $pdo->prepare("SELECT option_index FROM poll_votes WHERE poll_id = ? AND voter_ip IN ($inPlaceholders) ORDER BY id DESC LIMIT 1");
+    $checkIp->execute(array_merge([$poll['id']], $ipList));
     $userVoteRow = $checkIp->fetch();
     $hasVoted = (bool) $userVoteRow;
     $userVotedIndex = $userVoteRow ? intval($userVoteRow['option_index']) : null;
@@ -123,8 +129,9 @@ if ($method === 'POST' && ($action === 'vote' || isset($input['optionIndex']))) 
         exit;
     }
 
-    $checkIp = $pdo->prepare("SELECT id FROM poll_votes WHERE poll_id = ? AND voter_ip = ?");
-    $checkIp->execute([$pollId, $userIp]);
+    $inPlaceholders = implode(',', array_fill(0, count($ipList), '?'));
+    $checkIp = $pdo->prepare("SELECT id FROM poll_votes WHERE poll_id = ? AND voter_ip IN ($inPlaceholders)");
+    $checkIp->execute(array_merge([$pollId], $ipList));
     if ($checkIp->fetch()) {
         http_response_code(409);
         echo json_encode(["success" => false, "error" => "You have already voted in this poll"]);

@@ -11344,8 +11344,9 @@
   .elementor-location-header,
   .she-header-yes,
   .elementor-element-2d9e131,
-  .she-header {
-    position: sticky !important;
+  .she-header,
+  .elementor-1969 .elementor-element.elementor-element-2d9e131 {
+    position: absolute !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
@@ -11354,32 +11355,146 @@
     z-index: 999999 !important;
     margin: 0 !important;
     box-sizing: border-box !important;
-    transition: background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease !important;
-  }
-
-  /* ── INNER PAGES (body:not(.home)): Sticky Header Background & Text Colors ─── */
-  body:not(.home) .elementor-location-header,
-  body:not(.home) .she-header-yes,
-  body:not(.home) .elementor-element-2d9e131 {
     background: transparent !important;
     background-color: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
+    transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease !important;
   }
 
-  /* Inner pages scrolled sticky state */
-  body:not(.home) .elementor-location-header.is-sticky,
-  body:not(.home) .she-header-yes.is-sticky,
-  body:not(.home) .elementor-element-2d9e131.is-sticky {
+  /* Remove Elementor default dark background on header container in normal state */
+  .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky):not(.elementor-motion-effects-element-type-background),
+  .elementor-1969 .elementor-element.elementor-element-2d9e131:not(.is-sticky) > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Scrolled Sticky Header State: DARK NAVY GLASS BACKGROUND */
+  .elementor-location-header.is-sticky,
+  .she-header-yes.is-sticky,
+  .elementor-element-2d9e131.is-sticky,
+  .she-header.is-sticky,
+  body.header-is-sticky .elementor-location-header,
+  body.header-is-sticky .she-header-yes,
+  body.header-is-sticky .elementor-element-2d9e131 {
     position: fixed !important;
     top: 0 !important;
-    background: rgba(6, 16, 34, 0.92) !important;
-    backdrop-filter: blur(16px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+    background: rgba(6, 16, 34, 0.94) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(0, 174, 254, 0.25) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* ── UNIVERSAL HEADER TYPOGRAPHY (ALL PAGES): Crisp Inter Sans-Serif Font ─── */
+  .elementor-location-header .elementor-nav-menu a.elementor-item,
+  .elementor-1969 .elementor-nav-menu .elementor-item,
+  .elementor-nav-menu a.elementor-item,
+  .elementor-nav-menu .elementor-item,
+  .elementor-item,
+  .menu-item a {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+    letter-spacing: 0.01em !important;
+  }
+
+  .elementor-location-header .elementor-button,
+  .elementor-1969 .elementor-button,
+  .elementor-1969 .elementor-element-36265fd .elementor-button,
+  .csp-header-submit-btn {
+    font-family: 'Merriweather', Georgia, serif !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+  }
+
+  .elementor-location-header .elementor-button-content-wrapper,
+  .elementor-1969 .elementor-element-36265fd .elementor-button-content-wrapper,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button-content-wrapper,
+  .elementor-element-36265fd .elementor-button-content-wrapper,
+  .csp-header-submit-btn .elementor-button-content-wrapper {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  /* ── NORMAL STATE (TOP OF PAGE ON LIGHT HERO PAGES): Crisp Dark Links ─── */
+  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-nav-menu a.elementor-item,
+  body:not(.home):not(.forum-page) .she-header-yes:not(.is-sticky) .elementor-nav-menu a.elementor-item,
+  body:not(.home):not(.forum-page) .elementor-element-2d9e131:not(.is-sticky) .elementor-nav-menu a.elementor-item,
+  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-nav-menu .menu-item a,
+  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-item {
+    color: #0f172a !important;
+    fill: #0f172a !important;
+    text-shadow: none !important;
+  }
+
+  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-nav-menu a.elementor-item:hover,
+  body:not(.home):not(.forum-page) .she-header-yes:not(.is-sticky) .elementor-nav-menu a.elementor-item:hover {
+    color: #00AEFE !important;
+    fill: #00AEFE !important;
+    text-shadow: none !important;
+  }
+
+  /* Normal State Mobile Menu Hamburger Toggle Icon (Un-scrolled on light hero pages) */
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle i {
+    color: #0f172a !important;
+    fill: #0f172a !important;
+  }
+
+  /* ── SCROLLED STICKY STATE: Crisp White Text Links over Dark Navy Glass ─── */
+  .elementor-location-header.is-sticky .elementor-nav-menu a.elementor-item,
+  .she-header-yes.is-sticky .elementor-nav-menu a.elementor-item,
+  .elementor-element-2d9e131.is-sticky .elementor-nav-menu a.elementor-item,
+  .is-sticky .elementor-nav-menu a.elementor-item,
+  .is-sticky .elementor-nav-menu .menu-item a,
+  .is-sticky .elementor-item,
+  body.header-is-sticky .elementor-nav-menu a.elementor-item,
+  body.header-is-sticky .elementor-item {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    text-shadow: none !important;
+  }
+
+  .elementor-location-header.is-sticky .elementor-nav-menu a.elementor-item:hover,
+  .she-header-yes.is-sticky .elementor-nav-menu a.elementor-item:hover,
+  .is-sticky .elementor-nav-menu a.elementor-item:hover,
+  .is-sticky .elementor-item:hover,
+  body.header-is-sticky .elementor-nav-menu a.elementor-item:hover {
+    color: #00AEFE !important;
+    fill: #00AEFE !important;
+    text-shadow: none !important;
+  }
+
+  /* Scrolled Sticky State Mobile Hamburger Toggle Icon (Bright Crisp White on Dark Navy Glass) */
+  body.header-is-sticky .elementor-menu-toggle,
+  body.header-is-sticky .elementor-menu-toggle i,
+  body.header-is-sticky .elementor-menu-toggle svg,
+  body.header-is-sticky .elementor-menu-toggle path,
+  body.header-is-sticky .elementor-1969 .elementor-menu-toggle,
+  body.header-is-sticky .elementor-1969 .elementor-menu-toggle i,
+  body.header-is-sticky .elementor-element-27c23fa .elementor-menu-toggle,
+  body.header-is-sticky .elementor-element-27c23fa .elementor-menu-toggle i,
+  .is-sticky .elementor-menu-toggle,
+  .is-sticky .elementor-menu-toggle i,
+  .is-sticky .elementor-menu-toggle svg,
+  .is-sticky .elementor-menu-toggle path,
+  .elementor-location-header.is-sticky .elementor-menu-toggle,
+  .elementor-location-header.is-sticky .elementor-menu-toggle i,
+  .elementor-element-2d9e131.is-sticky .elementor-menu-toggle,
+  .elementor-element-2d9e131.is-sticky .elementor-menu-toggle i {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
   }
 
   /* ── HERO OVERLAY PAGES (body.home, body.forum-page, body.elementor-page-977): Transparent on top, Dark Glass on scroll ─── */
@@ -11882,11 +11997,12 @@
   }
 
   #csp-back-to-top:hover {
-    background: linear-gradient(135deg, #00AEFE, #B71F71);
-    color: #ffffff;
-    border-color: transparent;
-    transform: translateY(-4px) scale(1.06);
-    box-shadow: 0 14px 35px rgba(0, 174, 254, 0.4);
+    background: #00AEFE !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    border-color: #00AEFE !important;
+    transform: translateY(-4px) scale(1.06) !important;
+    box-shadow: 0 14px 35px rgba(0, 174, 254, 0.5) !important;
   }
 
   @media (max-width: 767px) {
@@ -11991,13 +12107,13 @@
   }
 
   /* ── NAV TEXT: Normal State vs Sticky State ──────────────────────────────── */
-  /* Homepage & Forum Hero page normal state: white text & toggle over dark hero */
+  /* Homepage & Forum Hero page normal state: crisp white text & toggle over dark hero */
   body.home .elementor-1969 .elementor-nav-menu--main .elementor-item,
   body.forum-page .elementor-1969 .elementor-nav-menu--main .elementor-item,
   body.forum-page .elementor-item {
     color: #ffffff !important;
     fill: #ffffff !important;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
+    text-shadow: none !important;
   }
 
   body.home .elementor-1969 .elementor-menu-toggle,
@@ -12008,11 +12124,11 @@
     fill: #ffffff !important;
   }
 
-  /* Inner pages normal state (un-scrolled): dark text over light page background */
-  body:not(.home):not(.forum-page) .elementor-1969 .elementor-nav-menu--main .elementor-item,
-  body:not(.home):not(.forum-page) .elementor-item {
-    color: #0f172a !important;
-    fill: #0f172a !important;
+  /* Inner pages normal state (un-scrolled): bright white text over dark header */
+  body .elementor-1969 .elementor-nav-menu--main .elementor-item,
+  body .elementor-item {
+    color: #ffffff !important;
+    fill: #ffffff !important;
   }
 
   /* Mobile logo size constraints (only on mobile, hidden on desktop) */
@@ -12034,13 +12150,13 @@
     }
   }
 
-  body:not(.home):not(.forum-page) .elementor-1969 .elementor-menu-toggle,
-  body:not(.home):not(.forum-page) .elementor-1969 .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page) .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page) .elementor-menu-toggle:before,
-  body:not(.home):not(.forum-page) .elementor-menu-toggle:after,
-  body:not(.home):not(.forum-page) .elementor-menu-toggle i:after {
+  /* Normal un-scrolled state for light hero pages (Dark Icon) */
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle i {
     color: #0f172a !important;
     fill: #0f172a !important;
     stroke: #0f172a !important;
@@ -12270,7 +12386,7 @@
 
   /* Submit Story Pill Button inside Modal */
   .csp-modal-card a.csp-modal-cta {
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    background: #00AEFE !important;
     color: #ffffff !important;
     fill: #ffffff !important;
     font-family: 'Merriweather', Georgia, serif !important;
@@ -12290,7 +12406,7 @@
   }
 
   .csp-modal-card a.csp-modal-cta:hover {
-    background: linear-gradient(110deg, #B71F71 0%, #00AEFE 100%) !important;
+    background: #0096db !important;
     transform: translateY(-2px) scale(1.03) !important;
     box-shadow: 0 8px 30px rgba(0, 174, 254, 0.55) !important;
     color: #ffffff !important;
@@ -12376,25 +12492,200 @@
     color: #ffffff !important;
   }
 
-  /* ── GLOBAL PILL BUTTON STYLING ───────────────────────────────────────────── */
+  /* ── GLOBAL SEMANTIC BUTTON HIERARCHY ───────────────────────────────────── */
   .elementor-button,
   .elementor-price-table__button,
   .elementskit-btn,
-  .csp-hero-btn-primary,
   .csp-hero-btn-secondary,
+  .csp-btn-outline-dark,
   .wp-block-button__link,
   input[type="submit"],
   button[type="submit"],
   .csp-modal-cta {
     border-radius: 50px !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
+  /* Tier 1: Signature Primary Buttons & CTAs (Solid Conspodium Blue) */
+  .csp-hero-btn-primary,
+  .csp-arch-hero-btn,
+  .csp-btn-primary-gradient,
+  .csp-btn-solid-dark,
+  .elementskit-btn,
+  .ekit-btn-wraper .elementskit-btn,
+  .elementor-widget-elementskit-button .elementskit-btn,
+  .elementor-element .elementskit-btn,
+  .elementor-element-27fe09ce .elementskit-btn,
+  .elementor-element-188a988c .elementskit-btn,
+  .elementor-element-c6a871e .elementskit-btn,
+  .elementor-element-ba7f8bc .elementskit-btn,
+  .elementor-element-170b1e1a .elementskit-btn,
+  .elementor-element-7972d6e7 .elementskit-btn,
+  .elementor-element-f180e55 .elementskit-btn,
+  .elementor-element-36265fd .elementor-button,
+  .elementor-979 .elementor-element.elementor-element-170b1e1a .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-27fe09ce .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-188a988c .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-ba7f8bc .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn,
+  .elementor-1468 .elementor-element.elementor-element-7972d6e7 .elementskit-btn,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button,
+  a.elementskit-btn[href*="submit-story"],
+  a.elementor-button[href*="submit-story"],
+  a.elementskit-btn[href*="forum"],
+  a.elementor-button[href*="forum"],
+  a.elementskit-btn[href*="about-us"],
+  a.elementskit-btn[href*="advert"],
+  a.elementskit-btn[href*="sponsorship"],
+  a.elementor-button[href*="about-us"],
+  a.elementor-button[href*="advert"],
+  a.elementor-button[href*="sponsorship"],
+  .csp-btn-voice,
+  .elementor-price-table__button,
+  .elementor-widget-price-table .elementor-price-table__button,
+  .elementor-element-c424d68 .elementor-price-table__button,
+  .elementor-element-c439157 .elementor-price-table__button,
+  .elementor-element-53118d9 .elementor-price-table__button,
+  .elementor-979 .elementor-element.elementor-element-c424d68 .elementor-price-table__button,
+  .elementor-979 .elementor-element.elementor-element-c439157 .elementor-price-table__button,
+  .elementor-979 .elementor-element.elementor-element-53118d9 .elementor-price-table__button,
+  .elementor-price-table__ribbon-inner,
+  .elementor-widget-price-table .elementor-price-table__ribbon-inner,
+  .elementor-element-c439157 .elementor-price-table__ribbon-inner,
+  .elementor-element-53118d9 .elementor-price-table__ribbon-inner,
+  .elementor-979 .elementor-element.elementor-element-c439157 .elementor-price-table__ribbon-inner,
+  .elementor-979 .elementor-element.elementor-element-53118d9 .elementor-price-table__ribbon-inner {
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    border-radius: 50px !important;
+    box-shadow: 0 6px 20px rgba(0, 174, 254, 0.35) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  /* Stats counter numbers - solid Conspodium blue */
+  .csp-stat-num {
+    color: #00AEFE !important;
+    background: none !important;
+    background-image: none !important;
+    -webkit-text-fill-color: #00AEFE !important;
+  }
+
+  /* ── SIGNATURE CHAT-BUBBLE PILL (HERO & HEADER SUBMIT STORY BUTTONS) ── */
+  .csp-hero-btn-primary,
+  .csp-arch-hero-btn,
+  .csp-btn-primary-gradient,
+  .csp-btn-solid-dark,
+  .csp-header-submit-btn,
+  .elementor-location-header .elementor-button,
+  .elementor-1969 .elementor-element-36265fd .elementor-button,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button,
+  .elementor-element-36265fd .elementor-button,
+  a.elementor-button[href*="submit-story"],
+  a.elementskit-btn[href*="submit-story"],
+  .csp-btn-voice {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    font-family: 'Merriweather', Georgia, serif !important;
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    padding: 12px 24px !important;
+    border-radius: 999px 999px 4px 999px !important;
+    box-shadow: 0 6px 24px rgba(0, 174, 254, 0.38) !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, filter 0.25s ease, border-radius 0.25s ease, background-color 0.25s ease !important;
+    white-space: nowrap !important;
+  }
+
+  .csp-hero-btn-primary:hover,
+  .csp-arch-hero-btn:hover,
+  .csp-btn-primary-gradient:hover,
+  .csp-btn-solid-dark:hover,
+  .csp-header-submit-btn:hover,
+  .elementor-location-header .elementor-button:hover,
+  .elementor-1969 .elementor-element-36265fd .elementor-button:hover,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button:hover,
+  .elementor-element-36265fd .elementor-button:hover,
+  a.elementor-button[href*="submit-story"]:hover,
+  a.elementskit-btn[href*="submit-story"]:hover,
+  .csp-btn-voice:hover {
+    background: #0096db !important;
+    background-color: #0096db !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    border-radius: 999px 999px 12px 999px !important;
+    box-shadow: 0 10px 32px rgba(0, 174, 254, 0.5) !important;
+    filter: brightness(1.08) !important;
+  }
+
+  .elementskit-btn:hover,
+  .ekit-btn-wraper .elementskit-btn:hover,
+  .elementor-widget-elementskit-button .elementskit-btn:hover,
+  .elementor-element .elementskit-btn:hover,
+  .elementor-element-27fe09ce .elementskit-btn:hover,
+  .elementor-element-188a988c .elementskit-btn:hover,
+  .elementor-element-c6a871e .elementskit-btn:hover,
+  .elementor-element-ba7f8bc .elementskit-btn:hover,
+  .elementor-element-170b1e1a .elementskit-btn:hover,
+  .elementor-element-7972d6e7 .elementskit-btn:hover,
+  .elementor-element-f180e55 .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-170b1e1a .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-27fe09ce .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-188a988c .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-ba7f8bc .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn:hover,
+  .elementor-1468 .elementor-element.elementor-element-7972d6e7 .elementskit-btn:hover,
+  a.elementskit-btn[href*="forum"]:hover,
+  a.elementor-button[href*="forum"]:hover,
+  a.elementskit-btn[href*="about-us"]:hover,
+  a.elementskit-btn[href*="advert"]:hover,
+  a.elementskit-btn[href*="sponsorship"]:hover,
+  a.elementor-button[href*="about-us"]:hover,
+  a.elementor-button[href*="advert"]:hover,
+  a.elementor-button[href*="sponsorship"]:hover,
+  .elementor-price-table__button:hover,
+  .elementor-widget-price-table .elementor-price-table__button:hover,
+  .elementor-element-c424d68 .elementor-price-table__button:hover,
+  .elementor-element-c439157 .elementor-price-table__button:hover,
+  .elementor-element-53118d9 .elementor-price-table__button:hover,
+  .elementor-979 .elementor-element.elementor-element-c424d68 .elementor-price-table__button:hover,
+  .elementor-979 .elementor-element.elementor-element-c439157 .elementor-price-table__button:hover,
+  .elementor-979 .elementor-element.elementor-element-53118d9 .elementor-price-table__button:hover {
+    background: #0096db !important;
+    background-color: #0096db !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 10px 28px rgba(0, 174, 254, 0.5) !important;
+  }
+
+  /* Tier 3: Directory, Card Links & Tags (Structured Tag 4px) */
+  .csp-read-more-btn,
+  .jeg_readmore,
+  .csp-card-read-btn,
+  .csp-tag-btn {
+    border-radius: 4px !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
 
   .elementskit-btn,
   .elementor-element-170b1e1a .elementskit-btn,
-  .elementor-element-7972d6e7 .elementskit-btn,
-  .csp-cat-card-btn,
-  a.csp-cat-card-btn {
+  .elementor-element-7972d6e7 .elementskit-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -12405,16 +12696,13 @@
     font-size: 15px !important;
     font-weight: 700 !important;
     line-height: 1.2 !important;
-    border-radius: 50px !important;
     box-sizing: border-box !important;
   }
 
   @media (max-width: 767px) {
-
     .elementskit-btn,
     .elementor-element-170b1e1a .elementskit-btn,
-    .elementor-element-7972d6e7 .elementskit-btn,
-    .csp-cat-card-btn {
+    .elementor-element-7972d6e7 .elementskit-btn {
       width: 100% !important;
       max-width: 260px !important;
       min-width: unset !important;
@@ -12483,33 +12771,90 @@
     line-height: 1.55 !important;
   }
 
+  /* Secondary / Card Action Pills (Grey text + Grey outline, Conspodium Blue on Hover) */
   .csp-cat-card-btn,
-  a.csp-cat-card-btn {
+  a.csp-cat-card-btn,
+  .csp-scholar-btn,
+  a.csp-scholar-btn,
+  .csp-card-footer-row .csp-cat-card-btn,
+  .elementskit-info-image-box .elementskit-btn,
+  .elementskit-info-image-box .ekit-btn-wraper .elementskit-btn,
+  .elementor-element-7ad4723a .elementskit-info-image-box .elementskit-btn,
+  .elementor-2245 .elementor-element .elementskit-info-image-box .elementskit-btn,
+  .elementor-6 .elementor-element .elementskit-info-image-box .elementskit-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 12px 38px !important;
+    gap: 8px !important;
+    padding: 11px 28px !important;
     border-radius: 50px !important;
-    background: #ffffff !important;
-    border: 1.5px solid #00AEFE !important;
-    color: #00AEFE !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #64748b !important;
+    fill: #64748b !important;
     text-decoration: none !important;
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif !important;
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.02em !important;
-    box-shadow: 0 4px 12px rgba(0, 174, 254, 0.12) !important;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+    font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    cursor: pointer !important;
+  }
+
+  .elementskit-info-image-box .elementskit-btn svg,
+  .elementskit-info-image-box .elementskit-btn svg path,
+  .csp-cat-card-btn svg,
+  .csp-cat-card-btn svg path,
+  .csp-scholar-btn svg,
+  .csp-scholar-btn svg path {
+    stroke: #64748b !important;
+    fill: none !important;
+    color: #64748b !important;
+    transition: stroke 0.3s ease, fill 0.3s ease, color 0.3s ease !important;
   }
 
   .csp-cat-card-btn:hover,
   a.csp-cat-card-btn:hover,
-  .csp-cat-card:hover .csp-cat-card-btn {
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  .csp-scholar-btn:hover,
+  a.csp-scholar-btn:hover,
+  .csp-cat-card:hover .csp-cat-card-btn,
+  .csp-scholar-card:hover .csp-scholar-btn,
+  .csp-card-footer-row .csp-cat-card-btn:hover,
+  .elementskit-info-image-box .elementskit-btn:hover,
+  .elementskit-info-image-box:hover .elementskit-btn,
+  .elementskit-info-image-box .ekit-btn-wraper .elementskit-btn:hover,
+  .elementor-element-7ad4723a .elementskit-info-image-box .elementskit-btn:hover,
+  .elementor-2245 .elementor-element .elementskit-info-image-box .elementskit-btn:hover,
+  .elementor-2245 .elementor-element .elementskit-info-image-box:hover .elementskit-btn,
+  .elementor-6 .elementor-element .elementskit-info-image-box .elementskit-btn:hover,
+  .elementor-6 .elementor-element .elementskit-info-image-box:hover .elementskit-btn {
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
+    border-color: #00AEFE !important;
     color: #ffffff !important;
-    border-color: transparent !important;
-    transform: translateY(-2px) scale(1.05) !important;
-    box-shadow: 0 8px 24px rgba(0, 174, 254, 0.45) !important;
+    fill: #ffffff !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 8px 22px rgba(0, 174, 254, 0.38) !important;
+  }
+
+  .elementskit-info-image-box:hover .elementskit-btn svg,
+  .elementskit-info-image-box:hover .elementskit-btn svg path,
+  .elementskit-info-image-box .elementskit-btn:hover svg,
+  .elementskit-info-image-box .elementskit-btn:hover svg path,
+  .csp-cat-card:hover .csp-cat-card-btn svg,
+  .csp-cat-card:hover .csp-cat-card-btn svg path,
+  .csp-cat-card-btn:hover svg,
+  .csp-cat-card-btn:hover svg path,
+  .csp-scholar-card:hover .csp-scholar-btn svg,
+  .csp-scholar-card:hover .csp-scholar-btn svg path,
+  .csp-scholar-btn:hover svg,
+  .csp-scholar-btn:hover svg path {
+    stroke: #ffffff !important;
+    color: #ffffff !important;
   }
 
   /* ── FLAT AUTHOR SVG ICON HOVER STYLING ────────────────────────────────── */
@@ -12779,13 +13124,16 @@
   }
 
   .csp-confirm-primary-btn {
-    background: linear-gradient(135deg, #00AEFE, #B71F71);
-    color: #ffffff;
-    box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35);
+    background: #00AEFE !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35) !important;
   }
 
   .csp-confirm-primary-btn:hover {
-    opacity: 0.9;
+    background: #0096db !important;
+    background-image: none !important;
+    opacity: 1 !important;
   }
 
   /* ── 2-COLUMN MAGAZINE SIDEBAR & GRID LAYOUT ───────────────────────────── */
@@ -13020,9 +13368,15 @@
     margin-right: 8px !important;
   }
 
-  .elementor-price-table__button {
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  .elementor-price-table__button,
+  .elementor-element-c439157 .elementor-price-table__button,
+  .elementor-element-c424d68 .elementor-price-table__button,
+  .elementor-element-53118d9 .elementor-price-table__button {
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
     color: #ffffff !important;
+    fill: #ffffff !important;
     border-radius: 50px !important;
     font-weight: 600 !important;
     box-shadow: 0 6px 20px rgba(0, 174, 254, 0.3) !important;
@@ -13031,13 +13385,25 @@
     margin-top: 16px !important;
   }
 
-  .elementor-price-table__button:hover {
+  .elementor-price-table__button:hover,
+  .elementor-element-c439157 .elementor-price-table__button:hover,
+  .elementor-element-c424d68 .elementor-price-table__button:hover,
+  .elementor-element-53118d9 .elementor-price-table__button:hover {
+    background: #0096db !important;
+    background-color: #0096db !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
     transform: translateY(-2px) scale(1.02) !important;
     box-shadow: 0 10px 28px rgba(0, 174, 254, 0.45) !important;
   }
 
-  .elementor-price-table__ribbon-inner {
-    background: linear-gradient(110deg, #00AEFE, #B71F71) !important;
+  .elementor-price-table__ribbon-inner,
+  .elementor-element-c439157 .elementor-price-table__ribbon-inner,
+  .elementor-element-53118d9 .elementor-price-table__ribbon-inner {
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
     color: #ffffff !important;
     font-weight: 700 !important;
   }
@@ -13068,7 +13434,7 @@
   }
 
   form#fluentform_1 .ff-btn-submit {
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    background: #00AEFE !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 50px !important;
@@ -13080,6 +13446,7 @@
   }
 
   form#fluentform_1 .ff-btn-submit:hover {
+    background: #0096db !important;
     transform: translateY(-2px) scale(1.02) !important;
     box-shadow: 0 10px 28px rgba(0, 174, 254, 0.5) !important;
   }
@@ -13156,7 +13523,7 @@
   .csp-newsletter-sub-form button,
   .csp-sidebar-newsletter button {
     font-family: 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    background: #00AEFE !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 50px !important;
@@ -13269,7 +13636,7 @@
     gap: 8px;
     padding: 12px 26px;
     border-radius: 50px;
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
+    background: #00AEFE;
     color: #fff;
     font-family: 'Merriweather', serif;
     font-weight: 600;
@@ -13940,7 +14307,7 @@
               card.innerHTML = imgHtml +
                 '<div style="padding:4px 20px 24px;">' +
                 titleHtml +
-                '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
+                '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:#00AEFE;color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
                 '</div>';
 
               card.appendChild(closeBtn);
@@ -13982,7 +14349,7 @@
         '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(0,174,254,0.2),rgba(183,31,113,0.2));border:1px solid rgba(0,174,254,0.4);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;">🎉</div>' +
         '<h3 style="font-family:\'Merriweather\',serif;font-size:1.3rem;color:#ffffff;margin-bottom:10px;line-height:1.3;">' + (title || 'Submission Successful!') + '</h3>' +
         '<p style="font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.6;margin-bottom:24px;">' + (message || 'Thank you! Your information has been received.') + '</p>' +
-        '<button id="csp-success-modal-btn" style="padding:12px 32px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border:none;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Got It →</button>';
+        '<button id="csp-success-modal-btn" style="padding:12px 32px;background:#00AEFE;color:#fff;border:none;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Got It →</button>';
 
       card.appendChild(closeBtn);
       modal.appendChild(card);
@@ -14070,7 +14437,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #00AEFE, #B71F71);
+    background: #00AEFE;
     border: none;
     color: #fff;
     font-size: 1rem;
@@ -14359,16 +14726,24 @@
 
     // 4.5 Dynamic Sticky Header Scroll Toggler
     function initStickyHeader() {
-      var headers = document.querySelectorAll('.elementor-location-header, .she-header, .elementor-element-2d9e131');
-      if (!headers.length) return;
+      var headers = document.querySelectorAll('.elementor-location-header, .she-header, .elementor-element-2d9e131, .elementor-1969');
+      var toggles = document.querySelectorAll('.elementor-menu-toggle');
 
       function handleHeaderScroll() {
-        var isScrolled = window.scrollY > 15;
+        var scrollPos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        var isScrolled = scrollPos > 15;
         headers.forEach(function (h) {
           if (isScrolled) {
             h.classList.add('is-sticky');
           } else {
             h.classList.remove('is-sticky');
+          }
+        });
+        toggles.forEach(function (t) {
+          if (isScrolled) {
+            t.classList.add('is-sticky');
+          } else {
+            t.classList.remove('is-sticky');
           }
         });
         if (isScrolled) {
@@ -14379,6 +14754,8 @@
       }
 
       window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+      window.addEventListener('touchmove', handleHeaderScroll, { passive: true });
+      window.addEventListener('resize', handleHeaderScroll, { passive: true });
       handleHeaderScroll();
     }
 
@@ -14557,9 +14934,15 @@
   }
 
   .csp-sub-modal-btn.info {
-    background: linear-gradient(135deg, #00AEFE, #B71F71);
-    color: #ffffff;
-    box-shadow: 0 10px 24px rgba(0, 174, 254, 0.4);
+    background: #00AEFE !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 24px rgba(0, 174, 254, 0.4) !important;
+  }
+
+  .csp-sub-modal-btn.info:hover {
+    background: #0096db !important;
+    background-image: none !important;
   }
 </style>
 <script>
@@ -14841,7 +15224,7 @@
     padding: 9px 20px !important;
     border-radius: 50px !important;
     border: none !important;
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+    background: #00AEFE !important;
     color: #fff !important;
     font-weight: 700 !important;
     font-size: 0.82rem !important;
@@ -16127,12 +16510,14 @@
 				<div class="elementor-element elementor-element-36265fd elementor-align-right sticky-button-prefixstyle elementor-widget-mobile__width-initial elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-button" data-id="36265fd" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
 					<div class="elementor-widget-container">
 						<div class="elementor-button-wrapper">
-							<a class="elementor-button elementor-button-link elementor-size-sm" href="/submit-story/">
+							<a class="elementor-button elementor-button-link elementor-size-sm csp-header-submit-btn" href="/submit-story/">
 								<span class="elementor-button-content-wrapper">
-									<span class="elementor-button-icon">
-										<i aria-hidden="true" class="jki jki-long-arrow-alt-right-solid"></i>
-									</span>
 									<span class="elementor-button-text">Submit Story</span>
+									<span class="elementor-button-icon" style="margin-left: 6px; display: inline-flex; align-items: center;">
+										<svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align: middle;">
+											<path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+									</span>
 								</span>
 							</a>
 						</div>
@@ -16320,7 +16705,7 @@
           align-items: center !important;
           justify-content: center !important;
           gap: 10px !important;
-          background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+          background: #00AEFE !important;
           color: #fff !important;
           text-decoration: none !important;
           font-weight: 500 !important;
@@ -16328,16 +16713,17 @@
           font-size: 15px !important;
           line-height: 1.2 !important;
           padding: 16px 36px !important;
-          border-radius: 50px !important;
+          border-radius: 999px 999px 4px 999px !important;
           min-width: 180px !important;
           box-shadow: 0 6px 28px rgba(0, 174, 254, 0.35) !important;
-          transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease !important;
+          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, filter 0.25s ease, border-radius 0.25s ease !important;
           white-space: nowrap !important;
         }
 
         .csp-hero-btn-primary:hover {
-          background: linear-gradient(110deg, #B71F71 0%, #00AEFE 100%) !important;
-          transform: translateY(-3px) !important;
+          background: #0096db !important;
+          transform: translateY(-3px) scale(1.02) !important;
+          border-radius: 999px 999px 12px 999px !important;
           box-shadow: 0 10px 36px rgba(0, 174, 254, 0.5) !important;
           filter: brightness(1.08) !important;
         }
@@ -17097,6 +17483,142 @@
         data-id="4d857de7" data-element_type="container" data-e-type="container"
         data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
         <div class="e-con-inner">
+          <style id="csp-home-modern-doodles-styles">
+            /* ── Modern Hand-Drawn Squiggles (Matching About Hero) ── */
+            .csp-arch-hero-squiggle {
+              width: 180px;
+              height: 45px;
+              opacity: 0.95;
+              margin-top: 18px;
+              display: block;
+            }
+            .csp-arch-hero-squiggle svg {
+              width: 100%;
+              height: 100%;
+              display: block;
+              overflow: visible;
+            }
+
+            /* ── Interactive Blob Wrapper with 3D Overlays ── */
+            .csp-blob-interactive-wrap {
+              position: relative !important;
+              width: 100% !important;
+              display: block !important;
+              overflow: visible !important;
+            }
+
+            /* ── Background Floating Organic Fluid Accent Blobs ── */
+            .csp-arch-blob-accent {
+              position: absolute;
+              top: -24px;
+              right: -24px;
+              width: 190px;
+              height: 210px;
+              background: #F8B85C;
+              border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
+              z-index: 0;
+              opacity: 0.85;
+              transition: transform 0.5s ease;
+              animation: cspBlobSway 10s ease-in-out infinite alternate;
+              pointer-events: none;
+            }
+            .csp-arch-blob-accent-story {
+              position: absolute;
+              top: -24px;
+              left: -24px;
+              width: 190px;
+              height: 210px;
+              background: linear-gradient(135deg, #00AEFE 0%, #B71F71 100%);
+              border-radius: 58% 42% 35% 65% / 40% 52% 48% 60%;
+              z-index: 0;
+              opacity: 0.35;
+              transition: transform 0.5s ease;
+              animation: cspBlobSway 10s ease-in-out infinite alternate;
+              pointer-events: none;
+            }
+            @keyframes cspBlobSway {
+              0% { transform: scale(1) rotate(0deg); }
+              100% { transform: scale(1.06) rotate(6deg); }
+            }
+
+            /* ── Geometric Ring & Circle Badges ── */
+            .csp-arch-badge-group {
+              position: absolute;
+              bottom: -24px;
+              left: -20px;
+              width: 120px;
+              height: 120px;
+              z-index: 12;
+              pointer-events: none;
+            }
+            .csp-arch-badge-group-story {
+              position: absolute;
+              bottom: -24px;
+              right: -20px;
+              width: 120px;
+              height: 120px;
+              z-index: 12;
+              pointer-events: none;
+            }
+            .csp-arch-circle-solid {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 95px;
+              height: 95px;
+              border-radius: 50%;
+              background: #FDBA9F;
+              opacity: 0.92;
+            }
+            .csp-arch-circle-solid-story {
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              width: 95px;
+              height: 95px;
+              border-radius: 50%;
+              background: #00AEFE;
+              opacity: 0.85;
+            }
+            .csp-arch-circle-ring {
+              position: absolute;
+              bottom: 10px;
+              left: -8px;
+              width: 102px;
+              height: 102px;
+              border-radius: 50%;
+              border: 2.5px solid #E87A5D;
+              opacity: 0.85;
+            }
+            .csp-arch-circle-ring-story {
+              position: absolute;
+              bottom: 10px;
+              right: -8px;
+              width: 102px;
+              height: 102px;
+              border-radius: 50%;
+              border: 2.5px solid #B71F71;
+              opacity: 0.85;
+            }
+
+            /* ── Vector Hand-Drawn Doodle Layer (Loops, Starbursts, Dots) ── */
+            .csp-home-blob-doodle-layer {
+              position: absolute !important;
+              inset: -35px !important;
+              width: calc(100% + 70px) !important;
+              height: calc(100% + 70px) !important;
+              pointer-events: none !important;
+              z-index: 15 !important;
+              overflow: visible !important;
+            }
+            @media (max-width: 768px) {
+              .csp-home-blob-doodle-layer {
+                inset: -15px !important;
+                width: calc(100% + 30px) !important;
+                height: calc(100% + 30px) !important;
+              }
+            }
+          </style>
           <div class="elementor-element elementor-element-75d32a27 e-con-full e-flex e-con e-child adv-sticky-elementor"
             data-id="75d32a27" data-element_type="container" data-e-type="container"
             data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
@@ -17140,14 +17662,53 @@
                 </div>
               </div>
             </div>
+
+            <!-- Sleek Minimalist Wavy Doodle Vector (Matching About Hero) -->
+            <div class="csp-arch-hero-squiggle" aria-hidden="true">
+              <svg viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 38C28 14 52 52 76 28C100 4 124 48 148 24C172 0 196 42 220 18C228 10 236 12 240 16" stroke="#00AEFE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
           </div>
           <div class="elementor-element elementor-element-d43fa17 e-con-full e-flex e-con e-child adv-sticky-elementor"
             data-id="d43fa17" data-element_type="container" data-e-type="container"
-            data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-            <div
-              class="elementor-element elementor-element-c9eb748 elementor-widget elementor-widget-ucaddon_blob_shapes"
-              data-id="c9eb748" data-element_type="widget" data-e-type="widget"
-              data-widget_type="ucaddon_blob_shapes.default">
+            data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}" style="position:relative;overflow:visible;">
+            
+            <!-- Interactive Blob Wrapper with Sleek Modern UI Doodles & Accents -->
+            <div class="csp-blob-interactive-wrap">
+              <!-- Background Top-Right Amber Blob Accent -->
+              <div class="csp-arch-blob-accent" aria-hidden="true"></div>
+
+              <!-- SVG Modern Hand-Drawn UI Doodles Layer -->
+              <svg class="csp-home-blob-doodle-layer" viewBox="0 0 540 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Top-Right Electric Cyan Spiral Loop -->
+                <path d="M 430 75 Q 475 35, 505 70 T 465 130 Q 440 155, 485 165" stroke="#00AEFE" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <circle cx="512" cy="55" r="5" fill="#00AEFE"/>
+                <circle cx="492" cy="25" r="3.5" fill="#00AEFE" opacity="0.75"/>
+                <circle cx="455" cy="18" r="3" fill="#00AEFE" opacity="0.5"/>
+
+                <!-- Top-Left Magenta 4-Point Starburst Sparkle & Dashed Arc -->
+                <path d="M 35 45 Q 65 15, 95 28" stroke="#B71F71" stroke-width="4" stroke-linecap="round" stroke-dasharray="5 5" fill="none"/>
+                <path d="M 30 20 L 30 38 M 21 29 L 39 29" stroke="#B71F71" stroke-width="4" stroke-linecap="round"/>
+                <path d="M 24 23 L 36 35 M 24 35 L 36 23" stroke="#B71F71" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="108" cy="38" r="4" fill="#F59E0B"/>
+
+                <!-- Bottom-Left Gold Zigzag Squiggle & Plus Accent -->
+                <path d="M 15 385 Q 35 360, 55 385 T 95 385 Q 115 410, 135 385" stroke="#F59E0B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+                <path d="M 10 420 L 10 436 M 2 428 L 18 428" stroke="#F59E0B" stroke-width="3.5" stroke-linecap="round"/>
+                <circle cx="28" cy="355" r="4.5" fill="#B71F71"/>
+
+                <!-- Bottom-Right Purple Wave with Cyan & Pink Accent Dots -->
+                <path d="M 390 485 Q 445 455, 505 480" stroke="#8B5CF6" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+                <path d="M 420 505 Q 465 485, 515 505" stroke="#8B5CF6" stroke-width="3.5" stroke-linecap="round" opacity="0.7" fill="none"/>
+                <circle cx="522" cy="460" r="5" fill="#00AEFE"/>
+                <circle cx="530" cy="485" r="3.5" fill="#B71F71"/>
+              </svg>
+
+              <div
+                class="elementor-element elementor-element-c9eb748 elementor-widget elementor-widget-ucaddon_blob_shapes"
+                data-id="c9eb748" data-element_type="widget" data-e-type="widget"
+                data-widget_type="ucaddon_blob_shapes.default">
               <div class="elementor-widget-container">
 
                 <!-- start Blob Shapes -->
@@ -17255,6 +17816,26 @@
                   .ue_blob_inside {
                     position: relative;
                   }
+
+                  .csp-home-blob-doodle-layer {
+                    position: absolute;
+                    top: -40px;
+                    left: -40px;
+                    width: calc(100% + 80px);
+                    height: calc(100% + 80px);
+                    pointer-events: none;
+                    z-index: 10;
+                    overflow: visible;
+                  }
+
+                  @media (max-width: 768px) {
+                    .csp-home-blob-doodle-layer {
+                      top: -20px;
+                      left: -20px;
+                      width: calc(100% + 40px);
+                      height: calc(100% + 40px);
+                    }
+                  }
                 </style>
 
                 <div id="uc_blob_shapes_elementor_c9eb748_justification" class="ue-blob-wrapper" role="group">
@@ -17277,6 +17858,13 @@
                 </div>
                 <!-- end Blob Shapes -->
               </div>
+            </div>
+
+            <!-- Bottom-Left Geometry: Overlapping Coral Circle & Wireframe Ring -->
+            <div class="csp-arch-badge-group" aria-hidden="true">
+              <div class="csp-arch-circle-solid"></div>
+              <div class="csp-arch-circle-ring"></div>
+            </div>
             </div>
           </div>
         </div>
@@ -17326,8 +17914,14 @@
             color: #64748b;
             font-size: 0.95rem;
             margin: 0 0 56px;
-            max-width: 560px;
+            max-width: 100%;
             line-height: 1.6;
+          }
+
+          @media(min-width: 900px) {
+            .csp-section-sub {
+              white-space: nowrap;
+            }
           }
 
           .csp-scholars-grid {
@@ -17405,9 +17999,9 @@
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #B71F71;
-            background: rgba(183, 31, 113, 0.06);
-            border: 1px solid rgba(183, 31, 113, 0.25);
+            color: #00AEFE;
+            background: rgba(0, 174, 254, 0.08);
+            border: 1px solid rgba(0, 174, 254, 0.25);
             border-radius: 20px;
             padding: 4px 12px;
             margin-bottom: 14px;
@@ -17436,26 +18030,52 @@
             min-height: 56px;
           }
 
-          .csp-scholar-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: #00AEFE;
-            background: rgba(0, 174, 254, 0.04);
-            border: 1.5px solid rgba(0, 174, 254, 0.35);
-            border-radius: 50px;
-            padding: 9px 22px;
-            text-decoration: none;
-            transition: all 0.2s ease;
+          .csp-scholar-btn,
+          a.csp-scholar-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            padding: 9px 22px !important;
+            border-radius: 50px !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border: 1.5px solid #cbd5e1 !important;
+            color: #64748b !important;
+            fill: #64748b !important;
+            text-decoration: none !important;
+            font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, sans-serif !important;
+            font-size: 0.82rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.01em !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            cursor: pointer !important;
           }
 
-          .csp-scholar-btn:hover {
-            background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
-            color: #fff;
-            border-color: transparent;
-            box-shadow: 0 6px 20px rgba(0, 174, 254, 0.3);
+          .csp-scholar-btn svg path {
+            stroke: #64748b !important;
+            transition: stroke 0.3s ease !important;
+          }
+
+          .csp-scholar-btn:hover,
+          a.csp-scholar-btn:hover,
+          .csp-scholar-card:hover .csp-scholar-btn {
+            background: #00AEFE !important;
+            background-color: #00AEFE !important;
+            background-image: none !important;
+            border-color: #00AEFE !important;
+            color: #ffffff !important;
+            fill: #ffffff !important;
+            transform: translateY(-2px) scale(1.02) !important;
+            box-shadow: 0 8px 22px rgba(0, 174, 254, 0.38) !important;
+          }
+
+          .csp-scholar-btn:hover svg path,
+          a.csp-scholar-btn:hover svg path,
+          .csp-scholar-card:hover .csp-scholar-btn svg path {
+            stroke: #ffffff !important;
           }
         </style>
         <div class="csp-scholars-inner">
@@ -17464,23 +18084,32 @@
           <p class="csp-section-sub">Distinguished scholars who challenge conventional thinking and shape the
             intellectual future of the diaspora.</p>
           <div class="csp-scholars-grid">
-            <div class="csp-scholar-card csp-skeleton-pulse" style="min-height:280px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:24px;">
-              <div style="width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,0.1);margin-bottom:16px;"></div>
-              <div style="width:60%;height:18px;background:rgba(255,255,255,0.1);border-radius:4px;margin-bottom:12px;"></div>
-              <div style="width:80%;height:14px;background:rgba(255,255,255,0.07);border-radius:4px;margin-bottom:16px;"></div>
-              <div style="width:100%;height:40px;background:rgba(255,255,255,0.05);border-radius:4px;"></div>
+            <div class="csp-scholar-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:36px 28px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.03);">
+              <div class="csp-skeleton-pulse" style="width:100px;height:100px;border-radius:50%;margin:0 auto 22px;"></div>
+              <div class="csp-skeleton-pulse" style="width:90px;height:22px;border-radius:20px;margin:0 auto 14px;"></div>
+              <div class="csp-skeleton-pulse" style="width:70%;height:22px;border-radius:6px;margin:0 auto 8px;"></div>
+              <div class="csp-skeleton-pulse" style="width:50%;height:14px;border-radius:4px;margin:0 auto 20px;"></div>
+              <div class="csp-skeleton-pulse" style="width:90%;height:14px;border-radius:4px;margin:0 auto 6px;"></div>
+              <div class="csp-skeleton-pulse" style="width:75%;height:14px;border-radius:4px;margin:0 auto 24px;"></div>
+              <div class="csp-skeleton-pulse" style="width:140px;height:38px;border-radius:50px;margin:0 auto;"></div>
             </div>
-            <div class="csp-scholar-card csp-skeleton-pulse" style="min-height:280px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:24px;">
-              <div style="width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,0.1);margin-bottom:16px;"></div>
-              <div style="width:60%;height:18px;background:rgba(255,255,255,0.1);border-radius:4px;margin-bottom:12px;"></div>
-              <div style="width:80%;height:14px;background:rgba(255,255,255,0.07);border-radius:4px;margin-bottom:16px;"></div>
-              <div style="width:100%;height:40px;background:rgba(255,255,255,0.05);border-radius:4px;"></div>
+            <div class="csp-scholar-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:36px 28px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.03);">
+              <div class="csp-skeleton-pulse" style="width:100px;height:100px;border-radius:50%;margin:0 auto 22px;"></div>
+              <div class="csp-skeleton-pulse" style="width:90px;height:22px;border-radius:20px;margin:0 auto 14px;"></div>
+              <div class="csp-skeleton-pulse" style="width:65%;height:22px;border-radius:6px;margin:0 auto 8px;"></div>
+              <div class="csp-skeleton-pulse" style="width:55%;height:14px;border-radius:4px;margin:0 auto 20px;"></div>
+              <div class="csp-skeleton-pulse" style="width:90%;height:14px;border-radius:4px;margin:0 auto 6px;"></div>
+              <div class="csp-skeleton-pulse" style="width:80%;height:14px;border-radius:4px;margin:0 auto 24px;"></div>
+              <div class="csp-skeleton-pulse" style="width:140px;height:38px;border-radius:50px;margin:0 auto;"></div>
             </div>
-            <div class="csp-scholar-card csp-skeleton-pulse" style="min-height:280px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:24px;">
-              <div style="width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,0.1);margin-bottom:16px;"></div>
-              <div style="width:60%;height:18px;background:rgba(255,255,255,0.1);border-radius:4px;margin-bottom:12px;"></div>
-              <div style="width:80%;height:14px;background:rgba(255,255,255,0.07);border-radius:4px;margin-bottom:16px;"></div>
-              <div style="width:100%;height:40px;background:rgba(255,255,255,0.05);border-radius:4px;"></div>
+            <div class="csp-scholar-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:36px 28px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.03);">
+              <div class="csp-skeleton-pulse" style="width:100px;height:100px;border-radius:50%;margin:0 auto 22px;"></div>
+              <div class="csp-skeleton-pulse" style="width:90px;height:22px;border-radius:20px;margin:0 auto 14px;"></div>
+              <div class="csp-skeleton-pulse" style="width:72%;height:22px;border-radius:6px;margin:0 auto 8px;"></div>
+              <div class="csp-skeleton-pulse" style="width:48%;height:14px;border-radius:4px;margin:0 auto 20px;"></div>
+              <div class="csp-skeleton-pulse" style="width:90%;height:14px;border-radius:4px;margin:0 auto 6px;"></div>
+              <div class="csp-skeleton-pulse" style="width:70%;height:14px;border-radius:4px;margin:0 auto 24px;"></div>
+              <div class="csp-skeleton-pulse" style="width:140px;height:38px;border-radius:50px;margin:0 auto;"></div>
             </div>
           </div>
         </div>
@@ -18029,7 +18658,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            background: linear-gradient(135deg, #00AEFE 0%, #B71F71 100%);
+            background: #00AEFE;
             color: #ffffff;
             font-weight: 700;
             font-size: 0.95rem;
@@ -18044,11 +18673,12 @@
 
           .csp-poll-vote-btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 14px 28px -6px rgba(0, 174, 254, 0.5);
-            opacity: 0.95;
+            box-shadow: 0 14px 28px -6px rgba(0, 174, 254, 0.6);
+            background: #0096dc;
           }
 
           .csp-poll-vote-btn:disabled {
+            background: #00AEFE;
             opacity: 0.45;
             cursor: not-allowed;
             transform: none;
@@ -18233,8 +18863,17 @@
                   var qEl = document.getElementById('csp-poll-q-text');
                   if (qEl) qEl.textContent = res.poll.question;
 
-                  if (res.poll.userHasVoted) {
-                    renderPollResults(res.poll.options, res.poll.totalVotes, true, res.poll.userVotedIndex);
+                  var localVotedIndex = null;
+                  try {
+                    var stored = localStorage.getItem('csp_voted_poll_' + res.poll.id);
+                    if (stored !== null && stored !== undefined && stored !== '') localVotedIndex = parseInt(stored);
+                  } catch (e) {}
+
+                  var userHasVoted = res.poll.userHasVoted || (localVotedIndex !== null && !isNaN(localVotedIndex));
+                  var votedIndex = (res.poll.userVotedIndex !== null && res.poll.userVotedIndex !== undefined) ? res.poll.userVotedIndex : localVotedIndex;
+
+                  if (userHasVoted) {
+                    renderPollResults(res.poll.options, res.poll.totalVotes, true, votedIndex);
                   } else {
                     container.innerHTML = '';
                     if (btn) { btn.style.display = 'inline-flex'; btn.disabled = true; }
@@ -18267,24 +18906,31 @@
               btn.addEventListener('click', function () {
                 var sel = document.querySelector('.csp-poll-opt.selected');
                 if (!sel || activePollId === null) return;
-                var optIdx = sel.dataset.index;
+                var optIdx = parseInt(sel.dataset.index);
                 btn.disabled = true;
                 btn.innerHTML = '<span>Submitting...</span>';
 
                 fetch(getRootUrl('api/polls.php?action=vote'), {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ pollId: activePollId, optionIndex: parseInt(optIdx) })
+                  body: JSON.stringify({ pollId: activePollId, optionIndex: optIdx })
                 })
                   .then(function (r) { return r.json(); })
                   .then(function (res) {
                     if (res.success && res.poll) {
-                      renderPollResults(res.poll.options, res.poll.totalVotes, true, parseInt(optIdx));
+                      try { localStorage.setItem('csp_voted_poll_' + activePollId, optIdx); } catch (e) {}
+                      renderPollResults(res.poll.options, res.poll.totalVotes, true, optIdx);
                       if (typeof cspToast === 'function') cspToast('Vote recorded! Thank you.', 'success');
                     } else {
-                      if (typeof cspToast === 'function') cspToast(res.error || 'Could not record vote', 'danger');
-                      btn.disabled = false;
-                      btn.innerHTML = '<span>Vote Now</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                      if (res.error && res.error.indexOf('already voted') !== -1) {
+                        try { localStorage.setItem('csp_voted_poll_' + activePollId, optIdx); } catch (e) {}
+                        loadPoll();
+                        if (typeof cspToast === 'function') cspToast('You have already voted in this poll.', 'info');
+                      } else {
+                        if (typeof cspToast === 'function') cspToast(res.error || 'Could not record vote', 'danger');
+                        btn.disabled = false;
+                        btn.innerHTML = '<span>Vote Now</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                      }
                     }
                   }).catch(function (err) {
                     console.error('Vote error:', err);
@@ -18413,7 +19059,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            background: linear-gradient(135deg, #00AEFE, #B71F71);
+            background: #00AEFE;
             color: #ffffff;
             font-weight: 700;
             padding: 13px 36px;
@@ -18428,16 +19074,16 @@
           }
 
           .csp-cd-cta-btn:hover {
-            opacity: 0.92;
+            background: #0096db;
             transform: translateY(-2px);
             box-shadow: 0 14px 28px -6px rgba(0, 174, 254, 0.5);
           }
 
           .csp-cd-cta-btn:disabled,
           .csp-cd-cta-btn.registered {
-            background: rgba(16, 185, 129, 0.15) !important;
-            color: #10b981 !important;
-            border: 1px solid rgba(16, 185, 129, 0.35) !important;
+            background: rgba(0, 174, 254, 0.15) !important;
+            color: #00AEFE !important;
+            border: 1px solid rgba(0, 174, 254, 0.35) !important;
             box-shadow: none !important;
             cursor: default !important;
             transform: none !important;
@@ -18637,10 +19283,10 @@
               </div>
               <div class="csp-cd-cta">
                 <button type="button" class="csp-cd-cta-btn" id="csp-cd-reg-btn">
-                  <span>Register Now</span>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                      stroke-linejoin="round" />
+                  <span>Reserve Your Seat</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
                 </button>
               </div>
@@ -18652,8 +19298,9 @@
                 <button type="button" class="csp-cd-form-close" id="csp-cd-form-close">&times;</button>
                 <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
                   <div
-                    style="font-size:1.6rem;background:rgba(0,174,254,0.15);width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,174,254,0.3);">
-                    📅</div>
+                    style="background:rgba(0,174,254,0.15);width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,174,254,0.3);color:#00AEFE;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  </div>
                   <div>
                     <h4 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#ffffff;margin:0 0 2px;">Event
                       Registration</h4>
@@ -18679,8 +19326,9 @@
                     <input type="email" id="csp-cd-email-input" required placeholder="name@example.com">
                   </div>
                   <button type="submit" id="csp-cd-submit-btn"
-                    style="width:100%;padding:14px;background:linear-gradient(110deg,#00AEFE,#B71F71);color:#ffffff;border:none;border-radius:50px;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:0 8px 20px rgba(0,174,254,0.3);transition:all 0.2s;">
-                    Register &amp; Add to Calendar 📅
+                    style="width:100%;padding:14px;background:#00AEFE;color:#ffffff;border:none;border-radius:50px;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:0 8px 20px rgba(0,174,254,0.3);transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px;">
+                    <span>Register &amp; Add to Calendar</span>
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                   </button>
                 </form>
                 <div id="csp-cd-form-msg" style="display:none;padding:10px 0;"></div>
@@ -18711,7 +19359,7 @@
                 } else {
                   regBtn.disabled = false;
                   regBtn.className = 'csp-cd-cta-btn';
-                  regBtn.innerHTML = '<span>Reserve Your Seat 📅</span>';
+                  regBtn.innerHTML = '<span>Reserve Your Seat</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
                 }
               }
             }
@@ -18760,16 +19408,23 @@
                   liveDateStr = ld.discussion_date || "";
 
                   var titleEl = document.getElementById('csp-live-topic-text');
-                  if (titleEl) titleEl.textContent = ld.topic;
+                  if (titleEl && ld.topic) titleEl.textContent = ld.topic;
 
                   var nameEl = document.getElementById('csp-live-speaker-name');
-                  if (nameEl) nameEl.textContent = ld.speaker_name;
+                  if (nameEl && ld.speaker_name) nameEl.textContent = ld.speaker_name;
 
                   var roleEl = document.getElementById('csp-live-speaker-role');
-                  if (roleEl) roleEl.textContent = ld.speaker_role;
+                  if (roleEl && ld.speaker_role) roleEl.textContent = ld.speaker_role;
 
                   var avatarEl = document.getElementById('csp-live-speaker-avatar');
-                  if (avatarEl && ld.speaker_avatar) avatarEl.src = ld.speaker_avatar + (ld.speaker_avatar.includes('?') ? '&' : '?') + 'v=' + Date.now();
+                  if (avatarEl && ld.speaker_avatar) {
+                    var newAv = ld.speaker_avatar + (ld.speaker_avatar.includes('?') ? '&' : '?') + 'v=' + Date.now();
+                    if (!avatarEl.src.includes(ld.speaker_avatar)) {
+                      var imgPre = new Image();
+                      imgPre.onload = function() { avatarEl.src = newAv; };
+                      imgPre.src = newAv;
+                    }
+                  }
 
                   if (ld.discussion_date) {
                     var parsedDate = new Date(ld.discussion_date.replace(' ', 'T')).getTime();
@@ -18910,11 +19565,14 @@
                           '<div style="width:52px;height:52px;border-radius:50%;background:rgba(0,174,254,0.12);color:#00AEFE;font-size:1.8rem;display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;border:1.5px solid rgba(0,174,254,0.4);box-shadow:0 0 24px rgba(0,174,254,0.25);">✓</div>' +
                           '<p style="font-size:0.86rem;color:rgba(255,255,255,0.8);margin:0 0 20px;line-height:1.5;">Welcome <strong>' + name.replace(/</g, '&lt;') + '</strong>! Add this event directly to your calendar below:</p>' +
                           '<div style="display:flex;flex-direction:column;gap:12px;">' +
-                          '<a href="' + gCalUrl + '" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 20px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#ffffff;border-radius:50px;font-weight:700;font-size:0.9rem;text-decoration:none;box-shadow:0 8px 24px rgba(0,174,254,0.35);transition:transform 0.2s,box-shadow 0.2s;">' +
-                          '<span>📅 Add to Google Calendar ↗</span>' +
+                          '<a href="' + gCalUrl + '" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 20px;background:#00AEFE;color:#ffffff;border-radius:50px;font-weight:700;font-size:0.9rem;text-decoration:none;box-shadow:0 8px 24px rgba(0,174,254,0.35);transition:transform 0.2s,box-shadow 0.2s;">' +
+                          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>' +
+                          '<span>Add to Google Calendar</span>' +
+                          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>' +
                           '</a>' +
                           '<button id="csp-ics-download-btn" type="button" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;background:rgba(255,255,255,0.08);color:#ffffff;border:1px solid rgba(255,255,255,0.22);border-radius:50px;font-weight:600;font-size:0.84rem;cursor:pointer;transition:all 0.2s;">' +
-                          '<span>📥 Download .ics File (Apple / Outlook)</span>' +
+                          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>' +
+                          '<span>Download .ics File (Apple / Outlook)</span>' +
                           '</button>' +
                           '<button id="csp-reg-done-btn" type="button" style="margin-top:6px;padding:8px;background:transparent;color:rgba(255,255,255,0.6);border:none;font-size:0.8rem;cursor:pointer;text-decoration:underline;">' +
                           'Close window' +
@@ -18937,14 +19595,14 @@
                     } else {
                       alert((res && res.error) ? res.error : 'Registration failed');
                       submitBtn.disabled = false;
-                      submitBtn.textContent = 'Register & Add to Calendar 📅';
+                      submitBtn.innerHTML = '<span>Register &amp; Add to Calendar</span> <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>';
                     }
                   })
                   .catch(function (err) {
                     console.error('Registration error:', err);
                     alert('Could not submit registration. Please check your network connection.');
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Register & Add to Calendar 📅';
+                    submitBtn.innerHTML = '<span>Register &amp; Add to Calendar</span> <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>';
                   });
               });
             }
@@ -19315,13 +19973,14 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #00AEFE, #B71F71);
+            background: #00AEFE;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.85rem;
             font-weight: 700;
             color: #fff;
+            box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35);
           }
 
           .csp-quote-author-name {
@@ -19422,6 +20081,8 @@
           .csp-trending-tags-wrap {
             overflow: hidden;
             position: relative;
+            padding: 10px 0;
+            margin: -10px 0;
           }
 
           .csp-trending-tags-wrap::after {
@@ -19666,25 +20327,25 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(1);
-            width: 66px;
-            height: 66px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #00AEFE, #B71F71);
+            background: #00AEFE;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 24px rgba(0, 174, 254, 0.5);
-            border: 2.5px solid rgba(255, 255, 255, 0.4);
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+            box-shadow: 0 10px 30px rgba(0, 174, 254, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
             z-index: 3;
             outline: none !important;
-            border-style: solid !important;
           }
 
           .csp-vcard:hover .csp-vcard-play {
-            transform: translate(-50%, -50%) scale(1.15) !important;
-            box-shadow: 0 0 35px rgba(0, 174, 254, 0.85), 0 0 55px rgba(183, 31, 113, 0.6);
+            transform: translate(-50%, -50%) scale(1.12) !important;
+            box-shadow: 0 12px 35px rgba(0, 174, 254, 0.7);
             border-color: #ffffff;
+            background: #0096dc;
           }
 
           /* Centered Glassmorphic Video Player Modal Popup */
@@ -19995,7 +20656,8 @@
               Watch</p>
             <h2
               style="font-family:'Merriweather',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:400;color:#ffffff;margin:0 0 12px;">
-              Short Video Highlights</h2>
+              Short Video <span
+                style="font-family:'Merienda',cursive,sans-serif;font-weight:700;background:linear-gradient(110deg,#00AEFE,#B71F71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Highlights</span></h2>
             <p style="font-size:0.95rem;color:rgba(255,255,255,0.7);line-height:1.6;margin:0;">30–90 second scholar
               introductions, essay summaries, and behind-the-scenes previews — built for readers who scroll before
               committing to a deep read.</p>
@@ -20008,8 +20670,8 @@
               <span
                 style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
               <div class="csp-vcard-play">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:3px;">
-                  <path d="M8 5v14l11-7z" fill="#ffffff" />
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true" style="margin-left:3px;display:block;">
+                  <path d="M7 4.5v15a1 1 0 0 0 1.52.86l13-7.5a1 1 0 0 0 0-1.72l-13-7.5A1 1 0 0 0 7 4.5z"/>
                 </svg>
               </div>
               <div
@@ -20023,8 +20685,8 @@
               <span
                 style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
               <div class="csp-vcard-play">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:3px;">
-                  <path d="M8 5v14l11-7z" fill="#ffffff" />
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true" style="margin-left:3px;display:block;">
+                  <path d="M7 4.5v15a1 1 0 0 0 1.52.86l13-7.5a1 1 0 0 0 0-1.72l-13-7.5A1 1 0 0 0 7 4.5z"/>
                 </svg>
               </div>
               <div
@@ -20038,8 +20700,8 @@
               <span
                 style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.75);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);z-index:2;">0:08</span>
               <div class="csp-vcard-play">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="display:block;margin-left:3px;">
-                  <path d="M8 5v14l11-7z" fill="#ffffff" />
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true" style="margin-left:3px;display:block;">
+                  <path d="M7 4.5v15a1 1 0 0 0 1.52.86l13-7.5a1 1 0 0 0 0-1.72l-13-7.5A1 1 0 0 0 7 4.5z"/>
                 </svg>
               </div>
               <div
@@ -20386,11 +21048,18 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Sleek Minimalist Wavy Doodle Vector -->
+              <div class="csp-arch-hero-squiggle" aria-hidden="true">
+                <svg viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 38C28 14 52 52 76 28C100 4 124 48 148 24C172 0 196 42 220 18C228 10 236 12 240 16" stroke="#00AEFE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
             </div>
           </div>
           <div class="elementor-element elementor-element-69c6f153 e-con-full e-flex e-con e-child adv-sticky-elementor"
             data-id="69c6f153" data-element_type="container" data-e-type="container"
-            data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
+            data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}" style="position:relative;overflow:visible;">
             <div
               class="elementor-element elementor-element-54b4beee elementor-widget__width-auto elementor-absolute elementor-widget elementor-widget-image"
               data-id="54b4beee" data-element_type="widget" data-e-type="widget"
@@ -20400,11 +21069,44 @@
                   src="/wp-content/uploads/2025/11/dots-1.png" class="attachment-full size-full wp-image-137" alt="">
               </div>
             </div>
-            <div
-              class="elementor-element elementor-element-8997264 elementor-widget elementor-widget-ucaddon_blob_shapes"
-              data-id="8997264" data-element_type="widget" data-e-type="widget"
-              data-widget_type="ucaddon_blob_shapes.default">
-              <div class="elementor-widget-container">
+            
+            <!-- Interactive Blob Wrapper with Sleek Modern UI Doodles & Accents -->
+            <div class="csp-blob-interactive-wrap">
+              <!-- Background Top-Left Organic Gradient Blob Accent -->
+              <div class="csp-arch-blob-accent-story" aria-hidden="true"></div>
+
+              <!-- SVG Modern Hand-Drawn UI Doodles Layer -->
+              <svg class="csp-home-blob-doodle-layer" viewBox="0 0 540 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Top-Left Gold Wavy Squiggle & Magenta Sparkle -->
+                <path d="M 30 75 Q 55 50, 80 75 T 130 75 Q 155 100, 180 75" stroke="#F59E0B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+                <path d="M 25 35 L 25 51 M 17 43 L 33 43" stroke="#B71F71" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M 20 38 L 30 48 M 20 48 L 30 38" stroke="#B71F71" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="195" cy="80" r="4" fill="#00AEFE"/>
+
+                <!-- Top-Right Cyan Dashed Arc & 4-Point Starburst -->
+                <path d="M 410 40 Q 460 15, 505 48" stroke="#00AEFE" stroke-width="4" stroke-linecap="round" stroke-dasharray="6 6" fill="none"/>
+                <path d="M 500 20 L 500 36 M 492 28 L 508 28" stroke="#00AEFE" stroke-width="4" stroke-linecap="round"/>
+                <path d="M 495 23 L 505 33 M 495 33 L 505 23" stroke="#00AEFE" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="430" cy="18" r="4" fill="#F59E0B"/>
+                <circle cx="520" cy="65" r="3.5" fill="#00AEFE" opacity="0.8"/>
+
+                <!-- Bottom-Left Cyan Curly Ribbon Loop & Indigo Dots -->
+                <path d="M 35 380 Q 10 415, 40 445 T 75 430 Q 60 465, 25 485" stroke="#00AEFE" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+                <circle cx="15" cy="360" r="4.5" fill="#8B5CF6"/>
+                <circle cx="85" cy="460" r="3.5" fill="#00AEFE" opacity="0.75"/>
+
+                <!-- Bottom-Right Magenta & Purple Double Accent Wave -->
+                <path d="M 385 490 Q 445 465, 505 490" stroke="#B71F71" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+                <path d="M 410 510 Q 460 490, 515 510" stroke="#8B5CF6" stroke-width="3.5" stroke-linecap="round" opacity="0.75" fill="none"/>
+                <path d="M 510 445 L 510 461 M 502 453 L 518 453" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="525" cy="430" r="4.5" fill="#00AEFE"/>
+              </svg>
+
+              <div
+                class="elementor-element elementor-element-8997264 elementor-widget elementor-widget-ucaddon_blob_shapes"
+                data-id="8997264" data-element_type="widget" data-e-type="widget"
+                data-widget_type="ucaddon_blob_shapes.default">
+                <div class="elementor-widget-container">
 
                 <!-- start Blob Shapes -->
                 <style>
@@ -20509,6 +21211,13 @@
                 <!-- end Blob Shapes -->
               </div>
             </div>
+
+            <!-- Bottom-Right Geometry: Overlapping Cyan Circle & Magenta Wireframe Ring -->
+            <div class="csp-arch-badge-group-story" aria-hidden="true">
+              <div class="csp-arch-circle-solid-story"></div>
+              <div class="csp-arch-circle-ring-story"></div>
+            </div>
+            </div>
           </div>
         </div>
       </div>
@@ -20559,10 +21268,9 @@
           .csp-stat-num {
             font-size: clamp(2.2rem, 4vw, 3rem);
             font-weight: 800;
-            background: linear-gradient(135deg, #00AEFE, #B71F71);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #00AEFE !important;
+            background: none !important;
+            -webkit-text-fill-color: #00AEFE !important;
             line-height: 1;
             margin-bottom: 10px;
           }
@@ -20893,6 +21601,7 @@
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 14px 40px rgba(0, 0, 0, 0.06);
+            position: relative;
           }
 
           .csp-conv-body {
@@ -20901,6 +21610,8 @@
             flex-direction: column;
             justify-content: center;
             background: #f8fafc;
+            position: relative;
+            transition: opacity 0.3s ease;
           }
 
           .csp-conv-btns {
@@ -20910,12 +21621,92 @@
             flex-wrap: wrap;
           }
 
+          .csp-conv-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            padding: 13px 28px !important;
+            background: #00AEFE !important;
+            color: #ffffff !important;
+            border: 1.5px solid transparent !important;
+            border-radius: 50px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-weight: 600 !important;
+            font-size: 0.88rem !important;
+            text-decoration: none !important;
+            box-shadow: 0 6px 20px rgba(0, 174, 254, 0.35) !important;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            cursor: pointer !important;
+          }
+
+          .csp-conv-btn:hover {
+            background: #0096dc !important;
+            color: #ffffff !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(0, 174, 254, 0.5) !important;
+          }
+
+          .csp-conv-btn-outline {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            padding: 13px 28px !important;
+            background: transparent !important;
+            color: #111827 !important;
+            border: 1.5px solid #cbd5e1 !important;
+            border-radius: 50px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-weight: 600 !important;
+            font-size: 0.88rem !important;
+            text-decoration: none !important;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            cursor: pointer !important;
+          }
+
+          .csp-conv-btn-outline:hover {
+            border-color: #111827 !important;
+            background: rgba(0, 0, 0, 0.04) !important;
+            color: #111827 !important;
+            transform: translateY(-2px) !important;
+          }
+
+          /* Skeleton Shimmer Overlay for Interview Section */
+          .csp-conv-skeleton-overlay {
+            position: absolute;
+            inset: 0;
+            background: #f8fafc;
+            z-index: 5;
+            padding: 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+          }
+
+          .csp-conv-skeleton-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+          }
+
+          .csp-skel-line {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 37%, #f1f5f9 63%);
+            background-size: 200% 100%;
+            animation: csp-shimmer 1.4s infinite ease-in-out;
+            border-radius: 6px;
+          }
+
           @media (max-width: 768px) {
             .csp-conv-grid {
               grid-template-columns: 1fr !important;
             }
 
-            .csp-conv-body {
+            .csp-conv-body,
+            .csp-conv-skeleton-overlay {
               padding: 28px 20px !important;
               text-align: center !important;
             }
@@ -20926,7 +21717,8 @@
               gap: 12px !important;
             }
 
-            .csp-conv-btn {
+            .csp-conv-btn,
+            .csp-conv-btn-outline {
               width: 100% !important;
               justify-content: center !important;
               box-sizing: border-box !important;
@@ -20948,26 +21740,29 @@
             <!-- Photo Thumbnail with Overlay Play Button -->
             <div id="csp-interview-media-wrapper"
               style="position:relative;width:100%;min-height:300px;background:#09152b;overflow:hidden;cursor:pointer;">
-              <img id="csp-interview-photo" src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg"
+              <img id="csp-interview-photo" src="/uploads/upload_1789745044_214929bc.jpg"
                 alt="Featured Interview"
-                style="width:100%;height:100%;object-fit:cover;opacity:0.85;transition:transform 0.5s ease;"
+                style="width:100%;height:100%;object-fit:cover;opacity:0.85;transition:transform 0.5s ease, opacity 0.3s ease;"
                 onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'" />
               <div
                 style="position:absolute;inset:0;background:linear-gradient(to top, rgba(9,21,43,0.7) 0%, transparent 60%);">
               </div>
               <div id="csp-interview-play-btn"
-                style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg, #00AEFE, #B71F71);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,174,254,0.5);border:2px solid rgba(255,255,255,0.3);transition:transform 0.25s ease;"
+                style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:#00AEFE;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,174,254,0.5);border:2px solid rgba(255,255,255,0.3);transition:transform 0.25s ease;"
                 onmouseover="this.style.transform='translate(-50%,-50%) scale(1.1)'"
                 onmouseout="this.style.transform='translate(-50%,-50%) scale(1)'">
-                <span style="color:#ffffff;font-size:1.4rem;margin-left:4px;">▶</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true" style="margin-left:3px;">
+                  <path d="M7 4.5v15a1 1 0 0 0 1.52.86l13-7.5a1 1 0 0 0 0-1.72l-13-7.5A1 1 0 0 0 7 4.5z"/>
+                </svg>
               </div>
               <span id="csp-interview-badge"
                 style="position:absolute;bottom:16px;left:16px;background:rgba(0,0,0,0.75);color:#ffffff;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);">Featured
                 Interview</span>
+              <div id="csp-interview-photo-skel" class="csp-skel-line" style="position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 0.3s ease;"></div>
             </div>
 
             <!-- Content -->
-            <div class="csp-conv-body">
+            <div class="csp-conv-body" id="csp-interview-content-box">
               <span id="csp-interview-badge-tag"
                 style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;color:#00AEFE;text-transform:uppercase;margin-bottom:10px;display:block;">Featured
                 Interview</span>
@@ -20980,12 +21775,33 @@
                 African intellectuals and leaders in the global diaspora are building new institutions, preserving
                 cultural heritage, and shaping economic policy.</p>
               <div class="csp-conv-btns">
-                <a id="csp-interview-watch-btn" href="#" class="csp-conv-btn"
-                  style="display:inline-flex;align-items:center;gap:10px;padding:13px 28px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border-radius:50px;font-weight:600;font-size:0.88rem;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);transition:transform 0.2s;">▶
-                  Watch Interview</a>
-                <a href="/stories/" class="csp-conv-btn"
-                  style="display:inline-flex;align-items:center;gap:10px;padding:13px 28px;background:#ffffff;border:1.5px solid #cbd5e1;color:#0f172a;border-radius:50px;font-weight:600;font-size:0.88rem;text-decoration:none;transition:all 0.2s;">📖
-                  Explore Stories</a>
+                <a id="csp-interview-watch-btn" href="#" class="csp-conv-btn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:middle;flex-shrink:0;">
+                    <path d="M7 4.5v15a1 1 0 0 0 1.52.86l13-7.5a1 1 0 0 0 0-1.72l-13-7.5A1 1 0 0 0 7 4.5z"/>
+                  </svg>
+                  <span>Watch Interview</span>
+                </a>
+                <a href="/stories/" class="csp-conv-btn-outline">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:middle;flex-shrink:0;">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                  </svg>
+                  <span>Explore Stories</span>
+                </a>
+              </div>
+
+              <!-- Shimmer Loading Overlay -->
+              <div id="csp-interview-skel-overlay" class="csp-conv-skeleton-overlay">
+                <div class="csp-skel-line" style="width:120px;height:14px;"></div>
+                <div class="csp-skel-line" style="width:75%;height:32px;"></div>
+                <div class="csp-skel-line" style="width:40%;height:16px;"></div>
+                <div class="csp-skel-line" style="width:90%;height:22px;"></div>
+                <div class="csp-skel-line" style="width:100%;height:16px;"></div>
+                <div class="csp-skel-line" style="width:85%;height:16px;"></div>
+                <div style="display:flex;gap:12px;margin-top:10px;">
+                  <div class="csp-skel-line" style="width:150px;height:44px;border-radius:50px;"></div>
+                  <div class="csp-skel-line" style="width:140px;height:44px;border-radius:50px;"></div>
+                </div>
               </div>
             </div>
 
@@ -21070,7 +21886,7 @@
                   position: absolute;
                   top: -14px;
                   right: 28px;
-                  background: linear-gradient(135deg, #00AEFE, #B71F71);
+                  background: #00AEFE;
                   color: #ffffff;
                   font-size: 0.72rem;
                   font-weight: 700;
@@ -21167,13 +21983,14 @@
                 }
 
                 .csp-price-btn.primary {
-                  background: linear-gradient(135deg, #00AEFE, #B71F71);
+                  background: #00AEFE;
                   color: #ffffff;
                   border: none;
                   box-shadow: 0 6px 20px rgba(0, 174, 254, 0.25);
                 }
 
                 .csp-price-btn.primary:hover {
+                  background: #0096db;
                   opacity: 0.92;
                   transform: translateY(-2px);
                   box-shadow: 0 8px 24px rgba(0, 174, 254, 0.35);
@@ -21988,7 +22805,7 @@
           <input type="email" id="pay-cust-email" required placeholder="e.g. amara@diaspora.org" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:12px 14px;color:#fff;font-size:0.92rem;">
         </div>
 
-        <button type="submit" id="csp-pay-submit-btn" style="width:100%;padding:14px;background:linear-gradient(110deg,#00AEFE 0%,#B71F71 100%);color:#fff;border:none;border-radius:50px;font-family:'Merriweather',serif;font-weight:600;font-size:0.95rem;cursor:pointer;box-shadow:0 6px 24px rgba(0,174,254,0.4);">Proceed to Pay $${amountVal} →</button>
+        <button type="submit" id="csp-pay-submit-btn" style="width:100%;padding:14px;background:#00AEFE;color:#fff;border:none;border-radius:50px;font-family:'Merriweather',serif;font-weight:600;font-size:0.95rem;cursor:pointer;box-shadow:0 6px 24px rgba(0,174,254,0.4);">Proceed to Pay $${amountVal} →</button>
       </form>
     `;
 
@@ -22244,7 +23061,7 @@
           if (fiEyebrowEl && fi.title) fiEyebrowEl.textContent = fi.title;
 
           var fiNameEl = document.getElementById('csp-interviewee-name');
-          if (fiNameEl) fiNameEl.textContent = fi.interviewee_name || 'Prof. Amara Diallo & The Panel';
+          if (fiNameEl && fi.interviewee_name) fiNameEl.textContent = fi.interviewee_name;
 
           var fiRoleEl = document.getElementById('csp-interviewee-role');
           if (fiRoleEl) {
@@ -22257,7 +23074,15 @@
 
           var fiPhotoEl = document.getElementById('csp-interview-photo');
           if (fiPhotoEl && fi.photo) {
-            fiPhotoEl.src = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(fi.photo) : fi.photo;
+            var fullImg = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(fi.photo) : fi.photo;
+            if (fiPhotoEl.src.indexOf(fi.photo) === -1) {
+              var tempImg = new Image();
+              tempImg.onload = function () {
+                fiPhotoEl.src = fullImg;
+                fiPhotoEl.style.opacity = '0.85';
+              };
+              tempImg.src = fullImg;
+            }
           }
 
           if (fi.video_url) {
