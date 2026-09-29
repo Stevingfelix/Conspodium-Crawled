@@ -1522,13 +1522,18 @@ e-page-transition,
   .elementor-element-362a422c {
     position: relative !important;
     background: #FFFFFF !important;
-    padding-top: clamp(130px, 13vw, 160px) !important;
-    padding-bottom: 75px !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding-top: clamp(120px, 12vw, 140px) !important;
+    padding-bottom: 60px !important;
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
     z-index: 1000 !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   .csp-stories-mosaic-hero .e-con-inner,
@@ -1848,6 +1853,134 @@ e-page-transition,
     color: #00AEFE !important;
   }
 
+  /* ── Hero Background Blob & Doodle Accents ── */
+  .csp-stories-hero-blob-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .csp-stories-blob-1 {
+    position: absolute;
+    top: 40px;
+    right: 5%;
+    width: 380px;
+    height: 380px;
+    background: linear-gradient(135deg, rgba(0, 174, 254, 0.35) 0%, rgba(56, 189, 248, 0.22) 50%, rgba(183, 31, 113, 0.12) 100%);
+    border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
+    opacity: 0.9;
+    filter: blur(6px);
+    box-shadow: 0 16px 50px rgba(0, 174, 254, 0.2);
+    animation: cspStoriesBlobMorph 10s ease-in-out infinite alternate, cspStoriesBlobFloat1 7s ease-in-out infinite alternate;
+    will-change: border-radius, transform;
+  }
+
+  .csp-stories-blob-2 {
+    position: absolute;
+    bottom: 30px;
+    left: 4%;
+    width: 320px;
+    height: 320px;
+    background: linear-gradient(135deg, rgba(183, 31, 113, 0.18) 0%, rgba(0, 174, 254, 0.26) 60%, rgba(56, 189, 248, 0.14) 100%);
+    border-radius: 58% 42% 40% 60% / 45% 55% 45% 55%;
+    opacity: 0.85;
+    filter: blur(6px);
+    box-shadow: 0 16px 40px rgba(183, 31, 113, 0.12);
+    animation: cspStoriesBlobMorph 12s ease-in-out infinite alternate-reverse, cspStoriesBlobFloat2 8s ease-in-out infinite alternate;
+    will-change: border-radius, transform;
+  }
+
+  @keyframes cspStoriesBlobMorph {
+    0% {
+      border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
+      transform: rotate(0deg) scale(1);
+    }
+    33% {
+      border-radius: 58% 42% 38% 62% / 40% 55% 45% 60%;
+      transform: rotate(120deg) scale(1.06);
+    }
+    66% {
+      border-radius: 35% 65% 55% 45% / 60% 35% 65% 40%;
+      transform: rotate(240deg) scale(0.96);
+    }
+    100% {
+      border-radius: 60% 40% 45% 55% / 50% 60% 40% 50%;
+      transform: rotate(360deg) scale(1.04);
+    }
+  }
+
+  @keyframes cspStoriesBlobFloat1 {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(-14px, -16px); }
+    100% { transform: translate(10px, -6px); }
+  }
+
+  @keyframes cspStoriesBlobFloat2 {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(12px, 14px); }
+    100% { transform: translate(-8px, 6px); }
+  }
+
+  /* Minimalist Doodle Squiggle and Ring Badges */
+  .csp-stories-squiggle-left {
+    position: absolute;
+    top: 22%;
+    left: 3%;
+    width: 150px;
+    height: 45px;
+    opacity: 0.85;
+    pointer-events: none;
+    z-index: 2;
+    animation: cspFloatSquiggle 5s ease-in-out infinite alternate;
+  }
+
+  @keyframes cspFloatSquiggle {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-8px) rotate(-3deg); }
+  }
+
+  .csp-stories-badge-group {
+    position: absolute;
+    top: 20%;
+    right: 4%;
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .csp-stories-circle-solid {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #00AEFE;
+    opacity: 0.85;
+    top: 10px;
+    right: 14px;
+    box-shadow: 0 4px 12px rgba(0, 174, 254, 0.4);
+  }
+
+  .csp-stories-circle-ring {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px dashed rgba(0, 174, 254, 0.45);
+    top: 0;
+    right: 0;
+    animation: cspSpinSlow 20s linear infinite;
+  }
+
+  @keyframes cspSpinSlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
   /* ── Mobile Responsiveness ── */
   @media (max-width: 992px) {
     .elementor-2245 .elementor-element-362a422c,
@@ -1865,10 +1998,35 @@ e-page-transition,
       justify-content: flex-start !important;
       padding: 6px 4px !important;
     }
+
+    .csp-stories-squiggle-left,
+    .csp-stories-badge-group {
+      display: none !important;
+    }
   }
 </style>
 
 <div class="elementor-element elementor-element-362a422c e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded csp-stories-mosaic-hero" data-id="362a422c" data-element_type="container" data-e-type="container">
+  
+  <!-- Fluid Morphing Blob Accents -->
+  <div class="csp-stories-hero-blob-wrap" aria-hidden="true">
+    <div class="csp-stories-blob-1"></div>
+    <div class="csp-stories-blob-2"></div>
+  </div>
+
+  <!-- Minimalist Doodle Squiggle (Left) -->
+  <div class="csp-stories-squiggle-left" aria-hidden="true">
+    <svg viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 38C28 14 52 52 76 28C100 4 124 48 148 24C172 0 196 42 220 18C228 10 236 12 240 16" stroke="#00AEFE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <!-- Geometric Circle Badges (Right) -->
+  <div class="csp-stories-badge-group" aria-hidden="true">
+    <div class="csp-stories-circle-solid"></div>
+    <div class="csp-stories-circle-ring"></div>
+  </div>
+
   <div class="e-con-inner">
     <div class="csp-mosaic-hero-center-content">
       
@@ -1927,85 +2085,93 @@ e-page-transition,
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">EXPLORE STORIES</h2>				</div>
 				</div>
-				<div class="elementor-element elementor-element-5f5039d6 eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="5f5039d6" data-element_type="widget" data-e-type="widget" data-widget_type="		<div class="elementor-element elementor-element-68d4a41e e-con-full e-grid e-con e-child adv-sticky-elementor" id="csp-stories-discover-categories" data-id="68d4a41e" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:24px;width:100%;margin-bottom:40px;">
+				<div class="elementor-element elementor-element-5f5039d6 eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="5f5039d6" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
+				<div class="elementor-widget-container">
+					<div class="eael-dual-header">
+						<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-ad87566">Discover by </span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">Category</span> </h2>
+						<span class="subtext"><p>Browse stories by cultural and editorial focus</p></span>
+					</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-68d4a41e e-con-full e-grid e-con e-child adv-sticky-elementor" id="csp-stories-discover-categories" data-id="68d4a41e" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:30px;width:100%;margin-bottom:40px;">
         
         <!-- Category Card 1 -->
-        <div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,174,254,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.03)'">
-          <div style="height:180px;overflow:hidden;position:relative;">
-            <img width="1536" height="864" src="../wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Culture &amp; Heritage" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+        <div class="csp-cat-card" onclick="window.location.href='/category/culture-heritage/'">
+          <div>
+            <div class="csp-cat-img-box">
+              <img width="1536" height="864" src="../wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Culture &amp; Heritage">
+            </div>
+            <div style="padding:24px 24px 16px;text-align:left;">
+              <h3 class="csp-cat-title">Culture &amp; Heritage</h3>
+              <p class="csp-cat-desc">Heritage, traditions, and the African spirit abroad</p>
+            </div>
           </div>
-          <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">Culture &amp; Heritage</h3>
-              <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">Heritage, traditions, and the African spirit abroad</p>
-            </div>
-            <div style="margin-top:16px;">
-              <a href="/category/culture-heritage/" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>
-            </div>
+          <div style="padding:0 24px 24px;text-align:center;">
+            <a href="/category/culture-heritage/" class="csp-cat-card-btn">Explore</a>
           </div>
         </div>
 
         <!-- Category Card 2 -->
-        <div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,174,254,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.03)'">
-          <div style="height:180px;overflow:hidden;position:relative;">
-            <img loading="lazy" width="1024" height="570" src="../wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Innovation" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+        <div class="csp-cat-card" onclick="window.location.href='/category/innovation/'">
+          <div>
+            <div class="csp-cat-img-box">
+              <img loading="lazy" width="1024" height="570" src="../wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Innovation">
+            </div>
+            <div style="padding:24px 24px 16px;text-align:left;">
+              <h3 class="csp-cat-title">Innovation</h3>
+              <p class="csp-cat-desc">Africans In Diaspora influencing economic decisions worldwide</p>
+            </div>
           </div>
-          <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">Innovation</h3>
-              <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">Africans In Diaspora influencing economic decisions worldwide</p>
-            </div>
-            <div style="margin-top:16px;">
-              <a href="/category/innovation/" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>
-            </div>
+          <div style="padding:0 24px 24px;text-align:center;">
+            <a href="/category/innovation/" class="csp-cat-card-btn">Explore</a>
           </div>
         </div>
 
         <!-- Category Card 3 -->
-        <div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,174,254,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.03)'">
-          <div style="height:180px;overflow:hidden;position:relative;">
-            <img loading="lazy" width="1180" height="664" src="../wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Art &amp; Entertainment" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+        <div class="csp-cat-card" onclick="window.location.href='/category/art-entertainment/'">
+          <div>
+            <div class="csp-cat-img-box">
+              <img loading="lazy" width="1180" height="664" src="../wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Art &amp; Entertainment">
+            </div>
+            <div style="padding:24px 24px 16px;text-align:left;">
+              <h3 class="csp-cat-title">Art &amp; Entertainment</h3>
+              <p class="csp-cat-desc">Creatives are shaping and representing global culture.</p>
+            </div>
           </div>
-          <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">Art &amp; Entertainment</h3>
-              <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">Creatives are shaping and representing global culture.</p>
-            </div>
-            <div style="margin-top:16px;">
-              <a href="/category/art-entertainment/" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>
-            </div>
+          <div style="padding:0 24px 24px;text-align:center;">
+            <a href="/category/art-entertainment/" class="csp-cat-card-btn">Explore</a>
           </div>
         </div>
 
         <!-- Category Card 4 -->
-        <div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,174,254,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.03)'">
-          <div style="height:180px;overflow:hidden;position:relative;">
-            <img loading="lazy" width="2560" height="1703" src="../wp-content/uploads/2026/02/group-five-african-college-students-spending-time-together-campus-university-yard-black-afro-friends-making-selfie-phone-education-theme-scaled.jpg" alt="Community" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+        <div class="csp-cat-card" onclick="window.location.href='/category/community/'">
+          <div>
+            <div class="csp-cat-img-box">
+              <img loading="lazy" width="2560" height="1703" src="../wp-content/uploads/2026/02/group-five-african-college-students-spending-time-together-campus-university-yard-black-afro-friends-making-selfie-phone-education-theme-scaled.jpg" alt="Community">
+            </div>
+            <div style="padding:24px 24px 16px;text-align:left;">
+              <h3 class="csp-cat-title">Community</h3>
+              <p class="csp-cat-desc">Stories connecting Africans In Diaspora across the globe.</p>
+            </div>
           </div>
-          <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">Community</h3>
-              <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">Stories connecting Africans In Diaspora across the globe.</p>
-            </div>
-            <div style="margin-top:16px;">
-              <a href="/category/community/" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>
-            </div>
+          <div style="padding:0 24px 24px;text-align:center;">
+            <a href="/category/community/" class="csp-cat-card-btn">Explore</a>
           </div>
         </div>
 
         <!-- Category Card 5 -->
-        <div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,174,254,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.03)'">
-          <div style="height:180px;overflow:hidden;position:relative;">
-            <img loading="lazy" width="2560" height="1703" src="../wp-content/uploads/2026/02/group-ten-african-american-people-posed-street-city-fashionable-people-africa-shows-thumb-up-scaled.jpg" alt="Success Stories" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+        <div class="csp-cat-card" onclick="window.location.href='/category/success-stories/'">
+          <div>
+            <div class="csp-cat-img-box">
+              <img loading="lazy" width="2560" height="1703" src="../wp-content/uploads/2026/02/group-ten-african-american-people-posed-street-city-fashionable-people-africa-shows-thumb-up-scaled.jpg" alt="Success Stories">
+            </div>
+            <div style="padding:24px 24px 16px;text-align:left;">
+              <h3 class="csp-cat-title">Success Stories</h3>
+              <p class="csp-cat-desc">Growth, Success and impact.</p>
+            </div>
           </div>
-          <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">Success Stories</h3>
-              <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">Growth, Success and impact.</p>
-            </div>
-            <div style="margin-top:16px;">
-              <a href="/category/success-stories/" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>
-            </div>
+          <div style="padding:0 24px 24px;text-align:center;">
+            <a href="/category/success-stories/" class="csp-cat-card-btn">Explore</a>
           </div>
         </div>
 
@@ -2386,18 +2552,18 @@ e-page-transition,
           var catImg = getAbsImg(cat.image);
           var catUrl = getRoot('category/' + cat.slug + '/');
           
-          cardsHtml += '<div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 12px 28px rgba(0,174,254,0.12)\'" onmouseout="this.style.transform=\'none\';this.style.boxShadow=\'0 6px 20px rgba(0,0,0,0.03)\'">' +
-            '<div style="height:180px;overflow:hidden;position:relative;">' +
-              '<img width="1536" height="864" src="' + catImg + '" alt="' + cat.name + '" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform=\'scale(1.06)\'" onmouseout="this.style.transform=\'none\'">' +
+          cardsHtml += '<div class="csp-cat-card" onclick="window.location.href=\'' + catUrl + '\'">' +
+            '<div>' +
+              '<div class="csp-cat-img-box">' +
+                '<img width="1536" height="864" src="' + catImg + '" alt="' + cat.name + '">' +
+              '</div>' +
+              '<div style="padding:24px 24px 16px;text-align:left;">' +
+                '<h3 class="csp-cat-title">' + cat.name + '</h3>' +
+                '<p class="csp-cat-desc">' + (cat.description || '') + '</p>' +
+              '</div>' +
             '</div>' +
-            '<div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">' +
-              '<div>' +
-                '<h3 style="font-family:\'Merriweather\',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">' + cat.name + '</h3>' +
-                '<p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">' + (cat.description || '') + '</p>' +
-              '</div>' +
-              '<div style="margin-top:16px;">' +
-                '<a href="' + catUrl + '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>' +
-              '</div>' +
+            '<div style="padding:0 24px 24px;text-align:center;">' +
+              '<a href="' + catUrl + '" class="csp-cat-card-btn">Explore</a>' +
             '</div>' +
           '</div>';
         });

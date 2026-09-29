@@ -683,21 +683,97 @@ min-width: 100px;
     border-radius: 999px !important;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 1024px) {
+    /* Normal & General Mobile Layout */
+    .elementor-1969 .elementor-element.elementor-element-2d9e131,
+    .elementor-element-2d9e131,
+    .elementor-location-header .elementor-element-2d9e131 {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 64px !important;
+      min-height: 64px !important;
+      max-height: 64px !important;
+      padding: 8px 16px !important;
+      box-sizing: border-box !important;
+      background: transparent !important;
+    }
+
+    .elementor-1969 .elementor-element.elementor-element-f22f163,
+    .elementor-element-f22f163 {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      flex: 0 0 auto !important;
+      width: auto !important;
+      height: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .elementor-1969 .elementor-element.elementor-element-adf27cc,
+    .elementor-element-adf27cc {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      flex: 0 0 auto !important;
+      width: auto !important;
+      height: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Scrolled Sticky State on Mobile (Slim Clean Pill) */
     body.header-is-sticky .elementor-location-header,
     body.header-is-sticky .elementor-1969,
     .elementor-location-header.is-sticky,
     .elementor-1969.is-sticky {
+      position: fixed !important;
       top: 10px !important;
+      left: 50% !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
       width: calc(100% - 24px) !important;
-      border-radius: 20px !important;
+      max-width: calc(100% - 24px) !important;
+      height: 52px !important;
+      min-height: 52px !important;
+      max-height: 52px !important;
+      border-radius: 50px !important;
+      background: rgba(6, 16, 34, 0.92) !important;
+      background-color: rgba(6, 16, 34, 0.92) !important;
+      backdrop-filter: blur(20px) saturate(190%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+      border: 1.5px solid rgba(0, 174, 254, 0.35) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(0, 174, 254, 0.15) !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box !important;
+      z-index: 999999 !important;
     }
 
     body.header-is-sticky .elementor-1969 .elementor-element.elementor-element-2d9e131,
     body.header-is-sticky .elementor-element-2d9e131,
     .elementor-location-header.is-sticky .elementor-element-2d9e131 {
-      padding: 8px 16px !important;
-      border-radius: 20px !important;
+      height: 100% !important;
+      min-height: 100% !important;
+      max-height: 100% !important;
+      padding: 0 16px !important;
+      border-radius: 50px !important;
+      background: transparent !important;
+    }
+
+    body.header-is-sticky .elementor-element-2d4f26f img,
+    .elementor-location-header.is-sticky .elementor-element-2d4f26f img {
+      height: 34px !important;
+      width: 34px !important;
+      max-height: 34px !important;
+      max-width: 34px !important;
     }
   }
 
@@ -923,10 +999,17 @@ min-width: 100px;
   /* Normal State Mobile Menu Hamburger Toggle Icon (Un-scrolled on light hero pages) */
   body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle,
   body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .csp-menu-burger-svg,
   body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i {
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg {
     color: #0f172a !important;
-    fill: #0f172a !important;
+    fill: none !important;
+    stroke: #0f172a !important;
   }
 
   /* ── SCROLLED STICKY STATE (ALL PAGES): Crisp White Text Links over Dark Frosted Glass ─── */
@@ -951,11 +1034,69 @@ min-width: 100px;
     text-shadow: none !important;
   }
 
+  /* ── ACTIVE / CURRENT PAGE DESKTOP HIGHLIGHT (ANIMATED GLOW) ─── */
+  .elementor-nav-menu li.current-menu-item > a.elementor-item,
+  .elementor-nav-menu li.current_page_item > a.elementor-item,
+  .elementor-nav-menu li.active-menu-item > a.elementor-item,
+  .elementor-nav-menu a.elementor-item.elementor-item-active,
+  .elementor-nav-menu a.elementor-item.active-link {
+    color: #00AEFE !important;
+    font-weight: 700 !important;
+    position: relative !important;
+    display: inline-block !important;
+  }
+
+  /* Animated glowing solid blue line snug underneath the active nav item — matches text width exactly */
+  .elementor-nav-menu li.current-menu-item > a.elementor-item::after,
+  .elementor-nav-menu li.current_page_item > a.elementor-item::after,
+  .elementor-nav-menu li.active-menu-item > a.elementor-item::after,
+  .elementor-nav-menu a.elementor-item.elementor-item-active::after,
+  .elementor-nav-menu a.elementor-item.active-link::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 2px !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 28px) !important;
+    height: 2.5px !important;
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    border-radius: 99px !important;
+    box-shadow: 0 0 10px rgba(0, 174, 254, 0.8), 0 0 18px rgba(0, 174, 254, 0.45) !important;
+    animation: cspActivePulseBlue 2s ease-in-out infinite alternate !important;
+    transform-origin: center !important;
+  }
+
+  /* Hover underline should also match text width */
+  .elementor-nav-menu--main .elementor-item:hover::after {
+    width: calc(100% - 28px) !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+
+  @keyframes cspActivePulseBlue {
+    0% {
+      opacity: 0.75;
+      box-shadow: 0 0 6px rgba(0, 174, 254, 0.5);
+    }
+    50% {
+      opacity: 1;
+      box-shadow: 0 0 14px rgba(0, 174, 254, 0.95), 0 0 22px rgba(0, 174, 254, 0.45);
+    }
+    100% {
+      opacity: 0.8;
+      box-shadow: 0 0 8px rgba(0, 174, 254, 0.65);
+    }
+  }
+
   /* Scrolled Sticky State Mobile Hamburger Toggle Icon (Bright Crisp White on Dark Navy Glass) */
   body.header-is-sticky .elementor-menu-toggle,
   body.header-is-sticky .elementor-menu-toggle i,
   body.header-is-sticky .elementor-menu-toggle svg,
-  body.header-is-sticky .elementor-menu-toggle path,
+  body.header-is-sticky .elementor-menu-toggle svg line,
+  body.header-is-sticky .csp-menu-burger-svg,
   body.header-is-sticky .elementor-1969 .elementor-menu-toggle,
   body.header-is-sticky .elementor-1969 .elementor-menu-toggle i,
   body.header-is-sticky .elementor-element-27c23fa .elementor-menu-toggle,
@@ -963,11 +1104,13 @@ min-width: 100px;
   .is-sticky .elementor-menu-toggle,
   .is-sticky .elementor-menu-toggle i,
   .is-sticky .elementor-menu-toggle svg,
-  .is-sticky .elementor-menu-toggle path,
+  .is-sticky .elementor-menu-toggle svg line,
+  .is-sticky .csp-menu-burger-svg,
   .elementor-location-header.is-sticky .elementor-menu-toggle,
-  .elementor-location-header.is-sticky .elementor-menu-toggle i {
+  .elementor-location-header.is-sticky .elementor-menu-toggle i,
+  .elementor-location-header.is-sticky .csp-menu-burger-svg {
     color: #ffffff !important;
-    fill: #ffffff !important;
+    fill: none !important;
     stroke: #ffffff !important;
   }
 
@@ -1191,69 +1334,199 @@ min-width: 100px;
     }
   }
 
-  /* ── LOGO FIX: Desktop/tablet logo must be visible on non-mobile screens ────── */
+  /* ── BULLETPROOF LOGO VISIBILITY: Desktop/Tablet vs Mobile ────── */
   @media (min-width: 768px) {
-
+    .elementor-element-738d6a4,
+    .elementor-element-738d6a4 .elementor-widget-container,
+    .elementor-element-738d6a4 a,
+    .elementor-element-738d6a4 img,
     .elementor .elementor-hidden-mobile,
     .elementor-hidden-mobile {
       display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
 
-    .elementor-element-738d6a4 img,
-    .elementor-element-738d6a4 .elementor-widget-container {
-      display: block !important;
-      max-height: 68px !important;
+    .elementor-element-738d6a4 img {
+      max-height: 56px !important;
       width: auto !important;
       height: auto !important;
-      opacity: 1 !important;
     }
-  }
 
-  /* Mobile square logo (2d4f26f): show ONLY on mobile, hide on tablet + desktop */
-  .elementor-element-2d4f26f {
-    display: none !important;
-  }
-
-  @media (max-width: 767px) {
     .elementor-element-2d4f26f {
-      display: block !important;
-    }
-
-    .elementor-element-2d4f26f img,
-    .elementor-element-2d4f26f .elementor-widget-container {
-      display: block !important;
-      max-height: 52px !important;
-      width: auto !important;
-      opacity: 1 !important;
-    }
-  }
-
-  /* ── HAMBURGER FIX: PERMANENT SINGLE BURGER RULE (PREVENTS DUPLICATE BURGERS ON RESIZE) ── */
-  .elementor-element-c6b6140 .elementor-menu-toggle {
-    display: none !important;
-  }
-
-  @media (min-width: 1025px) {
-    .elementor-element-27c23fa {
       display: none !important;
     }
   }
 
+  /* Mobile square logo (2d4f26f): show ONLY on mobile screens < 768px */
+  @media (max-width: 767px) {
+    .elementor-element-738d6a4 {
+      display: none !important;
+    }
+
+    .elementor-element-2d4f26f,
+    .elementor-element-2d4f26f .elementor-widget-container,
+    .elementor-element-2d4f26f a,
+    .elementor-element-2d4f26f img {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .elementor-element-2d4f26f img {
+      max-height: 48px !important;
+      max-width: 48px !important;
+      width: 48px !important;
+      height: 48px !important;
+      object-fit: contain !important;
+    }
+  }
+
+  /* ── HAMBURGER VISIBILITY & STYLING ── */
+  /* Hide the desktop nav widget's toggle (c6b6140) — only the dedicated mobile toggle (27c23fa) should be used */
+  .elementor-element-c6b6140 .elementor-menu-toggle {
+    display: none !important;
+  }
+
+  /* Strip legacy plugin pseudo-element bars so only the clean SVG is rendered */
+  .elementor-menu-toggle:before,
+  .elementor-menu-toggle:after,
+  .elementor-menu-toggle i:before,
+  .elementor-menu-toggle i:after,
+  .elementor-element-27c23fa .elementor-menu-toggle:before,
+  .elementor-element-27c23fa .elementor-menu-toggle:after {
+    display: none !important;
+    content: none !important;
+  }
+
+  .csp-menu-burger-svg,
+  .elementor-element-27c23fa .csp-menu-burger-svg,
+  .elementor-element-27c23fa .elementor-menu-toggle svg,
+  .elementor-menu-toggle svg {
+    display: block !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    stroke: currentColor !important;
+    stroke-width: 2.5px !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    fill: none !important;
+    pointer-events: none !important;
+  }
+
+  .csp-menu-burger-svg line,
+  .elementor-element-27c23fa .csp-menu-burger-svg line,
+  .elementor-element-27c23fa .elementor-menu-toggle svg line,
+  .elementor-menu-toggle svg line {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    stroke: currentColor !important;
+    stroke-width: 2.5px !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+  }
+
+  .elementor-menu-toggle .elementor-screen-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  /* DESKTOP (>= 1025px): Hide mobile burger widget */
+  @media (min-width: 1025px) {
+    .elementor-element-27c23fa,
+    .elementor-element-27c23fa .elementor-menu-toggle,
+    .elementor-hidden-desktop {
+      display: none !important;
+    }
+  }
+
+  /* TABLET & MOBILE (<= 1024px): Show mobile hamburger toggle */
   @media (max-width: 1024px) {
+    .elementor-1969 .elementor-element.elementor-element-adf27cc,
+    .elementor-element-adf27cc {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      flex: 1 1 auto !important;
+      width: auto !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: visible !important;
+    }
+
+    .elementor-1969 .elementor-element.elementor-element-27c23fa,
     .elementor-element-27c23fa {
-      flex: 1 !important;
+      flex: 0 0 auto !important;
       display: flex !important;
       justify-content: flex-end !important;
       align-items: center !important;
-      padding-right: 16px !important;
-      margin-left: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: auto !important;
+      height: 44px !important;
+      z-index: 1000 !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      overflow: visible !important;
     }
 
-    .elementor-element-27c23fa .elementor-menu-toggle,
-    .elementor-element-27c23fa .elementor-nav-menu-toggle {
+    .elementor-1969 .elementor-element.elementor-element-27c23fa > .elementor-widget-container,
+    .elementor-element-27c23fa > .elementor-widget-container {
       display: flex !important;
-      margin-left: auto !important;
-      margin-right: 8px !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      width: auto !important;
+      height: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      overflow: visible !important;
+    }
+
+    .elementor-1969 .elementor-element.elementor-element-27c23fa .elementor-menu-toggle,
+    .elementor-element-27c23fa .elementor-menu-toggle {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      width: 44px !important;
+      height: 44px !important;
+      min-width: 44px !important;
+      min-height: 44px !important;
+      padding: 6px !important;
+      margin: 0 !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      z-index: 1001 !important;
+      position: relative !important;
+    }
+
+    /* Hide desktop nav and desktop submit button on tablet/mobile */
+    .elementor-element-c6b6140 {
+      display: none !important;
+    }
+
+    .elementor-element-36265fd {
+      display: none !important;
     }
   }
 
@@ -1691,39 +1964,47 @@ min-width: 100px;
     cursor: pointer !important;
   }
 
-  /* ── NAV TEXT: Normal State vs Sticky State ──────────────────────────────── */
+  /* ── NAV TEXT & TOGGLE: Normal State vs Sticky State ──────────────────────────────── */
   /* Homepage & Forum Hero page normal state: crisp white text & toggle over dark hero */
-  body.home .elementor-1969 .elementor-nav-menu--main .elementor-item,
-  body.forum-page .elementor-1969 .elementor-nav-menu--main .elementor-item,
-  body.forum-page .elementor-item {
+  body.home:not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main .elementor-item,
+  body.forum-page:not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main .elementor-item,
+  body.forum-page:not(.header-is-sticky) .elementor-item {
     color: #ffffff !important;
     fill: #ffffff !important;
     text-shadow: none !important;
   }
 
-  body.home .elementor-1969 .elementor-menu-toggle,
-  body.home .elementor-1969 .elementor-menu-toggle i,
-  body.forum-page .elementor-1969 .elementor-menu-toggle,
-  body.forum-page .elementor-1969 .elementor-menu-toggle i {
+  body.home:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle,
+  body.home:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
+  body.home:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
+  body.home:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
+  body.home:not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg,
+  body.forum-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle,
+  body.forum-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
+  body.forum-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
+  body.forum-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
+  body.forum-page:not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg {
     color: #ffffff !important;
-    fill: #ffffff !important;
+    fill: none !important;
+    stroke: #ffffff !important;
   }
 
-  /* Inner pages normal state (un-scrolled): bright white text over dark header */
-  body .elementor-1969 .elementor-nav-menu--main .elementor-item,
-  body .elementor-item {
-    color: #ffffff !important;
-    fill: #ffffff !important;
+  /* Light hero pages normal state (un-scrolled): crisp dark text over light header */
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main a.elementor-item:not(.active-link):not(.elementor-item-active),
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 a.elementor-item:not(.active-link):not(.elementor-item-active),
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-item:not(.active-link):not(.elementor-item-active) {
+    color: #0f172a !important;
+    fill: #0f172a !important;
   }
 
   /* Mobile logo size constraints (only on mobile, hidden on desktop) */
-  @media (min-width: 768px) {
+  @media (min-width: 1025px) {
     .elementor-element-2d4f26f,
     .elementor-hidden-desktop {
       display: none !important;
     }
   }
-  @media (max-width: 767px) {
+  @media (max-width: 1024px) {
     .elementor-element-2d4f26f img,
     .elementor-1969 .elementor-element-2d4f26f img {
       height: 48px !important;
@@ -1738,12 +2019,21 @@ min-width: 100px;
   /* Normal un-scrolled state for light hero pages (Dark Icon) */
   body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle,
   body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .csp-menu-burger-svg,
   body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle,
   body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .csp-menu-burger-svg,
   body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle i {
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .csp-menu-burger-svg {
     color: #0f172a !important;
-    fill: #0f172a !important;
+    fill: none !important;
     stroke: #0f172a !important;
   }
 
@@ -1851,7 +2141,7 @@ min-width: 100px;
   }
 
   /* Dark blurry backdrop BEHIND card */
-  .csp-modal-backdrop {
+  #csp-mobile-menu-modal .csp-modal-backdrop {
     position: absolute !important;
     inset: 0 !important;
     top: 0 !important;
@@ -1868,7 +2158,7 @@ min-width: 100px;
   }
 
   /* Menu card ON TOP of backdrop - Perfectly centered in viewport */
-  .csp-modal-card {
+  #csp-mobile-menu-modal .csp-modal-card {
     position: relative !important;
     z-index: 2 !important;
     margin: auto !important;
@@ -1898,7 +2188,7 @@ min-width: 100px;
     opacity: 1 !important;
   }
 
-  .csp-modal-header-row {
+  #csp-mobile-menu-modal .csp-modal-header-row {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -1908,7 +2198,7 @@ min-width: 100px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
   }
 
-  .csp-modal-title-label {
+  #csp-mobile-menu-modal .csp-modal-title-label {
     display: flex !important;
     align-items: center !important;
     gap: 8px !important;
@@ -1922,7 +2212,7 @@ min-width: 100px;
     text-shadow: 0 2px 10px rgba(0, 174, 254, 0.4) !important;
   }
 
-  .csp-modal-card ul.csp-modal-menu {
+  #csp-mobile-menu-modal .csp-modal-card ul.csp-modal-menu {
     list-style: none !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -1933,11 +2223,11 @@ min-width: 100px;
     gap: 8px !important;
   }
 
-  .csp-modal-card ul.csp-modal-menu>li:first-child {
+  #csp-mobile-menu-modal .csp-modal-card ul.csp-modal-menu>li:first-child {
     margin-top: 4px !important;
   }
 
-  .csp-modal-card li {
+  #csp-mobile-menu-modal .csp-modal-card li {
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -1945,7 +2235,7 @@ min-width: 100px;
     justify-content: center !important;
   }
 
-  .csp-modal-card a {
+  #csp-mobile-menu-modal .csp-modal-card a {
     font-family: 'Merriweather', Georgia, serif !important;
     font-size: 1.12rem !important;
     font-weight: 500 !important;
@@ -1961,8 +2251,8 @@ min-width: 100px;
     transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease !important;
   }
 
-  .csp-modal-card a:hover,
-  .csp-modal-card a.active-link {
+  #csp-mobile-menu-modal .csp-modal-card a:hover,
+  #csp-mobile-menu-modal .csp-modal-card a.active-link {
     background: rgba(0, 174, 254, 0.15) !important;
     color: #00AEFE !important;
     fill: #00AEFE !important;
@@ -1970,7 +2260,7 @@ min-width: 100px;
   }
 
   /* Submit Story Pill Button inside Modal */
-  .csp-modal-card a.csp-modal-cta {
+  #csp-mobile-menu-modal .csp-modal-card a.csp-modal-cta {
     background: #00AEFE !important;
     color: #ffffff !important;
     fill: #ffffff !important;
@@ -1990,7 +2280,7 @@ min-width: 100px;
     text-decoration: none !important;
   }
 
-  .csp-modal-card a.csp-modal-cta:hover {
+  #csp-mobile-menu-modal .csp-modal-card a.csp-modal-cta:hover {
     background: #0096db !important;
     transform: translateY(-2px) scale(1.03) !important;
     box-shadow: 0 8px 30px rgba(0, 174, 254, 0.55) !important;
@@ -1998,7 +2288,7 @@ min-width: 100px;
     text-decoration: none !important;
   }
 
-  .csp-mobile-menu-close {
+  #csp-mobile-menu-modal .csp-mobile-menu-close {
     position: relative !important;
     top: auto !important;
     right: auto !important;
@@ -2014,16 +2304,15 @@ min-width: 100px;
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
-    z-index: 10 !important;
-    margin: 0 !important;
-    flex-shrink: 0 !important;
-    transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease !important;
+    transition: all 0.25s ease !important;
+    padding: 0 !important;
   }
 
-  .csp-mobile-menu-close:hover {
-    background: rgba(255, 255, 255, 0.25) !important;
+  #csp-mobile-menu-modal .csp-mobile-menu-close:hover {
+    background: rgba(239, 68, 68, 0.3) !important;
+    border-color: rgba(239, 68, 68, 0.6) !important;
+    transform: rotate(90deg) !important;
     color: #ffffff !important;
-    transform: scale(1.08) !important;
   }
 
   /* Next Live Discussion & Dark Modal Form Input Legibility */
@@ -3279,12 +3568,19 @@ min-width: 100px;
     max-width: 100% !important;
   }
 
+  /* Collapse internal wrapper divs so only the article card outline remains */
   .eael-grid-post .eael-grid-post-holder,
   .eael-grid-post .eael-grid-post-holder-inner {
     width: 100% !important;
     max-width: 100% !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
   }
 
   .eael-grid-post .eael-entry-media,
@@ -3693,6 +3989,16 @@ min-width: 100px;
       var currentPath = window.location.pathname;
       if (!currentPath.endsWith('/') && !currentPath.includes('.')) currentPath += '/';
 
+      // Clear all existing active classes
+      document.querySelectorAll('.elementor-nav-menu li').forEach(function(li) {
+        li.classList.remove('current-menu-item', 'current_page_item', 'active-menu-item');
+        var itemA = li.querySelector('a');
+        if (itemA) {
+          itemA.classList.remove('active-link', 'elementor-item-active');
+          itemA.removeAttribute('aria-current');
+        }
+      });
+
       document.querySelectorAll('.elementor-nav-menu a, .elementor-location-footer a').forEach(function (a) {
         var href = a.getAttribute('href');
         if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) {
@@ -3702,10 +4008,24 @@ min-width: 100px;
           var cleanHref = normHref;
           if (!cleanHref.endsWith('/') && !cleanHref.includes('.')) cleanHref += '/';
 
-          if (currentPath === cleanHref || (cleanHref !== '/' && cleanHref !== getRootUrl('/') && currentPath.endsWith(cleanHref))) {
-            a.classList.add('active-link');
+          var isMatch = false;
+          var p = currentPath.toLowerCase();
+          var h = cleanHref.toLowerCase();
+
+          if (h === '/' || h === getRootUrl('/').toLowerCase()) {
+            isMatch = (p === '/' || p === getRootUrl('/').toLowerCase() || p.endsWith('/index.html') || p === '');
+          } else {
+            var slug = h.replace(/^\//, '').replace(/\/$/, '');
+            if (slug && p.includes(slug)) {
+              isMatch = true;
+            }
+          }
+
+          if (isMatch) {
+            a.classList.add('active-link', 'elementor-item-active');
+            a.setAttribute('aria-current', 'page');
             var li = a.closest('li');
-            if (li) li.classList.add('current-menu-item', 'active-menu-item');
+            if (li) li.classList.add('current-menu-item', 'active-menu-item', 'current_page_item');
           }
         }
       });
@@ -5184,7 +5504,7 @@ min-width: 100px;
 					<div class="elementor-widget-container">
 						<nav migration_allowed="1" migrated="0" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-slide">
 							<ul id="menu-1-c6b6140" class="elementor-nav-menu">
-								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-6 current_page_item menu-item-2085"><a href="/" aria-current="page" class="elementor-item">Home</a></li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-6 menu-item-2085"><a href="/" class="elementor-item">Home</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2087"><a href="/about-us/" class="elementor-item">About Us</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2089"><a href="/contact-us/" class="elementor-item">Contact Us</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2086"><a href="/stories/" class="elementor-item">Stories</a></li>
@@ -5198,7 +5518,11 @@ min-width: 100px;
 				<div class="elementor-element elementor-element-27c23fa elementor-nav-menu__align-center elementor-nav-menu--stretch sticky-nav-menu-prefixstyle elementor-hidden-desktop elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="27c23fa" data-element_type="widget" data-e-type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i class=\&quot;fas fa-caret-down\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
 					<div class="elementor-widget-container">
 						<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
-							<i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--open jki jki-menu-7-light"></i><i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close eicon-close"></i>
+							<svg class="csp-menu-burger-svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<line x1="3" y1="6" x2="21" y2="6"></line>
+								<line x1="3" y1="12" x2="21" y2="12"></line>
+								<line x1="3" y1="18" x2="21" y2="18"></line>
+							</svg>
 							<span class="elementor-screen-only">Menu</span>
 						</div>
 					</div>
@@ -5233,13 +5557,18 @@ min-width: 100px;
   .elementor-element-362a422c {
     position: relative !important;
     background: #FFFFFF !important;
-    padding-top: clamp(130px, 13vw, 160px) !important;
-    padding-bottom: 75px !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding-top: clamp(120px, 12vw, 140px) !important;
+    padding-bottom: 60px !important;
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
     z-index: 1000 !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   .csp-stories-mosaic-hero .e-con-inner,
@@ -5559,6 +5888,134 @@ min-width: 100px;
     color: #00AEFE !important;
   }
 
+  /* ── Hero Background Blob & Doodle Accents ── */
+  .csp-stories-hero-blob-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .csp-stories-blob-1 {
+    position: absolute;
+    top: 40px;
+    right: 5%;
+    width: 380px;
+    height: 380px;
+    background: linear-gradient(135deg, rgba(0, 174, 254, 0.35) 0%, rgba(56, 189, 248, 0.22) 50%, rgba(183, 31, 113, 0.12) 100%);
+    border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
+    opacity: 0.9;
+    filter: blur(6px);
+    box-shadow: 0 16px 50px rgba(0, 174, 254, 0.2);
+    animation: cspStoriesBlobMorph 10s ease-in-out infinite alternate, cspStoriesBlobFloat1 7s ease-in-out infinite alternate;
+    will-change: border-radius, transform;
+  }
+
+  .csp-stories-blob-2 {
+    position: absolute;
+    bottom: 30px;
+    left: 4%;
+    width: 320px;
+    height: 320px;
+    background: linear-gradient(135deg, rgba(183, 31, 113, 0.18) 0%, rgba(0, 174, 254, 0.26) 60%, rgba(56, 189, 248, 0.14) 100%);
+    border-radius: 58% 42% 40% 60% / 45% 55% 45% 55%;
+    opacity: 0.85;
+    filter: blur(6px);
+    box-shadow: 0 16px 40px rgba(183, 31, 113, 0.12);
+    animation: cspStoriesBlobMorph 12s ease-in-out infinite alternate-reverse, cspStoriesBlobFloat2 8s ease-in-out infinite alternate;
+    will-change: border-radius, transform;
+  }
+
+  @keyframes cspStoriesBlobMorph {
+    0% {
+      border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
+      transform: rotate(0deg) scale(1);
+    }
+    33% {
+      border-radius: 58% 42% 38% 62% / 40% 55% 45% 60%;
+      transform: rotate(120deg) scale(1.06);
+    }
+    66% {
+      border-radius: 35% 65% 55% 45% / 60% 35% 65% 40%;
+      transform: rotate(240deg) scale(0.96);
+    }
+    100% {
+      border-radius: 60% 40% 45% 55% / 50% 60% 40% 50%;
+      transform: rotate(360deg) scale(1.04);
+    }
+  }
+
+  @keyframes cspStoriesBlobFloat1 {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(-14px, -16px); }
+    100% { transform: translate(10px, -6px); }
+  }
+
+  @keyframes cspStoriesBlobFloat2 {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(12px, 14px); }
+    100% { transform: translate(-8px, 6px); }
+  }
+
+  /* Minimalist Doodle Squiggle and Ring Badges */
+  .csp-stories-squiggle-left {
+    position: absolute;
+    top: 22%;
+    left: 3%;
+    width: 150px;
+    height: 45px;
+    opacity: 0.85;
+    pointer-events: none;
+    z-index: 2;
+    animation: cspFloatSquiggle 5s ease-in-out infinite alternate;
+  }
+
+  @keyframes cspFloatSquiggle {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-8px) rotate(-3deg); }
+  }
+
+  .csp-stories-badge-group {
+    position: absolute;
+    top: 20%;
+    right: 4%;
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .csp-stories-circle-solid {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #00AEFE;
+    opacity: 0.85;
+    top: 10px;
+    right: 14px;
+    box-shadow: 0 4px 12px rgba(0, 174, 254, 0.4);
+  }
+
+  .csp-stories-circle-ring {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px dashed rgba(0, 174, 254, 0.45);
+    top: 0;
+    right: 0;
+    animation: cspSpinSlow 20s linear infinite;
+  }
+
+  @keyframes cspSpinSlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
   /* ── Mobile Responsiveness ── */
   @media (max-width: 992px) {
     .elementor-2245 .elementor-element-362a422c,
@@ -5576,10 +6033,35 @@ min-width: 100px;
       justify-content: flex-start !important;
       padding: 6px 4px !important;
     }
+
+    .csp-stories-squiggle-left,
+    .csp-stories-badge-group {
+      display: none !important;
+    }
   }
 </style>
 
 <div class="elementor-element elementor-element-362a422c e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded csp-stories-mosaic-hero" data-id="362a422c" data-element_type="container" data-e-type="container">
+  
+  <!-- Fluid Morphing Blob Accents -->
+  <div class="csp-stories-hero-blob-wrap" aria-hidden="true">
+    <div class="csp-stories-blob-1"></div>
+    <div class="csp-stories-blob-2"></div>
+  </div>
+
+  <!-- Minimalist Doodle Squiggle (Left) -->
+  <div class="csp-stories-squiggle-left" aria-hidden="true">
+    <svg viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 38C28 14 52 52 76 28C100 4 124 48 148 24C172 0 196 42 220 18C228 10 236 12 240 16" stroke="#00AEFE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <!-- Geometric Circle Badges (Right) -->
+  <div class="csp-stories-badge-group" aria-hidden="true">
+    <div class="csp-stories-circle-solid"></div>
+    <div class="csp-stories-circle-ring"></div>
+  </div>
+
   <div class="e-con-inner">
     <div class="csp-mosaic-hero-center-content">
       
@@ -5638,85 +6120,93 @@ min-width: 100px;
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">EXPLORE STORIES</h2>				</div>
 				</div>
-				<div class="elementor-element elementor-element-5f5039d6 eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="5f5039d6" data-element_type="widget" data-e-type="widget" data-widget_type="		<div class="elementor-element elementor-element-68d4a41e e-con-full e-grid e-con e-child adv-sticky-elementor" id="csp-stories-discover-categories" data-id="68d4a41e" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:24px;width:100%;margin-bottom:40px;">
+				<div class="elementor-element elementor-element-5f5039d6 eael-dual-header-content-align-center elementor-widget elementor-widget-eael-dual-color-header" data-id="5f5039d6" data-element_type="widget" data-e-type="widget" data-widget_type="eael-dual-color-header.default">
+				<div class="elementor-widget-container">
+					<div class="eael-dual-header">
+						<h2 class="title eael-dch-title"><span class="eael-dch-title-text elementor-repeater-item-ad87566">Discover by </span> <span class="eael-dch-title-text elementor-repeater-item-83c38c3 eael-dch-title-gradient">Category</span> </h2>
+						<span class="subtext"><p>Browse stories by cultural and editorial focus</p></span>
+					</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-68d4a41e e-con-full e-grid e-con e-child adv-sticky-elementor" id="csp-stories-discover-categories" data-id="68d4a41e" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:30px;width:100%;margin-bottom:40px;">
         
         <!-- Category Card 1 -->
-        <div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,174,254,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.03)'">
-          <div style="height:180px;overflow:hidden;position:relative;">
-            <img width="1536" height="864" src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Culture &amp; Heritage" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+        <div class="csp-cat-card" onclick="window.location.href='/category/culture-heritage/'">
+          <div>
+            <div class="csp-cat-img-box">
+              <img width="1536" height="864" src="/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Culture &amp; Heritage">
+            </div>
+            <div style="padding:24px 24px 16px;text-align:left;">
+              <h3 class="csp-cat-title">Culture &amp; Heritage</h3>
+              <p class="csp-cat-desc">Heritage, traditions, and the African spirit abroad</p>
+            </div>
           </div>
-          <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">Culture &amp; Heritage</h3>
-              <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">Heritage, traditions, and the African spirit abroad</p>
-            </div>
-            <div style="margin-top:16px;">
-              <a href="/category/culture-heritage/" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>
-            </div>
+          <div style="padding:0 24px 24px;text-align:center;">
+            <a href="/category/culture-heritage/" class="csp-cat-card-btn">Explore</a>
           </div>
         </div>
 
         <!-- Category Card 2 -->
-        <div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,174,254,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.03)'">
-          <div style="height:180px;overflow:hidden;position:relative;">
-            <img loading="lazy" width="1024" height="570" src="/wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Innovation" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+        <div class="csp-cat-card" onclick="window.location.href='/category/innovation/'">
+          <div>
+            <div class="csp-cat-img-box">
+              <img loading="lazy" width="1024" height="570" src="/wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Innovation">
+            </div>
+            <div style="padding:24px 24px 16px;text-align:left;">
+              <h3 class="csp-cat-title">Innovation</h3>
+              <p class="csp-cat-desc">Africans In Diaspora influencing economic decisions worldwide</p>
+            </div>
           </div>
-          <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">Innovation</h3>
-              <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">Africans In Diaspora influencing economic decisions worldwide</p>
-            </div>
-            <div style="margin-top:16px;">
-              <a href="/category/innovation/" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>
-            </div>
+          <div style="padding:0 24px 24px;text-align:center;">
+            <a href="/category/innovation/" class="csp-cat-card-btn">Explore</a>
           </div>
         </div>
 
         <!-- Category Card 3 -->
-        <div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,174,254,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.03)'">
-          <div style="height:180px;overflow:hidden;position:relative;">
-            <img loading="lazy" width="1180" height="664" src="/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Art &amp; Entertainment" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+        <div class="csp-cat-card" onclick="window.location.href='/category/art-entertainment/'">
+          <div>
+            <div class="csp-cat-img-box">
+              <img loading="lazy" width="1180" height="664" src="/wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Art &amp; Entertainment">
+            </div>
+            <div style="padding:24px 24px 16px;text-align:left;">
+              <h3 class="csp-cat-title">Art &amp; Entertainment</h3>
+              <p class="csp-cat-desc">Creatives are shaping and representing global culture.</p>
+            </div>
           </div>
-          <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">Art &amp; Entertainment</h3>
-              <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">Creatives are shaping and representing global culture.</p>
-            </div>
-            <div style="margin-top:16px;">
-              <a href="/category/art-entertainment/" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>
-            </div>
+          <div style="padding:0 24px 24px;text-align:center;">
+            <a href="/category/art-entertainment/" class="csp-cat-card-btn">Explore</a>
           </div>
         </div>
 
         <!-- Category Card 4 -->
-        <div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,174,254,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.03)'">
-          <div style="height:180px;overflow:hidden;position:relative;">
-            <img loading="lazy" width="2560" height="1703" src="/wp-content/uploads/2026/02/group-five-african-college-students-spending-time-together-campus-university-yard-black-afro-friends-making-selfie-phone-education-theme-scaled.jpg" alt="Community" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+        <div class="csp-cat-card" onclick="window.location.href='/category/community/'">
+          <div>
+            <div class="csp-cat-img-box">
+              <img loading="lazy" width="2560" height="1703" src="/wp-content/uploads/2026/02/group-five-african-college-students-spending-time-together-campus-university-yard-black-afro-friends-making-selfie-phone-education-theme-scaled.jpg" alt="Community">
+            </div>
+            <div style="padding:24px 24px 16px;text-align:left;">
+              <h3 class="csp-cat-title">Community</h3>
+              <p class="csp-cat-desc">Stories connecting Africans In Diaspora across the globe.</p>
+            </div>
           </div>
-          <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">Community</h3>
-              <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">Stories connecting Africans In Diaspora across the globe.</p>
-            </div>
-            <div style="margin-top:16px;">
-              <a href="/category/community/" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>
-            </div>
+          <div style="padding:0 24px 24px;text-align:center;">
+            <a href="/category/community/" class="csp-cat-card-btn">Explore</a>
           </div>
         </div>
 
         <!-- Category Card 5 -->
-        <div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,174,254,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.03)'">
-          <div style="height:180px;overflow:hidden;position:relative;">
-            <img loading="lazy" width="2560" height="1703" src="/wp-content/uploads/2026/02/group-ten-african-american-people-posed-street-city-fashionable-people-africa-shows-thumb-up-scaled.jpg" alt="Success Stories" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='none'">
+        <div class="csp-cat-card" onclick="window.location.href='/category/success-stories/'">
+          <div>
+            <div class="csp-cat-img-box">
+              <img loading="lazy" width="2560" height="1703" src="/wp-content/uploads/2026/02/group-ten-african-american-people-posed-street-city-fashionable-people-africa-shows-thumb-up-scaled.jpg" alt="Success Stories">
+            </div>
+            <div style="padding:24px 24px 16px;text-align:left;">
+              <h3 class="csp-cat-title">Success Stories</h3>
+              <p class="csp-cat-desc">Growth, Success and impact.</p>
+            </div>
           </div>
-          <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">Success Stories</h3>
-              <p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">Growth, Success and impact.</p>
-            </div>
-            <div style="margin-top:16px;">
-              <a href="/category/success-stories/" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>
-            </div>
+          <div style="padding:0 24px 24px;text-align:center;">
+            <a href="/category/success-stories/" class="csp-cat-card-btn">Explore</a>
           </div>
         </div>
 
@@ -6097,18 +6587,18 @@ min-width: 100px;
           var catImg = getAbsImg(cat.image);
           var catUrl = getRoot('category/' + cat.slug + '/');
           
-          cardsHtml += '<div class="csp-category-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 20px rgba(0,0,0,0.03);transition:transform 0.25s ease, box-shadow 0.25s ease;" onmouseover="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 12px 28px rgba(0,174,254,0.12)\'" onmouseout="this.style.transform=\'none\';this.style.boxShadow=\'0 6px 20px rgba(0,0,0,0.03)\'">' +
-            '<div style="height:180px;overflow:hidden;position:relative;">' +
-              '<img width="1536" height="864" src="' + catImg + '" alt="' + cat.name + '" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform=\'scale(1.06)\'" onmouseout="this.style.transform=\'none\'">' +
+          cardsHtml += '<div class="csp-cat-card" onclick="window.location.href=\'' + catUrl + '\'">' +
+            '<div>' +
+              '<div class="csp-cat-img-box">' +
+                '<img width="1536" height="864" src="' + catImg + '" alt="' + cat.name + '">' +
+              '</div>' +
+              '<div style="padding:24px 24px 16px;text-align:left;">' +
+                '<h3 class="csp-cat-title">' + cat.name + '</h3>' +
+                '<p class="csp-cat-desc">' + (cat.description || '') + '</p>' +
+              '</div>' +
             '</div>' +
-            '<div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">' +
-              '<div>' +
-                '<h3 style="font-family:\'Merriweather\',serif;font-size:1.15rem;color:#0f172a;margin:0 0 8px 0;">' + cat.name + '</h3>' +
-                '<p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin:0;">' + (cat.description || '') + '</p>' +
-              '</div>' +
-              '<div style="margin-top:16px;">' +
-                '<a href="' + catUrl + '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 22px;border-radius:50px;background:#00AEFE;color:#fff;font-weight:600;font-size:0.82rem;text-decoration:none;">Explore &rarr;</a>' +
-              '</div>' +
+            '<div style="padding:0 24px 24px;text-align:center;">' +
+              '<a href="' + catUrl + '" class="csp-cat-card-btn">Explore</a>' +
             '</div>' +
           '</div>';
         });
