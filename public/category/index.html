@@ -597,7 +597,7 @@
     display: none !important;
   }
 
-  /* ── UNIVERSAL STICKY HEADER FOR ALL PAGES (DESKTOP & MOBILE) ─── */
+  /* ── UNIVERSAL FULL-WIDTH HEADER (DESKTOP & MOBILE) ─── */
   .elementor-location-header,
   .elementor-1969 {
     position: absolute !important;
@@ -614,86 +614,95 @@
     background-color: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    border-bottom: none !important;
+    border: none !important;
     box-shadow: none !important;
     transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
   }
 
-  /* Scrolled Sticky Header State: DARK NAVY FROSTED GLASS BLUR BACKGROUND */
-  .elementor-location-header.is-sticky,
-  .elementor-1969.is-sticky,
+  /* Scrolled Sticky Header State: FULL-WIDTH DARK NAVY FROSTED GLASS BLUR */
   body.header-is-sticky .elementor-location-header,
   body.header-is-sticky .elementor-1969,
-  .she-header-yes.is-sticky,
-  .elementor-element-2d9e131.is-sticky {
+  .elementor-location-header.is-sticky,
+  .elementor-1969.is-sticky {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
-    background: rgba(6, 16, 34, 0.85) !important;
-    background-color: rgba(6, 16, 34, 0.85) !important;
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    max-width: 100% !important;
+    background: rgba(6, 16, 34, 0.88) !important;
+    background-color: rgba(6, 16, 34, 0.88) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
     border-bottom: 1px solid rgba(0, 174, 254, 0.25) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     z-index: 999999 !important;
   }
 
-  /* ── HEADER CONTAINER FLEX LAYOUT & MENU CENTERING ────────────────────────── */
+  /* ── FULL-WIDTH EDGE-TO-EDGE CONTAINER LAYOUT (STRETCHES TO BOTH ENDS) ─── */
   .elementor-1969 .elementor-element.elementor-element-2d9e131,
-  .elementor-element-2d9e131 {
+  .elementor-element-2d9e131,
+  .elementor-location-header .elementor-element-2d9e131 {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: space-between !important;
     width: 100% !important;
-    max-width: 1400px !important;
-    margin: 0 auto !important;
-    padding: 8px 32px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 12px 48px !important;
     box-sizing: border-box !important;
     background: transparent !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
   }
 
   @media (min-width: 1025px) {
-    /* Left Logo Column */
+    /* 1. Left Logo: pinned to the far left end */
     .elementor-1969 .elementor-element.elementor-element-f22f163,
     .elementor-element-f22f163 {
-      flex: 0 0 190px !important;
-      width: 190px !important;
-      max-width: 190px !important;
+      flex: 0 0 auto !important;
       display: flex !important;
       align-items: center !important;
       justify-content: flex-start !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
 
     .elementor-element-738d6a4,
     .elementor-element-738d6a4 .elementor-widget-container {
-      width: 100% !important;
+      width: auto !important;
       display: flex !important;
       align-items: center !important;
     }
 
     .elementor-element-738d6a4 img {
-      max-height: 50px !important;
+      max-height: 52px !important;
       width: auto !important;
       display: block !important;
     }
 
-    /* Container holding Centered Menu + Submit Story Button */
+    /* 2. Right Flex Container holding Centered Menu + Far Right Button */
     .elementor-1969 .elementor-element.elementor-element-adf27cc,
     .elementor-element-adf27cc {
       flex: 1 1 auto !important;
-      width: auto !important;
-      max-width: calc(100% - 190px) !important;
       display: flex !important;
       flex-direction: row !important;
       align-items: center !important;
       justify-content: space-between !important;
-      margin-left: 0 !important;
+      margin: 0 0 0 40px !important;
+      padding: 0 !important;
+      width: auto !important;
     }
 
-    /* Centered Navigation Menu in middle of container */
+    /* 3. Navigation Menu: Perfectly centered in the middle */
     .elementor-1969 .elementor-element.elementor-element-c6b6140,
     .elementor-element-c6b6140 {
       flex: 1 1 auto !important;
@@ -714,24 +723,31 @@
       margin: 0 auto !important;
       padding: 0 !important;
       list-style: none !important;
-      gap: 2px !important;
+      gap: 6px !important;
       width: auto !important;
     }
 
     .elementor-nav-menu a.elementor-item {
-      padding: 8px 12px !important;
+      padding: 8px 14px !important;
       white-space: nowrap !important;
     }
 
-    /* Submit Story CTA anchored to the right */
+    /* 4. Submit Story CTA: pinned to the far right end */
     .elementor-1969 .elementor-element.elementor-element-36265fd,
     .elementor-element-36265fd {
-      flex: 0 0 190px !important;
-      width: 190px !important;
+      flex: 0 0 auto !important;
       display: flex !important;
       align-items: center !important;
       justify-content: flex-end !important;
       margin-left: auto !important;
+      padding: 0 !important;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .elementor-1969 .elementor-element.elementor-element-2d9e131,
+    .elementor-element-2d9e131 {
+      padding: 10px 20px !important;
     }
   }
 
@@ -771,51 +787,46 @@
   }
 
   /* ── NORMAL STATE (TOP OF PAGE ON LIGHT HERO PAGES): Crisp Dark Links ─── */
-  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-nav-menu a.elementor-item,
-  body:not(.home):not(.forum-page) .she-header-yes:not(.is-sticky) .elementor-nav-menu a.elementor-item,
-  body:not(.home):not(.forum-page) .elementor-element-2d9e131:not(.is-sticky) .elementor-nav-menu a.elementor-item,
-  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-nav-menu .menu-item a,
-  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-item {
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu a.elementor-item,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu .menu-item a,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-item {
     color: #0f172a !important;
     fill: #0f172a !important;
     text-shadow: none !important;
   }
 
-  body:not(.home):not(.forum-page) .elementor-location-header:not(.is-sticky) .elementor-nav-menu a.elementor-item:hover,
-  body:not(.home):not(.forum-page) .she-header-yes:not(.is-sticky) .elementor-nav-menu a.elementor-item:hover {
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu a.elementor-item:hover {
     color: #00AEFE !important;
     fill: #00AEFE !important;
     text-shadow: none !important;
   }
 
   /* Normal State Mobile Menu Hamburger Toggle Icon (Un-scrolled on light hero pages) */
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle i {
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i {
     color: #0f172a !important;
     fill: #0f172a !important;
   }
 
-  /* ── SCROLLED STICKY STATE: Crisp White Text Links over Dark Navy Glass ─── */
+  /* ── SCROLLED STICKY STATE (ALL PAGES): Crisp White Text Links over Dark Frosted Glass ─── */
+  body.header-is-sticky .elementor-nav-menu a.elementor-item,
+  body.header-is-sticky .elementor-nav-menu .menu-item a,
+  body.header-is-sticky .elementor-item,
   .elementor-location-header.is-sticky .elementor-nav-menu a.elementor-item,
-  .she-header-yes.is-sticky .elementor-nav-menu a.elementor-item,
-  .elementor-element-2d9e131.is-sticky .elementor-nav-menu a.elementor-item,
   .is-sticky .elementor-nav-menu a.elementor-item,
   .is-sticky .elementor-nav-menu .menu-item a,
-  .is-sticky .elementor-item,
-  body.header-is-sticky .elementor-nav-menu a.elementor-item,
-  body.header-is-sticky .elementor-item {
+  .is-sticky .elementor-item {
     color: #ffffff !important;
     fill: #ffffff !important;
     text-shadow: none !important;
   }
 
+  body.header-is-sticky .elementor-nav-menu a.elementor-item:hover,
   .elementor-location-header.is-sticky .elementor-nav-menu a.elementor-item:hover,
-  .she-header-yes.is-sticky .elementor-nav-menu a.elementor-item:hover,
   .is-sticky .elementor-nav-menu a.elementor-item:hover,
-  .is-sticky .elementor-item:hover,
-  body.header-is-sticky .elementor-nav-menu a.elementor-item:hover {
+  .is-sticky .elementor-item:hover {
     color: #00AEFE !important;
     fill: #00AEFE !important;
     text-shadow: none !important;
@@ -835,59 +846,10 @@
   .is-sticky .elementor-menu-toggle svg,
   .is-sticky .elementor-menu-toggle path,
   .elementor-location-header.is-sticky .elementor-menu-toggle,
-  .elementor-location-header.is-sticky .elementor-menu-toggle i,
-  .elementor-element-2d9e131.is-sticky .elementor-menu-toggle,
-  .elementor-element-2d9e131.is-sticky .elementor-menu-toggle i {
+  .elementor-location-header.is-sticky .elementor-menu-toggle i {
     color: #ffffff !important;
     fill: #ffffff !important;
     stroke: #ffffff !important;
-  }
-
-  /* ── HERO OVERLAY PAGES (body.home, body.forum-page, body.elementor-page-977): Transparent on top, Dark Glass on scroll ─── */
-  body.home .elementor-location-header:not(.is-sticky),
-  body.home .she-header-yes:not(.is-sticky),
-  body.home .elementor-element-2d9e131:not(.is-sticky),
-  body.forum-page .elementor-location-header:not(.is-sticky),
-  body.forum-page .she-header-yes:not(.is-sticky),
-  body.forum-page .elementor-element-2d9e131:not(.is-sticky),
-  body.elementor-page-977 .elementor-location-header:not(.is-sticky),
-  body.elementor-page-977 .she-header-yes:not(.is-sticky),
-  body.elementor-page-977 .elementor-element-2d9e131:not(.is-sticky),
-  body.page-id-977 .elementor-location-header:not(.is-sticky),
-  body.page-id-977 .she-header-yes:not(.is-sticky),
-  body.page-id-977 .elementor-element-2d9e131:not(.is-sticky) {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    background: transparent !important;
-    background-color: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: none !important;
-    border-bottom: none !important;
-  }
-
-  body.home .elementor-location-header.is-sticky,
-  body.home .she-header-yes.is-sticky,
-  body.home .elementor-element-2d9e131.is-sticky,
-  body.forum-page .elementor-location-header.is-sticky,
-  body.forum-page .she-header-yes.is-sticky,
-  body.forum-page .elementor-element-2d9e131.is-sticky,
-  body.elementor-page-977 .elementor-location-header.is-sticky,
-  body.elementor-page-977 .she-header-yes.is-sticky,
-  body.elementor-page-977 .elementor-element-2d9e131.is-sticky,
-  body.page-id-977 .elementor-location-header.is-sticky,
-  body.page-id-977 .she-header-yes.is-sticky,
-  body.page-id-977 .elementor-element-2d9e131.is-sticky {
-    position: fixed !important;
-    top: 0 !important;
-    background: rgba(6, 16, 34, 0.92) !important;
-    backdrop-filter: blur(16px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
   }
 
 
@@ -5082,8 +5044,8 @@
   <!-- HEADER COMPONENT -->
   <div data-elementor-type="header" data-elementor-id="1969" class="elementor elementor-1969 elementor-location-header">
 	<div class="elementor-section-wrap">
-		<div class="elementor-element elementor-element-2d9e131 e-con-full she-header-yes e-flex e-con e-parent adv-sticky-elementor elementor-sticky e-lazyloaded yes-is-sticky she-header" data-id="2d9e131" data-element_type="container" data-e-type="container">
-			<div class="elementor-element elementor-element-f22f163 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="f22f163" data-element_type="container" data-e-type="container">
+		<div class="elementor-element elementor-element-2d9e131 e-con-full e-flex e-con e-parent" data-id="2d9e131" data-element_type="container" data-e-type="container">
+			<div class="elementor-element elementor-element-f22f163 e-con-full e-flex e-con e-child" data-id="f22f163" data-element_type="container" data-e-type="container">
 				<div class="elementor-element elementor-element-738d6a4 elementor-widget__width-initial elementor-hidden-mobile elementor-widget elementor-widget-image" data-id="738d6a4" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 					<div class="elementor-widget-container">
 						<a href="/">
@@ -5099,7 +5061,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="elementor-element elementor-element-adf27cc e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="adf27cc" data-element_type="container" data-e-type="container">
+			<div class="elementor-element elementor-element-adf27cc e-con-full e-flex e-con e-child" data-id="adf27cc" data-element_type="container" data-e-type="container">
 				<div class="elementor-element elementor-element-c6b6140 elementor-nav-menu__align-center elementor-nav-menu--stretch sticky-nav-menu-prefixstyle elementor-hidden-tablet elementor-hidden-mobile elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="c6b6140" data-element_type="widget" data-e-type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i class=\&quot;fas fa-caret-down\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
 					<div class="elementor-widget-container">
 						<nav migration_allowed="1" migrated="0" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-slide">
