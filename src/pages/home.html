@@ -13479,9 +13479,9 @@
           font-weight: 700;
           letter-spacing: 0.16em;
           text-transform: uppercase;
-          color: #ffffff !important;
-          background: #00AEFE !important;
-          border: 1px solid rgba(255, 255, 255, 0.3) !important;
+          color: #00AEFE !important;
+          background: transparent !important;
+          border: 1.5px solid #00AEFE !important;
           border-radius: 50px;
           padding: 7px 22px !important;
           margin-bottom: 24px !important;
@@ -13491,7 +13491,9 @@
           max-width: fit-content !important;
           margin-left: auto !important;
           margin-right: auto !important;
-          box-shadow: 0 4px 20px rgba(0, 174, 254, 0.45) !important;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          box-shadow: 0 0 16px rgba(0, 174, 254, 0.2) !important;
           transform: translateY(24px);
           opacity: 0;
           transition: transform 0.7s 0.2s ease, opacity 0.7s 0.2s ease;
