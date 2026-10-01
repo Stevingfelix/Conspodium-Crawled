@@ -42,6 +42,13 @@
       --pink-accent: #B71F71;
     }
 
+    html, body {
+      overflow-x: hidden !important;
+      width: 100% !important;
+      max-width: 100vw !important;
+      box-sizing: border-box !important;
+    }
+
     body {
       background-color: var(--bg-page);
       color: var(--text-main);
@@ -51,10 +58,17 @@
     .csp-thread-sec {
       padding: 130px 4% 80px;
       max-width: 1240px;
+      width: 100% !important;
+      box-sizing: border-box !important;
       margin: 0 auto;
     }
     @media (max-width: 768px) {
-      .csp-thread-sec { padding: 100px 16px 50px; }
+      .csp-thread-sec { 
+        padding: 100px 16px 50px !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
+      }
       .csp-thread-main-card { padding: 20px 16px !important; border-radius: 18px !important; }
       .csp-thread-heading { font-size: 1.5rem !important; }
     }
@@ -63,6 +77,8 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
     @media (max-width: 640px) {
       .csp-reply-form-grid {
@@ -74,9 +90,23 @@
       display: grid;
       grid-template-columns: 1fr 340px;
       gap: 36px;
+      width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
     }
     @media (max-width: 900px) {
-      .csp-thread-layout { grid-template-columns: 1fr; gap: 24px; }
+      .csp-thread-layout { 
+        grid-template-columns: 100% !important; 
+        gap: 24px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+    }
+    .csp-thread-layout > div,
+    .csp-thread-layout > aside {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
     }
 
     /* Main Card Styling */
@@ -87,6 +117,11 @@
       padding: 36px;
       box-shadow: 0 4px 24px rgba(15,23,42,0.03);
       margin-bottom: 28px;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     .csp-thread-badge {
@@ -811,7 +846,7 @@
 
         emailInputs.forEach(function(inp) {
           if (session && !unlocked && !window.isEditingIdentity) {
-            emailInputs.value = session.email || '';
+            inp.value = session.email || '';
             inp.readOnly = true;
             inp.tabIndex = -1;
             inp.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
@@ -828,13 +863,13 @@
             if (!existingBadge) {
               existingBadge = document.createElement('div');
               existingBadge.className = 'csp-session-lock-badge';
-              existingBadge.style.cssText = 'background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:9px 14px;font-size:0.84rem;color:#0369a1;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;font-weight:500;';
+              existingBadge.style.cssText = 'background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:9px 14px;font-size:0.84rem;color:#0369a1;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;font-weight:500;gap:8px;flex-wrap:nowrap;';
               var grid = formReply.querySelector('.csp-reply-form-grid');
               if (grid) formReply.insertBefore(existingBadge, grid);
               else formReply.insertBefore(existingBadge, formReply.firstChild);
             }
-            existingBadge.innerHTML = '<span>🔒 Replying as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '</span>' +
-              '<button type="button" onclick="window.requestIdentityEdit()" style="background:none;border:none;color:#00AEFE;font-weight:700;font-size:0.82rem;cursor:pointer;text-decoration:underline;">Switch / Edit</button>';
+            existingBadge.innerHTML = '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1;">🔒 Replying as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '</span>' +
+              '<button type="button" onclick="window.requestIdentityEdit()" style="background:none;border:none;color:#00AEFE;font-weight:700;font-size:0.82rem;cursor:pointer;text-decoration:underline;white-space:nowrap;flex-shrink:0;padding-left:6px;">Switch / Edit</button>';
           } else {
             if (existingBadge && existingBadge.parentNode) {
               existingBadge.parentNode.removeChild(existingBadge);

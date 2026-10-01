@@ -1881,16 +1881,18 @@
     text-decoration: none !important;
   }
 
-  /* Submit Story Pill Button inside Modal */
+  /* Submit Story Chat-Style Pill Button inside Modal */
   #csp-mobile-menu-modal .csp-modal-card a.csp-modal-cta {
     background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
     color: #ffffff !important;
     fill: #ffffff !important;
     font-family: 'Merriweather', Georgia, serif !important;
-    font-size: 0.95rem !important;
-    font-weight: 600 !important;
-    padding: 14px 32px !important;
-    border-radius: 50px !important;
+    font-size: 0.92rem !important;
+    font-weight: 500 !important;
+    padding: 12px 28px !important;
+    border-radius: 999px 999px 4px 999px !important;
     margin-top: 14px !important;
     box-shadow: 0 6px 24px rgba(0, 174, 254, 0.4) !important;
     display: inline-flex !important;
@@ -1898,16 +1900,21 @@
     justify-content: center !important;
     gap: 8px !important;
     width: auto !important;
-    min-width: 180px !important;
+    min-width: 170px !important;
     text-decoration: none !important;
+    white-space: nowrap !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, filter 0.25s ease, border-radius 0.25s ease, background-color 0.25s ease !important;
   }
 
   #csp-mobile-menu-modal .csp-modal-card a.csp-modal-cta:hover {
     background: #0096db !important;
-    transform: translateY(-2px) scale(1.03) !important;
-    box-shadow: 0 8px 30px rgba(0, 174, 254, 0.55) !important;
+    background-color: #0096db !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    border-radius: 999px 999px 12px 999px !important;
+    box-shadow: 0 10px 32px rgba(0, 174, 254, 0.5) !important;
     color: #ffffff !important;
     text-decoration: none !important;
+    filter: brightness(1.08) !important;
   }
 
   #csp-mobile-menu-modal .csp-mobile-menu-close {
@@ -3734,10 +3741,11 @@
         menuItems.forEach(function (item) {
           var li = document.createElement('li');
           var a = document.createElement('a');
-          a.textContent = item.text;
-          a.href = item.href;
           if (item.isCta) {
             a.className = 'csp-modal-cta';
+            a.innerHTML = '<span>' + item.text + '</span><span class="elementor-button-icon" style="margin-left:6px;display:inline-flex;align-items:center;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+          } else {
+            a.textContent = item.text;
           }
           var itemPath = item.href.replace(/\/$/, '') || '/';
           if (currentPath === itemPath || (itemPath !== '/' && currentPath.endsWith(itemPath))) {
@@ -5146,6 +5154,13 @@
       --pink-accent: #B71F71;
     }
 
+    html, body {
+      overflow-x: hidden !important;
+      width: 100% !important;
+      max-width: 100vw !important;
+      box-sizing: border-box !important;
+    }
+
     body {
       background-color: var(--bg-page);
       color: var(--text-main);
@@ -5273,19 +5288,38 @@
       padding: 24px 3% 80px 3%;
       max-width: 1320px;
       margin: 0 auto;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       .csp-post-sec {
-        padding: 16px 12px 60px 12px;
+        padding: 16px 14px 60px 14px !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
       }
     }
     .csp-post-grid-layout {
       display: grid;
       grid-template-columns: 1fr 340px;
       gap: 40px;
+      width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
     }
     @media (max-width: 960px) {
-      .csp-post-grid-layout { grid-template-columns: 1fr; }
+      .csp-post-grid-layout { 
+        grid-template-columns: 100% !important; 
+        gap: 32px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+    }
+    .csp-post-grid-layout > article,
+    .csp-post-grid-layout > aside {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
     }
 
     /* Category Pill Container spanning wide across post */
@@ -5304,6 +5338,16 @@
       width: 100% !important;
       max-width: 100% !important;
       box-sizing: border-box !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important;
+    }
+    @media (max-width: 768px) {
+      .csp-cat-nav-wrap {
+        margin-bottom: 20px !important;
+        padding: 8px 12px !important;
+        border-radius: 30px !important;
+      }
     }
 
     /* ── BREADCRUMB & BACK BTN ── */
@@ -5314,6 +5358,8 @@
       margin-bottom: 20px;
       flex-wrap: wrap;
       gap: 12px;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
     .csp-back-btn {
       display: inline-flex;
@@ -5338,7 +5384,9 @@
 
     /* ── IMMERSIVE DARK OVERLAY HERO (OPTION 2) ── */
     .csp-opt2-hero-wrap {
-      width: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
       min-height: 520px;
       border-radius: 28px;
       position: relative;
@@ -5352,10 +5400,10 @@
     }
     @media (max-width: 768px) {
       .csp-opt2-hero-wrap {
-        min-height: 420px;
-        padding: 28px 20px;
-        border-radius: 20px;
-        margin-bottom: 24px;
+        min-height: 380px !important;
+        padding: 24px 16px !important;
+        border-radius: 20px !important;
+        margin-bottom: 24px !important;
       }
     }
     .csp-opt2-bg-img {
@@ -5385,7 +5433,10 @@
       z-index: 3;
       max-width: 1000px;
       color: #ffffff;
-      width: 100%;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
     .csp-opt2-badge {
       display: inline-flex;
@@ -5410,20 +5461,24 @@
     }
     .csp-opt2-title {
       font-family: 'Merriweather', serif;
-      font-size: clamp(2.1rem, 3.8vw, 3.4rem);
+      font-size: clamp(1.6rem, 5vw, 3.4rem) !important;
       font-weight: 700;
       line-height: 1.25;
       color: #ffffff;
       margin-bottom: 18px;
       text-shadow: 0 2px 14px rgba(0,0,0,0.6);
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
     .csp-opt2-meta {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 14px;
       font-size: 0.88rem;
       color: rgba(255, 255, 255, 0.9);
       flex-wrap: wrap;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
     .csp-opt2-meta-author {
       display: inline-flex;
@@ -5461,6 +5516,31 @@
       line-height: 1.8;
       color: #1e293b;
       margin-bottom: 40px;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    .csp-post-body * {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .csp-post-body img,
+    .csp-post-body iframe,
+    .csp-post-body table,
+    .csp-post-body video {
+      max-width: 100% !important;
+      height: auto !important;
+      border-radius: 12px;
+    }
+    @media (max-width: 768px) {
+      .csp-post-body {
+        padding: 22px 16px !important;
+        font-size: 0.98rem !important;
+        margin-bottom: 28px !important;
+        border-radius: 16px !important;
+      }
     }
     .csp-post-body p {
       margin-bottom: 24px;
@@ -5470,6 +5550,7 @@
       color: #0f172a;
       margin: 36px 0 16px 0;
       line-height: 1.3;
+      word-break: break-word;
     }
     .csp-post-body blockquote {
       border-left: 4px solid var(--blue-accent);
@@ -5490,6 +5571,9 @@
       color: #0f172a;
       line-height: 1.6;
       margin-bottom: 32px;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      word-break: break-word;
     }
 
     /* ── SHARE BUTTONS ── */
@@ -5504,6 +5588,15 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 16px;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    @media (max-width: 768px) {
+      .csp-share-sec {
+        padding: 20px 16px !important;
+        margin-bottom: 28px !important;
+      }
     }
     .csp-share-title {
       font-family: 'Merriweather', serif;
@@ -6495,11 +6588,11 @@
         if (!existingBadge) {
           existingBadge = document.createElement('div');
           existingBadge.className = 'csp-session-lock-badge';
-          existingBadge.style.cssText = 'background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:8px 14px;font-size:0.82rem;color:#0369a1;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;font-weight:500;';
+          existingBadge.style.cssText = 'background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:8px 14px;font-size:0.82rem;color:#0369a1;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;font-weight:500;gap:8px;flex-wrap:nowrap;';
           formEl.insertBefore(existingBadge, formEl.firstChild);
         }
-        existingBadge.innerHTML = '<span>🔒 Commenting as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '</span>' +
-          '<button type="button" onclick="window.requestIdentityEdit()" style="background:none;border:none;color:#00AEFE;font-weight:700;font-size:0.8rem;cursor:pointer;text-decoration:underline;">Switch / Edit</button>';
+        existingBadge.innerHTML = '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1;">🔒 Commenting as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '</span>' +
+          '<button type="button" onclick="window.requestIdentityEdit()" style="background:none;border:none;color:#00AEFE;font-weight:700;font-size:0.8rem;cursor:pointer;text-decoration:underline;white-space:nowrap;flex-shrink:0;padding-left:6px;">Switch / Edit</button>';
       } else {
         if (existingBadge && existingBadge.parentNode) {
           existingBadge.parentNode.removeChild(existingBadge);

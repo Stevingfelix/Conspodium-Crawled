@@ -2259,16 +2259,18 @@ min-width: 100px;
     text-decoration: none !important;
   }
 
-  /* Submit Story Pill Button inside Modal */
+  /* Submit Story Chat-Style Pill Button inside Modal */
   #csp-mobile-menu-modal .csp-modal-card a.csp-modal-cta {
     background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
     color: #ffffff !important;
     fill: #ffffff !important;
     font-family: 'Merriweather', Georgia, serif !important;
-    font-size: 0.95rem !important;
-    font-weight: 600 !important;
-    padding: 14px 32px !important;
-    border-radius: 50px !important;
+    font-size: 0.92rem !important;
+    font-weight: 500 !important;
+    padding: 12px 28px !important;
+    border-radius: 999px 999px 4px 999px !important;
     margin-top: 14px !important;
     box-shadow: 0 6px 24px rgba(0, 174, 254, 0.4) !important;
     display: inline-flex !important;
@@ -2276,16 +2278,21 @@ min-width: 100px;
     justify-content: center !important;
     gap: 8px !important;
     width: auto !important;
-    min-width: 180px !important;
+    min-width: 170px !important;
     text-decoration: none !important;
+    white-space: nowrap !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, filter 0.25s ease, border-radius 0.25s ease, background-color 0.25s ease !important;
   }
 
   #csp-mobile-menu-modal .csp-modal-card a.csp-modal-cta:hover {
     background: #0096db !important;
-    transform: translateY(-2px) scale(1.03) !important;
-    box-shadow: 0 8px 30px rgba(0, 174, 254, 0.55) !important;
+    background-color: #0096db !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    border-radius: 999px 999px 12px 999px !important;
+    box-shadow: 0 10px 32px rgba(0, 174, 254, 0.5) !important;
     color: #ffffff !important;
     text-decoration: none !important;
+    filter: brightness(1.08) !important;
   }
 
   #csp-mobile-menu-modal .csp-mobile-menu-close {
@@ -4112,10 +4119,11 @@ min-width: 100px;
         menuItems.forEach(function (item) {
           var li = document.createElement('li');
           var a = document.createElement('a');
-          a.textContent = item.text;
-          a.href = item.href;
           if (item.isCta) {
             a.className = 'csp-modal-cta';
+            a.innerHTML = '<span>' + item.text + '</span><span class="elementor-button-icon" style="margin-left:6px;display:inline-flex;align-items:center;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+          } else {
+            a.textContent = item.text;
           }
           var itemPath = item.href.replace(/\/$/, '') || '/';
           if (currentPath === itemPath || (itemPath !== '/' && currentPath.endsWith(itemPath))) {
