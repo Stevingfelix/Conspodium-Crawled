@@ -29,6 +29,50 @@ $method = $_SERVER['REQUEST_METHOD'];
 $resource = $_GET['resource'] ?? 'posts';
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 
+// ── ARTICLE LIKES RESOURCE ──────────────────────────────────────────────────
+if ($resource === 'like' || ($_GET['action'] ?? '') === 'like' || ($_POST['action'] ?? '') === 'like') {
+    $postId = intval($_GET['id'] ?? $input['id'] ?? $input['post_id'] ?? 0);
+    $slug = trim($_GET['slug'] ?? $input['slug'] ?? '');
+    if (!$postId && $slug) {
+        $sP = $pdo->prepare("SELECT id FROM posts WHERE slug = ?");
+        $sP->execute([$slug]);
+        $fP = $sP->fetch();
+        if ($fP) $postId = intval($fP['id']);
+    }
+
+    if ($postId <= 0) {
+        http_response_code(400);
+        echo json_encode(["success" => false, "error" => "Valid post ID is required"]);
+        exit;
+    }
+
+    $voterIp = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+
+    // Check if voter already liked
+    $checkStmt = $pdo->prepare("SELECT id FROM post_likes WHERE post_id = ? AND voter_ip = ?");
+    $checkStmt->execute([$postId, $voterIp]);
+    $existing = $checkStmt->fetch();
+
+    if ($existing) {
+        // Unlike
+        $pdo->prepare("DELETE FROM post_likes WHERE id = ?")->execute([$existing['id']]);
+        $pdo->prepare("UPDATE posts SET likes = MAX(0, COALESCE(likes, 0) - 1) WHERE id = ?")->execute([$postId]);
+        $liked = false;
+    } else {
+        // Like
+        $pdo->prepare("INSERT OR IGNORE INTO post_likes (post_id, voter_ip) VALUES (?, ?)")->execute([$postId, $voterIp]);
+        $pdo->prepare("UPDATE posts SET likes = COALESCE(likes, 0) + 1 WHERE id = ?")->execute([$postId]);
+        $liked = true;
+    }
+
+    $cntStmt = $pdo->prepare("SELECT COALESCE(likes, 0) as likes FROM posts WHERE id = ?");
+    $cntStmt->execute([$postId]);
+    $likes = intval($cntStmt->fetchColumn() ?: 0);
+
+    echo json_encode(["success" => true, "post_id" => $postId, "likes" => $likes, "liked" => $liked]);
+    exit;
+}
+
 // ── CATEGORIES RESOURCE ──────────────────────────────────────────────────────
 if ($resource === 'categories') {
     if ($method === 'GET') {
@@ -303,14 +347,28 @@ if ($method === 'GET') {
     $slugOrId = $_GET['slug'] ?? $_GET['id'] ?? null;
 
     if ($slugOrId) {
-        $isId = is_numeric($slugOrId);
-        $query = $isId 
-            ? "SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon FROM posts p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = ?"
-            : "SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon FROM posts p LEFT JOIN categories c ON p.category_id = c.id WHERE p.slug = ?";
+        $cleanParam = trim(rtrim(trim($slugOrId), '/'));
+        $isId = is_numeric($cleanParam);
         
-        $stmt = $pdo->prepare($query);
-        $stmt->execute([$slugOrId]);
-        $post = $stmt->fetch();
+        $post = null;
+        if ($isId) {
+            $stmt = $pdo->prepare("SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon FROM posts p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = ?");
+            $stmt->execute([intval($cleanParam)]);
+            $post = $stmt->fetch();
+        }
+
+        if (!$post) {
+            $stmt = $pdo->prepare("SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon FROM posts p LEFT JOIN categories c ON p.category_id = c.id WHERE p.slug = ?");
+            $stmt->execute([$cleanParam]);
+            $post = $stmt->fetch();
+        }
+
+        // Fallback: search by prefix or partial match if exact slug not found
+        if (!$post && strlen($cleanParam) > 3) {
+            $stmt = $pdo->prepare("SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon FROM posts p LEFT JOIN categories c ON p.category_id = c.id WHERE p.slug LIKE ? OR p.title LIKE ? LIMIT 1");
+            $stmt->execute(['%' . $cleanParam . '%', '%' . $cleanParam . '%']);
+            $post = $stmt->fetch();
+        }
 
         if (!$post) {
             http_response_code(404);

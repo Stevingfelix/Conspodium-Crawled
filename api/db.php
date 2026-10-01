@@ -95,6 +95,108 @@ try {
         }
     }
 
+    // Unconditional Table & Column Migrations
+    try {
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS forum_categories (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                slug TEXT NOT NULL UNIQUE,
+                description TEXT,
+                icon_type TEXT DEFAULT 'globe',
+                color_accent TEXT DEFAULT '#00AEFE',
+                display_order INTEGER DEFAULT 0,
+                is_active INTEGER DEFAULT 1,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+
+            CREATE TABLE IF NOT EXISTS forum_threads (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                category_id INTEGER DEFAULT NULL,
+                title TEXT NOT NULL,
+                slug TEXT NOT NULL UNIQUE,
+                category TEXT DEFAULT 'General Discussion',
+                author_name TEXT NOT NULL,
+                author_email TEXT NOT NULL,
+                content TEXT NOT NULL,
+                views INTEGER DEFAULT 0,
+                is_pinned INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'approved',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+
+            CREATE TABLE IF NOT EXISTS forum_replies (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                thread_id INTEGER NOT NULL,
+                parent_id INTEGER DEFAULT NULL,
+                author_name TEXT NOT NULL,
+                author_email TEXT NOT NULL,
+                content TEXT NOT NULL,
+                status TEXT DEFAULT 'approved',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+
+            CREATE TABLE IF NOT EXISTS post_likes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                post_id INTEGER NOT NULL,
+                voter_ip TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_post_likes ON post_likes(post_id, voter_ip);
+
+            CREATE TABLE IF NOT EXISTS forum_votes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                target_type TEXT NOT NULL,
+                target_id INTEGER NOT NULL,
+                vote_type TEXT NOT NULL,
+                voter_ip TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_forum_votes ON forum_votes(target_type, target_id, voter_ip);
+        ");
+
+        try { $pdo->exec("ALTER TABLE posts ADD COLUMN likes INTEGER DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN category_id INTEGER DEFAULT NULL"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN views INTEGER DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN is_pinned INTEGER DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN status TEXT DEFAULT 'approved'"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN upvotes INTEGER DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN downvotes INTEGER DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN author_location TEXT DEFAULT NULL"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN parent_id INTEGER DEFAULT NULL"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN status TEXT DEFAULT 'approved'"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN upvotes INTEGER DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN downvotes INTEGER DEFAULT 0"); } catch (Exception $e) {}
+
+        // Seed initial forum categories if empty
+        $fCatCheck = $pdo->query("SELECT COUNT(*) as count FROM forum_categories")->fetch();
+        if (!$fCatCheck || (int)$fCatCheck['count'] === 0) {
+            $stmtFCat = $pdo->prepare("INSERT INTO forum_categories (name, slug, description, icon_type, color_accent, display_order, is_active) VALUES (?, ?, ?, ?, ?, ?, 1)");
+            $defaultForumCategories = [
+                ['African Diaspora Matters', 'african-diaspora-matters', 'Global diaspora affairs, dual citizenship policy, and civic rights.', 'globe', '#00AEFE', 1],
+                ['Insights & Policy', 'insights-policy', 'Economic reports, financial regulations, diaspora bonds, and policy briefs.', 'chart', '#10b981', 2],
+                ['Culture & Heritage', 'culture-heritage', 'Pan-African arts, cultural preservation, languages, and ancestral heritage.', 'temple', '#f59e0b', 3],
+                ['Innovation & Tech', 'innovation-tech', 'Venture capital, startup ecosystems, software, and tech hub expansion.', 'lightbulb', '#8b5cf6', 4],
+                ['Art & Entertainment', 'art-entertainment', 'Cinema, music, literature, fashion, and creative diaspora industries.', 'palette', '#ec4899', 5],
+                ['Community Hub', 'community-hub', 'Regional meetups, local diaspora networks, education, and student support.', 'users', '#3b82f6', 6],
+                ['Success Stories', 'success-stories', 'Milestones, high-impact careers, community leaders, and pioneer spotlights.', 'trophy', '#eab308', 7],
+                ['Interview Transcripts', 'interview-transcripts', 'Official Q&As, leadership symposium transcripts, and podcast notes.', 'document', '#6366f1', 8],
+                ['General Discussion', 'general-discussion', 'Open diaspora town square for general perspectives and announcements.', 'chat', '#64748b', 9]
+            ];
+            foreach ($defaultForumCategories as $dfc) {
+                $stmtFCat->execute($dfc);
+            }
+        }
+
+        // Auto-link existing threads category_id with fallback fuzzy matching
+        $pdo->exec("UPDATE forum_threads SET category_id = (SELECT id FROM forum_categories WHERE forum_categories.name = forum_threads.category LIMIT 1) WHERE category_id IS NULL");
+        $pdo->exec("UPDATE forum_threads SET category_id = (SELECT id FROM forum_categories WHERE forum_categories.slug = 'innovation-tech' LIMIT 1) WHERE category_id IS NULL AND (category LIKE '%Innovation%' OR category = 'Innovation')");
+        $pdo->exec("UPDATE forum_threads SET category_id = (SELECT id FROM forum_categories WHERE forum_categories.slug = 'culture-heritage' LIMIT 1) WHERE category_id IS NULL AND (category LIKE '%Culture%')");
+        $pdo->exec("UPDATE forum_threads SET category_id = (SELECT id FROM forum_categories WHERE forum_categories.slug = 'insights-policy' LIMIT 1) WHERE category_id IS NULL AND (category LIKE '%Insights%' OR category LIKE '%Policy%')");
+        $pdo->exec("UPDATE forum_threads SET category_id = (SELECT id FROM forum_categories WHERE forum_categories.slug = 'community-hub' LIMIT 1) WHERE category_id IS NULL AND (category LIKE '%Community%')");
+        $pdo->exec("UPDATE forum_threads SET category_id = (SELECT id FROM forum_categories WHERE forum_categories.slug = 'general-discussion' LIMIT 1) WHERE category_id IS NULL");
+    } catch (Throwable $e) {}
+
     // Check if database schema is already initialized
     $schemaInit = false;
     try {
@@ -248,7 +350,7 @@ try {
         $pdo->exec("ALTER TABLE posts ADD COLUMN is_hero_slide4 INTEGER DEFAULT 0");
     } catch (Exception $e) {}
     try {
-        $pdo->exec("ALTER TABLE event_reminders ADD COLUMN user_name TEXT");
+        $pdo->exec("ALTER TABLE forum_threads ADD COLUMN category_id INTEGER DEFAULT NULL");
     } catch (Exception $e) {}
     try {
         $pdo->exec("UPDATE subscribers SET list_segment = 'community' WHERE list_segment = 'general' OR list_segment IS NULL OR list_segment = ''");
@@ -342,8 +444,21 @@ try {
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
 
+        CREATE TABLE IF NOT EXISTS forum_categories (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            slug TEXT NOT NULL UNIQUE,
+            description TEXT,
+            icon_type TEXT DEFAULT 'globe',
+            color_accent TEXT DEFAULT '#00AEFE',
+            display_order INTEGER DEFAULT 0,
+            is_active INTEGER DEFAULT 1,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+
         CREATE TABLE IF NOT EXISTS forum_threads (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category_id INTEGER DEFAULT NULL,
             title TEXT NOT NULL,
             slug TEXT NOT NULL UNIQUE,
             category TEXT DEFAULT 'General Discussion',
@@ -353,7 +468,8 @@ try {
             views INTEGER DEFAULT 0,
             is_pinned INTEGER DEFAULT 0,
             status TEXT DEFAULT 'approved',
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (category_id) REFERENCES forum_categories(id) ON DELETE SET NULL
         );
 
         CREATE TABLE IF NOT EXISTS forum_replies (
@@ -652,14 +768,36 @@ try {
         }
     }
 
+    // Seed forum categories if empty
+    $forumCatCount = $pdo->query("SELECT COUNT(*) as count FROM forum_categories")->fetch()['count'];
+    if ($forumCatCount == 0) {
+        $stmtForumCat = $pdo->prepare("INSERT INTO forum_categories (name, slug, description, icon_type, color_accent, display_order, is_active) VALUES (?, ?, ?, ?, ?, ?, 1)");
+        $initialForumCats = [
+            ['African Diaspora Matters', 'african-diaspora-matters', 'Crucial policy debates, citizenship pathways, and global diaspora affairs.', 'globe', '#00AEFE', 1],
+            ['Insights & Policy', 'insights-policy', 'Economic research, trade corridors, regulatory frameworks, and market analysis.', 'chart', '#0077b6', 2],
+            ['Culture & Heritage', 'culture-heritage', 'Pan-African traditions, cinema, literature, art preservation, and identity.', 'temple', '#b5179e', 3],
+            ['Innovation & Tech', 'innovation-tech', 'Diaspora tech hubs, venture capital, AI labs, and academic partnerships.', 'lightbulb', '#f77f00', 4],
+            ['Art & Entertainment', 'art-entertainment', 'Music, creative industries, fashion, cinema, and global cultural representation.', 'palette', '#B71F71', 5],
+            ['Community Hub', 'community-hub', 'Connecting diaspora networks, professional associations, and local chapters.', 'users', '#10b981', 6],
+            ['Success Stories', 'success-stories', 'Celebrating trailblazers, founders, researchers, and diaspora achievements.', 'trophy', '#eab308', 7],
+            ['Interview Transcripts', 'interview-transcripts', 'Transcribed discussions, executive keynotes, and first-hand dialogues.', 'document', '#6366f1', 8],
+            ['General Discussion', 'general-discussion', 'Open exchanges, community questions, and general diaspora dialogues.', 'chat', '#64748b', 9]
+        ];
+
+        foreach ($initialForumCats as $fc) {
+            $stmtForumCat->execute($fc);
+        }
+    }
+
     // Seed forum threads and replies if empty
     $forumCount = $pdo->query("SELECT COUNT(*) as count FROM forum_threads")->fetch()['count'];
     if ($forumCount == 0) {
-        $stmtThread = $pdo->prepare("INSERT INTO forum_threads (title, slug, category, author_name, author_email, content, views, is_pinned, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'approved', ?)");
+        $stmtThread = $pdo->prepare("INSERT INTO forum_threads (category_id, title, slug, category, author_name, author_email, content, views, is_pinned, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'approved', ?)");
         $stmtThread->execute([
+            1,
             "How can we streamline diaspora voting rights across West Africa?",
             "streamline-diaspora-voting-rights-west-africa",
-            "Policy & Governance",
+            "African Diaspora Matters",
             "Tunde Olanrewaju",
             "tunde.o@diaspora-policy.org",
             "With over 30 million West Africans living in diaspora, securing dual-citizenship voting rights is critical for democratic accountability. Let us discuss practical steps.",
@@ -670,9 +808,10 @@ try {
         $thread1Id = $pdo->lastInsertId();
 
         $stmtThread->execute([
+            4,
             "Investing in Tech Startups vs Real Estate in Homeland: What are your experiences?",
             "investing-in-tech-startups-vs-real-estate",
-            "Investment & Finance",
+            "Innovation & Tech",
             "Marcus Vance",
             "marcus.vance@pan-african-tech.io",
             "Many diaspora investors default to land purchase, but venture capital opportunities in Lagos and Nairobi yield higher long-term social impact. What is your strategy?",

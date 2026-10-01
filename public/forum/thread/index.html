@@ -2401,61 +2401,88 @@
     background-clip: text !important;
   }
 
-  /* ── Global Toast Notifications & Confirmation Modals ── */
+  /* ── Sleek Global Toast Notifications & Confirmation Modals ── */
   #csp-toast-container {
     position: fixed;
-    top: 24px;
-    right: 24px;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 99999999;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
+    align-items: center;
     gap: 10px;
     pointer-events: none;
-    max-width: 400px;
-    width: calc(100% - 48px);
+    max-width: 480px;
+    width: calc(100% - 32px);
   }
 
   .csp-toast {
     pointer-events: auto;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.94);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 14px;
-    padding: 14px 20px;
-    font-family: 'Inter', -apple-system, sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 50px;
+    padding: 10px 22px 10px 14px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 0.88rem;
     font-weight: 500;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 12px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-    transform: translateX(120%);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    transform: translateY(24px) scale(0.95);
     opacity: 0;
     transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
 
   .csp-toast.show {
-    transform: translateX(0);
+    transform: translateY(0) scale(1);
     opacity: 1;
   }
 
-  .csp-toast-icon {
-    font-size: 1.15rem;
+  .csp-toast-icon-wrap {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
   }
-
-  .csp-toast-success {
-    border-left: 4px solid #10b981;
+  .csp-toast-icon-wrap svg {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2.2;
   }
 
-  .csp-toast-danger {
-    border-left: 4px solid #f43f5e;
+  .csp-toast-success .csp-toast-icon-wrap {
+    background: rgba(16, 185, 129, 0.18);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.35);
   }
 
-  .csp-toast-info {
-    border-left: 4px solid #00AEFE;
+  .csp-toast-danger .csp-toast-icon-wrap {
+    background: rgba(244, 63, 94, 0.18);
+    color: #f43f5e;
+    border: 1px solid rgba(244, 63, 94, 0.35);
+  }
+
+  .csp-toast-info .csp-toast-icon-wrap {
+    background: rgba(0, 174, 254, 0.18);
+    color: #00AEFE;
+    border: 1px solid rgba(0, 174, 254, 0.35);
+  }
+
+  .csp-toast-warning .csp-toast-icon-wrap {
+    background: rgba(245, 158, 11, 0.18);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.35);
   }
 
   #csp-confirm-backdrop {
@@ -3397,10 +3424,10 @@
     }
     window.getAbsoluteImageUrl = getAbsoluteImageUrl;
 
-    // Global Toast Notifications
+    // Global Toast Notifications (Sleek On-Screen Pill HUD)
     window.cspToast = function (message, type, duration) {
       type = type || 'info';
-      duration = duration || 3500;
+      duration = duration || 3200;
 
       var container = document.getElementById('csp-toast-container');
       if (!container) {
@@ -3409,22 +3436,30 @@
         document.body.appendChild(container);
       }
 
-      var icons = {
-        success: '🎉',
-        danger: '🚨',
-        info: 'ℹ️'
+      var svgIcons = {
+        success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+        danger: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+        info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+        warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
       };
+
+      // Strip any accidental leading emoji clutter from message string
+      var cleanMsg = (message || '').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}\s❤️🎉⭐💡ℹ️🚨👍]+/gu, '').trim() || message;
 
       var toast = document.createElement('div');
       toast.className = 'csp-toast csp-toast-' + type;
-      toast.innerHTML = '<span class="csp-toast-icon">' + (icons[type] || 'ℹ️') + '</span><span>' + message + '</span>';
+      toast.innerHTML = '<span class="csp-toast-icon-wrap">' + (svgIcons[type] || svgIcons.info) + '</span><span class="csp-toast-msg">' + cleanMsg + '</span>';
       container.appendChild(toast);
 
-      setTimeout(function () { toast.classList.add('show'); }, 10);
+      requestAnimationFrame(function () {
+        toast.classList.add('show');
+      });
 
       setTimeout(function () {
         toast.classList.remove('show');
-        setTimeout(function () { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 350);
+        setTimeout(function () {
+          if (toast.parentNode) toast.parentNode.removeChild(toast);
+        }, 350);
       }, duration);
     };
 
@@ -5114,11 +5149,11 @@
       display: inline-block;
       font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: #00AEFE;
-      background: rgba(0,174,254,0.08);
-      border: 1px solid rgba(0,174,254,0.25);
+      color: #475569;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
       border-radius: 50px;
       padding: 5px 14px;
       margin-bottom: 16px;
@@ -5149,7 +5184,8 @@
       width: 42px;
       height: 42px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #00AEFE, #B71F71);
+      background: linear-gradient(135deg, #00AEFE 0%, #0077b6 100%);
+      box-shadow: 0 2px 10px rgba(0, 174, 254, 0.3);
       color: #ffffff;
       font-weight: 700;
       display: flex;
@@ -5214,10 +5250,60 @@
     }
     .csp-input:focus { outline: none; border-color: #00AEFE; box-shadow: 0 0 0 3px rgba(0,174,254,0.15); }
 
+    /* Primary Action Buttons */
+    .csp-btn-reply-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 26px;
+      border-radius: 50px;
+      background: #00AEFE;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 174, 254, 0.3);
+      transition: all 0.2s ease;
+      box-sizing: border-box !important;
+    }
+    .csp-btn-reply-submit:hover {
+      background: #0098de;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(0, 174, 254, 0.45);
+    }
+
+    .csp-btn-sidebar-white {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 12px 24px !important;
+      border-radius: 50px !important;
+      background: #ffffff !important;
+      color: #0f172a !important;
+      text-decoration: none !important;
+      font-weight: 600 !important;
+      font-size: 0.92rem !important;
+      border: 1px solid #ffffff !important;
+      cursor: pointer !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+      transition: all 0.2s ease !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+    }
+    .csp-btn-sidebar-white:hover {
+      background: #f8fafc !important;
+      color: #00AEFE !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+    }
+
     .csp-btn-pill {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 12px 24px; border-radius: 50px;
-      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
+      background: #00AEFE;
       color: #fff; text-decoration: none; font-weight: 600;
       border: none; cursor: pointer; box-shadow: 0 6px 20px rgba(0,174,254,0.3);
       transition: transform 0.2s, opacity 0.2s;
@@ -5247,6 +5333,122 @@
       color: #00AEFE;
       transform: translateX(-3px);
       box-shadow: 0 4px 14px rgba(0, 174, 254, 0.15);
+    }
+
+    /* Modal CSS */
+    .csp-forum-modal-overlay {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 99999999 !important;
+      background: rgba(15, 23, 42, 0.75) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s !important;
+      padding: 24px 16px !important;
+      box-sizing: border-box !important;
+    }
+    .csp-forum-modal-overlay.active {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      visibility: visible !important;
+    }
+    .csp-forum-modal-card {
+      background: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+      border-top: 5px solid #00AEFE !important;
+      border-radius: 28px !important;
+      max-width: 820px !important;
+      width: 100% !important;
+      max-height: calc(100vh - 48px) !important;
+      max-height: calc(100dvh - 48px) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      padding: 36px 40px 0 !important;
+      box-shadow: 0 25px 70px rgba(15, 23, 42, 0.25), 0 0 30px rgba(0, 174, 254, 0.12) !important;
+      color: #0f172a !important;
+      transform: scale(0.96) translateY(10px) !important;
+      opacity: 0 !important;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease !important;
+      box-sizing: border-box !important;
+    }
+    .csp-forum-modal-overlay.active .csp-forum-modal-card {
+      transform: scale(1) translateY(0) !important;
+      opacity: 1 !important;
+    }
+
+    /* Guard Modal Animated Icons */
+    .csp-guard-icon-anim {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      transition: all 0.3s ease;
+    }
+    .csp-guard-icon-anim.cooldown {
+      background: rgba(245, 158, 11, 0.12);
+      color: #d97706;
+      animation: cspPulseOrange 2.4s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    .csp-guard-icon-anim.edit {
+      background: rgba(0, 174, 254, 0.12);
+      color: #00AEFE;
+      animation: cspPulseGlow 2.4s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    .csp-guard-icon-anim.exhausted {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      animation: cspPulseRed 2.4s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    @keyframes cspPulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(0, 174, 254, 0.4); transform: scale(0.95); }
+      70% { box-shadow: 0 0 0 16px rgba(0, 174, 254, 0); transform: scale(1); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 174, 254, 0); transform: scale(0.95); }
+    }
+    @keyframes cspPulseOrange {
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); transform: scale(0.95); }
+      70% { box-shadow: 0 0 0 16px rgba(245, 158, 11, 0); transform: scale(1); }
+      100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); transform: scale(0.95); }
+    }
+    @keyframes cspPulseRed {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); transform: scale(0.95); }
+      70% { box-shadow: 0 0 0 16px rgba(239, 68, 68, 0); transform: scale(1); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); transform: scale(0.95); }
+    }
+    .csp-clock-minute-hand {
+      transform-origin: 12px 12px;
+      animation: cspClockTick 4s linear infinite;
+    }
+    @keyframes cspClockTick {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .csp-edit-pen-icon {
+      animation: cspPenTilt 1.8s ease-in-out infinite alternate;
+      transform-origin: bottom right;
+    }
+    @keyframes cspPenTilt {
+      0% { transform: rotate(0deg) translate(0, 0); }
+      50% { transform: rotate(-10deg) translate(-2px, -2px); }
+      100% { transform: rotate(6deg) translate(1px, 1px); }
+    }
+    .csp-lock-icon {
+      animation: cspLockBounce 2s ease-in-out infinite;
+    }
+    @keyframes cspLockBounce {
+      0%, 100% { transform: translateY(0); }
+      15% { transform: translateY(-4px) rotate(-3deg); }
+      30% { transform: translateY(0) rotate(0deg); }
+      45% { transform: translateY(-2px) rotate(2deg); }
+      60% { transform: translateY(0); }
     }
 
     /* Sidebar Cards */
@@ -5289,6 +5491,74 @@
       color: #64748b;
       display: flex;
       gap: 12px;
+    }
+
+    /* Upvote / Downvote Capsule */
+    .csp-vote-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 50px;
+      padding: 3px 8px;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .csp-vote-capsule:hover {
+      border-color: #cbd5e1;
+      background: #e2e8f0;
+    }
+    .csp-vote-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .csp-vote-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+    }
+    .csp-vote-btn:hover {
+      background: #ffffff;
+      color: #0f172a;
+      transform: scale(1.18);
+    }
+    .csp-vote-btn.up:hover, .csp-vote-btn.up.active {
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.15);
+    }
+    .csp-vote-btn.up.active svg {
+      fill: currentColor;
+    }
+    .csp-vote-btn.down:hover, .csp-vote-btn.down.active {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.15);
+    }
+    .csp-vote-btn.down.active svg {
+      fill: currentColor;
+    }
+    .csp-vote-count {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #334155;
+      min-width: 18px;
+      text-align: center;
+      line-height: 1;
+      padding: 0 2px;
+    }
+    .csp-vote-count.positive {
+      color: #10b981;
+    }
+    .csp-vote-count.negative {
+      color: #ef4444;
     }
 
     /* Skeleton Loader Styles */
@@ -5400,16 +5670,39 @@
           </div>
           
           <div class="csp-thread-meta-bar">
-            <div style="display:flex;align-items:center;gap:12px;">
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
               <div class="csp-author-avatar-badge" id="th-author-avatar">C</div>
               <div>
-                <strong id="th-author-name" style="color:#0f172a;display:block;">Author Name</strong>
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                  <strong id="th-author-name" style="color:#0f172a;display:inline-block;font-size:0.95rem;">Author Name</strong>
+                  <span id="th-author-location" style="display:none;align-items:center;gap:4px;background:#f1f5f9;border:1px solid #e2e8f0;padding:2px 10px;border-radius:50px;font-size:0.75rem;font-weight:600;color:#475569;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span id="th-author-location-text">Location</span>
+                  </span>
+                </div>
                 <span id="th-created-date" style="font-size:0.8rem;color:#64748b;">Date</span>
               </div>
             </div>
-            <div style="margin-left:auto;display:flex;gap:16px;font-weight:500;">
-              <span>👁️ <span id="th-views-count">0</span> Views</span>
-              <span style="color:#00AEFE;font-weight:600;">💬 <span id="th-replies-count">0</span> Replies</span>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:16px;font-weight:500;flex-wrap:wrap;">
+              <!-- Vote Capsule for Topic -->
+              <div class="csp-vote-capsule" id="th-vote-capsule">
+                <button type="button" class="csp-vote-btn up" id="th-vote-up-btn" title="Upvote topic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                </button>
+                <span class="csp-vote-count" id="th-vote-count">0</span>
+                <button type="button" class="csp-vote-btn down" id="th-vote-down-btn" title="Downvote topic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                </button>
+              </div>
+
+              <span style="display:inline-flex;align-items:center;gap:5px;color:#64748b;font-size:0.85rem;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span id="th-views-count">0</span> Views
+              </span>
+              <span style="display:inline-flex;align-items:center;gap:5px;color:#00AEFE;font-size:0.85rem;font-weight:600;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span id="th-replies-count">0</span> Replies
+              </span>
             </div>
           </div>
 
@@ -5455,7 +5748,7 @@
               <input type="email" id="rp-email" class="csp-input" placeholder="Your Email *" required>
             </div>
             <textarea id="rp-content" class="csp-input" rows="4" placeholder="Write your reply or contribution..." required></textarea>
-            <button type="submit" class="csp-btn-pill">Post Reply →</button>
+            <button type="submit" class="csp-btn-reply-submit">Post Reply →</button>
           </form>
         </div>
       </div>
@@ -5482,13 +5775,25 @@
 
         <div class="csp-sidebar-card" style="background:linear-gradient(135deg, #0f172a, #1e293b);color:#ffffff;border:none;">
           <h3 style="font-family:'Merriweather',serif;font-size:1.15rem;color:#ffffff;margin-bottom:10px;">Have a Question or Topic?</h3>
-          <p style="font-size:0.88rem;color:#cbd5e1;line-height:1.55;margin-bottom:20px;">Start a new discussion thread and engage with scholars, creators, and community members across the global diaspora.</p>
-          <a href="/forum/" class="csp-btn-pill" style="width:100%;justify-content:center;text-decoration:none;">💬 Return to Forum</a>
+          <a href="/forum/" class="csp-btn-sidebar-white">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Return to Forum
+          </a>
         </div>
       </div>
 
     </div>
   </main>
+
+  <!-- ── IDENTITY SWITCH & COOLDOWN MODAL ── -->
+  <div class="csp-forum-modal-overlay" id="modal-identity-guard">
+    <div class="csp-forum-modal-card" style="max-width:440px;text-align:center;padding:40px 32px 32px !important;border-radius:28px;" id="identity-guard-card">
+      <div id="id-guard-icon" class="csp-guard-icon-anim"></div>
+      <h3 id="id-guard-title" style="font-family:'Playfair Display','Merriweather',serif;color:#0f172a;font-size:1.55rem;font-weight:900;letter-spacing:-0.025em;margin:0 0 10px;line-height:1.25;"></h3>
+      <p id="id-guard-desc" style="font-size:0.92rem;color:#64748b;line-height:1.55;margin:0 0 26px;"></p>
+      <div id="id-guard-actions" style="display:flex;gap:10px;justify-content:center;width:100%;"></div>
+    </div>
+  </div>
 
 <div data-elementor-type="footer" data-elementor-id="1374" class="elementor elementor-1374 elementor-location-footer">
 					<div class="elementor-section-wrap">
@@ -5565,6 +5870,192 @@
       var threadId = urlParams.get('id') || 1;
       var currentParentId = null;
 
+      var COOLDOWN_MS = 3 * 24 * 60 * 60 * 1000; // 3 Days Cooldown
+      var MAX_EDITS = 3; // 3 Lifetime Edits
+      window.isEditingIdentity = false;
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      // ── COMMENTER / AUTHOR IDENTITY LOCK SYSTEM ──
+      window.getCommenterSession = function() {
+        try {
+          var name = localStorage.getItem('csp_commenter_name') || '';
+          var email = localStorage.getItem('csp_commenter_email') || '';
+          var edits = parseInt(localStorage.getItem('csp_identity_edits') || '0', 10);
+          var lastUpdated = parseInt(localStorage.getItem('csp_identity_updated_at') || '0', 10);
+          if (name) return { name: name, email: email, edits: edits, lastUpdated: lastUpdated };
+        } catch(e) {}
+        return null;
+      };
+
+      window.saveCommenterSession = function(name, email, isEdit) {
+        if (!name) return;
+        try {
+          localStorage.setItem('csp_commenter_name', name.trim());
+          if (email) localStorage.setItem('csp_commenter_email', email.trim());
+          document.cookie = "csp_user_comment_author=" + encodeURIComponent(name.trim()) + "; max-age=31536000; path=/";
+          if (email) document.cookie = "csp_user_comment_email=" + encodeURIComponent(email.trim()) + "; max-age=31536000; path=/";
+          
+          if (!localStorage.getItem('csp_identity_updated_at') || isEdit) {
+            localStorage.setItem('csp_identity_updated_at', String(Date.now()));
+          }
+          if (isEdit) {
+            var currentEdits = parseInt(localStorage.getItem('csp_identity_edits') || '0', 10);
+            localStorage.setItem('csp_identity_edits', String(currentEdits + 1));
+          }
+        } catch(e) {}
+        window.isEditingIdentity = false;
+        window.syncCommenterSessionUI();
+      };
+
+      window.requestIdentityEdit = function() {
+        var session = window.getCommenterSession();
+        if (!session) return;
+
+        var guardModal = document.getElementById('modal-identity-guard');
+        var card = document.getElementById('identity-guard-card');
+        var iconEl = document.getElementById('id-guard-icon');
+        var titleEl = document.getElementById('id-guard-title');
+        var descEl = document.getElementById('id-guard-desc');
+        var actionsEl = document.getElementById('id-guard-actions');
+
+        var now = Date.now();
+        var timeSinceUpdate = now - (session.lastUpdated || 0);
+        var inCooldown = session.lastUpdated && timeSinceUpdate < COOLDOWN_MS;
+        var editsLeft = Math.max(0, MAX_EDITS - (session.edits || 0));
+
+        // Case 1: Max edits exhausted
+        if (editsLeft <= 0) {
+          if (card) card.style.borderTop = '5px solid #ef4444';
+          iconEl.className = 'csp-guard-icon-anim exhausted';
+          iconEl.innerHTML = '<svg class="csp-lock-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
+          titleEl.textContent = 'Identity Updates Exhausted';
+          descEl.innerHTML = 'You have reached the limit of <strong>3 identity updates</strong> on this device. Your contributor profile is permanently set to <strong>' + escapeHtml(session.name) + '</strong>.<br><br>If you require an urgent correction, please contact <a href="mailto:support@conspodium.com" style="color:#00AEFE;font-weight:600;">support@conspodium.com</a>.';
+          actionsEl.innerHTML = '<button type="button" onclick="document.getElementById(\'modal-identity-guard\').classList.remove(\'active\')" style="padding:11px 28px;border-radius:50px;background:#f1f5f9;border:1.5px solid #e2e8f0;font-weight:600;color:#334155;cursor:pointer;font-size:0.92rem;">Close</button>';
+          if (guardModal) guardModal.classList.add('active');
+          return;
+        }
+
+        // Case 2: In Cooldown
+        if (inCooldown) {
+          var msRemaining = COOLDOWN_MS - timeSinceUpdate;
+          var hoursRemaining = Math.ceil(msRemaining / (1000 * 60 * 60));
+          var daysRemaining = Math.floor(hoursRemaining / 24);
+          var remainingStr = daysRemaining > 0 
+            ? daysRemaining + (daysRemaining === 1 ? ' day' : ' days') + ' and ' + (hoursRemaining % 24) + ' hrs' 
+            : hoursRemaining + (hoursRemaining === 1 ? ' hour' : ' hours');
+
+          if (card) card.style.borderTop = '5px solid #f59e0b';
+          iconEl.className = 'csp-guard-icon-anim cooldown';
+          iconEl.innerHTML = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline class="csp-clock-minute-hand" points="12 6 12 12 16 14"></polyline></svg>';
+          titleEl.textContent = 'Identity Cooldown Active';
+          descEl.innerHTML = 'To maintain community trust and prevent impersonation, contributor names can only be updated once every 3 days.<br><br>Your next update will be available in <strong>' + remainingStr + '</strong>.';
+          actionsEl.innerHTML = '<button type="button" onclick="document.getElementById(\'modal-identity-guard\').classList.remove(\'active\')" style="width:100%;height:46px;border-radius:50px;background:#00AEFE;border:none;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.95rem;">Got It</button>';
+          if (guardModal) guardModal.classList.add('active');
+          return;
+        }
+
+        // Case 3: Allowed to Edit
+        if (card) card.style.borderTop = '5px solid #00AEFE';
+        iconEl.className = 'csp-guard-icon-anim edit';
+        iconEl.innerHTML = '<svg class="csp-edit-pen-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
+        titleEl.textContent = 'Switch Contributor Identity?';
+        descEl.innerHTML = 'You have <strong>' + editsLeft + ' of ' + MAX_EDITS + '</strong> name updates remaining on this device.<br><br>Once you update your details, your identity will be locked for a 3-day cooldown period.';
+        actionsEl.innerHTML = `
+          <button type="button" onclick="document.getElementById('modal-identity-guard').classList.remove('active')" style="flex:1;height:46px;border-radius:50px;background:#f8fafc;border:1.5px solid #e2e8f0;font-weight:600;color:#64748b;cursor:pointer;font-size:0.92rem;">Cancel</button>
+          <button type="button" onclick="window.confirmUnlockIdentity()" style="flex:1;height:46px;border-radius:50px;background:#00AEFE;border:none;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Unlock Fields</button>
+        `;
+        if (guardModal) guardModal.classList.add('active');
+      };
+
+      window.confirmUnlockIdentity = function() {
+        var guardModal = document.getElementById('modal-identity-guard');
+        if (guardModal) guardModal.classList.remove('active');
+        window.isEditingIdentity = true;
+        window.syncCommenterSessionUI(true);
+        if (window.cspToast) window.cspToast('Fields unlocked. Enter your updated name & email.', 'info');
+      };
+
+      window.syncCommenterSessionUI = function(unlocked) {
+        var session = window.getCommenterSession();
+        var authorInputs = document.querySelectorAll('#rp-name');
+        var emailInputs = document.querySelectorAll('#rp-email');
+        var formReply = document.getElementById('form-thread-reply');
+
+        authorInputs.forEach(function(inp) {
+          if (session && !unlocked && !window.isEditingIdentity) {
+            inp.value = session.name;
+            inp.readOnly = true;
+            inp.tabIndex = -1;
+            inp.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
+          } else {
+            inp.readOnly = false;
+            inp.removeAttribute('tabindex');
+            inp.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
+          }
+        });
+
+        emailInputs.forEach(function(inp) {
+          if (session && !unlocked && !window.isEditingIdentity) {
+            emailInputs.value = session.email || '';
+            inp.readOnly = true;
+            inp.tabIndex = -1;
+            inp.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
+          } else {
+            inp.readOnly = false;
+            inp.removeAttribute('tabindex');
+            inp.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
+          }
+        });
+
+        if (formReply) {
+          var existingBadge = formReply.querySelector('.csp-session-lock-badge');
+          if (session && !unlocked && !window.isEditingIdentity) {
+            if (!existingBadge) {
+              existingBadge = document.createElement('div');
+              existingBadge.className = 'csp-session-lock-badge';
+              existingBadge.style.cssText = 'background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:9px 14px;font-size:0.84rem;color:#0369a1;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;font-weight:500;';
+              var grid = formReply.querySelector('.csp-reply-form-grid');
+              if (grid) formReply.insertBefore(existingBadge, grid);
+              else formReply.insertBefore(existingBadge, formReply.firstChild);
+            }
+            existingBadge.innerHTML = '<span>🔒 Replying as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '</span>' +
+              '<button type="button" onclick="window.requestIdentityEdit()" style="background:none;border:none;color:#00AEFE;font-weight:700;font-size:0.82rem;cursor:pointer;text-decoration:underline;">Switch / Edit</button>';
+          } else {
+            if (existingBadge && existingBadge.parentNode) {
+              existingBadge.parentNode.removeChild(existingBadge);
+            }
+          }
+        }
+
+        document.querySelectorAll('.csp-inline-reply-box').forEach(function(box) {
+          var nameInp = box.querySelector('input[type="text"]');
+          var emailInp = box.querySelector('input[type="email"]');
+          if (nameInp && emailInp) {
+            if (session && !unlocked && !window.isEditingIdentity) {
+              nameInp.value = session.name;
+              nameInp.readOnly = true;
+              nameInp.tabIndex = -1;
+              nameInp.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
+              emailInp.value = session.email || '';
+              emailInp.readOnly = true;
+              emailInp.tabIndex = -1;
+              emailInp.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
+            } else {
+              nameInp.readOnly = false;
+              nameInp.removeAttribute('tabindex');
+              nameInp.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
+              emailInp.readOnly = false;
+              emailInp.removeAttribute('tabindex');
+              emailInp.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
+            }
+          }
+        });
+      };
+
       window.setReplyParent = function(parentId, authorName) {
         currentParentId = parentId;
         document.getElementById('reply-to-name').textContent = '@' + authorName;
@@ -5631,8 +6122,6 @@
           if (res.success) {
             if (window.saveCommenterSession) window.saveCommenterSession(authorName, authorEmail);
             hideInlineReplyForm(parentId);
-            if (nameInput) nameInput.value = '';
-            if (emailInput) emailInput.value = '';
             if (textInput) textInput.value = '';
             if (window.cspToast) window.cspToast('Reply posted successfully!', 'success');
             loadThreadDetail();
@@ -5643,16 +6132,80 @@
         });
       };
 
-      window.likeComment = function(btn) {
-        if (btn.classList.contains('liked')) {
-          btn.classList.remove('liked');
-          btn.style.color = '#65676b';
-          btn.textContent = 'Like';
+      window.voteForumItem = function(targetType, targetId, voteType, btn, e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        var capsule = btn.closest('.csp-vote-capsule');
+        if (!capsule) return;
+
+        var upBtn = capsule.querySelector('.csp-vote-btn.up');
+        var downBtn = capsule.querySelector('.csp-vote-btn.down');
+        var countEl = capsule.querySelector('.csp-vote-count');
+        var currentScore = parseInt(countEl ? countEl.textContent : 0, 10);
+
+        var isCurrentlyUp = upBtn && upBtn.classList.contains('active');
+        var isCurrentlyDown = downBtn && downBtn.classList.contains('active');
+
+        if (voteType === 'up') {
+          if (isCurrentlyUp) {
+            upBtn.classList.remove('active');
+            currentScore -= 1;
+          } else {
+            if (upBtn) upBtn.classList.add('active');
+            if (isCurrentlyDown) {
+              if (downBtn) downBtn.classList.remove('active');
+              currentScore += 2;
+            } else {
+              currentScore += 1;
+            }
+          }
         } else {
-          btn.classList.add('liked');
-          btn.style.color = '#1877f2';
-          btn.innerHTML = '👍 Liked';
+          if (isCurrentlyDown) {
+            downBtn.classList.remove('active');
+            currentScore += 1;
+          } else {
+            if (downBtn) downBtn.classList.add('active');
+            if (isCurrentlyUp) {
+              if (upBtn) upBtn.classList.remove('active');
+              currentScore -= 2;
+            } else {
+              currentScore -= 1;
+            }
+          }
         }
+
+        if (countEl) {
+          countEl.textContent = currentScore;
+          countEl.className = 'csp-vote-count ' + (currentScore > 0 ? 'positive' : (currentScore < 0 ? 'negative' : ''));
+        }
+
+        var voteApi = window.getRootUrl ? window.getRootUrl('api/forum.php?action=vote') : '/api/forum.php?action=vote';
+        fetch(voteApi, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            target_type: targetType,
+            target_id: targetId,
+            vote_type: voteType
+          })
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success) {
+            if (countEl) {
+              countEl.textContent = res.score;
+              countEl.className = 'csp-vote-count ' + (res.score > 0 ? 'positive' : (res.score < 0 ? 'negative' : ''));
+            }
+            if (upBtn) {
+              if (res.user_vote === 'up') upBtn.classList.add('active');
+              else upBtn.classList.remove('active');
+            }
+            if (downBtn) {
+              if (res.user_vote === 'down') downBtn.classList.add('active');
+              else downBtn.classList.remove('active');
+            }
+          }
+        })
+        .catch(function(){});
       };
 
       function renderReplyTree(replies) {
@@ -5684,32 +6237,46 @@
             var safeAuthor = (rp.author_name || 'User').replace(/'/g, "\\'");
             var dateStr = rp.created_at ? rp.created_at.slice(0, 16) : '';
             var initial = (rp.author_name || 'U').charAt(0).toUpperCase();
+            var score = parseInt(rp.score || 0, 10);
+            var userVote = rp.user_vote || null;
 
             html += `
-              <div class="fb-comment-item" style="display:flex;gap:8px;margin-bottom:10px;align-items:flex-start;">
-                <div style="width:${isChild ? '28px' : '36px'};height:${isChild ? '28px' : '36px'};border-radius:50%;background:linear-gradient(135deg,#00AEFE,#B71F71);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:${isChild ? '0.78rem' : '0.95rem'};flex-shrink:0;margin-top:2px;">
+              <div class="fb-comment-item" style="display:flex;gap:8px;margin-bottom:12px;align-items:flex-start;">
+                <div style="width:${isChild ? '28px' : '36px'};height:${isChild ? '28px' : '36px'};border-radius:50%;background:linear-gradient(135deg,#00AEFE 0%,#0077b6 100%);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:${isChild ? '0.78rem' : '0.95rem'};flex-shrink:0;margin-top:2px;">
                   ${initial}
                 </div>
 
                 <div style="flex:1;max-width:100%;overflow:hidden;">
-                  <!-- Facebook Grey Comment Bubble -->
+                  <!-- Comment Bubble -->
                   <div style="background:#f0f2f5;border-radius:18px;padding:8px 14px;display:inline-block;max-width:100%;box-sizing:border-box;text-align:left;">
                     <div style="font-weight:700;font-size:0.85rem;color:#050505;margin:0 0 2px 0;line-height:1.2;text-align:left;display:flex;align-items:center;gap:4px;">
-                      <span>${rp.author_name}</span>
+                      <span>${escapeHtml(rp.author_name)}</span>
                     </div>
-                    <div style="font-size:0.88rem;color:#050505;line-height:1.35;text-align:left;white-space:pre-wrap;word-break:break-word;">${parentAuthor ? `<span style="font-weight:600;color:#00AEFE;margin-right:4px;">@${parentAuthor}</span>` : ''}${(rp.content || '').trim()}</div>
+                    <div style="font-size:0.88rem;color:#050505;line-height:1.35;text-align:left;white-space:pre-wrap;word-break:break-word;">${parentAuthor ? `<span style="font-weight:600;color:#00AEFE;margin-right:4px;">@${escapeHtml(parentAuthor)}</span>` : ''}${escapeHtml(rp.content || '').trim()}</div>
                   </div>
 
-                  <!-- Facebook Action Bar (Like · Reply · Date) -->
-                  <div style="display:flex;align-items:center;gap:12px;margin-top:2px;margin-left:8px;font-size:0.75rem;font-weight:700;color:#65676b;">
-                    <button type="button" onclick="likeComment(this)" style="background:none;border:none;color:#65676b;font-weight:700;font-size:0.75rem;cursor:pointer;padding:0;">Like</button>
-                    <button type="button" onclick="toggleInlineReplyForm(${rp.id}, '${safeAuthor}')" style="background:none;border:none;color:#65676b;font-weight:700;font-size:0.75rem;cursor:pointer;padding:0;">Reply</button>
-                    <span style="font-weight:400;color:#8a8d91;">${dateStr}</span>
+                  <!-- Action Bar (Vote · Reply · Date) -->
+                  <div style="display:flex;align-items:center;gap:10px;margin-top:4px;margin-left:4px;font-size:0.75rem;font-weight:700;color:#65676b;flex-wrap:wrap;">
+                    <div class="csp-vote-capsule" style="padding:1px 6px;">
+                      <button type="button" class="csp-vote-btn up ${userVote === 'up' ? 'active' : ''}" onclick="window.voteForumItem('reply', ${rp.id}, 'up', this, event)" title="Upvote reply">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                      </button>
+                      <span class="csp-vote-count ${score > 0 ? 'positive' : (score < 0 ? 'negative' : '')}">${score}</span>
+                      <button type="button" class="csp-vote-btn down ${userVote === 'down' ? 'active' : ''}" onclick="window.voteForumItem('reply', ${rp.id}, 'down', this, event)" title="Downvote reply">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                      </button>
+                    </div>
+
+                    <button type="button" onclick="toggleInlineReplyForm(${rp.id}, '${safeAuthor}')" style="background:none;border:none;color:#00AEFE;font-weight:700;font-size:0.78rem;cursor:pointer;padding:2px 6px;border-radius:4px;display:inline-flex;align-items:center;gap:4px;">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 9 7"></polyline><path d="M20 18v-2a4 4 0 0 0-4-4H4"></path></svg>
+                      Reply
+                    </button>
+                    <span style="font-weight:400;color:#8a8d91;font-size:0.75rem;">${dateStr}</span>
                   </div>
 
-                  <!-- INLINE FB NESTED REPLY FORM -->
+                  <!-- INLINE NESTED REPLY FORM -->
                   <div id="inline-reply-box-${rp.id}" class="csp-inline-reply-box" style="display:none;margin-top:8px;padding:10px 14px;background:#f0f2f5;border-radius:16px;">
-                    <div style="font-size:0.75rem;font-weight:600;color:#00AEFE;margin-bottom:6px;">Replying to @${rp.author_name}</div>
+                    <div style="font-size:0.75rem;font-weight:600;color:#00AEFE;margin-bottom:6px;">Replying to @${escapeHtml(rp.author_name)}</div>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
                       <input type="text" id="inline-name-${rp.id}" class="csp-input" style="margin-bottom:0;padding:6px 12px;font-size:0.82rem;border-radius:20px;background:#fff;border:1px solid #ccd0d5;" placeholder="Your Name *" required>
                       <input type="email" id="inline-email-${rp.id}" class="csp-input" style="margin-bottom:0;padding:6px 12px;font-size:0.82rem;border-radius:20px;background:#fff;border:1px solid #ccd0d5;" placeholder="Your Email *" required>
@@ -5760,11 +6327,52 @@
             document.getElementById('th-views-count').textContent = t.views || 0;
             document.getElementById('th-replies-count').textContent = replies.length;
             document.getElementById('th-replies-heading-count').textContent = replies.length;
-            document.getElementById('th-content-body').textContent = t.content;
+
+            // Location Handling
+            var location = t.author_location || t.location || '';
+            if (!location) {
+              var locMatch = (t.content || '').match(/📍\s*\*?Location:\s*([^\n*]+)\*?/i);
+              if (locMatch && locMatch[1]) location = locMatch[1].trim();
+            }
+
+            var locBadge = document.getElementById('th-author-location');
+            var locText = document.getElementById('th-author-location-text');
+            if (location && locBadge && locText) {
+              locText.textContent = location;
+              locBadge.style.display = 'inline-flex';
+            } else if (locBadge) {
+              locBadge.style.display = 'none';
+            }
+
+            // Clean Body
+            var cleanBody = (t.content || '').replace(/📍\s*\*?Location:[^\n*]+\*?/gi, '').trim();
+            document.getElementById('th-content-body').textContent = cleanBody;
+
+            // Setup Topic Upvote / Downvote
+            var score = parseInt(t.score || 0, 10);
+            var voteCountEl = document.getElementById('th-vote-count');
+            var upBtn = document.getElementById('th-vote-up-btn');
+            var downBtn = document.getElementById('th-vote-down-btn');
+
+            if (voteCountEl) {
+              voteCountEl.textContent = score;
+              voteCountEl.className = 'csp-vote-count ' + (score > 0 ? 'positive' : (score < 0 ? 'negative' : ''));
+            }
+            if (upBtn) {
+              if (t.user_vote === 'up') upBtn.classList.add('active');
+              else upBtn.classList.remove('active');
+              upBtn.onclick = function(e) { window.voteForumItem('thread', t.id, 'up', upBtn, e); };
+            }
+            if (downBtn) {
+              if (t.user_vote === 'down') downBtn.classList.add('active');
+              else downBtn.classList.remove('active');
+              downBtn.onclick = function(e) { window.voteForumItem('thread', t.id, 'down', downBtn, e); };
+            }
 
             // Render Threaded Replies nested inside parent cards
             var rContainer = document.getElementById('thread-replies-list');
             rContainer.innerHTML = renderReplyTree(replies);
+            window.syncCommenterSessionUI();
           });
       }
 
@@ -5785,9 +6393,9 @@
             others.forEach(function(t){
               container.innerHTML += `
                 <a href="/forum/thread/?id=${t.id}" class="csp-rel-topic-item">
-                  <div class="csp-rel-topic-title">${t.title}</div>
+                  <div class="csp-rel-topic-title">${escapeHtml(t.title)}</div>
                   <div class="csp-rel-topic-meta">
-                    <span style="color:#00AEFE;">${t.category}</span>
+                    <span style="color:#00AEFE;">${escapeHtml(t.category)}</span>
                     <span>💬 ${t.reply_count || 0} Replies</span>
                   </div>
                 </a>
@@ -5797,47 +6405,54 @@
       }
 
       // Reply Form Submit
-      document.getElementById('form-thread-reply').onsubmit = function(e){
-        e.preventDefault();
-        var session = window.getCommenterSession ? window.getCommenterSession() : null;
-        var authorName = session ? session.name : document.getElementById('rp-name').value.trim();
-        var authorEmail = session ? session.email : document.getElementById('rp-email').value.trim();
-        var content = document.getElementById('rp-content').value.trim();
+      var replyForm = document.getElementById('form-thread-reply');
+      if (replyForm) {
+        replyForm.onsubmit = function(e){
+          e.preventDefault();
+          var isEdit = Boolean(window.isEditingIdentity);
+          var session = window.getCommenterSession ? window.getCommenterSession() : null;
+          var authorName = (!session || isEdit) ? document.getElementById('rp-name').value.trim() : session.name;
+          var authorEmail = (!session || isEdit) ? document.getElementById('rp-email').value.trim() : (session.email || document.getElementById('rp-email').value.trim());
+          var content = document.getElementById('rp-content').value.trim();
 
-        if (!authorName || !authorEmail || !content) {
-          if (window.cspToast) window.cspToast('Please fill in all fields.', 'danger');
-          else alert('Please fill in all fields.');
-          return;
-        }
+          if (!authorName || !authorEmail || !content) {
+            if (window.cspToast) window.cspToast('Please fill in all fields.', 'danger');
+            else alert('Please fill in all fields.');
+            return;
+          }
 
-        var payload = {
-          thread_id: threadId,
-          parent_id: currentParentId,
-          author_name: authorName,
-          author_email: authorEmail,
-          content: content
+          var payload = {
+            thread_id: threadId,
+            parent_id: currentParentId,
+            author_name: authorName,
+            author_email: authorEmail,
+            content: content
+          };
+
+          fetch('/api/forum.php?action=create_reply', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (res.success) {
+              window.saveCommenterSession(authorName, authorEmail, isEdit);
+              cancelReplyTo();
+              document.getElementById('rp-content').value = '';
+              if (window.cspToast) window.cspToast('Reply posted successfully!', 'success');
+              loadThreadDetail();
+            } else {
+              if (window.cspToast) window.cspToast(res.error || 'Failed to post reply', 'danger');
+              else alert(res.error || 'Failed to post reply');
+            }
+          });
         };
-
-        fetch('/api/forum.php?action=create_reply', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
-        .then(function(r){ return r.json(); })
-        .then(function(res){
-          if (res.success) {
-            if (window.saveCommenterSession) window.saveCommenterSession(authorName, authorEmail);
-            cancelReplyTo();
-            document.getElementById('form-thread-reply').reset();
-            if (window.cspToast) window.cspToast('Reply posted successfully!', 'success');
-            loadThreadDetail();
-          } else { alert(res.error || 'Failed to post reply'); }
-        });
-      };
+      }
 
       loadThreadDetail();
       loadRelatedTopics();
-      if (window.syncCommenterSessionUI) window.syncCommenterSessionUI();
+      window.syncCommenterSessionUI();
     })();
   </script>
 </body>

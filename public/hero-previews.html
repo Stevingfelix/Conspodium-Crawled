@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Header Design Concepts Preview | Conspodium</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300;1,400&family=Merienda:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --border-card: #e2e8f0;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --blue-accent: #00AEFE;
+      --pink-accent: #B71F71;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      padding-bottom: 80px;
+    }
+
+    /* ── TOP CONTROL BAR ── */
+    .preview-control-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid #334155;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .preview-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .preview-brand span {
+      background: linear-gradient(135deg, #00AEFE, #B71F71);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Merienda', cursive;
+      font-size: 1.25rem;
+    }
+    .preview-tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(255,255,255,0.08);
+      padding: 4px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .preview-tab-btn {
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .preview-tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+    .preview-tab-btn.active {
+      background: #00AEFE;
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 174, 254, 0.4);
+    }
+
+    /* ── CONCEPT SHELL ── */
+    .concept-view {
+      display: none;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    .concept-view.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .concept-info-banner {
+      max-width: 1320px;
+      margin: 24px auto 16px;
+      padding: 16px 24px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-left: 5px solid #00AEFE;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    }
+    .concept-info-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .concept-info-desc {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .csp-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Category Pill Mockup */
+    .csp-cat-nav-pill-bar {
+      display: flex;
+      gap: 8px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 50px;
+      padding: 8px 16px;
+      margin: 16px 0 24px 0;
+      overflow-x: auto;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    }
+    .csp-cat-pill {
+      padding: 6px 14px;
+      border-radius: 50px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      color: #475569;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .csp-cat-pill.active {
+      background: #00AEFE;
+      color: #ffffff;
+      border-color: #00AEFE;
+    }
+
+    /* Standard Grid below hero */
+    .csp-content-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 40px;
+      margin-top: 32px;
+    }
+    @media (max-width: 960px) {
+      .csp-content-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Mock Article Body */
+    .mock-article-body {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 36px 40px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #1e293b;
+    }
+    .mock-article-body p { margin-bottom: 20px; }
+    .mock-article-body h3 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.4rem;
+      color: #0f172a;
+      margin: 32px 0 14px;
+    }
+
+    /* Mock Sidebar */
+    .mock-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .mock-sidebar-card {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+    }
+    .mock-sidebar-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       OPTION 1: WIDE FULL-SPAN CINEMATIC BANNER
+       ══════════════════════════════════════════════════════════════════ */
+    .opt1-header {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .opt1-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 174, 254, 0.08);
+      border: 1px solid rgba(0, 174, 254, 0.25);
+      color: #00AEFE;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .opt1-title {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.25;
+      color: #0f172a;
+      margin-bottom: 18px;
+      max-width: 1100px;
+    }
+    .opt1-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.88rem;
+      color: #64748b;
+      padding: 14px 0;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .opt1-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .opt1-hero-img-wrap {
+      width: 100%;
+      height: 520px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+      border: 1px solid #cbd5e1;
+    }
+    .opt1-hero-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .opt1-caption {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 0.78rem;
+      padding: 6px 14px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       OPTION 2: IMMERSIVE DARK OVERLAY HERO (Verge / NYT Style)
+       ══════════════════════════════════════════════════════════════════ */
+    .opt2-hero-wrap {
+      width: 100%;
+      min-height: 560px;
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 48px 48px;
+      margin-bottom: 32px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+    }
+    .opt2-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+    .opt2-gradient-scrim {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(15,23,42,0.15) 0%, rgba(15,23,42,0.6) 50%, rgba(15,23,42,0.95) 100%);
+      z-index: 2;
+    }
+    .opt2-content {
+      position: relative;
+      z-index: 3;
+      max-width: 960px;
+      color: #ffffff;
+    }
+    .opt2-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #00AEFE;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      box-shadow: 0 4px 14px rgba(0, 174, 254, 0.4);
+    }
+    .opt2-title {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(2.3rem, 4vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.25;
+      color: #ffffff;
+      margin-bottom: 18px;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.5);
+    }
+    .opt2-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.85);
+      flex-wrap: wrap;
+    }
+    .opt2-meta-author {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #ffffff;
+    }
+    .opt2-avatar-init {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #00AEFE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       OPTION 3: SPLIT 50/50 EDITORIAL HERO (Vogue / Monocle Style)
+       ══════════════════════════════════════════════════════════════════ */
+    .opt3-split-card {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 28px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 44px;
+      align-items: center;
+      box-shadow: 0 10px 36px rgba(15, 23, 42, 0.05);
+      margin-bottom: 36px;
+    }
+    @media (max-width: 900px) {
+      .opt3-split-card {
+        grid-template-columns: 1fr;
+        padding: 24px;
+        gap: 24px;
+      }
+    }
+    .opt3-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 174, 254, 0.08);
+      border: 1px solid rgba(0, 174, 254, 0.25);
+      color: #00AEFE;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .opt3-title {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.3;
+      color: #0f172a;
+      margin-bottom: 16px;
+    }
+    .opt3-excerpt {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #475569;
+      margin-bottom: 24px;
+      border-left: 3px solid #00AEFE;
+      padding-left: 14px;
+    }
+    .opt3-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.85rem;
+      color: #64748b;
+      padding-top: 18px;
+      border-top: 1px solid #f1f5f9;
+      flex-wrap: wrap;
+    }
+    .opt3-img-wrap {
+      width: 100%;
+      height: 440px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+      border: 1px solid #cbd5e1;
+    }
+    .opt3-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP SWITCHER CONTROL BAR -->
+  <header class="preview-control-bar">
+    <div class="preview-brand">
+      <span>CONSPODIUM</span>
+      <div style="font-size:0.85rem;color:#94a3b8;font-weight:500;">Hero Header Architecture Preview</div>
+    </div>
+    
+    <div class="preview-tabs">
+      <button class="preview-tab-btn active" onclick="switchConcept('opt1', this)">
+        <i class="fas fa-panorama"></i> Option 1: Wide Full-Span
+      </button>
+      <button class="preview-tab-btn" onclick="switchConcept('opt2', this)">
+        <i class="fas fa-layer-group"></i> Option 2: Immersive Overlay
+      </button>
+      <button class="preview-tab-btn" onclick="switchConcept('opt3', this)">
+        <i class="fas fa-columns"></i> Option 3: Split Editorial
+      </button>
+    </div>
+
+    <a href="/post/dr-alban-from-oguta-to-stockholm-genesis-of-a-star" style="background:rgba(255,255,255,0.1);color:#fff;text-decoration:none;padding:8px 16px;border-radius:50px;font-size:0.82rem;font-weight:600;border:1px solid rgba(255,255,255,0.2);">
+      ← View Current Post Page
+    </a>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       VIEW 1: WIDE FULL-SPAN CINEMATIC BANNER
+       ══════════════════════════════════════════════════════════════════ -->
+  <section id="view-opt1" class="concept-view active">
+    <div class="csp-container">
+      <div class="concept-info-banner">
+        <div>
+          <div class="concept-info-title">Option 1: Wide Full-Span Cinematic Banner (The Atlantic / Bloomberg Style)</div>
+          <div class="concept-info-desc">Post Title and metadata span full container width, followed by a dramatic 1320px widescreen featured image before the 2-column body &amp; sidebar.</div>
+        </div>
+        <div style="font-size:0.85rem;font-weight:700;color:#00AEFE;">Recommended for High Resolution Photography</div>
+      </div>
+
+      <!-- Category Pill Bar -->
+      <div class="csp-cat-nav-pill-bar">
+        <span class="csp-cat-pill">All Stories</span>
+        <span class="csp-cat-pill active">Culture &amp; Heritage</span>
+        <span class="csp-cat-pill">Innovation &amp; Tech</span>
+        <span class="csp-cat-pill">Art &amp; Entertainment</span>
+        <span class="csp-cat-pill">Community</span>
+        <span class="csp-cat-pill">Success Stories</span>
+      </div>
+
+      <!-- Full Width Header -->
+      <div class="opt1-header">
+        <span class="opt1-category"><i class="fas fa-landmark"></i> Culture &amp; Heritage</span>
+        <h1 class="opt1-title">Dr. Alban — From Oguta to Stockholm: Genesis of a Star</h1>
+        
+        <div class="opt1-meta">
+          <div class="opt1-meta-item">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#00AEFE,#0077b6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.8rem;">C</div>
+            <strong style="color:#0f172a;">Conspodium Culture Desk</strong>
+          </div>
+          <div class="opt1-meta-item"><i class="far fa-calendar-alt"></i> September 18, 2026</div>
+          <div class="opt1-meta-item"><i class="far fa-clock"></i> 7 min read</div>
+          <div class="opt1-meta-item"><i class="far fa-eye"></i> 2,154 views</div>
+          <div style="margin-left:auto;">
+            <button style="background:#00AEFE;color:#fff;border:none;padding:6px 14px;border-radius:50px;font-size:0.8rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+              <i class="fas fa-headphones"></i> Listen (Audio)
+            </button>
+          </div>
+        </div>
+
+        <!-- 1320px Wide Hero Image -->
+        <div class="opt1-hero-img-wrap">
+          <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1600&auto=format&fit=crop" alt="Dr Alban Stockholm Genesis">
+          <div class="opt1-caption">Photo: Live in Stockholm / Afrobeat Europe Archives</div>
+        </div>
+      </div>
+
+      <!-- 2-Column Grid Below Hero -->
+      <div class="csp-content-grid">
+        <article class="mock-article-body">
+          <div style="background:rgba(0,174,254,0.06);border-left:4px solid #00AEFE;padding:16px 20px;border-radius:10px;font-size:1.08rem;font-weight:500;margin-bottom:28px;color:#0f172a;">
+            How a young Nigerian dentistry student in Sweden revolutionized 90s global dance music and forged a bridge between African rhythm and European pop culture.
+          </div>
+          <p>In the late 1980s, the bustling streets of Stockholm were at the center of a burgeoning European dance revolution. Into this evolving cultural landscape stepped Alban Uzoma Nwapa—a young man who had arrived from Oguta, Nigeria to study dentistry at Karolinska Institute.</p>
+          <h3>From Dentistry to the DJ Booth</h3>
+          <p>To fund his university tuition, Alban took on DJing gigs at Stockholm's famed Club Alphabet. What began as a nocturnal side-hustle soon transformed into a sonic movement that would define 90s Eurodance across 40 countries worldwide.</p>
+        </article>
+
+        <!-- Sidebar Mock -->
+        <aside class="mock-sidebar">
+          <div class="mock-sidebar-card">
+            <h4 class="mock-sidebar-title">🔥 Top Read Essays</h4>
+            <div style="font-size:0.88rem;color:#0f172a;font-weight:600;line-height:1.4;margin-bottom:8px;">1. Dr. Alban — From Oguta to Stockholm</div>
+            <div style="font-size:0.88rem;color:#0f172a;font-weight:600;line-height:1.4;">2. Dr. Ngozi Eze: Biotechnology &amp; Data Sovereignty</div>
+          </div>
+          <div class="mock-sidebar-card" style="background:#0f172a;color:#fff;border-color:#334155;">
+            <h4 class="mock-sidebar-title" style="color:#fff;border-bottom-color:#334155;">📬 Executive Briefing</h4>
+            <p style="font-size:0.82rem;color:#94a3b8;margin-bottom:12px;">Get weekly diaspora analysis directly in your inbox.</p>
+            <button style="width:100%;padding:10px;border-radius:10px;background:#00AEFE;color:#fff;border:none;font-weight:700;">Subscribe Free →</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       VIEW 2: IMMERSIVE DARK OVERLAY HERO (Verge / NYT Style)
+       ══════════════════════════════════════════════════════════════════ -->
+  <section id="view-opt2" class="concept-view">
+    <div class="csp-container">
+      <div class="concept-info-banner">
+        <div>
+          <div class="concept-info-title">Option 2: Immersive Dark Overlay Hero (The Verge / NYT Magazine Style)</div>
+          <div class="concept-info-desc">A deep 560px panoramic background canvas with dark gradient scrim. The title, category pill, author avatar, and metadata are layered directly over the image.</div>
+        </div>
+        <div style="font-size:0.85rem;font-weight:700;color:#00AEFE;">Maximum Visual Impact &amp; Cinematic Luxury</div>
+      </div>
+
+      <!-- Category Pill Bar -->
+      <div class="csp-cat-nav-pill-bar">
+        <span class="csp-cat-pill">All Stories</span>
+        <span class="csp-cat-pill active">Culture &amp; Heritage</span>
+        <span class="csp-cat-pill">Innovation &amp; Tech</span>
+        <span class="csp-cat-pill">Art &amp; Entertainment</span>
+        <span class="csp-cat-pill">Community</span>
+        <span class="csp-cat-pill">Success Stories</span>
+      </div>
+
+      <!-- Immersive Dark Overlay Hero Box -->
+      <div class="opt2-hero-wrap">
+        <img class="opt2-bg-img" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1600&auto=format&fit=crop" alt="Dr Alban Hero">
+        <div class="opt2-gradient-scrim"></div>
+        
+        <div class="opt2-content">
+          <span class="opt2-badge"><i class="fas fa-bolt"></i> Culture &amp; Heritage</span>
+          <h1 class="opt2-title">Dr. Alban — From Oguta to Stockholm: Genesis of a Star</h1>
+          
+          <div class="opt2-meta">
+            <div class="opt2-meta-author">
+              <div class="opt2-avatar-init">C</div>
+              <span>Conspodium Culture Desk</span>
+            </div>
+            <div><i class="far fa-calendar-alt"></i> September 18, 2026</div>
+            <div><i class="far fa-clock"></i> 7 min read</div>
+            <div><i class="far fa-eye"></i> 2,154 views</div>
+            <button style="background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:50px;font-size:0.8rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+              <i class="fas fa-headphones"></i> Listen Audio
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-Column Grid Below Overlay Hero -->
+      <div class="csp-content-grid">
+        <article class="mock-article-body">
+          <div style="background:rgba(0,174,254,0.06);border-left:4px solid #00AEFE;padding:16px 20px;border-radius:10px;font-size:1.08rem;font-weight:500;margin-bottom:28px;color:#0f172a;">
+            How a young Nigerian dentistry student in Sweden revolutionized 90s global dance music and forged a bridge between African rhythm and European pop culture.
+          </div>
+          <p>In the late 1980s, the bustling streets of Stockholm were at the center of a burgeoning European dance revolution. Into this evolving cultural landscape stepped Alban Uzoma Nwapa—a young man who had arrived from Oguta, Nigeria to study dentistry at Karolinska Institute.</p>
+          <h3>From Dentistry to the DJ Booth</h3>
+          <p>To fund his university tuition, Alban took on DJing gigs at Stockholm's famed Club Alphabet. What began as a nocturnal side-hustle soon transformed into a sonic movement that would define 90s Eurodance across 40 countries worldwide.</p>
+        </article>
+
+        <!-- Sidebar Mock -->
+        <aside class="mock-sidebar">
+          <div class="mock-sidebar-card">
+            <h4 class="mock-sidebar-title">🔥 Top Read Essays</h4>
+            <div style="font-size:0.88rem;color:#0f172a;font-weight:600;line-height:1.4;margin-bottom:8px;">1. Dr. Alban — From Oguta to Stockholm</div>
+            <div style="font-size:0.88rem;color:#0f172a;font-weight:600;line-height:1.4;">2. Dr. Ngozi Eze: Biotechnology &amp; Data Sovereignty</div>
+          </div>
+          <div class="mock-sidebar-card" style="background:#0f172a;color:#fff;border-color:#334155;">
+            <h4 class="mock-sidebar-title" style="color:#fff;border-bottom-color:#334155;">📬 Executive Briefing</h4>
+            <p style="font-size:0.82rem;color:#94a3b8;margin-bottom:12px;">Get weekly diaspora analysis directly in your inbox.</p>
+            <button style="width:100%;padding:10px;border-radius:10px;background:#00AEFE;color:#fff;border:none;font-weight:700;">Subscribe Free →</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       VIEW 3: SPLIT 50/50 EDITORIAL HERO (Monocle / Vogue Style)
+       ══════════════════════════════════════════════════════════════════ -->
+  <section id="view-opt3" class="concept-view">
+    <div class="csp-container">
+      <div class="concept-info-banner">
+        <div>
+          <div class="concept-info-title">Option 3: Split 50/50 Editorial Hero (Monocle / Vogue Style)</div>
+          <div class="concept-info-desc">Both the title, summary, author details, and the framed photography sit side-by-side above the fold, ensuring immediate visibility without tall scrolling.</div>
+        </div>
+        <div style="font-size:0.85rem;font-weight:700;color:#00AEFE;">Balanced &amp; Laptop-Screen Friendly</div>
+      </div>
+
+      <!-- Category Pill Bar -->
+      <div class="csp-cat-nav-pill-bar">
+        <span class="csp-cat-pill">All Stories</span>
+        <span class="csp-cat-pill active">Culture &amp; Heritage</span>
+        <span class="csp-cat-pill">Innovation &amp; Tech</span>
+        <span class="csp-cat-pill">Art &amp; Entertainment</span>
+        <span class="csp-cat-pill">Community</span>
+        <span class="csp-cat-pill">Success Stories</span>
+      </div>
+
+      <!-- Split Hero Card -->
+      <div class="opt3-split-card">
+        <div>
+          <span class="opt3-badge"><i class="fas fa-bookmark"></i> Culture &amp; Heritage</span>
+          <h1 class="opt3-title">Dr. Alban — From Oguta to Stockholm: Genesis of a Star</h1>
+          <div class="opt3-excerpt">
+            How a young Nigerian dentistry student in Sweden revolutionized 90s global dance music and forged a bridge between African rhythm and European pop culture.
+          </div>
+          <div class="opt3-meta">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#00AEFE,#0077b6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.85rem;">C</div>
+              <strong style="color:#0f172a;">Conspodium Culture Desk</strong>
+            </div>
+            <div><i class="far fa-calendar-alt"></i> Sept 18, 2026</div>
+            <div><i class="far fa-clock"></i> 7 min</div>
+          </div>
+        </div>
+
+        <div class="opt3-img-wrap">
+          <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1600&auto=format&fit=crop" alt="Dr Alban Split View">
+        </div>
+      </div>
+
+      <!-- 2-Column Grid Below Split Hero -->
+      <div class="csp-content-grid">
+        <article class="mock-article-body">
+          <p>In the late 1980s, the bustling streets of Stockholm were at the center of a burgeoning European dance revolution. Into this evolving cultural landscape stepped Alban Uzoma Nwapa—a young man who had arrived from Oguta, Nigeria to study dentistry at Karolinska Institute.</p>
+          <h3>From Dentistry to the DJ Booth</h3>
+          <p>To fund his university tuition, Alban took on DJing gigs at Stockholm's famed Club Alphabet. What began as a nocturnal side-hustle soon transformed into a sonic movement that would define 90s Eurodance across 40 countries worldwide.</p>
+        </article>
+
+        <!-- Sidebar Mock -->
+        <aside class="mock-sidebar">
+          <div class="mock-sidebar-card">
+            <h4 class="mock-sidebar-title">🔥 Top Read Essays</h4>
+            <div style="font-size:0.88rem;color:#0f172a;font-weight:600;line-height:1.4;margin-bottom:8px;">1. Dr. Alban — From Oguta to Stockholm</div>
+            <div style="font-size:0.88rem;color:#0f172a;font-weight:600;line-height:1.4;">2. Dr. Ngozi Eze: Biotechnology &amp; Data Sovereignty</div>
+          </div>
+          <div class="mock-sidebar-card" style="background:#0f172a;color:#fff;border-color:#334155;">
+            <h4 class="mock-sidebar-title" style="color:#fff;border-bottom-color:#334155;">📬 Executive Briefing</h4>
+            <p style="font-size:0.82rem;color:#94a3b8;margin-bottom:12px;">Get weekly diaspora analysis directly in your inbox.</p>
+            <button style="width:100%;padding:10px;border-radius:10px;background:#00AEFE;color:#fff;border:none;font-weight:700;">Subscribe Free →</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Switcher Script -->
+  <script>
+    function switchConcept(conceptKey, btn) {
+      document.querySelectorAll('.preview-tab-btn').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      if (btn) btn.classList.add('active');
+
+      document.querySelectorAll('.concept-view').forEach(function(view) {
+        view.classList.remove('active');
+      });
+
+      var target = document.getElementById('view-' + conceptKey);
+      if (target) target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

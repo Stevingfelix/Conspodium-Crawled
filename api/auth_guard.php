@@ -31,12 +31,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 function requireAdmin() {
-    // 1. Check PHP Session
-    if (!empty($_SESSION['admin_user'])) {
-        return;
-    }
-
-    // 2. Check Admin Auth Token Header / Query Param
+    // 1. Check Admin Auth Token Header / Query Param / Bearer
     $clientToken = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
     if (empty($clientToken) && !empty($_SERVER['HTTP_AUTHORIZATION'])) {
         if (preg_match('/Bearer\s+(\S+)/i', $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
@@ -44,47 +39,26 @@ function requireAdmin() {
         }
     }
 
-    $isLocalhost = isset($_SERVER['HTTP_HOST']) && (
-        strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || 
-        strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false
-    );
-
     global $pdo;
-    if (isset($pdo)) {
-        if (!empty($clientToken)) {
-            $stmt = $pdo->prepare("SELECT id, username, email, name, role FROM admins WHERE session_token = ?");
-            $stmt->execute([$clientToken]);
-            $admin = $stmt->fetch();
-            if (!$admin && $isLocalhost) {
-                // Local dev sync fallback only
-                $stmtFallback = $pdo->query("SELECT id, username, email, name, role FROM admins LIMIT 1");
-                $admin = $stmtFallback->fetch();
-            }
-            if ($admin && !empty($admin['id'])) {
-                $_SESSION['admin_user'] = [
-                    "id" => intval($admin['id']),
-                    "username" => $admin['username'],
-                    "email" => $admin['email'],
-                    "name" => $admin['name'],
-                    "role" => $admin['role']
-                ];
-                return;
-            }
-        } elseif ($isLocalhost) {
-            // Local dev fallback when token header isn't passed on localhost
-            $stmtFallback = $pdo->query("SELECT id, username, email, name, role FROM admins LIMIT 1");
-            $admin = $stmtFallback->fetch();
-            if ($admin && !empty($admin['id'])) {
-                $_SESSION['admin_user'] = [
-                    "id" => intval($admin['id']),
-                    "username" => $admin['username'],
-                    "email" => $admin['email'],
-                    "name" => $admin['name'],
-                    "role" => $admin['role']
-                ];
-                return;
-            }
+    if (!empty($clientToken) && isset($pdo)) {
+        $stmt = $pdo->prepare("SELECT id, username, email, name, role, session_token FROM admins WHERE session_token = ? AND session_token IS NOT NULL AND session_token != ''");
+        $stmt->execute([$clientToken]);
+        $admin = $stmt->fetch();
+        if ($admin && !empty($admin['id'])) {
+            $_SESSION['admin_user'] = [
+                "id" => intval($admin['id']),
+                "username" => $admin['username'],
+                "email" => $admin['email'],
+                "name" => $admin['name'],
+                "role" => $admin['role']
+            ];
+            return;
         }
+    }
+
+    // 2. Check PHP Session
+    if (!empty($_SESSION['admin_user']) && !empty($_SESSION['admin_user']['id'])) {
+        return;
     }
 
     http_response_code(401);

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Community Forum | Conspodium Magazine</title>
+  <title>Global Diaspora Community Forum | Conspodium Magazine</title>
   <meta name="description" content="Join lively discussions, exchange ideas with pan-African diaspora innovators and scholars, and debate policy and culture on the Conspodium Community Forum.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://conspodium.com/forum/">
@@ -11,7 +11,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Conspodium Magazine">
-  <meta property="og:title" content="Community Forum | Conspodium Magazine">
+  <meta property="og:title" content="Global Diaspora Community Forum | Conspodium Magazine">
   <meta property="og:description" content="Join lively discussions, exchange ideas with pan-African diaspora innovators and scholars on the Conspodium Community Forum.">
   <meta property="og:url" content="https://conspodium.com/forum/">
   <meta property="og:image" content="https://conspodium.com/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg">
@@ -20,7 +20,7 @@
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@conspodium">
-  <meta name="twitter:title" content="Community Forum | Conspodium Magazine">
+  <meta name="twitter:title" content="Global Diaspora Community Forum | Conspodium Magazine">
   <meta name="twitter:description" content="Join lively discussions, exchange ideas with pan-African diaspora innovators and scholars on the Conspodium Community Forum.">
   <meta name="twitter:image" content="https://conspodium.com/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg">
 
@@ -60,9 +60,11 @@
     ]
   }
   </script>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merienda:wght@700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merienda:wght@700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <link rel="stylesheet" id="dashicons-css" href="/wp-includes/css/dashicons.min._ver_6_8_7.css" media="all">
   <link rel="stylesheet" id="hfe-widgets-style-css" href="/wp-content/plugins/header-footer-elementor/inc/widgets-css/frontend._ver_2_9_2.css" media="all">
@@ -75,187 +77,743 @@
   <link rel="stylesheet" id="she-header-style-css" href="/wp-content/plugins/sticky-header-effects-for-elementor/assets/css/she-header-style._ver_2_1_6.css" media="all">
   <link rel="stylesheet" id="elementor-post-1969-css" href="/wp-content/uploads/elementor/css/post-1969._ver_1786118447.css" media="all">
   <link rel="stylesheet" id="hfe-nav-menu-widget-css" href="/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min._ver_3_26_0.css" media="all">
-  <link rel="stylesheet" id="ekit-widget-styles-css" href="/wp-content/plugins/elementskit-lite/widgets/init/assets/css/widget-styles._ver_3_10_02.css" media="all">
   <link rel="stylesheet" id="elementor-post-1374-css" href="/wp-content/uploads/elementor/css/post-1374._ver_1786118447.css" media="all">
   <link rel="stylesheet" href="/assets/index.css">
+
+  <!-- INCLUDE:header-fixes.html -->
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
+    :root {
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --border-card: #e2e8f0;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --blue-accent: #00AEFE;
+      --pink-accent: #B71F71;
+    }
+
+    body.forum-page {
       font-family: 'Inter', -apple-system, sans-serif;
-      background: #f8fafc;
-      color: #0f172a;
+      background-color: var(--bg-page);
+      color: var(--text-main);
       min-height: 100vh;
       line-height: 1.6;
     }
-    .csp-forum-hero {
+
+    /* ── EDITORIAL MASTHEAD HERO (LUXURIOUS BREATHING ROOM UNDER STICKY NAV) ── */
+    .csp-forum-hero-sec {
       position: relative;
-      background: linear-gradient(180deg, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.65) 100%), url('/uploads/forum_hero_banner.png') center/cover no-repeat;
-      padding: 100px 24px 70px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.78) 50%, rgba(15, 23, 42, 0.96) 100%), url('/uploads/forum_hero_banner.png') center/cover no-repeat, #0f172a;
+      padding: 185px 24px 75px;
       text-align: center;
       color: #ffffff;
-      border-bottom: 1px solid #e2e8f0;
-      box-shadow: inset 0 -10px 30px rgba(0,0,0,0.3);
-    }
-    .csp-forum-title {
-      font-family: 'Merienda', cursive, sans-serif;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      color: #ffffff;
-      margin-bottom: 14px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
-    .csp-forum-subtitle {
-      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
-      color: #f1f5f9 !important;
-      max-width: 680px;
-      margin: 0 auto 32px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      border-bottom: 1px solid #1e293b;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
     }
     @media (max-width: 768px) {
-      .csp-forum-hero { padding: 90px 16px 45px !important; }
-      .csp-forum-container { padding: 24px 16px 60px !important; }
-      .csp-thread-card { padding: 18px 14px !important; border-radius: 16px !important; }
-      .csp-thread-title { font-size: 1.08rem !important; }
-      .csp-thread-header { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
-      .csp-modal-card { padding: 20px 16px !important; border-radius: 18px !important; }
-      .csp-modal-form-grid { grid-template-columns: 1fr !important; }
+      .csp-forum-hero-sec {
+        padding: 135px 16px 50px !important;
+      }
     }
-    .csp-modal-form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .csp-btn-pill {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 32px; border-radius: 50px;
-      background: #00AEFE;
-      color: #fff; text-decoration: none; font-weight: 600;
-      border: none; cursor: pointer; box-shadow: 0 6px 20px rgba(0,174,254,0.4);
-      transition: transform 0.2s, opacity 0.2s;
-    }
-    .csp-btn-pill:hover { transform: translateY(-2px); opacity: 0.95; }
-
-    .csp-forum-container {
-      max-width: 1000px;
+    .csp-forum-hero-inner {
+      max-width: 920px;
       margin: 0 auto;
-      padding: 40px 20px 80px;
+      width: 100%;
     }
-    /* ── Sleek Category Slider Wrapper ── */
+    .csp-forum-mast-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 174, 254, 0.14);
+      border: 1px solid rgba(0, 174, 254, 0.4);
+      color: #00AEFE;
+      padding: 8px 22px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(0, 174, 254, 0.2);
+    }
+    .csp-forum-mast-title {
+      font-family: 'Merienda', cursive, sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3.4rem);
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 18px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+    .csp-forum-mast-title span {
+      background: linear-gradient(135deg, #00AEFE 0%, #B71F71 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .csp-forum-mast-desc {
+      font-size: clamp(0.95rem, 2vw, 1.12rem);
+      color: #cbd5e1;
+      max-width: 680px;
+      margin: 0 auto 34px;
+      line-height: 1.6;
+    }
+
+    /* Hero Search & Quick CTA */
+    .csp-hero-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      max-width: 760px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .csp-hero-search-wrap {
+      flex: 1;
+      min-width: 260px;
+      position: relative;
+    }
+    .csp-hero-search-input {
+      width: 100%;
+      height: 52px;
+      padding: 0 20px 0 48px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      box-sizing: border-box;
+    }
+    .csp-hero-search-input::placeholder {
+      color: #cbd5e1;
+    }
+    .csp-hero-search-input:focus {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: #00AEFE;
+      box-shadow: 0 0 0 4px rgba(0, 174, 254, 0.3);
+    }
+    .csp-hero-search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #00AEFE;
+      font-size: 1rem;
+    }
+    .csp-btn-hero-cta {
+      height: 52px;
+      padding: 0 28px;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #00AEFE 0%, #0090d0 100%);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 22px rgba(0, 174, 254, 0.4);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .csp-btn-hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 174, 254, 0.55);
+      filter: brightness(1.05);
+    }
+    @media (max-width: 640px) {
+      .csp-hero-action-bar {
+        flex-direction: column;
+      }
+      .csp-hero-search-wrap, .csp-btn-hero-cta {
+        width: 100% !important;
+      }
+    }
+
+    /* ── FORUM 2-COLUMN CONTAINER (RESPONSIVE NO-BLEED) ── */
+    .csp-forum-main-sec {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 40px 3% 80px 3%;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .csp-forum-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px;
+      width: 100%;
+      box-sizing: border-box;
+      align-items: start;
+    }
+    @media (max-width: 992px) {
+      .csp-forum-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── CATEGORY PILLS SLIDER ── */
     .csp-cat-slider-container {
       position: relative;
       display: flex;
       align-items: center;
-      margin-bottom: 28px;
+      margin-bottom: 20px;
       width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
-
     .csp-forum-filters {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       overflow-x: auto;
       scroll-behavior: smooth;
-      padding: 6px 4px;
+      padding: 4px 2px;
       margin: 0;
       width: 100%;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE/Edge */
+      scrollbar-width: none;
     }
-    .csp-forum-filters::-webkit-scrollbar {
-      display: none; /* Chrome/Safari/Brave */
-    }
-
+    .csp-forum-filters::-webkit-scrollbar { display: none; }
     .csp-filter-chip {
-      padding: 9px 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
       border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       background: #ffffff;
       border: 1px solid #cbd5e1;
       color: #475569;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
       white-space: nowrap;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
       flex-shrink: 0;
+    }
+    .csp-filter-chip svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      flex-shrink: 0;
+      transition: stroke 0.2s ease;
     }
     .csp-filter-chip.active, .csp-filter-chip:hover {
       background: #00AEFE;
-      border-color: transparent;
+      border-color: #00AEFE;
       color: #ffffff;
       box-shadow: 0 4px 14px rgba(0,174,254,0.3);
     }
-
-    /* Slider Arrow Buttons */
+    .csp-filter-chip.active svg, .csp-filter-chip:hover svg {
+      stroke: #ffffff;
+    }
     .csp-slider-arrow {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: #ffffff;
       border: 1px solid #cbd5e1;
       color: #0f172a;
-      font-size: 1.2rem;
-      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 10;
-      line-height: 1;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+      transition: all 0.2s ease;
+      z-index: 5;
       margin: 0 4px;
+      padding: 0;
+    }
+    .csp-slider-arrow svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
     }
     .csp-slider-arrow:hover:not(.disabled) {
-      background: #ffffff;
       color: #00AEFE;
       border-color: #00AEFE;
-      transform: scale(1.08);
-      box-shadow: 0 6px 20px rgba(0, 174, 254, 0.25);
-    }
-    .csp-slider-arrow:active:not(.disabled) {
-      transform: scale(0.95);
+      transform: scale(1.06);
     }
     .csp-slider-arrow.disabled {
       opacity: 0.35;
       cursor: not-allowed;
-      box-shadow: none;
-      border-color: #e2e8f0;
-      background: #f8fafc;
-      color: #94a3b8;
     }
 
+    /* ── STREAM TOOLBAR (SORT & COUNT) ── */
+    .csp-stream-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .csp-stream-count {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #64748b;
+    }
+    .csp-stream-count strong {
+      color: #0f172a;
+    }
+    .csp-sort-pills {
+      display: flex;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 3px;
+      border-radius: 50px;
+      border: 1px solid #e2e8f0;
+    }
+    .csp-sort-btn {
+      padding: 6px 14px;
+      border-radius: 50px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .csp-sort-btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+    .csp-sort-btn:hover {
+      color: #0f172a;
+    }
+    .csp-sort-btn.active {
+      background: #ffffff;
+      color: #00AEFE;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .csp-sort-btn.active svg {
+      stroke: #00AEFE;
+    }
+
+    /* ── UPGRADED THREAD CARD ── */
     .csp-thread-card {
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 20px;
-      padding: 24px;
+      padding: 22px 24px;
       margin-bottom: 16px;
       box-shadow: 0 4px 20px rgba(15,23,42,0.03);
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+      position: relative;
     }
     .csp-thread-card:hover {
       border-color: #00AEFE;
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,174,254,0.1);
+      box-shadow: 0 10px 30px rgba(0,174,254,0.12);
     }
-    .csp-thread-header {
-      display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px;
+    .csp-thread-card.pinned {
+      border: 1.5px solid rgba(0, 174, 254, 0.4);
+      background: linear-gradient(180deg, #ffffff 0%, rgba(0, 174, 254, 0.02) 100%);
+      box-shadow: 0 6px 24px rgba(0,174,254,0.08);
     }
-    .csp-thread-title {
-      font-family: 'Merriweather', serif; font-size: 1.2rem; color: #0f172a; text-decoration: none;
-    }
-    .csp-thread-meta {
-      font-size: 0.82rem; color: #64748b; display: flex; gap: 16px; align-items: center; margin-top: 10px;
+    .csp-thread-card.pinned::before {
+      content: "Featured Debate";
+      position: absolute;
+      top: -11px;
+      left: 24px;
+      background: linear-gradient(135deg, #00AEFE 0%, #0077b6 100%);
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,174,254,0.3);
     }
 
-    /* ── FORUM THREAD MODALS (SPACIOUS & EXPANSIVE) ── */
+    /* Author Lockup Header */
+    .csp-thread-author-lockup {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .csp-thread-user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .csp-thread-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00AEFE, #0077b6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,174,254,0.25);
+    }
+    .csp-thread-author-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .csp-thread-location {
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .csp-thread-location svg {
+      width: 11px;
+      height: 11px;
+      stroke: currentColor;
+    }
+    .csp-thread-category-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #475569;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 4px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+    .csp-thread-card:hover .csp-thread-category-badge {
+      background: #e2e8f0;
+      color: #0f172a;
+      border-color: #cbd5e1;
+    }
+
+    /* Thread Title & Excerpt */
+    .csp-thread-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.35;
+      margin-bottom: 8px;
+      transition: color 0.2s ease;
+    }
+    .csp-thread-card:hover .csp-thread-title {
+      color: #00AEFE;
+    }
+    .csp-thread-snippet {
+      font-size: 0.92rem;
+      color: #475569;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    /* Thread Footer & Engagement Capsule */
+    .csp-thread-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+    .csp-thread-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .csp-thread-time svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+    }
+    .csp-thread-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .csp-thread-capsule-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f8fafc;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      color: #64748b;
+      font-weight: 500;
+      font-size: 0.78rem;
+    }
+    .csp-thread-capsule-item svg {
+      width: 12px;
+      height: 12px;
+      stroke: #94a3b8;
+    }
+    .csp-thread-capsule-item.active-replies {
+      background: #f1f5f9;
+      color: #334155;
+      border-color: #cbd5e1;
+      font-weight: 600;
+    }
+    .csp-thread-capsule-item.active-replies svg {
+      stroke: #475569;
+    }
+
+    /* Upvote / Downvote Capsule */
+    .csp-vote-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 50px;
+      padding: 2px 6px;
+      transition: all 0.2s ease;
+      z-index: 2;
+    }
+    .csp-vote-capsule:hover {
+      border-color: #cbd5e1;
+      background: #e2e8f0;
+    }
+    .csp-vote-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .csp-vote-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+    }
+    .csp-vote-btn:hover {
+      background: #ffffff;
+      color: #0f172a;
+      transform: scale(1.18);
+    }
+    .csp-vote-btn.up:hover, .csp-vote-btn.up.active {
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.15);
+    }
+    .csp-vote-btn.up.active svg {
+      fill: currentColor;
+    }
+    .csp-vote-btn.down:hover, .csp-vote-btn.down.active {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.15);
+    }
+    .csp-vote-btn.down.active svg {
+      fill: currentColor;
+    }
+    .csp-vote-count {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #334155;
+      min-width: 18px;
+      text-align: center;
+      padding: 0 2px;
+    }
+    .csp-vote-count.positive { color: #10b981; }
+    .csp-vote-count.negative { color: #ef4444; }
+
+    /* ── SIDEBAR WIDGETS ── */
+    .csp-forum-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .csp-forum-sidebox {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+    }
+    .csp-sidebox-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .csp-sidebox-title svg {
+      width: 18px;
+      height: 18px;
+      stroke: #00AEFE;
+      flex-shrink: 0;
+    }
+
+    /* Trending Rank Item */
+    .csp-side-rank-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #f1f5f9;
+      text-decoration: none;
+      color: inherit;
+    }
+    .csp-side-rank-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .csp-side-rank-num {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      width: 20px;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+    .csp-side-rank-item:hover .csp-side-rank-num {
+      color: #00AEFE;
+    }
+    .csp-side-rank-title {
+      font-family: 'Merriweather', serif;
+      font-size: 0.86rem;
+      color: #0f172a;
+      line-height: 1.35;
+      margin: 0 0 4px 0;
+      transition: color 0.2s ease;
+    }
+    .csp-side-rank-item:hover .csp-side-rank-title {
+      color: #00AEFE;
+    }
+    .csp-side-rank-meta {
+      font-size: 0.74rem;
+      color: #64748b;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .csp-side-rank-meta svg {
+      width: 11px;
+      height: 11px;
+      stroke: currentColor;
+    }
+
+    /* Modern Rules of Engagement System (Minimalist Editorial Slate) */
+    .csp-rules-list-v2 {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .csp-rule-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      transition: all 0.2s ease;
+    }
+    .csp-rule-card:hover {
+      border-color: #cbd5e1;
+      background: #ffffff;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    }
+    .csp-rule-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .csp-rule-icon-box svg {
+      width: 16px;
+      height: 16px;
+      stroke: #334155;
+    }
+    .csp-rule-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .csp-rule-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 3px;
+      line-height: 1.25;
+    }
+    .csp-rule-desc {
+      font-size: 0.78rem;
+      color: #64748b;
+      line-height: 1.45;
+    }
+
+    /* Executive Briefing Dark Card */
+    .csp-forum-sidebox.dark {
+      background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      border: 1px solid #334155;
+    }
+    .csp-forum-sidebox.dark .csp-sidebox-title {
+      color: #ffffff;
+      border-bottom-color: rgba(255, 255, 255, 0.12);
+    }
+
+    /* ── FORUM MODALS ── */
     .csp-forum-modal-overlay {
       position: fixed !important;
       inset: 0 !important;
       z-index: 99999999 !important;
-      background: rgba(15, 23, 42, 0.72) !important;
+      background: rgba(15, 23, 42, 0.75) !important;
       backdrop-filter: blur(12px) !important;
       -webkit-backdrop-filter: blur(12px) !important;
       display: flex !important;
@@ -278,13 +836,13 @@
       border: 1px solid #e2e8f0 !important;
       border-top: 5px solid #00AEFE !important;
       border-radius: 28px !important;
-      max-width: 860px !important;
+      max-width: 820px !important;
       width: 100% !important;
       max-height: calc(100vh - 48px) !important;
       max-height: calc(100dvh - 48px) !important;
       display: flex !important;
       flex-direction: column !important;
-      padding: 38px 44px 0 !important;
+      padding: 36px 40px 0 !important;
       box-shadow: 0 25px 70px rgba(15, 23, 42, 0.25), 0 0 30px rgba(0, 174, 254, 0.12) !important;
       color: #0f172a !important;
       transform: scale(0.96) translateY(10px) !important;
@@ -295,6 +853,106 @@
     .csp-forum-modal-overlay.active .csp-forum-modal-card {
       transform: scale(1) translateY(0) !important;
       opacity: 1 !important;
+    }
+
+    /* Animated Checkmark in Conspodium Blue */
+    .csp-modal-check-anim {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(0, 174, 254, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 0 0 rgba(0, 174, 254, 0.4);
+      animation: cspPulseGlow 2.4s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    @keyframes cspPulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(0, 174, 254, 0.4); transform: scale(0.95); }
+      70% { box-shadow: 0 0 0 16px rgba(0, 174, 254, 0); transform: scale(1); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 174, 254, 0); transform: scale(0.95); }
+    }
+    .csp-modal-check-svg {
+      width: 36px;
+      height: 36px;
+      stroke: #00AEFE;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .csp-forum-modal-overlay.active .csp-modal-check-svg .csp-check-path {
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: cspDrawCheck 0.6s 0.15s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+    @keyframes cspDrawCheck {
+      100% { stroke-dashoffset: 0; }
+    }
+
+    /* Guard Modal Animated Icons */
+    .csp-guard-icon-anim {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      transition: all 0.3s ease;
+    }
+    .csp-guard-icon-anim.cooldown {
+      background: rgba(245, 158, 11, 0.12);
+      color: #d97706;
+      animation: cspPulseOrange 2.4s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    .csp-guard-icon-anim.edit {
+      background: rgba(0, 174, 254, 0.12);
+      color: #00AEFE;
+      animation: cspPulseGlow 2.4s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    .csp-guard-icon-anim.exhausted {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      animation: cspPulseRed 2.4s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    @keyframes cspPulseOrange {
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); transform: scale(0.95); }
+      70% { box-shadow: 0 0 0 16px rgba(245, 158, 11, 0); transform: scale(1); }
+      100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); transform: scale(0.95); }
+    }
+    @keyframes cspPulseRed {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); transform: scale(0.95); }
+      70% { box-shadow: 0 0 0 16px rgba(239, 68, 68, 0); transform: scale(1); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); transform: scale(0.95); }
+    }
+    .csp-clock-minute-hand {
+      transform-origin: 12px 12px;
+      animation: cspClockTick 4s linear infinite;
+    }
+    @keyframes cspClockTick {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .csp-edit-pen-icon {
+      animation: cspPenTilt 1.8s ease-in-out infinite alternate;
+      transform-origin: bottom right;
+    }
+    @keyframes cspPenTilt {
+      0% { transform: rotate(0deg) translate(0, 0); }
+      50% { transform: rotate(-10deg) translate(-2px, -2px); }
+      100% { transform: rotate(6deg) translate(1px, 1px); }
+    }
+    .csp-lock-icon {
+      animation: cspLockBounce 2s ease-in-out infinite;
+    }
+    @keyframes cspLockBounce {
+      0%, 100% { transform: translateY(0); }
+      15% { transform: translateY(-4px) rotate(-3deg); }
+      30% { transform: translateY(0) rotate(0deg); }
+      45% { transform: translateY(-2px) rotate(2deg); }
+      60% { transform: translateY(0); }
     }
     .csp-forum-modal-card form {
       flex: 1 1 auto !important;
@@ -314,21 +972,20 @@
     }
     .csp-forum-field-label {
       display: block;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 600;
       color: #334155;
       margin-bottom: 6px;
-      letter-spacing: 0.01em;
     }
     .csp-input {
       width: 100% !important;
       background: #f8fafc !important;
       border: 1.5px solid #cbd5e1 !important;
-      border-radius: 14px !important;
-      padding: 14px 18px !important;
+      border-radius: 12px !important;
+      padding: 12px 16px !important;
       color: #0f172a !important;
-      font-size: 0.98rem !important;
-      margin-bottom: 18px !important;
+      font-size: 0.95rem !important;
+      margin-bottom: 16px !important;
       box-sizing: border-box !important;
       font-family: 'Inter', -apple-system, sans-serif !important;
       transition: all 0.2s ease !important;
@@ -341,48 +998,36 @@
     }
     .csp-modal-form-grid {
       display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
-      gap: 16px !important;
+      grid-template-columns: 1fr 1fr 1fr !important;
+      gap: 12px !important;
       margin-bottom: 4px !important;
+    }
+    @media (max-width: 768px) {
+      .csp-modal-form-grid {
+        grid-template-columns: 1fr !important;
+      }
     }
     .csp-forum-close-btn {
       background: #f1f5f9 !important;
       border: 1px solid #e2e8f0 !important;
       color: #64748b !important;
-      width: 40px !important;
-      height: 40px !important;
+      width: 36px !important;
+      height: 36px !important;
       border-radius: 50% !important;
-      font-size: 1.5rem !important;
-      line-height: 1 !important;
+      font-size: 1.3rem !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
       cursor: pointer !important;
       transition: all 0.2s ease !important;
-      padding: 0 !important;
-      flex-shrink: 0 !important;
     }
     .csp-forum-close-btn:hover {
       background: rgba(239, 68, 68, 0.1) !important;
-      border-color: rgba(239, 68, 68, 0.3) !important;
       color: #ef4444 !important;
       transform: rotate(90deg) !important;
     }
-    @media (max-width: 768px) {
-      .csp-forum-modal-card {
-        padding: 24px 20px 0 !important;
-        border-radius: 20px !important;
-      }
-      .csp-modal-form-grid {
-        grid-template-columns: 1fr !important;
-        gap: 0 !important;
-      }
-      .csp-forum-modal-footer {
-        padding: 12px 0 20px !important;
-      }
-    }
 
-    /* Skeleton Loader Styles */
+    /* Skeleton Pulse */
     @keyframes csp-shimmer {
       0% { background-position: -200% 0; }
       100% { background-position: 200% 0; }
@@ -399,175 +1044,359 @@
 
 <!-- INCLUDE:wp-header.html -->
 
-  <section class="csp-forum-hero">
-    <h1 class="csp-forum-title">Community Discussion Forum</h1>
-    <p class="csp-forum-subtitle">Share ideas, ask questions, debate diaspora policies, and build connections across the global African diaspora network.</p>
-    <button class="csp-btn-pill" id="btn-open-thread-modal">💬 Start a New Discussion Thread</button>
+  <!-- ── 1. EDITORIAL MASTHEAD HERO ── -->
+  <section class="csp-forum-hero-sec">
+    <div class="csp-forum-hero-inner">
+      <div class="csp-forum-mast-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Global Diaspora Exchange
+      </div>
+      <h1 class="csp-forum-mast-title">
+        Where Diaspora Minds <span>Connect!</span>
+      </h1>
+      <p class="csp-forum-mast-desc">
+        Exchange policy perspectives, venture innovation models, cultural heritage analysis, and cross-border partnerships across 54+ countries.
+      </p>
+
+      <!-- Search & CTA Action Bar -->
+      <div class="csp-hero-action-bar">
+        <div class="csp-hero-search-wrap">
+          <svg class="csp-hero-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="forum-live-search" class="csp-hero-search-input" placeholder="Search topics, debates, policies, keywords..." autocomplete="off">
+        </div>
+        <button class="csp-btn-hero-cta" id="btn-open-thread-modal">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Start Discussion
+        </button>
+      </div>
+    </div>
   </section>
 
-  <div class="csp-forum-container">
-    <div class="csp-cat-slider-container">
-      <button type="button" class="csp-slider-arrow left disabled" id="cat-slide-left" aria-label="Scroll categories left">
-        <i class="dashicons dashicons-arrow-left-alt2" style="font-size:1.1rem;margin-top:1px;"></i>
-      </button>
+  <!-- ── 2. MAIN 2-COLUMN FORUM SECTION ── -->
+  <main class="csp-forum-main-sec">
+    <div class="csp-forum-grid">
+      
+      <!-- LEFT COLUMN: DISCUSSION STREAM -->
+      <div>
+        <!-- Category Filter Slider -->
+        <div class="csp-cat-slider-container">
+          <button type="button" class="csp-slider-arrow left disabled" id="cat-slide-left" aria-label="Scroll left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
 
-      <div class="csp-forum-filters" id="forum-category-filters">
-        <button class="csp-filter-chip active" data-cat="All">All Discussions</button>
-        <button class="csp-filter-chip" data-cat="African Diaspora Matters">African Diaspora Matters</button>
-        <button class="csp-filter-chip" data-cat="Diaspora Insights & Analysis">Diaspora Insights</button>
-        <button class="csp-filter-chip" data-cat="Culture & Heritage">Culture &amp; Heritage</button>
-        <button class="csp-filter-chip" data-cat="Innovation">Innovation</button>
-        <button class="csp-filter-chip" data-cat="Art & Entertainment">Art &amp; Entertainment</button>
-        <button class="csp-filter-chip" data-cat="Community">Community</button>
+          <div class="csp-forum-filters" id="forum-category-filters">
+            <button class="csp-filter-chip active" data-cat="All">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              All Discussions
+            </button>
+            <button class="csp-filter-chip" data-cat="African Diaspora Matters">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              African Diaspora Matters
+            </button>
+            <button class="csp-filter-chip" data-cat="Diaspora Insights & Analysis">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              Insights &amp; Policy
+            </button>
+            <button class="csp-filter-chip" data-cat="Culture & Heritage">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3l9 7H3z"/></svg>
+              Culture &amp; Heritage
+            </button>
+            <button class="csp-filter-chip" data-cat="Innovation">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15 2a6 6 0 0 0-6 6c0 2.5 1.5 3.5 1.5 5h3c0-1.5 1.5-2.5 1.5-5a6 6 0 0 0-6-6z"/></svg>
+              Innovation &amp; Tech
+            </button>
+            <button class="csp-filter-chip" data-cat="Art & Entertainment">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.6-.7 1.6-1.6 0-.4-.2-.8-.5-1.1-.3-.3-.4-.7-.4-1.1 0-.9.7-1.6 1.6-1.6H17c2.8 0 5-2.2 5-5 0-5.5-4.5-9.6-10-9.6z"/></svg>
+              Art &amp; Entertainment
+            </button>
+            <button class="csp-filter-chip" data-cat="Community">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Community Hub
+            </button>
+            <button class="csp-filter-chip" data-cat="Success Stories">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34c3.48-.91 6-4.05 6-7.66V3H4v6c0 3.61 2.52 6.75 6 7.66z"/></svg>
+              Success Stories
+            </button>
+            <button class="csp-filter-chip" data-cat="Interview Transcripts">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Interview Transcripts
+            </button>
+          </div>
+
+          <button type="button" class="csp-slider-arrow right" id="cat-slide-right" aria-label="Scroll right">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <!-- Stream Toolbar (Count & Sort) -->
+        <div class="csp-stream-toolbar">
+          <div class="csp-stream-count" id="forum-stream-count">
+            Showing <strong>all discussions</strong>
+          </div>
+
+          <div class="csp-sort-pills">
+            <button class="csp-sort-btn active" data-sort="trending" onclick="setSortMode('trending', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+              Trending
+            </button>
+            <button class="csp-sort-btn" data-sort="latest" onclick="setSortMode('latest', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Latest
+            </button>
+            <button class="csp-sort-btn" data-sort="replies" onclick="setSortMode('replies', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Most Discussed
+            </button>
+            <button class="csp-sort-btn" data-sort="views" onclick="setSortMode('views', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Most Viewed
+            </button>
+          </div>
+        </div>
+
+        <!-- Discussion Thread Stream List -->
+        <div id="forum-threads-list">
+          <!-- Skeletons -->
+          <div class="csp-thread-card" style="pointer-events:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <div class="csp-skeleton-pulse" style="width:130px;height:16px;border-radius:50px;"></div>
+              <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
+            </div>
+            <div class="csp-skeleton-pulse" style="width:75%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
+            <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
+            <div class="csp-skeleton-pulse" style="width:60%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
+          </div>
+          <div class="csp-thread-card" style="pointer-events:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <div class="csp-skeleton-pulse" style="width:110px;height:16px;border-radius:50px;"></div>
+              <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
+            </div>
+            <div class="csp-skeleton-pulse" style="width:82%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
+            <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
+            <div class="csp-skeleton-pulse" style="width:55%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
+          </div>
+        </div>
       </div>
 
-      <button type="button" class="csp-slider-arrow right" id="cat-slide-right" aria-label="Scroll categories right">
-        <i class="dashicons dashicons-arrow-right-alt2" style="font-size:1.1rem;margin-top:1px;"></i>
-      </button>
+      <!-- RIGHT COLUMN: MAGAZINE SIDEBAR -->
+      <aside class="csp-forum-sidebar">
+        <!-- 1. Trending Debates of the Week -->
+        <div class="csp-forum-sidebox" id="sidebar-trending-debates-box">
+          <h3 class="csp-sidebox-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            Trending Debates
+          </h3>
+          <div id="sidebar-trending-debates-list">
+            <div class="csp-skeleton-pulse" style="height:44px;border-radius:8px;margin-bottom:10px;"></div>
+            <div class="csp-skeleton-pulse" style="height:44px;border-radius:8px;"></div>
+          </div>
+        </div>
+
+        <!-- 2. Community Guidelines / Rules of Engagement -->
+        <div class="csp-forum-sidebox">
+          <h3 class="csp-sidebox-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 9l9-6 9 6M3 9a5 5 0 0 0 7 4.58M21 9a5 5 0 0 1-7 4.58M7 21h10"/></svg>
+            Rules of Engagement
+          </h3>
+          <div class="csp-rules-list-v2">
+            <div class="csp-rule-card">
+              <div class="csp-rule-icon-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15 2a6 6 0 0 0-6 6c0 2.5 1.5 3.5 1.5 5h3c0-1.5 1.5-2.5 1.5-5a6 6 0 0 0-6-6z"/></svg>
+              </div>
+              <div class="csp-rule-content">
+                <div class="csp-rule-title">Intellectual Rigor</div>
+                <div class="csp-rule-desc">Back policy arguments with verified data, reputable sources, and lived experience.</div>
+              </div>
+            </div>
+
+            <div class="csp-rule-card">
+              <div class="csp-rule-icon-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="csp-rule-content">
+                <div class="csp-rule-title">Mutual Empowerment</div>
+                <div class="csp-rule-desc">Prioritize constructive, solutions-oriented pan-African collaboration across borders.</div>
+              </div>
+            </div>
+
+            <div class="csp-rule-card">
+              <div class="csp-rule-icon-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="csp-rule-content">
+                <div class="csp-rule-title">Zero Toxicity</div>
+                <div class="csp-rule-desc">Spam, ad-hominem attacks, misinformation, and unsolicited self-promotion are removed.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Executive Briefing -->
+        <div class="csp-forum-sidebox dark">
+          <h3 class="csp-sidebox-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Executive Briefing
+          </h3>
+          <p style="font-size:0.84rem;color:rgba(255,255,255,0.8);margin:0 0 14px 0;line-height:1.5;">
+            Receive curated diaspora debates, venture briefs, and policy breakdowns weekly.
+          </p>
+          <form class="csp-newsletter-sub-form" data-segment="forum_sidebar" onsubmit="return window.handleSidebarNewsletterSubmit(event);" style="display:flex;flex-direction:column;gap:10px;">
+            <input type="text" name="name" placeholder="Your Name" required class="csp-input" style="background:#1e293b!important;color:#fff!important;border-color:#334155!important;font-size:0.85rem!important;padding:10px 14px!important;margin-bottom:0!important;" />
+            <input type="email" name="email" placeholder="Your Email Address" required class="csp-input" style="background:#1e293b!important;color:#fff!important;border-color:#334155!important;font-size:0.85rem!important;padding:10px 14px!important;margin-bottom:0!important;" />
+            <button type="submit" style="padding:10px 16px;border-radius:10px;border:none;background:#00AEFE;color:#fff;font-weight:700;font-size:0.85rem;cursor:pointer;">Subscribe Free →</button>
+          </form>
+        </div>
+      </aside>
+
     </div>
+  </main>
 
-    <div id="forum-threads-list">
-      <!-- Pre-rendered skeleton thread cards -->
-      <div class="csp-thread-card" style="pointer-events:none;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <div class="csp-skeleton-pulse" style="width:130px;height:16px;border-radius:50px;"></div>
-          <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
-        </div>
-        <div class="csp-skeleton-pulse" style="width:75%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
-        <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
-        <div class="csp-skeleton-pulse" style="width:60%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
-        <div style="display:flex;gap:16px;align-items:center;">
-          <div class="csp-skeleton-pulse" style="width:110px;height:14px;border-radius:4px;"></div>
-          <div class="csp-skeleton-pulse" style="width:80px;height:14px;border-radius:4px;"></div>
-          <div class="csp-skeleton-pulse" style="width:70px;height:14px;border-radius:4px;"></div>
-        </div>
-      </div>
-      <div class="csp-thread-card" style="pointer-events:none;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <div class="csp-skeleton-pulse" style="width:110px;height:16px;border-radius:50px;"></div>
-          <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
-        </div>
-        <div class="csp-skeleton-pulse" style="width:82%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
-        <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
-        <div class="csp-skeleton-pulse" style="width:55%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
-        <div style="display:flex;gap:16px;align-items:center;">
-          <div class="csp-skeleton-pulse" style="width:100px;height:14px;border-radius:4px;"></div>
-          <div class="csp-skeleton-pulse" style="width:75px;height:14px;border-radius:4px;"></div>
-          <div class="csp-skeleton-pulse" style="width:70px;height:14px;border-radius:4px;"></div>
-        </div>
-      </div>
-      <div class="csp-thread-card" style="pointer-events:none;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <div class="csp-skeleton-pulse" style="width:140px;height:16px;border-radius:50px;"></div>
-          <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
-        </div>
-        <div class="csp-skeleton-pulse" style="width:68%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
-        <div class="csp-skeleton-pulse" style="width:95%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
-        <div class="csp-skeleton-pulse" style="width:50%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
-        <div style="display:flex;gap:16px;align-items:center;">
-          <div class="csp-skeleton-pulse" style="width:120px;height:14px;border-radius:4px;"></div>
-          <div class="csp-skeleton-pulse" style="width:80px;height:14px;border-radius:4px;"></div>
-          <div class="csp-skeleton-pulse" style="width:65px;height:14px;border-radius:4px;"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Create Thread Modal (Big, Spacious Form) -->
+  <!-- ── 3. CREATE THREAD MODAL ── -->
   <div class="csp-forum-modal-overlay" id="modal-create-thread">
     <div class="csp-forum-modal-card">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #f1f5f9;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #f1f5f9;">
         <div>
-          <span style="display:inline-block;padding:4px 12px;border-radius:50px;font-size:0.75rem;background:rgba(0,174,254,0.1);color:#00AEFE;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px;">New Discussion</span>
-          <h2 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.65rem;font-weight:700;margin:0 0 6px;">Start a Discussion Thread</h2>
-          <p style="margin:0;font-size:0.95rem;color:#64748b;">Share your perspective, question, or analysis with diaspora leaders across the globe.</p>
+          <span style="display:inline-block;padding:4px 12px;border-radius:50px;font-size:0.75rem;background:rgba(0,174,254,0.1);color:#00AEFE;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:6px;">New Exchange</span>
+          <h2 style="font-family:'Merriweather',serif;color:#0f172a;font-size:1.5rem;font-weight:700;margin:0 0 4px;">Start a Discussion Thread</h2>
+          <p style="margin:0;font-size:0.9rem;color:#64748b;">Share your perspective, question, or analysis with diaspora leaders globally.</p>
         </div>
-        <button id="btn-close-create-thread" class="csp-forum-close-btn" aria-label="Close modal">&times;</button>
+        <button id="btn-close-create-thread" class="csp-forum-close-btn" aria-label="Close modal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
       </div>
 
       <form id="form-new-thread">
         <label class="csp-forum-field-label" for="th-title">Topic Title / Question <span style="color:#00AEFE;">*</span></label>
-        <input type="text" id="th-title" class="csp-input" placeholder="e.g. How can diaspora investments accelerate cross-border tech hubs?" required style="font-size:1.08rem;font-weight:600;padding:15px 18px;">
+        <input type="text" id="th-title" class="csp-input" placeholder="e.g. How can diaspora tech hubs partner with African universities in 2026?" required style="font-size:1.02rem;font-weight:600;">
         
-        <label class="csp-forum-field-label" for="th-category">Discussion Category <span style="color:#00AEFE;">*</span></label>
-        <select id="th-category" class="csp-input" required style="color:#0f172a;background:#f8fafc;font-size:1rem;font-weight:500;">
-          <option value="General Discussion">General Discussion</option>
-          <option value="African Diaspora Matters">African Diaspora Matters</option>
-          <option value="Diaspora Insights & Analysis">Diaspora Insights &amp; Analysis</option>
-          <option value="Culture & Heritage">Culture &amp; Heritage</option>
-          <option value="Innovation">Innovation &amp; Technology</option>
-          <option value="Art & Entertainment">Art &amp; Entertainment</option>
-          <option value="Community">Community &amp; Civic Engagement</option>
-        </select>
-
         <div class="csp-modal-form-grid">
           <div>
-            <label class="csp-forum-field-label" for="th-name">Your Full Name <span style="color:#00AEFE;">*</span></label>
+            <label class="csp-forum-field-label" for="th-category">Category <span style="color:#00AEFE;">*</span></label>
+            <select id="th-category" class="csp-input" required style="font-weight:500;">
+              <option value="African Diaspora Matters">African Diaspora Matters</option>
+              <option value="Diaspora Insights & Analysis">Diaspora Insights &amp; Analysis</option>
+              <option value="Culture & Heritage">Culture &amp; Heritage</option>
+              <option value="Innovation">Innovation &amp; Tech</option>
+              <option value="Art & Entertainment">Art &amp; Entertainment</option>
+              <option value="Community">Community Hub</option>
+              <option value="Success Stories">Success Stories</option>
+              <option value="Interview Transcripts">Interview Transcripts</option>
+              <option value="General Discussion">General Discussion</option>
+            </select>
+          </div>
+          <div>
+            <label class="csp-forum-field-label" for="th-name">Your Name <span style="color:#00AEFE;">*</span></label>
             <input type="text" id="th-name" class="csp-input" placeholder="e.g. Kwame Mensah" required>
           </div>
           <div>
-            <label class="csp-forum-field-label" for="th-email">Your Email Address <span style="color:#00AEFE;">*</span></label>
+            <label class="csp-forum-field-label" for="th-email">Your Email <span style="color:#00AEFE;">*</span></label>
             <input type="email" id="th-email" class="csp-input" placeholder="e.g. kwame@example.com" required>
           </div>
         </div>
 
+        <label class="csp-forum-field-label" for="th-location">Your City / Diaspora Location (Optional)</label>
+        <input type="text" id="th-location" class="csp-input" placeholder="e.g. London, UK • Stockholm, Sweden • Lagos, Nigeria • Atlanta, USA">
+
         <label class="csp-forum-field-label" for="th-content">Thread Body &amp; Details <span style="color:#00AEFE;">*</span></label>
-        <textarea id="th-content" class="csp-input" rows="6" placeholder="Provide background context, questions, key discussion points, or insights you would like the community to engage on..." required style="min-height:140px;max-height:35vh;line-height:1.65;font-size:1rem;resize:vertical;"></textarea>
+        <textarea id="th-content" class="csp-input" rows="5" placeholder="Provide background context, questions, key discussion points, or insights you would like the community to engage on..." required style="min-height:120px;max-height:30vh;line-height:1.65;font-size:0.95rem;resize:vertical;"></textarea>
       </form>
       <div class="csp-forum-modal-footer">
-        <button type="button" id="btn-cancel-create-thread" style="background:#f1f5f9;border:1px solid #e2e8f0;color:#64748b;font-weight:600;padding:0 24px;border-radius:50px;height:50px;cursor:pointer;font-size:0.95rem;">Cancel</button>
-        <button type="submit" form="form-new-thread" class="csp-btn-pill" style="min-width:240px;justify-content:center;height:50px;font-size:1.02rem;font-weight:600;">Post Topic to Forum →</button>
+        <button type="button" id="btn-cancel-create-thread" style="background:#f1f5f9;border:1px solid #e2e8f0;color:#64748b;font-weight:600;padding:0 22px;border-radius:50px;height:46px;cursor:pointer;font-size:0.9rem;">Cancel</button>
+        <button type="submit" form="form-new-thread" class="csp-btn-hero-cta" style="height:46px;padding:0 26px;font-size:0.95rem;">Publish Discussion →</button>
       </div>
     </div>
   </div>
 
-  <!-- View Thread & Replies Modal -->
-  <div class="csp-forum-modal-overlay" id="modal-view-thread">
-    <div class="csp-forum-modal-card" style="max-width:860px;">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
-        <div>
-          <span id="v-thread-cat" style="display:inline-block;padding:4px 12px;border-radius:50px;font-size:0.75rem;background:rgba(0,174,254,0.12);color:#00AEFE;font-weight:600;margin-bottom:8px;">General</span>
-          <h2 id="v-thread-title" style="font-family:'Merriweather',serif;font-size:1.5rem;color:#0f172a;margin:0 0 6px;">Thread Title</h2>
-        </div>
-        <button id="btn-close-view-thread" class="csp-forum-close-btn" aria-label="Close modal">&times;</button>
+  <!-- ── 3.1 CREATE THREAD SUCCESS MODAL ── -->
+  <div class="csp-forum-modal-overlay" id="modal-create-thread-success">
+    <div class="csp-forum-modal-card" style="max-width:440px;text-align:center;padding:40px 32px 32px !important;border-top:5px solid #00AEFE !important;border-radius:28px;">
+      <div class="csp-modal-check-anim">
+        <svg class="csp-modal-check-svg" viewBox="0 0 24 24">
+          <path class="csp-check-path" d="M20 6L9 17l-5-5"/>
+        </svg>
       </div>
-
-      <div style="font-size:0.88rem;color:#64748b;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #e2e8f0;">
-        Posted by <strong id="v-thread-author" style="color:#0f172a;">Author Name</strong> on <span id="v-thread-date">Date</span>
-      </div>
-
-      <div id="v-thread-body" style="font-size:1.02rem;line-height:1.75;color:#334155;margin-bottom:28px;white-space:pre-wrap;background:#f8fafc;padding:20px;border-radius:16px;border:1px solid #e2e8f0;"></div>
-
-      <h3 style="font-size:1.2rem;font-family:'Merriweather',serif;color:#0f172a;margin-bottom:16px;border-top:1px solid #e2e8f0;padding-top:24px;">Discussion Replies</h3>
+      <h2 style="font-family:'Playfair Display','Merriweather',serif;color:#0f172a;font-size:1.6rem;font-weight:900;letter-spacing:-0.025em;margin:0 0 10px;line-height:1.25;">Discussion Topic Live!</h2>
+      <p style="font-size:0.92rem;color:#64748b;line-height:1.55;margin:0 0 26px;">Your thread has been posted successfully to the Conspodium Community Forum and is now open for global diaspora contributions.</p>
       
-      <div id="v-thread-replies" style="margin-bottom:28px;max-height:300px;overflow-y:auto;"></div>
-
-      <!-- Reply Form -->
-      <form id="form-post-reply" style="border-top:1px solid #e2e8f0;padding-top:20px;">
-        <h4 style="font-size:1.05rem;color:#0f172a;margin-bottom:14px;font-family:'Merriweather',serif;">Add Your Reply</h4>
-        <div class="csp-modal-form-grid">
-          <div>
-            <label class="csp-forum-field-label" for="rp-name">Your Name <span style="color:#00AEFE;">*</span></label>
-            <input type="text" id="rp-name" class="csp-input" placeholder="Your Name *" required>
-          </div>
-          <div>
-            <label class="csp-forum-field-label" for="rp-email">Your Email <span style="color:#00AEFE;">*</span></label>
-            <input type="email" id="rp-email" class="csp-input" placeholder="Your Email *" required>
-          </div>
-        </div>
-        <label class="csp-forum-field-label" for="rp-content">Your Comment / Reply <span style="color:#00AEFE;">*</span></label>
-        <textarea id="rp-content" class="csp-input" rows="4" placeholder="Write your contribution or reply..." required style="min-height:110px;"></textarea>
-        <div style="display:flex;justify-content:flex-end;">
-          <button type="submit" class="csp-btn-pill" style="height:46px;padding:0 28px;font-size:0.95rem;font-weight:600;">Post Reply →</button>
-        </div>
-      </form>
+      <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
+        <a id="btn-success-view-thread" href="#" class="csp-btn-hero-cta" style="width:100%;justify-content:center;text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:0.95rem;height:48px;box-sizing:border-box;box-shadow:0 6px 20px rgba(0,174,254,0.35);">
+          <span>View Discussion Post</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+        <button type="button" id="btn-success-return-forum" style="width:100%;height:46px;background:#f8fafc;border:1.5px solid #e2e8f0;color:#334155;font-weight:600;border-radius:50px;cursor:pointer;font-size:0.92rem;transition:all 0.2s ease;" onmouseover="this.style.borderColor='#00AEFE';this.style.color='#00AEFE';" onmouseout="this.style.borderColor='#e2e8f0';this.style.color='#334155';">
+          Return to Forum Stream
+        </button>
+      </div>
     </div>
   </div>
 
+  <!-- ── 3.2 IDENTITY SWITCH & COOLDOWN MODAL ── -->
+  <div class="csp-forum-modal-overlay" id="modal-identity-guard">
+    <div class="csp-forum-modal-card" style="max-width:440px;text-align:center;padding:40px 32px 32px !important;border-radius:28px;" id="identity-guard-card">
+      <div id="id-guard-icon" class="csp-guard-icon-anim"></div>
+      <h3 id="id-guard-title" style="font-family:'Playfair Display','Merriweather',serif;color:#0f172a;font-size:1.55rem;font-weight:900;letter-spacing:-0.025em;margin:0 0 10px;line-height:1.25;"></h3>
+      <p id="id-guard-desc" style="font-size:0.92rem;color:#64748b;line-height:1.55;margin:0 0 26px;"></p>
+      <div id="id-guard-actions" style="display:flex;gap:10px;justify-content:center;width:100%;"></div>
+    </div>
+  </div>
+
+  <!-- ── 4. JAVASCRIPT CONTROLLER ── -->
   <script>
     (function(){
+      var allThreads = [];
+      var allCategories = [];
       var activeCat = 'All';
-      var currentThreadId = null;
+      var currentSort = 'trending';
+      var searchQuery = '';
+
+      var ICON_SVGS = {
+        globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>',
+        chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+        temple: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3l9 7H3z"/></svg>',
+        lightbulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15 2a6 6 0 0 0-6 6c0 2.5 1.5 3.5 1.5 5h3c0-1.5 1.5-2.5 1.5-5a6 6 0 0 0-6-6z"/></svg>',
+        palette: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.6-.7 1.6-1.6 0-.4-.2-.8-.5-1.1-.3-.3-.4-.7-.4-1.1 0-.9.7-1.6 1.6-1.6H17c2.8 0 5-2.2 5-5 0-5.5-4.5-9.6-10-9.6z"/></svg>',
+        users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+        trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34c3.48-.91 6-4.05 6-7.66V3H4v6c0 3.61 2.52 6.75 6 7.66z"/></svg>',
+        document: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+        chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+      };
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      // Format relative time or clean date
+      function formatTimestamp(dateStr) {
+        if (!dateStr) return 'Recently';
+        try {
+          var d = new Date(dateStr.replace(' ', 'T'));
+          var now = new Date();
+          var diffSec = Math.floor((now - d) / 1000);
+          if (diffSec < 60) return 'Just now';
+          if (diffSec < 3600) return Math.floor(diffSec / 60) + 'm ago';
+          if (diffSec < 86400) return Math.floor(diffSec / 3600) + 'h ago';
+          if (diffSec < 604800) return Math.floor(diffSec / 86400) + 'd ago';
+          return dateStr.slice(0, 10);
+        } catch(e) {
+          return dateStr.slice(0, 10);
+        }
+      }
+
+      // Clean embedded location strings from snippet
+      function cleanSnippet(content) {
+        if (!content) return '';
+        return content.replace(/📍\s*\*?Location:[^\n*]+\*?/gi, '').trim();
+      }
+
+      // Extract City/Location from database or payload
+      function extractLocation(t) {
+        if (t.author_location && t.author_location.trim()) return t.author_location.trim();
+        if (t.location && t.location.trim()) return t.location.trim();
+        var match = (t.content || '').match(/📍\s*\*?Location:\s*([^\n*]+)\*?/i);
+        if (match && match[1]) return match[1].trim();
+        return '';
+      }
 
       function initCategorySliderControls() {
         var leftBtn = document.getElementById('cat-slide-left');
@@ -578,260 +1407,633 @@
         function updateArrowState() {
           var scrollLeft = Math.ceil(filters.scrollLeft);
           var maxScroll = Math.floor(filters.scrollWidth - filters.clientWidth);
+          if (scrollLeft <= 5) leftBtn.classList.add('disabled');
+          else leftBtn.classList.remove('disabled');
 
-          if (scrollLeft <= 5) {
-            leftBtn.classList.add('disabled');
-          } else {
-            leftBtn.classList.remove('disabled');
-          }
-
-          if (scrollLeft >= maxScroll - 5) {
-            rightBtn.classList.add('disabled');
-          } else {
-            rightBtn.classList.remove('disabled');
-          }
+          if (scrollLeft >= maxScroll - 5) rightBtn.classList.add('disabled');
+          else rightBtn.classList.remove('disabled');
         }
 
-        leftBtn.onclick = function() {
-          filters.scrollBy({ left: -280, behavior: 'smooth' });
-        };
-
-        rightBtn.onclick = function() {
-          filters.scrollBy({ left: 280, behavior: 'smooth' });
-        };
-
+        leftBtn.onclick = function() { filters.scrollBy({ left: -260, behavior: 'smooth' }); };
+        rightBtn.onclick = function() { filters.scrollBy({ left: 260, behavior: 'smooth' }); };
         filters.onscroll = updateArrowState;
         window.addEventListener('resize', updateArrowState);
-        window.updateCatSliderArrows = updateArrowState;
         setTimeout(updateArrowState, 200);
       }
 
+      function bindCategoryClicks() {
+        var chips = document.querySelectorAll('.csp-filter-chip');
+        chips.forEach(function(chip){
+          chip.onclick = function(){
+            chips.forEach(function(c){ c.classList.remove('active'); });
+            chip.classList.add('active');
+            activeCat = chip.dataset.cat || 'All';
+            chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            renderFilteredStream();
+          };
+        });
+      }
+
       function loadCategories() {
-        fetch('/api/categories.php')
+        var api = window.getRootUrl ? window.getRootUrl('api/forum.php?action=categories') : '/api/forum.php?action=categories';
+        fetch(api)
           .then(function(r){ return r.json(); })
           .then(function(res){
-            if (!res.success || !res.data) return;
-            var filterContainer = document.getElementById('forum-category-filters');
-            var selectElement = document.getElementById('th-category');
-
-            filterContainer.innerHTML = '<button class="csp-filter-chip active" data-cat="All">All Discussions</button><button class="csp-filter-chip" data-cat="General Discussion">💬 General Discussion</button>';
-            selectElement.innerHTML = '<option value="General Discussion">General Discussion</option>';
-
-            res.data.forEach(function(c){
-              filterContainer.innerHTML += '<button class="csp-filter-chip" data-cat="' + c.name + '">' + (c.icon || '🏷️') + ' ' + c.name + '</button>';
-              selectElement.innerHTML += '<option value="' + c.name + '">' + c.name + '</option>';
-            });
-
-            // Re-bind click handlers
-            filterContainer.querySelectorAll('.csp-filter-chip').forEach(function(chip){
-              chip.addEventListener('click', function(){
-                filterContainer.querySelectorAll('.csp-filter-chip').forEach(function(c){ c.classList.remove('active'); });
-                chip.classList.add('active');
-                activeCat = chip.dataset.cat;
-                chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                loadThreads();
-              });
-            });
-
-            if (window.updateCatSliderArrows) {
-              setTimeout(window.updateCatSliderArrows, 200);
+            if (res.success && res.data && res.data.length > 0) {
+              allCategories = res.data;
+              renderCategoryPills(res.data);
+              renderCategorySelect(res.data);
             }
+          })
+          .catch(function(){});
+      }
+
+      function renderCategoryPills(cats) {
+        var container = document.getElementById('forum-category-filters');
+        if (!container) return;
+
+        var allSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+        var html = '<button class="csp-filter-chip ' + (activeCat === 'All' ? 'active' : '') + '" data-cat="All">' + allSvg + 'All Discussions</button>';
+
+        cats.forEach(function(cat){
+          var iconSvg = ICON_SVGS[cat.icon_type] || ICON_SVGS.chat;
+          var isActive = (activeCat === cat.name || activeCat === cat.slug);
+          html += '<button class="csp-filter-chip ' + (isActive ? 'active' : '') + '" data-cat="' + escapeHtml(cat.name) + '" data-id="' + cat.id + '">' + iconSvg + escapeHtml(cat.name) + '</button>';
+        });
+
+        container.innerHTML = html;
+        bindCategoryClicks();
+        initCategorySliderControls();
+      }
+
+      function renderCategorySelect(cats) {
+        var select = document.getElementById('th-category');
+        if (!select) return;
+
+        var html = '';
+        cats.forEach(function(cat){
+          html += '<option value="' + escapeHtml(cat.name) + '" data-id="' + cat.id + '">' + escapeHtml(cat.name) + '</option>';
+        });
+        select.innerHTML = html;
+      }
+
+      window.setSortMode = function(mode, btn) {
+        currentSort = mode;
+        document.querySelectorAll('.csp-sort-btn').forEach(function(b){ b.classList.remove('active'); });
+        if (btn) btn.classList.add('active');
+        renderFilteredStream();
+      };
+
+      function renderFilteredStream() {
+        var container = document.getElementById('forum-threads-list');
+        var countEl = document.getElementById('forum-stream-count');
+        if (!container) return;
+
+        var filtered = allThreads.slice();
+
+        // 1. Filter Category
+        if (activeCat !== 'All') {
+          filtered = filtered.filter(function(t){
+            var c = (t.category || '').toLowerCase();
+            var a = activeCat.toLowerCase();
+            return c.includes(a) || a.includes(c) || (a.includes('policy') && c.includes('insights'));
           });
+        }
+
+        // 2. Filter Search Query
+        if (searchQuery.trim()) {
+          var q = searchQuery.toLowerCase().trim();
+          filtered = filtered.filter(function(t){
+            return (t.title && t.title.toLowerCase().includes(q)) ||
+                   (t.content && t.content.toLowerCase().includes(q)) ||
+                   (t.author_name && t.author_name.toLowerCase().includes(q));
+          });
+        }
+
+        // 3. Sort
+        filtered.sort(function(a, b){
+          if (a.is_pinned && !b.is_pinned) return -1;
+          if (!a.is_pinned && b.is_pinned) return 1;
+
+          if (currentSort === 'latest') {
+            return (b.id || 0) - (a.id || 0);
+          } else if (currentSort === 'replies') {
+            return (b.reply_count || 0) - (a.reply_count || 0);
+          } else if (currentSort === 'views') {
+            return (b.views || 0) - (a.views || 0);
+          } else { // 'trending' default
+            var scoreA = (a.reply_count || 0) * 3 + (a.views || 0);
+            var scoreB = (b.reply_count || 0) * 3 + (b.views || 0);
+            return scoreB - scoreA;
+          }
+        });
+
+        // Update count indicator
+        if (countEl) {
+          var catLabel = activeCat === 'All' ? 'all categories' : `“${activeCat}”`;
+          countEl.innerHTML = `Showing <strong>${filtered.length} active discussion${filtered.length === 1 ? '' : 's'}</strong> in ${catLabel}`;
+        }
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="csp-thread-card" style="text-align:center;padding:50px 24px;cursor:default;">
+              <div style="margin-bottom:12px;display:flex;justify-content:center;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <h3 style="font-family:'Merriweather',serif;font-size:1.2rem;color:#0f172a;margin-bottom:6px;">No discussions found</h3>
+              <p style="font-size:0.9rem;color:#64748b;max-width:440px;margin:0 auto 20px;">There are no active exchanges matching your current filters. Be the first to initiate this debate!</p>
+              <button type="button" class="csp-btn-hero-cta" onclick="document.getElementById('modal-create-thread').classList.add('active'); if(window.syncCommenterSessionUI) window.syncCommenterSessionUI();" style="margin:0 auto;display:inline-flex;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Start this Discussion
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        var html = '';
+        filtered.forEach(function(t){
+          var initial = (t.author_name || 'C').trim().charAt(0).toUpperCase();
+          var location = extractLocation(t);
+          var isPinned = Boolean(t.is_pinned && t.is_pinned != '0');
+          var replies = parseInt(t.reply_count || 0, 10);
+          var views = parseInt(t.views || 0, 10);
+          var timeAgo = formatTimestamp(t.created_at);
+          var score = parseInt(t.score != null ? t.score : ((t.upvotes || 0) - (t.downvotes || 0)), 10);
+          var userVote = t.user_vote || null;
+          var cleanText = cleanSnippet(escapeHtml(t.content) || '');
+
+          html += `
+            <a href="/forum/thread/?id=${t.id}" class="csp-thread-card ${isPinned ? 'pinned' : ''}">
+              <div class="csp-thread-author-lockup">
+                <div class="csp-thread-user-info">
+                  <div class="csp-thread-avatar">${initial}</div>
+                  <div>
+                    <div class="csp-thread-author-name">
+                      ${escapeHtml(t.author_name) || 'Conspodium Contributor'}
+                      ${location ? `
+                      <span class="csp-thread-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        ${escapeHtml(location)}
+                      </span>` : ''}
+                    </div>
+                  </div>
+                </div>
+                <span class="csp-thread-category-badge">${escapeHtml(t.category) || 'General'}</span>
+              </div>
+
+              <h3 class="csp-thread-title">${escapeHtml(t.title)}</h3>
+              <p class="csp-thread-snippet">${cleanText}</p>
+
+              <div class="csp-thread-footer">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <div class="csp-vote-capsule" onclick="event.preventDefault(); event.stopPropagation();">
+                    <button type="button" class="csp-vote-btn up ${userVote === 'up' ? 'active' : ''}" onclick="window.voteForumItem('thread', ${t.id}, 'up', this, event)" title="Upvote topic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                    </button>
+                    <span class="csp-vote-count ${score > 0 ? 'positive' : (score < 0 ? 'negative' : '')}">${score}</span>
+                    <button type="button" class="csp-vote-btn down ${userVote === 'down' ? 'active' : ''}" onclick="window.voteForumItem('thread', ${t.id}, 'down', this, event)" title="Downvote topic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                    </button>
+                  </div>
+                  <div class="csp-thread-time">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>${timeAgo}</span>
+                  </div>
+                </div>
+                <div class="csp-thread-capsule">
+                  <span class="csp-thread-capsule-item ${replies > 0 ? 'active-replies' : ''}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>${replies} ${replies === 1 ? 'reply' : 'replies'}</span>
+                  </span>
+                  <span class="csp-thread-capsule-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <span>${views} views</span>
+                  </span>
+                </div>
+              </div>
+            </a>
+          `;
+        });
+
+        container.innerHTML = html;
+      }
+
+      window.voteForumItem = function(targetType, targetId, voteType, btn, e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        var capsule = btn.closest('.csp-vote-capsule');
+        if (!capsule) return;
+
+        var upBtn = capsule.querySelector('.csp-vote-btn.up');
+        var downBtn = capsule.querySelector('.csp-vote-btn.down');
+        var countEl = capsule.querySelector('.csp-vote-count');
+        var currentScore = parseInt(countEl ? countEl.textContent : 0, 10);
+
+        var isCurrentlyUp = upBtn.classList.contains('active');
+        var isCurrentlyDown = downBtn.classList.contains('active');
+
+        if (voteType === 'up') {
+          if (isCurrentlyUp) {
+            upBtn.classList.remove('active');
+            currentScore -= 1;
+          } else {
+            upBtn.classList.add('active');
+            if (isCurrentlyDown) {
+              downBtn.classList.remove('active');
+              currentScore += 2;
+            } else {
+              currentScore += 1;
+            }
+          }
+        } else {
+          if (isCurrentlyDown) {
+            downBtn.classList.remove('active');
+            currentScore += 1;
+          } else {
+            downBtn.classList.add('active');
+            if (isCurrentlyUp) {
+              upBtn.classList.remove('active');
+              currentScore -= 2;
+            } else {
+              currentScore -= 1;
+            }
+          }
+        }
+
+        if (countEl) {
+          countEl.textContent = currentScore;
+          countEl.className = 'csp-vote-count ' + (currentScore > 0 ? 'positive' : (currentScore < 0 ? 'negative' : ''));
+        }
+
+        var voteApi = window.getRootUrl ? window.getRootUrl('api/forum.php?action=vote') : '/api/forum.php?action=vote';
+        fetch(voteApi, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            target_type: targetType,
+            target_id: targetId,
+            vote_type: voteType
+          })
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (res.success) {
+            if (countEl) {
+              countEl.textContent = res.score;
+              countEl.className = 'csp-vote-count ' + (res.score > 0 ? 'positive' : (res.score < 0 ? 'negative' : ''));
+            }
+            if (upBtn) {
+              if (res.user_vote === 'up') upBtn.classList.add('active');
+              else upBtn.classList.remove('active');
+            }
+            if (downBtn) {
+              if (res.user_vote === 'down') downBtn.classList.add('active');
+              else downBtn.classList.remove('active');
+            }
+          }
+        })
+        .catch(function(){});
+      };
+
+      function updateTrendingSidebar(threads) {
+        var sideList = document.getElementById('sidebar-trending-debates-list');
+        if (!sideList) return;
+
+        var sortedByHeat = threads.slice().sort(function(a, b){
+          return ((b.reply_count || 0) * 2 + (b.views || 0)) - ((a.reply_count || 0) * 2 + (a.views || 0));
+        }).slice(0, 3);
+
+        if (sortedByHeat.length === 0) {
+          sideList.innerHTML = '<p style="font-size:0.82rem;color:#94a3b8;">No trending discussions yet.</p>';
+          return;
+        }
+
+        var html = '';
+        sortedByHeat.forEach(function(t, idx){
+          var num = (idx + 1).toString().padStart(2, '0');
+          html += `
+            <a href="/forum/thread/?id=${t.id}" class="csp-side-rank-item">
+              <span class="csp-side-rank-num">${num}</span>
+              <div>
+                <h4 class="csp-side-rank-title">${escapeHtml(t.title)}</h4>
+                <div class="csp-side-rank-meta">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <span>${t.reply_count || 0} replies • ${escapeHtml(t.category) || 'General'}</span>
+                </div>
+              </div>
+            </a>
+          `;
+        });
+
+        sideList.innerHTML = html;
       }
 
       function loadThreads() {
-        var container = document.getElementById('forum-threads-list');
-        if (container) {
-          container.innerHTML = `
-            <div class="csp-thread-card" style="pointer-events:none;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                <div class="csp-skeleton-pulse" style="width:130px;height:16px;border-radius:50px;"></div>
-                <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
-              </div>
-              <div class="csp-skeleton-pulse" style="width:75%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
-              <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
-              <div class="csp-skeleton-pulse" style="width:60%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
-              <div style="display:flex;gap:16px;align-items:center;">
-                <div class="csp-skeleton-pulse" style="width:110px;height:14px;border-radius:4px;"></div>
-                <div class="csp-skeleton-pulse" style="width:80px;height:14px;border-radius:4px;"></div>
-                <div class="csp-skeleton-pulse" style="width:70px;height:14px;border-radius:4px;"></div>
-              </div>
-            </div>
-            <div class="csp-thread-card" style="pointer-events:none;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                <div class="csp-skeleton-pulse" style="width:110px;height:16px;border-radius:50px;"></div>
-                <div class="csp-skeleton-pulse" style="width:80px;height:24px;border-radius:50px;"></div>
-              </div>
-              <div class="csp-skeleton-pulse" style="width:82%;height:22px;margin-bottom:12px;border-radius:6px;"></div>
-              <div class="csp-skeleton-pulse" style="width:100%;height:14px;margin-bottom:8px;border-radius:4px;"></div>
-              <div class="csp-skeleton-pulse" style="width:55%;height:14px;margin-bottom:16px;border-radius:4px;"></div>
-              <div style="display:flex;gap:16px;align-items:center;">
-                <div class="csp-skeleton-pulse" style="width:100px;height:14px;border-radius:4px;"></div>
-                <div class="csp-skeleton-pulse" style="width:75px;height:14px;border-radius:4px;"></div>
-                <div class="csp-skeleton-pulse" style="width:70px;height:14px;border-radius:4px;"></div>
-              </div>
-            </div>
-          `;
-        }
-
-        fetch('/api/forum.php?action=threads&category=' + encodeURIComponent(activeCat))
+        var api = window.getRootUrl ? window.getRootUrl('api/forum.php?action=threads') : '/api/forum.php?action=threads';
+        fetch(api)
           .then(function(r){ return r.json(); })
           .then(function(res){
-            if (!container) return;
-            if (!res.success || !res.data || res.data.length === 0) {
-              container.innerHTML = '<div class="csp-thread-card" style="text-align:center;color:#0f172a;font-weight:600;padding:48px 24px;"><p style="font-size:1.1rem;color:#0f172a;margin-bottom:8px;">No discussion topics found in this category.</p><p style="font-size:0.9rem;color:#64748b;font-weight:normal;">Be the first to start a conversation with the community!</p></div>';
-              return;
+            if (res.success && res.data) {
+              allThreads = res.data;
+              renderFilteredStream();
+              updateTrendingSidebar(allThreads);
             }
-
-            container.innerHTML = '';
-            res.data.forEach(function(t){
-              container.innerHTML += `
-                <a href="/forum/thread/?id=${t.id}" class="csp-thread-card" style="text-decoration:none;display:block;">
-                  <div class="csp-thread-header">
-                    <div>
-                      <span style="font-size:0.75rem;color:#00AEFE;font-weight:600;margin-bottom:4px;display:inline-block;">${t.is_pinned ? '📌 Pinned • ' : ''}${t.category}</span>
-                      <h3 class="csp-thread-title">${t.title}</h3>
-                    </div>
-                    <span style="font-size:0.85rem;background:rgba(0,174,254,0.12);color:#00AEFE;padding:4px 14px;border-radius:50px;white-space:nowrap;font-weight:600;">💬 ${t.reply_count || 0} Replies</span>
-                  </div>
-                  <p style="font-size:0.9rem;color:#334155;margin-top:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.6;">${t.content}</p>
-                  <div class="csp-thread-meta">
-                    <span style="color:#0f172a;font-weight:500;">By ${t.author_name}</span>
-                    <span>👁️ ${t.views || 0} Views</span>
-                    <span>${t.created_at ? t.created_at.slice(0,10) : 'Recently'}</span>
-                  </div>
-                </a>
-              `;
-            });
-          });
+          })
+          .catch(function(){});
       }
 
-      window.viewThread = function(id) {
-        currentThreadId = id;
-        fetch('/api/forum.php?action=thread&id=' + id)
-          .then(function(r){ return r.json(); })
-          .then(function(res){
-            if (!res.success || !res.data) return;
-            var t = res.data.thread;
-            var replies = res.data.replies || [];
+      // Live Search Listener with instant render
+      var searchInput = document.getElementById('forum-live-search');
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e){
+          searchQuery = e.target.value;
+          renderFilteredStream();
+        });
+      }
 
-            document.getElementById('v-thread-title').textContent = t.title;
-            document.getElementById('v-thread-cat').textContent = t.category;
-            document.getElementById('v-thread-author').textContent = t.author_name;
-            document.getElementById('v-thread-date').textContent = t.created_at ? t.created_at.slice(0,16) : 'Recently';
-            document.getElementById('v-thread-body').textContent = t.content;
+      // ── COMMENTER / AUTHOR IDENTITY LOCK & COOLDOWN SYSTEM ──
+      var COOLDOWN_MS = 3 * 24 * 60 * 60 * 1000; // 3 Days Cooldown
+      var MAX_EDITS = 3;
 
-            var rContainer = document.getElementById('v-thread-replies');
-            if (replies.length === 0) {
-              rContainer.innerHTML = '<p style="color:#64748b;font-size:0.88rem;padding:12px;background:#f8fafc;border-radius:10px;text-align:center;">No replies yet. Start the conversation below!</p>';
-            } else {
-              rContainer.innerHTML = '';
-              replies.forEach(function(rp){
-                rContainer.innerHTML += `
-                  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin-bottom:12px;">
-                    <div style="font-size:0.82rem;color:#00AEFE;font-weight:600;margin-bottom:6px;">${rp.author_name} <span style="color:#64748b;font-weight:normal;margin-left:8px;">${rp.created_at ? rp.created_at.slice(0,16) : ''}</span></div>
-                    <div style="font-size:0.92rem;color:#0f172a;line-height:1.6;">${rp.content}</div>
-                  </div>
-                `;
-              });
+      window.getCommenterSession = function() {
+        try {
+          var name = localStorage.getItem('csp_commenter_name') || '';
+          var email = localStorage.getItem('csp_commenter_email') || '';
+          if (name) {
+            var edits = parseInt(localStorage.getItem('csp_identity_edits') || '0', 10);
+            var lastUpdated = parseInt(localStorage.getItem('csp_identity_updated_at') || '0', 10);
+            return {
+              name: name,
+              email: email,
+              edits: edits,
+              lastUpdated: lastUpdated
+            };
+          }
+        } catch(e) {}
+        return null;
+      };
+
+      window.saveCommenterSession = function(name, email, isEdit) {
+        if (!name) return;
+        try {
+          localStorage.setItem('csp_commenter_name', name.trim());
+          if (email) localStorage.setItem('csp_commenter_email', email.trim());
+          document.cookie = "csp_user_comment_author=" + encodeURIComponent(name.trim()) + "; max-age=31536000; path=/";
+          if (email) document.cookie = "csp_user_comment_email=" + encodeURIComponent(email.trim()) + "; max-age=31536000; path=/";
+          
+          if (!localStorage.getItem('csp_identity_updated_at') || isEdit) {
+            localStorage.setItem('csp_identity_updated_at', String(Date.now()));
+          }
+          if (isEdit) {
+            var currentEdits = parseInt(localStorage.getItem('csp_identity_edits') || '0', 10);
+            localStorage.setItem('csp_identity_edits', String(currentEdits + 1));
+          }
+        } catch(e) {}
+        window.isEditingIdentity = false;
+        window.syncCommenterSessionUI();
+      };
+
+      window.requestIdentityEdit = function() {
+        var session = window.getCommenterSession();
+        if (!session) return;
+
+        var guardModal = document.getElementById('modal-identity-guard');
+        var card = document.getElementById('identity-guard-card');
+        var iconEl = document.getElementById('id-guard-icon');
+        var titleEl = document.getElementById('id-guard-title');
+        var descEl = document.getElementById('id-guard-desc');
+        var actionsEl = document.getElementById('id-guard-actions');
+
+        var now = Date.now();
+        var timeSinceUpdate = now - (session.lastUpdated || 0);
+        var inCooldown = session.lastUpdated && timeSinceUpdate < COOLDOWN_MS;
+        var editsLeft = Math.max(0, MAX_EDITS - (session.edits || 0));
+
+        // Case 1: Max edits exhausted
+        if (editsLeft <= 0) {
+          if (card) card.style.borderTop = '5px solid #ef4444';
+          iconEl.className = 'csp-guard-icon-anim exhausted';
+          iconEl.innerHTML = '<svg class="csp-lock-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
+          titleEl.textContent = 'Identity Updates Exhausted';
+          descEl.innerHTML = 'You have reached the limit of <strong>3 identity updates</strong> on this device. Your contributor profile is permanently set to <strong>' + escapeHtml(session.name) + '</strong>.<br><br>If you require an urgent correction, please contact <a href="mailto:support@conspodium.com" style="color:#00AEFE;font-weight:600;">support@conspodium.com</a>.';
+          actionsEl.innerHTML = '<button type="button" onclick="document.getElementById(\'modal-identity-guard\').classList.remove(\'active\')" style="padding:11px 28px;border-radius:50px;background:#f1f5f9;border:1.5px solid #e2e8f0;font-weight:600;color:#334155;cursor:pointer;font-size:0.92rem;">Close</button>';
+          if (guardModal) guardModal.classList.add('active');
+          return;
+        }
+
+        // Case 2: In Cooldown
+        if (inCooldown) {
+          var msRemaining = COOLDOWN_MS - timeSinceUpdate;
+          var hoursRemaining = Math.ceil(msRemaining / (1000 * 60 * 60));
+          var daysRemaining = Math.floor(hoursRemaining / 24);
+          var remainingStr = daysRemaining > 0 
+            ? daysRemaining + (daysRemaining === 1 ? ' day' : ' days') + ' and ' + (hoursRemaining % 24) + ' hrs' 
+            : hoursRemaining + (hoursRemaining === 1 ? ' hour' : ' hours');
+
+          if (card) card.style.borderTop = '5px solid #f59e0b';
+          iconEl.className = 'csp-guard-icon-anim cooldown';
+          iconEl.innerHTML = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline class="csp-clock-minute-hand" points="12 6 12 12 16 14"></polyline></svg>';
+          titleEl.textContent = 'Identity Cooldown Active';
+          descEl.innerHTML = 'To maintain community trust and prevent impersonation, contributor names can only be updated once every 3 days.<br><br>Your next update will be available in <strong>' + remainingStr + '</strong>.';
+          actionsEl.innerHTML = '<button type="button" onclick="document.getElementById(\'modal-identity-guard\').classList.remove(\'active\')" style="width:100%;height:46px;border-radius:50px;background:#00AEFE;border:none;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.95rem;">Got It</button>';
+          if (guardModal) guardModal.classList.add('active');
+          return;
+        }
+
+        // Case 3: Allowed to Edit
+        if (card) card.style.borderTop = '5px solid #00AEFE';
+        iconEl.className = 'csp-guard-icon-anim edit';
+        iconEl.innerHTML = '<svg class="csp-edit-pen-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
+        titleEl.textContent = 'Switch Contributor Identity?';
+        descEl.innerHTML = 'You have <strong>' + editsLeft + ' of ' + MAX_EDITS + '</strong> name updates remaining on this device.<br><br>Once you update your details, your identity will be locked for a 3-day cooldown period.';
+        actionsEl.innerHTML = `
+          <button type="button" onclick="document.getElementById('modal-identity-guard').classList.remove('active')" style="flex:1;height:46px;border-radius:50px;background:#f8fafc;border:1.5px solid #e2e8f0;font-weight:600;color:#64748b;cursor:pointer;font-size:0.92rem;">Cancel</button>
+          <button type="button" onclick="window.confirmUnlockIdentity()" style="flex:1;height:46px;border-radius:50px;background:#00AEFE;border:none;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Unlock Fields</button>
+        `;
+        if (guardModal) guardModal.classList.add('active');
+      };
+
+      window.confirmUnlockIdentity = function() {
+        var guardModal = document.getElementById('modal-identity-guard');
+        if (guardModal) guardModal.classList.remove('active');
+        window.isEditingIdentity = true;
+        window.syncCommenterSessionUI(true);
+        if (window.cspToast) window.cspToast('Fields unlocked. Enter your updated name & email.', 'info');
+      };
+
+      window.syncCommenterSessionUI = function(unlocked) {
+        var session = window.getCommenterSession();
+        var nameInput = document.getElementById('th-name');
+        var emailInput = document.getElementById('th-email');
+        var formNewThread = document.getElementById('form-new-thread');
+
+        if (nameInput) {
+          if (session && !unlocked && !window.isEditingIdentity) {
+            nameInput.value = session.name;
+            nameInput.readOnly = true;
+            nameInput.tabIndex = -1;
+            nameInput.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
+          } else {
+            nameInput.readOnly = false;
+            nameInput.removeAttribute('tabindex');
+            nameInput.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
+          }
+        }
+
+        if (emailInput) {
+          if (session && !unlocked && !window.isEditingIdentity) {
+            emailInput.value = session.email || '';
+            emailInput.readOnly = true;
+            emailInput.tabIndex = -1;
+            emailInput.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
+          } else {
+            emailInput.readOnly = false;
+            emailInput.removeAttribute('tabindex');
+            emailInput.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
+          }
+        }
+
+        if (formNewThread) {
+          var existingBadge = formNewThread.querySelector('.csp-session-lock-badge');
+          if (session && !unlocked && !window.isEditingIdentity) {
+            if (!existingBadge) {
+              existingBadge = document.createElement('div');
+              existingBadge.className = 'csp-session-lock-badge';
+              existingBadge.style.cssText = 'background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:9px 14px;font-size:0.84rem;color:#0369a1;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;font-weight:500;';
+              formNewThread.insertBefore(existingBadge, formNewThread.firstChild);
             }
-
-            document.getElementById('modal-view-thread').classList.add('active');
-          });
+            existingBadge.innerHTML = '<span>🔒 Posting as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '</span>' +
+              '<button type="button" onclick="window.requestIdentityEdit()" style="background:none;border:none;color:#00AEFE;font-weight:700;font-size:0.82rem;cursor:pointer;text-decoration:underline;">Switch / Edit</button>';
+          } else {
+            if (existingBadge && existingBadge.parentNode) {
+              existingBadge.parentNode.removeChild(existingBadge);
+            }
+          }
+        }
       };
 
       // Modal Triggers
       var createModal = document.getElementById('modal-create-thread');
-      var viewModal = document.getElementById('modal-view-thread');
+      var successModal = document.getElementById('modal-create-thread-success');
+      var guardModal = document.getElementById('modal-identity-guard');
       var btnOpenCreate = document.getElementById('btn-open-thread-modal');
       var btnCloseCreate = document.getElementById('btn-close-create-thread');
       var btnCancelCreate = document.getElementById('btn-cancel-create-thread');
-      var btnCloseView = document.getElementById('btn-close-view-thread');
+      var btnSuccessReturn = document.getElementById('btn-success-return-forum');
 
-      if (btnOpenCreate) btnOpenCreate.onclick = function(){ createModal.classList.add('active'); };
+      if (btnOpenCreate) {
+        btnOpenCreate.onclick = function(){ 
+          createModal.classList.add('active'); 
+          window.syncCommenterSessionUI();
+        };
+      }
       if (btnCloseCreate) btnCloseCreate.onclick = function(){ createModal.classList.remove('active'); };
       if (btnCancelCreate) btnCancelCreate.onclick = function(){ createModal.classList.remove('active'); };
-      if (btnCloseView) btnCloseView.onclick = function(){ viewModal.classList.remove('active'); };
 
-      // Close modals when clicking the dark backdrop outside the card
+      if (btnSuccessReturn) {
+        btnSuccessReturn.onclick = function() {
+          if (successModal) successModal.classList.remove('active');
+          loadThreads();
+        };
+      }
+
       if (createModal) {
         createModal.addEventListener('click', function(e) {
           if (e.target === createModal) createModal.classList.remove('active');
         });
       }
-      if (viewModal) {
-        viewModal.addEventListener('click', function(e) {
-          if (e.target === viewModal) viewModal.classList.remove('active');
+      if (successModal) {
+        successModal.addEventListener('click', function(e) {
+          if (e.target === successModal) successModal.classList.remove('active');
+        });
+      }
+      if (guardModal) {
+        guardModal.addEventListener('click', function(e) {
+          if (e.target === guardModal) guardModal.classList.remove('active');
         });
       }
 
-      // Close on Escape key
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
           if (createModal) createModal.classList.remove('active');
-          if (viewModal) viewModal.classList.remove('active');
+          if (successModal) successModal.classList.remove('active');
+          if (guardModal) guardModal.classList.remove('active');
         }
       });
 
       // Submit Thread Form
-      document.getElementById('form-new-thread').onsubmit = function(e){
-        e.preventDefault();
-        var payload = {
-          title: document.getElementById('th-title').value,
-          category: document.getElementById('th-category').value,
-          author_name: document.getElementById('th-name').value,
-          author_email: document.getElementById('th-email').value,
-          content: document.getElementById('th-content').value
-        };
+      var form = document.getElementById('form-new-thread');
+      if (form) {
+        form.onsubmit = function(e){
+          e.preventDefault();
+          var loc = document.getElementById('th-location') ? document.getElementById('th-location').value.trim() : '';
+          var content = document.getElementById('th-content').value.trim();
 
-        fetch('/api/forum.php?action=create_thread', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
-        .then(function(r){ return r.json(); })
-        .then(function(res){
-          if (res.success) {
-            alert('🎉 Discussion topic posted successfully!');
-            document.getElementById('form-new-thread').reset();
-            document.getElementById('modal-create-thread').classList.remove('active');
-            if (res.thread_id) {
-              window.location.href = '/forum/thread/?id=' + res.thread_id;
+          var catSelect = document.getElementById('th-category');
+          var selectedOption = catSelect ? catSelect.options[catSelect.selectedIndex] : null;
+          var categoryId = selectedOption ? selectedOption.getAttribute('data-id') : null;
+
+          var session = window.getCommenterSession ? window.getCommenterSession() : null;
+          var isEditing = Boolean(window.isEditingIdentity);
+          var authorName = (!isEditing && session) ? session.name : document.getElementById('th-name').value.trim();
+          var authorEmail = (!isEditing && session) ? session.email : document.getElementById('th-email').value.trim();
+
+          var payload = {
+            title: document.getElementById('th-title').value.trim(),
+            category: catSelect ? catSelect.value : 'General Discussion',
+            category_id: categoryId ? parseInt(categoryId, 10) : null,
+            author_name: authorName,
+            author_email: authorEmail,
+            author_location: loc,
+            location: loc,
+            content: content
+          };
+
+          window.saveCommenterSession(payload.author_name, payload.author_email, isEditing);
+
+          var createApi = window.getRootUrl ? window.getRootUrl('api/forum.php?action=create_thread') : '/api/forum.php?action=create_thread';
+
+          fetch(createApi, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (res.success) {
+              form.reset();
+              createModal.classList.remove('active');
+              window.syncCommenterSessionUI();
+
+              if (res.thread_id) {
+                var dest = window.getRootUrl ? window.getRootUrl('forum/thread/?id=' + res.thread_id) : '/forum/thread/?id=' + res.thread_id;
+                var btnView = document.getElementById('btn-success-view-thread');
+                if (btnView) btnView.href = dest;
+                if (successModal) {
+                  successModal.classList.add('active');
+                } else {
+                  if (window.cspToast) window.cspToast('Discussion topic published successfully!', 'success');
+                  window.location.href = dest;
+                }
+              } else {
+                if (window.cspToast) window.cspToast('Discussion topic published successfully!', 'success');
+                loadThreads();
+              }
             } else {
-              loadThreads();
+              if (window.cspToast) window.cspToast(res.error || 'Failed to create topic', 'danger');
+              else alert(res.error || 'Failed to create topic');
             }
-          } else { alert(res.error || 'Failed to create topic'); }
-        });
-      };
-
-      // Submit Reply Form
-      document.getElementById('form-post-reply').onsubmit = function(e){
-        e.preventDefault();
-        if (!currentThreadId) return;
-        var payload = {
-          thread_id: currentThreadId,
-          author_name: document.getElementById('rp-name').value,
-          author_email: document.getElementById('rp-email').value,
-          content: document.getElementById('rp-content').value
+          })
+          .catch(function(err){
+            if (window.cspToast) window.cspToast('Network error while creating thread.', 'danger');
+          });
         };
-
-        fetch('/api/forum.php?action=create_reply', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
-        .then(function(r){ return r.json(); })
-        .then(function(res){
-          if (res.success) {
-            document.getElementById('form-post-reply').reset();
-            viewThread(currentThreadId);
-          } else { alert(res.error || 'Failed to post reply'); }
-        });
-      };
+      }
 
       initCategorySliderControls();
+      bindCategoryClicks();
       loadCategories();
       loadThreads();
+      window.syncCommenterSessionUI();
     })();
   </script>
 </body>

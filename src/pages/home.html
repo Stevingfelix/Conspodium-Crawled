@@ -11845,62 +11845,7 @@
       background-clip: text !important;
     }
 
-    /* ── Global Toast Notifications & Confirmation Modals ── */
-    #csp-toast-container {
-      position: fixed;
-      top: 24px;
-      right: 24px;
-      z-index: 99999999;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      pointer-events: none;
-      max-width: 400px;
-      width: calc(100% - 48px);
-    }
 
-    .csp-toast {
-      pointer-events: auto;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 14px;
-      padding: 14px 20px;
-      font-family: 'Inter', -apple-system, sans-serif;
-      font-size: 0.88rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-      transform: translateX(120%);
-      opacity: 0;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .csp-toast.show {
-      transform: translateX(0);
-      opacity: 1;
-    }
-
-    .csp-toast-icon {
-      font-size: 1.15rem;
-      flex-shrink: 0;
-    }
-
-    .csp-toast-success {
-      border-left: 4px solid #10b981;
-    }
-
-    .csp-toast-danger {
-      border-left: 4px solid #f43f5e;
-    }
-
-    .csp-toast-info {
-      border-left: 4px solid #00AEFE;
-    }
 
     #csp-confirm-backdrop {
       position: fixed;
@@ -12061,36 +12006,7 @@
       }
       window.getAbsoluteImageUrl = getAbsoluteImageUrl;
 
-      // Global Toast Notifications
-      window.cspToast = function (message, type, duration) {
-        type = type || 'info';
-        duration = duration || 3500;
 
-        var container = document.getElementById('csp-toast-container');
-        if (!container) {
-          container = document.createElement('div');
-          container.id = 'csp-toast-container';
-          document.body.appendChild(container);
-        }
-
-        var icons = {
-          success: '🎉',
-          danger: '🚨',
-          info: 'ℹ️'
-        };
-
-        var toast = document.createElement('div');
-        toast.className = 'csp-toast csp-toast-' + type;
-        toast.innerHTML = '<span class="csp-toast-icon">' + (icons[type] || 'ℹ️') + '</span><span>' + message + '</span>';
-        container.appendChild(toast);
-
-        setTimeout(function () { toast.classList.add('show'); }, 10);
-
-        setTimeout(function () {
-          toast.classList.remove('show');
-          setTimeout(function () { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 350);
-        }, duration);
-      };
 
       // Global Confirmation Modal (Promise-based)
       window.cspConfirm = function (options) {

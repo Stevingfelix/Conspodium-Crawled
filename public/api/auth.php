@@ -50,16 +50,10 @@ if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action ===
         }
     }
 
-    if ($clientToken) {
-        $stmt = $pdo->prepare("SELECT id, username, email, name, role, session_token FROM admins WHERE session_token = ?");
+    if (!empty($clientToken)) {
+        $stmt = $pdo->prepare("SELECT id, username, email, name, role, session_token FROM admins WHERE session_token = ? AND session_token IS NOT NULL AND session_token != ''");
         $stmt->execute([$clientToken]);
         $admin = $stmt->fetch();
-        
-        if (!$admin) {
-            // Fallback for serverless instance synchronization
-            $stmtFallback = $pdo->query("SELECT id, username, email, name, role FROM admins LIMIT 1");
-            $admin = $stmtFallback->fetch();
-        }
 
         if ($admin && !empty($admin['id'])) {
             $userData = [
@@ -72,16 +66,27 @@ if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action ===
             $_SESSION['admin_user'] = $userData;
             echo json_encode(["success" => true, "authenticated" => true, "user" => $userData]);
             return;
+        } else {
+            // Invalid or expired token
+            $_SESSION = [];
+            http_response_code(401);
+            echo json_encode([
+                "success" => false,
+                "authenticated" => false,
+                "error" => "Invalid or expired session token"
+            ]);
+            return;
         }
     }
 
-    if (!empty($_SESSION['admin_user'])) {
+    if (!empty($_SESSION['admin_user']) && !empty($_SESSION['admin_user']['id'])) {
         echo json_encode([
             "success" => true,
             "authenticated" => true,
             "user" => $_SESSION['admin_user']
         ]);
     } else {
+        http_response_code(401);
         echo json_encode([
             "success" => false,
             "authenticated" => false,
@@ -146,10 +151,22 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
 
 // ── ADMIN LOGOUT ────────────────────────────────────────────────────────────
 if ($method === 'POST' && ($action === 'logout' || $action === 'signout')) {
+    $clientToken = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
+    if (empty($clientToken) && !empty($_SERVER['HTTP_AUTHORIZATION'])) {
+        if (preg_match('/Bearer\s+(\S+)/i', $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
+            $clientToken = $matches[1];
+        }
+    }
+
     if (!empty($_SESSION['admin_user']['id'])) {
         try {
             $upToken = $pdo->prepare("UPDATE admins SET session_token = NULL WHERE id = ?");
             $upToken->execute([$_SESSION['admin_user']['id']]);
+        } catch (Exception $e) {}
+    } elseif (!empty($clientToken)) {
+        try {
+            $upToken = $pdo->prepare("UPDATE admins SET session_token = NULL WHERE session_token = ?");
+            $upToken->execute([$clientToken]);
         } catch (Exception $e) {}
     }
 
@@ -161,7 +178,7 @@ if ($method === 'POST' && ($action === 'logout' || $action === 'signout')) {
             $params["secure"], $params["httponly"]
         );
     }
-    session_destroy();
+    @session_destroy();
 
     echo json_encode(["success" => true, "message" => "Logged out successfully"]);
     return;

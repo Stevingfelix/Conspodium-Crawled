@@ -970,50 +970,82 @@ e-page-transition,
   background-clip: text !important;
 }
 
-/* ── Global Toast Notifications & Confirmation Modals ── */
+/* ── Sleek Global Toast Notifications & Confirmation Modals ── */
 #csp-toast-container {
   position: fixed;
-  top: 24px;
-  right: 24px;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 2147483647 !important;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  align-items: center;
   gap: 10px;
   pointer-events: none;
-  max-width: 400px;
-  width: calc(100% - 48px);
+  max-width: 480px;
+  width: calc(100% - 32px);
 }
 .csp-toast {
   pointer-events: auto;
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 14px;
-  padding: 14px 20px;
-  font-family: 'Inter', -apple-system, sans-serif;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50px;
+  padding: 10px 22px 10px 14px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.88rem;
   font-weight: 500;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 12px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-  transform: translateX(120%);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transform: translateY(24px) scale(0.95);
   opacity: 0;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 .csp-toast.show {
-  transform: translateX(0);
+  transform: translateY(0) scale(1);
   opacity: 1;
 }
-.csp-toast-icon {
-  font-size: 1.15rem;
+.csp-toast-icon-wrap {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
-.csp-toast-success { border-left: 4px solid #10b981; }
-.csp-toast-danger { border-left: 4px solid #f43f5e; }
-.csp-toast-info { border-left: 4px solid #00AEFE; }
+.csp-toast-icon-wrap svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.2;
+}
+.csp-toast-success .csp-toast-icon-wrap {
+  background: rgba(16, 185, 129, 0.18);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+.csp-toast-danger .csp-toast-icon-wrap {
+  background: rgba(244, 63, 94, 0.18);
+  color: #f43f5e;
+  border: 1px solid rgba(244, 63, 94, 0.35);
+}
+.csp-toast-info .csp-toast-icon-wrap {
+  background: rgba(0, 174, 254, 0.18);
+  color: #00AEFE;
+  border: 1px solid rgba(0, 174, 254, 0.35);
+}
+.csp-toast-warning .csp-toast-icon-wrap {
+  background: rgba(245, 158, 11, 0.18);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
 
 #csp-confirm-backdrop {
   position: fixed;
@@ -1142,10 +1174,10 @@ e-page-transition,
     return getRootUrl(u);
   }
 
-  // Global Toast Notifications
+  // Global Toast Notifications (Sleek On-Screen Pill HUD)
   window.cspToast = function(message, type, duration) {
     type = type || 'info';
-    duration = duration || 4500;
+    duration = duration || 3800;
 
     var activeOverlay = document.querySelector('.csp-modal-overlay.active');
     var targetParent = activeOverlay || document.body;
@@ -1161,18 +1193,23 @@ e-page-transition,
       targetParent.appendChild(container);
     }
 
-    var icons = {
-      success: '🎉',
-      danger: '🚨',
-      info: 'ℹ️'
+    var svgIcons = {
+      success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+      danger: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+      info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+      warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
     };
+
+    var cleanMsg = (message || '').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}\s❤️🎉⭐💡ℹ️🚨👍]+/gu, '').trim() || message;
 
     var toast = document.createElement('div');
     toast.className = 'csp-toast csp-toast-' + type;
-    toast.innerHTML = '<span class="csp-toast-icon">' + (icons[type] || 'ℹ️') + '</span><span>' + message + '</span>';
+    toast.innerHTML = '<span class="csp-toast-icon-wrap">' + (svgIcons[type] || svgIcons.info) + '</span><span class="csp-toast-msg">' + cleanMsg + '</span>';
     container.appendChild(toast);
 
-    setTimeout(function(){ toast.classList.add('show'); }, 10);
+    requestAnimationFrame(function(){
+      toast.classList.add('show');
+    });
 
     setTimeout(function(){
       toast.classList.remove('show');
@@ -1721,7 +1758,7 @@ e-page-transition,
 </aside>
 
 <!-- ── Admin Login Screen (Displayed when unauthenticated) ── -->
-<div id="csp-login-screen" style="position:fixed;inset:0;z-index:9999;background:var(--bg-deep);display:none;align-items:center;justify-content:center;padding:20px;">
+<div id="csp-login-screen" style="position:fixed;inset:0;z-index:9999;background:var(--bg-deep);display:flex;align-items:center;justify-content:center;padding:20px;">
   <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:24px;width:100%;max-width:420px;padding:36px;box-shadow:0 20px 60px rgba(15,23,42,0.1);text-align:center;">
     <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;color:#fff;margin:0 auto 18px;">C</div>
     <h2 style="font-family:'Merriweather',serif;font-size:1.4rem;color:#0f172a;margin-bottom:6px;">Conspodium CMS Portal</h2>
@@ -1732,11 +1769,11 @@ e-page-transition,
       
       <div class="csp-form-group">
         <label class="csp-form-label">Username or Email</label>
-        <input type="text" id="login-username" class="csp-form-input" placeholder="admin" required value="admin">
+        <input type="text" id="login-username" class="csp-form-input" placeholder="admin" required autocomplete="username">
       </div>
       <div class="csp-form-group">
         <label class="csp-form-label">Password</label>
-        <input type="password" id="login-password" class="csp-form-input" placeholder="••••••••" required value="conspodium2026">
+        <input type="password" id="login-password" class="csp-form-input" placeholder="••••••••" required autocomplete="current-password">
       </div>
       <button id="btn-submit-cms-login" type="submit" onclick="handleAdminLogin(event)" class="csp-btn-sm csp-btn-primary" style="width:100%;height:46px;justify-content:center;font-size:0.9rem;margin-top:8px;">Sign In to CMS Portal →</button>
     </form>
@@ -2263,11 +2300,12 @@ e-page-transition,
                   <th>Author</th>
                   <th>Published Date</th>
                   <th>Views</th>
+                  <th>Likes</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody id="posts-cms-table">
-                <tr><td colspan="7">Loading articles...</td></tr>
+                <tr><td colspan="8">Loading articles...</td></tr>
               </tbody>
             </table>
           </div>
@@ -2943,12 +2981,45 @@ e-page-transition,
                 <th>Author</th>
                 <th>Replies</th>
                 <th>Views</th>
+                <th>Upvotes / Score</th>
                 <th>Pinned</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody id="forum-moderation-table">
-              <tr><td colspan="7">Loading discussion threads...</td></tr>
+              <tr><td colspan="8">Loading discussion threads...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FORUM CATEGORIES MANAGEMENT CARD -->
+      <div class="csp-card" style="margin-top:24px;">
+        <div class="csp-card-header">
+          <span class="csp-card-header-title" style="display:flex;align-items:center;gap:8px;">
+            <svg class="csp-sec-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+            Forum Channels &amp; Topics Structure
+          </span>
+          <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-add-forum-category">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add New Forum Category
+          </button>
+        </div>
+        <div class="csp-table-wrapper">
+          <table class="csp-table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Icon</th>
+                <th>Category Name</th>
+                <th>Slug</th>
+                <th>Discussions</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="forum-categories-table">
+              <tr><td colspan="7">Loading forum categories...</td></tr>
             </tbody>
           </table>
         </div>
@@ -3038,6 +3109,58 @@ e-page-transition,
             </form>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Add/Edit Forum Category Modal -->
+    <div class="csp-modal-overlay" id="modal-forum-category">
+      <div class="csp-modal" style="max-width:560px;">
+        <div class="csp-modal-header">
+          <h3 class="csp-modal-title" id="forum-cat-modal-title">Add Forum Channel / Category</h3>
+          <button type="button" class="csp-modal-close" id="btn-close-forum-cat">&times;</button>
+        </div>
+        <form id="form-forum-category">
+          <input type="hidden" id="forum-cat-id" value="0">
+          <div class="csp-form-group">
+            <label class="csp-form-label">Category Name *</label>
+            <input type="text" id="forum-cat-name" class="csp-form-input" placeholder="e.g. African Diaspora Matters" required>
+          </div>
+          <div class="csp-form-row">
+            <div class="csp-form-group">
+              <label class="csp-form-label">URL Slug</label>
+              <input type="text" id="forum-cat-slug" class="csp-form-input" placeholder="e.g. african-diaspora-matters">
+            </div>
+            <div class="csp-form-group">
+              <label class="csp-form-label">Display Order</label>
+              <input type="number" id="forum-cat-order" class="csp-form-input" value="0" min="0">
+            </div>
+          </div>
+          <div class="csp-form-row">
+            <div class="csp-form-group">
+              <label class="csp-form-label">Icon Type *</label>
+              <select id="forum-cat-icon" class="csp-form-select" required>
+                <option value="globe">🌐 Globe (Diaspora &amp; International)</option>
+                <option value="chart">📊 Chart (Insights, Policy &amp; Economics)</option>
+                <option value="temple">🏛️ Temple (Culture, History &amp; Heritage)</option>
+                <option value="lightbulb">💡 Lightbulb (Innovation &amp; Tech)</option>
+                <option value="palette">🎨 Palette (Art &amp; Entertainment)</option>
+                <option value="users">👥 Users (Community &amp; Hub)</option>
+                <option value="trophy">🏆 Trophy (Success Stories &amp; Awards)</option>
+                <option value="document">📄 Document (Transcripts &amp; Briefs)</option>
+                <option value="chat">💬 Chat (General Discussion)</option>
+              </select>
+            </div>
+            <div class="csp-form-group">
+              <label class="csp-form-label">Accent Color</label>
+              <input type="color" id="forum-cat-color" class="csp-form-input" value="#00AEFE" style="height:42px;padding:2px 4px;cursor:pointer;">
+            </div>
+          </div>
+          <div class="csp-form-group">
+            <label class="csp-form-label">Description (Optional)</label>
+            <textarea id="forum-cat-desc" class="csp-form-textarea" rows="3" placeholder="Channel discussion focus and topic guidelines..."></textarea>
+          </div>
+          <button type="submit" class="csp-btn-sm csp-btn-primary" style="height:44px;width:100%;justify-content:center;margin-top:8px;" id="btn-save-forum-cat">Save Forum Channel</button>
+        </form>
       </div>
     </div>
 
@@ -3740,15 +3863,18 @@ e-page-transition,
 
     <!-- Scrollable Modal Content Container -->
     <div style="overflow-y:auto;padding-right:6px;flex:1;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:0.85rem;background:#f8fafc;padding:10px 14px;border-radius:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:0.85rem;background:#f8fafc;padding:10px 14px;border-radius:10px;flex-wrap:wrap;gap:10px;">
         <div>
           <strong id="art-modal-author" style="color:#0f172a;">Author Name</strong>
           <span id="art-modal-date" style="color:var(--text-muted);margin-left:8px;">2026-02-05</span>
         </div>
-        <div style="display:flex;gap:8px;align-items:center;">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
           <span id="art-modal-category-badge" class="csp-badge" style="background:rgba(183,31,113,0.1);color:var(--pink);border:1px solid rgba(183,31,113,0.3);">Category</span>
           <span id="art-modal-views-badge" class="csp-badge" style="background:rgba(15,23,42,0.06);color:#0f172a;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:3px;vertical-align:-1px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>0 views
+          </span>
+          <span id="art-modal-likes-badge" class="csp-badge" style="background:#ffe4e6;color:#e11d48;border:1px solid #fecdd3;font-weight:700;">
+            ❤️ 0 Likes
           </span>
         </div>
       </div>
@@ -4735,6 +4861,11 @@ e-page-transition,
         viewsBadge.textContent = '👁️ ' + (post.views || 0).toLocaleString() + ' views';
       }
 
+      var likesBadge = document.getElementById('art-modal-likes-badge');
+      if (likesBadge) {
+        likesBadge.innerHTML = '❤️ ' + (post.likes || 0).toLocaleString() + ' Likes';
+      }
+
       var imgEl = document.getElementById('art-modal-image');
       if (post.featured_image) {
         imgEl.src = getAbsoluteImageUrl(post.featured_image);
@@ -5182,6 +5313,7 @@ e-page-transition,
           <td>${p.author_name}</td>
           <td>${pubDate}</td>
           <td>${(p.views || 0).toLocaleString()}</td>
+          <td><span class="csp-badge" style="background:#ffe4e6;color:#e11d48;border:1px solid #fecdd3;font-weight:700;font-size:0.76rem;padding:3px 8px;display:inline-flex;align-items:center;gap:3px;">❤️ ${(p.likes || 0).toLocaleString()}</span></td>
           <td>
             ${publishNowBtn}
             <button class="csp-btn-sm csp-btn-secondary" onclick="openViewArticleModal(${p.id})" style="margin-right:4px;">
@@ -7450,17 +7582,26 @@ e-page-transition,
   // Authentication & Session Guard
   function checkAuthSession() {
     var loader = document.getElementById('csp-page-loader');
-    if (loader) loader.classList.add('loaded');
+    var loginScreen = document.getElementById('csp-login-screen');
 
     var token = localStorage.getItem('conspodium_admin_token') || '';
-    var headers = token ? { 'X-Admin-Token': token } : {};
+    if (!token) {
+      if (loader) loader.classList.add('loaded');
+      if (loginScreen) loginScreen.style.display = 'flex';
+      return;
+    }
+
+    var headers = { 'X-Admin-Token': token };
 
     fetch(getRootUrl('api/auth.php?action=me'), { headers: headers })
-      .then(function(r){ return r.json(); })
+      .then(function(r){ 
+        if (!r.ok) throw new Error('Unauthenticated');
+        return r.json(); 
+      })
       .then(function(res){
-        var loginScreen = document.getElementById('csp-login-screen');
         if (res.success && res.user) {
           if (loginScreen) loginScreen.style.display = 'none';
+          if (loader) loader.classList.add('loaded');
           
           var nameEl = document.getElementById('admin-sidebar-name');
           var avatarEl = document.getElementById('admin-sidebar-avatar');
@@ -7473,9 +7614,9 @@ e-page-transition,
           var uInp = document.getElementById('prof-tab-username');
           var dInp = document.getElementById('prof-tab-display-name');
           var eInp = document.getElementById('prof-tab-email');
-          if (uInp && typeof isAdminProfileEditing !== 'undefined' && !isAdminProfileEditing) uInp.value = res.user.username || 'admin';
-          if (dInp && typeof isAdminProfileEditing !== 'undefined' && !isAdminProfileEditing) dInp.value = res.user.name || 'Executive Editor';
-          if (eInp && typeof isAdminProfileEditing !== 'undefined' && !isAdminProfileEditing) eInp.value = res.user.email || 'admin@conspodium.se';
+          if (uInp && typeof isAdminProfileEditing !== 'undefined' && !isAdminProfileEditing) uInp.value = res.user.username || '';
+          if (dInp && typeof isAdminProfileEditing !== 'undefined' && !isAdminProfileEditing) dInp.value = res.user.name || '';
+          if (eInp && typeof isAdminProfileEditing !== 'undefined' && !isAdminProfileEditing) eInp.value = res.user.email || '';
 
           // Load Admin CMS data
           loadCategoriesSelect();
@@ -7499,12 +7640,19 @@ e-page-transition,
           }
         } else {
           localStorage.removeItem('conspodium_admin_token');
+          localStorage.removeItem('csp_admin_token');
+          localStorage.removeItem('csp_admin');
+          sessionStorage.clear();
+          if (loader) loader.classList.add('loaded');
           if (loginScreen) loginScreen.style.display = 'flex';
         }
       })
       .catch(function(){
         localStorage.removeItem('conspodium_admin_token');
-        var loginScreen = document.getElementById('csp-login-screen');
+        localStorage.removeItem('csp_admin_token');
+        localStorage.removeItem('csp_admin');
+        sessionStorage.clear();
+        if (loader) loader.classList.add('loaded');
         if (loginScreen) loginScreen.style.display = 'flex';
       });
   }
@@ -8040,15 +8188,27 @@ e-page-transition,
 
   // Logout Handler
   document.querySelectorAll('.btn-logout-action').forEach(function(btn){
-    btn.addEventListener('click', function(){
+    btn.addEventListener('click', function(e){
+      if (e) e.preventDefault();
+      var token = localStorage.getItem('conspodium_admin_token') || '';
       localStorage.removeItem('conspodium_admin_token');
+      localStorage.removeItem('csp_admin_token');
+      localStorage.removeItem('csp_admin');
+      localStorage.removeItem('csp_admin_user');
       sessionStorage.clear();
-      fetch(getRootUrl('api/auth.php?action=logout'), { method: 'POST' })
-        .then(function(){
-          var loginScreen = document.getElementById('csp-login-screen');
-          if (loginScreen) loginScreen.style.display = 'flex';
-          location.reload();
-        });
+
+      document.cookie = "csp_admin_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+      fetch(getRootUrl('api/auth.php?action=logout'), {
+        method: 'POST',
+        headers: token ? { 'X-Admin-Token': token } : {}
+      })
+      .finally(function(){
+        var loginScreen = document.getElementById('csp-login-screen');
+        if (loginScreen) loginScreen.style.display = 'flex';
+        window.location.reload();
+      });
     });
   });
 
@@ -8338,6 +8498,8 @@ e-page-transition,
         tbody.innerHTML = '';
         res.data.forEach(function(t){
           var pinBtn = t.is_pinned ? `<button class="csp-btn-sm csp-btn-secondary" onclick="moderateForum('thread', ${t.id}, 'unpin')" style="margin-right:4px;">Unpin</button>` : `<button class="csp-btn-sm csp-btn-secondary" onclick="moderateForum('thread', ${t.id}, 'pin')" style="margin-right:4px;">Pin Topic</button>`;
+          var netScore = t.score != null ? t.score : ((t.upvotes || 0) - (t.downvotes || 0));
+          var netScoreStr = (netScore >= 0 ? '+' : '') + netScore;
           tbody.innerHTML += `
             <tr>
               <td style="font-weight:600;color:#0f172a;max-width:260px;">
@@ -8350,6 +8512,11 @@ e-page-transition,
               </td>
               <td style="font-weight:600;color:var(--blue);">${t.reply_count || 0}</td>
               <td>${t.views || 0}</td>
+              <td>
+                <span class="csp-badge" style="background:rgba(0,174,254,0.1);color:#0284c7;border:1px solid rgba(0,174,254,0.25);font-weight:700;font-size:0.78rem;padding:3px 8px;display:inline-flex;align-items:center;gap:4px;">
+                  👍 ${t.upvotes || 0} <span style="font-weight:400;color:#64748b;">(${netScoreStr})</span>
+                </span>
+              </td>
               <td>${t.is_pinned ? '📌 Pinned' : 'Normal'}</td>
               <td>
                 <button class="csp-btn-sm csp-btn-secondary" onclick="viewAdminThreadDetails(${t.id})" style="margin-right:4px;">🔍 Details & Comments</button>
@@ -8392,12 +8559,17 @@ e-page-transition,
         var t = res.data.thread;
         var replies = res.data.replies || [];
         
+        var netScore = t.score != null ? t.score : ((t.upvotes || 0) - (t.downvotes || 0));
+        var netScoreStr = (netScore >= 0 ? '+' : '') + netScore;
         document.getElementById('admin-thread-title').textContent = t.title;
         document.getElementById('admin-thread-meta').innerHTML = `
           <span class="csp-status-badge csp-status-approved" style="margin-right:8px;">${t.category}</span>
           <span>By <strong>${t.author_name}</strong> (${t.author_email})</span> • 
           <span>Posted ${new Date(t.created_at).toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'})}</span> • 
-          <span>👁️ ${t.views} views</span>
+          <span>👁️ ${t.views || 0} views</span> • 
+          <span style="background:rgba(0,174,254,0.1);color:#0284c7;border:1px solid rgba(0,174,254,0.25);padding:3px 10px;border-radius:20px;font-weight:700;font-size:0.78rem;display:inline-flex;align-items:center;gap:4px;">
+            👍 ${t.upvotes || 0} Upvotes (${netScoreStr} score)
+          </span>
         `;
         document.getElementById('admin-thread-content').innerHTML = t.content ? t.content.replace(/\n/g, '<br>') : '<em>No content body.</em>';
         document.getElementById('admin-thread-id-input').value = t.id;
@@ -8417,7 +8589,10 @@ e-page-transition,
                     <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--pink));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;">${initials}</div>
                     <div>
                       <div style="font-weight:700;color:#0f172a;font-size:0.9rem;">${r.author_name}</div>
-                      <div style="font-size:0.75rem;color:var(--text-muted);">${r.author_email} • ${new Date(r.created_at).toLocaleString()}</div>
+                      <div style="font-size:0.75rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                        <span>${r.author_email} • ${new Date(r.created_at).toLocaleString()}</span>
+                        <span style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;padding:2px 8px;border-radius:12px;font-weight:700;font-size:0.72rem;">👍 ${r.upvotes || 0} Upvotes</span>
+                      </div>
                     </div>
                   </div>
                   <div style="display:flex;gap:6px;">
@@ -8653,7 +8828,230 @@ e-page-transition,
   renderImagePicker('live-speaker-avatar-container', 'live-speaker-avatar', 'file-live-speaker-avatar', '/uploads/live_speaker_avatar.png');
   renderImagePicker('sec-int-photo-container', 'sec-int-photo', 'file-sec-int-photo', '/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg');
 
-  // 6. Admin Forum Topic Creator
+  // 6. Admin Forum Topic Creator & Forum Category Manager
+  window.allForumCategories = [];
+
+  var ICON_SVGS_DASHBOARD = {
+    globe: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>',
+    chart: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+    temple: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3l9 7H3z"/></svg>',
+    lightbulb: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15 2a6 6 0 0 0-6 6c0 2.5 1.5 3.5 1.5 5h3c0-1.5 1.5-2.5 1.5-5a6 6 0 0 0-6-6z"/></svg>',
+    palette: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.6-.7 1.6-1.6 0-.4-.2-.8-.5-1.1-.3-.3-.4-.7-.4-1.1 0-.9.7-1.6 1.6-1.6H17c2.8 0 5-2.2 5-5 0-5.5-4.5-9.6-10-9.6z"/></svg>',
+    users: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    trophy: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34c3.48-.91 6-4.05 6-7.66V3H4v6c0 3.61 2.52 6.75 6 7.66z"/></svg>',
+    document: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+    chat: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+  };
+
+  function loadAdminForumCategories() {
+    fetch(getRootUrl('api/forum.php?action=admin_categories'), {
+      headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' }
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        var tbody = document.getElementById('forum-categories-table');
+        if (!tbody) return;
+        if (!res.success || !res.data || res.data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:24px;">No forum channels configured yet.</td></tr>';
+          return;
+        }
+
+        window.allForumCategories = res.data;
+        tbody.innerHTML = '';
+        res.data.forEach(function(cat){
+          var iconSvg = ICON_SVGS_DASHBOARD[cat.icon_type] || ICON_SVGS_DASHBOARD.chat;
+          var accentColor = cat.color_accent || '#00AEFE';
+          var statusBadge = cat.is_active ? '<span class="csp-status-badge csp-status-approved">Active</span>' : '<span class="csp-status-badge csp-status-pending">Hidden</span>';
+          
+          tbody.innerHTML += `
+            <tr>
+              <td style="font-weight:700;color:var(--blue);">${cat.display_order || 0}</td>
+              <td>
+                <div style="width:34px;height:34px;border-radius:10px;background:rgba(0,174,254,0.08);color:${accentColor};display:inline-flex;align-items:center;justify-content:center;">
+                  ${iconSvg}
+                </div>
+              </td>
+              <td>
+                <div style="font-weight:700;color:#0f172a;">${cat.name}</div>
+                <div style="font-size:0.76rem;color:var(--text-muted);max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${cat.description || 'No description'}</div>
+              </td>
+              <td><code style="font-size:0.8rem;background:#f1f5f9;padding:2px 6px;border-radius:4px;">${cat.slug}</code></td>
+              <td style="font-weight:700;color:#0f172a;">${cat.threads_count || 0}</td>
+              <td>${statusBadge}</td>
+              <td>
+                <button class="csp-btn-sm csp-btn-secondary" onclick="editForumCategory(${cat.id})" style="margin-right:4px;">✏️ Edit</button>
+                <button class="csp-btn-sm csp-btn-danger" onclick="deleteForumCategory(${cat.id})">🗑️ Delete</button>
+              </td>
+            </tr>
+          `;
+        });
+
+        populateAdminCategoryPicker(res.data);
+      });
+  }
+
+  function populateAdminCategoryPicker(cats) {
+    var popover = document.getElementById('adm-th-cat-picker-popover');
+    var trigger = document.getElementById('adm-th-cat-picker-trigger');
+    var hiddenInput = document.getElementById('adm-th-category');
+    var badge = document.getElementById('adm-th-cat-trigger-badge');
+    var triggerText = document.getElementById('adm-th-cat-trigger-text');
+    if (!popover || !trigger || !hiddenInput) return;
+
+    var html = '';
+    cats.forEach(function(cat){
+      var iconSvg = ICON_SVGS_DASHBOARD[cat.icon_type] || ICON_SVGS_DASHBOARD.chat;
+      var accentColor = cat.color_accent || '#00AEFE';
+      html += `
+        <div class="cat-picker-item" data-id="${cat.id}" data-name="${cat.name}" data-icon="${cat.icon_type}" data-color="${accentColor}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:background 0.15s ease;">
+          <span style="width:28px;height:28px;border-radius:6px;background:rgba(0,174,254,0.1);color:${accentColor};display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+            ${iconSvg}
+          </span>
+          <span style="font-size:0.86rem;font-weight:600;color:#0f172a;">${cat.name}</span>
+        </div>
+      `;
+    });
+    popover.innerHTML = html;
+
+    // Bind pick clicks
+    popover.querySelectorAll('.cat-picker-item').forEach(function(item){
+      item.onclick = function(e){
+        e.stopPropagation();
+        var catName = item.getAttribute('data-name');
+        var catId = item.getAttribute('data-id');
+        var iconType = item.getAttribute('data-icon');
+        var color = item.getAttribute('data-color') || '#00AEFE';
+
+        hiddenInput.value = catName;
+        hiddenInput.setAttribute('data-id', catId);
+        if (triggerText) triggerText.textContent = catName;
+        if (badge) {
+          badge.style.color = color;
+          badge.innerHTML = ICON_SVGS_DASHBOARD[iconType] || ICON_SVGS_DASHBOARD.chat;
+        }
+        popover.style.display = 'none';
+      };
+    });
+
+    trigger.onclick = function(e){
+      e.stopPropagation();
+      popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+    };
+
+    document.addEventListener('click', function(e){
+      if (!trigger.contains(e.target) && !popover.contains(e.target)) {
+        popover.style.display = 'none';
+      }
+    });
+
+    // Select first category by default if current value is default
+    if (cats.length > 0 && (!hiddenInput.value || hiddenInput.value === 'General Discussion')) {
+      var first = cats[0];
+      hiddenInput.value = first.name;
+      hiddenInput.setAttribute('data-id', first.id);
+      if (triggerText) triggerText.textContent = first.name;
+      if (badge) {
+        badge.style.color = first.color_accent || '#00AEFE';
+        badge.innerHTML = ICON_SVGS_DASHBOARD[first.icon_type] || ICON_SVGS_DASHBOARD.chat;
+      }
+    }
+  }
+
+  window.editForumCategory = function(catId) {
+    var cat = window.allForumCategories.find(function(c){ return c.id == catId; });
+    if (!cat) return;
+
+    document.getElementById('forum-cat-id').value = cat.id;
+    document.getElementById('forum-cat-name').value = cat.name;
+    document.getElementById('forum-cat-slug').value = cat.slug;
+    document.getElementById('forum-cat-order').value = cat.display_order || 0;
+    document.getElementById('forum-cat-icon').value = cat.icon_type || 'chat';
+    document.getElementById('forum-cat-color').value = cat.color_accent || '#00AEFE';
+    document.getElementById('forum-cat-desc').value = cat.description || '';
+    document.getElementById('forum-cat-modal-title').textContent = 'Edit Forum Channel: ' + cat.name;
+
+    var modal = document.getElementById('modal-forum-category');
+    if (modal) modal.classList.add('active');
+  };
+
+  window.deleteForumCategory = function(catId) {
+    if (!confirm('Are you sure you want to delete this forum channel? Threads in this category will become unassigned.')) return;
+
+    fetch(getRootUrl('api/forum.php?action=admin_delete_category'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
+      },
+      body: JSON.stringify({ id: catId })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success) {
+        if (window.cspToast) window.cspToast('Forum channel deleted', 'info');
+        else alert('Forum channel deleted');
+        loadAdminForumCategories();
+        loadForumThreads();
+      } else {
+        alert(res.error || 'Failed to delete category');
+      }
+    });
+  };
+
+  // Bind Forum Category Modal buttons
+  var btnAddForumCat = document.getElementById('btn-add-forum-category');
+  var btnCloseForumCat = document.getElementById('btn-close-forum-cat');
+  var modalForumCat = document.getElementById('modal-forum-category');
+  var formForumCat = document.getElementById('form-forum-category');
+
+  if (btnAddForumCat && modalForumCat) {
+    btnAddForumCat.onclick = function(){
+      document.getElementById('forum-cat-id').value = '0';
+      formForumCat.reset();
+      document.getElementById('forum-cat-modal-title').textContent = 'Add Forum Channel / Category';
+      modalForumCat.classList.add('active');
+    };
+  }
+  if (btnCloseForumCat && modalForumCat) {
+    btnCloseForumCat.onclick = function(){ modalForumCat.classList.remove('active'); };
+  }
+
+  if (formForumCat) {
+    formForumCat.onsubmit = function(e){
+      e.preventDefault();
+      var id = parseInt(document.getElementById('forum-cat-id').value || 0, 10);
+      var payload = {
+        id: id,
+        name: document.getElementById('forum-cat-name').value.trim(),
+        slug: document.getElementById('forum-cat-slug').value.trim(),
+        display_order: parseInt(document.getElementById('forum-cat-order').value || 0, 10),
+        icon_type: document.getElementById('forum-cat-icon').value,
+        color_accent: document.getElementById('forum-cat-color').value,
+        description: document.getElementById('forum-cat-desc').value.trim()
+      };
+
+      fetch(getRootUrl('api/forum.php?action=admin_save_category'), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || ''
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success) {
+          if (window.cspToast) window.cspToast('🎉 Forum channel saved successfully!', 'success');
+          else alert('🎉 Forum channel saved successfully!');
+          modalForumCat.classList.remove('active');
+          loadAdminForumCategories();
+        } else {
+          alert('Error: ' + (res.error || 'Failed to save category'));
+        }
+      });
+    };
+  }
+
   var btnOpenAdminThread = document.getElementById('btn-open-admin-thread-modal');
   var btnCloseAdminThread = document.getElementById('btn-close-admin-thread');
   var modalAdminThread = document.getElementById('modal-admin-create-thread');
@@ -8669,9 +9067,13 @@ e-page-transition,
   if (formAdminThread) {
     formAdminThread.onsubmit = function(e){
       e.preventDefault();
+      var catHidden = document.getElementById('adm-th-category');
+      var categoryId = catHidden ? catHidden.getAttribute('data-id') : null;
+
       var payload = {
         title: document.getElementById('adm-th-title').value,
-        category: document.getElementById('adm-th-category').value,
+        category: catHidden ? catHidden.value : 'General Discussion',
+        category_id: categoryId ? parseInt(categoryId, 10) : null,
         author_name: document.getElementById('adm-th-name').value,
         author_email: document.getElementById('adm-th-email').value,
         content: document.getElementById('adm-th-content').value,
@@ -8690,6 +9092,7 @@ e-page-transition,
           formAdminThread.reset();
           modalAdminThread.classList.remove('active');
           loadForumThreads();
+          loadAdminForumCategories();
         } else { alert('Error: ' + (res.error || 'Failed to create topic')); }
       });
     };
@@ -10599,7 +11002,7 @@ e-page-transition,
       if (t.dataset.tab === 'attendees') loadAttendeesTab();
       if (t.dataset.tab === 'newsletter') { loadSubscribers(); loadCampaigns(); }
       if (t.dataset.tab === 'comments') loadComments();
-      if (t.dataset.tab === 'forum') loadForumThreads();
+      if (t.dataset.tab === 'forum') { loadForumThreads(); loadAdminForumCategories(); }
       if (t.dataset.tab === 'settings') { loadHomepageSections(); loadPaymentSettings(); loadGeneralSettings(); }
     });
   });
@@ -10607,8 +11010,6 @@ e-page-transition,
   // Initial Load
   document.addEventListener('DOMContentLoaded', function(){
     checkAuthSession();
-    loadAttendeesTab();
-    loadCategoriesSelect();
   });
 })();
 </script>
