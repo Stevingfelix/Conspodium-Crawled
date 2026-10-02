@@ -904,9 +904,11 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   .elementor-1969 .elementor-button,
   .elementor-1969 .elementor-element-36265fd .elementor-button,
   .csp-header-submit-btn {
-    font-family: 'Merriweather', Georgia, serif !important;
-    font-weight: 500 !important;
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
     letter-spacing: 0.01em !important;
+    text-transform: none !important;
   }
 
   .elementor-location-header .elementor-button-content-wrapper,
@@ -2395,36 +2397,97 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     -webkit-text-fill-color: #00AEFE !important;
   }
 
-  /* ── SIGNATURE CHAT-BUBBLE PILL (HERO & HEADER SUBMIT STORY BUTTONS) ── */
+  /* ── GLOBAL UNIFIED BUTTON DESIGN SYSTEM (SLEEK, SOFT FLAT TEXT, CONSISTENT SIZE & ICONS) ── */
+  .elementor-button,
+  .elementor-price-table__button,
+  .elementskit-btn,
   .csp-hero-btn-primary,
+  .csp-hero-btn-secondary,
+  .csp-btn-voice,
+  .csp-header-submit-btn,
+  .csp-modal-cta,
+  .csp-poll-vote-btn,
+  .csp-forum-create-btn,
   .csp-arch-hero-btn,
   .csp-btn-primary-gradient,
   .csp-btn-solid-dark,
-  .csp-header-submit-btn,
   .elementor-location-header .elementor-button,
   .elementor-1969 .elementor-element-36265fd .elementor-button,
   .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button,
   .elementor-element-36265fd .elementor-button,
   a.elementor-button[href*="submit-story"],
   a.elementskit-btn[href*="submit-story"],
-  .csp-btn-voice {
+  a.elementskit-btn[href*="forum"],
+  a.elementor-button[href*="forum"],
+  a.elementskit-btn[href*="about-us"],
+  a.elementskit-btn[href*="advert"],
+  a.elementskit-btn[href*="sponsorship"],
+  a.elementor-button[href*="about-us"],
+  a.elementor-button[href*="advert"],
+  a.elementor-button[href*="sponsorship"] {
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    line-height: 1.25 !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 8px !important;
+    gap: 9px !important;
+    box-sizing: border-box !important;
+    text-decoration: none !important;
+  }
+
+  /* Universal icon sizing across ALL buttons */
+  .elementor-button svg,
+  .elementskit-btn svg,
+  .csp-hero-btn-primary svg,
+  .csp-hero-btn-secondary svg,
+  .csp-btn-voice svg,
+  .csp-header-submit-btn svg,
+  .csp-modal-cta svg,
+  .csp-poll-vote-btn svg,
+  .csp-forum-create-btn svg,
+  .elementor-button i,
+  .elementskit-btn i,
+  .elementor-button .elementor-button-icon svg,
+  .elementskit-btn .elementskit-btn-icon svg {
+    width: 17px !important;
+    height: 17px !important;
+    max-width: 17px !important;
+    max-height: 17px !important;
+    font-size: 17px !important;
+    stroke-width: 2 !important;
+    flex-shrink: 0 !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+  }
+
+  /* ── TIER 1: SIGNATURE CHAT-BUBBLE PILL (HERO, HEADER, FORUM & VOICE BUTTONS) ── */
+  .csp-hero-btn-primary,
+  .csp-arch-hero-btn,
+  .csp-btn-primary-gradient,
+  .csp-btn-solid-dark,
+  .csp-header-submit-btn,
+  .csp-modal-cta,
+  .elementor-location-header .elementor-button,
+  .elementor-1969 .elementor-element-36265fd .elementor-button,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button,
+  .elementor-element-36265fd .elementor-button,
+  a.elementor-button[href*="submit-story"],
+  a.elementskit-btn[href*="submit-story"],
+  a.elementor-button[href*="forum"],
+  a.elementskit-btn[href*="forum"],
+  .csp-btn-voice {
     background: #00AEFE !important;
     background-color: #00AEFE !important;
     background-image: none !important;
     color: #ffffff !important;
     fill: #ffffff !important;
-    text-decoration: none !important;
-    font-weight: 500 !important;
-    font-family: 'Merriweather', Georgia, serif !important;
-    font-size: 14px !important;
-    line-height: 1.2 !important;
-    padding: 12px 24px !important;
+    padding: 13px 28px !important;
     border-radius: 999px 999px 4px 999px !important;
-    box-shadow: 0 6px 24px rgba(0, 174, 254, 0.38) !important;
+    box-shadow: 0 6px 20px rgba(0, 174, 254, 0.32) !important;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, filter 0.25s ease, border-radius 0.25s ease, background-color 0.25s ease !important;
     white-space: nowrap !important;
   }
@@ -2434,12 +2497,15 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   .csp-btn-primary-gradient:hover,
   .csp-btn-solid-dark:hover,
   .csp-header-submit-btn:hover,
+  .csp-modal-cta:hover,
   .elementor-location-header .elementor-button:hover,
   .elementor-1969 .elementor-element-36265fd .elementor-button:hover,
   .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button:hover,
   .elementor-element-36265fd .elementor-button:hover,
   a.elementor-button[href*="submit-story"]:hover,
   a.elementskit-btn[href*="submit-story"]:hover,
+  a.elementor-button[href*="forum"]:hover,
+  a.elementskit-btn[href*="forum"]:hover,
   .csp-btn-voice:hover {
     background: #0096db !important;
     background-color: #0096db !important;
@@ -2448,51 +2514,43 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     fill: #ffffff !important;
     transform: translateY(-2px) scale(1.02) !important;
     border-radius: 999px 999px 12px 999px !important;
-    box-shadow: 0 10px 32px rgba(0, 174, 254, 0.5) !important;
-    filter: brightness(1.08) !important;
+    box-shadow: 0 10px 28px rgba(0, 174, 254, 0.45) !important;
+    filter: brightness(1.05) !important;
+  }
+
+  /* ── TIER 2: SECONDARY / STANDARD PILL BUTTONS ── */
+  .csp-hero-btn-secondary,
+  a.elementskit-btn[href*="about-us"],
+  a.elementskit-btn[href*="advert"],
+  a.elementskit-btn[href*="sponsorship"],
+  a.elementor-button[href*="about-us"],
+  a.elementor-button[href*="advert"],
+  a.elementor-button[href*="sponsorship"],
+  .elementor-price-table__button,
+  .csp-poll-vote-btn {
+    border-radius: 50px !important;
+    padding: 13px 28px !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
   .elementskit-btn:hover,
   .ekit-btn-wraper .elementskit-btn:hover,
   .elementor-widget-elementskit-button .elementskit-btn:hover,
   .elementor-element .elementskit-btn:hover,
-  .elementor-element-27fe09ce .elementskit-btn:hover,
-  .elementor-element-188a988c .elementskit-btn:hover,
-  .elementor-element-c6a871e .elementskit-btn:hover,
-  .elementor-element-ba7f8bc .elementskit-btn:hover,
-  .elementor-element-170b1e1a .elementskit-btn:hover,
-  .elementor-element-7972d6e7 .elementskit-btn:hover,
-  .elementor-element-f180e55 .elementskit-btn:hover,
-  .elementor-979 .elementor-element.elementor-element-170b1e1a .elementskit-btn:hover,
-  .elementor-979 .elementor-element.elementor-element-27fe09ce .elementskit-btn:hover,
-  .elementor-979 .elementor-element.elementor-element-188a988c .elementskit-btn:hover,
-  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn:hover,
-  .elementor-979 .elementor-element.elementor-element-ba7f8bc .elementskit-btn:hover,
-  .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn:hover,
-  .elementor-1468 .elementor-element.elementor-element-7972d6e7 .elementskit-btn:hover,
-  a.elementskit-btn[href*="forum"]:hover,
-  a.elementor-button[href*="forum"]:hover,
   a.elementskit-btn[href*="about-us"]:hover,
   a.elementskit-btn[href*="advert"]:hover,
   a.elementskit-btn[href*="sponsorship"]:hover,
   a.elementor-button[href*="about-us"]:hover,
   a.elementor-button[href*="advert"]:hover,
   a.elementor-button[href*="sponsorship"]:hover,
-  .elementor-price-table__button:hover,
-  .elementor-widget-price-table .elementor-price-table__button:hover,
-  .elementor-element-c424d68 .elementor-price-table__button:hover,
-  .elementor-element-c439157 .elementor-price-table__button:hover,
-  .elementor-element-53118d9 .elementor-price-table__button:hover,
-  .elementor-979 .elementor-element.elementor-element-c424d68 .elementor-price-table__button:hover,
-  .elementor-979 .elementor-element.elementor-element-c439157 .elementor-price-table__button:hover,
-  .elementor-979 .elementor-element.elementor-element-53118d9 .elementor-price-table__button:hover {
+  .elementor-price-table__button:hover {
     background: #0096db !important;
     background-color: #0096db !important;
     background-image: none !important;
     color: #ffffff !important;
     fill: #ffffff !important;
-    transform: translateY(-3px) scale(1.02) !important;
-    box-shadow: 0 10px 28px rgba(0, 174, 254, 0.5) !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 8px 24px rgba(0, 174, 254, 0.4) !important;
   }
 
   /* Tier 3: Directory, Card Links & Tags (Structured Tag 4px) */
@@ -2510,13 +2568,13 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 10px !important;
-    min-width: 180px !important;
-    padding: 14px 36px !important;
+    gap: 9px !important;
+    min-width: 170px !important;
+    padding: 13px 28px !important;
     font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     font-size: 15px !important;
-    font-weight: 700 !important;
-    line-height: 1.2 !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
     box-sizing: border-box !important;
   }
 
@@ -4059,9 +4117,10 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
         menuItems.forEach(function (item) {
           var li = document.createElement('li');
           var a = document.createElement('a');
+          a.href = item.href;
           if (item.isCta) {
             a.className = 'csp-modal-cta';
-            a.innerHTML = '<span>' + item.text + '</span><span class="elementor-button-icon" style="margin-left:6px;display:inline-flex;align-items:center;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+            a.innerHTML = '<span>' + item.text + '</span><span class="elementor-button-icon" style="margin-left:6px;display:inline-flex;align-items:center;"><svg width="17" height="17" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
           } else {
             a.textContent = item.text;
           }
@@ -5521,8 +5580,8 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 								<span class="elementor-button-content-wrapper">
 									<span class="elementor-button-text">Submit Story</span>
 									<span class="elementor-button-icon" style="margin-left: 6px; display: inline-flex; align-items: center;">
-										<svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align: middle;">
-											<path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+										<svg width="17" height="17" viewBox="0 0 16 16" fill="none" style="vertical-align: middle;">
+											<path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 										</svg>
 									</span>
 								</span>

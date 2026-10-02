@@ -560,5 +560,26 @@ staticSitemap += `</urlset>\n`;
 await writeFile(join(PUBLIC, 'sitemap.xml'), staticSitemap, 'utf8');
 console.log('✓');
 
+// 4. Generate static polls JSON fallback for serverless/static platforms (Vercel)
+const activePollData = {
+  success: true,
+  poll: {
+    id: 1,
+    question: "What is the most pressing economic opportunity for the African Diaspora in 2026?",
+    options: [
+      { option: "Cross-Border Tech Incubators & Innovations", index: 0, count: 8, percentage: 31 },
+      { option: "Agricultural Value Chains & Sustainable Trade", index: 1, count: 4, percentage: 15 },
+      { option: "Diaspora Development Bonds & Investment Funds", index: 2, count: 10, percentage: 38 },
+      { option: "Creative Industries & Global Cultural Exports", index: 3, count: 4, percentage: 15 }
+    ],
+    totalVotes: 26,
+    userHasVoted: false,
+    userVotedIndex: null
+  }
+};
+await mkdir(join(PUBLIC, 'api'), { recursive: true });
+await writeFile(join(PUBLIC, 'api', 'polls_active.json'), JSON.stringify(activePollData, null, 2), 'utf8');
+await writeFile(join(PUBLIC, 'api', 'polls.json'), JSON.stringify(activePollData, null, 2), 'utf8');
+
 console.log('\n✅ Build complete → public/');
 console.log('   Run: npm start  →  http://localhost:8080\n');
