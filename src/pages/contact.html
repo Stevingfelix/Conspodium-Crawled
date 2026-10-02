@@ -247,16 +247,17 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     <style id="csp-contact-story-style">
         /* ── Header Subtitle & Hero Elements ── */
         .elementor-975 .elementor-element.elementor-element-33c066d0 .elementor-heading-title {
-            font-family: 'Inter', sans-serif !important;
-            font-size: 0.76rem !important;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
+            font-size: 0.8rem !important;
             font-weight: 700 !important;
-            letter-spacing: 0.18em !important;
+            letter-spacing: 0.14em !important;
             text-transform: uppercase !important;
             color: #00AEFE !important;
-            background: rgba(0, 174, 254, 0.08) !important;
-            border: 1px solid rgba(0, 174, 254, 0.25) !important;
-            padding: 6px 18px !important;
-            border-radius: 50px !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
             display: inline-block !important;
             margin-bottom: 8px !important;
         }
@@ -302,21 +303,56 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
             color: #0f172a !important;
         }
 
-        /* 4 Infoboxes - Clean Cards with Full Icon Visibility (No Cutoff) */
+        /* ── How Can We Help? Sleek Minimal Cards & Black Icons ── */
+        .elementor-975 .elementor-element.elementor-element-1ca8cfa5 {
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 18px !important;
+            width: 100% !important;
+            max-width: 960px !important;
+            margin: 24px auto 0 auto !important;
+            box-sizing: border-box !important;
+        }
+
+        .elementor-975 .elementor-element.elementor-element-78bc4fb1,
+        .elementor-975 .elementor-element.elementor-element-c65338f,
+        .elementor-975 .elementor-element.elementor-element-cc937ea,
+        .elementor-975 .elementor-element.elementor-element-7078a6d {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 1 1 auto !important;
+        }
+
+        @media (max-width: 767px) {
+            .elementor-975 .elementor-element.elementor-element-1ca8cfa5 {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 12px !important;
+                padding: 0 4px !important;
+            }
+        }
+
         .elementor-975 .elementskit-infobox {
             background: #ffffff !important;
             border: 1px solid #e2e8f0 !important;
-            border-radius: 20px !important;
-            padding: 26px 20px 22px 20px !important;
-            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            border-radius: 16px !important;
+            padding: 24px 16px 20px 16px !important;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03) !important;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            cursor: pointer !important;
+            box-sizing: border-box !important;
+            height: 100% !important;
             overflow: visible !important;
         }
 
         .elementor-975 .elementskit-infobox:hover {
-            transform: translateY(-4px) !important;
-            border-color: rgba(0, 174, 254, 0.45) !important;
-            box-shadow: 0 16px 36px rgba(0, 174, 254, 0.12) !important;
+            transform: translateY(-3px) !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07) !important;
         }
 
         .elementor-975 .elementskit-box-header {
@@ -329,15 +365,18 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
             padding: 0 !important;
         }
 
+        /* Unboxed black icons (no circular border or background) */
         .elementor-975 .elementskit-infobox .elementskit-info-box-icon {
-            color: #00AEFE !important;
-            background: rgba(0, 174, 254, 0.08) !important;
-            border: 1.5px solid rgba(0, 174, 254, 0.25) !important;
-            border-radius: 50% !important;
-            width: 56px !important;
-            height: 56px !important;
-            min-width: 56px !important;
-            min-height: 56px !important;
+            color: #0f172a !important;
+            fill: #0f172a !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            width: auto !important;
+            height: auto !important;
+            min-width: unset !important;
+            min-height: unset !important;
             line-height: 1 !important;
             display: inline-flex !important;
             align-items: center !important;
@@ -347,36 +386,48 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
             overflow: visible !important;
             box-sizing: border-box !important;
             transform: none !important;
-            transition: all 0.25s ease !important;
+            transition: transform 0.25s ease, color 0.25s ease !important;
         }
 
-        .elementor-975 .elementskit-infobox .elementkit-infobox-icon {
-            font-size: 22px !important;
+        .elementor-975 .elementskit-infobox .elementkit-infobox-icon,
+        .elementor-975 .elementskit-infobox .elementkit-infobox-icon i,
+        .elementor-975 .elementskit-infobox .elementkit-infobox-icon svg {
+            font-size: 28px !important;
             line-height: 1 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             margin: 0 !important;
             padding: 0 !important;
-            color: inherit !important;
+            color: #0f172a !important;
+            fill: #0f172a !important;
         }
 
         .elementor-975 .elementskit-infobox:hover .elementskit-info-box-icon {
-            background: #00AEFE !important;
-            border-color: #00AEFE !important;
-            color: #ffffff !important;
-            box-shadow: 0 6px 18px rgba(0, 174, 254, 0.35) !important;
-            transform: none !important;
+            background: transparent !important;
+            border: none !important;
+            color: #00AEFE !important;
+            fill: #00AEFE !important;
+            box-shadow: none !important;
+            transform: scale(1.08) !important;
+        }
+
+        .elementor-975 .elementskit-infobox:hover .elementkit-infobox-icon,
+        .elementor-975 .elementskit-infobox:hover .elementkit-infobox-icon i,
+        .elementor-975 .elementskit-infobox:hover .elementkit-infobox-icon svg {
+            color: #00AEFE !important;
+            fill: #00AEFE !important;
         }
 
         .elementor-975 .elementskit-infobox .elementskit-info-box-title {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-            color: #64748b !important;
-            font-size: 1.02rem !important;
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+            color: #1e293b !important;
+            font-size: 0.95rem !important;
             font-weight: 600 !important;
             margin: 0 !important;
-            line-height: 1.3 !important;
+            line-height: 1.35 !important;
             letter-spacing: -0.01em !important;
+            text-align: center !important;
             transition: color 0.25s ease !important;
         }
 
@@ -1479,9 +1530,10 @@ body:not(.home) .elementor-1969 .elementor-menu-toggle i {
   background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
   color: #ffffff !important;
   fill: #ffffff !important;
-  font-family: 'Merriweather', Georgia, serif !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   font-size: 0.95rem !important;
   font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
   padding: 14px 32px !important;
   border-radius: 50px !important;
   margin-top: 14px !important;
@@ -1558,9 +1610,10 @@ button[type="submit"],
   gap: 10px !important;
   min-width: 180px !important;
   padding: 16px 36px !important;
-  font-family: 'Merriweather', Georgia, serif !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   font-size: 15px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
   line-height: 1.2 !important;
   border-radius: 50px !important;
   box-sizing: border-box !important;

@@ -252,15 +252,32 @@
     .csp-table tr:hover td { background: #f8fafc; }
 
     /* ── Action Buttons & Badges ── */
-    .csp-btn-sm {
-      display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
-      border-radius: 50px; font-size: 0.78rem; font-weight: 600; border: none; cursor: pointer;
-      transition: background 0.18s, opacity 0.18s; text-decoration: none;
+    .csp-btn-sm, button.csp-btn, .csp-btn, .csp-table button, .csp-form-actions button, button[type="submit"] {
+      display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px;
+      border-radius: 50px; font-size: 0.8rem; font-weight: 600; border: none; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      letter-spacing: -0.015em !important;
+      -webkit-font-smoothing: antialiased !important;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      text-decoration: none;
     }
-    .csp-btn-primary { background: linear-gradient(135deg, var(--blue), var(--pink)); color: #fff; }
+    .csp-btn-primary { 
+      background: #00AEFE !important; 
+      color: #ffffff !important; 
+      border: 1px solid #00AEFE !important;
+      box-shadow: 0 4px 12px rgba(0, 174, 254, 0.3) !important;
+    }
+    .csp-btn-primary:hover { 
+      background: #0096db !important; 
+      border-color: #0096db !important;
+      color: #ffffff !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 6px 18px rgba(0, 174, 254, 0.45) !important;
+    }
     .csp-btn-secondary { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+    .csp-btn-secondary:hover { background: #e2e8f0; color: #0f172a; }
     .csp-btn-danger { background: rgba(230,50,50,0.08); color: #dc2626; border: 1px solid rgba(230,50,50,0.25); }
-    .csp-btn-sm:hover { opacity: 0.88; }
+    .csp-btn-danger:hover { background: rgba(230,50,50,0.15); color: #b91c1c; }
 
     .csp-status-badge {
       display: inline-block; padding: 3px 10px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
@@ -801,9 +818,10 @@ body:not(.home) .elementor-1969 .elementor-menu-toggle i {
   background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
   color: #ffffff !important;
   fill: #ffffff !important;
-  font-family: 'Merriweather', Georgia, serif !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   font-size: 0.95rem !important;
   font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
   padding: 14px 32px !important;
   border-radius: 50px !important;
   margin-top: 14px !important;
@@ -880,9 +898,10 @@ button[type="submit"],
   gap: 10px !important;
   min-width: 180px !important;
   padding: 16px 36px !important;
-  font-family: 'Merriweather', Georgia, serif !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   font-size: 15px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
   line-height: 1.2 !important;
   border-radius: 50px !important;
   box-sizing: border-box !important;
@@ -1760,7 +1779,9 @@ e-page-transition,
 <!-- ── Admin Login Screen (Displayed when unauthenticated) ── -->
 <div id="csp-login-screen" style="position:fixed;inset:0;z-index:9999;background:var(--bg-deep);display:flex;align-items:center;justify-content:center;padding:20px;">
   <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:24px;width:100%;max-width:420px;padding:36px;box-shadow:0 20px 60px rgba(15,23,42,0.1);text-align:center;">
-    <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;color:#fff;margin:0 auto 18px;">C</div>
+    <div style="margin:0 auto 18px;display:flex;align-items:center;justify-content:center;">
+      <img src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-2.png" alt="Conspodium Logo" style="width:54px;height:54px;object-fit:contain;display:block;">
+    </div>
     <h2 style="font-family:'Merriweather',serif;font-size:1.4rem;color:#0f172a;margin-bottom:6px;">Conspodium CMS Portal</h2>
     <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:24px;">Sign in to access admin tools, publish user submissions, and manage articles.</p>
     
@@ -1775,7 +1796,7 @@ e-page-transition,
         <label class="csp-form-label">Password</label>
         <input type="password" id="login-password" class="csp-form-input" placeholder="••••••••" required autocomplete="current-password">
       </div>
-      <button id="btn-submit-cms-login" type="submit" onclick="handleAdminLogin(event)" class="csp-btn-sm csp-btn-primary" style="width:100%;height:46px;justify-content:center;font-size:0.9rem;margin-top:8px;">Sign In to CMS Portal →</button>
+      <button id="btn-submit-cms-login" type="submit" onclick="handleAdminLogin(event)" style="width:100%;height:46px;display:inline-flex;align-items:center;justify-content:center;font-size:0.92rem;font-weight:600;font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;margin-top:8px;background:#00AEFE;color:#ffffff;border:none;border-radius:12px;cursor:pointer;letter-spacing:-0.015em;box-shadow:0 6px 20px rgba(0,174,254,0.35);transition:transform 0.2s ease,background 0.2s ease,box-shadow 0.2s ease;">Sign In to CMS Portal →</button>
     </form>
   </div>
 </div>
@@ -1980,7 +2001,7 @@ e-page-transition,
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                 📜 View Past Events History
               </button>
-              <button type="button" onclick="switchTab('attendees')" style="background:linear-gradient(135deg,#00AEFE,#B71F71);color:#ffffff;border:none;border-radius:50px;font-weight:600;padding:8px 18px;font-size:0.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,174,254,0.3);transition:all 0.2s;">
+              <button type="button" onclick="switchTab('attendees')" style="background:#00AEFE;color:#ffffff;border:none;border-radius:50px;font-weight:600;padding:8px 18px;font-size:0.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,174,254,0.3);transition:all 0.2s;">
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 Manage Attendees &amp; Follow-ups →
               </button>
@@ -2526,7 +2547,7 @@ e-page-transition,
           <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="openPastEventsHistoryModal()" style="background:rgba(255,255,255,0.1);color:#ffffff;border-color:rgba(255,255,255,0.2);font-weight:600;display:inline-flex;align-items:center;gap:6px;">
             📜 Past Events History
           </button>
-          <button type="button" class="csp-btn-sm csp-btn-primary" onclick="openAttendeesEmailModal()" style="font-weight:600;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#00AEFE,#007bb5);border:none;box-shadow:0 4px 12px rgba(0,174,254,0.3);">
+          <button type="button" class="csp-btn-sm csp-btn-primary" onclick="openAttendeesEmailModal()" style="font-weight:600;display:inline-flex;align-items:center;gap:6px;background:#00AEFE;border:none;box-shadow:0 4px 12px rgba(0,174,254,0.3);">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Send Follow-up Email
           </button>
@@ -3248,7 +3269,7 @@ e-page-transition,
           </div>
           <div style="display:flex;justify-content:flex-end;gap:10px;padding-top:12px;border-top:1px solid #f1f5f9;">
             <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="closeModal('modal-attendees-email')" style="padding:8px 18px;font-size:0.85rem;">Cancel</button>
-            <button type="submit" id="btn-submit-att-email" class="csp-btn-sm csp-btn-primary" style="background:linear-gradient(135deg,#00AEFE,#007bb5);border:none;font-weight:600;padding:8px 22px;font-size:0.85rem;box-shadow:0 4px 14px rgba(0,174,254,0.35);">
+            <button type="submit" id="btn-submit-att-email" class="csp-btn-sm csp-btn-primary" style="background:#00AEFE;border:none;font-weight:600;padding:8px 22px;font-size:0.85rem;box-shadow:0 4px 14px rgba(0,174,254,0.35);">
               🚀 Send Email Broadcast
             </button>
           </div>
@@ -3982,7 +4003,7 @@ e-page-transition,
       <button type="button" class="csp-btn-sm csp-btn-danger" id="btn-sub-modal-reject">Move to Trash</button>
       <button type="button" class="csp-btn-sm csp-btn-secondary" id="btn-sub-modal-pdf" style="opacity:0.5;cursor:not-allowed;">📄 Download PDF</button>
       <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-sub-modal-publish" style="opacity:0.5;cursor:not-allowed;">🚀 Publish to Stories</button>
-      <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-sub-modal-approve" style="background:#10b981;border-color:#059669;">✓ Accept Proposal</button>
+      <button type="button" class="csp-btn-sm csp-btn-primary" id="btn-sub-modal-approve" style="background:#00AEFE;border-color:#00AEFE;">✓ Accept Proposal</button>
     </div>
   </div>
 </div>

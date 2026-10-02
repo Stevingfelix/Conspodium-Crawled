@@ -747,9 +747,10 @@ body:not(.home) .elementor-1969 .elementor-menu-toggle i {
   background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
   color: #ffffff !important;
   fill: #ffffff !important;
-  font-family: 'Merriweather', Georgia, serif !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   font-size: 0.95rem !important;
   font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
   padding: 14px 32px !important;
   border-radius: 50px !important;
   margin-top: 14px !important;
@@ -826,9 +827,10 @@ button[type="submit"],
   gap: 10px !important;
   min-width: 180px !important;
   padding: 16px 36px !important;
-  font-family: 'Merriweather', Georgia, serif !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   font-size: 15px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
   line-height: 1.2 !important;
   border-radius: 50px !important;
   box-sizing: border-box !important;
@@ -1449,7 +1451,7 @@ e-page-transition,
   .csp-stories-mosaic-hero,
   .elementor-element-362a422c {
     position: relative !important;
-    background: #FFFFFF !important;
+    background: radial-gradient(120% 80% at 50% -10%, rgba(0, 174, 254, 0.08) 0%, rgba(240, 249, 255, 0.5) 45%, #FFFFFF 100%), #FFFFFF !important;
     min-height: 100vh !important;
     display: flex !important;
     flex-direction: column !important;
@@ -1492,14 +1494,15 @@ e-page-transition,
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    background: rgba(0, 174, 254, 0.08) !important;
-    border: 1px solid rgba(0, 174, 254, 0.3) !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     color: #00AEFE !important;
-    padding: 6px 18px !important;
-    border-radius: 30px !important;
-    font-size: 0.78rem !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    font-size: 0.8rem !important;
     font-weight: 700 !important;
-    letter-spacing: 0.12em !important;
+    letter-spacing: 0.16em !important;
     text-transform: uppercase !important;
     margin-bottom: 16px !important;
   }
@@ -1781,79 +1784,7 @@ e-page-transition,
     color: #00AEFE !important;
   }
 
-  /* ── Hero Background Blob & Doodle Accents ── */
-  .csp-stories-hero-blob-wrap {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .csp-stories-blob-1 {
-    position: absolute;
-    top: 40px;
-    right: 5%;
-    width: 380px;
-    height: 380px;
-    background: linear-gradient(135deg, rgba(0, 174, 254, 0.35) 0%, rgba(56, 189, 248, 0.22) 50%, rgba(183, 31, 113, 0.12) 100%);
-    border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
-    opacity: 0.9;
-    filter: blur(6px);
-    box-shadow: 0 16px 50px rgba(0, 174, 254, 0.2);
-    animation: cspStoriesBlobMorph 10s ease-in-out infinite alternate, cspStoriesBlobFloat1 7s ease-in-out infinite alternate;
-    will-change: border-radius, transform;
-  }
-
-  .csp-stories-blob-2 {
-    position: absolute;
-    bottom: 30px;
-    left: 4%;
-    width: 320px;
-    height: 320px;
-    background: linear-gradient(135deg, rgba(183, 31, 113, 0.18) 0%, rgba(0, 174, 254, 0.26) 60%, rgba(56, 189, 248, 0.14) 100%);
-    border-radius: 58% 42% 40% 60% / 45% 55% 45% 55%;
-    opacity: 0.85;
-    filter: blur(6px);
-    box-shadow: 0 16px 40px rgba(183, 31, 113, 0.12);
-    animation: cspStoriesBlobMorph 12s ease-in-out infinite alternate-reverse, cspStoriesBlobFloat2 8s ease-in-out infinite alternate;
-    will-change: border-radius, transform;
-  }
-
-  @keyframes cspStoriesBlobMorph {
-    0% {
-      border-radius: 42% 58% 65% 35% / 48% 40% 60% 52%;
-      transform: rotate(0deg) scale(1);
-    }
-    33% {
-      border-radius: 58% 42% 38% 62% / 40% 55% 45% 60%;
-      transform: rotate(120deg) scale(1.06);
-    }
-    66% {
-      border-radius: 35% 65% 55% 45% / 60% 35% 65% 40%;
-      transform: rotate(240deg) scale(0.96);
-    }
-    100% {
-      border-radius: 60% 40% 45% 55% / 50% 60% 40% 50%;
-      transform: rotate(360deg) scale(1.04);
-    }
-  }
-
-  @keyframes cspStoriesBlobFloat1 {
-    0% { transform: translate(0, 0); }
-    50% { transform: translate(-14px, -16px); }
-    100% { transform: translate(10px, -6px); }
-  }
-
-  @keyframes cspStoriesBlobFloat2 {
-    0% { transform: translate(0, 0); }
-    50% { transform: translate(12px, 14px); }
-    100% { transform: translate(-8px, 6px); }
-  }
-
-  /* Minimalist Doodle Squiggle and Ring Badges */
+  /* Minimalist Doodle Squiggle and Ring Badges (Desktop only) */
   .csp-stories-squiggle-left {
     position: absolute;
     top: 22%;
@@ -1935,12 +1866,6 @@ e-page-transition,
 </style>
 
 <div class="elementor-element elementor-element-362a422c e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded csp-stories-mosaic-hero" data-id="362a422c" data-element_type="container" data-e-type="container">
-  
-  <!-- Fluid Morphing Blob Accents -->
-  <div class="csp-stories-hero-blob-wrap" aria-hidden="true">
-    <div class="csp-stories-blob-1"></div>
-    <div class="csp-stories-blob-2"></div>
-  </div>
 
   <!-- Minimalist Doodle Squiggle (Left) -->
   <div class="csp-stories-squiggle-left" aria-hidden="true">
@@ -2156,11 +2081,11 @@ e-page-transition,
             <div id="eael-post-grid-0b52a18" class="eael-post-grid-container">
               <div class="eael-post-grid eael-post-appender eael-post-appender-0b52a18 eael-post-grid-style-two csp-stories-post-grid" data-layout-mode="grid">
                 <!-- Article 1 -->
-                <article class="eael-grid-post eael-post-grid-column category-culture-heritage" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s ease;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
+                <article class="eael-grid-post eael-post-grid-column category-culture-heritage" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);">
                   <div class="eael-grid-post-holder">
                     <div class="eael-grid-post-holder-inner">
                       <div class="eael-entry-media" style="overflow:hidden;height:200px;border-radius:20px 20px 0 0;">
-                        <img loading="lazy" src="../wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Empowering Diaspora Communities" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='none'">
+                        <img loading="lazy" src="../wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg" alt="Empowering Diaspora Communities" style="width:100%;height:100%;object-fit:cover;">
                       </div>
                       <div class="eael-entry-wrapper" style="padding:20px;">
                         <span style="font-size:0.72rem;font-weight:700;color:#00AEFE;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg> Culture &amp; Heritage</span>
@@ -2178,11 +2103,11 @@ e-page-transition,
                 </article>
 
                 <!-- Article 2 -->
-                <article class="eael-grid-post eael-post-grid-column category-innovation" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s ease;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
+                <article class="eael-grid-post eael-post-grid-column category-innovation" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);">
                   <div class="eael-grid-post-holder">
                     <div class="eael-grid-post-holder-inner">
                       <div class="eael-entry-media" style="overflow:hidden;height:200px;border-radius:20px 20px 0 0;">
-                        <img loading="lazy" src="../wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Africans in Diaspora Influencing Global Economic Decisions" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='none'">
+                        <img loading="lazy" src="../wp-content/uploads/2026/01/WhatsApp-Image-2022-07-03-at-11.51.25-AM-1024x570-1.jpeg" alt="Africans in Diaspora Influencing Global Economic Decisions" style="width:100%;height:100%;object-fit:cover;">
                       </div>
                       <div class="eael-entry-wrapper" style="padding:20px;">
                         <span style="font-size:0.72rem;font-weight:700;color:#B71F71;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg> Innovation &amp; Tech</span>
@@ -2200,11 +2125,11 @@ e-page-transition,
                 </article>
 
                 <!-- Article 3 -->
-                <article class="eael-grid-post eael-post-grid-column category-art-entertainment" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s ease;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
+                <article class="eael-grid-post eael-post-grid-column category-art-entertainment" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);">
                   <div class="eael-grid-post-holder">
                     <div class="eael-grid-post-holder-inner">
                       <div class="eael-entry-media" style="overflow:hidden;height:200px;border-radius:20px 20px 0 0;">
-                        <img loading="lazy" src="../wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Creatives Are Shaping Culture" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='none'">
+                        <img loading="lazy" src="../wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg" alt="Creatives Are Shaping Culture" style="width:100%;height:100%;object-fit:cover;">
                       </div>
                       <div class="eael-entry-wrapper" style="padding:20px;">
                         <span style="font-size:0.72rem;font-weight:700;color:#00AEFE;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg> Art &amp; Entertainment</span>
@@ -2222,11 +2147,11 @@ e-page-transition,
                 </article>
 
                 <!-- Article 4 -->
-                <article class="eael-grid-post eael-post-grid-column category-success-stories" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);transition:transform 0.25s ease;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
+                <article class="eael-grid-post eael-post-grid-column category-success-stories" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.03);">
                   <div class="eael-grid-post-holder">
                     <div class="eael-grid-post-holder-inner">
                       <div class="eael-entry-media" style="overflow:hidden;height:200px;border-radius:20px 20px 0 0;">
-                        <img loading="lazy" src="../wp-content/uploads/2026/01/AF3-1-png-300x171.jpg" alt="Mutual Aid Networks" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='none'">
+                        <img loading="lazy" src="../wp-content/uploads/2026/01/AF3-1-png-300x171.jpg" alt="Mutual Aid Networks" style="width:100%;height:100%;object-fit:cover;">
                       </div>
                       <div class="eael-entry-wrapper" style="padding:20px;">
                         <span style="font-size:0.72rem;font-weight:700;color:#10b981;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Success Stories</span>
@@ -2328,6 +2253,102 @@ e-page-transition,
       </div>
     </div>
 <style id="csp-stories-pagination-style">
+/* Sleek Dynamic Story Card Hover Animations */
+.csp-cat-main-col .eael-grid-post,
+.csp-stories-post-grid .eael-grid-post,
+.eael-post-appender .eael-grid-post,
+.eael-grid-post.eael-post-grid-column {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease !important;
+  will-change: transform, box-shadow;
+  position: relative;
+  cursor: pointer;
+}
+
+.csp-cat-main-col .eael-grid-post:hover,
+.csp-stories-post-grid .eael-grid-post:hover,
+.eael-post-appender .eael-grid-post:hover,
+.eael-grid-post.eael-post-grid-column:hover {
+  transform: translateY(-8px) scale(1.008) !important;
+  box-shadow: 0 20px 38px -8px rgba(0, 174, 254, 0.18), 0 10px 22px -6px rgba(15, 23, 42, 0.08) !important;
+  border-color: rgba(0, 174, 254, 0.4) !important;
+}
+
+.csp-cat-main-col .eael-grid-post .eael-entry-media img,
+.csp-stories-post-grid .eael-grid-post .eael-entry-media img,
+.eael-post-appender .eael-grid-post .eael-entry-media img,
+.eael-grid-post.eael-post-grid-column .eael-entry-media img {
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease !important;
+  transform-origin: center center;
+}
+
+.csp-cat-main-col .eael-grid-post:hover .eael-entry-media img,
+.csp-stories-post-grid .eael-grid-post:hover .eael-entry-media img,
+.eael-post-appender .eael-grid-post:hover .eael-entry-media img,
+.eael-grid-post.eael-post-grid-column:hover .eael-entry-media img {
+  transform: scale(1.06) !important;
+  filter: brightness(1.03) !important;
+}
+
+.csp-cat-main-col .eael-grid-post .eael-entry-title a,
+.csp-stories-post-grid .eael-grid-post .eael-entry-title a,
+.eael-post-appender .eael-grid-post .eael-entry-title a,
+.eael-grid-post.eael-post-grid-column .eael-entry-title a {
+  transition: color 0.25s ease !important;
+}
+
+.csp-cat-main-col .eael-grid-post:hover .eael-entry-title a,
+.csp-stories-post-grid .eael-grid-post:hover .eael-entry-title a,
+.eael-post-appender .eael-grid-post:hover .eael-entry-title a,
+.eael-grid-post.eael-post-grid-column:hover .eael-entry-title a {
+  color: #00AEFE !important;
+}
+
+.csp-cat-main-col .eael-grid-post .eael-post-elements-readmore-btn,
+.csp-stories-post-grid .eael-grid-post .eael-post-elements-readmore-btn,
+.eael-post-appender .eael-grid-post .eael-post-elements-readmore-btn,
+.eael-grid-post .eael-post-elements-readmore-btn,
+.eael-post-elements-readmore-btn {
+  color: #64748b !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.82rem !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  margin-bottom: 10px !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease !important;
+}
+
+.csp-cat-main-col .eael-grid-post:hover .eael-post-elements-readmore-btn,
+.csp-stories-post-grid .eael-grid-post:hover .eael-post-elements-readmore-btn,
+.eael-post-appender .eael-grid-post:hover .eael-post-elements-readmore-btn,
+.eael-grid-post:hover .eael-post-elements-readmore-btn,
+.eael-post-elements-readmore-btn:hover {
+  transform: translateX(5px) !important;
+  color: #00AEFE !important;
+}
+
+/* Sidebar sleek interactive cards */
+.csp-sidebar-item {
+  transition: transform 0.25s ease, background 0.25s ease !important;
+}
+.csp-sidebar-item:hover {
+  transform: translateX(4px) !important;
+}
+.csp-poll-opt-btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.csp-poll-opt-btn:hover {
+  border-color: #00AEFE !important;
+  background: rgba(0, 174, 254, 0.05) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 174, 254, 0.12) !important;
+}
+
 .csp-pagination-container {
   display: flex;
   align-items: center;
@@ -2344,11 +2365,11 @@ e-page-transition,
   color: #334155;
   padding: 8px 16px;
   border-radius: 50px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2362,6 +2383,7 @@ e-page-transition,
   border-color: #00AEFE;
   color: #00AEFE;
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 174, 254, 0.18);
 }
 .csp-page-btn.active {
   background: #00AEFE !important;
@@ -2827,7 +2849,7 @@ e-page-transition,
                 '<div class="eael-entry-content" style="margin-top:6px;">' +
                   '<div class="eael-grid-post-excerpt">' +
                     '<p style="font-size:0.85rem;color:#64748b;line-height:1.5;margin-bottom:10px;">' + (post.excerpt || '') + '</p>' +
-                    '<a href="' + postLink + '" class="eael-post-elements-readmore-btn" style="display:inline-block;font-size:0.82rem;font-weight:600;color:#00AEFE;text-decoration:none;margin-bottom:10px;">Read Story →</a>' +
+                    '<a href="' + postLink + '" class="eael-post-elements-readmore-btn" style="display:inline-block;font-size:0.82rem;font-weight:600;color:#64748b;text-decoration:none;margin-bottom:10px;font-family:\'Plus Jakarta Sans\',sans-serif;">Read Story →</a>' +
                   '</div>' +
                 '</div>' +
                 '<div class="eael-entry-header-after style-two" style="border-top:1px solid #f1f5f9;padding-top:10px;">' +
@@ -2894,8 +2916,15 @@ e-page-transition,
   }
 
   function scrollToGrid() {
-    var target = document.querySelector('.elementor-element-181d0192') || appender;
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var target = document.querySelector('.csp-cat-nav-wrap') || document.querySelector('.csp-cat-layout-flex') || appender;
+    if (target) {
+      var headerOffset = 100;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: Math.max(0, targetPosition),
+        behavior: 'smooth'
+      });
+    }
   }
 
   // Initial load
