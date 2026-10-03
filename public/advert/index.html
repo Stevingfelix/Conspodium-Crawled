@@ -1801,6 +1801,10 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   /* -------------------------------------------------------------
      Modern Luxury Testimonial Animated Slider (Unboxed & Cinematic)
      ------------------------------------------------------------- */
+  .csp-author-metric {
+    display: none !important;
+  }
+
   .elementor-element-4d330d3,
   .elementor-977 .elementor-element.elementor-element-4d330d3 {
     max-width: 960px !important;
@@ -1810,7 +1814,10 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     padding: 0 20px !important;
     box-sizing: border-box !important;
     background: transparent !important;
+    background-color: transparent !important;
     border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
     --container-widget-width: 100% !important;
     --container-widget-flex-grow: 0 !important;
   }
@@ -1820,7 +1827,10 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     margin: 0 auto !important;
     width: 100% !important;
     background: transparent !important;
+    background-color: transparent !important;
     border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
   }
 
   .csp-advert-testimonial-slider {
@@ -1833,6 +1843,11 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
   }
 
   .csp-testimonial-track {
@@ -2449,7 +2464,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       width: 100% !important;
     }
 
-    /* Print & Digital placement buttons fill 100% container width on mobile */
+    /* Print & Digital placement buttons centered on mobile */
     .elementor-element-b75da38,
     .elementor-element-3b186358,
     .elementor-element-b75da38 .elementor-widget-container,
@@ -2459,31 +2474,35 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     .elementor-element-b75da38 .ekit-btn-wraper,
     .elementor-element-3b186358 .ekit-btn-wraper {
       width: 100% !important;
-      display: block !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      text-align: center !important;
     }
     .elementor-element-b75da38 .elementskit-btn,
     .elementor-element-3b186358 .elementskit-btn {
       width: 100% !important;
-      max-width: 100% !important;
-      display: flex !important;
+      max-width: 300px !important;
+      display: inline-flex !important;
       justify-content: center !important;
       align-items: center !important;
-      border-radius: 12px !important;
+      border-radius: 50px !important;
       box-sizing: border-box !important;
       text-align: center !important;
+      margin: 0 auto !important;
     }
 
-    /* Advertising Options Spacing on Mobile (Large clear gap from Cultural Institutions) */
+    /* Advertising Options Spacing on Mobile */
     .elementor-element-2ef9f0da {
-      margin-bottom: 60px !important;
+      margin-bottom: 50px !important;
     }
     .elementor-element-472497a {
       margin-bottom: 25px !important;
     }
     .elementor-element-d802c16 {
-      margin-top: 60px !important;
+      margin-top: 50px !important;
       padding-top: 20px !important;
-      margin-bottom: 30px !important;
+      margin-bottom: 25px !important;
       display: block !important;
       clear: both !important;
     }
@@ -2494,7 +2513,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       line-height: 1.25 !important;
     }
 
-    /* Mobile Subtext Legibility (Sponsorship page style) */
+    /* Mobile Subtext Legibility */
     .subtext,
     .subtext p,
     .eael-dual-header .subtext,
@@ -2508,17 +2527,21 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       color: #475569 !important;
     }
 
-    /* Why Conspodium Works Mobile Spacing */
+    /* Why Conspodium Works Mobile Section & Cards - Stretched to Ends */
     .elementor-element-702ac813 .elementor-heading-title {
-      margin-top: 35px !important;
+      margin-top: 30px !important;
       margin-bottom: 12px !important;
       font-size: 1.85rem !important;
+      text-align: center !important;
     }
-    .elementor-element-d099459 {
-      margin: 0 auto 12px auto !important;
-      padding: 0 14px !important;
+    .elementor-element-d099459,
+    .elementor-977 .elementor-element.elementor-element-d099459 {
+      margin: 0 auto 20px auto !important;
+      padding: 0 16px !important;
       display: block !important;
       width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
     }
     .elementor-element-d099459 > .e-con-inner {
       display: flex !important;
@@ -2526,6 +2549,10 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       align-items: stretch !important;
       gap: 16px !important;
       width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box !important;
     }
     .elementor-element-d099459 .elementor-element,
     .elementor-element-d099459 > .e-con-inner > .elementor-element,
@@ -2540,32 +2567,125 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       opacity: 1 !important;
       height: auto !important;
       min-height: auto !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      box-sizing: border-box !important;
     }
     .elementor-element-d099459 .elementskit-infobox {
       height: auto !important;
       min-height: auto !important;
-      padding: 28px 22px !important;
+      padding: 26px 20px !important;
       border-radius: 20px !important;
       display: flex !important;
       visibility: visible !important;
       opacity: 1 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      border: 1px solid #E2E8F0 !important;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
     }
 
-    /* Measurable Reach Tight Spacing on Mobile */
-    .elementor-element-73830d1b {
-      margin-top: 5px !important;
-      margin-bottom: 15px !important;
-      padding: 5px 0 !important;
+    /* Measurable Reach Mobile Section & Cards - Stretched to Ends & Centered Button */
+    .elementor-element-73830d1b,
+    .elementor-977 .elementor-element.elementor-element-73830d1b {
+      margin: 15px auto 25px auto !important;
+      padding: 0 16px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      box-sizing: border-box !important;
+    }
+    .elementor-element-73830d1b > .e-con-inner {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box !important;
     }
     .elementor-element-54d59a54 .elementor-heading-title {
       margin-top: 8px !important;
       margin-bottom: 12px !important;
       font-size: 1.75rem !important;
+      text-align: center !important;
+    }
+    .csp-reach-showcase-box {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 auto !important;
+      padding: 28px 18px 24px 18px !important;
+      border-radius: 22px !important;
+      box-sizing: border-box !important;
+    }
+    .csp-reach-top-bar {
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      gap: 10px !important;
+      margin-bottom: 22px !important;
+      padding-bottom: 16px !important;
+    }
+    .csp-reach-badge {
+      margin: 0 auto !important;
+    }
+    .csp-reach-live-note {
+      text-align: center !important;
+      margin: 0 auto !important;
+    }
+    .csp-reach-stats-grid {
+      width: 100% !important;
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+      margin-bottom: 22px !important;
+    }
+    .csp-stat-cell {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      padding: 22px 16px !important;
+    }
+    .csp-reach-bottom-strip {
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      gap: 16px !important;
+      padding-top: 18px !important;
+    }
+    .csp-community-live-badge {
+      justify-content: center !important;
+      text-align: center !important;
+      margin: 0 auto !important;
+      width: 100% !important;
+    }
+    .csp-reach-cta-link {
+      margin: 0 auto !important;
+      align-self: center !important;
+      display: inline-flex !important;
+      justify-content: center !important;
+      text-align: center !important;
     }
 
-    /* Bottom Consultation Image Mobile */
+    /* 1. Sleeker Images on Mobile (Editorial Hero & Bottom Consultation) */
+    .elementor-element-46f7ba70 img,
+    .csp-hero-visual-card img,
+    .elementor-element-598a9a85 .elementor-widget-image img {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      aspect-ratio: 16 / 10 !important;
+      max-height: 270px !important;
+      object-fit: cover !important;
+      border-radius: 18px !important;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08) !important;
+      border: 1px solid #E2E8F0 !important;
+      display: block !important;
+      margin: 0 auto !important;
+    }
+
     .csp-advert-consultation-wrap {
-      margin: 10px auto 30px auto !important;
+      margin: 12px auto 30px auto !important;
       padding: 0 16px !important;
       width: 100% !important;
       max-width: 100% !important;
@@ -2574,49 +2694,99 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     .csp-advert-consultation-wrap .csp-consultation-img-container {
       width: 100% !important;
       max-width: 100% !important;
+      border-radius: 18px !important;
+      overflow: hidden !important;
       box-sizing: border-box !important;
+      border: 1px solid #E2E8F0 !important;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08) !important;
     }
     .csp-advert-consultation-wrap img {
-      min-height: 250px !important;
-      max-height: 380px !important;
+      min-height: 200px !important;
+      max-height: 270px !important;
       height: auto !important;
+      aspect-ratio: 16 / 10 !important;
       width: 100% !important;
       object-fit: cover !important;
+      display: block !important;
+      border-radius: 0 !important;
     }
 
-    /* Universal Mobile Full-Width Container & Element Stretching */
-    .elementor-977 .elementor-element.e-con,
-    .elementor-977 .elementor-element.e-con-boxed,
-    .elementor-977 .elementor-element.e-con-full,
-    .elementor-element.e-con,
-    .elementor-element.e-con-boxed,
-    .elementor-element.e-con-full,
-    .e-con-inner,
-    .elementor-element-812547d,
-    .elementor-element-2ef9f0da,
-    .elementor-element-238a62,
+    /* 3. Advertising Options - Visible 2 ends with 16px gutters */
+    .elementor-element-e54f59f,
     .elementor-element-6283bb91,
+    .elementor-element-238a62 {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    .elementor-element-6283bb91 > .elementor-element,
+    .elementor-element-6283bb91 .elementor-widget-container,
+    .elementor-element-6283bb91 .ekit-wid-con,
+    .elementor-element-6283bb91 .elementskit-infobox {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      box-sizing: border-box !important;
+      border-radius: 20px !important;
+      border: 1px solid #E2E8F0 !important;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
+    }
+
+    .elementor-element-46f7ba70,
+    .elementor-element-455d4f47,
+    .elementor-element-ab529c3 {
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      margin-bottom: 20px !important;
+    }
+
+    .elementor-element-46f7ba70 .elementskit-infobox,
+    .elementor-element-455d4f47 .elementskit-infobox,
+    .elementor-element-ab529c3 .elementskit-infobox {
+      border-radius: 20px !important;
+      border: 1px solid #E2E8F0 !important;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+    }
+
+    /* 4. Testimonials Unboxed & Transparent on Mobile */
+    .elementor-element-4d330d3,
+    .elementor-977 .elementor-element.elementor-element-4d330d3,
+    .csp-advert-testimonial-slider,
+    .elementor-element-238a62,
+    .elementor-977 .elementor-element.elementor-element-238a62,
+    .elementor-element-54ecb9eb {
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    .csp-author-metric {
+      display: none !important;
+    }
+
+    /* Universal Mobile Container Padding */
+    .elementor-element-812547d,
     .elementor-element-2fe749f4,
-    .elementor-element-73830d1b,
-    .elementor-element-d099459,
-    .csp-advert-testimonial-wrapper,
-    .csp-advert-testimonial-container {
+    .elementor-element-598a9a85 {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
       width: 100% !important;
       max-width: 100% !important;
       box-sizing: border-box !important;
     }
 
-    .elementor-element-812547d,
-    .elementor-element-238a62,
-    .elementor-element-2fe749f4,
-    .elementor-element-598a9a85 {
-      padding-left: 16px !important;
-      padding-right: 16px !important;
-    }
-
-    .elementor-element-2ef9f0da,
-    .elementor-element-6283bb91,
-    .elementor-element-8f64007 {
+    .elementor-element-2ef9f0da {
       padding-left: 0 !important;
       padding-right: 0 !important;
       margin-left: 0 !important;
@@ -2628,17 +2798,15 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     .elementor-element-2ef9f0da > .elementor-element,
     .elementor-element-2ef9f0da .elementor-widget-container,
     .elementor-element-2ef9f0da .ekit-wid-con,
-    .elementor-element-2ef9f0da .elementskit-infobox,
-    .elementor-element-6283bb91 > .elementor-element,
-    .elementor-element-6283bb91 .elementor-widget-container,
-    .elementor-element-6283bb91 .ekit-wid-con,
-    .elementor-element-6283bb91 .elementskit-infobox,
-    .elementor-element-d099459 .elementskit-infobox {
+    .elementor-element-2ef9f0da .elementskit-infobox {
       width: 100% !important;
       max-width: 100% !important;
       margin-left: 0 !important;
       margin-right: 0 !important;
       box-sizing: border-box !important;
+      border-radius: 20px !important;
+      border: 1px solid #E2E8F0 !important;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
     }
   }
 </style>
@@ -2803,7 +2971,6 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     box-sizing: border-box !important;
   }
 
-  .elementor-location-footer .e-con-inner,
   .elementor-location-footer .elementor-section-wrap,
   .elementor-location-footer>div {
     width: 100% !important;
@@ -8474,7 +8641,6 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 									</div>
 									<div class="csp-author-name">Dr. Kemi Adeleke</div>
 									<div class="csp-author-role">Head of Global Brand Marketing, Heritage Bank UK</div>
-									<div class="csp-author-metric"><i class="fas fa-chart-line"></i> 340% Diaspora Reach Growth</div>
 								</div>
 							</div>
 
@@ -8490,7 +8656,6 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 									</div>
 									<div class="csp-author-name">Marcus Sterling</div>
 									<div class="csp-author-role">Managing Director &amp; GP, Kora Diaspora Capital</div>
-									<div class="csp-author-metric"><i class="fas fa-briefcase"></i> £2.4M Direct Dealflow Impact</div>
 								</div>
 							</div>
 
@@ -8506,7 +8671,6 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 									</div>
 									<div class="csp-author-name">Amina Diallo</div>
 									<div class="csp-author-role">Founder &amp; Creative Director, Maison Afro-Luxe Paris</div>
-									<div class="csp-author-metric"><i class="fas fa-gem"></i> 100% Sold-Out Exclusive Release</div>
 								</div>
 							</div>
 
@@ -8522,7 +8686,6 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 									</div>
 									<div class="csp-author-name">Tunde Balogun</div>
 									<div class="csp-author-role">Executive Director, Pan-African Innovation Forum</div>
-									<div class="csp-author-metric"><i class="fas fa-users"></i> 45,000+ C-Suite Global Audience</div>
 								</div>
 							</div>
 
@@ -8612,73 +8775,560 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 				</div>
 				
   <div data-elementor-type="footer" data-elementor-id="1374" class="elementor elementor-1374 elementor-location-footer">
-					<div class="elementor-section-wrap">
-						<div class="elementor-element elementor-element-dd5bf5d e-flex e-con-boxed e-con e-parent adv-sticky-elementor" data-id="dd5bf5d" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-		<div class="elementor-element elementor-element-920f34a e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="920f34a" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-68518ef elementor-widget elementor-widget-image" data-id="68518ef" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
-				<div class="elementor-widget-container">
-															<img width="1024" height="315" src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990" alt="Conspodium Logo" decoding="async" srcset="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png 1024w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-300x92.png 300w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-768x236.png 768w" sizes="(max-width: 1024px) 100vw, 1024px">															</div>
-				</div>
-				<div class="elementor-element elementor-element-5dd035e sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="5dd035e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">Amplifying diaspora voices and connecting communities through premium storytelling since 2019.</h2>				</div>
-				</div>
-				<div class="elementor-element elementor-element-5d447be sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="5d447be" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-					<h2 class="elementor-heading-title elementor-size-default">© 2026 Conspodium Magazine. All rights reserved.</h2>				</div>
-				</div>
-				<div class="elementor-element elementor-element-2063cab elementor-widget elementor-widget-sky-social-icons" data-id="2063cab" data-element_type="widget" data-e-type="widget" data-widget_type="sky-social-icons.default">
-				<div class="elementor-widget-container">
-							<div class="sky-social-icons sa-d-inline-flex sa-align-items-center sa-justify-content-center">
-							<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-8988145 elementor-social-icon-facebook-f" href="https://web.facebook.com/profile.php?id=61582814130083" target="_blank">
-					<i class="fab fa-facebook-f"></i>				</a>
-											<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-3055492 elementor-social-icon-instagram" href="https://www.instagram.com/conspodium/" target="_blank">
-					<i class="fab fa-instagram"></i>				</a>
-											<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-d6a5c0a elementor-social-icon-linkedin" href="https://www.linkedin.com/company/conspodium" target="_blank">
-					<i class="fab fa-linkedin"></i>				</a>
-											<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-b1ebbc0 elementor-social-icon-youtube" href="https://www.youtube.com/@conspodium" target="_blank">
-					<i class="fab fa-youtube"></i>				</a>
-									</div>
+	<style id="csp-global-footer-style">
+		/* ── CONSPODIUM GLOBAL FOOTER OVERHAUL ── */
+		.elementor-location-footer,
+		.elementor-1374 {
+			background-color: #02091A !important;
+			background: #02091A !important;
+			width: 100% !important;
+			max-width: 100% !important;
+			margin: 0 !important;
+			padding: 0 !important;
+			box-sizing: border-box !important;
+			color: #FFFFFF !important;
+			overflow: hidden !important;
+		}
+
+		.elementor-location-footer .elementor-section-wrap {
+			width: 100% !important;
+			max-width: 100% !important;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+
+		/* Main Footer Section */
+		.elementor-element-dd5bf5d,
+		.elementor-1374 .elementor-element.elementor-element-dd5bf5d {
+			background-color: #02091A !important;
+			background: #02091A !important;
+			width: 100% !important;
+			max-width: 100% !important;
+			padding: 65px 32px 50px 32px !important;
+			margin: 0 !important;
+			box-sizing: border-box !important;
+			border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+		}
+
+		.elementor-element-dd5bf5d > .e-con-inner,
+		.elementor-1374 .elementor-element.elementor-element-dd5bf5d > .e-con-inner {
+			max-width: 1280px !important;
+			width: 100% !important;
+			margin: 0 auto !important;
+			padding: 0 !important;
+			display: flex !important;
+			flex-direction: row !important;
+			justify-content: space-between !important;
+			align-items: flex-start !important;
+			box-sizing: border-box !important;
+			gap: 48px !important;
+		}
+
+		/* Left Brand Column */
+		.elementor-element-920f34a,
+		.elementor-1374 .elementor-element.elementor-element-920f34a {
+			flex: 0 0 340px !important;
+			max-width: 340px !important;
+			width: 100% !important;
+			margin: 0 !important;
+			padding: 0 !important;
+			display: flex !important;
+			flex-direction: column !important;
+			align-items: flex-start !important;
+			text-align: left !important;
+			box-sizing: border-box !important;
+		}
+
+		.elementor-element-920f34a .elementor-widget-image,
+		.elementor-element-68518ef {
+			margin: 0 0 16px 0 !important;
+			padding: 0 !important;
+			width: auto !important;
+			max-width: 220px !important;
+		}
+
+		.elementor-element-68518ef img {
+			width: 100% !important;
+			max-width: 220px !important;
+			height: auto !important;
+			display: block !important;
+			object-fit: contain !important;
+		}
+
+		.elementor-element-5dd035e {
+			margin: 0 0 14px 0 !important;
+			padding: 0 !important;
+			text-align: left !important;
+		}
+
+		.elementor-element-5dd035e .elementor-heading-title {
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+			font-size: 0.85rem !important;
+			font-weight: 600 !important;
+			color: #6EC1E4 !important;
+			text-transform: uppercase !important;
+			letter-spacing: 0.05em !important;
+			line-height: 1.55 !important;
+			margin: 0 !important;
+		}
+
+		.elementor-element-5d447be {
+			margin: 0 0 18px 0 !important;
+			padding: 0 !important;
+			text-align: left !important;
+		}
+
+		.elementor-element-5d447be .elementor-heading-title {
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+			font-size: 0.82rem !important;
+			font-weight: 400 !important;
+			color: #94A3B8 !important;
+			line-height: 1.4 !important;
+			margin: 0 !important;
+		}
+
+		/* Social Icons */
+		.elementor-element-2063cab {
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+
+		.elementor-element-2063cab .sky-social-icons {
+			display: flex !important;
+			flex-direction: row !important;
+			align-items: center !important;
+			justify-content: flex-start !important;
+			gap: 10px !important;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+
+		.elementor-element-2063cab .sky-social-icons .sa-link {
+			width: 36px !important;
+			height: 36px !important;
+			min-width: 36px !important;
+			border-radius: 8px !important;
+			display: inline-flex !important;
+			align-items: center !important;
+			justify-content: center !important;
+			padding: 0 !important;
+			margin: 0 !important;
+			transition: transform 0.2s ease, opacity 0.2s ease !important;
+			text-decoration: none !important;
+		}
+
+		.elementor-element-2063cab .sky-social-icons .sa-link:hover {
+			transform: translateY(-2px) !important;
+			opacity: 0.9 !important;
+		}
+
+		.elementor-element-2063cab .sky-social-icons .sa-link i {
+			font-size: 15px !important;
+			color: #FFFFFF !important;
+			line-height: 1 !important;
+		}
+
+		/* Navigation Links Group */
+		.csp-footer-nav-group {
+			display: flex !important;
+			flex-direction: row !important;
+			align-items: flex-start !important;
+			justify-content: flex-end !important;
+			gap: 42px !important;
+			flex: 1 1 auto !important;
+			box-sizing: border-box !important;
+		}
+
+		/* 4 Menu Columns */
+		.elementor-element-ef39660,
+		.elementor-element-bc4ef16,
+		.elementor-element-71ce8ac,
+		.elementor-element-651f63e,
+		.elementor-1374 .elementor-element.elementor-element-ef39660,
+		.elementor-1374 .elementor-element.elementor-element-bc4ef16,
+		.elementor-1374 .elementor-element.elementor-element-71ce8ac,
+		.elementor-1374 .elementor-element.elementor-element-651f63e {
+			flex: 0 1 150px !important;
+			min-width: 120px !important;
+			max-width: 180px !important;
+			margin: 0 !important;
+			padding: 0 !important;
+			display: flex !important;
+			flex-direction: column !important;
+			align-items: flex-start !important;
+			text-align: left !important;
+			box-sizing: border-box !important;
+		}
+
+		.elementor-location-footer .elementor-widget-text-editor,
+		.elementor-location-footer .elementor-widget-text-editor .elementor-widget-container {
+			margin: 0 !important;
+			padding: 0 !important;
+			width: 100% !important;
+			text-align: left !important;
+		}
+
+		/* Column Heading */
+		.elementor-location-footer .elementor-widget-text-editor p strong {
+			font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+			font-size: 1.02rem !important;
+			font-weight: 700 !important;
+			color: #FFFFFF !important;
+			letter-spacing: -0.01em !important;
+			margin: 0 0 12px 0 !important;
+			display: block !important;
+		}
+
+		/* Compact, refined spacing between links */
+		.elementor-location-footer .elementor-widget-text-editor p {
+			margin: 0 0 7px 0 !important;
+			padding: 0 !important;
+			line-height: 1.3 !important;
+			font-size: 0.88rem !important;
+			text-align: left !important;
+		}
+
+		.elementor-location-footer .elementor-widget-text-editor p:last-child {
+			margin-bottom: 0 !important;
+		}
+
+		.elementor-location-footer .elementor-widget-text-editor a {
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+			font-size: 0.88rem !important;
+			font-weight: 400 !important;
+			color: #94A3B8 !important;
+			text-decoration: none !important;
+			transition: color 0.2s ease, transform 0.2s ease !important;
+			display: inline-block !important;
+			line-height: 1.3 !important;
+		}
+
+		.elementor-location-footer .elementor-widget-text-editor a:hover {
+			color: #00AEFE !important;
+			transform: translateX(2px) !important;
+		}
+
+		/* Bottom Credit Bar */
+		.elementor-element-7c02c78,
+		.elementor-1374 .elementor-element.elementor-element-7c02c78 {
+			background-color: #02091A !important;
+			background: #02091A !important;
+			border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+			padding: 18px 24px !important;
+			margin: 0 !important;
+			width: 100% !important;
+			text-align: center !important;
+			box-sizing: border-box !important;
+		}
+
+		.elementor-element-7c02c78 > .e-con-inner {
+			max-width: 1280px !important;
+			margin: 0 auto !important;
+			text-align: center !important;
+			display: flex !important;
+			justify-content: center !important;
+			align-items: center !important;
+		}
+
+		.elementor-element-9a52650 p {
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+			font-size: 0.85rem !important;
+			color: #64748B !important;
+			margin: 0 !important;
+			text-align: center !important;
+		}
+
+		.elementor-element-9a52650 a {
+			color: #94A3B8 !important;
+			text-decoration: underline !important;
+			transition: color 0.2s ease !important;
+		}
+
+		.elementor-element-9a52650 a:hover {
+			color: #00AEFE !important;
+		}
+
+		/* ── TABLET RESPONSIVE (769px - 1024px) ── */
+		@media (max-width: 1024px) and (min-width: 769px) {
+			.elementor-element-dd5bf5d > .e-con-inner {
+				flex-direction: column !important;
+				align-items: flex-start !important;
+				gap: 36px !important;
+			}
+			.elementor-element-920f34a {
+				flex: 0 0 100% !important;
+				max-width: 100% !important;
+			}
+			.csp-footer-nav-group {
+				width: 100% !important;
+				justify-content: flex-start !important;
+				gap: 32px !important;
+			}
+		}
+
+		/* ── MOBILE RESPONSIVE (ALL ELEMENTS CENTERED) ── */
+		@media (max-width: 768px) {
+			.elementor-element-dd5bf5d,
+			.elementor-1374 .elementor-element.elementor-element-dd5bf5d {
+				padding: 45px 20px 30px 20px !important;
+				width: 100% !important;
+				box-sizing: border-box !important;
+			}
+
+			.elementor-element-dd5bf5d > .e-con-inner,
+			.elementor-1374 .elementor-element.elementor-element-dd5bf5d > .e-con-inner {
+				flex-direction: column !important;
+				align-items: center !important;
+				justify-content: center !important;
+				text-align: center !important;
+				gap: 30px !important;
+				width: 100% !important;
+				max-width: 100% !important;
+				margin: 0 auto !important;
+			}
+
+			/* Brand Column Centering */
+			.elementor-element-920f34a,
+			.elementor-1374 .elementor-element.elementor-element-920f34a {
+				flex: none !important;
+				width: 100% !important;
+				max-width: 100% !important;
+				display: flex !important;
+				flex-direction: column !important;
+				align-items: center !important;
+				text-align: center !important;
+				margin: 0 auto !important;
+				padding: 0 !important;
+			}
+
+			.elementor-element-920f34a .elementor-widget-image,
+			.elementor-element-68518ef {
+				margin: 0 auto 14px auto !important;
+				text-align: center !important;
+				display: flex !important;
+				justify-content: center !important;
+				width: 100% !important;
+				max-width: 190px !important;
+			}
+
+			.elementor-element-68518ef img {
+				margin: 0 auto !important;
+				display: block !important;
+			}
+
+			.elementor-element-5dd035e {
+				text-align: center !important;
+				margin: 0 auto 12px auto !important;
+				width: 100% !important;
+				max-width: 320px !important;
+			}
+
+			.elementor-element-5dd035e .elementor-heading-title {
+				text-align: center !important;
+			}
+
+			.elementor-element-5d447be {
+				text-align: center !important;
+				margin: 0 auto 16px auto !important;
+				width: 100% !important;
+			}
+
+			.elementor-element-5d447be .elementor-heading-title {
+				text-align: center !important;
+			}
+
+			.elementor-element-2063cab {
+				width: 100% !important;
+				display: flex !important;
+				justify-content: center !important;
+				margin: 0 auto !important;
+				text-align: center !important;
+			}
+
+			.elementor-element-2063cab .sky-social-icons {
+				justify-content: center !important;
+				margin: 0 auto !important;
+				width: auto !important;
+			}
+
+			/* Nav Group on Mobile */
+			.csp-footer-nav-group {
+				display: flex !important;
+				flex-direction: column !important;
+				align-items: center !important;
+				justify-content: center !important;
+				text-align: center !important;
+				gap: 26px !important;
+				width: 100% !important;
+				margin: 0 auto !important;
+			}
+
+			/* 4 Menu Columns Centered on Mobile */
+			.elementor-element-ef39660,
+			.elementor-element-bc4ef16,
+			.elementor-element-71ce8ac,
+			.elementor-element-651f63e,
+			.elementor-1374 .elementor-element.elementor-element-ef39660,
+			.elementor-1374 .elementor-element.elementor-element-bc4ef16,
+			.elementor-1374 .elementor-element.elementor-element-71ce8ac,
+			.elementor-1374 .elementor-element.elementor-element-651f63e {
+				flex: none !important;
+				width: 100% !important;
+				max-width: 100% !important;
+				display: flex !important;
+				flex-direction: column !important;
+				align-items: center !important;
+				text-align: center !important;
+				margin: 0 auto !important;
+				padding: 0 !important;
+			}
+
+			.elementor-location-footer .elementor-widget-text-editor,
+			.elementor-location-footer .elementor-widget-text-editor .elementor-widget-container {
+				text-align: center !important;
+				width: 100% !important;
+				margin: 0 auto !important;
+				display: flex !important;
+				flex-direction: column !important;
+				align-items: center !important;
+			}
+
+			.elementor-location-footer .elementor-widget-text-editor p strong {
+				text-align: center !important;
+				margin: 0 auto 8px auto !important;
+				display: block !important;
+				width: 100% !important;
+			}
+
+			.elementor-location-footer .elementor-widget-text-editor p {
+				text-align: center !important;
+				margin: 0 auto 6px auto !important;
+				width: 100% !important;
+				display: block !important;
+			}
+
+			.elementor-location-footer .elementor-widget-text-editor a {
+				text-align: center !important;
+				margin: 0 auto !important;
+				display: inline-block !important;
+			}
+
+			.elementor-location-footer .elementor-widget-text-editor a:hover {
+				transform: none !important;
+			}
+
+			.elementor-element-7c02c78 {
+				padding: 16px 16px !important;
+			}
+
+			.elementor-element-9a52650 p {
+				font-size: 0.8rem !important;
+				text-align: center !important;
+			}
+		}
+	</style>
+
+	<div class="elementor-section-wrap">
+		<div class="elementor-element elementor-element-dd5bf5d e-flex e-con-boxed e-con e-parent adv-sticky-elementor" data-id="dd5bf5d" data-element_type="container" data-e-type="container" data-settings='{"background_background":"classic","sticky_logo_enable":"no"}'>
+			<div class="e-con-inner">
+				<div class="elementor-element elementor-element-920f34a e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="920f34a" data-element_type="container" data-e-type="container" data-settings='{"sticky_logo_enable":"no"}'>
+					<div class="elementor-element elementor-element-68518ef elementor-widget elementor-widget-image" data-id="68518ef" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+						<div class="elementor-widget-container">
+							<img width="1024" height="315" src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990" alt="Conspodium Logo" decoding="async" srcset="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png 1024w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-300x92.png 300w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-768x236.png 768w" sizes="(max-width: 1024px) 100vw, 1024px">
 						</div>
-				</div>
-				</div>
-		<div class="elementor-element elementor-element-ef39660 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="ef39660" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-d923509 elementor-widget elementor-widget-text-editor" data-id="d923509" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-				<div class="elementor-widget-container">
-									<p><strong>Magazine</strong></p><p><span style="font-size: 14px;"><a href="/stories/">Current Issue</a></span></p><p><span style="font-size: 14px;"><a href="/stories/">Archive</a></span></p><p><span style="font-size: 14px;"><a href="/submit-story/">Submit Story</a></span></p><p><span style="font-size: 14px;"><a href="/about-us/">Editorial Guidelines</a></span></p>								</div>
-				</div>
-				</div>
-		<div class="elementor-element elementor-element-bc4ef16 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="bc4ef16" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-04eb7b0 elementor-widget elementor-widget-text-editor" data-id="04eb7b0" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-				<div class="elementor-widget-container">
-									<p><strong>Company</strong></p><p><span style="font-size: 14px;"><a href="/about-us/">About Us</a></span></p><p><span style="font-size: 14px;"><a href="/sponsorship/">Sponsorship</a></span></p><p><span style="font-size: 14px;"><a href="/advert/">Careers &amp; Ads</a></span></p><p><span style="font-size: 14px;"><a href="/about-us/">Press</a></span></p>								</div>
-				</div>
-				</div>
-		<div class="elementor-element elementor-element-71ce8ac e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="71ce8ac" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-36d8ba6 elementor-widget elementor-widget-text-editor" data-id="36d8ba6" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-				<div class="elementor-widget-container">
-									<p><strong>Community</strong></p><p><span style="font-size: 14px;"><a href="/stories/">Events &amp; Stories</a></span></p><p><span style="font-size: 14px;"><a href="/forum/">Community Forum</a></span></p><p><span style="font-size: 14px;"><a href="/submit-story/">Submit Story</a></span></p><p><span style="font-size: 14px;"><a href="/about-us/">Guidelines</a></span></p>								</div>
-				</div>
-				</div>
-		<div class="elementor-element elementor-element-651f63e e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="651f63e" data-element_type="container" data-e-type="container" data-settings="{&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-				<div class="elementor-element elementor-element-657dbed elementor-widget elementor-widget-text-editor" data-id="657dbed" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-				<div class="elementor-widget-container">
-									<p><strong>Support</strong></p><p><span style="font-size: 14px;"><a href="/contact-us/">Contact Us</a></span></p><p><span style="font-size: 14px;"><a href="/contact-us/">FAQ &amp; Help</a></span></p><p><span style="font-size: 14px;"><a href="/advert/">Advertise</a></span></p>								</div>
-				</div>
-				</div>
 					</div>
-				</div>
-		<div class="elementor-element elementor-element-7c02c78 e-flex e-con-boxed e-con e-parent adv-sticky-elementor" data-id="7c02c78" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
-					<div class="e-con-inner">
-				<div class="elementor-element elementor-element-9a52650 elementor-widget elementor-widget-text-editor" data-id="9a52650" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-				<div class="elementor-widget-container">
-									<p>Web design by <a href="https://wa.link/vvj7yi"><span style="text-decoration: underline;">247kraft</span></a></p>								</div>
-				</div>
+					<div class="elementor-element elementor-element-5dd035e sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="5dd035e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+						<div class="elementor-widget-container">
+							<h2 class="elementor-heading-title elementor-size-default">Amplifying diaspora voices and connecting communities through premium storytelling since 2019.</h2>
+						</div>
 					</div>
-				</div>
+					<div class="elementor-element elementor-element-5d447be sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="5d447be" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+						<div class="elementor-widget-container">
+							<h2 class="elementor-heading-title elementor-size-default">© 2026 Conspodium Magazine. All rights reserved.</h2>
+						</div>
+					</div>
+					<div class="elementor-element elementor-element-2063cab elementor-widget elementor-widget-sky-social-icons" data-id="2063cab" data-element_type="widget" data-e-type="widget" data-widget_type="sky-social-icons.default">
+						<div class="elementor-widget-container">
+							<div class="sky-social-icons sa-d-inline-flex sa-align-items-center sa-justify-content-center">
+								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-8988145 elementor-social-icon-facebook-f" href="https://web.facebook.com/profile.php?id=61582814130083" target="_blank" aria-label="Facebook">
+									<i class="fab fa-facebook-f"></i>
+								</a>
+								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-3055492 elementor-social-icon-instagram" href="https://www.instagram.com/conspodium/" target="_blank" aria-label="Instagram">
+									<i class="fab fa-instagram"></i>
+								</a>
+								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-d6a5c0a elementor-social-icon-linkedin" href="https://www.linkedin.com/company/conspodium" target="_blank" aria-label="LinkedIn">
+									<i class="fab fa-linkedin"></i>
+								</a>
+								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-b1ebbc0 elementor-social-icon-youtube" href="https://www.youtube.com/@conspodium" target="_blank" aria-label="YouTube">
+									<i class="fab fa-youtube"></i>
+								</a>
 							</div>
+						</div>
+					</div>
 				</div>
+
+				<div class="csp-footer-nav-group">
+					<div class="elementor-element elementor-element-ef39660 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="ef39660" data-element_type="container" data-e-type="container" data-settings='{"sticky_logo_enable":"no"}'>
+						<div class="elementor-element elementor-element-d923509 elementor-widget elementor-widget-text-editor" data-id="d923509" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+							<div class="elementor-widget-container">
+								<p><strong>Magazine</strong></p>
+								<p><a href="/stories/">Current Issue</a></p>
+								<p><a href="/stories/">Archive</a></p>
+								<p><a href="/submit-story/">Submit Story</a></p>
+								<p><a href="/about-us/">Editorial Guidelines</a></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="elementor-element elementor-element-bc4ef16 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="bc4ef16" data-element_type="container" data-e-type="container" data-settings='{"sticky_logo_enable":"no"}'>
+						<div class="elementor-element elementor-element-04eb7b0 elementor-widget elementor-widget-text-editor" data-id="04eb7b0" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+							<div class="elementor-widget-container">
+								<p><strong>Company</strong></p>
+								<p><a href="/about-us/">About Us</a></p>
+								<p><a href="/sponsorship/">Sponsorship</a></p>
+								<p><a href="/advert/">Careers &amp; Ads</a></p>
+								<p><a href="/about-us/">Press</a></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="elementor-element elementor-element-71ce8ac e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="71ce8ac" data-element_type="container" data-e-type="container" data-settings='{"sticky_logo_enable":"no"}'>
+						<div class="elementor-element elementor-element-36d8ba6 elementor-widget elementor-widget-text-editor" data-id="36d8ba6" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+							<div class="elementor-widget-container">
+								<p><strong>Community</strong></p>
+								<p><a href="/stories/">Events &amp; Stories</a></p>
+								<p><a href="/forum/">Community Forum</a></p>
+								<p><a href="/submit-story/">Submit Story</a></p>
+								<p><a href="/about-us/">Guidelines</a></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="elementor-element elementor-element-651f63e e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="651f63e" data-element_type="container" data-e-type="container" data-settings='{"sticky_logo_enable":"no"}'>
+						<div class="elementor-element elementor-element-657dbed elementor-widget elementor-widget-text-editor" data-id="657dbed" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+							<div class="elementor-widget-container">
+								<p><strong>Support</strong></p>
+								<p><a href="/contact-us/">Contact Us</a></p>
+								<p><a href="/contact-us/">FAQ &amp; Help</a></p>
+								<p><a href="/advert/">Advertise</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="elementor-element elementor-element-7c02c78 e-flex e-con-boxed e-con e-parent adv-sticky-elementor" data-id="7c02c78" data-element_type="container" data-e-type="container" data-settings='{"background_background":"classic","sticky_logo_enable":"no"}'>
+			<div class="e-con-inner">
+				<div class="elementor-element elementor-element-9a52650 elementor-widget elementor-widget-text-editor" data-id="9a52650" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+					<div class="elementor-widget-container">
+						<p>Web design by <a href="https://wa.link/vvj7yi"><span style="text-decoration: underline;">247kraft</span></a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 		
 <script type="speculationrules">
