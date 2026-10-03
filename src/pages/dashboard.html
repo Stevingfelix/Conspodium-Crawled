@@ -617,6 +617,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+    }
     .veb-palette-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -636,77 +637,110 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 6px;
       transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
       user-select: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .veb-palette-btn:hover {
       background: #f0f9ff;
-      border-color: #7dd3fc;
+      border-color: #00AEFE;
       color: #0284c7;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,174,254,0.15);
+      box-shadow: 0 6px 16px rgba(0,174,254,0.18);
     }
     .veb-palette-btn:active {
       cursor: grabbing;
-      transform: scale(0.95);
+      transform: scale(0.96);
     }
     .veb-palette-btn svg {
       color: #00AEFE;
       transition: transform 0.2s ease;
     }
     .veb-palette-btn:hover svg {
-      transform: scale(1.12);
+      transform: scale(1.15);
     }
     .veb-block-item {
       position: relative;
       border-radius: 8px;
-      padding: 10px 14px;
-      margin-bottom: 6px;
+      padding: 6px 10px;
+      margin-bottom: 4px;
       cursor: pointer;
       transition: all 0.18s ease;
       border: 1.5px dashed transparent;
     }
     .veb-block-item:hover {
-      border-color: #94a3b8;
-      background: rgba(241, 245, 249, 0.45);
+      border-color: #38bdf8;
+      background: rgba(240, 249, 255, 0.4);
     }
     .veb-block-item.selected,
     .veb-block-item.is-selected {
       border: 2px solid #00AEFE !important;
       background: rgba(0, 174, 254, 0.03) !important;
-      box-shadow: 0 0 0 3px rgba(0, 174, 254, 0.14);
+      box-shadow: 0 0 0 3px rgba(0, 174, 254, 0.12);
     }
     .veb-block-toolbar {
       position: absolute;
-      top: -14px;
-      right: 12px;
+      top: -12px;
+      right: 10px;
       background: #0f172a;
       color: #ffffff;
       border-radius: 6px;
-      padding: 2px 6px;
-      display: none;
+      padding: 3px 6px;
+      display: none !important;
       align-items: center;
       gap: 4px;
-      z-index: 20;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+      z-index: 40;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
     }
-    .veb-block-item:hover .veb-block-toolbar,
-    .veb-block-item.selected .veb-block-toolbar,
-    .veb-block-item.is-selected .veb-block-toolbar {
-      display: flex;
+    .veb-block-item:hover > .veb-block-toolbar,
+    .veb-block-item.selected > .veb-block-toolbar,
+    #preview-contact-header-bg:hover > .veb-block-toolbar,
+    #preview-contact-header-bg.selected > .veb-block-toolbar,
+    #preview-sub-header-bg:hover > .veb-block-toolbar,
+    #preview-sub-header-bg.selected > .veb-block-toolbar,
+    #preview-contact-footer-bg:hover > .veb-block-toolbar,
+    #preview-contact-footer-bg.selected > .veb-block-toolbar,
+    #preview-sub-footer-bg:hover > .veb-block-toolbar,
+    #preview-sub-footer-bg.selected > .veb-block-toolbar {
+      display: inline-flex !important;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #preview-contact-header-bg > .veb-block-toolbar,
+    #preview-sub-header-bg > .veb-block-toolbar {
+      top: 10px !important;
+      right: 12px !important;
+      background: rgba(15, 23, 42, 0.96) !important;
+      border: 1px solid rgba(255, 255, 255, 0.28) !important;
+      backdrop-filter: blur(8px) !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35) !important;
+      z-index: 50 !important;
+    }
+    #preview-contact-footer-bg > .veb-block-toolbar,
+    #preview-sub-footer-bg > .veb-block-toolbar {
+      top: 10px !important;
+      right: 12px !important;
+      background: #0f172a !important;
+      border: 1px solid #334155 !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+      z-index: 50 !important;
     }
     .veb-tb-btn {
       background: transparent;
       border: none;
       color: #cbd5e1;
-      padding: 2px 5px;
+      padding: 3px 6px;
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.72rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      line-height: 1;
       transition: all 0.15s;
     }
     .veb-tb-btn:hover {
@@ -727,18 +761,17 @@
       background: rgba(0, 174, 254, 0.08);
       box-shadow: 0 0 0 1px #00AEFE;
     }
-    .veb-drop-indicator {
+    .veb-drop-indicator-line {
       height: 3px;
       background: #00AEFE;
-      border-radius: 2px;
-      margin: 4px 0;
-      box-shadow: 0 0 8px rgba(0,174,254,0.8);
-      animation: vebPulse 1.2s infinite;
+      border-radius: 3px;
+      box-shadow: 0 0 10px rgba(0, 174, 254, 0.9);
+      margin: 6px 0;
+      animation: vebPulse 0.8s infinite alternate;
     }
     @keyframes vebPulse {
-      0% { opacity: 0.6; }
-      50% { opacity: 1; }
-      100% { opacity: 0.6; }
+      0% { opacity: 0.6; transform: scaleY(1); }
+      100% { opacity: 1; transform: scaleY(1.4); }
     }
     .veb-inspector-section {
       background: #f8fafc;
@@ -761,26 +794,30 @@
     .veb-style-btn-group {
       display: inline-flex;
       background: #f1f5f9;
-      border: 1px solid #e2e8f0;
+      border: 1px solid #cbd5e1;
       border-radius: 8px;
       padding: 2px;
-      gap: 2px;
+      gap: 3px;
     }
     .veb-style-btn {
       border: none;
       background: transparent;
-      color: #64748b;
-      padding: 4px 8px;
+      color: #475569;
+      padding: 4px 10px;
       border-radius: 6px;
       font-size: 0.76rem;
       cursor: pointer;
       font-weight: 600;
       transition: all 0.15s;
     }
+    .veb-style-btn:hover {
+      background: rgba(255, 255, 255, 0.8);
+      color: #0284c7;
+    }
     .veb-style-btn.active {
-      background: #ffffff;
-      color: #00AEFE;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      background: #00AEFE;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,174,254,0.3);
     }
 
     #sub-modal-footer-actions .csp-btn-sm,
@@ -2012,9 +2049,8 @@ e-page-transition,
 
 <!-- ── Sidebar ── -->
 <aside class="csp-sidebar" id="csp-sidebar">
-  <a href="/" class="csp-sidebar-logo">
-    <div class="csp-sidebar-logo-mark">C</div>
-    <span class="csp-sidebar-logo-text">Conspodium</span>
+  <a href="/" class="csp-sidebar-logo" title="View Conspodium Website">
+    <img src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled.png" alt="Conspodium Logo" style="height:36px;max-width:180px;width:auto;object-fit:contain;display:block;">
   </a>
 
   <p class="csp-nav-section">Overview</p>
@@ -2031,14 +2067,14 @@ e-page-transition,
       <svg class="csp-nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
       Story Submissions
     </div>
-    <span class="csp-badge" id="sidebar-pending-badge">0</span>
+    <span class="csp-badge" id="sidebar-pending-badge" style="background:#00AEFE;color:#ffffff;border:none;box-shadow:0 1px 3px rgba(0,174,254,0.3);">0</span>
   </div>
   <div class="csp-nav-item" data-tab="contact">
     <div>
       <svg class="csp-nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       Contact Messages
     </div>
-    <span class="csp-badge" id="sidebar-contact-badge" style="background:#f43f5e;color:#fff;display:none;">0</span>
+    <span class="csp-badge" id="sidebar-contact-badge" style="background:#00AEFE;color:#ffffff;border:none;box-shadow:0 1px 3px rgba(0,174,254,0.3);display:none;">0</span>
   </div>
 
   <p class="csp-nav-section">Homepage &amp; Content</p>
@@ -2053,7 +2089,7 @@ e-page-transition,
       <svg class="csp-nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       Event Attendees
     </div>
-    <span class="csp-badge" id="sidebar-attendees-badge" style="background:#00AEFE;color:#fff;">0</span>
+    <span class="csp-badge" id="sidebar-attendees-badge" style="background:#00AEFE;color:#ffffff;border:none;box-shadow:0 1px 3px rgba(0,174,254,0.3);">0</span>
   </div>
   <div class="csp-nav-item" data-tab="polls">
     <div>
@@ -2141,19 +2177,6 @@ e-page-transition,
       Story Submit Form
     </div>
   </a>
-
-  <div class="csp-sidebar-footer">
-    <div class="csp-sidebar-user" style="flex-direction:column;align-items:flex-start;gap:10px;">
-      <div style="display:flex;align-items:center;gap:12px;width:100%;">
-        <div class="csp-sidebar-avatar" id="admin-sidebar-avatar">EA</div>
-        <div>
-          <div class="csp-sidebar-user-name" id="admin-sidebar-name">Editor Admin</div>
-          <div class="csp-sidebar-user-role">CMS Administrator</div>
-        </div>
-      </div>
-      <button class="csp-btn-sm csp-btn-danger btn-logout-action" style="width:100%;justify-content:center;margin-top:4px;">🚪 Log Out</button>
-    </div>
-  </div>
 </aside>
 
 <!-- ── Admin Login Screen (Displayed when unauthenticated) ── -->
@@ -2186,9 +2209,23 @@ e-page-transition,
   <div class="csp-topbar">
     <div style="display:flex;align-items:center;gap:14px;">
       <button class="csp-mobile-toggle" id="csp-toggle">☰</button>
-      <h2 id="csp-topbar-title" style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Overview</h2>
+      <h2 id="csp-topbar-title" style="margin:0;font-size:1.18rem;font-weight:700;color:#0f172a;letter-spacing:-0.2px;">Overview</h2>
     </div>
-    <button class="csp-btn-sm csp-btn-primary" id="btn-open-new-post" onclick="openPostModal()"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> New Article</button>
+
+    <!-- Admin Profile & Logout at Top Bar (Replaces New Article button) -->
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="display:flex;align-items:center;gap:10px;padding:4px 12px 4px 6px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:30px;cursor:pointer;transition:all 0.2s ease;" onclick="switchTab('settings')" title="Admin Settings &amp; Configuration" onmouseover="this.style.background='#f1f5f9';this.style.borderColor='#cbd5e1';" onmouseout="this.style.background='#f8fafc';this.style.borderColor='#e2e8f0';">
+        <div class="csp-sidebar-avatar" id="admin-sidebar-avatar" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg, #00AEFE, #B71F71);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:#ffffff;flex-shrink:0;">EA</div>
+        <div style="line-height:1.2;">
+          <div class="csp-sidebar-user-name" id="admin-sidebar-name" style="font-size:0.82rem;font-weight:700;color:#0f172a;white-space:nowrap;">Editor Admin</div>
+          <div class="csp-sidebar-user-role" style="font-size:0.68rem;color:#64748b;font-weight:500;">CMS Admin</div>
+        </div>
+      </div>
+      <button class="csp-btn-sm csp-btn-danger btn-logout-action" style="padding:6px 14px;border-radius:8px;font-size:0.8rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer;" title="Sign out of CMS">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        <span>Log Out</span>
+      </button>
+    </div>
   </div>
 
   <div class="csp-content">
@@ -2662,7 +2699,13 @@ e-page-transition,
             <svg class="csp-sec-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             Articles Database &amp; Spotlight Curation
           </span>
-          <button id="btn-bulk-delete-posts" class="csp-btn-sm csp-btn-danger" style="display:none;font-size:0.78rem;padding:6px 14px;">Delete Selected (<span id="count-selected-posts">0</span>)</button>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button id="btn-bulk-delete-posts" class="csp-btn-sm csp-btn-danger" style="display:none;font-size:0.78rem;padding:6px 14px;">Delete Selected (<span id="count-selected-posts">0</span>)</button>
+            <button class="csp-btn-sm csp-btn-primary" onclick="openPostModal()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;font-size:0.82rem;font-weight:600;background:#00AEFE;border:none;box-shadow:0 3px 10px rgba(0,174,254,0.25);">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>New Article</span>
+            </button>
+          </div>
         </div>
         <div style="padding:12px 20px;border-bottom:1px solid #e2e8f0;background:#f8fafc;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;">
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
@@ -3327,11 +3370,11 @@ e-page-transition,
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <div class="csp-outbox-filter-group" style="display:flex;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:10px;padding:3px;flex-wrap:wrap;gap:2px;">
-              <button type="button" class="outbox-filter-btn active" data-outbox-filter="all" style="background:rgba(0,174,254,0.15);border:none;color:var(--blue);font-weight:600;padding:6px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;">All Sent (<span id="outbox-count-all">0</span>)</button>
-              <button type="button" class="outbox-filter-btn" data-outbox-filter="contact_reply" style="background:none;border:none;color:var(--text-muted);padding:6px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;">Contact Replies (<span id="outbox-count-contact">0</span>)</button>
-              <button type="button" class="outbox-filter-btn" data-outbox-filter="story" style="background:none;border:none;color:var(--text-muted);padding:6px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;">Story Alerts (<span id="outbox-count-story">0</span>)</button>
-              <button type="button" class="outbox-filter-btn" data-outbox-filter="campaign" style="background:none;border:none;color:var(--text-muted);padding:6px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;">Campaigns (<span id="outbox-count-campaign">0</span>)</button>
-              <button type="button" class="outbox-filter-btn" data-outbox-filter="system" style="background:none;border:none;color:var(--text-muted);padding:6px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;">System Triggers (<span id="outbox-count-system">0</span>)</button>
+              <button type="button" class="outbox-filter-btn active" data-outbox-filter="all" onclick="setOutboxFilter('all')" style="background:rgba(0,174,254,0.15);border:none;color:var(--blue);font-weight:600;padding:6px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;">All Sent (<span id="outbox-count-all">0</span>)</button>
+              <button type="button" class="outbox-filter-btn" data-outbox-filter="contact_reply" onclick="setOutboxFilter('contact_reply')" style="background:none;border:none;color:var(--text-muted);padding:6px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;">Contact Replies (<span id="outbox-count-contact">0</span>)</button>
+              <button type="button" class="outbox-filter-btn" data-outbox-filter="story" onclick="setOutboxFilter('story')" style="background:none;border:none;color:var(--text-muted);padding:6px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;">Story Alerts (<span id="outbox-count-story">0</span>)</button>
+              <button type="button" class="outbox-filter-btn" data-outbox-filter="campaign" onclick="setOutboxFilter('campaign')" style="background:none;border:none;color:var(--text-muted);padding:6px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;">Campaigns (<span id="outbox-count-campaign">0</span>)</button>
+              <button type="button" class="outbox-filter-btn" data-outbox-filter="system" onclick="setOutboxFilter('system')" style="background:none;border:none;color:var(--text-muted);padding:6px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;">System Triggers (<span id="outbox-count-system">0</span>)</button>
             </div>
             <input type="text" id="search-outbox-logs" class="csp-form-input" placeholder="Search recipient, subject..." style="width:200px;font-size:0.8rem;padding:6px 12px;height:34px;">
             <button type="button" class="csp-btn-sm csp-btn-secondary" onclick="loadEmailLogs()" title="Refresh Outbox Logs" style="padding:6px 10px;height:34px;cursor:pointer;">
@@ -3345,15 +3388,13 @@ e-page-transition,
               <tr>
                 <th>Recipient</th>
                 <th>Subject &amp; Snippet</th>
-                <th>Category / Type</th>
-                <th>Dispatched Via</th>
                 <th>Status</th>
                 <th>Sent Date &amp; Time</th>
                 <th style="text-align:right;">Actions</th>
               </tr>
             </thead>
             <tbody id="outbox-logs-table-body">
-              <tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-muted);">Loading email outbox logs...</td></tr>
+              <tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-muted);">Loading email outbox logs...</td></tr>
             </tbody>
           </table>
         </div>
@@ -4533,7 +4574,20 @@ e-page-transition,
     <div id="sub-modal-bio" style="display:none;font-size:0.84rem;color:#334155;margin-bottom:16px;background:#f1f5f9;padding:10px 14px;border-radius:10px;border-left:3px solid #00AEFE;"></div>
     <div id="sub-modal-attachment" style="display:none;margin-bottom:16px;"></div>
 
-    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;max-height:360px;overflow-y:auto;font-size:0.92rem;line-height:1.6;color:#1e293b;white-space:pre-wrap;margin-bottom:20px;" id="sub-modal-body"></div>
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;max-height:360px;overflow-y:auto;font-size:0.92rem;line-height:1.6;color:#1e293b;white-space:pre-wrap;margin-bottom:16px;" id="sub-modal-body"></div>
+ 
+    <!-- Author Notification / Sent Emails Thread for this Submission -->
+    <div style="margin-bottom:18px;border:1px solid #e2e8f0;border-radius:10px;background:#ffffff;padding:12px 14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:0.8rem;font-weight:700;color:#0f172a;display:flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          SENT AUTHOR NOTIFICATIONS THREAD ( <span id="sub-author-replies-count">0</span> )
+        </span>
+      </div>
+      <div id="sub-author-replies-list" style="display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto;">
+        <div style="font-size:0.8rem;color:#94a3b8;font-style:italic;padding:4px 0;">No sent author notifications logged yet.</div>
+      </div>
+    </div>
 
     <div style="display:flex;gap:10px;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid #e2e8f0;flex-wrap:wrap;" id="sub-modal-footer-actions">
       <div>
@@ -4723,19 +4777,24 @@ e-page-transition,
           
           <!-- Block 1: Sender & Recipient Information -->
           <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;">
-            <div style="font-weight:700;font-size:0.8rem;color:#0f172a;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+            <div style="font-weight:700;font-size:0.8rem;color:#0f172a;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
               <span>Sender &amp; Recipient</span>
+            </div>
+
+            <div style="font-size:0.71rem;color:#64748b;margin-bottom:10px;line-height:1.4;display:flex;align-items:center;gap:6px;background:#f1f5f9;padding:6px 10px;border-radius:6px;border:1px solid #e2e8f0;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span>From Name and Email are synced from system configuration. To update them, visit <a href="javascript:void(0);" onclick="openEmailProviderSettings()" style="color:#00AEFE;text-decoration:underline;text-underline-offset:2px;font-weight:600;cursor:pointer;" onmouseover="this.style.color='#0284c7';" onmouseout="this.style.color='#00AEFE';">Settings &rarr; Email Marketing</a>.</span>
             </div>
             
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
               <div class="csp-form-group" style="margin:0;">
-                <label class="csp-form-label" style="font-size:0.73rem;">From Name *</label>
-                <input type="text" id="reply-from-name" class="csp-form-input" required value="Conspodium Editorial" style="font-size:0.82rem;">
+                <label class="csp-form-label" style="font-size:0.73rem;color:#64748b;">From Name (System)</label>
+                <input type="text" id="reply-from-name" class="csp-form-input" readonly value="Conspodium Editorial" style="font-size:0.82rem;background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;cursor:not-allowed;" title="Configured in Settings > Email Marketing">
               </div>
               <div class="csp-form-group" style="margin:0;">
-                <label class="csp-form-label" style="font-size:0.73rem;">From Email Address *</label>
-                <input type="email" id="reply-from-address" class="csp-form-input" required value="editor@conspodium.com" style="font-size:0.82rem;">
+                <label class="csp-form-label" style="font-size:0.73rem;color:#64748b;">From Email Address (System)</label>
+                <input type="email" id="reply-from-address" class="csp-form-input" readonly value="editor@conspodium.com" style="font-size:0.82rem;background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;cursor:not-allowed;" title="Configured in Settings > Email Marketing">
               </div>
             </div>
 
@@ -4836,18 +4895,24 @@ e-page-transition,
         <!-- RIGHT PANEL: Live Interactive Preview Canvas -->
         <div style="display:flex;flex-direction:column;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;">
           <!-- Canvas Top Bar -->
-          <div style="background:#ffffff;border-bottom:1px solid #e2e8f0;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          <div style="background:#ffffff;border-bottom:1px solid #e2e8f0;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;">
             <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-weight:700;font-size:0.84rem;color:#0f172a;display:inline-flex;align-items:center;gap:6px;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                Email Canvas Workspace
-              </span>
-              <span id="canvas-sync-indicator-contact" style="display:inline-flex;align-items:center;gap:4px;font-size:0.7rem;color:#15803d;background:#dcfce7;padding:2px 8px;border-radius:20px;font-weight:600;">● Live Interactive</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              <span style="font-weight:700;font-size:0.86rem;color:#0f172a;letter-spacing:-0.2px;">Email Canvas Workspace</span>
             </div>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <button type="button" id="btn-reset-canvas-contact" onclick="resetEmailCanvas('contact')" style="border:none;background:#fef2f2;color:#b91c1c;padding:4px 9px;border-radius:6px;font-size:0.75rem;cursor:pointer;font-weight:600;">🗑️ Reset Blocks</button>
-              <button type="button" onclick="setPreviewDevice('contact', 'desktop')" id="btn-device-contact-desktop" style="border:none;background:#e0f2fe;color:#0369a1;padding:4px 10px;border-radius:6px;font-size:0.75rem;cursor:pointer;font-weight:600;">🖥️ Desktop</button>
-              <button type="button" onclick="setPreviewDevice('contact', 'mobile')" id="btn-device-contact-mobile" style="border:none;background:transparent;color:#64748b;padding:4px 10px;border-radius:6px;font-size:0.75rem;cursor:pointer;font-weight:500;">📱 Mobile</button>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button type="button" id="btn-reset-canvas-contact" onclick="resetEmailCanvas('contact')" style="border:1px solid #fee2e2;background:#fff5f5;color:#dc2626;padding:5px 10px;border-radius:7px;font-size:0.75rem;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:5px;transition:all 0.15s;" onmouseover="this.style.background='#fee2e2';" onmouseout="this.style.background='#fff5f5';" title="Reset canvas to default layout">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Reset Blocks</span>
+              </button>
+              <div class="veb-style-btn-group" style="padding:2px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;display:inline-flex;align-items:center;gap:2px;">
+                <button type="button" onclick="setPreviewDevice('contact', 'desktop')" id="btn-device-contact-desktop" title="Desktop View (540px)" style="border:none;background:#00AEFE;color:#ffffff;padding:5px 9px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.15s;box-shadow:0 1px 3px rgba(0,174,254,0.3);">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button type="button" onclick="setPreviewDevice('contact', 'mobile')" id="btn-device-contact-mobile" title="Mobile View (375px)" style="border:none;background:transparent;color:#64748b;padding:5px 9px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.15s;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -4859,9 +4924,13 @@ e-page-transition,
               <div id="preview-contact-header-wrap" style="position:relative;">
                 <div id="preview-contact-header-bg" onclick="selectCanvasHeader('contact')" style="background:#0a1120;padding:24px 18px;text-align:center;border-bottom:3px solid #00AEFE;cursor:pointer;position:relative;transition:all 0.2s;" title="Click to customize banner branding">
                   <div class="veb-block-toolbar" onclick="event.stopPropagation();">
-                    <span style="font-size:0.68rem;font-weight:700;color:#64748b;text-transform:uppercase;margin-right:2px;">BANNER</span>
-                    <button type="button" class="veb-tb-btn" onclick="selectCanvasHeader('contact')" title="Edit Header">⚙️</button>
-                    <button type="button" class="veb-tb-btn del" onclick="toggleCanvasHeader('contact', false)" title="Hide Banner">✕</button>
+                    <span style="font-size:0.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;margin-right:2px;">BANNER</span>
+                    <button type="button" class="veb-tb-btn" onclick="selectCanvasHeader('contact')" title="Edit Header">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                    <button type="button" class="veb-tb-btn del" onclick="toggleCanvasHeader('contact', false)" title="Hide Banner">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
                   </div>
                   <div id="preview-contact-brand-title" style="color:#00AEFE;font-size:20px;letter-spacing:1.5px;font-weight:800;font-family:'Segoe UI',Roboto,Helvetica,sans-serif;text-transform:uppercase;">CONSPODIUM</div>
                   <div id="preview-contact-brand-subtitle" style="color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-top:4px;">PREMIUM DIASPORA MAGAZINE</div>
@@ -4885,9 +4954,13 @@ e-page-transition,
               <div id="preview-contact-footer-wrap" style="position:relative;">
                 <div id="preview-contact-footer-bg" onclick="selectCanvasFooter('contact')" style="background:#f8fafc;padding:16px;text-align:center;font-size:11px;line-height:1.5;color:#64748b;border-top:1px solid #e2e8f0;cursor:pointer;position:relative;transition:all 0.2s;" title="Click to customize footer">
                   <div class="veb-block-toolbar" onclick="event.stopPropagation();">
-                    <span style="font-size:0.68rem;font-weight:700;color:#64748b;text-transform:uppercase;margin-right:2px;">FOOTER</span>
-                    <button type="button" class="veb-tb-btn" onclick="selectCanvasFooter('contact')" title="Edit Footer">⚙️</button>
-                    <button type="button" class="veb-tb-btn del" onclick="toggleCanvasFooter('contact', false)" title="Hide Footer">✕</button>
+                    <span style="font-size:0.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;margin-right:2px;">FOOTER</span>
+                    <button type="button" class="veb-tb-btn" onclick="selectCanvasFooter('contact')" title="Edit Footer">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                    <button type="button" class="veb-tb-btn del" onclick="toggleCanvasFooter('contact', false)" title="Hide Footer">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
                   </div>
                   <p id="preview-contact-footer-text" style="margin:0 0 4px;font-weight:500;">Sent via Conspodium Verified Editorial Engine.</p>
                   <p id="preview-contact-footer-subtext" style="margin:0;color:#94a3b8;">© 2026 Conspodium Media Group. All rights reserved. • <span style="color:#00AEFE;font-weight:600;">conspodium.com</span></p>
@@ -4946,19 +5019,24 @@ e-page-transition,
           
           <!-- Block 1: Sender & Author Details -->
           <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;">
-            <div style="font-weight:700;font-size:0.8rem;color:#0f172a;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+            <div style="font-weight:700;font-size:0.8rem;color:#0f172a;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
               <span>Sender &amp; Author</span>
+            </div>
+
+            <div style="font-size:0.71rem;color:#64748b;margin-bottom:10px;line-height:1.4;display:flex;align-items:center;gap:6px;background:#f1f5f9;padding:6px 10px;border-radius:6px;border:1px solid #e2e8f0;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span>From Name and Email are synced from system configuration. To update them, visit <a href="javascript:void(0);" onclick="openEmailProviderSettings()" style="color:#00AEFE;text-decoration:underline;text-underline-offset:2px;font-weight:600;cursor:pointer;" onmouseover="this.style.color='#0284c7';" onmouseout="this.style.color='#00AEFE';">Settings &rarr; Email Marketing</a>.</span>
             </div>
             
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
               <div class="csp-form-group" style="margin:0;">
-                <label class="csp-form-label" style="font-size:0.73rem;">From Name *</label>
-                <input type="text" id="sub-notify-from-name" class="csp-form-input" required value="Conspodium Editorial" style="font-size:0.82rem;">
+                <label class="csp-form-label" style="font-size:0.73rem;color:#64748b;">From Name (System)</label>
+                <input type="text" id="sub-notify-from-name" class="csp-form-input" readonly value="Conspodium Editorial" style="font-size:0.82rem;background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;cursor:not-allowed;" title="Configured in Settings > Email Marketing">
               </div>
               <div class="csp-form-group" style="margin:0;">
-                <label class="csp-form-label" style="font-size:0.73rem;">From Email Address *</label>
-                <input type="email" id="sub-notify-from-address" class="csp-form-input" required value="editor@conspodium.com" style="font-size:0.82rem;">
+                <label class="csp-form-label" style="font-size:0.73rem;color:#64748b;">From Email Address (System)</label>
+                <input type="email" id="sub-notify-from-address" class="csp-form-input" readonly value="editor@conspodium.com" style="font-size:0.82rem;background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;cursor:not-allowed;" title="Configured in Settings > Email Marketing">
               </div>
             </div>
 
@@ -5060,18 +5138,24 @@ e-page-transition,
         <!-- RIGHT PANEL: Live Interactive Preview Canvas -->
         <div style="display:flex;flex-direction:column;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;">
           <!-- Canvas Top Bar -->
-          <div style="background:#ffffff;border-bottom:1px solid #e2e8f0;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          <div style="background:#ffffff;border-bottom:1px solid #e2e8f0;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;">
             <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-weight:700;font-size:0.84rem;color:#0f172a;display:inline-flex;align-items:center;gap:6px;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                Email Canvas Workspace
-              </span>
-              <span id="canvas-sync-indicator-submission" style="display:inline-flex;align-items:center;gap:4px;font-size:0.7rem;color:#15803d;background:#dcfce7;padding:2px 8px;border-radius:20px;font-weight:600;">● Live Interactive</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              <span style="font-weight:700;font-size:0.86rem;color:#0f172a;letter-spacing:-0.2px;">Email Canvas Workspace</span>
             </div>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <button type="button" id="btn-reset-canvas-submission" onclick="resetEmailCanvas('submission')" style="border:none;background:#fef2f2;color:#b91c1c;padding:4px 9px;border-radius:6px;font-size:0.75rem;cursor:pointer;font-weight:600;">🗑️ Reset Blocks</button>
-              <button type="button" onclick="setPreviewDevice('submission', 'desktop')" id="btn-device-sub-desktop" style="border:none;background:#e0f2fe;color:#0369a1;padding:4px 10px;border-radius:6px;font-size:0.75rem;cursor:pointer;font-weight:600;">🖥️ Desktop</button>
-              <button type="button" onclick="setPreviewDevice('submission', 'mobile')" id="btn-device-sub-mobile" style="border:none;background:transparent;color:#64748b;padding:4px 10px;border-radius:6px;font-size:0.75rem;cursor:pointer;font-weight:500;">📱 Mobile</button>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button type="button" id="btn-reset-canvas-submission" onclick="resetEmailCanvas('submission')" style="border:1px solid #fee2e2;background:#fff5f5;color:#dc2626;padding:5px 10px;border-radius:7px;font-size:0.75rem;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:5px;transition:all 0.15s;" onmouseover="this.style.background='#fee2e2';" onmouseout="this.style.background='#fff5f5';" title="Reset canvas to default layout">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Reset Blocks</span>
+              </button>
+              <div class="veb-style-btn-group" style="padding:2px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;display:inline-flex;align-items:center;gap:2px;">
+                <button type="button" onclick="setPreviewDevice('submission', 'desktop')" id="btn-device-sub-desktop" title="Desktop View (540px)" style="border:none;background:#00AEFE;color:#ffffff;padding:5px 9px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.15s;box-shadow:0 1px 3px rgba(0,174,254,0.3);">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button type="button" onclick="setPreviewDevice('submission', 'mobile')" id="btn-device-sub-mobile" title="Mobile View (375px)" style="border:none;background:transparent;color:#64748b;padding:5px 9px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.15s;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -5083,9 +5167,13 @@ e-page-transition,
               <div id="preview-sub-header-wrap" style="position:relative;">
                 <div id="preview-sub-header-bg" onclick="selectCanvasHeader('submission')" style="background:#0a1120;padding:24px 18px;text-align:center;border-bottom:3px solid #00AEFE;cursor:pointer;position:relative;transition:all 0.2s;" title="Click to customize banner branding">
                   <div class="veb-block-toolbar" onclick="event.stopPropagation();">
-                    <span style="font-size:0.68rem;font-weight:700;color:#64748b;text-transform:uppercase;margin-right:2px;">BANNER</span>
-                    <button type="button" class="veb-tb-btn" onclick="selectCanvasHeader('submission')" title="Edit Header">⚙️</button>
-                    <button type="button" class="veb-tb-btn del" onclick="toggleCanvasHeader('submission', false)" title="Hide Banner">✕</button>
+                    <span style="font-size:0.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;margin-right:2px;">BANNER</span>
+                    <button type="button" class="veb-tb-btn" onclick="selectCanvasHeader('submission')" title="Edit Header">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                    <button type="button" class="veb-tb-btn del" onclick="toggleCanvasHeader('submission', false)" title="Hide Banner">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
                   </div>
                   <div id="preview-sub-brand-title" style="color:#00AEFE;font-size:20px;letter-spacing:1.5px;font-weight:800;font-family:'Segoe UI',Roboto,Helvetica,sans-serif;text-transform:uppercase;">CONSPODIUM</div>
                   <div id="preview-sub-brand-subtitle" style="color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-top:4px;">PREMIUM DIASPORA MAGAZINE</div>
@@ -5109,9 +5197,13 @@ e-page-transition,
               <div id="preview-sub-footer-wrap" style="position:relative;">
                 <div id="preview-sub-footer-bg" onclick="selectCanvasFooter('submission')" style="background:#f8fafc;padding:16px;text-align:center;font-size:11px;line-height:1.5;color:#64748b;border-top:1px solid #e2e8f0;cursor:pointer;position:relative;transition:all 0.2s;" title="Click to customize footer">
                   <div class="veb-block-toolbar" onclick="event.stopPropagation();">
-                    <span style="font-size:0.68rem;font-weight:700;color:#64748b;text-transform:uppercase;margin-right:2px;">FOOTER</span>
-                    <button type="button" class="veb-tb-btn" onclick="selectCanvasFooter('submission')" title="Edit Footer">⚙️</button>
-                    <button type="button" class="veb-tb-btn del" onclick="toggleCanvasFooter('submission', false)" title="Hide Footer">✕</button>
+                    <span style="font-size:0.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;margin-right:2px;">FOOTER</span>
+                    <button type="button" class="veb-tb-btn" onclick="selectCanvasFooter('submission')" title="Edit Footer">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                    <button type="button" class="veb-tb-btn del" onclick="toggleCanvasFooter('submission', false)" title="Hide Footer">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
                   </div>
                   <p id="preview-sub-footer-text" style="margin:0 0 4px;font-weight:500;">Sent via Conspodium Verified Editorial Engine.</p>
                   <p id="preview-sub-footer-subtext" style="margin:0;color:#94a3b8;">© 2026 Conspodium Media Group. All rights reserved. • <span style="color:#00AEFE;font-weight:600;">conspodium.com</span></p>
@@ -5204,17 +5296,20 @@ e-page-transition,
         <!-- RIGHT PANEL: Live Interactive Preview Canvas -->
         <div style="display:flex;flex-direction:column;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;">
           <!-- Canvas Top Bar -->
-          <div style="background:#ffffff;border-bottom:1px solid #e2e8f0;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          <div style="background:#ffffff;border-bottom:1px solid #e2e8f0;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;">
             <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-weight:700;font-size:0.84rem;color:#0f172a;display:inline-flex;align-items:center;gap:6px;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                Live Template Canvas
-              </span>
-              <span style="display:inline-flex;align-items:center;gap:4px;font-size:0.7rem;color:#15803d;background:#dcfce7;padding:2px 8px;border-radius:20px;font-weight:600;">● Live Previewing</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              <span style="font-weight:700;font-size:0.86rem;color:#0f172a;letter-spacing:-0.2px;">Email Canvas Workspace</span>
             </div>
-            <div style="display:flex;align-items:center;gap:4px;">
-              <button type="button" onclick="setPreviewDevice('template', 'desktop')" id="btn-device-tmpl-desktop" style="border:none;background:#e0f2fe;color:#0369a1;padding:4px 10px;border-radius:6px;font-size:0.75rem;cursor:pointer;font-weight:600;">🖥️ Desktop</button>
-              <button type="button" onclick="setPreviewDevice('template', 'mobile')" id="btn-device-tmpl-mobile" style="border:none;background:transparent;color:#64748b;padding:4px 10px;border-radius:6px;font-size:0.75rem;cursor:pointer;font-weight:500;">📱 Mobile</button>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="veb-style-btn-group" style="padding:2px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;display:inline-flex;align-items:center;gap:2px;">
+                <button type="button" onclick="setPreviewDevice('template', 'desktop')" id="btn-device-tmpl-desktop" title="Desktop View (540px)" style="border:none;background:#00AEFE;color:#ffffff;padding:5px 9px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.15s;box-shadow:0 1px 3px rgba(0,174,254,0.3);">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button type="button" onclick="setPreviewDevice('template', 'mobile')" id="btn-device-tmpl-mobile" title="Mobile View (375px)" style="border:none;background:transparent;color:#64748b;padding:5px 9px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.15s;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -5422,7 +5517,6 @@ e-page-transition,
 
 <script>
 (function(){
-  // Global HTML Sanitizer Helper
   function escapeHtml(str) {
     if (str === null || str === undefined) return '';
     return String(str)
@@ -5432,7 +5526,12 @@ e-page-transition,
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
   }
+  function stripHtml(html) {
+    if (!html) return '';
+    return String(html).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  }
   window.escapeHtml = escapeHtml;
+  window.stripHtml = stripHtml;
 
   // Mobile toggle & backdrop logic
   var toggle = document.getElementById('csp-toggle');
@@ -7510,6 +7609,50 @@ e-page-transition,
       };
     }
 
+    var subRepliesList = document.getElementById('sub-author-replies-list');
+    var subRepliesCount = document.getElementById('sub-author-replies-count');
+    if (subRepliesList) {
+      subRepliesList.innerHTML = '<div style="font-size:0.8rem;color:#94a3b8;padding:6px 0;">Loading notification history...</div>';
+      fetch(getRootUrl('api/email_service.php?action=get_logs'), {
+        headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' }
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.logs && res.logs.length > 0) {
+          var authorEmail = (s.email || '').toLowerCase().trim();
+          var matched = res.logs.filter(function(l){
+            return (l.recipient_email || '').toLowerCase().trim() === authorEmail;
+          });
+          if (subRepliesCount) subRepliesCount.textContent = matched.length;
+          if (matched.length > 0) {
+            var srHtml = '';
+            matched.forEach(function(rep){
+              var dateStr = (rep.created_at || rep.sent_at) ? (rep.created_at || rep.sent_at).slice(0, 16).replace('T', ' ') : 'Recently';
+              var repBody = rep.body || rep.body_html || rep.body_text || '';
+              srHtml += '<div style="background:#ffffff;border:1px solid #e2e8f0;border-left:4px solid #00AEFE;border-radius:0 8px 8px 0;padding:10px 14px;box-shadow:0 1px 3px rgba(0,0,0,0.02);">';
+              srHtml += '  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:0.78rem;color:#64748b;">';
+              srHtml += '    <span style="font-weight:600;color:#0f172a;"><strong style="color:#00AEFE;">To:</strong> ' + escapeHtml(rep.recipient_email || s.email) + '</span>';
+              srHtml += '    <span style="background:#f1f5f9;padding:2px 8px;border-radius:12px;font-size:0.74rem;">' + dateStr + '</span>';
+              srHtml += '  </div>';
+              srHtml += '  <div style="font-weight:700;color:#0f172a;font-size:0.86rem;margin-bottom:6px;">' + escapeHtml(rep.subject || 'Submission Update') + '</div>';
+              srHtml += '  <div style="color:#334155;line-height:1.6;font-size:0.84rem;white-space:pre-wrap;background:#f8fafc;padding:10px 12px;border-radius:6px;border:1px solid #edf2f7;">' + (repBody.indexOf('<') !== -1 ? repBody : escapeHtml(repBody)) + '</div>';
+              srHtml += '</div>';
+            });
+            subRepliesList.innerHTML = srHtml;
+          } else {
+            if (subRepliesCount) subRepliesCount.textContent = '0';
+            subRepliesList.innerHTML = '<div style="font-size:0.8rem;color:#94a3b8;font-style:italic;padding:4px 0;">No sent author notifications logged yet for this submission.</div>';
+          }
+        } else {
+          if (subRepliesCount) subRepliesCount.textContent = '0';
+          subRepliesList.innerHTML = '<div style="font-size:0.8rem;color:#94a3b8;font-style:italic;padding:4px 0;">No sent author notifications logged yet.</div>';
+        }
+      })
+      .catch(function(){
+        if (subRepliesList) subRepliesList.innerHTML = '<div style="font-size:0.8rem;color:#94a3b8;font-style:italic;padding:4px 0;">No sent author notifications logged yet.</div>';
+      });
+    }
+
     openModal('modal-view-submission');
   }
 
@@ -8311,14 +8454,15 @@ e-page-transition,
           if (repliesCount) repliesCount.textContent = res.replies.length;
           var rHtml = '';
           res.replies.forEach(function(rep){
-            var dateStr = rep.sent_at ? rep.sent_at.slice(0, 16).replace('T', ' ') : 'Recently';
-            rHtml += '<div style="background:#ffffff;border:1px solid #e2e8f0;border-left:3px solid #00AEFE;border-radius:0 8px 8px 0;padding:10px 14px;font-size:0.84rem;">';
+            var dateStr = (rep.created_at || rep.sent_at) ? (rep.created_at || rep.sent_at).slice(0, 16).replace('T', ' ') : 'Recently';
+            var repBody = rep.body || rep.body_html || rep.body_text || '';
+            rHtml += '<div style="background:#ffffff;border:1px solid #e2e8f0;border-left:4px solid #00AEFE;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,0.02);">';
             rHtml += '  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:0.78rem;color:#64748b;">';
-            rHtml += '    <span><strong>To:</strong> ' + escapeHtml(rep.recipient_email || m.email) + '</span>';
-            rHtml += '    <span>' + dateStr + '</span>';
+            rHtml += '    <span><strong>To:</strong> ' + escapeHtml(rep.recipient_email || m.email) + ' &bull; <em style="color:#0284c7;font-style:normal;font-weight:600;">' + escapeHtml(rep.sent_by || 'Editor Admin') + '</em></span>';
+            rHtml += '    <span style="background:#f1f5f9;padding:2px 8px;border-radius:12px;font-size:0.74rem;">' + dateStr + '</span>';
             rHtml += '  </div>';
-            rHtml += '  <div style="font-weight:600;color:#0f172a;margin-bottom:4px;">' + escapeHtml(rep.subject || 'Email Reply') + '</div>';
-            rHtml += '  <div style="color:#334155;line-height:1.5;">' + (rep.body_html || escapeHtml(rep.body_text || '')) + '</div>';
+            rHtml += '  <div style="font-weight:700;color:#0f172a;margin-bottom:6px;font-size:0.88rem;">' + escapeHtml(rep.subject || 'Re: ' + (m.subject || 'Inquiry')) + '</div>';
+            rHtml += '  <div style="color:#334155;line-height:1.6;font-size:0.86rem;white-space:pre-wrap;background:#f8fafc;padding:10px 14px;border-radius:6px;border:1px solid #edf2f7;">' + (repBody.indexOf('<') !== -1 ? repBody : escapeHtml(repBody)) + '</div>';
             rHtml += '</div>';
           });
           repliesList.innerHTML = rHtml;
@@ -8433,13 +8577,31 @@ e-page-transition,
   var activeEmailConfigCache = null;
 
   window.openEmailProviderSettings = function() {
-    switchDashboardTab('settings');
-    var emailSubtabBtn = document.querySelector('.settings-subtab-btn[data-subtab="email"]');
-    if (emailSubtabBtn) emailSubtabBtn.click();
+    closeModal('modal-reply-contact');
+    closeModal('modal-notify-submission');
+    if (typeof window.switchTab === 'function') {
+      window.switchTab('settings');
+    } else {
+      var navItem = document.querySelector('.csp-nav-item[data-tab="settings"]');
+      if (navItem) navItem.click();
+    }
     setTimeout(function(){
-      var card = document.getElementById('card-email-provider-settings');
-      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 150);
+      var emailSubtabBtn = document.querySelector('.settings-subtab-btn[data-subtab="email"]');
+      if (emailSubtabBtn) emailSubtabBtn.click();
+      setTimeout(function(){
+        var card = document.getElementById('card-email-provider-settings');
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          var nameInput = document.getElementById('cfg-email-from-name');
+          if (nameInput) {
+            nameInput.focus();
+            card.style.transition = 'box-shadow 0.3s ease';
+            card.style.boxShadow = '0 0 0 3px rgba(0, 174, 254, 0.4)';
+            setTimeout(function(){ card.style.boxShadow = ''; }, 1800);
+          }
+        }
+      }, 100);
+    }, 120);
   };
 
   window.loadEmailServiceConfig = function() {
@@ -8448,6 +8610,9 @@ e-page-transition,
       .then(function(res){
         if (res.success && res.config) {
           activeEmailConfigCache = res.config;
+          var fromNameVal = res.config.fromName || res.config.from_name || 'Conspodium Editorial';
+          var fromAddrVal = res.config.fromAddress || res.config.from_address || 'editor@conspodium.com';
+
           var cfgProv = document.getElementById('cfg-email-provider');
           var cfgName = document.getElementById('cfg-email-from-name');
           var cfgAddr = document.getElementById('cfg-email-from-address');
@@ -8458,13 +8623,24 @@ e-page-transition,
           var cfgUser = document.getElementById('cfg-email-smtp-user');
 
           if (cfgProv) cfgProv.value = res.config.provider || 'smtp';
-          if (cfgName) cfgName.value = res.config.fromName || 'Conspodium Editorial';
-          if (cfgAddr) cfgAddr.value = res.config.fromAddress || 'editor@conspodium.com';
+          if (cfgName) cfgName.value = fromNameVal;
+          if (cfgAddr) cfgAddr.value = fromAddrVal;
           if (cfgKey)  cfgKey.value  = res.config.apiKey || '';
           if (cfgUrl)  cfgUrl.value  = res.config.webhookUrl || '';
           if (cfgHost) cfgHost.value = res.config.smtpHost || 'smtp.hostinger.com';
           if (cfgPort) cfgPort.value = res.config.smtpPort || '587';
           if (cfgUser) cfgUser.value = res.config.smtpUser || '';
+
+          // Sync into modal From fields immediately
+          var rFromName = document.getElementById('reply-from-name');
+          var rFromAddr = document.getElementById('reply-from-address');
+          if (rFromName) rFromName.value = fromNameVal;
+          if (rFromAddr) rFromAddr.value = fromAddrVal;
+
+          var sFromName = document.getElementById('sub-notify-from-name');
+          var sFromAddr = document.getElementById('sub-notify-from-address');
+          if (sFromName) sFromName.value = fromNameVal;
+          if (sFromAddr) sFromAddr.value = fromAddrVal;
 
           toggleEmailProviderFields(res.config.provider || 'smtp');
           updateActiveProviderBadge(res.config.provider || 'smtp');
@@ -8623,7 +8799,7 @@ e-page-transition,
 
           var btn = document.getElementById('btn-submit-contact-reply');
           if (btn) { btn.disabled = true; btn.innerHTML = 'Sending...'; }
-          cspToast('✉️ Dispatched email reply...', 'info');
+          cspToast('Sending email reply...', 'info');
 
           fetch(getRootUrl('api/email_service.php?action=send_reply'), {
             method: 'POST',
@@ -8647,7 +8823,7 @@ e-page-transition,
           .then(function(res){
             if (btn) { btn.disabled = false; btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span>Send Email Reply</span>'; }
             if (res.success) {
-              cspToast('🎉 ' + res.message, 'success');
+              cspToast(res.message || 'Email reply successfully sent!', 'success');
               closeModal('modal-reply-contact');
               loadContactMessages();
               loadOverviewData();
@@ -8723,7 +8899,7 @@ e-page-transition,
           .then(function(res){
             if (btn) { btn.disabled = false; btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span>Send Notification Email</span>'; }
             if (res.success) {
-              cspToast('🎉 Notification email sent successfully!', 'success');
+              cspToast(res.message || 'Notification email sent successfully to ' + email + '!', 'success');
               closeModal('modal-notify-submission');
             } else {
               cspToast('Failed to send email: ' + (res.error || 'Unknown error'), 'danger');
@@ -8990,41 +9166,163 @@ e-page-transition,
     }
   };
 
-  // Drag & Drop HTML5 Handlers
+  // ── ADVANCED DRAG & DROP POSITIONING ENGINE ─────────────────────────────
+  window.vebDragState = {
+    source: null,
+    type: null,
+    blockType: null,
+    blockId: null,
+    targetIndex: null
+  };
+
   window.handlePaletteDragStart = function(e, type, blockType) {
+    window.vebDragState = {
+      source: 'palette',
+      type: type,
+      blockType: blockType,
+      blockId: null,
+      targetIndex: null
+    };
     try {
-      e.dataTransfer.setData('text/plain', JSON.stringify({ type: type, blockType: blockType }));
+      e.dataTransfer.setData('text/plain', JSON.stringify({ source: 'palette', type: type, blockType: blockType }));
       e.dataTransfer.effectAllowed = 'copy';
+    } catch(err){}
+  };
+
+  window.handleBlockDragStart = function(e, type, blockId) {
+    window.vebDragState = {
+      source: 'canvas',
+      type: type,
+      blockType: null,
+      blockId: blockId,
+      targetIndex: null
+    };
+    try {
+      e.dataTransfer.setData('text/plain', JSON.stringify({ source: 'canvas', type: type, blockId: blockId }));
+      e.dataTransfer.effectAllowed = 'move';
     } catch(err){}
   };
 
   window.handleCanvasDragOver = function(e, type) {
     e.preventDefault();
     try {
-      e.dataTransfer.dropEffect = 'copy';
+      e.dataTransfer.dropEffect = (window.vebDragState && window.vebDragState.source === 'canvas') ? 'move' : 'copy';
     } catch(err){}
-    var indicator = document.getElementById(type + '-drop-indicator');
-    if (indicator) indicator.style.display = 'block';
+
+    var containerId = (type === 'contact') ? 'canvas-contact-blocks' : 'canvas-submission-blocks';
+    var container = document.getElementById(containerId);
+    if (!container) return;
+
+    var items = Array.from(container.querySelectorAll('.veb-block-item'));
+    var targetIndex = items.length;
+
+    // Remove any existing active drop lines
+    var existingLines = container.querySelectorAll('.veb-drop-indicator-line');
+    existingLines.forEach(function(el){ el.remove(); });
+
+    if (items.length === 0) {
+      var dropLine = document.createElement('div');
+      dropLine.className = 'veb-drop-indicator-line';
+      container.appendChild(dropLine);
+      if (window.vebDragState) window.vebDragState.targetIndex = 0;
+      return;
+    }
+
+    var hoveredItem = null;
+    var insertBefore = false;
+
+    for (var i = 0; i < items.length; i++) {
+      var rect = items[i].getBoundingClientRect();
+      if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+        hoveredItem = items[i];
+        var midY = rect.top + rect.height / 2;
+        if (e.clientY < midY) {
+          targetIndex = i;
+          insertBefore = true;
+        } else {
+          targetIndex = i + 1;
+          insertBefore = false;
+        }
+        break;
+      } else if (e.clientY < rect.top) {
+        hoveredItem = items[i];
+        targetIndex = i;
+        insertBefore = true;
+        break;
+      }
+    }
+
+    if (window.vebDragState) window.vebDragState.targetIndex = targetIndex;
+
+    var indicatorLine = document.createElement('div');
+    indicatorLine.className = 'veb-drop-indicator-line';
+
+    if (hoveredItem) {
+      if (insertBefore) {
+        container.insertBefore(indicatorLine, hoveredItem);
+      } else {
+        if (hoveredItem.nextSibling) {
+          container.insertBefore(indicatorLine, hoveredItem.nextSibling);
+        } else {
+          container.appendChild(indicatorLine);
+        }
+      }
+    } else {
+      container.appendChild(indicatorLine);
+    }
   };
 
   window.handleCanvasDragLeave = function(e, type) {
-    var indicator = document.getElementById(type + '-drop-indicator');
-    if (indicator) indicator.style.display = 'none';
+    var containerId = (type === 'contact') ? 'canvas-contact-blocks' : 'canvas-submission-blocks';
+    var container = document.getElementById(containerId);
+    if (container && !container.contains(e.relatedTarget)) {
+      var existingLines = container.querySelectorAll('.veb-drop-indicator-line');
+      existingLines.forEach(function(el){ el.remove(); });
+    }
   };
 
   window.handleCanvasDrop = function(type, e) {
     e.preventDefault();
-    var indicator = document.getElementById(type + '-drop-indicator');
-    if (indicator) indicator.style.display = 'none';
-    try {
-      var raw = e.dataTransfer.getData('text/plain');
-      if (raw) {
-        var data = JSON.parse(raw);
-        if (data && data.blockType) {
-          addCanvasBlock(type, data.blockType);
-        }
+    var containerId = (type === 'contact') ? 'canvas-contact-blocks' : 'canvas-submission-blocks';
+    var container = document.getElementById(containerId);
+    if (container) {
+      var existingLines = container.querySelectorAll('.veb-drop-indicator-line');
+      existingLines.forEach(function(el){ el.remove(); });
+    }
+
+    var state = window.emailStudioState[type];
+    if (!state) return;
+
+    var dragInfo = window.vebDragState || {};
+    var targetIdx = (typeof dragInfo.targetIndex === 'number') ? dragInfo.targetIndex : (state.blocks ? state.blocks.length : 0);
+
+    if (dragInfo.source === 'palette' && dragInfo.blockType) {
+      addCanvasBlock(type, dragInfo.blockType, targetIdx);
+    } else if (dragInfo.source === 'canvas' && dragInfo.blockId) {
+      var curIdx = state.blocks.findIndex(function(b){ return b.id === dragInfo.blockId; });
+      if (curIdx !== -1) {
+        var movingBlock = state.blocks.splice(curIdx, 1)[0];
+        if (targetIdx > curIdx) targetIdx--;
+        if (targetIdx < 0) targetIdx = 0;
+        if (targetIdx > state.blocks.length) targetIdx = state.blocks.length;
+        state.blocks.splice(targetIdx, 0, movingBlock);
+        state.selectedBlockId = movingBlock.id;
+        state.selectedTarget = 'block';
+        renderCanvasBlocks(type);
       }
-    } catch(err){}
+    } else {
+      try {
+        var raw = e.dataTransfer.getData('text/plain');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && parsed.blockType) {
+            addCanvasBlock(type, parsed.blockType, targetIdx);
+          }
+        }
+      } catch(err){}
+    }
+
+    window.vebDragState = null;
   };
 
   // Header and Footer Toggles
@@ -9063,6 +9361,7 @@ e-page-transition,
 
     var headerBg = document.getElementById('preview-' + (type === 'contact' ? 'contact' : 'sub') + '-header-bg');
     if (headerBg) {
+      headerBg.classList.add('selected');
       headerBg.style.outline = '2px dashed #00AEFE';
       headerBg.style.outlineOffset = '-2px';
     }
@@ -9078,6 +9377,7 @@ e-page-transition,
 
     var footerBg = document.getElementById('preview-' + (type === 'contact' ? 'contact' : 'sub') + '-footer-bg');
     if (footerBg) {
+      footerBg.classList.add('selected');
       footerBg.style.outline = '2px dashed #00AEFE';
       footerBg.style.outlineOffset = '-2px';
     }
@@ -9086,10 +9386,16 @@ e-page-transition,
 
   function clearSelectionHighlights(type) {
     var headerBg = document.getElementById('preview-' + (type === 'contact' ? 'contact' : 'sub') + '-header-bg');
-    if (headerBg) headerBg.style.outline = 'none';
+    if (headerBg) {
+      headerBg.classList.remove('selected');
+      headerBg.style.outline = 'none';
+    }
 
     var footerBg = document.getElementById('preview-' + (type === 'contact' ? 'contact' : 'sub') + '-footer-bg');
-    if (footerBg) footerBg.style.outline = 'none';
+    if (footerBg) {
+      footerBg.classList.remove('selected');
+      footerBg.style.outline = 'none';
+    }
 
     var containerId = (type === 'contact') ? 'canvas-contact-blocks' : 'canvas-submission-blocks';
     var container = document.getElementById(containerId);
@@ -9278,19 +9584,19 @@ e-page-transition,
       var selClass = isSel ? ' selected' : '';
       var s = blk.style || {};
 
-      html += '<div class="veb-block-item' + selClass + '" data-id="' + blk.id + '" onclick="selectCanvasBlock(\'' + type + '\', \'' + blk.id + '\', event)">';
+      html += '<div class="veb-block-item' + selClass + '" data-id="' + blk.id + '" draggable="true" ondragstart="handleBlockDragStart(event, \'' + type + '\', \'' + blk.id + '\')" onclick="selectCanvasBlock(\'' + type + '\', \'' + blk.id + '\', event)">';
       
       // Hover/Selection Action Toolbar
       html += '  <div class="veb-block-toolbar" onclick="event.stopPropagation();">';
-      html += '    <span style="font-size:0.68rem;font-weight:700;color:#64748b;text-transform:uppercase;margin-right:2px;">' + blk.type + '</span>';
+      html += '    <span style="font-size:0.65rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;margin-right:2px;display:inline-flex;align-items:center;gap:3px;"><span style="cursor:grab;opacity:0.7;">⋮⋮</span> ' + blk.type + '</span>';
       if (idx > 0) {
-        html += '    <button type="button" class="veb-tb-btn" onclick="moveCanvasBlock(\'' + type + '\', \'' + blk.id + '\', -1)" title="Move Up">↑</button>';
+        html += '    <button type="button" class="veb-tb-btn" onclick="moveCanvasBlock(\'' + type + '\', \'' + blk.id + '\', -1)" title="Move Up"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>';
       }
       if (idx < state.blocks.length - 1) {
-        html += '    <button type="button" class="veb-tb-btn" onclick="moveCanvasBlock(\'' + type + '\', \'' + blk.id + '\', 1)" title="Move Down">↓</button>';
+        html += '    <button type="button" class="veb-tb-btn" onclick="moveCanvasBlock(\'' + type + '\', \'' + blk.id + '\', 1)" title="Move Down"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></button>';
       }
-      html += '    <button type="button" class="veb-tb-btn" onclick="duplicateCanvasBlock(\'' + type + '\', \'' + blk.id + '\')" title="Duplicate">⧉</button>';
-      html += '    <button type="button" class="veb-tb-btn del" onclick="deleteCanvasBlock(\'' + type + '\', \'' + blk.id + '\')" title="Delete">✕</button>';
+      html += '    <button type="button" class="veb-tb-btn" onclick="duplicateCanvasBlock(\'' + type + '\', \'' + blk.id + '\')" title="Duplicate"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>';
+      html += '    <button type="button" class="veb-tb-btn del" onclick="deleteCanvasBlock(\'' + type + '\', \'' + blk.id + '\')" title="Delete"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>';
       html += '  </div>';
 
       // Block Content
@@ -9340,7 +9646,6 @@ e-page-transition,
     });
 
     container.innerHTML = html;
-    renderBlockInspector(type);
   };
 
   window.addCanvasBlock = function(type, blockType, index) {
@@ -9380,7 +9685,7 @@ e-page-transition,
       newBlock.style = { height: '24' };
     }
 
-    if (typeof index === 'number' && index >= 0) {
+    if (typeof index === 'number' && index >= 0 && index <= state.blocks.length) {
       state.blocks.splice(index, 0, newBlock);
     } else {
       state.blocks.push(newBlock);
@@ -9389,6 +9694,7 @@ e-page-transition,
     state.selectedTarget = 'block';
     state.selectedBlockId = newId;
     renderCanvasBlocks(type);
+    renderBlockInspector(type);
   };
 
   window.selectCanvasBlock = function(type, blockId, e) {
@@ -9428,6 +9734,7 @@ e-page-transition,
     state.blocks[idx] = state.blocks[targetIdx];
     state.blocks[targetIdx] = temp;
     renderCanvasBlocks(type);
+    renderBlockInspector(type);
   };
 
   window.duplicateCanvasBlock = function(type, blockId) {
@@ -9441,6 +9748,7 @@ e-page-transition,
     state.selectedBlockId = clone.id;
     state.selectedTarget = 'block';
     renderCanvasBlocks(type);
+    renderBlockInspector(type);
   };
 
   window.deleteCanvasBlock = function(type, blockId) {
@@ -9452,6 +9760,7 @@ e-page-transition,
       state.selectedTarget = null;
     }
     renderCanvasBlocks(type);
+    renderBlockInspector(type);
   };
 
   window.resetEmailCanvas = function(type) {
@@ -9484,6 +9793,7 @@ e-page-transition,
     var current = blk.style[prop] || defaultVal;
     blk.style[prop] = (current === activeVal) ? defaultVal : activeVal;
     renderCanvasBlocks(type);
+    renderBlockInspector(type);
   };
 
   window.updateHeaderProperty = function(type, prop, val) {
@@ -9920,7 +10230,7 @@ e-page-transition,
     var state = window.emailStudioState[type];
     if (!state) return '';
 
-    var html = '';
+    var html = '<!-- VISUAL_STUDIO_CANVAS -->';
 
     // 1. Render Branded Header Banner (if enabled)
     if (state.header && state.header.enabled) {
@@ -10030,15 +10340,15 @@ e-page-transition,
         card.style.borderRadius = '16px';
         card.style.border = '2px solid #0f172a';
         card.style.boxShadow = '0 12px 30px rgba(0,0,0,0.18)';
-        if (btnDesk) { btnDesk.style.background = 'transparent'; btnDesk.style.color = '#64748b'; btnDesk.style.fontWeight = '500'; }
-        if (btnMob) { btnMob.style.background = '#e0f2fe'; btnMob.style.color = '#0369a1'; btnMob.style.fontWeight = '600'; }
+        if (btnDesk) { btnDesk.style.background = 'transparent'; btnDesk.style.color = '#64748b'; btnDesk.style.boxShadow = 'none'; }
+        if (btnMob) { btnMob.style.background = '#00AEFE'; btnMob.style.color = '#ffffff'; btnMob.style.boxShadow = '0 1px 3px rgba(0,174,254,0.3)'; }
       } else {
         card.style.maxWidth = '540px';
         card.style.borderRadius = '12px';
         card.style.border = '1px solid #e2e8f0';
         card.style.boxShadow = '0 6px 20px rgba(0,0,0,0.06)';
-        if (btnDesk) { btnDesk.style.background = '#e0f2fe'; btnDesk.style.color = '#0369a1'; btnDesk.style.fontWeight = '600'; }
-        if (btnMob) { btnMob.style.background = 'transparent'; btnMob.style.color = '#64748b'; btnMob.style.fontWeight = '500'; }
+        if (btnDesk) { btnDesk.style.background = '#00AEFE'; btnDesk.style.color = '#ffffff'; btnDesk.style.boxShadow = '0 1px 3px rgba(0,174,254,0.3)'; }
+        if (btnMob) { btnMob.style.background = 'transparent'; btnMob.style.color = '#64748b'; btnMob.style.boxShadow = 'none'; }
       }
     }
   };
@@ -10065,8 +10375,8 @@ e-page-transition,
     var idEl = document.getElementById('reply-contact-id');
     if (idEl) idEl.value = m.id;
 
-    var defFromName = (activeEmailConfigCache && activeEmailConfigCache.from_name) ? activeEmailConfigCache.from_name : 'Conspodium Editorial';
-    var defFromAddr = (activeEmailConfigCache && activeEmailConfigCache.from_address) ? activeEmailConfigCache.from_address : 'editor@conspodium.com';
+    var defFromName = (activeEmailConfigCache && (activeEmailConfigCache.fromName || activeEmailConfigCache.from_name)) ? (activeEmailConfigCache.fromName || activeEmailConfigCache.from_name) : 'Conspodium Editorial';
+    var defFromAddr = (activeEmailConfigCache && (activeEmailConfigCache.fromAddress || activeEmailConfigCache.from_address)) ? (activeEmailConfigCache.fromAddress || activeEmailConfigCache.from_address) : 'editor@conspodium.com';
     
     var fromNameEl = document.getElementById('reply-from-name');
     if (fromNameEl) fromNameEl.value = defFromName;
@@ -10199,8 +10509,8 @@ e-page-transition,
     var idEl = document.getElementById('sub-notify-id');
     if (idEl) idEl.value = s.id;
 
-    var defFromName = (activeEmailConfigCache && activeEmailConfigCache.from_name) ? activeEmailConfigCache.from_name : 'Conspodium Editorial';
-    var defFromAddr = (activeEmailConfigCache && activeEmailConfigCache.from_address) ? activeEmailConfigCache.from_address : 'editor@conspodium.com';
+    var defFromName = (activeEmailConfigCache && (activeEmailConfigCache.fromName || activeEmailConfigCache.from_name)) ? (activeEmailConfigCache.fromName || activeEmailConfigCache.from_name) : 'Conspodium Editorial';
+    var defFromAddr = (activeEmailConfigCache && (activeEmailConfigCache.fromAddress || activeEmailConfigCache.from_address)) ? (activeEmailConfigCache.fromAddress || activeEmailConfigCache.from_address) : 'editor@conspodium.com';
     
     var fromNameEl = document.getElementById('sub-notify-from-name');
     if (fromNameEl) fromNameEl.value = defFromName;
@@ -10475,22 +10785,29 @@ e-page-transition,
         if (outboxTbody) outboxTbody.innerHTML = '<tr><td colspan="7" style="padding:24px;text-align:center;color:#94a3b8;">No sent emails found in outbox.</td></tr>';
       }
     })
-    .catch(function(){
+    .catch(function(err){
+      console.error('Failed to load email logs:', err);
       if (modalTbody) modalTbody.innerHTML = '<tr><td colspan="7" style="padding:24px;text-align:center;color:#ef4444;">Failed to load email logs.</td></tr>';
       if (outboxTbody) outboxTbody.innerHTML = '<tr><td colspan="7" style="padding:24px;text-align:center;color:#ef4444;">Failed to load outbox logs.</td></tr>';
     });
   };
 
-  function getLogCategory(trigger) {
-    var t = (trigger || '').toLowerCase();
+  function getLogCategory(item) {
+    if (!item) return 'system';
+    var t = '';
+    if (typeof item === 'object') {
+      t = (item.type || item.trigger_event || item.template_key || item.category || '').toLowerCase();
+    } else if (typeof item === 'string') {
+      t = item.toLowerCase();
+    }
     if (t.indexOf('contact') !== -1) return 'contact_reply';
-    if (t.indexOf('story') !== -1 || t.indexOf('submission') !== -1) return 'story';
-    if (t.indexOf('campaign') !== -1 || t.indexOf('newsletter') !== -1 || t.indexOf('broadcast') !== -1) return 'campaign';
+    if (t.indexOf('story') !== -1 || t.indexOf('submission') !== -1 || t.indexOf('author') !== -1) return 'story';
+    if (t.indexOf('campaign') !== -1 || t.indexOf('newsletter') !== -1 || t.indexOf('broadcast') !== -1 || t.indexOf('bulk') !== -1) return 'campaign';
     return 'system';
   }
 
-  function getCategoryBadge(trigger) {
-    var cat = getLogCategory(trigger);
+  function getCategoryBadge(item) {
+    var cat = getLogCategory(item);
     if (cat === 'contact_reply') {
       return '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#e0f2fe;color:#0369a1;font-size:0.75rem;font-weight:600;"><span style="width:5px;height:5px;border-radius:50%;background:#0284c7;"></span>Contact Reply</span>';
     }
@@ -10507,7 +10824,7 @@ e-page-transition,
     if (!logs) logs = [];
     var counts = { all: logs.length, contact: 0, story: 0, campaign: 0, system: 0 };
     logs.forEach(function(l){
-      var cat = getLogCategory(l.trigger_event || l.template_key);
+      var cat = getLogCategory(l);
       if (cat === 'contact_reply') counts.contact++;
       else if (cat === 'story') counts.story++;
       else if (cat === 'campaign') counts.campaign++;
@@ -10533,7 +10850,7 @@ e-page-transition,
 
     var filtered = (logs || []).filter(function(log){
       if (window.activeOutboxFilter && window.activeOutboxFilter !== 'all') {
-        if (getLogCategory(log.trigger_event || log.template_key) !== window.activeOutboxFilter) return false;
+        if (getLogCategory(log) !== window.activeOutboxFilter) return false;
       }
       var searchInp = document.getElementById('search-outbox-logs');
       var q = searchInp ? (searchInp.value || '').toLowerCase().trim() : '';
@@ -10541,14 +10858,14 @@ e-page-transition,
         var matchEmail = (log.recipient_email || '').toLowerCase().indexOf(q) !== -1;
         var matchName = (log.recipient_name || '').toLowerCase().indexOf(q) !== -1;
         var matchSubj = (log.subject || '').toLowerCase().indexOf(q) !== -1;
-        var matchTrig = (log.trigger_event || log.template_key || '').toLowerCase().indexOf(q) !== -1;
+        var matchTrig = (log.type || log.trigger_event || log.template_key || '').toLowerCase().indexOf(q) !== -1;
         return matchEmail || matchName || matchSubj || matchTrig;
       }
       return true;
     });
 
     if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="padding:28px;text-align:center;color:#94a3b8;">No matching sent emails found in outbox.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" style="padding:28px;text-align:center;color:#94a3b8;">No matching sent emails found in outbox.</td></tr>';
       return;
     }
 
@@ -10559,20 +10876,21 @@ e-page-transition,
         ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#dcfce7;color:#15803d;font-size:0.75rem;font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#22c55e;"></span>Delivered</span>'
         : '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#fee2e2;color:#b91c1c;font-size:0.75rem;font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#ef4444;"></span>Failed</span>';
 
-      var dateStr = log.sent_at ? log.sent_at.slice(0, 16).replace('T', ' ') : 'Recently';
-      var catBadge = getCategoryBadge(log.trigger_event || log.template_key);
+      var dateStr = (log.created_at || log.sent_at) ? (log.created_at || log.sent_at).slice(0, 16).replace('T', ' ') : 'Recently';
+
+      var rawBody = log.body || log.body_html || log.body_text || '';
+      var plainSnippet = String(rawBody).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      if (plainSnippet.length > 70) plainSnippet = plainSnippet.slice(0, 70) + '...';
 
       html += '<tr style="border-bottom:1px solid #f1f5f9;">';
       html += '  <td style="padding:12px 16px;">';
       html += '    <div style="font-weight:600;color:#0f172a;font-size:0.88rem;">' + escapeHtml(log.recipient_email || 'N/A') + '</div>';
       if (log.recipient_name) html += '    <div style="font-size:0.75rem;color:#64748b;">' + escapeHtml(log.recipient_name) + '</div>';
       html += '  </td>';
-      html += '  <td style="padding:12px 16px;max-width:260px;">';
+      html += '  <td style="padding:12px 16px;max-width:320px;">';
       html += '    <div style="font-weight:600;color:#1e293b;font-size:0.86rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escapeHtml(log.subject || '(No Subject)') + '</div>';
-      html += '    <div style="font-size:0.75rem;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escapeHtml(stripHtml(log.body_html || log.body_text || '').slice(0, 70)) + '...</div>';
+      html += '    <div style="font-size:0.75rem;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escapeHtml(plainSnippet) + '</div>';
       html += '  </td>';
-      html += '  <td style="padding:12px 16px;">' + catBadge + '</td>';
-      html += '  <td style="padding:12px 16px;color:#64748b;font-size:0.8rem;text-transform:uppercase;font-weight:600;">' + escapeHtml(log.provider || 'Hostinger SMTP') + '</td>';
       html += '  <td style="padding:12px 16px;">' + statusBadge + '</td>';
       html += '  <td style="padding:12px 16px;color:#64748b;font-size:0.78rem;">' + dateStr + '</td>';
       html += '  <td style="padding:12px 16px;text-align:right;">';
@@ -10598,12 +10916,12 @@ e-page-transition,
         ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#dcfce7;color:#15803d;font-size:0.75rem;font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#22c55e;"></span>Sent</span>'
         : '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#fee2e2;color:#b91c1c;font-size:0.75rem;font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#ef4444;"></span>Failed</span>';
 
-      var dateStr = log.sent_at ? log.sent_at.slice(0, 16).replace('T', ' ') : 'Recently';
+      var dateStr = (log.created_at || log.sent_at) ? (log.created_at || log.sent_at).slice(0, 16).replace('T', ' ') : 'Recently';
 
       html += '<tr style="border-bottom:1px solid #f1f5f9;">';
       html += '  <td style="padding:10px 14px;color:#0f172a;font-weight:600;">' + escapeHtml(log.recipient_email || 'N/A') + '</td>';
       html += '  <td style="padding:10px 14px;color:#334155;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escapeHtml(log.subject || '') + '</td>';
-      html += '  <td style="padding:10px 14px;">' + getCategoryBadge(log.trigger_event || log.template_key) + '</td>';
+      html += '  <td style="padding:10px 14px;">' + getCategoryBadge(log) + '</td>';
       html += '  <td style="padding:10px 14px;color:#64748b;font-size:0.8rem;text-transform:uppercase;">' + escapeHtml(log.provider || 'smtp') + '</td>';
       html += '  <td style="padding:10px 14px;">' + statusBadge + '</td>';
       html += '  <td style="padding:10px 14px;color:#64748b;font-size:0.78rem;">' + dateStr + '</td>';
@@ -10614,32 +10932,38 @@ e-page-transition,
   }
 
   window.viewSentEmailDetails = function(logId) {
-    if (!emailLogsCache) return;
-    var found = emailLogsCache.find(function(l){ return String(l.id) === String(logId); });
+    if (!window.emailLogsCache) return;
+    var found = window.emailLogsCache.find(function(l){ return String(l.id) === String(logId); });
     if (!found) return;
 
-    var toEl = document.getElementById('view-sent-to');
-    var triggerEl = document.getElementById('view-sent-trigger');
-    var dateEl = document.getElementById('view-sent-date');
-    var statusEl = document.getElementById('view-sent-status');
-    var subjectEl = document.getElementById('view-sent-subject');
-    var bodyEl = document.getElementById('view-sent-body');
+    var toEl = document.getElementById('view-sent-email-to') || document.getElementById('view-sent-to');
+    var triggerEl = document.getElementById('view-sent-email-trigger') || document.getElementById('view-sent-trigger');
+    var dateEl = document.getElementById('view-sent-email-date') || document.getElementById('view-sent-date');
+    var providerEl = document.getElementById('view-sent-email-provider') || document.getElementById('view-sent-provider');
+    var statusEl = document.getElementById('view-sent-email-status') || document.getElementById('view-sent-status');
+    var subjectEl = document.getElementById('view-sent-email-subject') || document.getElementById('view-sent-subject');
+    var bodyEl = document.getElementById('view-sent-email-body') || document.getElementById('view-sent-body');
     var errBox = document.getElementById('view-sent-error-box');
     var errMsg = document.getElementById('view-sent-error-msg');
 
     if (toEl) toEl.textContent = (found.recipient_name ? found.recipient_name + ' <' + found.recipient_email + '>' : found.recipient_email) || 'N/A';
-    if (triggerEl) triggerEl.textContent = found.trigger_event || found.template_key || 'direct';
-    if (dateEl) dateEl.textContent = found.sent_at ? found.sent_at.slice(0, 19).replace('T', ' ') : 'N/A';
+    if (triggerEl) triggerEl.textContent = (found.type || found.trigger_event || found.template_key || 'Direct Message').replace(/_/g, ' ').toUpperCase();
+    if (dateEl) dateEl.textContent = (found.created_at || found.sent_at) ? (found.created_at || found.sent_at).slice(0, 19).replace('T', ' ') : 'N/A';
+    if (providerEl) providerEl.textContent = (found.provider || 'Hostinger SMTP').toUpperCase();
     if (statusEl) {
       if (found.status === 'sent') {
-        statusEl.innerHTML = '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#dcfce7;color:#15803d;font-size:0.75rem;font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#22c55e;"></span>Delivered</span>';
+        statusEl.className = 'csp-badge';
+        statusEl.style.cssText = 'background:#dcfce7;color:#15803d;font-size:0.75rem;padding:3px 8px;border-radius:12px;font-weight:600;display:inline-flex;align-items:center;gap:4px;';
+        statusEl.innerHTML = '<span style="width:6px;height:6px;border-radius:50%;background:#22c55e;"></span>Delivered';
       } else {
-        statusEl.innerHTML = '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#fee2e2;color:#b91c1c;font-size:0.75rem;font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#ef4444;"></span>Failed</span>';
+        statusEl.className = 'csp-badge';
+        statusEl.style.cssText = 'background:#fee2e2;color:#b91c1c;font-size:0.75rem;padding:3px 8px;border-radius:12px;font-weight:600;display:inline-flex;align-items:center;gap:4px;';
+        statusEl.innerHTML = '<span style="width:6px;height:6px;border-radius:50%;background:#ef4444;"></span>Failed';
       }
     }
-    if (subjectEl) subjectEl.textContent = found.subject || '';
+    if (subjectEl) subjectEl.textContent = found.subject || '(No Subject)';
     if (bodyEl) {
-      bodyEl.innerHTML = found.body_html || escapeHtml(found.body_text || '(No content)');
+      bodyEl.innerHTML = found.body || found.body_html || escapeHtml(found.body_text || '(No content)');
     }
     if (errBox && errMsg) {
       if (found.status === 'failed' && found.error_message) {
@@ -10653,15 +10977,10 @@ e-page-transition,
     openModal('modal-view-sent-email');
   };
 
-  window.goToSentOutbox = function(category) {
-    if (typeof switchTab === 'function') {
-      switchTab('newsletter');
-    }
-
+  window.setOutboxFilter = function(category) {
     var filter = category || 'all';
     window.activeOutboxFilter = filter;
 
-    // Update active filter button in Email Marketing Outbox Card
     var filterBtns = document.querySelectorAll('.outbox-filter-btn');
     filterBtns.forEach(function(btn){
       if (btn.getAttribute('data-outbox-filter') === filter) {
@@ -10682,6 +11001,13 @@ e-page-transition,
     } else {
       loadEmailLogs();
     }
+  };
+
+  window.goToSentOutbox = function(category) {
+    if (typeof switchTab === 'function') {
+      switchTab('newsletter');
+    }
+    window.setOutboxFilter(category || 'all');
 
     setTimeout(function(){
       var card = document.getElementById('email-outbox-card');
@@ -10702,19 +11028,8 @@ e-page-transition,
   document.addEventListener('DOMContentLoaded', function(){
     document.querySelectorAll('.outbox-filter-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
-        document.querySelectorAll('.outbox-filter-btn').forEach(function(b){
-          b.classList.remove('active');
-          b.style.background = 'none';
-          b.style.color = 'var(--text-muted)';
-          b.style.fontWeight = 'normal';
-        });
-        this.classList.add('active');
-        this.style.background = 'rgba(0,174,254,0.15)';
-        this.style.color = 'var(--blue)';
-        this.style.fontWeight = '600';
-
-        window.activeOutboxFilter = this.getAttribute('data-outbox-filter') || 'all';
-        renderOutboxTable(window.emailLogsCache);
+        var filter = this.getAttribute('data-outbox-filter') || 'all';
+        window.setOutboxFilter(filter);
       });
     });
 
@@ -11723,10 +12038,14 @@ e-page-transition,
     .then(function(res){
       if (res.success) {
         if (errAlert) errAlert.style.display = 'none';
-        if (submitBtn) submitBtn.textContent = '🎉 Success!';
+        if (submitBtn) {
+          submitBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:middle;display:inline-block;"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Signed In</span>';
+        }
         if (res.token) {
           localStorage.setItem('conspodium_admin_token', res.token);
         }
+        document.documentElement.classList.remove('unauthenticated');
+        document.documentElement.classList.add('authenticated');
         var loginScreen = document.getElementById('csp-login-screen');
         if (loginScreen) loginScreen.style.display = 'none';
         var loader = document.getElementById('csp-page-loader');
@@ -11742,18 +12061,10 @@ e-page-transition,
           }
         }
 
-        // Immediately populate admin UI
-        loadCategoriesSelect();
-        loadOverviewData();
-        loadPosts();
-        loadSubmissions();
-        loadPolls();
-        loadHomepagePoll();
-        loadScholars();
-        loadCategoriesManager();
-        loadSettings();
-        loadHomepageSections();
-        loadPopupAdverts();
+        // Cleanly reload page to ensure full dashboard initialization
+        setTimeout(function(){
+          window.location.reload();
+        }, 300);
       } else {
         if (submitBtn) {
           submitBtn.disabled = false;

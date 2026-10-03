@@ -88,7 +88,8 @@ try {
             $pdo = new PDO("sqlite:" . $dbPath);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            @$pdo->exec("PRAGMA busy_timeout = 5000;");
+            @$pdo->exec("PRAGMA journal_mode = WAL;");
+            @$pdo->exec("PRAGMA busy_timeout = 10000;");
             $GLOBALS['pdo'] = $pdo;
         } else {
             $pdo = $GLOBALS['pdo'];

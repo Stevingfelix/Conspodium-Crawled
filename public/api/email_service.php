@@ -56,6 +56,52 @@ function renderBrandedEmailHtml($subject, $bodyContent, $recipientEmail = '', $o
         }
     }
 
+    $isBuilder = !empty($options['is_builder']) 
+        || strpos($bodyContent, '<!-- VISUAL_STUDIO_CANVAS -->') !== false 
+        || (strpos($bodyContent, '<table') !== false && (strpos($bodyContent, 'CONSPODIUM') !== false || strpos($bodyContent, 'Editorial Engine') !== false || strpos($bodyContent, 'border-radius') !== false));
+
+    $safeSubject = htmlspecialchars($subject, ENT_QUOTES, 'UTF-8');
+
+    if ($isBuilder) {
+        // The Visual Builder output is already a complete, self-contained email layout with its own customized banner and footer.
+        // Wrap it cleanly into the responsive email container without duplicate header or footer.
+        return <<<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{$safeSubject}</title>
+<style type="text/css">
+  body, table, td, p, a, li, blockquote { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+  table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+  img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+  @media only screen and (max-width: 620px) {
+    .csp-email-card { width: 100% !important; border-radius: 0 !important; }
+    .csp-email-body { padding: 18px 12px !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background-color:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#f1f5f9;padding:32px 12px;">
+  <tr>
+    <td align="center">
+      <table class="csp-email-card" width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width:600px;background-color:#ffffff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,0.06);">
+        <tr>
+          <td style="background:#ffffff;padding:0;">
+            {$bodyContent}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+HTML;
+    }
+
     $hasHtml = (preg_match('/<[a-z][\s\S]*>/i', $bodyContent) === 1);
     
     if (!$hasHtml) {
@@ -104,8 +150,6 @@ CTA;
         </div>
 QUOTE;
     }
-
-    $safeSubject = htmlspecialchars($subject, ENT_QUOTES, 'UTF-8');
 
     return <<<HTML
 <!DOCTYPE html>
@@ -221,111 +265,138 @@ function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyT
 
 // ── NATIVE SMTP SOCKET DRIVER ────────────────────────────────────────────────
 function sendSmtpEmail($host, $port, $user, $pass, $fromName, $fromEmail, $toEmail, $subject, $body, $bodyHtml = null) {
-    $timeout = 8;
-    $ssl = ($port == 465) ? 'ssl://' : '';
-    
-    $context = stream_context_create([
-        'ssl' => [
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true
-        ]
-    ]);
+    $cleanHost = preg_replace('#^(ssl|tls|tcp)://#i', '', trim($host));
+    $cleanHost = trim($cleanHost, "/ \t\n\r\0\x0B");
+    if (empty($cleanHost)) $cleanHost = 'smtp.hostinger.com';
 
-    $socket = @stream_socket_client($ssl . $host . ':' . intval($port), $errno, $errstr, $timeout, STREAM_CLIENT_CONNECT, $context);
-    if (!$socket) {
-        return ["success" => false, "error" => "Could not connect to SMTP server $host:$port - $errstr ($errno). Check Hostinger SMTP server and network connection."];
-    }
+    $primaryPort = intval($port) ?: 587;
+    $portsToTry = ($primaryPort === 465) ? [465, 587] : [$primaryPort, 465];
 
-    stream_set_timeout($socket, 5);
+    $lastError = "Unable to connect to SMTP server";
 
-    $read = function($sock) {
-        $response = "";
-        while ($line = fgets($sock, 512)) {
-            $response .= $line;
-            if (substr($line, 3, 1) == " ") break;
-            $info = stream_get_meta_data($sock);
-            if (!empty($info['timed_out'])) break;
+    foreach ($portsToTry as $currentPort) {
+        $isSsl = ($currentPort === 465);
+        $prefix = $isSsl ? 'ssl://' : 'tcp://';
+        $timeout = 10;
+
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ]);
+
+        $socket = @stream_socket_client($prefix . $cleanHost . ':' . $currentPort, $errno, $errstr, $timeout, STREAM_CLIENT_CONNECT, $context);
+        if (!$socket) {
+            $lastError = "Could not connect to SMTP server $cleanHost:$currentPort - $errstr ($errno).";
+            continue;
         }
-        return $response;
-    };
 
-    $send = function($sock, $cmd) use ($read) {
-        fputs($sock, $cmd . "\r\n");
-        return $read($sock);
-    };
+        stream_set_timeout($socket, 10);
 
-    $res = $read($socket);
-    if (substr($res, 0, 3) != "220") {
-        fclose($socket);
-        return ["success" => false, "error" => "SMTP banner invalid: $res"];
-    }
-
-    $res = $send($socket, "EHLO " . gethostname());
-
-    if ($port == 587) {
-        $res = $send($socket, "STARTTLS");
-        if (substr($res, 0, 3) == "220") {
-            $cryptoMethod = STREAM_CRYPTO_METHOD_TLS_CLIENT;
-            if (defined('STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT')) {
-                $cryptoMethod |= STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT;
+        $read = function($sock) {
+            $response = "";
+            while (!feof($sock) && ($line = fgets($sock, 1024))) {
+                $response .= $line;
+                if (strlen($line) >= 4 && $line[3] === ' ') break;
+                if (strlen(trim($line)) === 3 && ctype_digit(trim($line))) break;
+                $info = stream_get_meta_data($sock);
+                if (!empty($info['timed_out'])) break;
             }
-            if (defined('STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT')) {
-                $cryptoMethod |= STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT;
+            return $response;
+        };
+
+        $send = function($sock, $cmd) use ($read) {
+            fputs($sock, $cmd . "\r\n");
+            return $read($sock);
+        };
+
+        $banner = $read($socket);
+        if (substr(trim($banner), 0, 3) !== "220") {
+            fclose($socket);
+            $lastError = "SMTP banner invalid on port $currentPort: " . trim($banner);
+            continue;
+        }
+
+        $ehloDomain = 'conspodium.com';
+        if (!empty($fromEmail) && strpos($fromEmail, '@') !== false) {
+            $parts = explode('@', $fromEmail);
+            if (!empty($parts[1])) $ehloDomain = trim($parts[1]);
+        }
+
+        $res = $send($socket, "EHLO " . $ehloDomain);
+
+        if ($currentPort === 587 && strpos($res, 'STARTTLS') !== false) {
+            $tlsRes = $send($socket, "STARTTLS");
+            if (substr(trim($tlsRes), 0, 3) === "220") {
+                $cryptoMethod = STREAM_CRYPTO_METHOD_TLS_CLIENT;
+                if (defined('STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT')) {
+                    $cryptoMethod |= STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT;
+                }
+                if (defined('STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT')) {
+                    $cryptoMethod |= STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT;
+                }
+                $cryptoOk = @stream_socket_enable_crypto($socket, true, $cryptoMethod);
+                if ($cryptoOk) {
+                    $res = $send($socket, "EHLO " . $ehloDomain);
+                }
             }
-            @stream_socket_enable_crypto($socket, true, $cryptoMethod);
-            $res = $send($socket, "EHLO " . gethostname());
         }
-    }
 
-    if (!empty($user) && !empty($pass)) {
-        $res = $send($socket, "AUTH LOGIN");
-        if (substr($res, 0, 3) != "334") {
+        if (!empty($user) && !empty($pass)) {
+            $authRes = $send($socket, "AUTH LOGIN");
+            if (substr(trim($authRes), 0, 3) !== "334") {
+                fclose($socket);
+                $lastError = "SMTP Auth Login rejected on port $currentPort: " . trim($authRes);
+                continue;
+            }
+
+            $userRes = $send($socket, base64_encode($user));
+            if (substr(trim($userRes), 0, 3) !== "334") {
+                fclose($socket);
+                $lastError = "SMTP Username rejected on port $currentPort: " . trim($userRes);
+                continue;
+            }
+
+            $passRes = $send($socket, base64_encode($pass));
+            if (substr(trim($passRes), 0, 3) !== "235") {
+                fclose($socket);
+                return ["success" => false, "error" => "SMTP Authentication failed (Check Username/Password): " . trim($passRes)];
+            }
+        }
+
+        $mailFromRes = $send($socket, "MAIL FROM: <$fromEmail>");
+        if (substr(trim($mailFromRes), 0, 3) !== "250") {
             fclose($socket);
-            return ["success" => false, "error" => "SMTP Auth Login rejected: $res"];
+            return ["success" => false, "error" => "MAIL FROM rejected: " . trim($mailFromRes)];
         }
 
-        $res = $send($socket, base64_encode($user));
-        if (substr($res, 0, 3) != "334") {
+        $rcptRes = $send($socket, "RCPT TO: <$toEmail>");
+        if (substr(trim($rcptRes), 0, 3) !== "250") {
             fclose($socket);
-            return ["success" => false, "error" => "SMTP Username rejected: $res"];
+            return ["success" => false, "error" => "RCPT TO rejected: " . trim($rcptRes)];
         }
 
-        $res = $send($socket, base64_encode($pass));
-        if (substr($res, 0, 3) != "235") {
+        $dataRes = $send($socket, "DATA");
+        if (substr(trim($dataRes), 0, 3) !== "354") {
             fclose($socket);
-            return ["success" => false, "error" => "SMTP Authentication failed (Check Username/Password): $res"];
+            return ["success" => false, "error" => "DATA command rejected: " . trim($dataRes)];
+        }
+
+        $fullMessage = buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $body, $bodyHtml);
+        $finalRes = $send($socket, $fullMessage . "\r\n.");
+        @$send($socket, "QUIT");
+        @fclose($socket);
+
+        if (substr(trim($finalRes), 0, 3) === "250") {
+            return ["success" => true, "port" => $currentPort];
+        } else {
+            return ["success" => false, "error" => "SMTP dispatch rejected: " . trim($finalRes)];
         }
     }
 
-    $res = $send($socket, "MAIL FROM: <$fromEmail>");
-    if (substr($res, 0, 3) != "250") {
-        fclose($socket);
-        return ["success" => false, "error" => "MAIL FROM rejected: $res"];
-    }
-
-    $res = $send($socket, "RCPT TO: <$toEmail>");
-    if (substr($res, 0, 3) != "250") {
-        fclose($socket);
-        return ["success" => false, "error" => "RCPT TO rejected: $res"];
-    }
-
-    $res = $send($socket, "DATA");
-    if (substr($res, 0, 3) != "354") {
-        fclose($socket);
-        return ["success" => false, "error" => "DATA command rejected: $res"];
-    }
-
-    $fullMessage = buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $body, $bodyHtml);
-    $res = $send($socket, $fullMessage . "\r\n.");
-    $send($socket, "QUIT");
-    fclose($socket);
-
-    if (substr($res, 0, 3) == "250") {
-        return ["success" => true];
-    } else {
-        return ["success" => false, "error" => "SMTP dispatch failed: $res"];
-    }
+    return ["success" => false, "error" => $lastError];
 }
 
 // ── GET CONFIGURATION ────────────────────────────────────────────────────────
@@ -645,8 +716,8 @@ if ($method === 'POST' && ($action === 'send_reply' || $action === 'test_connect
             "success" => true,
             "provider" => $provider,
             "message" => ($action === 'test_connection')
-                ? "Test email dispatched successfully via $providerMsg!"
-                : "Email reply successfully sent to $recipientEmail via $providerMsg!"
+                ? "Test email sent successfully to $recipientEmail!"
+                : "Email reply successfully sent to $recipientEmail!"
         ]);
         exit;
     }
@@ -850,7 +921,7 @@ if ($method === 'POST' && $action === 'notify_author') {
 
     echo json_encode([
         "success" => true,
-        "message" => "Email notification successfully dispatched to $recipientEmail via $providerMsg!"
+        "message" => "Email notification successfully dispatched to $recipientEmail!"
     ]);
     exit;
 }
