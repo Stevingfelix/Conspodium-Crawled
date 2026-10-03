@@ -2938,8 +2938,8 @@
     align-items: center;
     gap: 10px;
     pointer-events: none;
-    max-width: 480px;
-    width: calc(100% - 32px);
+    max-width: min(680px, calc(100vw - 32px));
+    width: max-content;
   }
 
   .csp-toast {
@@ -2961,14 +2961,22 @@
     transform: translateY(24px) scale(0.95);
     opacity: 0;
     transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    white-space: nowrap;
-    text-overflow: ellipsis;
     max-width: 100%;
+    box-sizing: border-box;
   }
 
   .csp-toast.show {
     transform: translateY(0) scale(1);
     opacity: 1;
+  }
+
+  .csp-toast-msg {
+    flex: 1;
+    min-width: 0;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.45;
   }
 
   .csp-toast-icon-wrap {
@@ -4080,12 +4088,10 @@
       var loader = document.getElementById('csp-page-loader');
 
       function dismissLoader() {
-        if (loader) {
-          setTimeout(function () {
-            loader.classList.add('loaded');
-          }, 500);
-        }
+      if (loader) {
+        loader.classList.add('loaded');
       }
+    }
 
       dismissLoader();
 
@@ -4096,23 +4102,6 @@
       window.addEventListener('popstate', function () {
         if (loader) loader.classList.add('loaded');
       });
-
-      // Intercept link clicks to trigger loader transition with safety timeout
-      document.addEventListener('click', function (e) {
-        var a = e.target.closest('a[href]');
-        if (!a) return;
-        var href = a.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:') || a.getAttribute('target') === '_blank') return;
-        if (a.classList.contains('csp-tab-btn') || a.classList.contains('sub-filter-btn') || a.hasAttribute('data-sub-filter') || a.closest('#csp-login-screen') || a.closest('.csp-modal-card')) return;
-        if (loader) {
-          loader.classList.remove('loaded');
-          // Safety fallback: auto-dismiss loader after 2.5s if full page navigation doesn't occur
-          setTimeout(function () {
-            if (loader) loader.classList.add('loaded');
-          }, 2500);
-        }
-      });
-
       // Fix all header logos to strictly navigate back to Home root
       var homeUrl = getRootUrl('/');
       var logos = document.querySelectorAll('img.sticel-logo-shrink, .elementor-element-738d6a4 a, .elementor-element-2d4f26f a');
@@ -4378,39 +4367,64 @@
       var oldModal = document.getElementById('csp-global-success-modal');
       if (oldModal && oldModal.parentNode) oldModal.parentNode.removeChild(oldModal);
 
+      if (!document.getElementById('csp-success-modal-keyframes')) {
+        var styleTag = document.createElement('style');
+        styleTag.id = 'csp-success-modal-keyframes';
+        styleTag.textContent = '@keyframes cspPulseGlow{0%{box-shadow:0 0 0 0 rgba(0,174,254,0.4);transform:scale(0.95);}70%{box-shadow:0 0 0 16px rgba(0,174,254,0);transform:scale(1);}100%{box-shadow:0 0 0 0 rgba(0,174,254,0);transform:scale(0.95);}}@keyframes cspDrawCheck{100%{stroke-dashoffset:0;}}';
+        document.head.appendChild(styleTag);
+      }
+
       var modal = document.createElement('div');
       modal.id = 'csp-global-success-modal';
-      modal.style.cssText = 'position:fixed;inset:0;z-index:999999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity 0.35s ease;padding:20px;';
+      modal.style.cssText = 'position:fixed;inset:0;z-index:999999999;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,0.65);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;transition:opacity 0.3s cubic-bezier(0.16,1,0.3,1);padding:24px 16px;box-sizing:border-box;';
 
       var card = document.createElement('div');
-      card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;padding:32px 24px;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.35s ease;text-align:center;';
+      card.style.cssText = 'position:relative;background:#ffffff;border:1px solid #e2e8f0;border-top:5px solid #00AEFE;border-radius:28px;max-width:440px;width:100%;padding:40px 32px 32px;box-shadow:0 25px 70px rgba(15,23,42,0.22), 0 0 30px rgba(0,174,254,0.12);transform:scale(0.92) translateY(12px);opacity:0;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;text-align:center;color:#0f172a;box-sizing:border-box;';
 
       var closeBtn = document.createElement('button');
-      closeBtn.innerHTML = '&times;';
-      closeBtn.style.cssText = 'position:absolute;top:14px;right:14px;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+      closeBtn.setAttribute('aria-label', 'Close modal');
+      closeBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+      closeBtn.style.cssText = 'position:absolute;top:16px;right:16px;z-index:10;width:34px;height:34px;border-radius:50%;background:#f1f5f9;border:1px solid #e2e8f0;color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;';
+      closeBtn.onmouseenter = function() { this.style.background = '#e2e8f0'; this.style.color = '#0f172a'; this.style.transform = 'rotate(90deg)'; };
+      closeBtn.onmouseleave = function() { this.style.background = '#f1f5f9'; this.style.color = '#64748b'; this.style.transform = 'rotate(0deg)'; };
 
       function closeModal() {
         modal.style.opacity = '0';
-        card.style.transform = 'scale(0.9)';
-        setTimeout(function () { if (modal.parentNode) modal.parentNode.removeChild(modal); }, 350);
+        card.style.transform = 'scale(0.92) translateY(12px)';
+        card.style.opacity = '0';
+        setTimeout(function () { if (modal.parentNode) modal.parentNode.removeChild(modal); }, 300);
       }
 
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+
+      var cleanTitle = (title || 'Submission Successful!').replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim();
+
       card.innerHTML =
-        '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(0,174,254,0.2),rgba(183,31,113,0.2));border:1px solid rgba(0,174,254,0.4);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;">🎉</div>' +
-        '<h3 style="font-family:\'Merriweather\',serif;font-size:1.3rem;color:#ffffff;margin-bottom:10px;line-height:1.3;">' + (title || 'Submission Successful!') + '</h3>' +
-        '<p style="font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.6;margin-bottom:24px;">' + (message || 'Thank you! Your information has been received.') + '</p>' +
-        '<button id="csp-success-modal-btn" style="padding:12px 32px;background:#00AEFE;color:#fff;border:none;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Got It →</button>';
+        '<div style="width:72px;height:72px;border-radius:50%;background:rgba(0,174,254,0.12);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 0 0 0 rgba(0,174,254,0.4);animation:cspPulseGlow 2.4s infinite cubic-bezier(0.66,0,0,1);">' +
+          '<svg viewBox="0 0 24 24" style="width:36px;height:36px;stroke:#00AEFE;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none;">' +
+            '<path d="M5 13l4 4L19 7" style="stroke-dasharray:48;stroke-dashoffset:48;animation:cspDrawCheck 0.6s 0.15s cubic-bezier(0.65,0,0.45,1) forwards;"></path>' +
+          '</svg>' +
+        '</div>' +
+        '<h3 style="font-family:\'Merriweather\',Georgia,serif;font-size:1.35rem;font-weight:700;color:#0f172a;margin:0 0 10px;line-height:1.3;">' + cleanTitle + '</h3>' +
+        '<p style="font-family:\'Inter\',-apple-system,sans-serif;font-size:0.92rem;color:#64748b;line-height:1.6;margin:0 0 24px;">' + (message || 'Thank you! Your information has been received.') + '</p>' +
+        '<button id="csp-success-modal-btn" style="height:46px;padding:0 34px;background:linear-gradient(135deg,#00AEFE 0%,#0090d0 100%);color:#ffffff;border:none;border-radius:999px 999px 4px 999px;font-family:\'Inter\',-apple-system,sans-serif;font-weight:600;font-size:0.94rem;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all 0.25s ease;">Got It →</button>';
 
       card.appendChild(closeBtn);
       modal.appendChild(card);
       document.body.appendChild(modal);
 
       var btn = card.querySelector('#csp-success-modal-btn');
-      if (btn) btn.addEventListener('click', closeModal);
+      if (btn) {
+        btn.onmouseenter = function() { this.style.transform = 'translateY(-2px)'; this.style.boxShadow = '0 8px 26px rgba(0,174,254,0.5)'; };
+        btn.onmouseleave = function() { this.style.transform = 'translateY(0)'; this.style.boxShadow = '0 6px 20px rgba(0,174,254,0.35)'; };
+        btn.addEventListener('click', closeModal);
+      }
 
       setTimeout(function () {
         modal.style.opacity = '1';
-        card.style.transform = 'scale(1)';
+        card.style.transform = 'scale(1) translateY(0)';
+        card.style.opacity = '1';
       }, 50);
     };
 

@@ -28,12 +28,18 @@ if ($uri !== '/' && file_exists($filePath) && !is_dir($filePath)) {
 
 // 2. Directory with index.html (e.g. /dashboard/ or /stories/)
 if (is_dir($filePath) && file_exists(rtrim($filePath, '/') . '/index.html')) {
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Pragma: no-cache");
+    header("Expires: 0");
     require rtrim($filePath, '/') . '/index.html';
     return true;
 }
 
 // 3. Clean URL without trailing slash (e.g. /dashboard or /stories or /post/we-are-the-world)
 if (file_exists($filePath . '/index.html')) {
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Pragma: no-cache");
+    header("Expires: 0");
     require $filePath . '/index.html';
     return true;
 }

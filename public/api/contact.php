@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/auth_guard.php';
+require_once __DIR__ . '/email_helper.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? '';
@@ -20,33 +21,71 @@ $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 if ($method === 'GET') {
     requireAdmin();
     $statusFilter = $_GET['status'] ?? 'all';
-    if ($statusFilter && in_array($statusFilter, ['unread', 'read', 'archived'])) {
-        $stmt = $pdo->prepare("SELECT * FROM contact_messages WHERE status = ? ORDER BY created_at DESC");
-        $stmt->execute([$statusFilter]);
+    if ($statusFilter === 'trash') {
+        $stmt = $pdo->prepare("SELECT * FROM contact_messages WHERE status = 'trash' ORDER BY created_at DESC");
+        $stmt->execute();
+    } elseif ($statusFilter === 'unread') {
+        $stmt = $pdo->prepare("SELECT * FROM contact_messages WHERE status = 'unread' ORDER BY created_at DESC");
+        $stmt->execute();
+    } elseif ($statusFilter === 'read') {
+        $stmt = $pdo->prepare("SELECT * FROM contact_messages WHERE status IN ('read', 'replied') ORDER BY created_at DESC");
+        $stmt->execute();
     } else {
-        $stmt = $pdo->query("SELECT * FROM contact_messages ORDER BY created_at DESC");
+        // 'all' excludes trash
+        $stmt = $pdo->query("SELECT * FROM contact_messages WHERE status != 'trash' ORDER BY created_at DESC");
     }
     echo json_encode(["success" => true, "messages" => $stmt->fetchAll()]);
     exit;
 }
 
-// ── MARK MESSAGE STATUS (ADMIN ONLY) ───────────────────────────────────────
-if ($method === 'POST' && ($action === 'mark_read' || $action === 'mark_unread' || $action === 'archive')) {
+// ── EMPTY TRASH (ADMIN ONLY) ─────────────────────────────────────────────────
+if (($method === 'DELETE' || $method === 'POST') && $action === 'empty_trash') {
     requireAdmin();
-    $id = intval($_GET['id'] ?? $input['id'] ?? 0);
-    $statusMap = [
-        'mark_read' => 'read',
-        'mark_unread' => 'unread',
-        'archive' => 'archived'
-    ];
-    $newStatus = $statusMap[$action];
-    $stmt = $pdo->prepare("UPDATE contact_messages SET status = ? WHERE id = ?");
-    $stmt->execute([$newStatus, $id]);
-    echo json_encode(["success" => true, "message" => "Message status updated to " . $newStatus]);
+    $stmt = $pdo->query("DELETE FROM contact_messages WHERE status = 'trash'");
+    $count = $stmt->rowCount();
+    echo json_encode(["success" => true, "message" => "Emptied trash (" . $count . " message(s) permanently deleted)"]);
     exit;
 }
 
-// ── DELETE CONTACT MESSAGE(S) (ADMIN ONLY) ─────────────────────────────────
+// ── MOVE TO TRASH / RESTORE / STATUS (ADMIN ONLY) ────────────────────────────
+if ($method === 'POST' && ($action === 'trash' || $action === 'bulk_trash' || $action === 'restore' || $action === 'mark_read' || $action === 'mark_unread' || $action === 'archive')) {
+    requireAdmin();
+    $idsParam = $_GET['ids'] ?? $_GET['id'] ?? $input['ids'] ?? $input['id'] ?? null;
+    if ($idsParam) {
+        $rawIds = is_array($idsParam) ? $idsParam : explode(',', (string)$idsParam);
+        $ids = array_values(array_filter(array_map('intval', $rawIds), function($i) { return $i > 0; }));
+        if (!empty($ids)) {
+            $newStatus = 'read';
+            if ($action === 'trash' || $action === 'bulk_trash') {
+                $newStatus = 'trash';
+            } elseif ($action === 'restore') {
+                $newStatus = 'read';
+            } elseif ($action === 'mark_unread') {
+                $newStatus = 'unread';
+            } elseif ($action === 'archive') {
+                $newStatus = 'archived';
+            }
+
+            $inClause = implode(',', array_fill(0, count($ids), '?'));
+            $params = array_merge([$newStatus], $ids);
+            $stmt = $pdo->prepare("UPDATE contact_messages SET status = ? WHERE id IN ($inClause)");
+            $stmt->execute($params);
+            $count = $stmt->rowCount();
+            
+            $msg = ($action === 'trash' || $action === 'bulk_trash')
+                ? ($count . " message(s) moved to trash")
+                : (($action === 'restore') ? ($count . " message(s) restored from trash") : ("Message status updated to " . $newStatus));
+
+            echo json_encode(["success" => true, "message" => $msg]);
+            exit;
+        }
+    }
+    http_response_code(400);
+    echo json_encode(["success" => false, "error" => "No valid message IDs provided"]);
+    exit;
+}
+
+// ── DELETE CONTACT MESSAGE(S) PERMANENTLY (ADMIN ONLY) ───────────────────────
 if ($method === 'DELETE' || ($method === 'POST' && ($action === 'delete' || $action === 'bulk_delete'))) {
     requireAdmin();
     $idsParam = $_GET['ids'] ?? $_GET['id'] ?? $input['ids'] ?? $input['id'] ?? null;
@@ -90,6 +129,15 @@ if ($method === 'POST') {
     ");
     $stmt->execute([$firstName, $lastName, $email, $subject, $message]);
     $messageId = $pdo->lastInsertId();
+
+    $fullName = trim($firstName . ' ' . $lastName);
+    if (!$fullName) $fullName = $email;
+
+    // Dispatch automated confirmation to sender if trigger is active
+    csp_dispatch_templated_email($pdo, 'contact_received', $email, $fullName, [
+        '{author_name}' => $fullName,
+        '{subject}' => $subject
+    ]);
 
     // Send email alert to admin
     $emailSent = false;

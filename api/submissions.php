@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/auth_guard.php';
+require_once __DIR__ . '/email_helper.php';
 
 function slugify($text) {
     $text = preg_replace('~[^\pL\d]+~u', '-', $text);
@@ -64,9 +65,41 @@ if ($method === 'POST' && $action === 'approve') {
     }
 
     $pdo->prepare("UPDATE story_submissions SET status = 'approved' WHERE id = ?")->execute([$id]);
+    
+    // Dispatch automated approval email if trigger is active
+    if (!empty($sub['author_email'])) {
+        csp_dispatch_templated_email($pdo, 'story_approved', $sub['author_email'], $sub['author_name'], [
+            '{author_name}' => $sub['author_name'],
+            '{story_title}' => $sub['title'],
+            '{category}' => $sub['category'] ?? 'Editorial'
+        ]);
+    }
+
     echo json_encode([
         "success" => true,
         "message" => "Submission accepted and marked as approved!"
+    ]);
+    exit;
+}
+
+// ── RESTORE SUBMISSION (REMOVE FROM TRASH TO PENDING) ─────────────────────────
+if ($method === 'POST' && ($action === 'restore' || $action === 'unreject')) {
+    requireAdmin();
+    $id = intval($_GET['id'] ?? $input['id'] ?? 0);
+    $subStmt = $pdo->prepare("SELECT * FROM story_submissions WHERE id = ?");
+    $subStmt->execute([$id]);
+    $sub = $subStmt->fetch();
+
+    if (!$sub) {
+        http_response_code(404);
+        echo json_encode(["success" => false, "error" => "Submission not found"]);
+        exit;
+    }
+
+    $pdo->prepare("UPDATE story_submissions SET status = 'pending' WHERE id = ?")->execute([$id]);
+    echo json_encode([
+        "success" => true,
+        "message" => "Submission removed from trash and restored to pending inbox!"
     ]);
     exit;
 }
@@ -149,6 +182,17 @@ if ($method === 'POST' && $action === 'publish_story') {
     // Mark submission as approved
     $pdo->prepare("UPDATE story_submissions SET status = 'approved' WHERE id = ?")->execute([$id]);
 
+    // Dispatch automated published notification to author if live
+    if ($publishStatus === 'published' && !empty($sub['author_email'])) {
+        $storyUrl = 'https://conspodium.com/article/' . $slug;
+        csp_dispatch_templated_email($pdo, 'story_published', $sub['author_email'], $sub['author_name'], [
+            '{author_name}' => $sub['author_name'],
+            '{story_title}' => $title,
+            '{story_url}' => $storyUrl,
+            '{category}' => $eyebrow
+        ]);
+    }
+
     $msg = ($publishStatus === 'draft')
         ? "Article saved as draft in the Articles section!"
         : "Story article successfully published live on Conspodium!";
@@ -162,12 +206,40 @@ if ($method === 'POST' && $action === 'publish_story') {
     exit;
 }
 
-// ── REJECT SUBMISSION ────────────────────────────────────────────────────────
-if ($method === 'POST' && $action === 'reject') {
+// ── REJECT / MOVE TO TRASH SUBMISSION (ADMIN ONLY) ───────────────────────────
+if ($method === 'POST' && ($action === 'reject' || $action === 'bulk_reject')) {
     requireAdmin();
-    $id = intval($_GET['id'] ?? $input['id'] ?? 0);
-    $pdo->prepare("UPDATE story_submissions SET status = 'rejected' WHERE id = ?")->execute([$id]);
-    echo json_encode(["success" => true, "message" => "Submission moved to rejected trash"]);
+    $idsParam = $_GET['ids'] ?? $_GET['id'] ?? $input['ids'] ?? $input['id'] ?? null;
+    if ($idsParam) {
+        $rawIds = is_array($idsParam) ? $idsParam : explode(',', (string)$idsParam);
+        $ids = array_values(array_filter(array_map('intval', $rawIds), function($i) { return $i > 0; }));
+        if (!empty($ids)) {
+            $inClause = implode(',', array_fill(0, count($ids), '?'));
+            // Fetch author emails before update to send notifications
+            $fetchStmt = $pdo->prepare("SELECT id, author_name, author_email, title, category FROM story_submissions WHERE id IN ($inClause)");
+            $fetchStmt->execute($ids);
+            $rejectedSubs = $fetchStmt->fetchAll();
+
+            $stmt = $pdo->prepare("UPDATE story_submissions SET status = 'rejected' WHERE id IN ($inClause)");
+            $stmt->execute($ids);
+            $count = $stmt->rowCount();
+
+            foreach ($rejectedSubs as $sub) {
+                if (!empty($sub['author_email'])) {
+                    csp_dispatch_templated_email($pdo, 'story_rejected', $sub['author_email'], $sub['author_name'], [
+                        '{author_name}' => $sub['author_name'],
+                        '{story_title}' => $sub['title'],
+                        '{category}' => $sub['category'] ?? 'General'
+                    ]);
+                }
+            }
+
+            echo json_encode(["success" => true, "message" => $count . " submission(s) moved to rejected trash"]);
+            exit;
+        }
+    }
+    http_response_code(400);
+    echo json_encode(["success" => false, "error" => "No submission IDs provided"]);
     exit;
 }
 
@@ -223,6 +295,13 @@ if ($method === 'POST') {
     $stmt->execute([$name, $email, $bio, $category, $title, $content, $attachmentUrl]);
 
     $submissionId = $pdo->lastInsertId();
+
+    // Dispatch automated confirmation to author if trigger is active
+    csp_dispatch_templated_email($pdo, 'story_received', $email, $name, [
+        '{author_name}' => $name,
+        '{story_title}' => $title,
+        '{category}' => $category
+    ]);
 
     // Send email notification alert to admin
     $emailSent = false;

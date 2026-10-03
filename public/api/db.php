@@ -168,6 +168,94 @@ try {
         try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN upvotes INTEGER DEFAULT 0"); } catch (Exception $e) {}
         try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN downvotes INTEGER DEFAULT 0"); } catch (Exception $e) {}
 
+        // Create contact_replies, email_logs, and email_templates
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS contact_replies (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                contact_id INTEGER NOT NULL,
+                subject TEXT,
+                body TEXT,
+                sent_by TEXT DEFAULT 'Editor Admin',
+                provider TEXT DEFAULT 'smtp',
+                status TEXT DEFAULT 'sent',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+
+            CREATE TABLE IF NOT EXISTS email_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                recipient_email TEXT NOT NULL,
+                recipient_name TEXT,
+                subject TEXT,
+                body TEXT,
+                type TEXT DEFAULT 'general',
+                provider TEXT DEFAULT 'smtp',
+                status TEXT DEFAULT 'sent',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+
+            CREATE TABLE IF NOT EXISTS email_templates (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                template_key TEXT NOT NULL UNIQUE,
+                name TEXT NOT NULL,
+                subject TEXT NOT NULL,
+                body TEXT NOT NULL,
+                is_active INTEGER DEFAULT 1,
+                variables_hint TEXT,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+        ");
+
+        // Seed default email templates if empty
+        $tmplCheck = $pdo->query("SELECT COUNT(*) as count FROM email_templates")->fetch();
+        if (!$tmplCheck || (int)$tmplCheck['count'] === 0) {
+            $stmtTmpl = $pdo->prepare("INSERT INTO email_templates (template_key, name, subject, body, is_active, variables_hint) VALUES (?, ?, ?, ?, ?, ?)");
+            $defaultTemplates = [
+                [
+                    'story_received',
+                    'Story Submission Auto-Reply',
+                    'Story Submission Received — Conspodium Editorial',
+                    '<p>Dear {author_name},</p><p>Thank you for submitting your story proposal <strong>"{story_title}"</strong> to Conspodium.</p><p>Our editorial team is reviewing your draft and will follow up with you within 48–72 hours.</p><p>Warm regards,<br><strong>The Conspodium Editorial Team</strong></p>',
+                    1,
+                    '{author_name}, {story_title}, {category}, {site_name}'
+                ],
+                [
+                    'story_approved',
+                    'Story Proposal Approved Notice',
+                    'Congratulations! Your Story Has Been Accepted — Conspodium',
+                    '<p>Dear {author_name},</p><p>We are delighted to let you know that your submission <strong>"{story_title}"</strong> has been accepted for publication by the Conspodium Editorial Team!</p><p>Our editors are preparing your piece for live publication. We will notify you as soon as it goes live on the site.</p><p>Best regards,<br><strong>The Conspodium Editorial Team</strong></p>',
+                    1,
+                    '{author_name}, {story_title}, {category}, {site_name}'
+                ],
+                [
+                    'story_rejected',
+                    'Story Proposal Feedback / Rejection Notice',
+                    'Update on your Conspodium Submission — {story_title}',
+                    '<p>Dear {author_name},</p><p>Thank you for sharing your story proposal <strong>"{story_title}"</strong> with Conspodium.</p><p>After careful editorial review, we are unable to accept this submission for publication at this time. We warmly invite you to review our editorial guidelines and pitch future ideas.</p><p>Warm regards,<br><strong>The Conspodium Editorial Team</strong></p>',
+                    1,
+                    '{author_name}, {story_title}, {site_name}'
+                ],
+                [
+                    'story_published',
+                    'Story Published Live Notification',
+                    'Your Story is Now Live on Conspodium!',
+                    '<p>Dear {author_name},</p><p>Great news! Your story <strong>"{story_title}"</strong> has just been published live on Conspodium.</p><p>You can read and share your article here:<br><a href="{story_url}" style="color:#00AEFE;font-weight:bold;">{story_url}</a></p><p>Thank you for contributing to our global diaspora voice!</p><p>Warm regards,<br><strong>The Conspodium Editorial Team</strong></p>',
+                    1,
+                    '{author_name}, {story_title}, {story_url}, {category}, {site_name}'
+                ],
+                [
+                    'contact_received',
+                    'Contact Inquiry Auto-Acknowledgement',
+                    'We have received your message — Conspodium',
+                    '<p>Hello {sender_name},</p><p>Thank you for reaching out to Conspodium! We have received your message regarding <strong>"{subject}"</strong>.</p><p>Our team will review your inquiry and get back to you within 24–48 hours.</p><p>Best regards,<br><strong>Conspodium Support & Editorial Team</strong></p>',
+                    1,
+                    '{sender_name}, {subject}, {site_name}'
+                ]
+            ];
+            foreach ($defaultTemplates as $dt) {
+                $stmtTmpl->execute($dt);
+            }
+        }
+
         // Seed initial forum categories if empty
         $fCatCheck = $pdo->query("SELECT COUNT(*) as count FROM forum_categories")->fetch();
         if (!$fCatCheck || (int)$fCatCheck['count'] === 0) {
