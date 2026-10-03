@@ -1371,28 +1371,43 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   .elementor-element-46f7ba70 .elementskit-info-box-title,
-  .elementor-element-455d4f47 .elementskit-info-box-title {
+  .elementor-element-455d4f47 .elementskit-info-box-title,
+  .elementor-977 .elementor-element.elementor-element-46f7ba70 .elementskit-infobox .elementskit-info-box-title,
+  .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-infobox .elementskit-info-box-title {
     font-family: 'Inter', sans-serif !important;
     font-size: 1.35rem !important;
     font-weight: 700 !important;
     color: #0F172A !important;
     margin-bottom: 16px !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   .elementor-element-68a08653 .elementor-icon-list-items,
-  .elementor-element-6db6bf24 .elementor-icon-list-items {
+  .elementor-element-6db6bf24 .elementor-icon-list-items,
+  .elementor-977 .elementor-element.elementor-element-68a08653 .elementor-icon-list-items,
+  .elementor-977 .elementor-element.elementor-element-6db6bf24 .elementor-icon-list-items {
     margin: 0 0 28px 0 !important;
     padding: 0 !important;
     list-style: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   .elementor-element-68a08653 .elementor-icon-list-item,
-  .elementor-element-6db6bf24 .elementor-icon-list-item {
+  .elementor-element-6db6bf24 .elementor-icon-list-item,
+  .elementor-977 .elementor-element.elementor-element-68a08653 .elementor-icon-list-item,
+  .elementor-977 .elementor-element.elementor-element-6db6bf24 .elementor-icon-list-item {
     padding: 12px 0 !important;
     border-bottom: 1px solid #E2E8F0 !important;
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   .elementor-element-68a08653 .elementor-icon-list-item:last-child,
@@ -1401,10 +1416,17 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   .elementor-element-68a08653 .elementor-icon-list-icon i,
-  .elementor-element-6db6bf24 .elementor-icon-list-icon i {
-    color: #94A3B8 !important;
+  .elementor-element-6db6bf24 .elementor-icon-list-icon i,
+  .elementor-977 .elementor-element.elementor-element-68a08653 .elementor-icon-list-icon i,
+  .elementor-977 .elementor-element.elementor-element-6db6bf24 .elementor-icon-list-icon i,
+  .elementor-977 .elementor-element.elementor-element-68a08653 .elementor-icon-list-icon svg,
+  .elementor-977 .elementor-element.elementor-element-6db6bf24 .elementor-icon-list-icon svg {
+    color: #00AEFE !important;
+    fill: #00AEFE !important;
     font-size: 15px !important;
     transition: color 0.35s ease !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   .elementor-element-9c0f372:hover .elementor-element-68a08653 .elementor-icon-list-icon i,
@@ -1413,11 +1435,24 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 
   .elementor-element-68a08653 .elementor-icon-list-text,
-  .elementor-element-6db6bf24 .elementor-icon-list-text {
+  .elementor-element-6db6bf24 .elementor-icon-list-text,
+  .elementor-977 .elementor-element.elementor-element-68a08653 .elementor-icon-list-text,
+  .elementor-977 .elementor-element.elementor-element-6db6bf24 .elementor-icon-list-text {
     font-family: 'Inter', sans-serif !important;
     font-size: 0.92rem !important;
     color: #334155 !important;
     line-height: 1.45 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .elementor-element-68a08653 .elementor-icon-list-text b,
+  .elementor-element-6db6bf24 .elementor-icon-list-text b,
+  .elementor-977 .elementor-element.elementor-element-68a08653 .elementor-icon-list-text b,
+  .elementor-977 .elementor-element.elementor-element-6db6bf24 .elementor-icon-list-text b {
+    color: #0F172A !important;
+    font-weight: 700 !important;
   }
 
   .elementor-element-b75da38,
@@ -2640,8 +2675,9 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       box-sizing: border-box !important;
     }
 
-    /* ── 3. WHO ADVERTISES & ADVERTISING OPTIONS (CARDS VISIBLE WITH PADDING) ── */
-    .elementor-element-812547d {
+    /* ── 3. WHO ADVERTISES: SINGLE CLEAN CARD OUTLINE ── */
+    .elementor-element-812547d,
+    .elementor-977 .elementor-element.elementor-element-812547d {
       padding: 45px 16px 40px 16px !important;
       width: 100% !important;
       max-width: 100% !important;
@@ -2663,18 +2699,38 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       box-sizing: border-box !important;
     }
     .elementor-element-2ef9f0da > .elementor-element,
+    .elementor-977 .elementor-element.elementor-element-2ef9f0da > .elementor-element {
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .elementor-element-2ef9f0da .elementor-widget-container,
+    .elementor-element-2ef9f0da .ekit-wid-con {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+    }
     .elementor-element-2ef9f0da .elementskit-infobox {
       width: 100% !important;
       max-width: 100% !important;
       padding: 24px 20px !important;
       border-radius: 18px !important;
       border: 1px solid #E2E8F0 !important;
+      background: #FFFFFF !important;
       box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
       box-sizing: border-box !important;
       margin: 0 !important;
     }
 
-    /* Advertising Options Container & 2 Cards with Clean Visible Borders */
+    /* ── ADVERTISING OPTIONS: VISIBLE EDGES & ALL CARD ELEMENTS VISIBLE ── */
     .elementor-element-d802c16 {
       margin-top: 30px !important;
       margin-bottom: 25px !important;
@@ -2684,14 +2740,16 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       font-size: 1.95rem !important;
     }
 
-    .elementor-element-e54f59f {
+    .elementor-element-e54f59f,
+    .elementor-977 .elementor-element.elementor-element-e54f59f {
       width: 100% !important;
       max-width: 100% !important;
       padding: 0 !important;
       margin: 0 auto !important;
       box-sizing: border-box !important;
     }
-    .elementor-element-e54f59f > .e-con-inner {
+    .elementor-element-e54f59f > .e-con-inner,
+    .elementor-977 .elementor-element.elementor-element-e54f59f > .e-con-inner {
       display: flex !important;
       flex-direction: column !important;
       align-items: stretch !important;
@@ -2704,18 +2762,29 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     }
 
     .elementor-element-9c0f372,
-    .elementor-element-243a65ca {
+    .elementor-element-243a65ca,
+    .elementor-977 .elementor-element.elementor-element-9c0f372,
+    .elementor-977 .elementor-element.elementor-element-243a65ca {
       flex: 0 0 auto !important;
       width: 100% !important;
       max-width: 100% !important;
       min-width: 0 !important;
       box-sizing: border-box !important;
-      padding: 24px 20px 26px 20px !important;
-      border-radius: 20px !important;
+      background: #FFFFFF !important;
+      background-color: #FFFFFF !important;
       border: 1px solid #E2E8F0 !important;
-      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
+      border-radius: 20px !important;
+      padding: 20px 18px 24px 18px !important;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05) !important;
       margin: 0 0 20px 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      height: auto !important;
+      min-height: auto !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
+
     .advert-card-media {
       width: 100% !important;
       height: 180px !important;
@@ -2724,6 +2793,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       margin-bottom: 20px !important;
       overflow: hidden !important;
       border: 1px solid #E2E8F0 !important;
+      box-sizing: border-box !important;
     }
     .advert-card-media img {
       width: 100% !important;
@@ -2732,7 +2802,155 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       display: block !important;
     }
 
-    /* ── 4. PARTNERSHIP OPPORTUNITIES & TESTIMONIALS (CLEAN, UNBOXED, NO OUTLINES) ── */
+    /* Force visibility and correct colors for all text/elements inside Print & Digital cards */
+    .elementor-element-9c0f372 *,
+    .elementor-element-243a65ca * {
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .elementor-element-46f7ba70,
+    .elementor-element-455d4f47 {
+      margin: 16px 0 12px 0 !important;
+      width: 100% !important;
+      display: block !important;
+    }
+
+    .elementor-element-46f7ba70 .elementskit-infobox,
+    .elementor-element-455d4f47 .elementskit-infobox {
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .elementor-element-46f7ba70 .elementskit-info-box-icon,
+    .elementor-element-455d4f47 .elementskit-info-box-icon {
+      width: 44px !important;
+      height: 44px !important;
+      min-width: 44px !important;
+      border-radius: 12px !important;
+      background: #F1F5F9 !important;
+      border: 1px solid #E2E8F0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 0 !important;
+      flex-shrink: 0 !important;
+    }
+
+    .elementor-element-46f7ba70 .elementskit-info-box-icon i,
+    .elementor-element-455d4f47 .elementskit-info-box-icon i {
+      font-size: 20px !important;
+      color: #00AEFE !important;
+    }
+
+    .elementor-element-46f7ba70 .elementskit-info-box-title,
+    .elementor-element-455d4f47 .elementskit-info-box-title {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      color: #0F172A !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      line-height: 1.3 !important;
+    }
+
+    .elementor-element-68a08653,
+    .elementor-element-6db6bf24 {
+      width: 100% !important;
+      margin: 0 0 20px 0 !important;
+      display: block !important;
+    }
+
+    .elementor-element-68a08653 .elementor-icon-list-items,
+    .elementor-element-6db6bf24 .elementor-icon-list-items {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 10px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      list-style: none !important;
+    }
+
+    .elementor-element-68a08653 .elementor-icon-list-item,
+    .elementor-element-6db6bf24 .elementor-icon-list-item {
+      display: flex !important;
+      align-items: flex-start !important;
+      gap: 10px !important;
+      padding: 8px 0 !important;
+      border-bottom: 1px solid #F1F5F9 !important;
+      margin: 0 !important;
+    }
+
+    .elementor-element-68a08653 .elementor-icon-list-item:last-child,
+    .elementor-element-6db6bf24 .elementor-icon-list-item:last-child {
+      border-bottom: none !important;
+    }
+
+    .elementor-element-68a08653 .elementor-icon-list-icon,
+    .elementor-element-6db6bf24 .elementor-icon-list-icon,
+    .elementor-element-68a08653 .elementor-icon-list-icon i,
+    .elementor-element-6db6bf24 .elementor-icon-list-icon i {
+      color: #00AEFE !important;
+      fill: #00AEFE !important;
+      font-size: 14px !important;
+      margin-top: 3px !important;
+      flex-shrink: 0 !important;
+    }
+
+    .elementor-element-68a08653 .elementor-icon-list-text,
+    .elementor-element-6db6bf24 .elementor-icon-list-text {
+      color: #475569 !important;
+      font-size: 0.92rem !important;
+      line-height: 1.5 !important;
+    }
+
+    .elementor-element-68a08653 .elementor-icon-list-text b,
+    .elementor-element-6db6bf24 .elementor-icon-list-text b {
+      color: #0F172A !important;
+      font-weight: 700 !important;
+    }
+
+    .elementor-element-b75da38,
+    .elementor-element-3b186358,
+    .elementor-element-b75da38 .elementor-widget-container,
+    .elementor-element-3b186358 .elementor-widget-container,
+    .elementor-element-b75da38 .ekit-wid-con,
+    .elementor-element-3b186358 .ekit-wid-con,
+    .elementor-element-b75da38 .ekit-btn-wraper,
+    .elementor-element-3b186358 .ekit-btn-wraper {
+      width: 100% !important;
+      display: block !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .elementor-element-b75da38 .elementskit-btn,
+    .elementor-element-3b186358 .elementskit-btn {
+      width: 100% !important;
+      max-width: 100% !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 8px !important;
+      background: #00AEFE !important;
+      color: #FFFFFF !important;
+      fill: #FFFFFF !important;
+      padding: 13px 20px !important;
+      border-radius: 12px !important;
+      font-weight: 700 !important;
+      font-size: 0.95rem !important;
+      text-decoration: none !important;
+      box-shadow: 0 4px 14px rgba(0, 174, 254, 0.3) !important;
+      box-sizing: border-box !important;
+    }
+
+    /* ── 4. PARTNERSHIP OPPORTUNITIES: SINGLE CLEAN CARD OUTLINE ── */
     .elementor-element-238a62,
     .elementor-977 .elementor-element.elementor-element-238a62 {
       background: #FAFAFC !important;
@@ -2764,7 +2982,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       margin-bottom: 10px !important;
     }
 
-    /* 3 Collaboration Cards */
+    /* 3 Collaboration Cards - Single Clean Outline */
     .elementor-element-6283bb91 {
       display: flex !important;
       flex-direction: column !important;
@@ -2776,12 +2994,32 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       box-sizing: border-box !important;
     }
     .elementor-element-6283bb91 > .elementor-element,
+    .elementor-977 .elementor-element.elementor-element-6283bb91 > .elementor-element {
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .elementor-element-6283bb91 .elementor-widget-container,
+    .elementor-element-6283bb91 .ekit-wid-con {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+    }
     .elementor-element-6283bb91 .elementskit-infobox {
       width: 100% !important;
       max-width: 100% !important;
-      padding: 26px 20px !important;
+      padding: 28px 22px !important;
       border-radius: 20px !important;
       border: 1px solid #E2E8F0 !important;
+      background: #FFFFFF !important;
       box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
       box-sizing: border-box !important;
       margin: 0 !important;
@@ -8816,6 +9054,8 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 				</div>
 				</div>
 				</div>
+				</div>
+				</div>
 				
   <div data-elementor-type="footer" data-elementor-id="1374" class="elementor elementor-1374 elementor-location-footer">
 	<style id="csp-global-footer-style">
@@ -9109,12 +9349,21 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 			}
 		}
 
-		/* ── MOBILE RESPONSIVE (ALL ELEMENTS CENTERED) ── */
+		/* ── MOBILE RESPONSIVE (ALL ELEMENTS CENTERED & TIGHT LINK SPACING) ── */
 		@media (max-width: 768px) {
+			.elementor-location-footer,
+			.elementor-1374 {
+				width: 100% !important;
+				max-width: 100vw !important;
+				overflow-x: hidden !important;
+				box-sizing: border-box !important;
+			}
+
 			.elementor-element-dd5bf5d,
 			.elementor-1374 .elementor-element.elementor-element-dd5bf5d {
-				padding: 45px 20px 30px 20px !important;
+				padding: 38px 16px 28px 16px !important;
 				width: 100% !important;
+				max-width: 100% !important;
 				box-sizing: border-box !important;
 			}
 
@@ -9124,10 +9373,12 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 				align-items: center !important;
 				justify-content: center !important;
 				text-align: center !important;
-				gap: 30px !important;
+				gap: 28px !important;
 				width: 100% !important;
 				max-width: 100% !important;
 				margin: 0 auto !important;
+				padding: 0 !important;
+				box-sizing: border-box !important;
 			}
 
 			/* Brand Column Centering */
@@ -9135,49 +9386,56 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 			.elementor-1374 .elementor-element.elementor-element-920f34a {
 				flex: none !important;
 				width: 100% !important;
-				max-width: 100% !important;
+				max-width: 320px !important;
 				display: flex !important;
 				flex-direction: column !important;
 				align-items: center !important;
 				text-align: center !important;
 				margin: 0 auto !important;
 				padding: 0 !important;
+				box-sizing: border-box !important;
 			}
 
 			.elementor-element-920f34a .elementor-widget-image,
 			.elementor-element-68518ef {
-				margin: 0 auto 14px auto !important;
+				margin: 0 auto 12px auto !important;
 				text-align: center !important;
 				display: flex !important;
 				justify-content: center !important;
 				width: 100% !important;
-				max-width: 190px !important;
+				max-width: 175px !important;
 			}
 
 			.elementor-element-68518ef img {
 				margin: 0 auto !important;
 				display: block !important;
+				max-width: 175px !important;
+				height: auto !important;
 			}
 
 			.elementor-element-5dd035e {
 				text-align: center !important;
-				margin: 0 auto 12px auto !important;
+				margin: 0 auto 8px auto !important;
 				width: 100% !important;
-				max-width: 320px !important;
+				max-width: 290px !important;
 			}
 
 			.elementor-element-5dd035e .elementor-heading-title {
 				text-align: center !important;
+				font-size: 0.78rem !important;
+				line-height: 1.45 !important;
 			}
 
 			.elementor-element-5d447be {
 				text-align: center !important;
-				margin: 0 auto 16px auto !important;
+				margin: 0 auto 14px auto !important;
 				width: 100% !important;
+				max-width: 290px !important;
 			}
 
 			.elementor-element-5d447be .elementor-heading-title {
 				text-align: center !important;
+				font-size: 0.75rem !important;
 			}
 
 			.elementor-element-2063cab {
@@ -9192,21 +9450,29 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 				justify-content: center !important;
 				margin: 0 auto !important;
 				width: auto !important;
-			}
-
-			/* Nav Group on Mobile */
-			.csp-footer-nav-group {
 				display: flex !important;
-				flex-direction: column !important;
-				align-items: center !important;
-				justify-content: center !important;
-				text-align: center !important;
-				gap: 26px !important;
-				width: 100% !important;
-				margin: 0 auto !important;
+				gap: 10px !important;
 			}
 
-			/* 4 Menu Columns Centered on Mobile */
+			.elementor-element-2063cab .sky-social-icons .sa-link {
+				width: 34px !important;
+				height: 34px !important;
+				min-width: 34px !important;
+			}
+
+			/* Centered Nav Grid on Mobile with Tight Link Spacing */
+			.csp-footer-nav-group {
+				display: grid !important;
+				grid-template-columns: repeat(2, 1fr) !important;
+				gap: 22px 14px !important;
+				width: 100% !important;
+				max-width: 330px !important;
+				margin: 0 auto !important;
+				text-align: center !important;
+				justify-content: center !important;
+				box-sizing: border-box !important;
+			}
+
 			.elementor-element-ef39660,
 			.elementor-element-bc4ef16,
 			.elementor-element-71ce8ac,
@@ -9224,6 +9490,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 				text-align: center !important;
 				margin: 0 auto !important;
 				padding: 0 !important;
+				box-sizing: border-box !important;
 			}
 
 			.elementor-location-footer .elementor-widget-text-editor,
@@ -9238,22 +9505,33 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
 			.elementor-location-footer .elementor-widget-text-editor p strong {
 				text-align: center !important;
-				margin: 0 auto 8px auto !important;
+				margin: 0 auto 6px auto !important;
 				display: block !important;
-				width: 100% !important;
+				width: 100%;
+				font-size: 0.92rem !important;
+				color: #FFFFFF !important;
 			}
 
 			.elementor-location-footer .elementor-widget-text-editor p {
 				text-align: center !important;
-				margin: 0 auto 6px auto !important;
+				margin: 0 auto 4px auto !important;
 				width: 100% !important;
 				display: block !important;
+				line-height: 1.25 !important;
+			}
+
+			.elementor-location-footer .elementor-widget-text-editor p:last-child {
+				margin-bottom: 0 !important;
 			}
 
 			.elementor-location-footer .elementor-widget-text-editor a {
 				text-align: center !important;
 				margin: 0 auto !important;
 				display: inline-block !important;
+				font-size: 0.84rem !important;
+				line-height: 1.25 !important;
+				color: #94A3B8 !important;
+				padding: 1px 0 !important;
 			}
 
 			.elementor-location-footer .elementor-widget-text-editor a:hover {
@@ -9261,12 +9539,22 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 			}
 
 			.elementor-element-7c02c78 {
-				padding: 16px 16px !important;
+				padding: 14px 16px !important;
+				box-sizing: border-box !important;
+				width: 100% !important;
+				max-width: 100% !important;
 			}
 
 			.elementor-element-9a52650 p {
-				font-size: 0.8rem !important;
+				font-size: 0.78rem !important;
 				text-align: center !important;
+			}
+		}
+
+		@media (max-width: 340px) {
+			.csp-footer-nav-group {
+				grid-template-columns: 1fr !important;
+				gap: 18px !important;
 			}
 		}
 	</style>
