@@ -282,6 +282,7 @@
     .csp-status-badge {
       display: inline-block; padding: 3px 10px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
     }
+    .csp-status-category { background: rgba(0,174,254,0.1); color: #00AEFE; border: 1px solid rgba(0,174,254,0.3); }
     .csp-status-pending { background: rgba(245,158,11,0.12); color: #d97706; border: 1px solid rgba(245,158,11,0.3); }
     .csp-status-approved { background: rgba(16,185,129,0.12); color: #059669; border: 1px solid rgba(16,185,129,0.3); }
     .csp-status-rejected { background: rgba(239,68,68,0.12); color: #dc2626; border: 1px solid rgba(239,68,68,0.3); }
@@ -342,6 +343,33 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    .csp-welcome {
+      margin-bottom: 28px;
+    }
+    .csp-welcome h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .csp-welcome h1 em {
+      font-style: italic;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--blue), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .csp-welcome-sub {
+      font-size: 0.95rem;
+      color: #64748b;
+      line-height: 1.5;
+      margin: 0;
+    }
+
     .csp-sidebar-backdrop {
       position: fixed; inset: 0; z-index: 90;
       background: rgba(15, 23, 42, 0.55);
@@ -352,7 +380,7 @@
     }
 
     .csp-mobile-toggle {
-      display: none;
+      display: none !important;
       align-items: center;
       justify-content: center;
       width: 38px;
@@ -387,7 +415,7 @@
         max-width: 100vw;
         overflow-x: hidden;
       }
-      .csp-mobile-toggle { display: flex; }
+      .csp-mobile-toggle { display: flex !important; }
       .csp-content {
         padding: 16px 12px;
         width: 100%;
@@ -5632,11 +5660,9 @@
       height: 160px !important;
       left: 70px !important;
       bottom: 10px !important;
-    }
   }
-
-
-
+</style>
+<script>
   /* ── UNIVERSAL CONSPODIUM SVG ICON PROVIDER ────────────────── */
   window.CSP_ICONS = {
     'grid': '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
@@ -5758,7 +5784,8 @@
     container.innerHTML = html;
     if (window.cspToast) window.cspToast('Vote recorded for "' + optionText + '"!', 'success');
   };
-</style>
+</script>
+<!-- CSP_HEADER_FIXES_END -->
 </head>
 <body>
 
@@ -5943,7 +5970,7 @@
       <button class="csp-mobile-toggle" id="csp-toggle">☰</button>
       <h2 id="csp-topbar-title" style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Overview</h2>
     </div>
-    <button class="csp-btn-sm csp-btn-primary" id="btn-open-new-post" style="display:none;"></button>
+    <button class="csp-btn-sm csp-btn-primary" id="btn-open-new-post" onclick="openPostModal()"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> New Article</button>
   </div>
 
   <div class="csp-content">
@@ -8437,6 +8464,9 @@
     });
   });
 
+  // Initialize topbar button for active tab
+  updateTopbarActionButton('overview');
+
   // Modal open / close logic
   function openModal(id) {
     var m = document.getElementById(id);
@@ -8876,7 +8906,7 @@
             topTbody.innerHTML += `
               <tr>
                 <td style="font-weight:600;">${p.title}</td>
-                <td><span class="csp-status-badge csp-status-approved">${p.category_name || 'General'}</span></td>
+                <td><span class="csp-status-badge csp-status-category">${p.category_name || 'General'}</span></td>
                 <td>${p.reading_time || '5 min'}</td>
                 <td style="color:var(--blue);font-weight:600;">${(p.views || 0).toLocaleString()}</td>
               </tr>
@@ -12661,7 +12691,7 @@
               <td style="font-weight:600;color:#0f172a;max-width:260px;">
                 <a href="javascript:void(0)" onclick="viewAdminThreadDetails(${t.id})" style="color:#0f172a;text-decoration:none;font-weight:700;" onmouseover="this.style.color='var(--blue)'" onmouseout="this.style.color='#0f172a'">${t.title}</a>
               </td>
-              <td><span class="csp-status-badge csp-status-approved">${t.category}</span></td>
+              <td><span class="csp-status-badge csp-status-category">${t.category}</span></td>
               <td>
                 <div style="font-weight:500;">${t.author_name}</div>
                 <div style="font-size:0.76rem;color:var(--text-muted);">${t.author_email}</div>
@@ -12719,7 +12749,7 @@
         var netScoreStr = (netScore >= 0 ? '+' : '') + netScore;
         document.getElementById('admin-thread-title').textContent = t.title;
         document.getElementById('admin-thread-meta').innerHTML = `
-          <span class="csp-status-badge csp-status-approved" style="margin-right:8px;">${t.category}</span>
+          <span class="csp-status-badge csp-status-category" style="margin-right:8px;">${t.category}</span>
           <span>By <strong>${t.author_name}</strong> (${t.author_email})</span> • 
           <span>Posted ${new Date(t.created_at).toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'})}</span> • 
           <span>👁️ ${t.views || 0} views</span> • 

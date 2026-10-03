@@ -2048,27 +2048,7 @@ e-page-transition,
     }
   }
 
-  @media (max-width: 768px) {
-    .csp-advert-bento-showcase {
-      padding: 0 16px !important;
-      margin: 40px auto 30px auto !important;
-    }
-    .csp-bento-card {
-      padding: 28px 22px !important;
-      border-radius: 20px !important;
-    }
-    .csp-reach-showcase-box {
-      padding: 32px 22px 28px !important;
-      border-radius: 22px !important;
-    }
-    .csp-bento-title {
-      font-size: 1.85rem !important;
-    }
-    .csp-reach-bottom-strip {
-      flex-direction: column !important;
-      align-items: flex-start !important;
-    }
-  }
+
 
   /* -------------------------------------------------------------
      2. Who Advertises With Us Section Overhaul
@@ -2240,70 +2220,7 @@ e-page-transition,
     }
   }
 
-  @media (max-width: 768px) {
-    .elementor-element-2ef9f0da {
-      grid-template-columns: 1fr !important;
-      gap: 16px !important;
-    }
-    .elementor-element-812547d {
-      padding: 40px 16px !important;
-    }
-    .elementor-element-2ef9f0da .elementskit-infobox {
-      align-items: center !important;
-      text-align: center !important;
-      justify-content: center !important;
-      padding: 26px 20px !important;
-    }
-    .elementor-element-2ef9f0da .elementskit-box-header {
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      width: 100% !important;
-      margin: 0 auto 16px auto !important;
-      text-align: center !important;
-    }
-    .elementor-element-2ef9f0da .elementskit-info-box-icon {
-      margin: 0 auto !important;
-      align-self: center !important;
-      display: inline-flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-    }
-    .elementor-element-2ef9f0da .box-body {
-      width: 100% !important;
-      margin: 0 auto !important;
-      padding: 0 !important;
-      text-align: center !important;
-      align-items: center !important;
-      display: flex !important;
-      flex-direction: column !important;
-    }
-    .elementor-element-2ef9f0da .elementskit-info-box-title,
-    .elementor-element-27d2043d .elementskit-info-box-title,
-    .elementor-element-2dde977 .elementskit-info-box-title,
-    .elementor-element-6c7b80d .elementskit-info-box-title,
-    .elementor-element-76f974b .elementskit-info-box-title,
-    .elementor-element-472497a .elementskit-info-box-title {
-      text-align: center !important;
-      margin: 0 auto 8px auto !important;
-      padding: 0 !important;
-      width: 100% !important;
-      display: block !important;
-    }
-    .elementor-element-2ef9f0da .box-body p,
-    .elementor-element-2ef9f0da .elementskit-infobox p,
-    .elementor-element-27d2043d .elementskit-infobox p,
-    .elementor-element-2dde977 .elementskit-infobox p,
-    .elementor-element-6c7b80d .elementskit-infobox p,
-    .elementor-element-76f974b .elementskit-infobox p,
-    .elementor-element-472497a .elementskit-infobox p {
-      text-align: center !important;
-      margin: 0 auto !important;
-      padding: 0 !important;
-      width: 100% !important;
-      display: block !important;
-    }
-  }
+
 
   /* -------------------------------------------------------------
      3. Advertising Options (Placements & Spacing)
@@ -3418,13 +3335,14 @@ e-page-transition,
   }
 
   /* -------------------------------------------------------------
-     6. Mobile Responsive Typography & Big Button Sizing (@media max-width: 767px)
+     6. Mobile Responsive Typography, Cards & Spacing (@media max-width: 768px)
      ------------------------------------------------------------- */
-  @media (max-width: 767px) {
-    /* Large prominent buttons on mobile like Sponsorship page */
+  @media (max-width: 768px) {
+    /* Large prominent consultation CTA button */
     .elementskit-btn,
     .elementor-element-e1cd348 .elementskit-btn,
-    .elementor-element-680bd459 .elementskit-btn {
+    .elementor-element-680bd459 .elementskit-btn,
+    .csp-sleek-schedule-btn {
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -3438,6 +3356,7 @@ e-page-transition,
       border-radius: 50px !important;
       box-sizing: border-box !important;
       box-shadow: 0 8px 25px rgba(0, 174, 254, 0.3) !important;
+      margin: 0 auto !important;
     }
 
     .elementor-element-e1cd348 .ekit-btn-wraper,
@@ -3445,9 +3364,10 @@ e-page-transition,
       display: flex !important;
       justify-content: center !important;
       width: 100% !important;
+      margin: 0 auto !important;
     }
 
-    /* Print & Digital placement buttons centered on mobile */
+    /* Print & Digital placement buttons inside cards */
     .elementor-element-b75da38,
     .elementor-element-3b186358,
     .elementor-element-b75da38 .elementor-widget-container,
@@ -3465,29 +3385,15 @@ e-page-transition,
     .elementor-element-b75da38 .elementskit-btn,
     .elementor-element-3b186358 .elementskit-btn {
       width: 100% !important;
-      max-width: 300px !important;
+      max-width: 100% !important;
       display: inline-flex !important;
       justify-content: center !important;
       align-items: center !important;
-      border-radius: 50px !important;
+      border-radius: 12px !important;
       box-sizing: border-box !important;
       text-align: center !important;
+      padding: 14px 20px !important;
       margin: 0 auto !important;
-    }
-
-    /* Advertising Options Spacing on Mobile */
-    .elementor-element-2ef9f0da {
-      margin-bottom: 50px !important;
-    }
-    .elementor-element-472497a {
-      margin-bottom: 25px !important;
-    }
-    .elementor-element-d802c16 {
-      margin-top: 50px !important;
-      padding-top: 20px !important;
-      margin-bottom: 25px !important;
-      display: block !important;
-      clear: both !important;
     }
 
     /* Dual header mobile sizing */
@@ -3505,110 +3411,154 @@ e-page-transition,
     .elementskit-infobox .box-body p,
     .elementskit-infobox p,
     .elementor-icon-list-text {
-      font-size: 1.02rem !important;
-      line-height: 1.65 !important;
+      font-size: 0.98rem !important;
+      line-height: 1.6 !important;
       color: #475569 !important;
     }
 
-    /* Why Conspodium Works Mobile Section & Cards - Stretched to Ends */
-    .elementor-element-702ac813 .elementor-heading-title {
-      margin-top: 30px !important;
-      margin-bottom: 12px !important;
-      font-size: 1.85rem !important;
-      text-align: center !important;
-    }
-    .elementor-element-d099459,
-    .elementor-977 .elementor-element.elementor-element-d099459 {
-      margin: 0 auto 20px auto !important;
-      padding: 0 16px !important;
-      display: block !important;
+    /* ── 1. SLEEK MOBILE IMAGES (Hero Mockup & Bottom Consultation) ── */
+    .elementor-element-598a9a85 .elementor-element.e-con-full,
+    .csp-hero-visual-card {
+      margin: 20px auto 24px auto !important;
+      padding: 0 !important;
       width: 100% !important;
       max-width: 100% !important;
       box-sizing: border-box !important;
     }
-    .elementor-element-d099459 > .e-con-inner {
+    .elementor-element-598a9a85 .elementor-element.e-con-full > div,
+    .csp-hero-visual-card > div {
+      border-radius: 18px !important;
+      overflow: hidden !important;
+      border: 1px solid #E2E8F0 !important;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+      width: 100% !important;
+    }
+    .elementor-element-598a9a85 img[src*="advert-hero"] {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      aspect-ratio: 16 / 10 !important;
+      max-height: 250px !important;
+      object-fit: cover !important;
+      display: block !important;
+      border-radius: 0 !important;
+    }
+
+    .csp-advert-consultation-wrap {
+      margin: 16px auto 30px auto !important;
+      padding: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .csp-advert-consultation-wrap .csp-consultation-img-container {
+      width: 100% !important;
+      border-radius: 18px !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+      border: 1px solid #E2E8F0 !important;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+    }
+    .csp-advert-consultation-wrap img {
+      width: 100% !important;
+      height: auto !important;
+      aspect-ratio: 16 / 10 !important;
+      min-height: 0 !important;
+      max-height: 250px !important;
+      object-fit: cover !important;
+      display: block !important;
+      border-radius: 0 !important;
+    }
+
+    /* ── 2. WHY CONSPODIUM WORKS & MEASURABLE REACH: STRETCHED TO BOTH ENDS ── */
+    .elementor-element-598a9a85,
+    .elementor-977 .elementor-element.elementor-element-598a9a85,
+    .elementor-element-598a9a85.e-con-boxed {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+      padding-top: 90px !important;
+      padding-bottom: 35px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .elementor-element-598a9a85 > .e-con-inner,
+    .elementor-element-598a9a85.e-con-boxed > .e-con-inner,
+    .elementor-977 .elementor-element.elementor-element-598a9a85 > .e-con-inner {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    .csp-advert-bento-showcase {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 35px 0 25px 0 !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
+    .csp-bento-header {
+      text-align: center !important;
+      margin: 0 auto 26px auto !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+    .csp-bento-title {
+      font-size: 1.75rem !important;
+      line-height: 1.25 !important;
+      margin-bottom: 12px !important;
+    }
+    .csp-bento-sub {
+      font-size: 0.95rem !important;
+      line-height: 1.6 !important;
+    }
+
+    /* Why Conspodium Works 3 Cards */
+    .csp-bento-grid {
       display: flex !important;
       flex-direction: column !important;
-      align-items: stretch !important;
       gap: 16px !important;
       width: 100% !important;
       max-width: 100% !important;
+      margin: 0 0 28px 0 !important;
       padding: 0 !important;
-      margin: 0 !important;
       box-sizing: border-box !important;
     }
-    .elementor-element-d099459 .elementor-element,
-    .elementor-element-d099459 > .e-con-inner > .elementor-element,
-    .elementor-element-4417a3f,
-    .elementor-element-ed45629,
-    .elementor-element-ab529c3 {
+    .csp-bento-card {
       width: 100% !important;
       max-width: 100% !important;
-      flex: 0 0 auto !important;
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: auto !important;
       min-height: auto !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      box-sizing: border-box !important;
-    }
-    .elementor-element-d099459 .elementskit-infobox {
-      height: auto !important;
-      min-height: auto !important;
-      padding: 26px 20px !important;
+      padding: 26px 20px 24px 20px !important;
       border-radius: 20px !important;
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      width: 100% !important;
-      max-width: 100% !important;
       box-sizing: border-box !important;
+      margin: 0 !important;
       border: 1px solid #E2E8F0 !important;
       box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
     }
 
-    /* Measurable Reach Mobile Section & Cards - Stretched to Ends & Centered Button */
-    .elementor-element-73830d1b,
-    .elementor-977 .elementor-element.elementor-element-73830d1b {
-      margin: 15px auto 25px auto !important;
-      padding: 0 16px !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      background: transparent !important;
-      background-color: transparent !important;
-      box-sizing: border-box !important;
-    }
-    .elementor-element-73830d1b > .e-con-inner {
-      width: 100% !important;
-      max-width: 100% !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      box-sizing: border-box !important;
-    }
-    .elementor-element-54d59a54 .elementor-heading-title {
-      margin-top: 8px !important;
-      margin-bottom: 12px !important;
-      font-size: 1.75rem !important;
-      text-align: center !important;
-    }
+    /* Measurable Reach Dark Showcase Container & Centered Button */
     .csp-reach-showcase-box {
       width: 100% !important;
       max-width: 100% !important;
-      margin: 0 auto !important;
-      padding: 28px 18px 24px 18px !important;
+      margin: 0 !important;
+      padding: 26px 18px 24px 18px !important;
       border-radius: 22px !important;
       box-sizing: border-box !important;
     }
     .csp-reach-top-bar {
+      display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
       text-align: center !important;
-      gap: 10px !important;
-      margin-bottom: 22px !important;
-      padding-bottom: 16px !important;
+      gap: 8px !important;
+      margin-bottom: 20px !important;
+      padding-bottom: 14px !important;
+      width: 100% !important;
     }
     .csp-reach-badge {
       margin: 0 auto !important;
@@ -3616,180 +3566,274 @@ e-page-transition,
     .csp-reach-live-note {
       text-align: center !important;
       margin: 0 auto !important;
+      font-size: 0.8rem !important;
     }
     .csp-reach-stats-grid {
-      width: 100% !important;
-      grid-template-columns: 1fr !important;
+      display: flex !important;
+      flex-direction: column !important;
       gap: 12px !important;
-      margin-bottom: 22px !important;
+      width: 100% !important;
+      margin-bottom: 20px !important;
+      padding: 0 !important;
     }
     .csp-stat-cell {
       width: 100% !important;
+      max-width: 100% !important;
       box-sizing: border-box !important;
-      padding: 22px 16px !important;
+      padding: 20px 16px !important;
+      border-radius: 18px !important;
+      text-align: center !important;
+    }
+    .csp-stat-val {
+      font-size: 2.6rem !important;
     }
     .csp-reach-bottom-strip {
+      display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
       text-align: center !important;
       gap: 16px !important;
       padding-top: 18px !important;
+      width: 100% !important;
     }
     .csp-community-live-badge {
+      display: flex !important;
+      align-items: center !important;
       justify-content: center !important;
       text-align: center !important;
       margin: 0 auto !important;
       width: 100% !important;
+      font-size: 0.88rem !important;
     }
     .csp-reach-cta-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
       margin: 0 auto !important;
       align-self: center !important;
-      display: inline-flex !important;
-      justify-content: center !important;
       text-align: center !important;
+      width: auto !important;
+      min-width: 240px !important;
+      max-width: 280px !important;
+      min-height: 48px !important;
+      padding: 13px 26px !important;
+      border-radius: 50px !important;
+      font-size: 0.92rem !important;
+      box-sizing: border-box !important;
     }
 
-    /* 1. Sleeker Images on Mobile (Editorial Hero & Bottom Consultation) */
-    .elementor-element-46f7ba70 img,
-    .csp-hero-visual-card img,
-    .elementor-element-598a9a85 .elementor-widget-image img {
+    /* ── 3. WHO ADVERTISES & ADVERTISING OPTIONS (CARDS VISIBLE WITH PADDING) ── */
+    .elementor-element-812547d {
+      padding: 45px 16px 40px 16px !important;
       width: 100% !important;
       max-width: 100% !important;
-      height: auto !important;
-      aspect-ratio: 16 / 10 !important;
-      max-height: 270px !important;
-      object-fit: cover !important;
+      box-sizing: border-box !important;
+    }
+    .elementor-element-dbba7ca .title.eael-dch-title {
+      font-size: 1.95rem !important;
+      margin-bottom: 25px !important;
+      padding: 0 !important;
+    }
+    .elementor-element-2ef9f0da {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 0 45px 0 !important;
+      box-sizing: border-box !important;
+    }
+    .elementor-element-2ef9f0da > .elementor-element,
+    .elementor-element-2ef9f0da .elementskit-infobox {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 24px 20px !important;
       border-radius: 18px !important;
-      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08) !important;
       border: 1px solid #E2E8F0 !important;
-      display: block !important;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
+      box-sizing: border-box !important;
+      margin: 0 !important;
+    }
+
+    /* Advertising Options Container & 2 Cards with Clean Visible Borders */
+    .elementor-element-d802c16 {
+      margin-top: 30px !important;
+      margin-bottom: 25px !important;
+      padding: 0 !important;
+    }
+    .elementor-element-d802c16 .title.eael-dch-title {
+      font-size: 1.95rem !important;
+    }
+
+    .elementor-element-e54f59f {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
       margin: 0 auto !important;
+      box-sizing: border-box !important;
+    }
+    .elementor-element-e54f59f > .e-con-inner {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 24px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box !important;
     }
 
-    .csp-advert-consultation-wrap {
-      margin: 12px auto 30px auto !important;
-      padding: 0 16px !important;
+    .elementor-element-9c0f372,
+    .elementor-element-243a65ca {
+      flex: 0 0 auto !important;
       width: 100% !important;
       max-width: 100% !important;
+      min-width: 0 !important;
       box-sizing: border-box !important;
-    }
-    .csp-advert-consultation-wrap .csp-consultation-img-container {
-      width: 100% !important;
-      max-width: 100% !important;
-      border-radius: 18px !important;
-      overflow: hidden !important;
-      box-sizing: border-box !important;
+      padding: 24px 20px 26px 20px !important;
+      border-radius: 20px !important;
       border: 1px solid #E2E8F0 !important;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08) !important;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
+      margin: 0 0 20px 0 !important;
     }
-    .csp-advert-consultation-wrap img {
-      min-height: 200px !important;
-      max-height: 270px !important;
-      height: auto !important;
-      aspect-ratio: 16 / 10 !important;
+    .advert-card-media {
       width: 100% !important;
+      height: 180px !important;
+      min-height: 180px !important;
+      border-radius: 14px !important;
+      margin-bottom: 20px !important;
+      overflow: hidden !important;
+      border: 1px solid #E2E8F0 !important;
+    }
+    .advert-card-media img {
+      width: 100% !important;
+      height: 100% !important;
       object-fit: cover !important;
       display: block !important;
-      border-radius: 0 !important;
     }
 
-    /* 3. Advertising Options - Visible 2 ends with 16px gutters */
-    .elementor-element-e54f59f,
-    .elementor-element-6283bb91,
-    .elementor-element-238a62 {
-      padding-left: 16px !important;
-      padding-right: 16px !important;
-      box-sizing: border-box !important;
+    /* ── 4. PARTNERSHIP OPPORTUNITIES & TESTIMONIALS (CLEAN, UNBOXED, NO OUTLINES) ── */
+    .elementor-element-238a62,
+    .elementor-977 .elementor-element.elementor-element-238a62 {
+      background: #FAFAFC !important;
+      background-color: #FAFAFC !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      padding: 45px 16px 35px 16px !important;
       width: 100% !important;
       max-width: 100% !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box !important;
+    }
+    .elementor-element-238a62 > .e-con-inner {
+      padding: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      background: transparent !important;
+    }
+    .elementor-element-54ecb9eb {
+      padding: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      background: transparent !important;
     }
 
+    .elementor-element-6a9e835e .title.eael-dch-title {
+      font-size: 1.95rem !important;
+      margin-bottom: 10px !important;
+    }
+
+    /* 3 Collaboration Cards */
+    .elementor-element-6283bb91 {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 auto 24px auto !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
     .elementor-element-6283bb91 > .elementor-element,
-    .elementor-element-6283bb91 .elementor-widget-container,
-    .elementor-element-6283bb91 .ekit-wid-con,
     .elementor-element-6283bb91 .elementskit-infobox {
       width: 100% !important;
       max-width: 100% !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      box-sizing: border-box !important;
-      border-radius: 20px !important;
-      border: 1px solid #E2E8F0 !important;
-      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
-    }
-
-    .elementor-element-46f7ba70,
-    .elementor-element-455d4f47,
-    .elementor-element-ab529c3 {
-      width: 100% !important;
-      max-width: 100% !important;
-      box-sizing: border-box !important;
-      margin-bottom: 20px !important;
-    }
-
-    .elementor-element-46f7ba70 .elementskit-infobox,
-    .elementor-element-455d4f47 .elementskit-infobox,
-    .elementor-element-ab529c3 .elementskit-infobox {
+      padding: 26px 20px !important;
       border-radius: 20px !important;
       border: 1px solid #E2E8F0 !important;
       box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
       box-sizing: border-box !important;
-      width: 100% !important;
+      margin: 0 !important;
     }
 
-    /* 4. Testimonials Unboxed & Transparent on Mobile */
+    /* Completely Transparent Unboxed Floating Testimonials Slider */
     .elementor-element-4d330d3,
     .elementor-977 .elementor-element.elementor-element-4d330d3,
+    .elementor-element-4d330d3 .elementor-widget-container,
     .csp-advert-testimonial-slider,
-    .elementor-element-238a62,
-    .elementor-977 .elementor-element.elementor-element-238a62,
-    .elementor-element-54ecb9eb {
+    .csp-testimonial-track,
+    .csp-testimonial-slide {
       background: transparent !important;
       background-color: transparent !important;
       border: none !important;
       outline: none !important;
       box-shadow: none !important;
+      padding: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
     }
 
     .csp-author-metric {
       display: none !important;
     }
+    .csp-quote-mark {
+      font-size: 3rem !important;
+      color: #00AEFE !important;
+      margin: 0 auto 8px auto !important;
+      line-height: 0.6 !important;
+    }
+    .csp-quote-text {
+      font-size: 1.15rem !important;
+      line-height: 1.5 !important;
+      font-style: italic !important;
+      color: #0F172A !important;
+      margin: 0 auto 16px auto !important;
+      padding: 0 6px !important;
+    }
+    .csp-author-avatar {
+      width: 54px !important;
+      height: 54px !important;
+      border: 2px solid #00AEFE !important;
+      margin: 0 auto 8px auto !important;
+    }
+    .csp-author-name {
+      font-size: 1rem !important;
+      margin-bottom: 2px !important;
+    }
+    .csp-author-role {
+      font-size: 0.84rem !important;
+      margin-bottom: 0 !important;
+    }
 
-    /* Universal Mobile Container Padding */
-    .elementor-element-812547d,
-    .elementor-element-2fe749f4,
-    .elementor-element-598a9a85 {
-      padding-left: 16px !important;
-      padding-right: 16px !important;
+    /* Bottom Section Stay Connected */
+    .elementor-element-2fe749f4 {
+      padding: 50px 16px 55px 16px !important;
       width: 100% !important;
       max-width: 100% !important;
       box-sizing: border-box !important;
     }
-
-    .elementor-element-2ef9f0da {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
+    .elementor-element-2fe749f4 > .e-con-inner {
+      padding: 0 !important;
       width: 100% !important;
       max-width: 100% !important;
     }
-
-    .elementor-element-2ef9f0da > .elementor-element,
-    .elementor-element-2ef9f0da .elementor-widget-container,
-    .elementor-element-2ef9f0da .ekit-wid-con,
-    .elementor-element-2ef9f0da .elementskit-infobox {
-      width: 100% !important;
-      max-width: 100% !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      box-sizing: border-box !important;
-      border-radius: 20px !important;
-      border: 1px solid #E2E8F0 !important;
-      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
+    .elementor-element-69a5ba51 .eael-dch-title {
+      font-size: 1.95rem !important;
     }
   }
 </style>
