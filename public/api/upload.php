@@ -1,7 +1,7 @@
 <?php
 // api/upload.php - Media Image File Upload Handler
-@ini_set('upload_max_filesize', '30M');
-@ini_set('post_max_size', '30M');
+@ini_set('upload_max_filesize', '64M');
+@ini_set('post_max_size', '64M');
 @ini_set('memory_limit', '256M');
 
 header("Access-Control-Allow-Origin: *");
@@ -34,7 +34,7 @@ $isVideo = !empty($_FILES['video']);
 
 if ($file['error'] !== UPLOAD_ERR_OK) {
     $uploadErrors = [
-        UPLOAD_ERR_INI_SIZE => "File size exceeds server limit (upload_max_filesize). Image will be auto-compressed.",
+        UPLOAD_ERR_INI_SIZE => "File size exceeds server upload limit. Please try an image under 50MB.",
         UPLOAD_ERR_FORM_SIZE => "File size exceeds MAX_FILE_SIZE directive.",
         UPLOAD_ERR_PARTIAL => "The file was only partially uploaded.",
         UPLOAD_ERR_NO_FILE => "No file was uploaded.",
@@ -48,11 +48,11 @@ if ($file['error'] !== UPLOAD_ERR_OK) {
     exit();
 }
 
-// Max 30MB for images, 200MB for videos
-$maxSize = $isVideo ? (200 * 1024 * 1024) : (30 * 1024 * 1024);
+// Max 50MB for images, 200MB for videos
+$maxSize = $isVideo ? (200 * 1024 * 1024) : (50 * 1024 * 1024);
 if ($file['size'] > $maxSize) {
     http_response_code(400);
-    $limitLabel = $isVideo ? '200MB' : '30MB';
+    $limitLabel = $isVideo ? '200MB' : '50MB';
     echo json_encode(["success" => false, "error" => "File size exceeds $limitLabel limit."]);
     exit();
 }

@@ -264,13 +264,43 @@ if ($resource === 'comments') {
             exit;
         }
 
-        $stmt = $pdo->prepare("SELECT * FROM comments WHERE post_id = ? AND status = 'approved' ORDER BY created_at DESC");
+        $allowAllStatus = !empty($_GET['all_status']) || !empty($_GET['admin']) || !empty($_SERVER['HTTP_X_ADMIN_TOKEN']);
+        if ($allowAllStatus) {
+            $stmt = $pdo->prepare("SELECT * FROM comments WHERE post_id = ? ORDER BY created_at DESC");
+        } else {
+            $stmt = $pdo->prepare("SELECT * FROM comments WHERE post_id = ? AND status = 'approved' ORDER BY created_at DESC");
+        }
         $stmt->execute([$realPostId]);
         echo json_encode(["success" => true, "comments" => $stmt->fetchAll()]);
         exit;
     }
 
     if ($method === 'POST') {
+        $action = $_GET['action'] ?? $input['action'] ?? '';
+        $status = $_GET['status'] ?? $input['status'] ?? '';
+        if ($action === 'delete' || $status === 'delete') {
+            $id = intval($_GET['id'] ?? $input['id'] ?? $input['comment_id'] ?? 0);
+            if ($id > 0) {
+                $stmt = $pdo->prepare("DELETE FROM comments WHERE id = ? OR parent_id = ?");
+                $stmt->execute([$id, $id]);
+                echo json_encode(["success" => true, "message" => "Comment deleted successfully"]);
+                exit;
+            }
+            http_response_code(400);
+            echo json_encode(["success" => false, "error" => "Comment ID required"]);
+            exit;
+        }
+        if ($action === 'update_status' || $action === 'moderate') {
+            $id = intval($_GET['id'] ?? $input['id'] ?? 0);
+            $newStatus = csp_sanitize($_GET['new_status'] ?? $input['status'] ?? 'approved');
+            if ($id > 0) {
+                $stmt = $pdo->prepare("UPDATE comments SET status = ? WHERE id = ?");
+                $stmt->execute([$newStatus, $id]);
+                echo json_encode(["success" => true, "message" => "Comment status updated to " . $newStatus]);
+                exit;
+            }
+        }
+
         $honeypot = trim($input['website_url'] ?? $input['hp'] ?? '');
         if (!empty($honeypot)) {
             // Spam bot trapped
@@ -389,8 +419,8 @@ if ($resource === 'comments') {
         $status = csp_sanitize($_GET['status'] ?? $input['status'] ?? 'approved');
         if ($id > 0) {
             if ($status === 'delete') {
-                $stmt = $pdo->prepare("DELETE FROM comments WHERE id = ?");
-                $stmt->execute([$id]);
+                $stmt = $pdo->prepare("DELETE FROM comments WHERE id = ? OR parent_id = ?");
+                $stmt->execute([$id, $id]);
                 echo json_encode(["success" => true, "message" => "Comment deleted successfully"]);
                 exit;
             }
@@ -407,8 +437,8 @@ if ($resource === 'comments') {
     if ($method === 'DELETE') {
         $id = intval($_GET['id'] ?? $input['id'] ?? 0);
         if ($id > 0) {
-            $stmt = $pdo->prepare("DELETE FROM comments WHERE id = ?");
-            $stmt->execute([$id]);
+            $stmt = $pdo->prepare("DELETE FROM comments WHERE id = ? OR parent_id = ?");
+            $stmt->execute([$id, $id]);
             echo json_encode(["success" => true, "message" => "Comment deleted successfully"]);
             exit;
         }

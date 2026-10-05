@@ -135,7 +135,9 @@ if ($method === 'POST') {
 
     // Dispatch automated confirmation to sender if trigger is active
     csp_dispatch_templated_email($pdo, 'contact_received', $email, $fullName, [
+        '{sender_name}' => $fullName,
         '{author_name}' => $fullName,
+        '{name}' => $fullName,
         '{subject}' => $subject
     ]);
 

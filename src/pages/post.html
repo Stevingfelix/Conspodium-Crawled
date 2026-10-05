@@ -2143,10 +2143,17 @@
     }
   };
 
-  window.renderCommentTree = function(comments) {
+  window.currentLoadedPostComments = [];
+  window.currentPostCommentsPage = 1;
+  var POST_COMMENTS_PER_PAGE = 6;
+
+  window.renderCommentTree = function(comments, page) {
     if (!comments || comments.length === 0) {
       return '<div style="color:#65676b;font-size:0.9rem;padding:12px 0;">No comments yet. Be the first to join the conversation!</div>';
     }
+
+    window.currentLoadedPostComments = comments;
+    var currentPage = page || window.currentPostCommentsPage || 1;
 
     var byId = {};
     var byParent = {};
@@ -2162,6 +2169,14 @@
     var topLevel = comments.filter(function(c) {
       return !c.parent_id || !byId[c.parent_id];
     });
+
+    var totalTopLevel = topLevel.length;
+    var totalPages = Math.ceil(totalTopLevel / POST_COMMENTS_PER_PAGE);
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+    window.currentPostCommentsPage = currentPage;
+
+    var pagedTopLevel = topLevel.slice((currentPage - 1) * POST_COMMENTS_PER_PAGE, currentPage * POST_COMMENTS_PER_PAGE);
 
     function renderNodes(nodeList, depth) {
       var html = '';
@@ -2228,7 +2243,29 @@
       return html;
     }
 
-    return renderNodes(topLevel, 0);
+    var html = renderNodes(pagedTopLevel, 0);
+
+    // Frontend Comments Pagination Bar
+    if (totalPages > 1) {
+      html += `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding-top:12px;border-top:1px solid #e4e6eb;font-size:0.82rem;color:#65676b;flex-wrap:wrap;gap:8px;">
+          <span>Showing Page <strong>${currentPage}</strong> of <strong>${totalPages}</strong> (${totalTopLevel} responses)</span>
+          <div style="display:flex;gap:6px;">
+            <button type="button" ${currentPage <= 1 ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : `onclick="window.goToPostCommentsPage(${currentPage - 1})"`} style="padding:5px 14px;border-radius:18px;border:1px solid #ccd0d5;background:#f0f2f5;color:#050505;font-weight:600;font-size:0.78rem;cursor:pointer;">&larr; Prev</button>
+            <button type="button" ${currentPage >= totalPages ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : `onclick="window.goToPostCommentsPage(${currentPage + 1})"`} style="padding:5px 14px;border-radius:18px;border:1px solid #ccd0d5;background:#f0f2f5;color:#050505;font-weight:600;font-size:0.78rem;cursor:pointer;">Next &rarr;</button>
+          </div>
+        </div>
+      `;
+    }
+
+    return html;
+  };
+
+  window.goToPostCommentsPage = function(page) {
+    var container = document.getElementById('comments-list-container');
+    if (container && window.currentLoadedPostComments) {
+      container.innerHTML = window.renderCommentTree(window.currentLoadedPostComments, page);
+    }
   };
 
   window.renderCommentsStream = function() {
@@ -2246,13 +2283,13 @@
           var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
           try { comments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
         }
-        container.innerHTML = window.renderCommentTree(comments);
+        container.innerHTML = window.renderCommentTree(comments, 1);
       })
       .catch(function(){
         var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
         var comments = [];
         try { comments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
-        container.innerHTML = window.renderCommentTree(comments);
+        container.innerHTML = window.renderCommentTree(comments, 1);
       });
   };
 

@@ -97,6 +97,94 @@ if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action ===
 }
 
 // ── ADMIN LOGIN ─────────────────────────────────────────────────────────────
+function csp_detect_client_info() {
+    $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    if (strpos($ip, ',') !== false) {
+        $ip = trim(explode(',', $ip)[0]);
+    }
+    
+    $ua = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown Device';
+    $browser = 'Browser';
+    if (stripos($ua, 'Edg') !== false) {
+        $browser = 'Microsoft Edge';
+    } elseif (stripos($ua, 'Chrome') !== false && stripos($ua, 'Edg') === false) {
+        $browser = 'Google Chrome';
+    } elseif (stripos($ua, 'Safari') !== false && stripos($ua, 'Chrome') === false) {
+        $browser = 'Apple Safari';
+    } elseif (stripos($ua, 'Firefox') !== false) {
+        $browser = 'Mozilla Firefox';
+    } elseif (stripos($ua, 'Opera') !== false || stripos($ua, 'OPR') !== false) {
+        $browser = 'Opera';
+    }
+
+    $os = 'Workstation PC';
+    if (stripos($ua, 'Macintosh') !== false || stripos($ua, 'Mac OS') !== false) {
+        $os = 'Mac (macOS)';
+    } elseif (stripos($ua, 'Windows NT 10.0') !== false || stripos($ua, 'Windows NT 11.0') !== false) {
+        $os = 'Windows 10/11 PC';
+    } elseif (stripos($ua, 'Windows') !== false) {
+        $os = 'Windows PC';
+    } elseif (stripos($ua, 'iPhone') !== false) {
+        $os = 'Apple iPhone';
+    } elseif (stripos($ua, 'iPad') !== false) {
+        $os = 'Apple iPad';
+    } elseif (stripos($ua, 'Android') !== false) {
+        $os = 'Android Device';
+    } elseif (stripos($ua, 'Linux') !== false) {
+        $os = 'Linux PC';
+    }
+
+    $device = "$browser on $os";
+
+    $location = 'Local Machine';
+    if ($ip === '127.0.0.1' || $ip === '::1' || strpos($ip, '192.168.') === 0 || strpos($ip, '10.') === 0 || strpos($ip, '172.16.') === 0) {
+        $location = 'Localhost (LAN / Development PC)';
+    } else {
+        $country = $_SERVER['HTTP_CF_IPCOUNTRY'] ?? '';
+        $city = $_SERVER['HTTP_CF_IPCITY'] ?? '';
+        if ($city && $country) {
+            $location = "$city, $country";
+        } elseif ($country) {
+            $location = "Public ($country)";
+        } else {
+            $location = "Live Remote Session";
+        }
+    }
+
+    return [
+        'ip' => $ip,
+        'device' => $device,
+        'location' => $location,
+        'ua' => $ua
+    ];
+}
+
+// ── GET SECURITY LOGS ────────────────────────────────────────────────────────
+if ($method === 'GET' && $action === 'security_logs') {
+    try {
+        $stmt = $pdo->query("SELECT * FROM admin_security_logs ORDER BY id DESC LIMIT 50");
+        $logs = $stmt->fetchAll() ?: [];
+
+        // If table is empty or has only older logs, seed or verify active session
+        if (empty($logs)) {
+            $client = csp_detect_client_info();
+            $adminUser = $_SESSION['admin_user']['username'] ?? 'admin';
+            $adminEmail = $_SESSION['admin_user']['email'] ?? 'admin@conspodium.com';
+            
+            $ins = $pdo->prepare("INSERT INTO admin_security_logs (admin_id, admin_username, admin_email, ip_address, location, user_agent, browser_device, status, created_at) VALUES (1, ?, ?, ?, ?, ?, ?, 'Active Session', datetime('now', 'localtime'))");
+            $ins->execute([$adminUser, $adminEmail, $client['ip'], $client['location'], $client['ua'], $client['device']]);
+            
+            $logs = $pdo->query("SELECT * FROM admin_security_logs ORDER BY id DESC LIMIT 50")->fetchAll() ?: [];
+        }
+
+        echo json_encode(["success" => true, "logs" => $logs]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "error" => $e->getMessage()]);
+    }
+    return;
+}
+
 if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($input['username'])))) {
     if (!csp_check_rate_limit('admin_login', 30, 60)) {
         http_response_code(429);
@@ -113,6 +201,7 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
         return;
     }
 
+    $client = csp_detect_client_info();
     $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ? OR email = ?");
     $stmt->execute([$username, $username]);
     $admin = $stmt->fetch();
@@ -123,6 +212,23 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
         try {
             $upToken = $pdo->prepare("UPDATE admins SET session_token = ? WHERE id = ?");
             $upToken->execute([$token, $admin['id']]);
+
+            // Mark previous active sessions as closed
+            $pdo->prepare("UPDATE admin_security_logs SET status = 'Closed' WHERE admin_id = ? AND status = 'Active Session'")
+                ->execute([$admin['id']]);
+
+            // Record new active session
+            $insLog = $pdo->prepare("INSERT INTO admin_security_logs (admin_id, admin_username, admin_email, ip_address, location, user_agent, browser_device, status, session_token, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, 'Active Session', ?, datetime('now', 'localtime'))");
+            $insLog->execute([
+                $admin['id'],
+                $admin['username'],
+                $admin['email'],
+                $client['ip'],
+                $client['location'],
+                $client['ua'],
+                $client['device'],
+                $token
+            ]);
         } catch (Exception $e) {}
 
         $userData = [
@@ -143,6 +249,18 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
             "message" => "Welcome back, " . $admin['name'] . "!"
         ]);
     } else {
+        // Record failed login attempt
+        try {
+            $insLog = $pdo->prepare("INSERT INTO admin_security_logs (admin_id, admin_username, admin_email, ip_address, location, user_agent, browser_device, status, created_at) VALUES (NULL, ?, NULL, ?, ?, ?, ?, 'Failed Attempt', datetime('now', 'localtime'))");
+            $insLog->execute([
+                $username,
+                $client['ip'],
+                $client['location'],
+                $client['ua'],
+                $client['device']
+            ]);
+        } catch (Exception $e) {}
+
         http_response_code(401);
         echo json_encode(["success" => false, "error" => "Invalid username or password"]);
     }
@@ -162,11 +280,17 @@ if ($method === 'POST' && ($action === 'logout' || $action === 'signout')) {
         try {
             $upToken = $pdo->prepare("UPDATE admins SET session_token = NULL WHERE id = ?");
             $upToken->execute([$_SESSION['admin_user']['id']]);
+            
+            $pdo->prepare("UPDATE admin_security_logs SET status = 'Logged Out' WHERE admin_id = ? AND status = 'Active Session'")
+                ->execute([$_SESSION['admin_user']['id']]);
         } catch (Exception $e) {}
     } elseif (!empty($clientToken)) {
         try {
             $upToken = $pdo->prepare("UPDATE admins SET session_token = NULL WHERE session_token = ?");
             $upToken->execute([$clientToken]);
+
+            $pdo->prepare("UPDATE admin_security_logs SET status = 'Logged Out' WHERE session_token = ?")
+                ->execute([$clientToken]);
         } catch (Exception $e) {}
     }
 

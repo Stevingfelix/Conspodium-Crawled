@@ -279,13 +279,82 @@ if (!function_exists('csp_dispatch_templated_email')) {
 
             $defaultReplacements = [
                 '{site_name}' => 'Conspodium',
-                '{site_url}' => 'https://conspodium.com'
+                '{site_url}' => 'https://conspodium.com',
+                '{name}' => ($recipientName ?: 'Reader'),
+                '{Name}' => ($recipientName ?: 'Reader'),
+                '{sender_name}' => ($recipientName ?: 'Reader'),
+                '{sender name}' => ($recipientName ?: 'Reader'),
+                '{Sender Name}' => ($recipientName ?: 'Reader'),
+                '{Sender_Name}' => ($recipientName ?: 'Reader'),
+                '{author_name}' => ($recipientName ?: 'Reader'),
+                '{author name}' => ($recipientName ?: 'Reader'),
+                '{user_name}' => ($recipientName ?: 'Reader'),
+                '{user name}' => ($recipientName ?: 'Reader'),
+                '{recipient_name}' => ($recipientName ?: 'Reader'),
+                '{recipient name}' => ($recipientName ?: 'Reader'),
+                '{email}' => $recipientEmail,
+                '{recipient_email}' => $recipientEmail
             ];
             $allReplacements = array_merge($defaultReplacements, $replacements);
 
             foreach ($allReplacements as $key => $val) {
                 $subject = str_replace($key, (string)$val, $subject);
                 $body = str_replace($key, (string)$val, $body);
+            }
+            // Fallback cleanup for double or single braces {{name}} or {sender name} with whitespace/case variations
+            $cleanName = ($recipientName ?: 'Reader');
+            $subject = preg_replace('/\{+\s*(?:sender[_\s]*name|author[_\s]*name|user[_\s]*name|recipient[_\s]*name|name)\s*\}+/i', $cleanName, $subject);
+            $body = preg_replace('/\{+\s*(?:sender[_\s]*name|author[_\s]*name|user[_\s]*name|recipient[_\s]*name|name)\s*\}+/i', $cleanName, $body);
+
+            // Clean up any double-braced leftovers like {{site_name}}
+            $subject = str_replace(['{{site_name}}', '{{site_url}}', '{{email}}'], ['Conspodium', 'https://conspodium.com', $recipientEmail], $subject);
+            $body = str_replace(['{{site_name}}', '{{site_url}}', '{{email}}'], ['Conspodium', 'https://conspodium.com', $recipientEmail], $body);
+
+            // Wrap in branded responsive HTML email container if not already a full document
+            $isFullDoc = (stripos($body, '<!doctype') !== false || stripos($body, '<html') !== false);
+            $finalHtml = $body;
+            if (!$isFullDoc) {
+                $cleanParagraphs = (stripos($body, '<p') !== false || stripos($body, '<br') !== false || stripos($body, '<div') !== false)
+                    ? $body
+                    : implode('</p><p style="margin:0 0 16px;line-height:1.6;color:#334155;">', array_map('nl2br', explode("\n\n", htmlspecialchars($body))));
+
+                $finalHtml = <<<HTML
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{$subject}</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#f8fafc;padding:30px 15px;">
+  <tr>
+    <td align="center">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width:600px;background-color:#ffffff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
+        <tr>
+          <td style="background:#0f172a;padding:24px;text-align:center;">
+            <h1 style="color:#00AEFE;margin:0;font-size:22px;letter-spacing:0.5px;font-weight:700;">CONSPODIUM</h1>
+            <p style="color:#94a3b8;margin:4px 0 0;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Premium Diaspora Magazine</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:32px 28px;font-size:15px;color:#334155;line-height:1.6;">
+            {$cleanParagraphs}
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f1f5f9;padding:20px;text-align:center;font-size:12px;color:#64748b;border-top:1px solid #e2e8f0;">
+            <p style="margin:0 0 6px;">Sent via Conspodium Verified Editorial Engine.</p>
+            <p style="margin:0;">© 2026 Conspodium. All rights reserved. • <a href="https://conspodium.com" style="color:#00AEFE;text-decoration:none;">conspodium.com</a></p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+HTML;
             }
 
             $provider = getEmailSetting($pdo, 'email_provider', 'smtp');
@@ -298,7 +367,7 @@ if (!function_exists('csp_dispatch_templated_email')) {
 
             $sendSuccess = false;
             if (($provider === 'smtp' || $provider === 'hostinger') && !empty($smtpHost) && !empty($smtpUser) && !empty($smtpPass)) {
-                $smtpResult = sendSmtpEmail($smtpHost, $smtpPort, $smtpUser, $smtpPass, $fromName, $fromAddress, $recipientEmail, $subject, strip_tags($body), $body);
+                $smtpResult = sendSmtpEmail($smtpHost, $smtpPort, $smtpUser, $smtpPass, $fromName, $fromAddress, $recipientEmail, $subject, strip_tags($body), $finalHtml);
                 if ($smtpResult['success']) $sendSuccess = true;
             }
 
@@ -308,13 +377,13 @@ if (!function_exists('csp_dispatch_templated_email')) {
                     "MIME-Version: 1.0\r\n" .
                     "Content-Type: text/html; charset=UTF-8\r\n" .
                     "X-Mailer: PHP/" . phpversion();
-                @mail($recipientEmail, $subject, $body, $headers);
+                @mail($recipientEmail, $subject, $finalHtml, $headers);
                 $sendSuccess = true;
             }
 
             if ($sendSuccess) {
                 $pdo->prepare("INSERT INTO email_logs (recipient_email, recipient_name, subject, body, type, provider, status) VALUES (?, ?, ?, ?, ?, ?, 'sent')")
-                    ->execute([$recipientEmail, $recipientName, $subject, $body, $templateKey, $provider]);
+                    ->execute([$recipientEmail, $recipientName, $subject, $finalHtml, $templateKey, $provider]);
             }
             return $sendSuccess;
         } catch (Exception $e) {

@@ -3,6 +3,7 @@
  * router.php
  * Conspodium Local Development Server Router for `php -S localhost:8080`
  */
+date_default_timezone_set('Africa/Lagos');
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $publicDir = __DIR__ . '/public';

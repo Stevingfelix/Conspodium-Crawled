@@ -140,49 +140,18 @@ if ($action === 'send_campaign') {
     }
 
     try {
-        // Fetch recipients — live_discussion pulls from event_reminders (Live Discussion sign-ups)
+        // Fetch recipients strictly based on the chosen audience list
         if ($targetList === 'live_discussion') {
             $stmtRec = $pdo->prepare("SELECT user_email AS email, user_name AS name FROM event_reminders WHERE user_email IS NOT NULL AND user_email != '' GROUP BY user_email");
             $stmtRec->execute();
         } elseif ($targetList === 'all') {
-            // Merge subscribers + event_reminders (deduped by email)
-            $stmtRec = $pdo->prepare("SELECT email, name FROM subscribers WHERE status = 'active' UNION SELECT user_email AS email, user_name AS name FROM event_reminders WHERE user_email IS NOT NULL AND user_email != ''");
+            $stmtRec = $pdo->prepare("SELECT email, name FROM subscribers WHERE status = 'active'");
             $stmtRec->execute();
         } else {
             $stmtRec = $pdo->prepare("SELECT email, name FROM subscribers WHERE status = 'active' AND list_segment = ?");
             $stmtRec->execute([$targetList]);
         }
         $recipients = $stmtRec->fetchAll() ?: [];
-
-        // Always include the campaign creator's sender_email so they receive a copy in their inbox
-        $creatorEmail = filter_var($senderEmail, FILTER_VALIDATE_EMAIL);
-        if ($creatorEmail) {
-            $alreadyIncluded = false;
-            foreach ($recipients as $r) {
-                if (strtolower(trim($r['email'] ?? '')) === strtolower($creatorEmail)) {
-                    $alreadyIncluded = true;
-                    break;
-                }
-            }
-            if (!$alreadyIncluded) {
-                $recipients[] = [
-                    'email' => $creatorEmail,
-                    'name' => $senderName ?: 'Campaign Creator'
-                ];
-            }
-        }
-
-        // If still empty, fall back to admin email from settings
-        if (empty($recipients)) {
-            $adminEmail = getEmailSetting($pdo, 'admin_email', getEmailSetting($pdo, 'email_from_address', 'admin@conspodium.com'));
-            if ($adminEmail) {
-                $recipients[] = [
-                    'email' => $adminEmail,
-                    'name' => 'Admin'
-                ];
-            }
-        }
-
         $recipientsCount = count($recipients);
 
         if ($recipientsCount === 0) {
@@ -304,44 +273,68 @@ function csp_dispatch_bulk_campaign($campaignId, $recipients, $subject, $content
         $toName = $recipient['name'] ?? '';
 
         // Perform personalized token replacement
-        $recipientContent = str_replace(['{name}', '{email}'], [htmlspecialchars($toName ?: 'Subscriber'), htmlspecialchars($toEmail)], $content);
+        $recipientContent = str_replace(['{name}', '{email}', '{{name}}', '{{email}}'], [htmlspecialchars($toName ?: 'Subscriber'), htmlspecialchars($toEmail), htmlspecialchars($toName ?: 'Subscriber'), htmlspecialchars($toEmail)], $content);
 
-        // Ensure proper HTML email container if not already a full document
+        // Ensure proper HTML email container without duplicating headers/footers
         $isFullDoc = (stripos($recipientContent, '<!doctype') !== false || stripos($recipientContent, '<html') !== false);
+        $hasStudioCanvas = (stripos($recipientContent, '<!-- VISUAL_STUDIO_CANVAS -->') !== false || stripos($recipientContent, 'CONSPODIUM') !== false);
         $finalHtml = $recipientContent;
+
         if (!$isFullDoc) {
-            $finalHtml = "
-            <!DOCTYPE html>
-            <html>
-            <head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'></head>
-            <body style='margin:0;padding:0;background-color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;'>
-              <table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color:#f8fafc;padding:30px 15px;'>
-                <tr>
-                  <td align='center'>
-                    <table width='100%' border='0' cellspacing='0' cellpadding='0' style='max-width:600px;background-color:#ffffff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.06);'>
-                      <tr>
-                        <td style='background:#0f172a;padding:24px;text-align:center;'>
-                          <h1 style='color:#00AEFE;margin:0;font-size:22px;letter-spacing:0.5px;font-weight:700;'>CONSPODIUM</h1>
-                          <p style='color:#94a3b8;margin:4px 0 0;font-size:12px;text-transform:uppercase;letter-spacing:1px;'>Premium Diaspora Magazine</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style='padding:32px 28px;font-size:15px;color:#334155;line-height:1.6;'>
-                          {$recipientContent}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style='background:#f1f5f9;padding:20px;text-align:center;font-size:12px;color:#64748b;border-top:1px solid #e2e8f0;'>
-                          <p style='margin:0 0 6px;'>Sent via Conspodium Verified Editorial Engine.</p>
-                          <p style='margin:0;'>© " . date('Y') . " Conspodium. All rights reserved. • <a href='https://conspodium.com' style='color:#00AEFE;text-decoration:none;'>conspodium.com</a></p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </body>
-            </html>";
+            if ($hasStudioCanvas) {
+                $finalHtml = "<!DOCTYPE html>
+<html>
+<head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'></head>
+<body style='margin:0;padding:0;background-color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;'>
+  <table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color:#f8fafc;padding:30px 15px;'>
+    <tr>
+      <td align='center'>
+        <table width='100%' border='0' cellspacing='0' cellpadding='0' style='max-width:600px;background-color:#ffffff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.06);'>
+          <tr>
+            <td>
+              {$recipientContent}
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>";
+            } else {
+                $finalHtml = "
+                <!DOCTYPE html>
+                <html>
+                <head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'></head>
+                <body style='margin:0;padding:0;background-color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;'>
+                  <table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color:#f8fafc;padding:30px 15px;'>
+                    <tr>
+                      <td align='center'>
+                        <table width='100%' border='0' cellspacing='0' cellpadding='0' style='max-width:600px;background-color:#ffffff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.06);'>
+                          <tr>
+                            <td style='background:#0f172a;padding:24px;text-align:center;'>
+                              <h1 style='color:#00AEFE;margin:0;font-size:22px;letter-spacing:0.5px;font-weight:700;'>CONSPODIUM</h1>
+                              <p style='color:#94a3b8;margin:4px 0 0;font-size:12px;text-transform:uppercase;letter-spacing:1px;'>Premium Diaspora Magazine</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style='padding:32px 28px;font-size:15px;color:#334155;line-height:1.6;'>
+                              {$recipientContent}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style='background:#f1f5f9;padding:20px;text-align:center;font-size:12px;color:#64748b;border-top:1px solid #e2e8f0;'>
+                              <p style='margin:0 0 6px;'>Sent via Conspodium Verified Editorial Engine.</p>
+                              <p style='margin:0;'>© " . date('Y') . " Conspodium. All rights reserved. • <a href='https://conspodium.com' style='color:#00AEFE;text-decoration:none;'>conspodium.com</a></p>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </body>
+                </html>";
+            }
         }
 
         $plainText = strip_tags($recipientContent);

@@ -3676,20 +3676,25 @@
 <script id="csp-mobile-menu-script">
   (function () {
     function getRootUrl(targetRoute) {
+      if (!targetRoute) return '/';
+      var tr = String(targetRoute).trim();
+      if (tr.startsWith('http://') || tr.startsWith('https://') || tr.startsWith('//') || tr.startsWith('mailto:') || tr.startsWith('tel:') || tr.startsWith('#')) {
+        return tr;
+      }
       var p = window.location.pathname;
       var isPublicDir = p.startsWith('/public') || p.includes('/public/');
       var prefix = isPublicDir ? '/public' : '';
-      if (!targetRoute || targetRoute === '/' || targetRoute === './' || targetRoute === '../') {
+      if (tr === '/' || tr === './' || tr === '../') {
         return prefix + '/';
       }
-      var clean = targetRoute.replace(/^\.\.\//, '').replace(/^\.\//, '').replace(/^\//, '');
+      var clean = tr.replace(/^\.\.\//, '').replace(/^\.\//, '').replace(/^\//, '');
       return prefix + '/' + clean;
     }
     window.getRootUrl = getRootUrl;
 
     function getAbsoluteImageUrl(url) {
       if (!url) return getRootUrl('wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');
-      var u = url.trim();
+      var u = String(url).trim();
       if (u.startsWith('http://') || u.startsWith('https://') || u.startsWith('data:')) return u;
       if (u.startsWith('./')) return getRootUrl(u.slice(2));
       if (u.startsWith('/')) return getRootUrl(u.slice(1));
@@ -4092,18 +4097,23 @@
               card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.4s ease;text-align:center;';
 
               var closeBtn = document.createElement('button');
-              closeBtn.innerHTML = '&times;';
-              closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+              closeBtn.setAttribute('aria-label', 'Close advert');
+              closeBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+              closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:999;width:34px;height:34px;border-radius:50%;background:rgba(15,23,42,0.75);border:1px solid rgba(255,255,255,0.25);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;backdrop-filter:blur(4px);';
+              closeBtn.onmouseenter = function () { this.style.background = 'rgba(239,68,68,0.85)'; this.style.transform = 'rotate(90deg)'; };
+              closeBtn.onmouseleave = function () { this.style.background = 'rgba(15,23,42,0.75)'; this.style.transform = 'rotate(0deg)'; };
 
-              function closeAd() {
+              function closeAd(e) {
+                if (e && e.stopPropagation) e.stopPropagation();
                 sessionStorage.setItem(dismissKey, '1');
                 adModal.style.opacity = '0';
                 card.style.transform = 'scale(0.9)';
-                setTimeout(function () { if (adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 400);
+                setTimeout(function () { if (adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 350);
               }
 
               closeBtn.addEventListener('click', closeAd);
-              adModal.addEventListener('click', function (e) { if (e.target === adModal) closeAd(); });
+              card.addEventListener('click', function (e) { e.stopPropagation(); });
+              adModal.addEventListener('click', function (e) { if (e.target === adModal) closeAd(e); });
 
               var mediaSrc = ad.videoUrl || ad.video || ad.image || '';
               var isVideo = ad.mediaType === 'video' || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(mediaSrc);
@@ -4112,21 +4122,33 @@
                 if (isVideo) {
                   mediaHtml = '<div style="position:relative;width:100%;max-height:240px;overflow:hidden;background:#000;"><video src="' + getRootUrl(mediaSrc) + '" autoplay loop muted playsinline style="width:100%;max-height:240px;object-fit:cover;display:block;"></video></div>';
                 } else {
-                  mediaHtml = '<img src="' + getRootUrl(mediaSrc) + '" style="width:100%;max-height:220px;object-fit:cover;" />';
+                  mediaHtml = '<img src="' + getRootUrl(mediaSrc) + '" alt="Promotion" style="width:100%;max-height:220px;object-fit:cover;display:block;" />';
                 }
               }
-              var titleHtml = ad.title ? '<h3 style="font-family:\'Merriweather\',serif;font-size:1.25rem;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + ad.title + '</h3>' : '';
-              var linkUrl = ad.clickUrl ? getRootUrl(ad.clickUrl) : '#';
+              var titleHtml = ad.title ? '<h3 style="font-family:\'Merriweather\',Georgia,serif;font-size:1.2rem;font-weight:700;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + escapeHtml(ad.title) + '</h3>' : '';
+              var rawUrl = (ad.clickUrl || '').trim();
+              var isExt = rawUrl.startsWith('http://') || rawUrl.startsWith('https://');
+              var linkUrl = rawUrl ? getRootUrl(rawUrl) : '#';
+              var targetAttr = isExt ? ' target="_blank" rel="noopener noreferrer"' : '';
 
               card.innerHTML = mediaHtml +
                 '<div style="padding:4px 20px 24px;">' +
                 titleHtml +
-                '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:#00AEFE;color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
+                '<a href="' + linkUrl + '"' + targetAttr + ' id="csp-popup-ad-cta-btn" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;padding:12px 30px;background:linear-gradient(135deg,#00AEFE 0%,#0090d0 100%);color:#ffffff;border-radius:50px;font-family:\'Inter\',-apple-system,sans-serif;font-weight:700;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.4);transition:all 0.2s ease;cursor:pointer;">Explore Now &rarr;</a>' +
                 '</div>';
 
               card.appendChild(closeBtn);
               adModal.appendChild(card);
               document.body.appendChild(adModal);
+
+              var ctaBtn = card.querySelector('#csp-popup-ad-cta-btn');
+              if (ctaBtn) {
+                ctaBtn.onmouseenter = function () { this.style.transform = 'translateY(-2px)'; this.style.boxShadow = '0 8px 25px rgba(0,174,254,0.55)'; };
+                ctaBtn.onmouseleave = function () { this.style.transform = 'translateY(0)'; this.style.boxShadow = '0 6px 20px rgba(0,174,254,0.4)'; };
+                ctaBtn.addEventListener('click', function () {
+                  sessionStorage.setItem(dismissKey, '1');
+                });
+              }
 
               setTimeout(function () {
                 adModal.style.opacity = '1';
@@ -7734,10 +7756,17 @@
     }
   };
 
-  window.renderCommentTree = function(comments) {
+  window.currentLoadedPostComments = [];
+  window.currentPostCommentsPage = 1;
+  var POST_COMMENTS_PER_PAGE = 6;
+
+  window.renderCommentTree = function(comments, page) {
     if (!comments || comments.length === 0) {
       return '<div style="color:#65676b;font-size:0.9rem;padding:12px 0;">No comments yet. Be the first to join the conversation!</div>';
     }
+
+    window.currentLoadedPostComments = comments;
+    var currentPage = page || window.currentPostCommentsPage || 1;
 
     var byId = {};
     var byParent = {};
@@ -7753,6 +7782,14 @@
     var topLevel = comments.filter(function(c) {
       return !c.parent_id || !byId[c.parent_id];
     });
+
+    var totalTopLevel = topLevel.length;
+    var totalPages = Math.ceil(totalTopLevel / POST_COMMENTS_PER_PAGE);
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+    window.currentPostCommentsPage = currentPage;
+
+    var pagedTopLevel = topLevel.slice((currentPage - 1) * POST_COMMENTS_PER_PAGE, currentPage * POST_COMMENTS_PER_PAGE);
 
     function renderNodes(nodeList, depth) {
       var html = '';
@@ -7819,7 +7856,29 @@
       return html;
     }
 
-    return renderNodes(topLevel, 0);
+    var html = renderNodes(pagedTopLevel, 0);
+
+    // Frontend Comments Pagination Bar
+    if (totalPages > 1) {
+      html += `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding-top:12px;border-top:1px solid #e4e6eb;font-size:0.82rem;color:#65676b;flex-wrap:wrap;gap:8px;">
+          <span>Showing Page <strong>${currentPage}</strong> of <strong>${totalPages}</strong> (${totalTopLevel} responses)</span>
+          <div style="display:flex;gap:6px;">
+            <button type="button" ${currentPage <= 1 ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : `onclick="window.goToPostCommentsPage(${currentPage - 1})"`} style="padding:5px 14px;border-radius:18px;border:1px solid #ccd0d5;background:#f0f2f5;color:#050505;font-weight:600;font-size:0.78rem;cursor:pointer;">&larr; Prev</button>
+            <button type="button" ${currentPage >= totalPages ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : `onclick="window.goToPostCommentsPage(${currentPage + 1})"`} style="padding:5px 14px;border-radius:18px;border:1px solid #ccd0d5;background:#f0f2f5;color:#050505;font-weight:600;font-size:0.78rem;cursor:pointer;">Next &rarr;</button>
+          </div>
+        </div>
+      `;
+    }
+
+    return html;
+  };
+
+  window.goToPostCommentsPage = function(page) {
+    var container = document.getElementById('comments-list-container');
+    if (container && window.currentLoadedPostComments) {
+      container.innerHTML = window.renderCommentTree(window.currentLoadedPostComments, page);
+    }
   };
 
   window.renderCommentsStream = function() {
@@ -7837,13 +7896,13 @@
           var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
           try { comments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
         }
-        container.innerHTML = window.renderCommentTree(comments);
+        container.innerHTML = window.renderCommentTree(comments, 1);
       })
       .catch(function(){
         var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
         var comments = [];
         try { comments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
-        container.innerHTML = window.renderCommentTree(comments);
+        container.innerHTML = window.renderCommentTree(comments, 1);
       });
   };
 

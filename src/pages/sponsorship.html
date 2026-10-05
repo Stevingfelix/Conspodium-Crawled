@@ -1350,44 +1350,45 @@ e-page-transition,
           setTimeout(function(){
             if (sessionStorage.getItem(dismissKey)) return;
 
-            var adModal = document.createElement('div');
-            adModal.id = 'csp-popup-ad-modal-' + (ad.id || 'ad');
-            adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.4s ease;padding:20px;';
+            var adContainer = document.createElement('div');
+            adContainer.id = 'csp-popup-ad-modal-' + (ad.id || 'ad');
+            adContainer.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99999999;max-width:360px;width:calc(100% - 48px);opacity:0;transform:translateY(20px);transition:opacity 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);pointer-events:auto;';
 
             var card = document.createElement('div');
-            card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.4s ease;text-align:center;';
+            card.style.cssText = 'position:relative;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.04);text-align:center;';
 
             var closeBtn = document.createElement('button');
             closeBtn.innerHTML = '&times;';
-            closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+            closeBtn.style.cssText = 'position:absolute;top:10px;right:10px;z-index:10;width:30px;height:30px;border-radius:50%;background:#f1f5f9;border:1px solid #e2e8f0;color:#64748b;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;';
+            closeBtn.onmouseenter = function() { this.style.background = '#e2e8f0'; this.style.color = '#0f172a'; };
+            closeBtn.onmouseleave = function() { this.style.background = '#f1f5f9'; this.style.color = '#64748b'; };
 
             function closeAd() {
               sessionStorage.setItem(dismissKey, '1');
-              adModal.style.opacity = '0';
-              card.style.transform = 'scale(0.9)';
-              setTimeout(function(){ if(adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 400);
+              adContainer.style.opacity = '0';
+              adContainer.style.transform = 'translateY(20px)';
+              setTimeout(function(){ if(adContainer.parentNode) adContainer.parentNode.removeChild(adContainer); }, 400);
             }
 
             closeBtn.addEventListener('click', closeAd);
-            adModal.addEventListener('click', function(e){ if(e.target === adModal) closeAd(); });
 
-            var imgHtml = ad.image ? '<img src="' + getRootUrl(ad.image) + '" style="width:100%;max-height:220px;object-fit:cover;" />' : '';
-            var titleHtml = ad.title ? '<h3 style="font-family:\'Merriweather\',serif;font-size:1.25rem;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + ad.title + '</h3>' : '';
+            var imgHtml = ad.image ? '<img src="' + getRootUrl(ad.image) + '" style="width:100%;max-height:180px;object-fit:cover;" />' : '';
+            var titleHtml = ad.title ? '<h3 style="font-family:\'Merriweather\',serif;font-size:1.05rem;color:#0f172a;margin:12px 16px 8px;line-height:1.4;font-weight:700;">' + ad.title + '</h3>' : '';
             var linkUrl = ad.clickUrl ? getRootUrl(ad.clickUrl) : '#';
 
             card.innerHTML = imgHtml +
-              '<div style="padding:4px 20px 24px;">' +
+              '<div style="padding:4px 16px 18px;">' +
                 titleHtml +
-                '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:#00AEFE;color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
+                '<a href="' + linkUrl + '" style="display:inline-block;margin-top:10px;padding:10px 24px;background:#00AEFE;color:#fff;border-radius:50px;font-family:\'Inter\',-apple-system,sans-serif;font-weight:600;font-size:0.85rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,174,254,0.3);transition:all 0.2s ease;" onmouseover="this.style.transform=\'translateY(-1px)\';this.style.boxShadow=\'0 6px 20px rgba(0,174,254,0.4)\'" onmouseout="this.style.transform=\'translateY(0)\';this.style.boxShadow=\'0 4px 14px rgba(0,174,254,0.3)\'">Explore Now →</a>' +
               '</div>';
 
             card.appendChild(closeBtn);
-            adModal.appendChild(card);
-            document.body.appendChild(adModal);
+            adContainer.appendChild(card);
+            document.body.appendChild(adContainer);
 
             setTimeout(function(){
-              adModal.style.opacity = '1';
-              card.style.transform = 'scale(1)';
+              adContainer.style.opacity = '1';
+              adContainer.style.transform = 'translateY(0)';
             }, 50);
           }, delayMs);
         });
