@@ -95,7 +95,7 @@ if ($action === 'check_registration_status') {
 // GET REGISTERED ATTENDEES (FOR DASHBOARD & STATS)
 if ($action === 'get_event_reminders') {
     try {
-        $stmt = $pdo->query("SELECT id, user_name, user_email, event_name, event_date, created_at FROM event_reminders ORDER BY id DESC LIMIT 500");
+        $stmt = $pdo->query("SELECT id, user_name, user_email, event_name, event_date, COALESCE(is_trash, 0) as is_trash, created_at FROM event_reminders ORDER BY id DESC LIMIT 500");
         $raw = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $reminders = array_map(function($r) {
             return [
@@ -107,12 +107,20 @@ if ($action === 'get_event_reminders') {
                 'event_title' => $r['event_name'] ?: 'Conspodium Live Discussion',
                 'event_name' => $r['event_name'] ?: 'Conspodium Live Discussion',
                 'event_date' => $r['event_date'] ?: '',
+                'is_trash' => (int)$r['is_trash'],
                 'created_at' => $r['created_at'] ?: ''
             ];
         }, $raw);
-        $countStmt = $pdo->query("SELECT COUNT(*) as count FROM event_reminders");
-        $total = (int)$countStmt->fetch()['count'];
-        echo json_encode(["success" => true, "total" => $total, "data" => $reminders, "reminders" => $reminders]);
+        $countActive = (int)$pdo->query("SELECT COUNT(*) as count FROM event_reminders WHERE COALESCE(is_trash, 0) = 0")->fetch()['count'];
+        $countTrash = (int)$pdo->query("SELECT COUNT(*) as count FROM event_reminders WHERE COALESCE(is_trash, 0) = 1")->fetch()['count'];
+        echo json_encode([
+            "success" => true,
+            "total" => count($reminders),
+            "active_total" => $countActive,
+            "trash_total" => $countTrash,
+            "data" => $reminders,
+            "reminders" => $reminders
+        ]);
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(["success" => false, "error" => $e->getMessage()]);
@@ -120,7 +128,47 @@ if ($action === 'get_event_reminders') {
     exit();
 }
 
-// DELETE SINGLE EVENT ATTENDEE
+// MOVE SINGLE ATTENDEE TO TRASH
+if ($action === 'trash_event_reminder') {
+    $rawInput = json_decode(file_get_contents("php://input"), true) ?: $_POST;
+    $id = (int)($rawInput['id'] ?? $_GET['id'] ?? 0);
+    if ($id <= 0) {
+        http_response_code(400);
+        echo json_encode(["success" => false, "error" => "Valid attendee ID is required."]);
+        exit();
+    }
+    try {
+        $stmt = $pdo->prepare("UPDATE event_reminders SET is_trash = 1 WHERE id = ?");
+        $stmt->execute([$id]);
+        echo json_encode(["success" => true, "message" => "Attendee moved to Trash."]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "error" => $e->getMessage()]);
+    }
+    exit();
+}
+
+// RESTORE SINGLE ATTENDEE FROM TRASH
+if ($action === 'restore_event_reminder') {
+    $rawInput = json_decode(file_get_contents("php://input"), true) ?: $_POST;
+    $id = (int)($rawInput['id'] ?? $_GET['id'] ?? 0);
+    if ($id <= 0) {
+        http_response_code(400);
+        echo json_encode(["success" => false, "error" => "Valid attendee ID is required."]);
+        exit();
+    }
+    try {
+        $stmt = $pdo->prepare("UPDATE event_reminders SET is_trash = 0 WHERE id = ?");
+        $stmt->execute([$id]);
+        echo json_encode(["success" => true, "message" => "Attendee restored to active roster."]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "error" => $e->getMessage()]);
+    }
+    exit();
+}
+
+// PERMANENTLY DELETE SINGLE EVENT ATTENDEE
 if ($action === 'delete_event_reminder') {
     $rawInput = json_decode(file_get_contents("php://input"), true) ?: $_POST;
     $id = (int)($rawInput['id'] ?? $_GET['id'] ?? 0);
@@ -132,7 +180,7 @@ if ($action === 'delete_event_reminder') {
     try {
         $stmt = $pdo->prepare("DELETE FROM event_reminders WHERE id = ?");
         $stmt->execute([$id]);
-        echo json_encode(["success" => true, "message" => "Attendee removed successfully."]);
+        echo json_encode(["success" => true, "message" => "Attendee permanently deleted."]);
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(["success" => false, "error" => $e->getMessage()]);
@@ -140,7 +188,52 @@ if ($action === 'delete_event_reminder') {
     exit();
 }
 
-// CLEAR ALL EVENT ATTENDEES
+// EMPTY ATTENDEES TRASH (PERMANENT DELETE ALL IN TRASH)
+if ($action === 'empty_attendees_trash') {
+    try {
+        $pdo->exec("DELETE FROM event_reminders WHERE is_trash = 1");
+        echo json_encode(["success" => true, "message" => "Attendees trash emptied successfully."]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "error" => $e->getMessage()]);
+    }
+    exit();
+}
+
+// BULK ACTIONS FOR ATTENDEES (TRASH, RESTORE, DELETE)
+if ($action === 'bulk_attendees_action') {
+    $rawInput = json_decode(file_get_contents("php://input"), true) ?: $_POST;
+    $subAction = $rawInput['sub_action'] ?? '';
+    $ids = $rawInput['ids'] ?? [];
+    if (!is_array($ids) || empty($ids)) {
+        http_response_code(400);
+        echo json_encode(["success" => false, "error" => "Please select at least one attendee."]);
+        exit();
+    }
+    $cleanIds = array_map('intval', $ids);
+    $inClause = implode(',', $cleanIds);
+    try {
+        if ($subAction === 'trash') {
+            $pdo->exec("UPDATE event_reminders SET is_trash = 1 WHERE id IN ($inClause)");
+            echo json_encode(["success" => true, "message" => count($cleanIds) . " attendee(s) moved to Trash."]);
+        } elseif ($subAction === 'restore') {
+            $pdo->exec("UPDATE event_reminders SET is_trash = 0 WHERE id IN ($inClause)");
+            echo json_encode(["success" => true, "message" => count($cleanIds) . " attendee(s) restored."]);
+        } elseif ($subAction === 'delete') {
+            $pdo->exec("DELETE FROM event_reminders WHERE id IN ($inClause)");
+            echo json_encode(["success" => true, "message" => count($cleanIds) . " attendee(s) permanently deleted."]);
+        } else {
+            http_response_code(400);
+            echo json_encode(["success" => false, "error" => "Invalid bulk sub-action."]);
+        }
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "error" => $e->getMessage()]);
+    }
+    exit();
+}
+
+// CLEAR ALL EVENT ATTENDEES (LEGACY)
 if ($action === 'clear_all_event_reminders') {
     try {
         $pdo->exec("DELETE FROM event_reminders");
@@ -154,6 +247,7 @@ if ($action === 'clear_all_event_reminders') {
 
 // SEND FOLLOW-UP EMAIL BROADCAST TO ATTENDEES
 if ($action === 'send_attendees_email') {
+    require_once __DIR__ . '/email_helper.php';
     $rawInput = json_decode(file_get_contents("php://input"), true) ?: $_POST;
     $subject = csp_sanitize($rawInput['subject'] ?? 'Update on Upcoming Live Discussion');
     $message = $rawInput['message'] ?? '';
@@ -171,9 +265,9 @@ if ($action === 'send_attendees_email') {
         // Get active event details
         $stmtLive = $pdo->query("SELECT * FROM live_discussions WHERE is_active = 1 ORDER BY id DESC LIMIT 1");
         $live = $stmtLive->fetch() ?: [
-            'topic' => 'The Future of African Democracy',
-            'zoom_link' => 'https://zoom.us/j/conspodium-live',
-            'discussion_date' => date('Y-m-d H:i:s', strtotime('+5 days 18:00:00'))
+            'topic' => 'Conspodium Live Discussion',
+            'zoom_link' => '',
+            'discussion_date' => ''
         ];
 
         $attendees = [];
@@ -195,7 +289,6 @@ if ($action === 'send_attendees_email') {
             $stmt = $pdo->prepare("SELECT * FROM event_reminders WHERE event_name = ? ORDER BY id DESC");
             $stmt->execute([$live['topic']]);
             $attendees = $stmt->fetchAll();
-            // If none matched exact topic (e.g. legacy), fallback to all
             if (empty($attendees)) {
                 $stmtAll = $pdo->query("SELECT * FROM event_reminders ORDER BY id DESC");
                 $attendees = $stmtAll->fetchAll();
@@ -205,20 +298,49 @@ if ($action === 'send_attendees_email') {
             $attendees = $stmt->fetchAll();
         }
 
+        $provider = getEmailSetting($pdo, 'email_provider', 'smtp');
+        $fromName = getEmailSetting($pdo, 'email_from_name', 'Conspodium Events');
+        $fromAddress = getEmailSetting($pdo, 'email_from_address', 'events@conspodium.com');
+        $smtpHost = getEmailSetting($pdo, 'email_smtp_host', 'smtp.hostinger.com');
+        $smtpPort = getEmailSetting($pdo, 'email_smtp_port', '587');
+        $smtpUser = getEmailSetting($pdo, 'email_smtp_user', '');
+        $smtpPass = getEmailSetting($pdo, 'email_smtp_pass', '');
+
         $sentCount = 0;
         foreach ($attendees as $att) {
-            $email = $att['user_email'];
-            $name = $att['user_name'] ?? 'Valued Attendee';
-            if (empty($email)) continue;
+            $email = $att['user_email'] ?? $att['email'] ?? '';
+            $name = $att['user_name'] ?? $att['name'] ?? 'Valued Attendee';
+            if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) continue;
 
             $customBody = str_replace(
                 ['{name}', '{event_name}', '{zoom_link}', '{event_date}'],
-                [$name, $att['event_name'] ?: ($live['topic'] ?? ''), $live['zoom_link'] ?? '', $live['discussion_date'] ?? ''],
+                [$name, $att['event_name'] ?: ($live['topic'] ?? 'Conspodium Live Discussion'), $live['zoom_link'] ?? '', $live['discussion_date'] ?? ''],
                 $message
             );
 
-            @mail($email, $subject, $customBody, "From: Conspodium Events <events@conspodium.com>\r\nContent-Type: text/html; charset=UTF-8");
-            $sentCount++;
+            $sendSuccess = false;
+            if (($provider === 'smtp' || $provider === 'hostinger') && !empty($smtpHost) && !empty($smtpUser) && !empty($smtpPass)) {
+                $smtpRes = sendSmtpEmail($smtpHost, $smtpPort, $smtpUser, $smtpPass, $fromName, $fromAddress, $email, $subject, strip_tags($customBody), $customBody);
+                if ($smtpRes['success']) $sendSuccess = true;
+            }
+
+            if (!$sendSuccess) {
+                $headers = "From: $fromName <$fromAddress>\r\n" .
+                    "Reply-To: $fromAddress\r\n" .
+                    "MIME-Version: 1.0\r\n" .
+                    "Content-Type: text/html; charset=UTF-8\r\n" .
+                    "X-Mailer: Conspodium Native Mailer";
+                @mail($email, $subject, $customBody, $headers);
+                $sendSuccess = true;
+            }
+
+            if ($sendSuccess) {
+                try {
+                    $pdo->prepare("INSERT INTO email_logs (recipient_email, recipient_name, subject, body, type, provider, status) VALUES (?, ?, ?, ?, ?, ?, 'sent')")
+                        ->execute([$email, $name, $subject, $customBody, 'attendee_broadcast', $provider]);
+                } catch (Exception $e) {}
+                $sentCount++;
+            }
         }
 
         echo json_encode([
@@ -238,18 +360,11 @@ if ($method === 'GET' && $action === 'get_live_discussion') {
     try {
         $stmtLive = $pdo->query("SELECT * FROM live_discussions WHERE is_active = 1 ORDER BY id DESC LIMIT 1");
         $liveDiscussion = $stmtLive->fetch();
-        if (!$liveDiscussion) {
-            $liveDiscussion = [
-                'topic' => 'The Future of African Democracy',
-                'speaker_name' => 'Prof. Amara Diallo & Panel',
-                'speaker_role' => 'London School of Economics',
-                'speaker_avatar' => '/uploads/upload_1789742036_15826c02.jpg',
-                'discussion_date' => date('Y-m-d H:i:s', strtotime('+5 days 18:00:00')),
-                'zoom_link' => 'https://zoom.us/j/conspodium-live',
-                'ics_summary' => 'Conspodium Next Live Discussion: The Future of African Democracy'
-            ];
+        if ($liveDiscussion) {
+            echo json_encode(["success" => true, "data" => $liveDiscussion, "has_active" => true]);
+        } else {
+            echo json_encode(["success" => true, "data" => null, "has_active" => false]);
         }
-        echo json_encode(["success" => true, "data" => $liveDiscussion]);
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(["success" => false, "error" => $e->getMessage()]);
@@ -637,6 +752,12 @@ if ($method === 'POST') {
                 $stmt->execute([$scholarName, $titleAffiliation, $bio, $imageUrl, $researchField, $profileLink, $id]);
                 echo json_encode(["success" => true, "message" => "Scholar Spotlight updated successfully!"]);
             } else {
+                $count = (int)$pdo->query("SELECT COUNT(*) FROM scholar_spotlights")->fetchColumn();
+                if ($count >= 3) {
+                    http_response_code(400);
+                    echo json_encode(["success" => false, "error" => "Maximum limit of 3 Scholar Cards reached. Please edit or delete an existing card."]);
+                    exit();
+                }
                 $stmt = $pdo->prepare("INSERT INTO scholar_spotlights (scholar_name, title_affiliation, bio, image_url, research_field, profile_link) VALUES (?, ?, ?, ?, ?, ?)");
                 $stmt->execute([$scholarName, $titleAffiliation, $bio, $imageUrl, $researchField, $profileLink]);
                 echo json_encode(["success" => true, "message" => "New Scholar Spotlight card created successfully!", "id" => $pdo->lastInsertId()]);
@@ -688,6 +809,18 @@ if ($method === 'POST') {
             $stmt->execute([$topic, $speakerName, $speakerRole, $speakerAvatar, $discussionDate, $zoomLink, $icsSummary]);
 
             echo json_encode(["success" => true, "message" => "Next Live Discussion settings updated successfully!"]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["success" => false, "error" => $e->getMessage()]);
+        }
+        exit();
+    }
+
+    // CANCEL / CONCLUDE LIVE DISCUSSION
+    if ($action === 'cancel_live_discussion') {
+        try {
+            $pdo->query("UPDATE live_discussions SET is_active = 0");
+            echo json_encode(["success" => true, "message" => "Active live discussion has been concluded / archived."]);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode(["success" => false, "error" => $e->getMessage()]);

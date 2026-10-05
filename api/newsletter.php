@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/email_helper.php';
 
 $action = $_GET['action'] ?? $_POST['action'] ?? 'subscribe';
 
@@ -139,16 +140,55 @@ if ($action === 'send_campaign') {
     }
 
     try {
-        // Fetch recipients count
-        if ($targetList === 'all') {
-            $stmtRec = $pdo->prepare("SELECT email, name FROM subscribers WHERE status = 'active'");
+        // Fetch recipients — live_discussion pulls from event_reminders (Live Discussion sign-ups)
+        if ($targetList === 'live_discussion') {
+            $stmtRec = $pdo->prepare("SELECT user_email AS email, user_name AS name FROM event_reminders WHERE user_email IS NOT NULL AND user_email != '' GROUP BY user_email");
+            $stmtRec->execute();
+        } elseif ($targetList === 'all') {
+            // Merge subscribers + event_reminders (deduped by email)
+            $stmtRec = $pdo->prepare("SELECT email, name FROM subscribers WHERE status = 'active' UNION SELECT user_email AS email, user_name AS name FROM event_reminders WHERE user_email IS NOT NULL AND user_email != ''");
             $stmtRec->execute();
         } else {
             $stmtRec = $pdo->prepare("SELECT email, name FROM subscribers WHERE status = 'active' AND list_segment = ?");
             $stmtRec->execute([$targetList]);
         }
-        $recipients = $stmtRec->fetchAll();
+        $recipients = $stmtRec->fetchAll() ?: [];
+
+        // Always include the campaign creator's sender_email so they receive a copy in their inbox
+        $creatorEmail = filter_var($senderEmail, FILTER_VALIDATE_EMAIL);
+        if ($creatorEmail) {
+            $alreadyIncluded = false;
+            foreach ($recipients as $r) {
+                if (strtolower(trim($r['email'] ?? '')) === strtolower($creatorEmail)) {
+                    $alreadyIncluded = true;
+                    break;
+                }
+            }
+            if (!$alreadyIncluded) {
+                $recipients[] = [
+                    'email' => $creatorEmail,
+                    'name' => $senderName ?: 'Campaign Creator'
+                ];
+            }
+        }
+
+        // If still empty, fall back to admin email from settings
+        if (empty($recipients)) {
+            $adminEmail = getEmailSetting($pdo, 'admin_email', getEmailSetting($pdo, 'email_from_address', 'admin@conspodium.com'));
+            if ($adminEmail) {
+                $recipients[] = [
+                    'email' => $adminEmail,
+                    'name' => 'Admin'
+                ];
+            }
+        }
+
         $recipientsCount = count($recipients);
+
+        if ($recipientsCount === 0) {
+            echo json_encode(["success" => false, "error" => "No active recipients found. Please specify a valid sender email or subscriber list."]);
+            exit();
+        }
 
         $status = !empty($scheduledAt) ? 'scheduled' : 'sent';
         $sentAt = empty($scheduledAt) ? date('Y-m-d H:i:s') : null;
@@ -157,15 +197,19 @@ if ($action === 'send_campaign') {
         $stmtIns->execute([$subject, $targetList, $senderName, $senderEmail, $content, $status, $scheduledAt, $sentAt, $recipientsCount]);
         $campaignId = $pdo->lastInsertId();
 
-        // If immediate dispatch, simulate/process bulk SMTP email delivery
+        // If immediate dispatch, send bulk SMTP email delivery
         if ($status === 'sent' && $recipientsCount > 0) {
             csp_dispatch_bulk_campaign($campaignId, $recipients, $subject, $content, $senderName, $senderEmail);
         }
 
+        $recipientEmailsList = array_map(function($r) { return $r['email']; }, $recipients);
+
         echo json_encode([
             "success" => true,
-            "message" => $status === 'scheduled' ? "Campaign scheduled successfully for $scheduledAt." : "Bulk email campaign sent to $recipientsCount subscribers!",
-            "campaign_id" => $campaignId
+            "message" => $status === 'scheduled' ? "Campaign scheduled successfully for $scheduledAt." : "Email campaign dispatched to $recipientsCount recipient(s) including $senderEmail!",
+            "campaign_id" => $campaignId,
+            "recipients_count" => $recipientsCount,
+            "delivered_to" => $recipientEmailsList
         ]);
     } catch (Exception $e) {
         http_response_code(500);
@@ -214,14 +258,15 @@ if ($action === 'duplicate_campaign') {
 function csp_send_welcome_email($toEmail, $toName) {
     global $pdo;
     try {
-        $stmtSet = $pdo->query("SELECT key, value FROM site_settings");
-        $settings = [];
-        while ($row = $stmtSet->fetch()) {
-            $settings[$row['key']] = $row['value'];
-        }
+        $templated = csp_dispatch_templated_email($pdo, 'welcome_subscriber', $toEmail, $toName, ['{name}' => ($toName ?: 'Reader')]);
+        if ($templated) return true;
 
-        $senderName = $settings['sender_name'] ?? 'Conspodium Magazine';
-        $senderEmail = $settings['sender_email'] ?? 'newsletter@conspodium.com';
+        $senderName = getEmailSetting($pdo, 'email_from_name', 'Conspodium Magazine');
+        $senderEmail = getEmailSetting($pdo, 'email_from_address', 'newsletter@conspodium.com');
+        $smtpHost = getEmailSetting($pdo, 'email_smtp_host', 'smtp.hostinger.com');
+        $smtpPort = getEmailSetting($pdo, 'email_smtp_port', '587');
+        $smtpUser = getEmailSetting($pdo, 'email_smtp_user', '');
+        $smtpPass = getEmailSetting($pdo, 'email_smtp_pass', '');
         $subject = "Welcome to Conspodium Magazine!";
 
         $html = "
@@ -233,22 +278,96 @@ function csp_send_welcome_email($toEmail, $toName) {
             <p style='font-size: 12px; color: #888888;'>© " . date('Y') . " Conspodium Magazine. All rights reserved.</p>
         </div>";
 
-        $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= "From: $senderName <$senderEmail>" . "\r\n";
+        if (!empty($smtpUser) && !empty($smtpPass)) {
+            $smtpRes = sendSmtpEmail($smtpHost, $smtpPort, $smtpUser, $smtpPass, $senderName, $senderEmail, $toEmail, $subject, strip_tags($html), $html);
+            if ($smtpRes['success']) return true;
+        }
 
+        $headers = "MIME-Version: 1.0\r\nContent-type:text/html;charset=UTF-8\r\nFrom: $senderName <$senderEmail>\r\n";
         @mail($toEmail, $subject, $html, $headers);
     } catch (Exception $e) {}
 }
 
 // Helper function for bulk campaign dispatch
 function csp_dispatch_bulk_campaign($campaignId, $recipients, $subject, $content, $senderName, $senderEmail) {
-    foreach ($recipients as $recipient) {
-        $toEmail = $recipient['email'];
-        $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= "From: $senderName <$senderEmail>" . "\r\n";
+    global $pdo;
+    $smtpHost = getEmailSetting($pdo, 'email_smtp_host', 'smtp.hostinger.com');
+    $smtpPort = getEmailSetting($pdo, 'email_smtp_port', '587');
+    $smtpUser = getEmailSetting($pdo, 'email_smtp_user', '');
+    $smtpPass = getEmailSetting($pdo, 'email_smtp_pass', '');
 
-        @mail($toEmail, $subject, $content, $headers);
+    $hasSmtp = !empty($smtpUser) && !empty($smtpPass);
+
+    foreach ($recipients as $recipient) {
+        $toEmail = trim($recipient['email']);
+        if (empty($toEmail)) continue;
+        $toName = $recipient['name'] ?? '';
+
+        // Perform personalized token replacement
+        $recipientContent = str_replace(['{name}', '{email}'], [htmlspecialchars($toName ?: 'Subscriber'), htmlspecialchars($toEmail)], $content);
+
+        // Ensure proper HTML email container if not already a full document
+        $isFullDoc = (stripos($recipientContent, '<!doctype') !== false || stripos($recipientContent, '<html') !== false);
+        $finalHtml = $recipientContent;
+        if (!$isFullDoc) {
+            $finalHtml = "
+            <!DOCTYPE html>
+            <html>
+            <head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'></head>
+            <body style='margin:0;padding:0;background-color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;'>
+              <table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color:#f8fafc;padding:30px 15px;'>
+                <tr>
+                  <td align='center'>
+                    <table width='100%' border='0' cellspacing='0' cellpadding='0' style='max-width:600px;background-color:#ffffff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.06);'>
+                      <tr>
+                        <td style='background:#0f172a;padding:24px;text-align:center;'>
+                          <h1 style='color:#00AEFE;margin:0;font-size:22px;letter-spacing:0.5px;font-weight:700;'>CONSPODIUM</h1>
+                          <p style='color:#94a3b8;margin:4px 0 0;font-size:12px;text-transform:uppercase;letter-spacing:1px;'>Premium Diaspora Magazine</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style='padding:32px 28px;font-size:15px;color:#334155;line-height:1.6;'>
+                          {$recipientContent}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style='background:#f1f5f9;padding:20px;text-align:center;font-size:12px;color:#64748b;border-top:1px solid #e2e8f0;'>
+                          <p style='margin:0 0 6px;'>Sent via Conspodium Verified Editorial Engine.</p>
+                          <p style='margin:0;'>© " . date('Y') . " Conspodium. All rights reserved. • <a href='https://conspodium.com' style='color:#00AEFE;text-decoration:none;'>conspodium.com</a></p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </body>
+            </html>";
+        }
+
+        $plainText = strip_tags($recipientContent);
+        $sent = false;
+        $provider = 'php_mail';
+
+        if ($hasSmtp) {
+            $res = sendSmtpEmail($smtpHost, $smtpPort, $smtpUser, $smtpPass, $senderName, $senderEmail, $toEmail, $subject, $plainText, $finalHtml);
+            if (!empty($res['success'])) {
+                $sent = true;
+                $provider = 'hostinger_smtp';
+            }
+        }
+
+        if (!$sent) {
+            $headers  = "MIME-Version: 1.0\r\n";
+            $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+            $headers .= "From: {$senderName} <{$senderEmail}>\r\n";
+            $headers .= "Reply-To: {$senderName} <{$senderEmail}>\r\n";
+            @mail($toEmail, $subject, $finalHtml, $headers);
+            $sent = true;
+        }
+
+        try {
+            $pdo->prepare("INSERT INTO email_logs (recipient_email, recipient_name, subject, body, type, provider, status) VALUES (?, ?, ?, ?, 'campaign', ?, 'sent')")
+                ->execute([$toEmail, $toName, $subject, $finalHtml, $provider]);
+        } catch (Exception $e) {}
     }
 }

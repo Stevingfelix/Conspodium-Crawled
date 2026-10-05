@@ -5,10 +5,32 @@ require_once __DIR__ . '/db.php';
 if (!function_exists('getEmailSetting')) {
     function getEmailSetting($pdo, $key, $default = '') {
         try {
+            // 1. Try settings table
             $stmt = $pdo->prepare("SELECT value FROM settings WHERE key = ?");
             $stmt->execute([$key]);
             $row = $stmt->fetch();
-            return $row ? $row['value'] : $default;
+            if ($row && $row['value'] !== null && $row['value'] !== '') {
+                return $row['value'];
+            }
+
+            // 2. Try site_settings table (with exact key and alias)
+            $altKey = str_replace('email_', '', $key);
+            $stmt2 = $pdo->prepare("SELECT value FROM site_settings WHERE key = ? OR key = ?");
+            $stmt2->execute([$key, $altKey]);
+            $row2 = $stmt2->fetch();
+            if ($row2 && $row2['value'] !== null && $row2['value'] !== '') {
+                return $row2['value'];
+            }
+
+            // 3. Try settings table with altKey
+            $stmt3 = $pdo->prepare("SELECT value FROM settings WHERE key = ?");
+            $stmt3->execute([$altKey]);
+            $row3 = $stmt3->fetch();
+            if ($row3 && $row3['value'] !== null && $row3['value'] !== '') {
+                return $row3['value'];
+            }
+
+            return $default;
         } catch (Exception $e) {
             return $default;
         }
@@ -16,7 +38,7 @@ if (!function_exists('getEmailSetting')) {
 }
 
 if (!function_exists('buildMimeEmailMessage')) {
-    function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyText, $bodyHtml = null) {
+    function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyText, $bodyHtml = null, $replyToEmail = null) {
         $fromDomain = 'conspodium.com';
         if (strpos($fromEmail, '@') !== false) {
             $parts = explode('@', $fromEmail);
@@ -26,6 +48,7 @@ if (!function_exists('buildMimeEmailMessage')) {
         $msgId = '<' . md5(uniqid(microtime(), true)) . '@' . $fromDomain . '>';
         $dateStr = date("r");
         $boundary = "----=_NextPart_" . md5(uniqid(microtime(), true));
+        $effectiveReplyTo = !empty($replyToEmail) ? $replyToEmail : $fromEmail;
 
         if (empty($bodyHtml)) {
             $cleanParagraphs = implode('</p><p style="margin:0 0 16px;line-height:1.6;color:#334155;">', array_map('nl2br', explode("\n\n", htmlspecialchars($bodyText))));
@@ -71,7 +94,7 @@ HTML;
 
         $headers = [];
         $headers[] = "From: {$fromName} <{$fromEmail}>";
-        $headers[] = "Reply-To: {$fromName} <{$fromEmail}>";
+        $headers[] = "Reply-To: {$fromName} <{$effectiveReplyTo}>";
         $headers[] = "Return-Path: <{$fromEmail}>";
         $headers[] = "To: <{$toEmail}>";
         $headers[] = "Subject: {$subject}";
@@ -107,6 +130,10 @@ if (!function_exists('sendSmtpEmail')) {
 
         $primaryPort = intval($port) ?: 587;
         $portsToTry = ($primaryPort === 465) ? [465, 587] : [$primaryPort, 465];
+
+        // Hostinger SMTP strict sender requirement: Envelope sender (MAIL FROM) must match authenticated SMTP user
+        $effectiveFromEmail = (!empty($user) && strpos($user, '@') !== false) ? trim($user) : trim($fromEmail);
+        $replyToEmail = (!empty($fromEmail) && $fromEmail !== $effectiveFromEmail) ? trim($fromEmail) : $effectiveFromEmail;
 
         $lastError = "Unable to connect to SMTP server";
 
@@ -156,8 +183,8 @@ if (!function_exists('sendSmtpEmail')) {
             }
 
             $clientDomain = 'conspodium.com';
-            if (!empty($fromEmail) && strpos($fromEmail, '@') !== false) {
-                $parts = explode('@', $fromEmail);
+            if (!empty($effectiveFromEmail) && strpos($effectiveFromEmail, '@') !== false) {
+                $parts = explode('@', $effectiveFromEmail);
                 if (!empty($parts[1])) $clientDomain = trim($parts[1]);
             }
             $send($socket, "EHLO " . $clientDomain);
@@ -201,7 +228,7 @@ if (!function_exists('sendSmtpEmail')) {
                 }
             }
 
-            $mailFromResp = $send($socket, "MAIL FROM:<" . $fromEmail . ">");
+            $mailFromResp = $send($socket, "MAIL FROM:<" . $effectiveFromEmail . ">");
             if (substr(trim($mailFromResp), 0, 3) !== "250") {
                 fclose($socket);
                 return ["success" => false, "error" => "MAIL FROM command failed: " . trim($mailFromResp)];
@@ -219,7 +246,7 @@ if (!function_exists('sendSmtpEmail')) {
                 return ["success" => false, "error" => "DATA command initiation failed: " . trim($dataResp)];
             }
 
-            $mimePayload = buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyText, $bodyHtml);
+            $mimePayload = buildMimeEmailMessage($fromName, $effectiveFromEmail, $toEmail, $subject, $bodyText, $bodyHtml, $replyToEmail);
             $sendResp = $send($socket, $mimePayload . "\r\n.");
             @$send($socket, "QUIT");
             @fclose($socket);

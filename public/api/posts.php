@@ -73,6 +73,79 @@ if ($resource === 'like' || ($_GET['action'] ?? '') === 'like' || ($_POST['actio
     exit;
 }
 
+// ── DEVICE IDENTITY SESSION RESOURCE (Cross-Profile / Cross-Session Persistence) ──
+if ($resource === 'device_identity') {
+    $clientIp = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    $ipHash = hash('sha256', $clientIp . ($_SERVER['HTTP_USER_AGENT'] ?? ''));
+
+    if ($method === 'GET') {
+        $devKey = trim($_GET['device_key'] ?? $_COOKIE['csp_device_key'] ?? '');
+        $cookieName = trim($_COOKIE['csp_user_comment_author'] ?? '');
+        $cookieEmail = trim($_COOKIE['csp_user_comment_email'] ?? '');
+
+        $found = null;
+        if ($devKey) {
+            $stmt = $pdo->prepare("SELECT author_name, author_email, updated_at FROM device_identities WHERE device_key = ? ORDER BY updated_at DESC LIMIT 1");
+            $stmt->execute([$devKey]);
+            $found = $stmt->fetch();
+        }
+        if (!$found && $cookieName) {
+            $found = ["author_name" => $cookieName, "author_email" => $cookieEmail, "updated_at" => date('Y-m-d H:i:s')];
+        }
+        if (!$found) {
+            $stmt = $pdo->prepare("SELECT author_name, author_email, updated_at FROM device_identities WHERE ip_hash = ? ORDER BY updated_at DESC LIMIT 1");
+            $stmt->execute([$ipHash]);
+            $found = $stmt->fetch();
+        }
+
+        if ($found && !empty($found['author_name'])) {
+            echo json_encode([
+                "success" => true,
+                "session" => [
+                    "name" => $found['author_name'],
+                    "email" => $found['author_email'] ?? '',
+                    "updated_at" => $found['updated_at'] ?? ''
+                ]
+            ]);
+        } else {
+            echo json_encode(["success" => true, "session" => null]);
+        }
+        exit;
+    }
+
+    if ($method === 'POST') {
+        $name = csp_sanitize(trim($input['author_name'] ?? $input['name'] ?? ''));
+        $email = trim($input['author_email'] ?? $input['email'] ?? '');
+        $devKey = trim($input['device_key'] ?? $_COOKIE['csp_device_key'] ?? '');
+        if (!$devKey) $devKey = bin2hex(random_bytes(16));
+
+        if (!empty($name)) {
+            $now = date('Y-m-d H:i:s');
+            $chk = $pdo->prepare("SELECT id FROM device_identities WHERE device_key = ? OR ip_hash = ? LIMIT 1");
+            $chk->execute([$devKey, $ipHash]);
+            $existing = $chk->fetch();
+
+            if ($existing) {
+                $stmt = $pdo->prepare("UPDATE device_identities SET author_name = ?, author_email = ?, device_key = ?, ip_hash = ?, updated_at = ? WHERE id = ?");
+                $stmt->execute([$name, $email, $devKey, $ipHash, $now, $existing['id']]);
+            } else {
+                $stmt = $pdo->prepare("INSERT INTO device_identities (device_key, ip_hash, author_name, author_email, updated_at) VALUES (?, ?, ?, ?, ?)");
+                $stmt->execute([$devKey, $ipHash, $name, $email, $now]);
+            }
+
+            @setcookie('csp_device_key', $devKey, time() + 31536000, '/');
+            @setcookie('csp_user_comment_author', $name, time() + 31536000, '/');
+            if ($email) @setcookie('csp_user_comment_email', $email, time() + 31536000, '/');
+
+            echo json_encode(["success" => true, "device_key" => $devKey, "message" => "Identity saved"]);
+            exit;
+        }
+
+        echo json_encode(["success" => false, "error" => "Name is required"]);
+        exit;
+    }
+}
+
 // ── CATEGORIES RESOURCE ──────────────────────────────────────────────────────
 if ($resource === 'categories') {
     if ($method === 'GET') {
@@ -135,15 +208,42 @@ if ($resource === 'categories') {
     }
 }
 
+// ── COMMENT SETTINGS RESOURCE ───────────────────────────────────────────────────
+if ($resource === 'comment_settings') {
+    if ($method === 'GET') {
+        $row = $pdo->query("SELECT value FROM site_settings WHERE key = 'auto_approve_comments' LIMIT 1")->fetch();
+        $autoApprove = ($row && $row['value'] === '1');
+        echo json_encode(["success" => true, "auto_approve" => $autoApprove]);
+        exit;
+    }
+    if ($method === 'POST') {
+        $autoApproveVal = (!empty($input['auto_approve']) && ($input['auto_approve'] === true || $input['auto_approve'] === '1' || $input['auto_approve'] === 1)) ? '1' : '0';
+        $chk = $pdo->prepare("SELECT COUNT(*) as cnt FROM site_settings WHERE key = 'auto_approve_comments'");
+        $chk->execute();
+        if ($chk->fetch()['cnt'] > 0) {
+            $pdo->prepare("UPDATE site_settings SET value = ? WHERE key = 'auto_approve_comments'")->execute([$autoApproveVal]);
+        } else {
+            $pdo->prepare("INSERT INTO site_settings (key, value) VALUES ('auto_approve_comments', ?)")->execute([$autoApproveVal]);
+        }
+        echo json_encode([
+            "success" => true,
+            "auto_approve" => ($autoApproveVal === '1'),
+            "message" => ($autoApproveVal === '1' ? "Automatic comment approval enabled." : "Manual comment moderation enabled.")
+        ]);
+        exit;
+    }
+}
+
 // ── COMMENTS RESOURCE ────────────────────────────────────────────────────────
 if ($resource === 'comments') {
     if ($method === 'GET') {
         $all = !empty($_GET['all']);
         if ($all) {
             $stmt = $pdo->query("
-                SELECT cm.*, p.title as post_title, p.slug as post_slug
+                SELECT cm.*, p.title as post_title, p.slug as post_slug, parent.author_name as parent_author_name
                 FROM comments cm
                 LEFT JOIN posts p ON cm.post_id = p.id
+                LEFT JOIN comments parent ON cm.parent_id = parent.id
                 ORDER BY cm.created_at DESC
             ");
             echo json_encode(["success" => true, "comments" => $stmt->fetchAll()]);
@@ -159,7 +259,12 @@ if ($resource === 'comments') {
             if ($foundP) $realPostId = intval($foundP['id']);
         }
 
-        $stmt = $pdo->prepare("SELECT * FROM comments WHERE (post_id = ? OR post_id = 0) AND status = 'approved' ORDER BY created_at DESC");
+        if ($realPostId <= 0) {
+            echo json_encode(["success" => true, "comments" => []]);
+            exit;
+        }
+
+        $stmt = $pdo->prepare("SELECT * FROM comments WHERE post_id = ? AND status = 'approved' ORDER BY created_at DESC");
         $stmt->execute([$realPostId]);
         echo json_encode(["success" => true, "comments" => $stmt->fetchAll()]);
         exit;
@@ -184,7 +289,12 @@ if ($resource === 'comments') {
         $authorName = csp_sanitize($input['author_name'] ?? 'Anonymous');
         $authorEmail = filter_var(trim($input['author_email'] ?? ''), FILTER_VALIDATE_EMAIL) ? trim($input['author_email']) : '';
         $content = csp_sanitize($input['content'] ?? '');
-        $status = !empty($input['status']) ? csp_sanitize($input['status']) : 'approved';
+
+        // Determine Status: Check Auto-Approval Setting
+        $autoRow = $pdo->query("SELECT value FROM site_settings WHERE key = 'auto_approve_comments' LIMIT 1")->fetch();
+        $isAuto = ($autoRow && $autoRow['value'] === '1');
+        $isAdminReply = !empty($input['is_admin_reply']) || ($authorName === 'Editor Admin') || ($authorEmail === 'admin@conspodium.com');
+        $status = ($isAdminReply || $isAuto) ? 'approved' : 'pending';
 
         if (!$postIdentifier || !$content) {
             echo json_encode(["success" => false, "error" => "Post ID or slug and comment text are required"]);
@@ -197,6 +307,12 @@ if ($resource === 'comments') {
             $stmtP->execute([$postIdentifier]);
             $foundP = $stmtP->fetch();
             if ($foundP) $realPostId = intval($foundP['id']);
+        }
+
+        if ($realPostId <= 0) {
+            http_response_code(400);
+            echo json_encode(["success" => false, "error" => "Valid Post ID or slug is required"]);
+            exit;
         }
 
         // Only fallback to cookie if author_name or author_email is empty
@@ -214,10 +330,30 @@ if ($resource === 'comments') {
         $stmt->execute([$realPostId, $parentId, $authorName, $authorEmail, $content, $status]);
         $newCommentId = $pdo->lastInsertId();
 
-        // Lock identity into long-lived HTTP cookie
-        @setcookie('csp_user_comment_author', $authorName, time() + 31536000, '/');
-        if ($authorEmail) {
-            @setcookie('csp_user_comment_email', $authorEmail, time() + 31536000, '/');
+        // Lock identity into long-lived HTTP cookie & Server Device Registry (Only for public reader comments)
+        $isAdminReply = !empty($input['is_admin_reply']) || ($authorName === 'Editor Admin') || ($authorEmail === 'admin@conspodium.com');
+        if (!$isAdminReply) {
+            $devKey = trim($input['device_key'] ?? $_COOKIE['csp_device_key'] ?? '');
+            if (!$devKey) $devKey = bin2hex(random_bytes(16));
+            $clientIp = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+            $ipHash = hash('sha256', $clientIp . ($_SERVER['HTTP_USER_AGENT'] ?? ''));
+            $now = date('Y-m-d H:i:s');
+            try {
+                $chk = $pdo->prepare("SELECT id FROM device_identities WHERE device_key = ? OR ip_hash = ? LIMIT 1");
+                $chk->execute([$devKey, $ipHash]);
+                $existing = $chk->fetch();
+                if ($existing) {
+                    $pdo->prepare("UPDATE device_identities SET author_name = ?, author_email = ?, device_key = ?, ip_hash = ?, updated_at = ? WHERE id = ?")->execute([$authorName, $authorEmail, $devKey, $ipHash, $now, $existing['id']]);
+                } else {
+                    $pdo->prepare("INSERT INTO device_identities (device_key, ip_hash, author_name, author_email, updated_at) VALUES (?, ?, ?, ?, ?)")->execute([$devKey, $ipHash, $authorName, $authorEmail, $now]);
+                }
+                @setcookie('csp_device_key', $devKey, time() + 31536000, '/');
+            } catch (Exception $e) {}
+
+            @setcookie('csp_user_comment_author', $authorName, time() + 31536000, '/');
+            if ($authorEmail) {
+                @setcookie('csp_user_comment_email', $authorEmail, time() + 31536000, '/');
+            }
         }
 
         // Trigger email notification if replying to a parent comment author
@@ -286,7 +422,8 @@ if ($resource === 'comments') {
 if ($method === 'GET') {
     if (isset($_GET['spotlight']) || ($_GET['action'] ?? '') === 'get_spotlight') {
         $stmt = $pdo->query("
-            SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
+            SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon,
+                   (SELECT COUNT(id) FROM comments WHERE post_id = p.id AND status = 'approved') as comment_count
             FROM posts p
             LEFT JOIN categories c ON p.category_id = c.id
             WHERE p.is_spotlight = 1 AND (p.status = 'published' OR p.status IS NULL OR p.status = '')
@@ -297,7 +434,8 @@ if ($method === 'GET') {
         // Fallback to latest published if no custom spotlight is set
         if (!$spotlight) {
             $stmt = $pdo->query("
-                SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
+                SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon,
+                       (SELECT COUNT(id) FROM comments WHERE post_id = p.id AND status = 'approved') as comment_count
                 FROM posts p
                 LEFT JOIN categories c ON p.category_id = c.id
                 WHERE (p.status = 'published' OR p.status IS NULL OR p.status = '')
@@ -317,7 +455,8 @@ if ($method === 'GET') {
 
     if (isset($_GET['hero_slide4']) || ($_GET['action'] ?? '') === 'get_hero_slide4') {
         $stmt = $pdo->query("
-            SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
+            SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon,
+                   (SELECT COUNT(id) FROM comments WHERE post_id = p.id AND status = 'approved') as comment_count
             FROM posts p
             LEFT JOIN categories c ON p.category_id = c.id
             WHERE p.is_hero_slide4 = 1 AND (p.status = 'published' OR p.status IS NULL OR p.status = '')
@@ -327,7 +466,8 @@ if ($method === 'GET') {
 
         if (!$heroPost) {
             $stmt = $pdo->query("
-                SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
+                SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon,
+                       (SELECT COUNT(id) FROM comments WHERE post_id = p.id AND status = 'approved') as comment_count
                 FROM posts p
                 LEFT JOIN categories c ON p.category_id = c.id
                 WHERE (c.slug = 'interview-transcripts' OR c.name LIKE '%interview%') AND (p.status = 'published' OR p.status IS NULL OR p.status = '')
@@ -352,20 +492,39 @@ if ($method === 'GET') {
         
         $post = null;
         if ($isId) {
-            $stmt = $pdo->prepare("SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon FROM posts p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = ?");
+            $stmt = $pdo->prepare("
+                SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon,
+                       (SELECT COUNT(id) FROM comments WHERE post_id = p.id AND status = 'approved') as comment_count
+                FROM posts p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE p.id = ?
+            ");
             $stmt->execute([intval($cleanParam)]);
             $post = $stmt->fetch();
         }
 
         if (!$post) {
-            $stmt = $pdo->prepare("SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon FROM posts p LEFT JOIN categories c ON p.category_id = c.id WHERE p.slug = ?");
+            $stmt = $pdo->prepare("
+                SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon,
+                       (SELECT COUNT(id) FROM comments WHERE post_id = p.id AND status = 'approved') as comment_count
+                FROM posts p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE p.slug = ?
+            ");
             $stmt->execute([$cleanParam]);
             $post = $stmt->fetch();
         }
 
         // Fallback: search by prefix or partial match if exact slug not found
         if (!$post && strlen($cleanParam) > 3) {
-            $stmt = $pdo->prepare("SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon FROM posts p LEFT JOIN categories c ON p.category_id = c.id WHERE p.slug LIKE ? OR p.title LIKE ? LIMIT 1");
+            $stmt = $pdo->prepare("
+                SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon,
+                       (SELECT COUNT(id) FROM comments WHERE post_id = p.id AND status = 'approved') as comment_count
+                FROM posts p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE p.slug LIKE ? OR p.title LIKE ?
+                LIMIT 1
+            ");
             $stmt->execute(['%' . $cleanParam . '%', '%' . $cleanParam . '%']);
             $post = $stmt->fetch();
         }
@@ -401,7 +560,8 @@ if ($method === 'GET') {
     $offset = intval($_GET['offset'] ?? 0);
 
     $sql = "
-        SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon
+        SELECT p.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon,
+               (SELECT COUNT(id) FROM comments WHERE post_id = p.id AND status = 'approved') as comment_count
         FROM posts p
         LEFT JOIN categories c ON p.category_id = c.id
         WHERE 1=1

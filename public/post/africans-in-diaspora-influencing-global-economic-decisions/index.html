@@ -2718,17 +2718,17 @@
   #csp-confirm-backdrop {
     position: fixed;
     inset: 0;
-    z-index: 99999999;
-    background: rgba(5, 13, 26, 0.75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    z-index: 999999999;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   #csp-confirm-backdrop.show {
@@ -2738,55 +2738,125 @@
 
   .csp-confirm-modal {
     background: #ffffff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(226, 232, 240, 0.9);
     border-radius: 24px;
     max-width: 440px;
     width: 100%;
-    padding: 32px;
-    box-shadow: 0 24px 64px rgba(15, 23, 42, 0.25);
-    transform: scale(0.92);
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 32px 28px 28px;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.04);
+    transform: scale(0.92) translateY(10px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     font-family: 'Inter', -apple-system, sans-serif;
     text-align: center;
+    position: relative;
+    overflow: hidden;
   }
 
   #csp-confirm-backdrop.show .csp-confirm-modal {
-    transform: scale(1);
+    transform: scale(1) translateY(0);
   }
 
   .csp-confirm-icon-box {
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    margin: 0 auto 16px;
+    margin: 0 auto 20px;
+    transition: transform 0.25s ease;
+  }
+
+  .csp-icon-pulse-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 24px;
+    opacity: 0;
+    pointer-events: none;
+    animation: cspPulseGlow 2.4s infinite ease-out;
+  }
+
+  @keyframes cspPulseGlow {
+    0% { transform: scale(0.92); opacity: 0.75; }
+    50% { transform: scale(1.18); opacity: 0; }
+    100% { transform: scale(0.92); opacity: 0; }
   }
 
   .csp-confirm-icon-danger {
-    background: rgba(244, 63, 94, 0.12);
-    color: #f43f5e;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+  .csp-confirm-icon-danger .csp-icon-pulse-ring {
+    border: 2px solid rgba(239, 68, 68, 0.35);
+  }
+
+  .csp-confirm-icon-warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+  .csp-confirm-icon-warning .csp-icon-pulse-ring {
+    border: 2px solid rgba(245, 158, 11, 0.35);
   }
 
   .csp-confirm-icon-info {
-    background: rgba(0, 174, 254, 0.12);
+    background: rgba(0, 174, 254, 0.1);
     color: #00AEFE;
+    border: 1px solid rgba(0, 174, 254, 0.2);
+  }
+  .csp-confirm-icon-info .csp-icon-pulse-ring {
+    border: 2px solid rgba(0, 174, 254, 0.35);
+  }
+
+  /* Micro animations for icons */
+  .csp-trash-svg-animated {
+    display: block;
+  }
+  .csp-trash-svg-animated .csp-trash-lid {
+    transform-origin: left bottom;
+    animation: cspTrashLidBounce 2.2s infinite ease-in-out;
+  }
+  @keyframes cspTrashLidBounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-3.5px) rotate(-9deg); }
+    50% { transform: translateY(-1px) rotate(-3deg); }
+    75% { transform: translateY(0) rotate(0deg); }
+  }
+
+  .csp-alert-svg-animated {
+    animation: cspAlertWiggle 2.5s infinite ease-in-out;
+  }
+  @keyframes cspAlertWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-6deg); }
+    40% { transform: rotate(6deg); }
+    60% { transform: rotate(-3deg); }
+    80% { transform: rotate(3deg); }
+  }
+
+  .csp-info-svg-animated {
+    animation: cspInfoPulse 2.2s infinite ease-in-out;
+  }
+  @keyframes cspInfoPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
   }
 
   .csp-confirm-title {
     font-family: 'Merriweather', serif;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: #0f172a;
     margin: 0 0 10px;
+    line-height: 1.35;
   }
 
   .csp-confirm-desc {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: #64748b;
-    line-height: 1.55;
+    line-height: 1.6;
     margin: 0 0 24px;
   }
 
@@ -2798,47 +2868,53 @@
 
   .csp-confirm-btn {
     flex: 1;
-    padding: 12px 20px;
+    padding: 12px 18px;
     border-radius: 12px;
     font-weight: 600;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     cursor: pointer;
     border: none;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
   }
 
   .csp-confirm-cancel {
-    background: #f1f5f9;
+    background: #f8fafc;
     color: #475569;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #e2e8f0;
   }
 
   .csp-confirm-cancel:hover {
-    background: #e2e8f0;
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #cbd5e1;
   }
 
   .csp-confirm-danger-btn {
-    background: linear-gradient(135deg, #f43f5e, #be123c);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
   }
 
   .csp-confirm-danger-btn:hover {
-    opacity: 0.9;
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45);
+    transform: translateY(-1px);
   }
 
   .csp-confirm-primary-btn {
-    background: #00AEFE !important;
-    background-image: none !important;
+    background: linear-gradient(135deg, #00AEFE 0%, #0088cc 100%) !important;
+    background-image: linear-gradient(135deg, #00AEFE 0%, #0088cc 100%) !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35) !important;
+    box-shadow: 0 4px 14px rgba(0, 174, 254, 0.3) !important;
   }
 
   .csp-confirm-primary-btn:hover {
-    background: #0096db !important;
-    background-image: none !important;
-    opacity: 1 !important;
+    box-shadow: 0 6px 18px rgba(0, 174, 254, 0.45) !important;
+    transform: translateY(-1px);
   }
 
   /* ── 2-COLUMN MAGAZINE SIDEBAR & GRID LAYOUT ───────────────────────────── */
@@ -3718,7 +3794,7 @@
           backdrop.id = 'csp-confirm-backdrop';
           backdrop.innerHTML = `
           <div class="csp-confirm-modal">
-            <div class="csp-confirm-icon-box" id="csp-confirm-icon">⚠️</div>
+            <div class="csp-confirm-icon-box" id="csp-confirm-icon"></div>
             <h3 class="csp-confirm-title" id="csp-confirm-title"></h3>
             <p class="csp-confirm-desc" id="csp-confirm-desc"></p>
             <div class="csp-confirm-actions">
@@ -3743,11 +3819,37 @@
 
         if (type === 'danger') {
           iconBox.className = 'csp-confirm-icon-box csp-confirm-icon-danger';
-          iconBox.textContent = '🗑️';
+          iconBox.innerHTML = `
+            <div class="csp-icon-pulse-ring"></div>
+            <svg class="csp-trash-svg-animated" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path class="csp-trash-lid" d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              <path class="csp-trash-can" d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line>
+              <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+          `;
+          okBtn.className = 'csp-confirm-btn csp-confirm-danger-btn';
+        } else if (type === 'warning') {
+          iconBox.className = 'csp-confirm-icon-box csp-confirm-icon-warning';
+          iconBox.innerHTML = `
+            <div class="csp-icon-pulse-ring"></div>
+            <svg class="csp-alert-svg-animated" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          `;
           okBtn.className = 'csp-confirm-btn csp-confirm-danger-btn';
         } else {
           iconBox.className = 'csp-confirm-icon-box csp-confirm-icon-info';
-          iconBox.textContent = '💡';
+          iconBox.innerHTML = `
+            <div class="csp-icon-pulse-ring"></div>
+            <svg class="csp-info-svg-animated" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          `;
           okBtn.className = 'csp-confirm-btn csp-confirm-primary-btn';
         }
 
@@ -3757,6 +3859,15 @@
           backdrop.classList.remove('show');
           cancelBtn.onclick = null;
           okBtn.onclick = null;
+          if (result) {
+            if (typeof options.onConfirm === 'function') {
+              try { options.onConfirm(); } catch(e) { console.error('Error in cspConfirm onConfirm:', e); }
+            }
+          } else {
+            if (typeof options.onCancel === 'function') {
+              try { options.onCancel(); } catch(e) { console.error('Error in cspConfirm onCancel:', e); }
+            }
+          }
           resolve(result);
         }
 
@@ -4036,11 +4147,20 @@
               closeBtn.addEventListener('click', closeAd);
               adModal.addEventListener('click', function (e) { if (e.target === adModal) closeAd(); });
 
-              var imgHtml = ad.image ? '<img src="' + getRootUrl(ad.image) + '" style="width:100%;max-height:220px;object-fit:cover;" />' : '';
+              var mediaSrc = ad.videoUrl || ad.video || ad.image || '';
+              var isVideo = ad.mediaType === 'video' || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(mediaSrc);
+              var mediaHtml = '';
+              if (mediaSrc) {
+                if (isVideo) {
+                  mediaHtml = '<div style="position:relative;width:100%;max-height:240px;overflow:hidden;background:#000;"><video src="' + getRootUrl(mediaSrc) + '" autoplay loop muted playsinline style="width:100%;max-height:240px;object-fit:cover;display:block;"></video></div>';
+                } else {
+                  mediaHtml = '<img src="' + getRootUrl(mediaSrc) + '" style="width:100%;max-height:220px;object-fit:cover;" />';
+                }
+              }
               var titleHtml = ad.title ? '<h3 style="font-family:\'Merriweather\',serif;font-size:1.25rem;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + ad.title + '</h3>' : '';
               var linkUrl = ad.clickUrl ? getRootUrl(ad.clickUrl) : '#';
 
-              card.innerHTML = imgHtml +
+              card.innerHTML = mediaHtml +
                 '<div style="padding:4px 20px 24px;">' +
                 titleHtml +
                 '<a href="' + linkUrl + '" style="display:inline-block;margin-top:12px;padding:12px 28px;background:#00AEFE;color:#fff;border-radius:50px;font-family:\'Merriweather\',serif;font-weight:600;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);">Explore Now →</a>' +
@@ -6316,6 +6436,7 @@
           </div>
           <div style="display:inline-flex;align-items:center;gap:6px;"><i class="far fa-calendar-alt"></i> <span id="post-date">2026-08-03</span></div>
           <div style="display:inline-flex;align-items:center;gap:6px;"><i class="far fa-clock"></i> <span id="post-reading-time">6 min read</span></div>
+          <a href="#comments-section" style="display:inline-flex;align-items:center;gap:6px;color:#ffffff;text-decoration:none;transition:opacity 0.2s ease;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"><i class="far fa-comment-alt"></i> <span id="post-comments-meta-count">0 comments</span></a>
           <div style="display:inline-flex;align-items:center;gap:6px;"><i class="far fa-eye"></i> <span id="post-views">980 views</span></div>
           <button id="post-hero-like-btn" type="button" class="csp-post-like-btn" onclick="window.likeCurrentPost()" title="Like this article">
             <svg viewBox="0 0 24 24" class="csp-like-heart" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -7140,50 +7261,7 @@
 
 
 
-  // Bulletproof Embedded Confirmation Modal
-  window.cspConfirm = window.cspConfirm || function(options) {
-    return new Promise(function(resolve) {
-      options = options || {};
-      var title = options.title || 'Confirm Action';
-      var message = options.message || 'Are you sure you want to proceed?';
-      var confirmText = options.confirmText || 'Yes, Delete';
-      var cancelText = options.cancelText || 'Cancel';
-      var type = options.type || 'danger';
 
-      var backdrop = document.getElementById('csp-confirm-backdrop');
-      if (!backdrop) {
-        backdrop = document.createElement('div');
-        backdrop.id = 'csp-confirm-backdrop';
-        backdrop.innerHTML = `
-          <div class="csp-confirm-modal">
-            <div class="csp-confirm-icon-box ${type === 'danger' ? 'csp-confirm-icon-danger' : 'csp-confirm-icon-info'}">${type === 'danger' ? '🗑️' : '💡'}</div>
-            <h3 class="csp-confirm-title">${title}</h3>
-            <p class="csp-confirm-desc">${message}</p>
-            <div class="csp-confirm-actions">
-              <button type="button" class="csp-confirm-btn csp-confirm-cancel" id="csp-confirm-btn-cancel">${cancelText}</button>
-              <button type="button" class="csp-confirm-btn ${type === 'danger' ? 'csp-confirm-danger-btn' : 'csp-confirm-primary-btn'}" id="csp-confirm-btn-ok">${confirmText}</button>
-            </div>
-          </div>
-        `;
-        document.body.appendChild(backdrop);
-      }
-
-      var cancelBtn = document.getElementById('csp-confirm-btn-cancel');
-      var okBtn = document.getElementById('csp-confirm-btn-ok');
-
-      backdrop.classList.add('show');
-
-      function cleanup(result) {
-        backdrop.classList.remove('show');
-        cancelBtn.onclick = null;
-        okBtn.onclick = null;
-        resolve(result);
-      }
-
-      cancelBtn.onclick = function() { cleanup(false); };
-      okBtn.onclick = function() { cleanup(true); };
-    });
-  };
 
   // Check Admin Authentication Status
   window.checkAdminStatus = function() {
@@ -7217,10 +7295,30 @@
       });
   };
 
-  // ── COMMENTER SESSION IDENTITY LOCK SYSTEM ──
+  // ── DEVICE IDENTITY & 3-DAY COOLDOWN SYSTEM ──
   var COOLDOWN_MS = 3 * 24 * 60 * 60 * 1000; // 3 Days Cooldown
   var MAX_EDITS = 3; // 3 Lifetime Edits
   window.isEditingIdentity = false;
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  window.getCspDeviceKey = function() {
+    var key = '';
+    try { key = localStorage.getItem('csp_device_key') || ''; } catch(e){}
+    if (!key) {
+      var match = document.cookie.match(/(^|;)\s*csp_device_key=([^;]+)/);
+      if (match) key = decodeURIComponent(match[2]);
+    }
+    if (!key) {
+      key = 'csp_dev_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      try { localStorage.setItem('csp_device_key', key); } catch(e){}
+      document.cookie = "csp_device_key=" + encodeURIComponent(key) + "; max-age=31536000; path=/";
+    }
+    return key;
+  };
 
   window.getCommenterSession = function() {
     try {
@@ -7230,11 +7328,19 @@
       var lastUpdated = parseInt(localStorage.getItem('csp_identity_updated_at') || '0', 10);
       if (name) return { name: name, email: email, edits: edits, lastUpdated: lastUpdated };
     } catch(e) {}
+    var matchName = document.cookie.match(/(^|;)\s*csp_user_comment_author=([^;]+)/);
+    var matchEmail = document.cookie.match(/(^|;)\s*csp_user_comment_email=([^;]+)/);
+    if (matchName) {
+      var n = decodeURIComponent(matchName[2]);
+      var em = matchEmail ? decodeURIComponent(matchEmail[2]) : '';
+      return { name: n, email: em, edits: 0, lastUpdated: 0 };
+    }
     return null;
   };
 
   window.saveCommenterSession = function(name, email, isEdit) {
     if (!name) return;
+    var devKey = window.getCspDeviceKey();
     try {
       localStorage.setItem('csp_commenter_name', name.trim());
       if (email) localStorage.setItem('csp_commenter_email', email.trim());
@@ -7250,13 +7356,46 @@
       }
     } catch(e) {}
     window.isEditingIdentity = false;
+
+    // Background sync with server device registry
+    var idSyncUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=device_identity') : '/api/posts.php?resource=device_identity';
+    fetch(idSyncUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ author_name: name.trim(), author_email: email ? email.trim() : '', device_key: devKey })
+    }).catch(function(){});
+
     window.syncCommenterSessionUI();
+  };
+
+  window.initCommenterIdentity = function() {
+    var devKey = window.getCspDeviceKey();
+    var session = window.getCommenterSession();
+    if (session) {
+      window.syncCommenterSessionUI();
+    }
+
+    // Server check across Chrome profiles / fresh visits
+    var checkUrl = (window.getRootUrl ? window.getRootUrl('api/posts.php?resource=device_identity&device_key=' + encodeURIComponent(devKey)) : '/api/posts.php?resource=device_identity&device_key=' + encodeURIComponent(devKey));
+    fetch(checkUrl)
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success && res.session && res.session.name) {
+          try {
+            localStorage.setItem('csp_commenter_name', res.session.name);
+            if (res.session.email) localStorage.setItem('csp_commenter_email', res.session.email);
+            if (res.session.updated_at && !localStorage.getItem('csp_identity_updated_at')) {
+              localStorage.setItem('csp_identity_updated_at', String(new Date(res.session.updated_at).getTime()));
+            }
+          } catch(e){}
+          window.syncCommenterSessionUI();
+        }
+      })
+      .catch(function(){});
   };
 
   window.requestIdentityEdit = function() {
     var session = window.getCommenterSession();
-    if (!session) return;
-
     var guardModal = document.getElementById('modal-identity-guard');
     var card = document.getElementById('identity-guard-card');
     var iconEl = document.getElementById('id-guard-icon');
@@ -7264,19 +7403,28 @@
     var descEl = document.getElementById('id-guard-desc');
     var actionsEl = document.getElementById('id-guard-actions');
 
+    if (!session) {
+      window.isEditingIdentity = true;
+      window.syncCommenterSessionUI();
+      return;
+    }
+
     var now = Date.now();
     var timeSinceUpdate = now - (session.lastUpdated || 0);
-    var inCooldown = session.lastUpdated && timeSinceUpdate < COOLDOWN_MS;
+    var inCooldown = session.lastUpdated > 0 && timeSinceUpdate < COOLDOWN_MS;
     var editsLeft = Math.max(0, MAX_EDITS - (session.edits || 0));
 
     // Case 1: Max edits exhausted
     if (editsLeft <= 0) {
       if (card) card.style.borderTop = '5px solid #ef4444';
-      iconEl.className = 'csp-guard-icon-anim exhausted';
-      iconEl.innerHTML = '<svg class="csp-lock-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
-      titleEl.textContent = 'Identity Updates Exhausted';
-      descEl.innerHTML = 'You have reached the limit of <strong>3 identity updates</strong> on this device. Your contributor profile is permanently set to <strong>' + escapeHtml(session.name) + '</strong>.<br><br>If you require an urgent correction, please contact <a href="mailto:support@conspodium.com" style="color:#00AEFE;font-weight:600;">support@conspodium.com</a>.';
-      actionsEl.innerHTML = '<button type="button" onclick="document.getElementById(\'modal-identity-guard\').classList.remove(\'active\')" style="padding:11px 28px;border-radius:50px;background:#f1f5f9;border:1.5px solid #e2e8f0;font-weight:600;color:#334155;cursor:pointer;font-size:0.92rem;">Close</button>';
+      if (iconEl) {
+        iconEl.style.color = '#ef4444';
+        iconEl.style.background = '#fee2e2';
+        iconEl.innerHTML = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
+      }
+      if (titleEl) titleEl.textContent = 'Identity Updates Exhausted';
+      if (descEl) descEl.innerHTML = 'You have reached the limit of <strong>3 identity updates</strong> on this device. Your contributor profile is permanently set to <strong>' + escapeHtml(session.name) + '</strong>.<br><br>If you require an urgent correction, please contact <a href="mailto:support@conspodium.com" style="color:#00AEFE;font-weight:600;">support@conspodium.com</a>.';
+      if (actionsEl) actionsEl.innerHTML = '<button type="button" onclick="document.getElementById(\'modal-identity-guard\').classList.remove(\'active\')" style="padding:11px 28px;border-radius:50px;background:#f1f5f9;border:1.5px solid #e2e8f0;font-weight:600;color:#334155;cursor:pointer;font-size:0.92rem;">Close</button>';
       if (guardModal) guardModal.classList.add('active');
       return;
     }
@@ -7291,25 +7439,33 @@
         : hoursRemaining + (hoursRemaining === 1 ? ' hour' : ' hours');
 
       if (card) card.style.borderTop = '5px solid #f59e0b';
-      iconEl.className = 'csp-guard-icon-anim cooldown';
-      iconEl.innerHTML = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline class="csp-clock-minute-hand" points="12 6 12 12 16 14"></polyline></svg>';
-      titleEl.textContent = 'Identity Cooldown Active';
-      descEl.innerHTML = 'To maintain community trust and prevent impersonation, contributor names can only be updated once every 3 days.<br><br>Your next update will be available in <strong>' + remainingStr + '</strong>.';
-      actionsEl.innerHTML = '<button type="button" onclick="document.getElementById(\'modal-identity-guard\').classList.remove(\'active\')" style="width:100%;height:46px;border-radius:50px;background:#00AEFE;border:none;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.95rem;">Got It</button>';
+      if (iconEl) {
+        iconEl.style.color = '#f59e0b';
+        iconEl.style.background = '#fef3c7';
+        iconEl.innerHTML = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>';
+      }
+      if (titleEl) titleEl.textContent = 'Identity Cooldown Active';
+      if (descEl) descEl.innerHTML = 'To maintain community trust and prevent impersonation, contributor names can only be updated once every 3 days.<br><br>Your next update will be available in <strong>' + remainingStr + '</strong>.';
+      if (actionsEl) actionsEl.innerHTML = '<button type="button" onclick="document.getElementById(\'modal-identity-guard\').classList.remove(\'active\')" style="width:100%;height:46px;border-radius:50px;background:#00AEFE;border:none;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.95rem;">Got It</button>';
       if (guardModal) guardModal.classList.add('active');
       return;
     }
 
     // Case 3: Allowed to Edit
     if (card) card.style.borderTop = '5px solid #00AEFE';
-    iconEl.className = 'csp-guard-icon-anim edit';
-    iconEl.innerHTML = '<svg class="csp-edit-pen-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
-    titleEl.textContent = 'Switch Contributor Identity?';
-    descEl.innerHTML = 'You have <strong>' + editsLeft + ' of ' + MAX_EDITS + '</strong> name updates remaining on this device.<br><br>Once you update your details, your identity will be locked for a 3-day cooldown period.';
-    actionsEl.innerHTML = `
-      <button type="button" onclick="document.getElementById('modal-identity-guard').classList.remove('active')" style="flex:1;height:46px;border-radius:50px;background:#f8fafc;border:1.5px solid #e2e8f0;font-weight:600;color:#64748b;cursor:pointer;font-size:0.92rem;">Cancel</button>
-      <button type="button" onclick="window.confirmUnlockIdentity()" style="flex:1;height:46px;border-radius:50px;background:#00AEFE;border:none;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Unlock Fields</button>
-    `;
+    if (iconEl) {
+      iconEl.style.color = '#00AEFE';
+      iconEl.style.background = '#e0f2fe';
+      iconEl.innerHTML = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
+    }
+    if (titleEl) titleEl.textContent = 'Switch Contributor Identity?';
+    if (descEl) descEl.innerHTML = 'You have <strong>' + editsLeft + ' of ' + MAX_EDITS + '</strong> name updates remaining on this device.<br><br>Once you update your details, your identity will be locked for a 3-day cooldown period.';
+    if (actionsEl) {
+      actionsEl.innerHTML = `
+        <button type="button" onclick="document.getElementById('modal-identity-guard').classList.remove('active')" style="flex:1;height:46px;border-radius:50px;background:#f8fafc;border:1.5px solid #e2e8f0;font-weight:600;color:#64748b;cursor:pointer;font-size:0.92rem;">Cancel</button>
+        <button type="button" onclick="window.confirmUnlockIdentity()" style="flex:1;height:46px;border-radius:50px;background:#00AEFE;border:none;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Unlock Fields</button>
+      `;
+    }
     if (guardModal) guardModal.classList.add('active');
   };
 
@@ -7317,83 +7473,86 @@
     var guardModal = document.getElementById('modal-identity-guard');
     if (guardModal) guardModal.classList.remove('active');
     window.isEditingIdentity = true;
-    window.syncCommenterSessionUI(true);
-    if (window.cspToast) window.cspToast('Fields unlocked. Enter your updated name & email.', 'info');
+    window.syncCommenterSessionUI();
+    var authorInp = document.getElementById('comm-author');
+    if (authorInp) {
+      authorInp.value = '';
+      authorInp.focus();
+    }
+    var emailInp = document.getElementById('comm-email');
+    if (emailInp) emailInp.value = '';
+    if (window.cspToast) window.cspToast('Fields unlocked. Enter your updated contributor details.', 'info');
   };
 
-  window.syncCommenterSessionUI = function(unlocked) {
+  window.syncCommenterSessionUI = function() {
     var session = window.getCommenterSession();
-    var authorInputs = document.querySelectorAll('#comm-author, #rp-name');
-    var emailInputs = document.querySelectorAll('#comm-email, #rp-email');
-    var forms = document.querySelectorAll('.csp-comment-form, #form-thread-reply');
+    var authorInputs = document.querySelectorAll('#comm-author');
+    var emailInputs = document.querySelectorAll('#comm-email');
+    var formEl = document.getElementById('form-submit-comment');
+
+    var isLocked = Boolean(session && session.name && !window.isEditingIdentity);
 
     authorInputs.forEach(function(inp) {
-      if (session && !unlocked && !window.isEditingIdentity) {
+      if (isLocked) {
         inp.value = session.name;
         inp.readOnly = true;
-        inp.tabIndex = -1;
-        inp.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
+        inp.style.background = '#f1f5f9';
+        inp.style.color = '#334155';
+        inp.style.borderColor = '#cbd5e1';
+        inp.style.cursor = 'pointer';
+        inp.title = 'Click to switch contributor identity';
+        inp.onclick = function(){ window.requestIdentityEdit(); };
       } else {
         inp.readOnly = false;
-        inp.removeAttribute('tabindex');
-        inp.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
+        inp.style.background = '#ffffff';
+        inp.style.color = '#0f172a';
+        inp.style.borderColor = '#cbd5e1';
+        inp.style.cursor = 'text';
+        inp.removeAttribute('title');
+        inp.onclick = null;
       }
     });
 
     emailInputs.forEach(function(inp) {
-      if (session && !unlocked && !window.isEditingIdentity) {
+      if (isLocked) {
         inp.value = session.email || '';
         inp.readOnly = true;
-        inp.tabIndex = -1;
-        inp.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
+        inp.style.background = '#f1f5f9';
+        inp.style.color = '#334155';
+        inp.style.borderColor = '#cbd5e1';
+        inp.style.cursor = 'pointer';
+        inp.title = 'Click to switch contributor identity';
+        inp.onclick = function(){ window.requestIdentityEdit(); };
       } else {
         inp.readOnly = false;
-        inp.removeAttribute('tabindex');
-        inp.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
+        inp.style.background = '#ffffff';
+        inp.style.color = '#0f172a';
+        inp.style.borderColor = '#cbd5e1';
+        inp.style.cursor = 'text';
+        inp.removeAttribute('title');
+        inp.onclick = null;
       }
     });
 
-    forms.forEach(function(formEl) {
+    if (formEl) {
       var existingBadge = formEl.querySelector('.csp-session-lock-badge');
-      if (session && !unlocked && !window.isEditingIdentity) {
+      if (isLocked) {
         if (!existingBadge) {
           existingBadge = document.createElement('div');
           existingBadge.className = 'csp-session-lock-badge';
-          existingBadge.style.cssText = 'background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:8px 14px;font-size:0.82rem;color:#0369a1;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;font-weight:500;gap:8px;flex-wrap:nowrap;';
-          formEl.insertBefore(existingBadge, formEl.firstChild);
+          var row = formEl.querySelector('.csp-comment-form-row');
+          if (row) formEl.insertBefore(existingBadge, row);
+          else formEl.insertBefore(existingBadge, formEl.firstChild);
         }
-        existingBadge.innerHTML = '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1;">🔒 Commenting as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '</span>' +
-          '<button type="button" onclick="window.requestIdentityEdit()" style="background:none;border:none;color:#00AEFE;font-weight:700;font-size:0.8rem;cursor:pointer;text-decoration:underline;white-space:nowrap;flex-shrink:0;padding-left:6px;">Switch / Edit</button>';
+        existingBadge.style.cssText = 'background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:12px;padding:9px 14px;font-size:0.84rem;color:#0369a1;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:500;';
+        existingBadge.innerHTML = '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;">🔒 Commenting as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '</span>' +
+          '<button type="button" onclick="window.requestIdentityEdit()" style="background:#00AEFE;color:#ffffff;border:none;padding:5px 14px;border-radius:20px;font-weight:700;font-size:0.75rem;cursor:pointer;flex-shrink:0;">Switch / Edit</button>';
       } else {
         if (existingBadge && existingBadge.parentNode) {
           existingBadge.parentNode.removeChild(existingBadge);
         }
       }
-    });
-
-    document.querySelectorAll('.csp-article-inline-reply-box, .csp-inline-reply-box').forEach(function(box) {
-      var nameInp = box.querySelector('input[type="text"]');
-      var emailInp = box.querySelector('input[type="email"]');
-      if (nameInp && emailInp) {
-        if (session && !unlocked && !window.isEditingIdentity) {
-          nameInp.value = session.name;
-          nameInp.readOnly = true;
-          nameInp.tabIndex = -1;
-          nameInp.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
-          emailInp.value = session.email || '';
-          emailInp.readOnly = true;
-          emailInp.tabIndex = -1;
-          emailInp.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
-        } else {
-          nameInp.readOnly = false;
-          nameInp.removeAttribute('tabindex');
-          nameInp.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
-          emailInp.readOnly = false;
-          emailInp.removeAttribute('tabindex');
-          emailInp.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
-        }
-      }
-    });
+    }
   };
 
   // Global Comment Submit Handler (Guarantees zero-reload, input reset & API sync)
@@ -7403,28 +7562,36 @@
       if (e.stopPropagation) e.stopPropagation();
     }
 
-    var isEdit = Boolean(window.isEditingIdentity);
-    var session = window.getCommenterSession();
     var authorInput = document.getElementById('comm-author');
     var emailInput = document.getElementById('comm-email');
     var textInput = document.getElementById('comm-text');
 
-    var author = (!session || isEdit) ? (authorInput && authorInput.value.trim() ? authorInput.value.trim() : 'Anonymous Reader') : session.name;
-    var email = (!session || isEdit) ? (emailInput && emailInput.value.trim() ? emailInput.value.trim() : '') : (session.email || (emailInput ? emailInput.value.trim() : ''));
-    var text = textInput ? textInput.value.trim() : '';
+    var author = (authorInput && authorInput.value.trim()) ? authorInput.value.trim() : 'Anonymous Reader';
+    var email = (emailInput && emailInput.value.trim()) ? emailInput.value.trim() : '';
+    var text = (textInput && textInput.value.trim()) ? textInput.value.trim() : '';
 
     if (!text) return false;
 
     var postSlugOrId = window.location.pathname.replace(/\/$/, '').split('/').pop() || 'we-are-the-world';
     var postApiUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=comments') : '/api/posts.php?resource=comments';
+    var devKey = window.getCspDeviceKey();
 
     var payload = {
       post_id: postSlugOrId,
       parent_id: window.currentCommentParentId,
       author_name: author,
       author_email: email,
-      content: text
+      content: text,
+      device_key: devKey
     };
+
+    var submitBtn = document.getElementById('btn-submit-post-comment');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Posting...';
+    }
+
+    var isEdit = Boolean(window.isEditingIdentity);
 
     fetch(postApiUrl, {
       method: 'POST',
@@ -7433,17 +7600,29 @@
     })
     .then(function(r){ return r.json(); })
     .then(function(res){
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Post Comment &rarr;';
+      }
       if (res.success) {
         window.saveCommenterSession(author, email, isEdit);
         window.cancelCommentReplyTo();
         if (textInput) textInput.value = '';
-        window.cspToast('Comment posted successfully!', 'success');
+        if (typeof window.cspToast === 'function') {
+          window.cspToast('Comment posted successfully!', 'success');
+        }
         window.renderCommentsStream();
       } else {
-        window.cspToast(res.error || 'Failed to post comment', 'danger');
+        if (typeof window.cspToast === 'function') {
+          window.cspToast(res.error || 'Failed to post comment', 'danger');
+        }
       }
     })
     .catch(function(){
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Post Comment &rarr;';
+      }
       var pageKey = 'csp_comments_' + window.location.pathname.replace(/\/$/, '');
       var savedComments = [];
       try { savedComments = JSON.parse(localStorage.getItem(pageKey)) || []; } catch(err){}
@@ -7451,6 +7630,7 @@
         id: Date.now(),
         parent_id: window.currentCommentParentId,
         author_name: author,
+        author_email: email,
         created_at: new Date().toISOString(),
         content: text
       });
@@ -7458,7 +7638,9 @@
       window.saveCommenterSession(author, email, isEdit);
       window.cancelCommentReplyTo();
       if (textInput) textInput.value = '';
-      window.cspToast('Comment saved locally!', 'success');
+      if (typeof window.cspToast === 'function') {
+        window.cspToast('Comment posted successfully!', 'success');
+      }
       window.renderCommentsStream();
     });
 
@@ -7485,14 +7667,29 @@
         try { localStorage.setItem(pageKey, JSON.stringify(savedComments)); } catch(err){}
       }
 
-      // Sync Delete with MySQL Database
+      // Sync Delete with Database
       if (commentId) {
         var deleteUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=comments&id=' + commentId) : '/api/posts.php?resource=comments&id=' + commentId;
-        fetch(deleteUrl, { method: 'DELETE' }).catch(function(){});
+        fetch(deleteUrl, { 
+          method: 'DELETE',
+          headers: { 'X-Admin-Token': localStorage.getItem('conspodium_admin_token') || '' }
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (window.renderCommentsStream) window.renderCommentsStream();
+          if (typeof window.cspToast === 'function') {
+            window.cspToast('Comment deleted successfully!', 'danger');
+          }
+        })
+        .catch(function(err){
+          if (window.renderCommentsStream) window.renderCommentsStream();
+        });
+      } else {
+        if (window.renderCommentsStream) window.renderCommentsStream();
+        if (typeof window.cspToast === 'function') {
+          window.cspToast('Comment deleted successfully!', 'danger');
+        }
       }
-
-      if (window.renderCommentsStream) window.renderCommentsStream();
-      window.cspToast('Comment deleted successfully!', 'danger');
     });
   };
 
@@ -7504,7 +7701,13 @@
     var box = document.getElementById('article-inline-reply-box-' + parentId);
     if (box) {
       box.style.display = 'block';
-      window.syncCommenterSessionUI();
+      var session = window.getCommenterSession();
+      var nameInp = document.getElementById('art-inline-name-' + parentId);
+      var emailInp = document.getElementById('art-inline-email-' + parentId);
+      if (session) {
+        if (nameInp && !nameInp.value.trim()) nameInp.value = session.name;
+        if (emailInp && !emailInp.value.trim()) emailInp.value = session.email || '';
+      }
       var textInput = document.getElementById('art-inline-text-' + parentId);
       if (textInput) textInput.focus();
     }
@@ -7516,17 +7719,22 @@
   };
 
   window.submitArticleInlineReply = function(parentId) {
-    var session = window.getCommenterSession();
     var nameInput = document.getElementById('art-inline-name-' + parentId);
     var emailInput = document.getElementById('art-inline-email-' + parentId);
     var textInput = document.getElementById('art-inline-text-' + parentId);
+    var mainAuthorInput = document.getElementById('comm-author');
+    var mainEmailInput = document.getElementById('comm-email');
 
-    var authorName = session ? session.name : (nameInput ? nameInput.value.trim() : '');
-    var authorEmail = session ? session.email : (emailInput ? emailInput.value.trim() : '');
-    var content = textInput ? textInput.value.trim() : '';
+    var authorName = (nameInput && nameInput.value.trim()) 
+      ? nameInput.value.trim() 
+      : ((mainAuthorInput && mainAuthorInput.value.trim()) ? mainAuthorInput.value.trim() : 'Anonymous Reader');
+    var authorEmail = (emailInput && emailInput.value.trim()) 
+      ? emailInput.value.trim() 
+      : ((mainEmailInput && mainEmailInput.value.trim()) ? mainEmailInput.value.trim() : '');
+    var content = (textInput && textInput.value.trim()) ? textInput.value.trim() : '';
 
     if (!authorName || !content) {
-      if (window.cspToast) window.cspToast('Please fill in your name and comment.', 'danger');
+      if (typeof window.cspToast === 'function') window.cspToast('Please fill in your name and comment.', 'danger');
       else alert('Please fill in your name and comment.');
       return;
     }
@@ -7542,7 +7750,6 @@
       content: content
     };
 
-    var isEdit = Boolean(window.isEditingIdentity);
     fetch(postApiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -7551,16 +7758,22 @@
     .then(function(r){ return r.json(); })
     .then(function(res){
       if (res.success) {
-        window.saveCommenterSession(authorName, authorEmail, isEdit);
+        window.saveCommenterSession(authorName, authorEmail);
         hideArticleInlineReplyForm(parentId);
-        window.cspToast('Reply posted successfully!', 'success');
+        if (typeof window.cspToast === 'function') {
+          window.cspToast('Reply posted successfully!', 'success');
+        }
         window.renderCommentsStream();
       } else {
-        window.cspToast(res.error || 'Failed to post reply', 'danger');
+        if (typeof window.cspToast === 'function') {
+          window.cspToast(res.error || 'Failed to post reply', 'danger');
+        }
       }
     })
     .catch(function(){
-      window.cspToast('Failed to post comment', 'danger');
+      if (typeof window.cspToast === 'function') {
+        window.cspToast('Failed to post comment', 'danger');
+      }
     });
   };
 
@@ -7625,7 +7838,7 @@
                   <span>${authorName}</span>
                   ${deleteBtn}
                 </div>
-                <div style="font-size:0.88rem;color:#050505;line-height:1.35;text-align:left;white-space:pre-wrap;word-break:break-word;">${parentAuthor ? `<span style="font-weight:600;color:#00AEFE;margin-right:4px;">@${parentAuthor}</span>` : ''}${(textStr || '').trim()}</div>
+                <div style="font-size:0.88rem;color:#050505;line-height:1.35;text-align:left;white-space:pre-wrap;word-break:break-word;">${parentAuthor ? `<span style="display:inline-block;font-weight:700;color:#00AEFE;margin-right:6px;background:rgba(0,174,254,0.1);padding:1px 7px;border-radius:6px;font-size:0.78rem;">↳ Replying to @${parentAuthor}</span>` : ''}${(textStr || '').trim()}</div>
               </div>
 
               <!-- Facebook Action Bar (Like · Reply · Date) -->
@@ -7807,6 +8020,10 @@
 
           if (document.getElementById('post-date')) document.getElementById('post-date').textContent = p.published_at || p.created_at || 'Recent';
           if (document.getElementById('post-reading-time')) document.getElementById('post-reading-time').textContent = p.reading_time || '5 min read';
+          if (document.getElementById('post-comments-meta-count')) {
+            var cCount = p.comment_count || 0;
+            document.getElementById('post-comments-meta-count').textContent = cCount.toLocaleString() + (cCount === 1 ? ' comment' : ' comments');
+          }
           if (document.getElementById('post-views')) document.getElementById('post-views').textContent = (p.views || 0) + ' views';
           if (window.updateAuthorBox) window.updateAuthorBox(p);
 
@@ -8136,6 +8353,7 @@
   };
 
   // Initial Execution
+  window.initCommenterIdentity();
   window.fetchPostDetails();
   window.renderCommentsStream();
   window.loadRelatedStories();
@@ -8189,12 +8407,12 @@
   })();
   </script>
 
-  <!-- ── IDENTITY SWITCH & COOLDOWN MODAL ── -->
-  <div class="csp-forum-modal-overlay" id="modal-identity-guard">
-    <div class="csp-forum-modal-card" style="max-width:440px;text-align:center;padding:40px 32px 32px !important;border-radius:28px;" id="identity-guard-card">
-      <div id="id-guard-icon" class="csp-guard-icon-anim"></div>
-      <h3 id="id-guard-title" style="font-family:'Playfair Display','Merriweather',serif;color:#0f172a;font-size:1.55rem;font-weight:900;letter-spacing:-0.025em;margin:0 0 10px;line-height:1.25;"></h3>
-      <p id="id-guard-desc" style="font-size:0.92rem;color:#64748b;line-height:1.55;margin:0 0 26px;"></p>
+  <!-- ── SWITCH CONTRIBUTOR IDENTITY MODAL ── -->
+  <div class="csp-forum-modal-overlay" id="modal-identity-guard" style="z-index:999999;">
+    <div class="csp-forum-modal-card" style="max-width:440px;text-align:center;padding:36px 30px !important;border-radius:24px;box-shadow:0 25px 60px rgba(15,23,42,0.22);" id="identity-guard-card">
+      <div id="id-guard-icon" style="width:56px;height:56px;border-radius:50%;background:#e0f2fe;color:#00AEFE;display:flex;align-items:center;justify-content:center;margin:0 auto 16px auto;font-size:1.6rem;">👤</div>
+      <h3 id="id-guard-title" style="font-family:'Playfair Display','Merriweather',serif;color:#0f172a;font-size:1.45rem;font-weight:900;letter-spacing:-0.02em;margin:0 0 10px;line-height:1.25;">Switch Contributor Identity?</h3>
+      <p id="id-guard-desc" style="font-size:0.92rem;color:#64748b;line-height:1.55;margin:0 0 24px;"></p>
       <div id="id-guard-actions" style="display:flex;gap:10px;justify-content:center;width:100%;"></div>
     </div>
   </div>

@@ -206,11 +206,13 @@ if ($action === 'thread') {
 
         $stmtReplies = $pdo->prepare("
             SELECT r.*,
+                   parent.author_name as parent_author_name,
                    COALESCE(r.upvotes, 0) as upvotes,
                    COALESCE(r.downvotes, 0) as downvotes,
                    (COALESCE(r.upvotes, 0) - COALESCE(r.downvotes, 0)) as score,
                    (SELECT vote_type FROM forum_votes v WHERE v.target_type = 'reply' AND v.target_id = r.id AND v.voter_ip = ?) as user_vote
             FROM forum_replies r 
+            LEFT JOIN forum_replies parent ON r.parent_id = parent.id
             WHERE r.thread_id = ? AND r.status = 'approved'
             ORDER BY r.id ASC
         ");

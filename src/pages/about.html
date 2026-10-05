@@ -871,16 +871,16 @@ e-page-transition,
   position: fixed;
   inset: 0;
   z-index: 99999999;
-  background: rgba(5, 13, 26, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 #csp-confirm-backdrop.show {
   opacity: 1;
@@ -888,44 +888,113 @@ e-page-transition,
 }
 .csp-confirm-modal {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: 24px;
   max-width: 440px;
   width: 100%;
-  padding: 32px;
-  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.25);
-  transform: scale(0.92);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 32px 28px 28px;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.04);
+  transform: scale(0.92) translateY(10px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: 'Inter', -apple-system, sans-serif;
   text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 #csp-confirm-backdrop.show .csp-confirm-modal {
-  transform: scale(1);
+  transform: scale(1) translateY(0);
 }
 .csp-confirm-icon-box {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  margin: 0 auto 16px;
+  margin: 0 auto 20px;
+  transition: transform 0.25s ease;
 }
-.csp-confirm-icon-danger { background: rgba(244, 63, 94, 0.12); color: #f43f5e; }
-.csp-confirm-icon-info { background: rgba(0, 174, 254, 0.12); color: #00AEFE; }
+.csp-icon-pulse-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 24px;
+  opacity: 0;
+  pointer-events: none;
+  animation: cspPulseGlow 2.4s infinite ease-out;
+}
+@keyframes cspPulseGlow {
+  0% { transform: scale(0.92); opacity: 0.75; }
+  50% { transform: scale(1.18); opacity: 0; }
+  100% { transform: scale(0.92); opacity: 0; }
+}
+.csp-confirm-icon-danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.csp-confirm-icon-danger .csp-icon-pulse-ring {
+  border: 2px solid rgba(239, 68, 68, 0.35);
+}
+.csp-confirm-icon-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+.csp-confirm-icon-warning .csp-icon-pulse-ring {
+  border: 2px solid rgba(245, 158, 11, 0.35);
+}
+.csp-confirm-icon-info {
+  background: rgba(0, 174, 254, 0.1);
+  color: #00AEFE;
+  border: 1px solid rgba(0, 174, 254, 0.2);
+}
+.csp-confirm-icon-info .csp-icon-pulse-ring {
+  border: 2px solid rgba(0, 174, 254, 0.35);
+}
+.csp-trash-svg-animated {
+  display: block;
+}
+.csp-trash-svg-animated .csp-trash-lid {
+  transform-origin: left bottom;
+  animation: cspTrashLidBounce 2.2s infinite ease-in-out;
+}
+@keyframes cspTrashLidBounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-3.5px) rotate(-9deg); }
+  50% { transform: translateY(-1px) rotate(-3deg); }
+  75% { transform: translateY(0) rotate(0deg); }
+}
+.csp-alert-svg-animated {
+  animation: cspAlertWiggle 2.5s infinite ease-in-out;
+}
+@keyframes cspAlertWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-6deg); }
+  40% { transform: rotate(6deg); }
+  60% { transform: rotate(-3deg); }
+  80% { transform: rotate(3deg); }
+}
+.csp-info-svg-animated {
+  animation: cspInfoPulse 2.2s infinite ease-in-out;
+}
+@keyframes cspInfoPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
 .csp-confirm-title {
   font-family: 'Merriweather', serif;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #0f172a;
   margin: 0 0 10px;
 }
 .csp-confirm-desc {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: #64748b;
   line-height: 1.55;
   margin: 0 0 24px;
+  padding: 0 4px;
 }
 .csp-confirm-actions {
   display: flex;
@@ -940,27 +1009,45 @@ e-page-transition,
   font-size: 0.88rem;
   cursor: pointer;
   border: none;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: 'Inter', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 .csp-confirm-cancel {
-  background: #f1f5f9;
+  background: #f8fafc;
   color: #475569;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #e2e8f0;
 }
-.csp-confirm-cancel:hover { background: #e2e8f0; }
+.csp-confirm-cancel:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+  border-color: #cbd5e1;
+}
 .csp-confirm-danger-btn {
-  background: linear-gradient(135deg, #f43f5e, #be123c);
+  background: linear-gradient(135deg, #ef4444, #dc2626);
   color: #ffffff;
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
 }
-.csp-confirm-danger-btn:hover { opacity: 0.9; }
+.csp-confirm-danger-btn:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.45);
+  transform: translateY(-1px);
+}
 .csp-confirm-primary-btn {
-  background: linear-gradient(135deg, #00AEFE, #B71F71);
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35);
+  background: #00AEFE !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35) !important;
 }
-.csp-confirm-primary-btn:hover { opacity: 0.9; }
+.csp-confirm-primary-btn:hover {
+  background: #0096db !important;
+  background-image: none !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 174, 254, 0.45) !important;
+}
 </style>
 
 <!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
@@ -972,7 +1059,7 @@ e-page-transition,
 </div>
 
 <script id="csp-mobile-menu-script">
-(function() {
+(function(){
   function getRootUrl(targetRoute) {
     var p = window.location.pathname;
     var isPublicDir = p.startsWith('/public') || p.includes('/public/');
@@ -995,8 +1082,6 @@ e-page-transition,
   }
   window.getAbsoluteImageUrl = getAbsoluteImageUrl;
 
-
-
   // Global Confirmation Modal (Promise-based)
   window.cspConfirm = function(options) {
     return new Promise(function(resolve) {
@@ -1013,7 +1098,7 @@ e-page-transition,
         backdrop.id = 'csp-confirm-backdrop';
         backdrop.innerHTML = `
           <div class="csp-confirm-modal">
-            <div class="csp-confirm-icon-box" id="csp-confirm-icon">⚠️</div>
+            <div class="csp-confirm-icon-box" id="csp-confirm-icon"></div>
             <h3 class="csp-confirm-title" id="csp-confirm-title"></h3>
             <p class="csp-confirm-desc" id="csp-confirm-desc"></p>
             <div class="csp-confirm-actions">
@@ -1038,11 +1123,37 @@ e-page-transition,
 
       if (type === 'danger') {
         iconBox.className = 'csp-confirm-icon-box csp-confirm-icon-danger';
-        iconBox.textContent = '🗑️';
+        iconBox.innerHTML = `
+          <div class="csp-icon-pulse-ring"></div>
+          <svg class="csp-trash-svg-animated" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path class="csp-trash-lid" d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <path class="csp-trash-can" d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+          </svg>
+        `;
+        okBtn.className = 'csp-confirm-btn csp-confirm-danger-btn';
+      } else if (type === 'warning') {
+        iconBox.className = 'csp-confirm-icon-box csp-confirm-icon-warning';
+        iconBox.innerHTML = `
+          <div class="csp-icon-pulse-ring"></div>
+          <svg class="csp-alert-svg-animated" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        `;
         okBtn.className = 'csp-confirm-btn csp-confirm-danger-btn';
       } else {
         iconBox.className = 'csp-confirm-icon-box csp-confirm-icon-info';
-        iconBox.textContent = '💡';
+        iconBox.innerHTML = `
+          <div class="csp-icon-pulse-ring"></div>
+          <svg class="csp-info-svg-animated" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        `;
         okBtn.className = 'csp-confirm-btn csp-confirm-primary-btn';
       }
 

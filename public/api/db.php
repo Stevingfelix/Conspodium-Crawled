@@ -154,6 +154,18 @@ try {
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
             CREATE UNIQUE INDEX IF NOT EXISTS idx_forum_votes ON forum_votes(target_type, target_id, voter_ip);
+
+            CREATE TABLE IF NOT EXISTS device_identities (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                device_key TEXT NOT NULL,
+                ip_hash TEXT NOT NULL,
+                author_name TEXT NOT NULL,
+                author_email TEXT,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE INDEX IF NOT EXISTS idx_device_identities_key ON device_identities(device_key);
+            CREATE INDEX IF NOT EXISTS idx_device_identities_ip ON device_identities(ip_hash);
         ");
 
         try { $pdo->exec("ALTER TABLE posts ADD COLUMN likes INTEGER DEFAULT 0"); } catch (Exception $e) {}

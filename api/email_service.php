@@ -218,7 +218,7 @@ QUOTE;
 HTML;
 }
 
-function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyText, $bodyHtml = null) {
+function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyText, $bodyHtml = null, $replyToEmail = null) {
     $fromDomain = 'conspodium.com';
     if (strpos($fromEmail, '@') !== false) {
         $parts = explode('@', $fromEmail);
@@ -228,6 +228,7 @@ function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyT
     $msgId = '<' . md5(uniqid(microtime(), true)) . '@' . $fromDomain . '>';
     $dateStr = date("r");
     $boundary = "----=_NextPart_" . md5(uniqid(microtime(), true));
+    $effectiveReplyTo = !empty($replyToEmail) ? $replyToEmail : $fromEmail;
 
     if (empty($bodyHtml)) {
         $bodyHtml = renderBrandedEmailHtml($subject, $bodyText, $toEmail);
@@ -236,7 +237,7 @@ function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyT
 
     $headers = [];
     $headers[] = "From: {$fromName} <{$fromEmail}>";
-    $headers[] = "Reply-To: {$fromName} <{$fromEmail}>";
+    $headers[] = "Reply-To: {$fromName} <{$effectiveReplyTo}>";
     $headers[] = "Return-Path: <{$fromEmail}>";
     $headers[] = "To: <{$toEmail}>";
     $headers[] = "Subject: {$subject}";
@@ -271,6 +272,10 @@ function sendSmtpEmail($host, $port, $user, $pass, $fromName, $fromEmail, $toEma
 
     $primaryPort = intval($port) ?: 587;
     $portsToTry = ($primaryPort === 465) ? [465, 587] : [$primaryPort, 465];
+
+    // Hostinger SMTP strict sender requirement: Envelope sender (MAIL FROM) must match authenticated SMTP user
+    $effectiveFromEmail = (!empty($user) && strpos($user, '@') !== false) ? trim($user) : trim($fromEmail);
+    $replyToEmail = (!empty($fromEmail) && $fromEmail !== $effectiveFromEmail) ? trim($fromEmail) : $effectiveFromEmail;
 
     $lastError = "Unable to connect to SMTP server";
 
@@ -320,8 +325,8 @@ function sendSmtpEmail($host, $port, $user, $pass, $fromName, $fromEmail, $toEma
         }
 
         $ehloDomain = 'conspodium.com';
-        if (!empty($fromEmail) && strpos($fromEmail, '@') !== false) {
-            $parts = explode('@', $fromEmail);
+        if (!empty($effectiveFromEmail) && strpos($effectiveFromEmail, '@') !== false) {
+            $parts = explode('@', $effectiveFromEmail);
             if (!empty($parts[1])) $ehloDomain = trim($parts[1]);
         }
 
@@ -366,14 +371,14 @@ function sendSmtpEmail($host, $port, $user, $pass, $fromName, $fromEmail, $toEma
             }
         }
 
-        $mailFromRes = $send($socket, "MAIL FROM: <$fromEmail>");
+        $mailFromRes = $send($socket, "MAIL FROM: <$effectiveFromEmail>");
         if (substr(trim($mailFromRes), 0, 3) !== "250") {
             fclose($socket);
             return ["success" => false, "error" => "MAIL FROM rejected: " . trim($mailFromRes)];
         }
 
         $rcptRes = $send($socket, "RCPT TO: <$toEmail>");
-        if (substr(trim($rcptRes), 0, 3) !== "250") {
+        if (substr(trim($rcptRes), 0, 3) !== "250" && substr(trim($rcptRes), 0, 3) !== "251") {
             fclose($socket);
             return ["success" => false, "error" => "RCPT TO rejected: " . trim($rcptRes)];
         }
@@ -384,7 +389,7 @@ function sendSmtpEmail($host, $port, $user, $pass, $fromName, $fromEmail, $toEma
             return ["success" => false, "error" => "DATA command rejected: " . trim($dataRes)];
         }
 
-        $fullMessage = buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $body, $bodyHtml);
+        $fullMessage = buildMimeEmailMessage($fromName, $effectiveFromEmail, $toEmail, $subject, $body, $bodyHtml, $replyToEmail);
         $finalRes = $send($socket, $fullMessage . "\r\n.");
         @$send($socket, "QUIT");
         @fclose($socket);

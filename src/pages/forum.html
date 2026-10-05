@@ -471,21 +471,27 @@
       border: 1.5px solid rgba(0, 174, 254, 0.4);
       background: linear-gradient(180deg, #ffffff 0%, rgba(0, 174, 254, 0.02) 100%);
       box-shadow: 0 6px 24px rgba(0,174,254,0.08);
+      overflow: visible !important;
+      margin-top: 18px;
     }
     .csp-thread-card.pinned::before {
-      content: "Featured Debate";
+      content: "★ Featured Debate";
       position: absolute;
-      top: -11px;
-      left: 24px;
+      top: -12px;
+      left: 20px;
       background: linear-gradient(135deg, #00AEFE 0%, #0077b6 100%);
       color: #ffffff;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 2px 10px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 12px;
       border-radius: 20px;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      box-shadow: 0 2px 8px rgba(0,174,254,0.3);
+      box-shadow: 0 3px 10px rgba(0,174,254,0.35);
+      z-index: 5;
+      display: inline-flex;
+      align-items: center;
+      line-height: 1.2;
     }
 
     /* Author Lockup Header */
@@ -1789,105 +1795,106 @@
         });
       }
 
-      // ── COMMENTER / AUTHOR IDENTITY LOCK & COOLDOWN SYSTEM ──
-      var COOLDOWN_MS = 3 * 24 * 60 * 60 * 1000; // 3 Days Cooldown
-      var MAX_EDITS = 3;
+      // ── DEVICE IDENTITY & COMMENTER SESSION SYSTEM ──
+      window.isEditingIdentity = false;
+
+      window.getCspDeviceKey = function() {
+        var key = '';
+        try { key = localStorage.getItem('csp_device_key') || ''; } catch(e){}
+        if (!key) {
+          var match = document.cookie.match(/(^|;)\s*csp_device_key=([^;]+)/);
+          if (match) key = decodeURIComponent(match[2]);
+        }
+        if (!key) {
+          key = 'csp_dev_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+          try { localStorage.setItem('csp_device_key', key); } catch(e){}
+          document.cookie = "csp_device_key=" + encodeURIComponent(key) + "; max-age=31536000; path=/";
+        }
+        return key;
+      };
 
       window.getCommenterSession = function() {
         try {
           var name = localStorage.getItem('csp_commenter_name') || '';
           var email = localStorage.getItem('csp_commenter_email') || '';
-          if (name) {
-            var edits = parseInt(localStorage.getItem('csp_identity_edits') || '0', 10);
-            var lastUpdated = parseInt(localStorage.getItem('csp_identity_updated_at') || '0', 10);
-            return {
-              name: name,
-              email: email,
-              edits: edits,
-              lastUpdated: lastUpdated
-            };
-          }
+          if (name) return { name: name, email: email };
         } catch(e) {}
+        var matchName = document.cookie.match(/(^|;)\s*csp_user_comment_author=([^;]+)/);
+        var matchEmail = document.cookie.match(/(^|;)\s*csp_user_comment_email=([^;]+)/);
+        if (matchName) {
+          var n = decodeURIComponent(matchName[2]);
+          var em = matchEmail ? decodeURIComponent(matchEmail[2]) : '';
+          return { name: n, email: em };
+        }
         return null;
       };
 
-      window.saveCommenterSession = function(name, email, isEdit) {
+      window.saveCommenterSession = function(name, email) {
         if (!name) return;
+        var devKey = window.getCspDeviceKey();
         try {
           localStorage.setItem('csp_commenter_name', name.trim());
           if (email) localStorage.setItem('csp_commenter_email', email.trim());
           document.cookie = "csp_user_comment_author=" + encodeURIComponent(name.trim()) + "; max-age=31536000; path=/";
           if (email) document.cookie = "csp_user_comment_email=" + encodeURIComponent(email.trim()) + "; max-age=31536000; path=/";
-          
-          if (!localStorage.getItem('csp_identity_updated_at') || isEdit) {
-            localStorage.setItem('csp_identity_updated_at', String(Date.now()));
-          }
-          if (isEdit) {
-            var currentEdits = parseInt(localStorage.getItem('csp_identity_edits') || '0', 10);
-            localStorage.setItem('csp_identity_edits', String(currentEdits + 1));
-          }
         } catch(e) {}
         window.isEditingIdentity = false;
+
+        var idSyncUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?resource=device_identity') : '/api/posts.php?resource=device_identity';
+        fetch(idSyncUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ author_name: name.trim(), author_email: email ? email.trim() : '', device_key: devKey })
+        }).catch(function(){});
+
         window.syncCommenterSessionUI();
+      };
+
+      window.initCommenterIdentity = function() {
+        var devKey = window.getCspDeviceKey();
+        var session = window.getCommenterSession();
+        if (session) {
+          window.syncCommenterSessionUI();
+        }
+
+        var checkUrl = (window.getRootUrl ? window.getRootUrl('api/posts.php?resource=device_identity&device_key=' + encodeURIComponent(devKey)) : '/api/posts.php?resource=device_identity&device_key=' + encodeURIComponent(devKey));
+        fetch(checkUrl)
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if (res.success && res.session && res.session.name) {
+              try {
+                localStorage.setItem('csp_commenter_name', res.session.name);
+                if (res.session.email) localStorage.setItem('csp_commenter_email', res.session.email);
+              } catch(e){}
+              window.syncCommenterSessionUI();
+            }
+          })
+          .catch(function(){});
       };
 
       window.requestIdentityEdit = function() {
         var session = window.getCommenterSession();
-        if (!session) return;
-
         var guardModal = document.getElementById('modal-identity-guard');
-        var card = document.getElementById('identity-guard-card');
-        var iconEl = document.getElementById('id-guard-icon');
         var titleEl = document.getElementById('id-guard-title');
         var descEl = document.getElementById('id-guard-desc');
         var actionsEl = document.getElementById('id-guard-actions');
 
-        var now = Date.now();
-        var timeSinceUpdate = now - (session.lastUpdated || 0);
-        var inCooldown = session.lastUpdated && timeSinceUpdate < COOLDOWN_MS;
-        var editsLeft = Math.max(0, MAX_EDITS - (session.edits || 0));
-
-        // Case 1: Max edits exhausted
-        if (editsLeft <= 0) {
-          if (card) card.style.borderTop = '5px solid #ef4444';
-          iconEl.className = 'csp-guard-icon-anim exhausted';
-          iconEl.innerHTML = '<svg class="csp-lock-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
-          titleEl.textContent = 'Identity Updates Exhausted';
-          descEl.innerHTML = 'You have reached the limit of <strong>3 identity updates</strong> on this device. Your contributor profile is permanently set to <strong>' + escapeHtml(session.name) + '</strong>.<br><br>If you require an urgent correction, please contact <a href="mailto:support@conspodium.com" style="color:#00AEFE;font-weight:600;">support@conspodium.com</a>.';
-          actionsEl.innerHTML = '<button type="button" onclick="document.getElementById(\'modal-identity-guard\').classList.remove(\'active\')" style="padding:11px 28px;border-radius:50px;background:#f1f5f9;border:1.5px solid #e2e8f0;font-weight:600;color:#334155;cursor:pointer;font-size:0.92rem;">Close</button>';
-          if (guardModal) guardModal.classList.add('active');
+        if (!session) {
+          window.isEditingIdentity = true;
+          window.syncCommenterSessionUI();
           return;
         }
 
-        // Case 2: In Cooldown
-        if (inCooldown) {
-          var msRemaining = COOLDOWN_MS - timeSinceUpdate;
-          var hoursRemaining = Math.ceil(msRemaining / (1000 * 60 * 60));
-          var daysRemaining = Math.floor(hoursRemaining / 24);
-          var remainingStr = daysRemaining > 0 
-            ? daysRemaining + (daysRemaining === 1 ? ' day' : ' days') + ' and ' + (hoursRemaining % 24) + ' hrs' 
-            : hoursRemaining + (hoursRemaining === 1 ? ' hour' : ' hours');
-
-          if (card) card.style.borderTop = '5px solid #f59e0b';
-          iconEl.className = 'csp-guard-icon-anim cooldown';
-          iconEl.innerHTML = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline class="csp-clock-minute-hand" points="12 6 12 12 16 14"></polyline></svg>';
-          titleEl.textContent = 'Identity Cooldown Active';
-          descEl.innerHTML = 'To maintain community trust and prevent impersonation, contributor names can only be updated once every 3 days.<br><br>Your next update will be available in <strong>' + remainingStr + '</strong>.';
-          actionsEl.innerHTML = '<button type="button" onclick="document.getElementById(\'modal-identity-guard\').classList.remove(\'active\')" style="width:100%;height:46px;border-radius:50px;background:#00AEFE;border:none;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.95rem;">Got It</button>';
-          if (guardModal) guardModal.classList.add('active');
-          return;
+        if (titleEl) titleEl.textContent = 'Switch Contributor Identity?';
+        if (descEl) {
+          descEl.innerHTML = 'You are currently recognized on this device as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '.<br><br>Would you like to unlock the fields to post under a different name and email?';
         }
-
-        // Case 3: Allowed to Edit
-        if (card) card.style.borderTop = '5px solid #00AEFE';
-        iconEl.className = 'csp-guard-icon-anim edit';
-        iconEl.innerHTML = '<svg class="csp-edit-pen-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
-        titleEl.textContent = 'Switch Contributor Identity?';
-        descEl.innerHTML = 'You have <strong>' + editsLeft + ' of ' + MAX_EDITS + '</strong> name updates remaining on this device.<br><br>Once you update your details, your identity will be locked for a 3-day cooldown period.';
-        actionsEl.innerHTML = `
-          <button type="button" onclick="document.getElementById('modal-identity-guard').classList.remove('active')" style="flex:1;height:46px;border-radius:50px;background:#f8fafc;border:1.5px solid #e2e8f0;font-weight:600;color:#64748b;cursor:pointer;font-size:0.92rem;">Cancel</button>
-          <button type="button" onclick="window.confirmUnlockIdentity()" style="flex:1;height:46px;border-radius:50px;background:#00AEFE;border:none;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(0,174,254,0.35);font-size:0.92rem;">Unlock Fields</button>
-        `;
+        if (actionsEl) {
+          actionsEl.innerHTML = `
+            <button type="button" onclick="document.getElementById('modal-identity-guard').classList.remove('active')" style="flex:1;height:44px;border-radius:50px;background:#f8fafc;border:1.5px solid #cbd5e1;font-weight:600;color:#64748b;cursor:pointer;font-size:0.92rem;">Cancel</button>
+            <button type="button" onclick="window.confirmUnlockIdentity()" style="flex:1;height:44px;border-radius:50px;background:#00AEFE;border:none;font-weight:700;color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(0,174,254,0.35);font-size:0.92rem;">Unlock Fields</button>
+          `;
+        }
         if (guardModal) guardModal.classList.add('active');
       };
 
@@ -1895,53 +1902,80 @@
         var guardModal = document.getElementById('modal-identity-guard');
         if (guardModal) guardModal.classList.remove('active');
         window.isEditingIdentity = true;
-        window.syncCommenterSessionUI(true);
-        if (window.cspToast) window.cspToast('Fields unlocked. Enter your updated name & email.', 'info');
+        window.syncCommenterSessionUI();
+        var nameInp = document.getElementById('th-name');
+        if (nameInp) {
+          nameInp.value = '';
+          nameInp.focus();
+        }
+        var emailInp = document.getElementById('th-email');
+        if (emailInp) emailInp.value = '';
+        if (window.cspToast) window.cspToast('Fields unlocked. Enter your name & email.', 'info');
       };
 
-      window.syncCommenterSessionUI = function(unlocked) {
+      window.syncCommenterSessionUI = function() {
         var session = window.getCommenterSession();
         var nameInput = document.getElementById('th-name');
         var emailInput = document.getElementById('th-email');
         var formNewThread = document.getElementById('form-new-thread');
 
+        var isLocked = Boolean(session && session.name && !window.isEditingIdentity);
+
         if (nameInput) {
-          if (session && !unlocked && !window.isEditingIdentity) {
+          if (isLocked) {
             nameInput.value = session.name;
             nameInput.readOnly = true;
-            nameInput.tabIndex = -1;
-            nameInput.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
+            nameInput.style.background = '#f1f5f9';
+            nameInput.style.color = '#334155';
+            nameInput.style.borderColor = '#cbd5e1';
+            nameInput.style.cursor = 'pointer';
+            nameInput.title = 'Click to switch contributor identity';
+            nameInput.onclick = function(){ window.requestIdentityEdit(); };
           } else {
             nameInput.readOnly = false;
-            nameInput.removeAttribute('tabindex');
-            nameInput.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
+            nameInput.style.background = '#ffffff';
+            nameInput.style.color = '#0f172a';
+            nameInput.style.borderColor = '#cbd5e1';
+            nameInput.style.cursor = 'text';
+            nameInput.removeAttribute('title');
+            nameInput.onclick = null;
           }
         }
 
         if (emailInput) {
-          if (session && !unlocked && !window.isEditingIdentity) {
+          if (isLocked) {
             emailInput.value = session.email || '';
             emailInput.readOnly = true;
-            emailInput.tabIndex = -1;
-            emailInput.style.cssText = 'background:#e2e8f0 !important; color:#64748b !important; border:1.5px solid #cbd5e1 !important; pointer-events:none !important; user-select:none !important; cursor:not-allowed !important; box-shadow:none !important;';
+            emailInput.style.background = '#f1f5f9';
+            emailInput.style.color = '#334155';
+            emailInput.style.borderColor = '#cbd5e1';
+            emailInput.style.cursor = 'pointer';
+            emailInput.title = 'Click to switch contributor identity';
+            emailInput.onclick = function(){ window.requestIdentityEdit(); };
           } else {
             emailInput.readOnly = false;
-            emailInput.removeAttribute('tabindex');
-            emailInput.style.cssText = 'background:#ffffff !important; color:#0f172a !important; border:1.5px solid #cbd5e1 !important; pointer-events:auto !important; user-select:auto !important; cursor:text !important;';
+            emailInput.style.background = '#ffffff';
+            emailInput.style.color = '#0f172a';
+            emailInput.style.borderColor = '#cbd5e1';
+            emailInput.style.cursor = 'text';
+            emailInput.removeAttribute('title');
+            emailInput.onclick = null;
           }
         }
 
         if (formNewThread) {
           var existingBadge = formNewThread.querySelector('.csp-session-lock-badge');
-          if (session && !unlocked && !window.isEditingIdentity) {
+          if (isLocked) {
             if (!existingBadge) {
               existingBadge = document.createElement('div');
               existingBadge.className = 'csp-session-lock-badge';
-              existingBadge.style.cssText = 'background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:9px 14px;font-size:0.84rem;color:#0369a1;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;font-weight:500;gap:8px;flex-wrap:nowrap;';
-              formNewThread.insertBefore(existingBadge, formNewThread.firstChild);
+              var row = formNewThread.querySelector('.csp-form-grid');
+              if (row) formNewThread.insertBefore(existingBadge, row);
+              else formNewThread.insertBefore(existingBadge, formNewThread.firstChild);
             }
-            existingBadge.innerHTML = '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1;">🔒 Posting as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '</span>' +
-              '<button type="button" onclick="window.requestIdentityEdit()" style="background:none;border:none;color:#00AEFE;font-weight:700;font-size:0.82rem;cursor:pointer;text-decoration:underline;white-space:nowrap;flex-shrink:0;padding-left:6px;">Switch / Edit</button>';
+            existingBadge.style.cssText = 'background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:12px;padding:9px 14px;font-size:0.84rem;color:#0369a1;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:500;';
+            existingBadge.innerHTML = '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;">🔒 Posting as <strong>' + escapeHtml(session.name) + '</strong>' + (session.email ? ' (' + escapeHtml(session.email) + ')' : '') + '</span>' +
+              '<button type="button" onclick="window.requestIdentityEdit()" style="background:#00AEFE;color:#ffffff;border:none;padding:5px 14px;border-radius:20px;font-weight:700;font-size:0.75rem;cursor:pointer;flex-shrink:0;">Switch / Edit</button>';
           } else {
             if (existingBadge && existingBadge.parentNode) {
               existingBadge.parentNode.removeChild(existingBadge);
@@ -2012,9 +2046,8 @@
           var categoryId = selectedOption ? selectedOption.getAttribute('data-id') : null;
 
           var session = window.getCommenterSession ? window.getCommenterSession() : null;
-          var isEditing = Boolean(window.isEditingIdentity);
-          var authorName = (!isEditing && session) ? session.name : document.getElementById('th-name').value.trim();
-          var authorEmail = (!isEditing && session) ? session.email : document.getElementById('th-email').value.trim();
+          var authorName = document.getElementById('th-name').value.trim();
+          var authorEmail = document.getElementById('th-email').value.trim();
 
           var payload = {
             title: document.getElementById('th-title').value.trim(),
@@ -2027,7 +2060,7 @@
             content: content
           };
 
-          window.saveCommenterSession(payload.author_name, payload.author_email, isEditing);
+          window.saveCommenterSession(payload.author_name, payload.author_email);
 
           var createApi = window.getRootUrl ? window.getRootUrl('api/forum.php?action=create_thread') : '/api/forum.php?action=create_thread';
 
@@ -2072,7 +2105,7 @@
       bindCategoryClicks();
       loadCategories();
       loadThreads();
-      window.syncCommenterSessionUI();
+      window.initCommenterIdentity();
     })();
   </script>
 </body>
