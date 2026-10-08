@@ -6,16 +6,17 @@ DirectoryIndex index.html index.php install.php
     RewriteEngine On
     RewriteBase /
 
-    # 1. Direct pass-through for existing files (CSS, JS, Images, Fonts, PHP scripts)
+    # 1. Installer clean URL rewrite (/install -> install.php)
+    RewriteRule ^install/?$ install.php [L]
+
+    # 2. Direct pass-through for existing files in root (CSS, JS, Images, Fonts, PHP scripts)
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
 
-    # 2. Allow API scripts, uploads, assets, sitemaps, robots, and install wizard directly
+    # 3. Sitemap rewrite
     RewriteRule ^sitemap\.xml$ api/sitemap.php [L]
-    RewriteCond %{REQUEST_URI} ^/(install\.php|api/|uploads/|wp-content/|wp-includes/|assets/|robots\.txt|sitemap\.xml|2026/) [NC]
-    RewriteRule ^ - [L]
 
-    # 3. Handle Root URL
+    # 4. Handle Root URL (check root first, then public/)
     RewriteCond %{REQUEST_URI} ^/$
     RewriteCond %{DOCUMENT_ROOT}/index.html -f
     RewriteRule ^$ index.html [L]
@@ -24,12 +25,12 @@ DirectoryIndex index.html index.php install.php
     RewriteCond %{DOCUMENT_ROOT}/public/index.html -f
     RewriteRule ^$ public/index.html [L]
 
-    # 4. Routing if public/ directory exists in subfolder setup
+    # 5. Routing if public/ directory exists (serve assets & pages from public/ if not in root)
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
     RewriteRule ^(.*)$ public/$1 [L]
 
-    # 5. Clean URL Rewrites for Subpages (Subfolder setup)
+    # 6. Clean URL Rewrites for Subpages (Subfolder setup if public/ exists)
     RewriteRule ^dashboard/?$ public/dashboard/index.html [L]
     RewriteRule ^dashboard/(.*)$ public/dashboard/$1 [L]
     RewriteRule ^stories/?$ public/stories/index.html [L]
@@ -44,7 +45,7 @@ DirectoryIndex index.html index.php install.php
     RewriteRule ^forum/?$ public/forum/index.html [L]
     RewriteRule ^forum/thread/(.*)$ public/forum/thread/index.html [L]
 
-    # 6. Direct setup fallback (if public contents uploaded directly into root)
+    # 7. Direct setup fallback (if public contents uploaded directly into public_html root)
     RewriteRule ^dashboard/?$ dashboard/index.html [L]
     RewriteRule ^stories/?$ stories/index.html [L]
     RewriteRule ^about-us/?$ about-us/index.html [L]

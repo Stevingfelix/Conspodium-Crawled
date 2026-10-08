@@ -730,7 +730,24 @@ if ($method === 'POST') {
 
     $input = json_decode(file_get_contents("php://input"), true) ?: $_POST;
 
-    // SCHOLAR SPOTLIGHT CRUD
+    // SCHOLAR SPOTLIGHT REORDER & CRUD
+    if ($action === 'reorder_scholars') {
+        $order = $input['order'] ?? [];
+        if (is_array($order) && count($order) > 0) {
+            try {
+                $stmt = $pdo->prepare("UPDATE scholar_spotlights SET display_order = ? WHERE id = ?");
+                foreach ($order as $index => $sId) {
+                    $stmt->execute([$index + 1, intval($sId)]);
+                }
+                echo json_encode(["success" => true, "message" => "Scholar spotlight order updated successfully!"]);
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo json_encode(["success" => false, "error" => $e->getMessage()]);
+            }
+            exit();
+        }
+    }
+
     if ($action === 'save_scholar') {
         $id = intval($input['id'] ?? 0);
         $scholarName = csp_sanitize($input['scholar_name'] ?? '');

@@ -1759,47 +1759,54 @@ e-page-transition,
                   <!-- Hidden Real File Input -->
                   <input type="file" id="wiz-cover-file" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none;" />
 
-                  <!-- Upload Drag Drop Area -->
-                  <div id="wiz-upload-dropzone" style="border:2px dashed #cbd5e1;border-radius:16px;padding:16px 14px;text-align:center;background:#f8fafc;margin-bottom:16px;transition:all 0.2s ease;">
-                    <div id="wiz-upload-idle" style="cursor:pointer;" onclick="document.getElementById('wiz-cover-file').click();">
-                      <div style="width:38px;height:38px;border-radius:50%;background:#e0f2fe;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;">
-                        <!-- Flat Camera SVG -->
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                          <circle cx="12" cy="13" r="4"></circle>
-                        </svg>
+                    <!-- Upload Drag Drop Area -->
+                    <div id="wiz-upload-dropzone" style="border:2px dashed #cbd5e1;border-radius:16px;padding:16px 14px;text-align:center;background:#f8fafc;margin-bottom:16px;transition:all 0.2s ease;">
+                      <div id="wiz-upload-idle" style="cursor:pointer;" onclick="document.getElementById('wiz-cover-file').click();">
+                        <div style="width:38px;height:38px;border-radius:50%;background:#e0f2fe;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;">
+                          <!-- Flat Camera SVG -->
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                          </svg>
+                        </div>
+                        <div style="font-size:0.85rem;font-weight:600;color:#334155;" id="wiz-upload-title">Click to upload cover photograph</div>
+                        <div style="font-size:0.72rem;color:#94a3b8;margin-top:2px;">Supported: JPG, PNG, WEBP (Max 5MB)</div>
                       </div>
-                      <div style="font-size:0.85rem;font-weight:600;color:#334155;" id="wiz-upload-title">Click to upload cover photograph</div>
-                      <div style="font-size:0.72rem;color:#94a3b8;margin-top:2px;">Supported: JPG, PNG, WEBP (Max 5MB)</div>
-                    </div>
 
-                    <!-- Uploaded Image Full Preview & Actions Box -->
-                    <div id="wiz-upload-success" style="display:none;flex-direction:column;align-items:center;gap:12px;width:100%;">
-                      <div style="position:relative;width:100%;max-height:240px;border-radius:12px;overflow:hidden;background:#0f172a;box-shadow:0 4px 16px rgba(0,0,0,0.12);display:flex;align-items:center;justify-content:center;">
-                        <img id="wiz-preview-img" src="" alt="Cover preview" style="max-height:240px;width:100%;object-fit:cover;display:block;" />
-                        <span style="position:absolute;top:10px;left:10px;background:rgba(15,23,42,0.75);backdrop-filter:blur(6px);color:#10b981;font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;border:1px solid rgba(255,255,255,0.15);">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                          Ready to Publish
-                        </span>
+                      <!-- Uploading Progress State -->
+                      <div id="wiz-upload-loading" style="display:none;flex-direction:column;align-items:center;padding:16px;gap:10px;">
+                        <div class="csp-spinner" style="width:32px;height:32px;border:3px solid rgba(0,174,254,0.2);border-top-color:#00AEFE;border-radius:50%;animation:cspSpin 0.8s linear infinite;"></div>
+                        <span style="font-size:0.86rem;font-weight:600;color:#00AEFE;" id="wiz-upload-loading-text">Compressing &amp; uploading cover image...</span>
+                        <span style="font-size:0.75rem;color:#64748b;">Please wait while your photo is optimized for web publishing.</span>
                       </div>
-                      
-                      <!-- Action Buttons Toolbar -->
-                      <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;width:100%;padding-top:4px;">
-                        <button type="button" onclick="viewFullCoverImage()" style="background:#ffffff;border:1px solid #cbd5e1;color:#0f172a;border-radius:8px;padding:6px 12px;font-size:0.78rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,0.05);transition:all 0.15s ease;">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                          View Full Image
-                        </button>
-                        <button type="button" onclick="document.getElementById('wiz-cover-file').click()" style="background:#00AEFE;border:1px solid #00AEFE;color:#ffffff;border-radius:8px;padding:6px 12px;font-size:0.78rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;cursor:pointer;box-shadow:0 2px 6px rgba(0,174,254,0.3);transition:all 0.15s ease;">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                          Change Image
-                        </button>
-                        <button type="button" onclick="deleteCoverImage()" style="background:#fee2e2;border:1px solid #fca5a5;color:#dc2626;border-radius:8px;padding:6px 12px;font-size:0.78rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;cursor:pointer;transition:all 0.15s ease;">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                          Delete Image
-                        </button>
+
+                      <!-- Uploaded Image Full Preview & Actions Box -->
+                      <div id="wiz-upload-success" style="display:none;flex-direction:column;align-items:center;gap:12px;width:100%;">
+                        <div style="position:relative;width:100%;max-height:240px;border-radius:12px;overflow:hidden;background:#0f172a;box-shadow:0 4px 16px rgba(0,0,0,0.12);display:flex;align-items:center;justify-content:center;">
+                          <img id="wiz-preview-img" src="" alt="Cover preview" style="max-height:240px;width:100%;object-fit:cover;display:block;" />
+                          <span style="position:absolute;top:10px;left:10px;background:rgba(15,23,42,0.75);backdrop-filter:blur(6px);color:#10b981;font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;border:1px solid rgba(255,255,255,0.15);">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                            Ready to Publish
+                          </span>
+                        </div>
+                        
+                        <!-- Action Buttons Toolbar -->
+                        <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;width:100%;padding-top:4px;">
+                          <button type="button" onclick="viewFullCoverImage()" style="background:#ffffff;border:1px solid #cbd5e1;color:#0f172a;border-radius:8px;padding:6px 12px;font-size:0.78rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,0.05);transition:all 0.15s ease;">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            View Full Image
+                          </button>
+                          <button type="button" onclick="document.getElementById('wiz-cover-file').click()" style="background:#00AEFE;border:1px solid #00AEFE;color:#ffffff;border-radius:8px;padding:6px 12px;font-size:0.78rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;cursor:pointer;box-shadow:0 2px 6px rgba(0,174,254,0.3);transition:all 0.15s ease;">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                            Change Image
+                          </button>
+                          <button type="button" onclick="deleteCoverImage()" style="background:#fee2e2;border:1px solid #fca5a5;color:#dc2626;border-radius:8px;padding:6px 12px;font-size:0.78rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;cursor:pointer;transition:all 0.15s ease;">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            Delete Image
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
                   <div style="display:flex;align-items:flex-start;gap:8px;">
                     <input type="checkbox" id="wiz-agree" required style="margin-top:3px;accent-color:#00AEFE;" />
@@ -2161,12 +2168,16 @@ function compressImageFile(file, optionsOrCallback, optH, optQ, optCb) {
       var file = fileInput.files[0];
 
       var idleBox = document.getElementById('wiz-upload-idle');
-      var titleText = document.getElementById('wiz-upload-title');
+      var loadingBox = document.getElementById('wiz-upload-loading');
       var successBox = document.getElementById('wiz-upload-success');
       var previewImg = document.getElementById('wiz-preview-img');
+      var titleText = document.getElementById('wiz-upload-title');
 
-      if (titleText) titleText.textContent = 'Optimizing & uploading ' + file.name + '...';
-      if (window.cspToast) window.cspToast('Optimizing cover photograph...', 'info');
+      if (idleBox) idleBox.style.display = 'none';
+      if (successBox) successBox.style.display = 'none';
+      if (loadingBox) loadingBox.style.display = 'flex';
+
+      if (window.cspToast) window.cspToast('Optimizing & uploading cover image...', 'info');
 
       var uploadFn = function(fileToUpload) {
         var formData = new FormData();
@@ -2178,29 +2189,36 @@ function compressImageFile(file, optionsOrCallback, optH, optQ, optCb) {
         })
         .then(function(r) { return r.json(); })
         .then(function(res) {
+          if (loadingBox) loadingBox.style.display = 'none';
           if (res.success && (res.image_url || res.url || res.imageUrl)) {
             var url = res.image_url || res.url || res.imageUrl;
             window.uploadedCoverUrl = url;
             if (previewImg) previewImg.src = getRootUrl(url.replace(/^\//, ''));
-            if (idleBox) idleBox.style.display = 'none';
             if (successBox) successBox.style.display = 'flex';
             if (titleText) titleText.textContent = 'Click to replace cover photograph';
             if (window.cspToast) window.cspToast('Cover photograph uploaded successfully!', 'success');
           } else {
+            if (idleBox) idleBox.style.display = 'block';
             if (titleText) titleText.textContent = 'Click to upload cover photograph';
             if (window.cspToast) window.cspToast(res.error || 'Upload failed.', 'danger');
           }
         })
         .catch(function(err) {
           console.error('File upload error:', err);
+          if (loadingBox) loadingBox.style.display = 'none';
+          if (idleBox) idleBox.style.display = 'block';
           if (titleText) titleText.textContent = 'Click to upload cover photograph';
           if (window.cspToast) window.cspToast('File upload failed. Please try again.', 'danger');
         });
       };
 
-      compressImageFile(file).then(uploadFn).catch(function() {
+      if (typeof compressImageFile === 'function') {
+        compressImageFile(file).then(uploadFn).catch(function() {
+          uploadFn(file);
+        });
+      } else {
         uploadFn(file);
-      });
+      }
     });
   }
 

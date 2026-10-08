@@ -4047,6 +4047,17 @@
     }
     window.getAbsoluteImageUrl = getAbsoluteImageUrl;
 
+    function escapeHtml(str) {
+      if (str === undefined || str === null) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+    window.escapeHtml = escapeHtml;
+
     // Global Toast Notifications (Sleek On-Screen Pill HUD)
     window.cspToast = function (message, type, duration) {
       type = type || 'info';
@@ -4312,11 +4323,12 @@
         var menuItems = [
           { text: 'Home', href: getRootUrl('/') },
           { text: 'About Us', href: getRootUrl('about-us/') },
-          { text: 'Contact Us', href: getRootUrl('contact-us/') },
           { text: 'Stories', href: getRootUrl('stories/') },
+          { text: 'Magazine', href: getRootUrl('magazine/') },
           { text: 'Forum', href: getRootUrl('forum/') },
           { text: 'Sponsorship', href: getRootUrl('sponsorship/') },
           { text: 'Advert', href: getRootUrl('advert/') },
+          { text: 'Contact Us', href: getRootUrl('contact-us/') },
           { text: 'Submit Story', href: getRootUrl('submit-story/'), isCta: true }
         ];
 
@@ -4384,6 +4396,9 @@
     function initPopupAdvert() {
       if (window.location.pathname.includes('/dashboard')) return;
 
+      var currentPath = window.location.pathname;
+      if (!currentPath.endsWith('/') && !currentPath.includes('.')) currentPath += '/';
+
       fetch(getRootUrl('api/settings.php'))
         .then(function (r) { return r.json(); })
         .then(function (res) {
@@ -4420,78 +4435,125 @@
             var cleanTarget = target;
             if (!cleanTarget.endsWith('/') && !cleanTarget.includes('.')) cleanTarget += '/';
 
-            return currentPath === cleanTarget || currentPath.endsWith(cleanTarget);
+            return currentPath === cleanTarget || currentPath.endsWith(cleanTarget) || (cleanTarget === '/' && (currentPath === '/' || currentPath === '/index.html'));
           });
 
           if (matchingAds.length === 0) return;
 
           matchingAds.forEach(function (ad) {
             var dismissKey = 'csp_popup_ad_dismissed_' + (ad.id || 'ad');
-            if (sessionStorage.getItem(dismissKey)) return;
+            var globalDismissKey = 'csp_popup_ad_last_shown_global';
+            
+            // Check session frequency capping (once per session per ad, and minimum 20min interval between any popups)
+            var dismissedAt = parseInt(sessionStorage.getItem(dismissKey) || '0', 10);
+            var lastGlobalShown = parseInt(sessionStorage.getItem(globalDismissKey) || '0', 10);
+            if (dismissedAt) return; // Only show once per session for this specific advert
+            if (lastGlobalShown && (Date.now() - lastGlobalShown < 1200000)) return; // 20-min global session cooldown
 
             var delayMs = (parseInt(ad.delay) || 3) * 1000;
 
             setTimeout(function () {
-              if (sessionStorage.getItem(dismissKey)) return;
+              var checkDismissed = parseInt(sessionStorage.getItem(dismissKey) || '0', 10);
+              var checkGlobal = parseInt(sessionStorage.getItem(globalDismissKey) || '0', 10);
+              if (checkDismissed) return;
+              if (checkGlobal && (Date.now() - checkGlobal < 1200000)) return;
+
+              // Prevent duplicates
+              var existingModal = document.getElementById('csp-popup-ad-modal-' + (ad.id || 'ad'));
+              if (existingModal) return;
+
+              // Mark session shown timestamp
+              sessionStorage.setItem(globalDismissKey, String(Date.now()));
 
               var adModal = document.createElement('div');
               adModal.id = 'csp-popup-ad-modal-' + (ad.id || 'ad');
-              adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.4s ease;padding:20px;';
+              adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,0.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;transition:opacity 0.3s ease;padding:20px;box-sizing:border-box;';
 
               var card = document.createElement('div');
-              card.style.cssText = 'position:relative;background:#061022;border:1px solid rgba(0,174,254,0.4);border-radius:24px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,174,254,0.25);transform:scale(0.9);transition:transform 0.4s ease;text-align:center;';
+              card.style.cssText = 'position:relative;background:#061022;border-radius:22px;max-width:470px;width:100%;overflow:hidden;box-shadow:0 25px 65px rgba(0,0,0,0.6);transform:scale(0.92);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);text-align:center;line-height:0;';
 
               var closeBtn = document.createElement('button');
               closeBtn.setAttribute('aria-label', 'Close advert');
-              closeBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
-              closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:999;width:34px;height:34px;border-radius:50%;background:rgba(15,23,42,0.75);border:1px solid rgba(255,255,255,0.25);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;backdrop-filter:blur(4px);';
-              closeBtn.onmouseenter = function () { this.style.background = 'rgba(239,68,68,0.85)'; this.style.transform = 'rotate(90deg)'; };
-              closeBtn.onmouseleave = function () { this.style.background = 'rgba(15,23,42,0.75)'; this.style.transform = 'rotate(0deg)'; };
+              closeBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+              closeBtn.style.cssText = 'position:absolute;top:12px;right:12px;z-index:25;width:32px;height:32px;border-radius:50%;background:rgba(15,23,42,0.75);border:1px solid rgba(255,255,255,0.4);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;backdrop-filter:blur(6px);box-shadow:0 4px 12px rgba(0,0,0,0.3);';
+              closeBtn.onmouseenter = function () { this.style.background = 'rgba(239,68,68,0.9)'; this.style.transform = 'rotate(90deg) scale(1.08)'; };
+              closeBtn.onmouseleave = function () { this.style.background = 'rgba(15,23,42,0.75)'; this.style.transform = 'rotate(0deg) scale(1)'; };
 
               function closeAd(e) {
                 if (e && e.stopPropagation) e.stopPropagation();
-                sessionStorage.setItem(dismissKey, '1');
+                sessionStorage.setItem(dismissKey, String(Date.now()));
+                document.body.style.overflow = ''; // Unlock background scrolling
                 adModal.style.opacity = '0';
-                card.style.transform = 'scale(0.9)';
-                setTimeout(function () { if (adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 350);
+                card.style.transform = 'scale(0.92)';
+                setTimeout(function () { if (adModal.parentNode) adModal.parentNode.removeChild(adModal); }, 300);
               }
 
               closeBtn.addEventListener('click', closeAd);
-              card.addEventListener('click', function (e) { e.stopPropagation(); });
               adModal.addEventListener('click', function (e) { if (e.target === adModal) closeAd(e); });
 
               var mediaSrc = ad.videoUrl || ad.video || ad.image || '';
               var isVideo = ad.mediaType === 'video' || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(mediaSrc);
-              var mediaHtml = '';
-              if (mediaSrc) {
-                if (isVideo) {
-                  mediaHtml = '<div style="position:relative;width:100%;max-height:240px;overflow:hidden;background:#000;"><video src="' + getRootUrl(mediaSrc) + '" autoplay loop muted playsinline style="width:100%;max-height:240px;object-fit:cover;display:block;"></video></div>';
-                } else {
-                  mediaHtml = '<img src="' + getRootUrl(mediaSrc) + '" alt="Promotion" style="width:100%;max-height:220px;object-fit:cover;display:block;" />';
-                }
-              }
-              var titleHtml = ad.title ? '<h3 style="font-family:\'Merriweather\',Georgia,serif;font-size:1.2rem;font-weight:700;color:#fff;margin:16px 20px 10px;line-height:1.4;">' + escapeHtml(ad.title) + '</h3>' : '';
               var rawUrl = (ad.clickUrl || '').trim();
               var isExt = rawUrl.startsWith('http://') || rawUrl.startsWith('https://');
-              var linkUrl = rawUrl ? getRootUrl(rawUrl) : '#';
+              var linkUrl = rawUrl ? (isExt ? rawUrl : getRootUrl(rawUrl.replace(/^\//, ''))) : '#';
               var targetAttr = isExt ? ' target="_blank" rel="noopener noreferrer"' : '';
 
-              card.innerHTML = mediaHtml +
-                '<div style="padding:4px 20px 24px;">' +
-                titleHtml +
-                '<a href="' + linkUrl + '"' + targetAttr + ' id="csp-popup-ad-cta-btn" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;padding:12px 30px;background:linear-gradient(135deg,#00AEFE 0%,#0090d0 100%);color:#ffffff;border-radius:50px;font-family:\'Inter\',-apple-system,sans-serif;font-weight:700;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.4);transition:all 0.2s ease;cursor:pointer;">Explore Now &rarr;</a>' +
-                '</div>';
+              var mediaHtml = '';
+              if (mediaSrc) {
+                var resolvedMedia = getAbsoluteImageUrl(mediaSrc);
+                if (isVideo) {
+                  mediaHtml = '<div style="position:relative;width:100%;max-height:80vh;overflow:hidden;background:#000;"><video src="' + resolvedMedia + '" autoplay loop muted playsinline style="width:100%;max-height:80vh;object-fit:cover;display:block;"></video></div>';
+                } else {
+                  // Floating flyer presentation: full high-res photo with direct overlay
+                  mediaHtml = '<a href="' + linkUrl + '"' + targetAttr + ' style="display:block;text-decoration:none;position:relative;overflow:hidden;cursor:pointer;background:#0a101f;line-height:0;"><img src="' + resolvedMedia + '" alt="Promotion" style="width:100%;max-height:80vh;object-fit:contain;display:block;" /></a>';
+                }
+              }
 
+              var titleHtml = (ad.title && ad.title.trim()) ? '<h3 style="font-family:\'Merriweather\',Georgia,serif;font-size:1.05rem;font-weight:700;color:#ffffff;margin:0;line-height:1.4;text-shadow:0 2px 6px rgba(0,0,0,0.8);">' + escapeHtml(ad.title.trim()) + '</h3>' : '';
+              
+              var btnLabel = (ad.btnText !== undefined && ad.btnText !== null) ? ad.btnText.trim() : 'Explore Now \u2192';
+              var btnBaseStyle = 'display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 30px;border-radius:50px;font-family:\'Inter\',-apple-system,sans-serif;font-weight:700;font-size:0.92rem;text-decoration:none;transition:all 0.2s ease;cursor:pointer;pointer-events:auto;line-height:1.2;';
+              var colorKey = ad.btnColor || 'cyan';
+              var btnColorCss = '';
+              if (colorKey.startsWith('#')) {
+                btnColorCss = 'background:' + colorKey + ';color:#ffffff;box-shadow:0 8px 25px rgba(0,0,0,0.45);';
+              } else if (colorKey === 'navy') {
+                btnColorCss = 'background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#ffffff;border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 25px rgba(0,0,0,0.5);';
+              } else if (colorKey === 'emerald') {
+                btnColorCss = 'background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#ffffff;box-shadow:0 8px 25px rgba(16,185,129,0.55);';
+              } else if (colorKey === 'amber') {
+                btnColorCss = 'background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);color:#0f172a;font-weight:800;box-shadow:0 8px 25px rgba(245,158,11,0.55);';
+              } else if (colorKey === 'rose') {
+                btnColorCss = 'background:linear-gradient(135deg,#f43f5e 0%,#e11d48 100%);color:#ffffff;box-shadow:0 8px 25px rgba(244,63,94,0.55);';
+              } else if (colorKey === 'purple') {
+                btnColorCss = 'background:linear-gradient(135deg,#8b5cf6 0%,#7c3aed 100%);color:#ffffff;box-shadow:0 8px 25px rgba(139,92,246,0.55);';
+              } else if (colorKey === 'white') {
+                btnColorCss = 'background:#ffffff;color:#0f172a;font-weight:800;border:1px solid #e2e8f0;box-shadow:0 8px 25px rgba(255,255,255,0.4);';
+              } else {
+                btnColorCss = 'background:#00AEFE;color:#ffffff;box-shadow:0 8px 25px rgba(0,174,254,0.55);';
+              }
+
+              var floatingOverlay = '';
+              if (titleHtml || (btnLabel && linkUrl !== '#')) {
+                floatingOverlay = '<div style="position:absolute;bottom:22px;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 20px;z-index:15;pointer-events:none;box-sizing:border-box;">' +
+                  (titleHtml ? '<div style="background:rgba(2,6,23,0.72);backdrop-filter:blur(8px);padding:8px 18px;border-radius:30px;pointer-events:auto;border:1px solid rgba(255,255,255,0.15);">' + titleHtml + '</div>' : '') +
+                  (btnLabel && linkUrl !== '#' ? '<a href="' + linkUrl + '"' + targetAttr + ' id="csp-popup-ad-cta-btn" style="' + btnBaseStyle + btnColorCss + '">' + escapeHtml(btnLabel) + '</a>' : '') +
+                  '</div>';
+              }
+
+              card.innerHTML = mediaHtml + floatingOverlay;
               card.appendChild(closeBtn);
               adModal.appendChild(card);
               document.body.appendChild(adModal);
+              document.body.style.overflow = 'hidden'; // Lock background scrolling while popup is open
 
               var ctaBtn = card.querySelector('#csp-popup-ad-cta-btn');
               if (ctaBtn) {
-                ctaBtn.onmouseenter = function () { this.style.transform = 'translateY(-2px)'; this.style.boxShadow = '0 8px 25px rgba(0,174,254,0.55)'; };
-                ctaBtn.onmouseleave = function () { this.style.transform = 'translateY(0)'; this.style.boxShadow = '0 6px 20px rgba(0,174,254,0.4)'; };
+                ctaBtn.onmouseenter = function () { this.style.transform = 'scale(1.04) translateY(-2px)'; };
+                ctaBtn.onmouseleave = function () { this.style.transform = 'scale(1) translateY(0)'; };
                 ctaBtn.addEventListener('click', function () {
-                  sessionStorage.setItem(dismissKey, '1');
+                  sessionStorage.setItem(dismissKey, String(Date.now()));
+                  document.body.style.overflow = '';
                 });
               }
 
@@ -4504,6 +4566,7 @@
         })
         .catch(function () { });
     }
+    window.initPopupAdvert = initPopupAdvert;
 
     window.showSuccessModal = function (title, message) {
       var oldModal = document.getElementById('csp-global-success-modal');
@@ -6056,8 +6119,8 @@
 			border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 		}
 
-		.elementor-element-dd5bf5d > .e-con-inner,
-		.elementor-1374 .elementor-element.elementor-element-dd5bf5d > .e-con-inner {
+		.elementor-element-dd5bf5d>.e-con-inner,
+		.elementor-1374 .elementor-element.elementor-element-dd5bf5d>.e-con-inner {
 			max-width: 1280px !important;
 			width: 100% !important;
 			margin: 0 auto !important;
@@ -6267,7 +6330,7 @@
 			box-sizing: border-box !important;
 		}
 
-		.elementor-element-7c02c78 > .e-con-inner {
+		.elementor-element-7c02c78>.e-con-inner {
 			max-width: 1280px !important;
 			margin: 0 auto !important;
 			text-align: center !important;
@@ -6296,15 +6359,17 @@
 
 		/* ── TABLET RESPONSIVE (769px - 1024px) ── */
 		@media (max-width: 1024px) and (min-width: 769px) {
-			.elementor-element-dd5bf5d > .e-con-inner {
+			.elementor-element-dd5bf5d>.e-con-inner {
 				flex-direction: column !important;
 				align-items: flex-start !important;
 				gap: 36px !important;
 			}
+
 			.elementor-element-920f34a {
 				flex: 0 0 100% !important;
 				max-width: 100% !important;
 			}
+
 			.csp-footer-nav-group {
 				width: 100% !important;
 				justify-content: flex-start !important;
@@ -6314,6 +6379,7 @@
 
 		/* ── MOBILE RESPONSIVE (ALL ELEMENTS CENTERED & TIGHT LINK SPACING) ── */
 		@media (max-width: 768px) {
+
 			.elementor-location-footer,
 			.elementor-1374 {
 				width: 100% !important;
@@ -6330,8 +6396,8 @@
 				box-sizing: border-box !important;
 			}
 
-			.elementor-element-dd5bf5d > .e-con-inner,
-			.elementor-1374 .elementor-element.elementor-element-dd5bf5d > .e-con-inner {
+			.elementor-element-dd5bf5d>.e-con-inner,
+			.elementor-1374 .elementor-element.elementor-element-dd5bf5d>.e-con-inner {
 				flex-direction: column !important;
 				align-items: center !important;
 				justify-content: center !important;
@@ -6523,37 +6589,63 @@
 	</style>
 
 	<div class="elementor-section-wrap">
-		<div class="elementor-element elementor-element-dd5bf5d e-flex e-con-boxed e-con e-parent adv-sticky-elementor" data-id="dd5bf5d" data-element_type="container" data-e-type="container" data-settings='{"background_background":"classic","sticky_logo_enable":"no"}'>
+		<div class="elementor-element elementor-element-dd5bf5d e-flex e-con-boxed e-con e-parent adv-sticky-elementor"
+			data-id="dd5bf5d" data-element_type="container" data-e-type="container"
+			data-settings='{"background_background":"classic","sticky_logo_enable":"no"}'>
 			<div class="e-con-inner">
-				<div class="elementor-element elementor-element-920f34a e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="920f34a" data-element_type="container" data-e-type="container" data-settings='{"sticky_logo_enable":"no"}'>
-					<div class="elementor-element elementor-element-68518ef elementor-widget elementor-widget-image" data-id="68518ef" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-element elementor-element-920f34a e-con-full e-flex e-con e-child adv-sticky-elementor"
+					data-id="920f34a" data-element_type="container" data-e-type="container"
+					data-settings='{"sticky_logo_enable":"no"}'>
+					<div class="elementor-element elementor-element-68518ef elementor-widget elementor-widget-image"
+						data-id="68518ef" data-element_type="widget" data-e-type="widget"
+						data-widget_type="image.default">
 						<div class="elementor-widget-container">
-							<img width="1024" height="315" src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png" class="attachment-large size-large wp-image-990" alt="Conspodium Logo" decoding="async" srcset="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png 1024w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-300x92.png 300w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-768x236.png 768w" sizes="(max-width: 1024px) 100vw, 1024px">
+							<img width="1024" height="315"
+								src="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png"
+								class="attachment-large size-large wp-image-990" alt="Conspodium Logo" decoding="async"
+								srcset="/wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-1024x315.png 1024w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-300x92.png 300w, /wp-content/uploads/2026/01/CONSPODIUM-NEW-3-scaled-768x236.png 768w"
+								sizes="(max-width: 1024px) 100vw, 1024px">
 						</div>
 					</div>
-					<div class="elementor-element elementor-element-5dd035e sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="5dd035e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+					<div class="elementor-element elementor-element-5dd035e sticky-heading-prefixstyle elementor-widget elementor-widget-heading"
+						data-id="5dd035e" data-element_type="widget" data-e-type="widget"
+						data-widget_type="heading.default">
 						<div class="elementor-widget-container">
-							<h2 class="elementor-heading-title elementor-size-default">Amplifying diaspora voices and connecting communities through premium storytelling since 2019.</h2>
+							<h2 class="elementor-heading-title elementor-size-default">Amplifying diaspora voices and
+								connecting communities through premium storytelling since 2019.</h2>
 						</div>
 					</div>
-					<div class="elementor-element elementor-element-5d447be sticky-heading-prefixstyle elementor-widget elementor-widget-heading" data-id="5d447be" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+					<div class="elementor-element elementor-element-5d447be sticky-heading-prefixstyle elementor-widget elementor-widget-heading"
+						data-id="5d447be" data-element_type="widget" data-e-type="widget"
+						data-widget_type="heading.default">
 						<div class="elementor-widget-container">
-							<h2 class="elementor-heading-title elementor-size-default">© 2026 Conspodium Magazine. All rights reserved.</h2>
+							<h2 class="elementor-heading-title elementor-size-default">© 2026 Conspodium Magazine. All
+								rights reserved.</h2>
 						</div>
 					</div>
-					<div class="elementor-element elementor-element-2063cab elementor-widget elementor-widget-sky-social-icons" data-id="2063cab" data-element_type="widget" data-e-type="widget" data-widget_type="sky-social-icons.default">
+					<div class="elementor-element elementor-element-2063cab elementor-widget elementor-widget-sky-social-icons"
+						data-id="2063cab" data-element_type="widget" data-e-type="widget"
+						data-widget_type="sky-social-icons.default">
 						<div class="elementor-widget-container">
-							<div class="sky-social-icons sa-d-inline-flex sa-align-items-center sa-justify-content-center">
-								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-8988145 elementor-social-icon-facebook-f" href="https://web.facebook.com/profile.php?id=61582814130083" target="_blank" aria-label="Facebook">
+							<div
+								class="sky-social-icons sa-d-inline-flex sa-align-items-center sa-justify-content-center">
+								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-8988145 elementor-social-icon-facebook-f"
+									href="https://www.facebook.com/profile.php?id=61595273334333" target="_blank"
+									aria-label="Facebook">
 									<i class="fab fa-facebook-f"></i>
 								</a>
-								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-3055492 elementor-social-icon-instagram" href="https://www.instagram.com/conspodium/" target="_blank" aria-label="Instagram">
+								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-3055492 elementor-social-icon-instagram"
+									href="https://www.instagram.com/theconspodium/" target="_blank"
+									aria-label="Instagram">
 									<i class="fab fa-instagram"></i>
 								</a>
-								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-d6a5c0a elementor-social-icon-linkedin" href="https://www.linkedin.com/company/conspodium" target="_blank" aria-label="LinkedIn">
+								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-d6a5c0a elementor-social-icon-linkedin"
+									href="https://www.linkedin.com/company/conspodium" target="_blank"
+									aria-label="LinkedIn">
 									<i class="fab fa-linkedin"></i>
 								</a>
-								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-b1ebbc0 elementor-social-icon-youtube" href="https://www.youtube.com/@conspodium" target="_blank" aria-label="YouTube">
+								<a class="sa-link sa-social-icon sa-text-decoration-none elementor-social-icon- elementor-repeater-item-b1ebbc0 elementor-social-icon-youtube"
+									href="https://www.youtube.com/@conspodium" target="_blank" aria-label="YouTube">
 									<i class="fab fa-youtube"></i>
 								</a>
 							</div>
@@ -6562,20 +6654,28 @@
 				</div>
 
 				<div class="csp-footer-nav-group">
-					<div class="elementor-element elementor-element-ef39660 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="ef39660" data-element_type="container" data-e-type="container" data-settings='{"sticky_logo_enable":"no"}'>
-						<div class="elementor-element elementor-element-d923509 elementor-widget elementor-widget-text-editor" data-id="d923509" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+					<div class="elementor-element elementor-element-ef39660 e-con-full e-flex e-con e-child adv-sticky-elementor"
+						data-id="ef39660" data-element_type="container" data-e-type="container"
+						data-settings='{"sticky_logo_enable":"no"}'>
+						<div class="elementor-element elementor-element-d923509 elementor-widget elementor-widget-text-editor"
+							data-id="d923509" data-element_type="widget" data-e-type="widget"
+							data-widget_type="text-editor.default">
 							<div class="elementor-widget-container">
 								<p><strong>Magazine</strong></p>
-								<p><a href="/stories/">Current Issue</a></p>
-								<p><a href="/stories/">Archive</a></p>
+								<p><a href="/magazine/">Current Issue</a></p>
+								<p><a href="/magazine/#archive">Archive</a></p>
 								<p><a href="/submit-story/">Submit Story</a></p>
 								<p><a href="/about-us/">Editorial Guidelines</a></p>
 							</div>
 						</div>
 					</div>
 
-					<div class="elementor-element elementor-element-bc4ef16 e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="bc4ef16" data-element_type="container" data-e-type="container" data-settings='{"sticky_logo_enable":"no"}'>
-						<div class="elementor-element elementor-element-04eb7b0 elementor-widget elementor-widget-text-editor" data-id="04eb7b0" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+					<div class="elementor-element elementor-element-bc4ef16 e-con-full e-flex e-con e-child adv-sticky-elementor"
+						data-id="bc4ef16" data-element_type="container" data-e-type="container"
+						data-settings='{"sticky_logo_enable":"no"}'>
+						<div class="elementor-element elementor-element-04eb7b0 elementor-widget elementor-widget-text-editor"
+							data-id="04eb7b0" data-element_type="widget" data-e-type="widget"
+							data-widget_type="text-editor.default">
 							<div class="elementor-widget-container">
 								<p><strong>Company</strong></p>
 								<p><a href="/about-us/">About Us</a></p>
@@ -6586,8 +6686,12 @@
 						</div>
 					</div>
 
-					<div class="elementor-element elementor-element-71ce8ac e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="71ce8ac" data-element_type="container" data-e-type="container" data-settings='{"sticky_logo_enable":"no"}'>
-						<div class="elementor-element elementor-element-36d8ba6 elementor-widget elementor-widget-text-editor" data-id="36d8ba6" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+					<div class="elementor-element elementor-element-71ce8ac e-con-full e-flex e-con e-child adv-sticky-elementor"
+						data-id="71ce8ac" data-element_type="container" data-e-type="container"
+						data-settings='{"sticky_logo_enable":"no"}'>
+						<div class="elementor-element elementor-element-36d8ba6 elementor-widget elementor-widget-text-editor"
+							data-id="36d8ba6" data-element_type="widget" data-e-type="widget"
+							data-widget_type="text-editor.default">
 							<div class="elementor-widget-container">
 								<p><strong>Community</strong></p>
 								<p><a href="/stories/">Events &amp; Stories</a></p>
@@ -6598,8 +6702,12 @@
 						</div>
 					</div>
 
-					<div class="elementor-element elementor-element-651f63e e-con-full e-flex e-con e-child adv-sticky-elementor" data-id="651f63e" data-element_type="container" data-e-type="container" data-settings='{"sticky_logo_enable":"no"}'>
-						<div class="elementor-element elementor-element-657dbed elementor-widget elementor-widget-text-editor" data-id="657dbed" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+					<div class="elementor-element elementor-element-651f63e e-con-full e-flex e-con e-child adv-sticky-elementor"
+						data-id="651f63e" data-element_type="container" data-e-type="container"
+						data-settings='{"sticky_logo_enable":"no"}'>
+						<div class="elementor-element elementor-element-657dbed elementor-widget elementor-widget-text-editor"
+							data-id="657dbed" data-element_type="widget" data-e-type="widget"
+							data-widget_type="text-editor.default">
 							<div class="elementor-widget-container">
 								<p><strong>Support</strong></p>
 								<p><a href="/contact-us/">Contact Us</a></p>
@@ -6612,11 +6720,16 @@
 			</div>
 		</div>
 
-		<div class="elementor-element elementor-element-7c02c78 e-flex e-con-boxed e-con e-parent adv-sticky-elementor" data-id="7c02c78" data-element_type="container" data-e-type="container" data-settings='{"background_background":"classic","sticky_logo_enable":"no"}'>
+		<div class="elementor-element elementor-element-7c02c78 e-flex e-con-boxed e-con e-parent adv-sticky-elementor"
+			data-id="7c02c78" data-element_type="container" data-e-type="container"
+			data-settings='{"background_background":"classic","sticky_logo_enable":"no"}'>
 			<div class="e-con-inner">
-				<div class="elementor-element elementor-element-9a52650 elementor-widget elementor-widget-text-editor" data-id="9a52650" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-9a52650 elementor-widget elementor-widget-text-editor"
+					data-id="9a52650" data-element_type="widget" data-e-type="widget"
+					data-widget_type="text-editor.default">
 					<div class="elementor-widget-container">
-						<p>Web design by <a href="https://wa.link/vvj7yi"><span style="text-decoration: underline;">247kraft</span></a></p>
+						<p>Web design by <a href="https://wa.link/vvj7yi"><span
+									style="text-decoration: underline;">247kraft</span></a></p>
 					</div>
 				</div>
 			</div>

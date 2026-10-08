@@ -1,8 +1,10 @@
 node_modules/
 output/
+dist/
 .DS_Store
 *.log
 data/*.db-shm
 data/*.db-wal
 data/install.lock
+
 

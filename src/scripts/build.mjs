@@ -23,11 +23,12 @@ const SRC       = join(ROOT, 'src');
 const ASSETS    = join(SRC, 'assets');
 const PUBLIC    = join(ROOT, 'public');
 
-// 12 Core Clean Page Templates (Dynamic URL routing handles all article/category slugs)
+// 13 Core Clean Page Templates (Dynamic URL routing handles all article/category slugs)
 const PAGES = [
   { id: 'home',         out: 'index.html' },
   { id: 'about',        out: 'about-us/index.html' },
   { id: 'stories',      out: 'stories/index.html' },
+  { id: 'magazine',     out: 'magazine/index.html' },
   { id: 'contact',      out: 'contact-us/index.html' },
   { id: 'sponsorship',  out: 'sponsorship/index.html' },
   { id: 'advert',       out: 'advert/index.html' },
@@ -461,7 +462,7 @@ for (const page of PAGES) {
   }
 
   // Normalize relative assets & wp navigation links to root-relative paths
-  html = html.replace(/(src|href|srcset|poster)=["']\.\.?\/(wp-content|wp-includes|assets|videos)\//g, '$1="/$2/');
+  html = html.replace(/(src|href|srcset|poster)=["']\.\.?\/(wp-content|wp-includes|assets|videos|images|uploads)\//g, '$1="/$2/');
   html = html.replace(/href=["']\.\.\/([a-zA-Z0-9_-]+\/?)["']/g, 'href="/$1"');
   html = html.replace(/href=["']\.\/([a-zA-Z0-9_-]+\/?)["']/g, 'href="/$1"');
   html = html.replace(/href=["']\.\/["']/g, 'href="/"');
