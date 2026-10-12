@@ -288,6 +288,29 @@
     box-sizing: border-box !important;
   }
 
+  /* Universal footer credit centering (desktop & mobile) */
+  .elementor-element-7c02c78,
+  .elementor-element-7c02c78 > .e-con-inner,
+  .elementor-element-7c02c78 .elementor-element-9a52650,
+  .elementor-element-7c02c78 .elementor-widget-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .elementor-location-footer .elementor-element-7c02c78 p,
+  .elementor-location-footer .elementor-element-9a52650 p,
+  .elementor-element-7c02c78 p {
+    text-align: center !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
   /* Hide the sticky spacer clone that creates a blank gap at top of page */
   .elementor-sticky__spacer {
     display: none !important;
@@ -6921,8 +6944,8 @@
 			display: block !important;
 		}
 
-		/* Compact, refined spacing between links */
-		.elementor-location-footer .elementor-widget-text-editor p {
+		/* Compact, refined spacing between links (scoped strictly to footer nav links) */
+		.csp-footer-nav-group .elementor-widget-text-editor p {
 			margin: 0 0 7px 0 !important;
 			padding: 0 !important;
 			line-height: 1.3 !important;
@@ -6930,7 +6953,7 @@
 			text-align: left !important;
 		}
 
-		.elementor-location-footer .elementor-widget-text-editor p:last-child {
+		.csp-footer-nav-group .elementor-widget-text-editor p:last-child {
 			margin-bottom: 0 !important;
 		}
 
@@ -6950,21 +6973,29 @@
 			transform: translateX(2px) !important;
 		}
 
-		/* Bottom Credit Bar */
+		/* Bottom Credit Bar - 100% Centered on Desktop & Mobile */
+		.elementor-location-footer .elementor-element-7c02c78,
 		.elementor-element-7c02c78,
 		.elementor-1374 .elementor-element.elementor-element-7c02c78 {
 			background-color: #02091A !important;
 			background: #02091A !important;
 			border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
 			padding: 18px 24px !important;
-			margin: 0 !important;
+			margin: 0 auto !important;
 			width: 100% !important;
+			max-width: 100% !important;
 			text-align: center !important;
 			box-sizing: border-box !important;
+			display: flex !important;
+			justify-content: center !important;
+			align-items: center !important;
 		}
 
-		.elementor-element-7c02c78>.e-con-inner {
-			max-width: 1280px !important;
+		.elementor-location-footer .elementor-element-7c02c78 > .e-con-inner,
+		.elementor-element-7c02c78 > .e-con-inner,
+		.elementor-1374 .elementor-element.elementor-element-7c02c78 > .e-con-inner {
+			max-width: 100% !important;
+			width: 100% !important;
 			margin: 0 auto !important;
 			text-align: center !important;
 			display: flex !important;
@@ -6972,11 +7003,42 @@
 			align-items: center !important;
 		}
 
-		.elementor-element-9a52650 p {
+		.elementor-location-footer .elementor-element-7c02c78 .elementor-element-9a52650,
+		.elementor-element-7c02c78 .elementor-element-9a52650,
+		.elementor-1374 .elementor-element.elementor-element-9a52650 {
+			width: 100% !important;
+			max-width: 100% !important;
+			margin: 0 auto !important;
+			text-align: center !important;
+			display: flex !important;
+			justify-content: center !important;
+			align-items: center !important;
+		}
+
+		.elementor-location-footer .elementor-element-7c02c78 .elementor-widget-container,
+		.elementor-element-9a52650 .elementor-widget-container {
+			width: 100% !important;
+			text-align: center !important;
+			display: flex !important;
+			justify-content: center !important;
+			align-items: center !important;
+			margin: 0 auto !important;
+		}
+
+		.elementor-location-footer .elementor-element-7c02c78 p,
+		.elementor-location-footer .elementor-element-9a52650 p,
+		.elementor-element-9a52650 p,
+		.elementor-1374 .elementor-element.elementor-element-7c02c78 p {
 			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 			font-size: 0.85rem !important;
 			color: #64748B !important;
-			margin: 0 !important;
+			margin: 0 auto !important;
+			text-align: center !important;
+			width: 100% !important;
+			display: block !important;
+		}
+
+		.elementor-location-footer .elementor-element-7c02c78 * {
 			text-align: center !important;
 		}
 
@@ -7355,13 +7417,15 @@
 
 		<div class="elementor-element elementor-element-7c02c78 e-flex e-con-boxed e-con e-parent adv-sticky-elementor"
 			data-id="7c02c78" data-element_type="container" data-e-type="container"
-			data-settings='{"background_background":"classic","sticky_logo_enable":"no"}'>
-			<div class="e-con-inner">
+			data-settings='{"background_background":"classic","sticky_logo_enable":"no"}'
+			style="display:flex;justify-content:center;align-items:center;width:100%;text-align:center;">
+			<div class="e-con-inner" style="display:flex;justify-content:center;align-items:center;text-align:center;width:100%;max-width:1280px;margin:0 auto;">
 				<div class="elementor-element elementor-element-9a52650 elementor-widget elementor-widget-text-editor"
 					data-id="9a52650" data-element_type="widget" data-e-type="widget"
-					data-widget_type="text-editor.default">
-					<div class="elementor-widget-container">
-						<p>Web design by <a href="https://wa.link/vvj7yi"><span
+					data-widget_type="text-editor.default"
+					style="width:100%;text-align:center;display:flex;justify-content:center;align-items:center;margin:0 auto;">
+					<div class="elementor-widget-container" style="width:100%;text-align:center;display:flex;justify-content:center;align-items:center;margin:0 auto;">
+						<p style="text-align:center;margin:0 auto;width:100%;">Web design by <a href="https://wa.link/vvj7yi"><span
 									style="text-decoration: underline;">247kraft</span></a></p>
 					</div>
 				</div>

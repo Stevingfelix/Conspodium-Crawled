@@ -11334,6 +11334,29 @@
     box-sizing: border-box !important;
   }
 
+  /* Universal footer credit centering (desktop & mobile) */
+  .elementor-element-7c02c78,
+  .elementor-element-7c02c78 > .e-con-inner,
+  .elementor-element-7c02c78 .elementor-element-9a52650,
+  .elementor-element-7c02c78 .elementor-widget-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .elementor-location-footer .elementor-element-7c02c78 p,
+  .elementor-location-footer .elementor-element-9a52650 p,
+  .elementor-element-7c02c78 p {
+    text-align: center !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
   /* Hide the sticky spacer clone that creates a blank gap at top of page */
   .elementor-sticky__spacer {
     display: none !important;
@@ -23048,47 +23071,155 @@
             </div>
           </div>
 
-          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:56px;align-items:center;">
+          <!-- Mobile Centering & Single-Line Kicker Styles -->
+          <style>
+            #csp-magazine-showcase .csp-mag-kicker {
+              display: block;
+              margin-bottom: 14px;
+              background: none !important;
+              border: none !important;
+              padding: 0 !important;
+            }
+            #csp-magazine-showcase .csp-mag-kicker span {
+              font-size: clamp(0.72rem, 2.7vw, 0.82rem);
+              font-weight: 800;
+              color: #0284c7;
+              text-transform: uppercase;
+              letter-spacing: 0.08em;
+              white-space: nowrap;
+              display: inline-block;
+            }
+            @media (max-width: 768px) {
+              #csp-magazine-showcase {
+                padding: 56px 0 60px !important;
+              }
+              #csp-magazine-showcase .csp-mag-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 36px !important;
+              }
+              #csp-magazine-showcase .csp-mag-text-col {
+                text-align: center !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                width: 100% !important;
+              }
+              #csp-magazine-showcase .csp-mag-kicker {
+                text-align: center !important;
+                width: 100% !important;
+                margin-bottom: 12px !important;
+              }
+              #csp-magazine-showcase .csp-mag-kicker span {
+                text-align: center !important;
+                white-space: nowrap !important;
+              }
+              #csp-magazine-showcase .csp-mag-title {
+                text-align: center !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+              }
+              #csp-magazine-showcase .csp-mag-desc {
+                text-align: center !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                margin-bottom: 24px !important;
+              }
+              #csp-magazine-showcase .csp-mag-features {
+                display: grid !important;
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+                width: 100% !important;
+                max-width: 440px !important;
+                margin: 0 auto 28px auto !important;
+              }
+              #csp-magazine-showcase .csp-mag-feature-item {
+                justify-content: center !important;
+                align-items: center !important;
+              }
+              #csp-magazine-showcase .csp-mag-actions {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 100% !important;
+                max-width: 360px !important;
+                margin: 0 auto !important;
+                gap: 12px !important;
+              }
+              #csp-magazine-showcase .csp-mag-actions a {
+                width: 100% !important;
+                text-align: center !important;
+                justify-content: center !important;
+                box-sizing: border-box !important;
+              }
+              #csp-magazine-showcase .csp-mag-visual-card {
+                transform: none !important;
+                max-width: 360px !important;
+                width: 100% !important;
+                margin: 0 auto !important;
+                box-sizing: border-box !important;
+              }
+              #csp-magazine-showcase .csp-mag-card-footer {
+                padding: 12px 8px 4px !important;
+                gap: 8px !important;
+              }
+              #csp-magazine-showcase .csp-mag-card-price {
+                font-size: clamp(0.72rem, 2.4vw, 0.82rem) !important;
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+              }
+              #csp-magazine-showcase .csp-mag-card-btn {
+                font-size: clamp(0.75rem, 2.4vw, 0.82rem) !important;
+                padding: 6px 13px !important;
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+                display: inline-flex !important;
+              }
+            }
+          </style>
+
+          <div class="csp-mag-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:56px;align-items:center;">
             
             <!-- Left Text Content -->
-            <div>
-              <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,174,254,0.08);border:1px solid rgba(0,174,254,0.25);padding:6px 16px;border-radius:50px;margin-bottom:18px;">
-                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#00AEFE;"></span>
-                <span style="font-size:0.78rem;font-weight:800;color:#0284c7;text-transform:uppercase;letter-spacing:0.08em;">Official Print &amp; Collector's Edition · $19.99</span>
+            <div class="csp-mag-text-col">
+              <div class="csp-mag-kicker" style="margin-bottom:16px;">
+                <span style="font-size:clamp(0.72rem, 2.7vw, 0.82rem);font-weight:800;color:#0284c7;text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap;display:inline-block;">Official Print &amp; Collector's Edition · $19.99</span>
               </div>
 
-              <h3 style="font-family:'Merriweather',Georgia,serif;font-size:clamp(1.6rem, 2.6vw, 2.1rem);color:#0f172a;line-height:1.3;margin:0 0 16px 0;font-weight:700;">
+              <h3 class="csp-mag-title" style="font-family:'Merriweather',Georgia,serif;font-size:clamp(1.6rem, 2.6vw, 2.1rem);color:#0f172a;line-height:1.3;margin:0 0 16px 0;font-weight:700;">
                 Ideas That Shape Tomorrow: Diaspora Soft Power
               </h3>
 
-              <p style="font-size:0.98rem;line-height:1.7;color:#475569;margin:0 0 28px 0;max-width:540px;">
+              <p class="csp-mag-desc" style="font-size:0.98rem;line-height:1.7;color:#475569;margin:0 0 28px 0;max-width:540px;">
                 The historic <strong>First Edition (October 2026)</strong> is here. Heavy-stock gloss collector's print covering global economics, heritage craftsmanship, and transformative leadership.
               </p>
 
               <!-- Feature Highlights Grid -->
-              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:14px;margin-bottom:34px;">
-                <div style="display:flex;align-items:flex-start;gap:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;">
+              <div class="csp-mag-features" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:14px;margin-bottom:34px;">
+                <div class="csp-mag-feature-item" style="display:flex;align-items:center;gap:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;">
                   <div style="width:28px;height:28px;border-radius:8px;background:rgba(0,174,254,0.12);display:flex;align-items:center;justify-content:center;color:#00AEFE;font-size:0.9rem;flex-shrink:0;">📖</div>
                   <div>
                     <div style="font-size:0.88rem;font-weight:700;color:#0f172a;">55 Curated Pages</div>
                     <div style="font-size:0.76rem;color:#64748b;">First Edition Collector's Print</div>
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;">
+                <div class="csp-mag-feature-item" style="display:flex;align-items:center;gap:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;">
                   <div style="width:28px;height:28px;border-radius:8px;background:rgba(0,174,254,0.12);display:flex;align-items:center;justify-content:center;color:#00AEFE;font-size:0.9rem;flex-shrink:0;">👑</div>
                   <div>
                     <div style="font-size:0.88rem;font-weight:700;color:#0f172a;">Diaspora Soft Power</div>
                     <div style="font-size:0.76rem;color:#64748b;">Global influence &amp; culture</div>
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;">
+                <div class="csp-mag-feature-item" style="display:flex;align-items:center;gap:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;">
                   <div style="width:28px;height:28px;border-radius:8px;background:rgba(0,174,254,0.12);display:flex;align-items:center;justify-content:center;color:#00AEFE;font-size:0.9rem;flex-shrink:0;">🏷️</div>
                   <div>
                     <div style="font-size:0.88rem;font-weight:700;color:#0f172a;">Only $19.99</div>
                     <div style="font-size:0.76rem;color:#64748b;">Collector's print + digital</div>
                   </div>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;">
+                <div class="csp-mag-feature-item" style="display:flex;align-items:center;gap:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;">
                   <div style="width:28px;height:28px;border-radius:8px;background:rgba(0,174,254,0.12);display:flex;align-items:center;justify-content:center;color:#00AEFE;font-size:0.9rem;flex-shrink:0;">📬</div>
                   <div>
                     <div style="font-size:0.88rem;font-weight:700;color:#0f172a;">Direct Delivery</div>
@@ -23098,7 +23229,7 @@
               </div>
 
               <!-- Action Buttons (Consistent Cyan UI) -->
-              <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+              <div class="csp-mag-actions" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
                 <a href="./magazine/#order-options" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 34px;background:#00AEFE;color:#ffffff;border-radius:50px;font-size:0.95rem;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(0,174,254,0.35);transition:all 0.25s ease;" onmouseenter="this.style.background='#0096db';this.style.transform='translateY(-2px)';" onmouseleave="this.style.background='#00AEFE';this.style.transform='translateY(0)';">
                   <span>Order First Edition ($19.99)</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -23111,7 +23242,7 @@
 
             <!-- Right Visual 3D Magazine Cover Card -->
             <div style="position:relative;display:flex;justify-content:center;">
-              <div style="position:relative;max-width:370px;width:100%;border-radius:22px;padding:12px;background:#ffffff;border:1.5px solid #e2e8f0;box-shadow:0 20px 50px rgba(0,0,0,0.08), 0 0 35px rgba(0,174,254,0.12);transform:perspective(1000px) rotateY(-5deg) rotateX(3deg);transition:all 0.4s ease;" onmouseenter="this.style.transform='perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.02)'" onmouseleave="this.style.transform='perspective(1000px) rotateY(-5deg) rotateX(3deg) scale(1)'">
+              <div class="csp-mag-visual-card" style="position:relative;max-width:370px;width:100%;border-radius:22px;padding:12px;background:#ffffff;border:1.5px solid #e2e8f0;box-shadow:0 20px 50px rgba(0,0,0,0.08), 0 0 35px rgba(0,174,254,0.12);transform:perspective(1000px) rotateY(-5deg) rotateX(3deg);transition:all 0.4s ease;" onmouseenter="this.style.transform='perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.02)'" onmouseleave="this.style.transform='perspective(1000px) rotateY(-5deg) rotateX(3deg) scale(1)'">
                 
                 <!-- Badge on Top of Cover -->
                 <div style="position:absolute;top:24px;right:24px;z-index:5;background:rgba(15,23,42,0.9);border:1px solid rgba(0,174,254,0.5);color:#00AEFE;font-size:0.72rem;font-weight:800;padding:5px 14px;border-radius:30px;backdrop-filter:blur(6px);box-shadow:0 4px 12px rgba(0,0,0,0.3);">
@@ -23127,9 +23258,9 @@
                 </div>
 
                 <!-- Bottom Bar -->
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px 4px;">
-                  <span style="font-size:0.84rem;color:#64748b;font-weight:700;"><strong style="color:#00AEFE;">$19.99</strong> · Oct 2026 Edition</span>
-                  <a href="./magazine/#order-options" style="font-size:0.82rem;color:#ffffff;background:#00AEFE;padding:6px 16px;border-radius:20px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;box-shadow:0 4px 12px rgba(0,174,254,0.3);">Order Now &rarr;</a>
+                <div class="csp-mag-card-footer" style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px 4px;gap:8px;">
+                  <span class="csp-mag-card-price" style="font-size:0.84rem;color:#64748b;font-weight:700;white-space:nowrap;flex-shrink:0;"><strong style="color:#00AEFE;">$19.99</strong> · Oct 2026 Edition</span>
+                  <a href="./magazine/#order-options" class="csp-mag-card-btn" style="font-size:0.82rem;color:#ffffff;background:#00AEFE;padding:6px 16px;border-radius:20px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;flex-shrink:0;box-shadow:0 4px 12px rgba(0,174,254,0.3);"><span>Order Now</span> <span style="display:inline-block;">&rarr;</span></a>
                 </div>
               </div>
             </div>
@@ -23463,8 +23594,8 @@
 			display: block !important;
 		}
 
-		/* Compact, refined spacing between links */
-		.elementor-location-footer .elementor-widget-text-editor p {
+		/* Compact, refined spacing between links (scoped strictly to footer nav links) */
+		.csp-footer-nav-group .elementor-widget-text-editor p {
 			margin: 0 0 7px 0 !important;
 			padding: 0 !important;
 			line-height: 1.3 !important;
@@ -23472,7 +23603,7 @@
 			text-align: left !important;
 		}
 
-		.elementor-location-footer .elementor-widget-text-editor p:last-child {
+		.csp-footer-nav-group .elementor-widget-text-editor p:last-child {
 			margin-bottom: 0 !important;
 		}
 
@@ -23492,21 +23623,29 @@
 			transform: translateX(2px) !important;
 		}
 
-		/* Bottom Credit Bar */
+		/* Bottom Credit Bar - 100% Centered on Desktop & Mobile */
+		.elementor-location-footer .elementor-element-7c02c78,
 		.elementor-element-7c02c78,
 		.elementor-1374 .elementor-element.elementor-element-7c02c78 {
 			background-color: #02091A !important;
 			background: #02091A !important;
 			border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
 			padding: 18px 24px !important;
-			margin: 0 !important;
+			margin: 0 auto !important;
 			width: 100% !important;
+			max-width: 100% !important;
 			text-align: center !important;
 			box-sizing: border-box !important;
+			display: flex !important;
+			justify-content: center !important;
+			align-items: center !important;
 		}
 
-		.elementor-element-7c02c78>.e-con-inner {
-			max-width: 1280px !important;
+		.elementor-location-footer .elementor-element-7c02c78 > .e-con-inner,
+		.elementor-element-7c02c78 > .e-con-inner,
+		.elementor-1374 .elementor-element.elementor-element-7c02c78 > .e-con-inner {
+			max-width: 100% !important;
+			width: 100% !important;
 			margin: 0 auto !important;
 			text-align: center !important;
 			display: flex !important;
@@ -23514,11 +23653,42 @@
 			align-items: center !important;
 		}
 
-		.elementor-element-9a52650 p {
+		.elementor-location-footer .elementor-element-7c02c78 .elementor-element-9a52650,
+		.elementor-element-7c02c78 .elementor-element-9a52650,
+		.elementor-1374 .elementor-element.elementor-element-9a52650 {
+			width: 100% !important;
+			max-width: 100% !important;
+			margin: 0 auto !important;
+			text-align: center !important;
+			display: flex !important;
+			justify-content: center !important;
+			align-items: center !important;
+		}
+
+		.elementor-location-footer .elementor-element-7c02c78 .elementor-widget-container,
+		.elementor-element-9a52650 .elementor-widget-container {
+			width: 100% !important;
+			text-align: center !important;
+			display: flex !important;
+			justify-content: center !important;
+			align-items: center !important;
+			margin: 0 auto !important;
+		}
+
+		.elementor-location-footer .elementor-element-7c02c78 p,
+		.elementor-location-footer .elementor-element-9a52650 p,
+		.elementor-element-9a52650 p,
+		.elementor-1374 .elementor-element.elementor-element-7c02c78 p {
 			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 			font-size: 0.85rem !important;
 			color: #64748B !important;
-			margin: 0 !important;
+			margin: 0 auto !important;
+			text-align: center !important;
+			width: 100% !important;
+			display: block !important;
+		}
+
+		.elementor-location-footer .elementor-element-7c02c78 * {
 			text-align: center !important;
 		}
 
@@ -23897,13 +24067,15 @@
 
 		<div class="elementor-element elementor-element-7c02c78 e-flex e-con-boxed e-con e-parent adv-sticky-elementor"
 			data-id="7c02c78" data-element_type="container" data-e-type="container"
-			data-settings='{"background_background":"classic","sticky_logo_enable":"no"}'>
-			<div class="e-con-inner">
+			data-settings='{"background_background":"classic","sticky_logo_enable":"no"}'
+			style="display:flex;justify-content:center;align-items:center;width:100%;text-align:center;">
+			<div class="e-con-inner" style="display:flex;justify-content:center;align-items:center;text-align:center;width:100%;max-width:1280px;margin:0 auto;">
 				<div class="elementor-element elementor-element-9a52650 elementor-widget elementor-widget-text-editor"
 					data-id="9a52650" data-element_type="widget" data-e-type="widget"
-					data-widget_type="text-editor.default">
-					<div class="elementor-widget-container">
-						<p>Web design by <a href="https://wa.link/vvj7yi"><span
+					data-widget_type="text-editor.default"
+					style="width:100%;text-align:center;display:flex;justify-content:center;align-items:center;margin:0 auto;">
+					<div class="elementor-widget-container" style="width:100%;text-align:center;display:flex;justify-content:center;align-items:center;margin:0 auto;">
+						<p style="text-align:center;margin:0 auto;width:100%;">Web design by <a href="https://wa.link/vvj7yi"><span
 									style="text-decoration: underline;">247kraft</span></a></p>
 					</div>
 				</div>
