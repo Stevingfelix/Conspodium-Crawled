@@ -2117,25 +2117,51 @@ e-page-transition,
   position: absolute;
   top: 18px;
   right: 18px;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  color: #0f172a;
-  font-size: 1.4rem;
-  line-height: 1;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  color: #64748b;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  padding: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+  line-height: 1;
+}
+
+.csp-modal-close svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  transition: transform 0.25s ease;
+  display: block;
 }
 
 .csp-modal-close:hover {
   background: #00aefe;
   border-color: #00aefe;
   color: #ffffff;
+  transform: rotate(90deg) scale(1.06);
+  box-shadow: 0 4px 14px rgba(0, 174, 254, 0.35);
+}
+
+@media (max-width: 768px) {
+  .csp-modal-close {
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+  }
+  .csp-modal-close svg {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 .csp-modal-header-flex {
@@ -3125,7 +3151,12 @@ e-page-transition,
 <!-- TEAM MEMBER DETAIL MODAL POPUP -->
 <div id="csp-team-modal-overlay" class="csp-team-modal-overlay" onclick="handleModalOverlayClick(event)">
   <div class="csp-team-modal-card">
-    <button class="csp-modal-close" onclick="closeTeamModal()">&times;</button>
+    <button class="csp-modal-close" onclick="closeTeamModal()" aria-label="Close bio" title="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
     <div class="csp-modal-body">
       <div class="csp-modal-header-flex">
         <img id="csp-modal-img" src="" alt="" class="csp-modal-avatar" />

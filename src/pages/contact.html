@@ -944,53 +944,66 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
         }
 
         .csp-faq-accordion {
-            max-width: 860px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+            max-width: 860px !important;
+            margin: 0 auto !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 16px !important;
+            width: 100% !important;
         }
 
         .csp-faq-item {
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            background: #ffffff;
-            overflow: hidden;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 16px !important;
+            background: #ffffff !important;
+            overflow: hidden !important;
             transition: all 0.25s ease !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            text-align: left !important;
+            display: block !important;
         }
 
         .csp-faq-item:hover {
-            border-color: rgba(0, 174, 254, 0.4);
-            box-shadow: 0 8px 24px rgba(0, 174, 254, 0.06);
+            border-color: rgba(0, 174, 254, 0.4) !important;
+            box-shadow: 0 8px 24px rgba(0, 174, 254, 0.06) !important;
         }
 
         .csp-faq-item.active {
-            border-color: rgba(0, 174, 254, 0.45);
-            background: #f8fafc;
-            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+            border-color: rgba(0, 174, 254, 0.45) !important;
+            background: #f8fafc !important;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04) !important;
         }
 
-        .csp-faq-trigger {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 24px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            text-align: left;
-            outline: none;
-            gap: 16px;
+        .csp-faq-trigger,
+        button.csp-faq-trigger {
+            width: 100% !important;
+            max-width: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 22px 28px !important;
+            background: transparent !important;
+            border: none !important;
+            cursor: pointer !important;
+            text-align: left !important;
+            outline: none !important;
+            gap: 20px !important;
+            box-sizing: border-box !important;
+            margin: 0 !important;
         }
 
         .csp-faq-question {
-            font-family: 'Inter', -apple-system, sans-serif !important;
-            font-size: 1.02rem !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 1.05rem !important;
             font-weight: 600 !important;
             color: #0f172a !important;
             line-height: 1.45 !important;
-            transition: color 0.2s ease;
+            text-align: left !important;
+            flex: 1 1 auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            transition: color 0.2s ease !important;
         }
 
         .csp-faq-item.active .csp-faq-question {
@@ -1001,14 +1014,16 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
         .csp-faq-icon {
             width: 36px !important;
             height: 36px !important;
+            min-width: 36px !important;
             border-radius: 50% !important;
             background: rgba(0, 174, 254, 0.08) !important;
             border: 1.5px solid rgba(0, 174, 254, 0.25) !important;
             color: #00AEFE !important;
-            display: flex !important;
+            display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             flex-shrink: 0 !important;
+            margin-left: auto !important;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
 
@@ -1019,6 +1034,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
             stroke: #00AEFE !important;
             stroke-width: 2.5px !important;
             display: block !important;
+            margin: 0 auto !important;
             transition: stroke 0.3s ease !important;
         }
 
@@ -1044,6 +1060,9 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+            width: 100% !important;
+            box-sizing: border-box !important;
+            text-align: left !important;
         }
 
         .csp-faq-item.active .csp-faq-panel {
@@ -1052,13 +1071,31 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
         }
 
         .csp-faq-body {
-            padding: 0 24px 22px 24px;
-            font-size: 0.94rem;
-            color: #475569;
-            line-height: 1.65;
-            border-top: 1px dashed rgba(226, 232, 240, 0.9);
-            margin-top: 4px;
-            padding-top: 16px;
+            padding: 0 28px 24px 28px !important;
+            font-size: 0.95rem !important;
+            color: #475569 !important;
+            line-height: 1.65 !important;
+            border-top: 1px dashed rgba(226, 232, 240, 0.9) !important;
+            margin-top: 4px !important;
+            padding-top: 18px !important;
+            text-align: left !important;
+            box-sizing: border-box !important;
+        }
+
+        @media (max-width: 768px) {
+            .csp-faq-trigger,
+            button.csp-faq-trigger {
+                padding: 18px 20px !important;
+                gap: 14px !important;
+            }
+            .csp-faq-question {
+                font-size: 0.96rem !important;
+            }
+            .csp-faq-body {
+                padding: 0 20px 20px 20px !important;
+                padding-top: 14px !important;
+                font-size: 0.9rem !important;
+            }
         }
 
         .csp-faq-link {

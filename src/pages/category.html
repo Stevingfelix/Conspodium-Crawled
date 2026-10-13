@@ -66,145 +66,270 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* ── CATEGORY HERO ── */
+    /* ── CINEMATIC FULL-BLEED CATEGORY HERO ── */
     .csp-cat-hero {
       position: relative;
-      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-      border-bottom: 1px solid var(--border-card);
-      padding: 36px 8% 50px 8%;
-    }
-    .csp-cat-breadcrumb {
+      width: 100%;
+      min-height: 520px;
+      overflow: hidden;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 8px;
-      font-size: 0.84rem;
-      color: var(--text-sub);
-      margin-bottom: 20px;
-    }
-    .csp-cat-breadcrumb a {
-      color: var(--blue-accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .csp-cat-breadcrumb a:hover {
-      text-decoration: underline;
-    }
-    .csp-cat-hero-flex {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 32px;
-    }
-    .csp-cat-hero-info {
-      max-width: 650px;
-    }
-    .csp-cat-hero-title {
-      font-family: 'Merriweather', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 400;
-      color: var(--text-main);
-      line-height: 1.2;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .csp-cat-hero-desc {
-      font-size: 1.05rem;
-      color: var(--text-sub);
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-    .csp-cat-hero-cta-bar {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .csp-cat-count-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(0, 174, 254, 0.08);
-      border: 1px solid rgba(0, 174, 254, 0.25);
-      color: var(--blue-accent);
-      font-size: 0.82rem;
-      font-weight: 600;
-      padding: 8px 18px;
-      border-radius: 50px;
-    }
-    .csp-cat-share-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
-      color: #ffffff !important;
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 8px 24px;
-      border-radius: 50px;
-      text-decoration: none !important;
-      box-shadow: 0 4px 14px rgba(0, 174, 254, 0.3);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .csp-cat-share-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(0, 174, 254, 0.45);
-    }
-    .csp-cat-banner-img {
-      width: 320px;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      border: 1px solid #cbd5e1;
-      flex-shrink: 0;
-    }
-    @media(max-width: 850px) {
-      .csp-cat-hero-flex { flex-direction: column; align-items: flex-start; }
-      .csp-cat-banner-img { width: 100%; height: 200px; }
+      text-align: center;
+      padding: 175px 5% 55px 5%;
+      box-sizing: border-box;
+      background-color: #02091A;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* ── CATEGORY SWITCHER TABS ── */
-    .csp-cat-nav-wrap {
-      background: #ffffff;
-      border-bottom: 1px solid var(--border-card);
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    .csp-cat-hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      z-index: 1;
+      transform: scale(1.02);
+      filter: saturate(1.15) brightness(0.9);
+      transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .csp-cat-nav-inner {
-      padding: 14px 8%;
+
+    .csp-cat-hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(180deg, 
+        rgba(2, 9, 26, 0.55) 0%, 
+        rgba(2, 9, 26, 0.75) 45%, 
+        rgba(2, 9, 26, 0.94) 85%,
+        #02091A 100%);
+      pointer-events: none;
+    }
+
+    .csp-cat-hero-ambient {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 720px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 174, 254, 0.22) 0%, transparent 70%);
+      z-index: 2;
+      pointer-events: none;
+      filter: blur(40px);
+      transition: background 0.6s ease;
+    }
+
+    .csp-cat-hero-container {
+      position: relative;
+      z-index: 3;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
       display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      white-space: nowrap;
-      scrollbar-width: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
-    .csp-cat-nav-inner::-webkit-scrollbar { display: none; }
-    .csp-cat-tab {
+
+    .csp-cat-breadcrumb {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 8px 20px;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      background: #f1f5f9;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75);
+      background: transparent;
+      border: none;
+      padding: 0;
+      border-radius: 0;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      margin: 0 auto 28px auto;
+      letter-spacing: 0.02em;
+    }
+
+    .csp-cat-breadcrumb a {
+      color: rgba(255, 255, 255, 0.85);
       text-decoration: none;
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
+      transition: color 0.2s ease;
     }
-    .csp-cat-tab:hover {
-      background: #e2e8f0;
-      color: var(--text-main);
+
+    .csp-cat-breadcrumb a:hover {
+      color: #00AEFE;
     }
-    .csp-cat-tab.active {
-      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%);
+
+    .csp-bc-sep {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.8rem;
+    }
+
+    .csp-bc-current {
+      color: #00AEFE;
+      font-weight: 600;
+    }
+
+    .csp-cat-kicker-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .csp-cat-kicker {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #00AEFE;
+      background: rgba(0, 174, 254, 0.12);
+      border: 1px solid rgba(0, 174, 254, 0.3);
+      padding: 4px 14px;
+      border-radius: 30px;
+    }
+
+    .csp-cat-kicker-dot {
+      color: rgba(255, 255, 255, 0.35);
+      font-size: 0.75rem;
+    }
+
+    .csp-cat-meta-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .csp-cat-hero-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 700;
       color: #ffffff;
-      box-shadow: 0 4px 14px rgba(0, 174, 254, 0.3);
+      line-height: 1.15;
+      margin: 0 0 16px 0;
+      letter-spacing: -0.025em;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
+      max-width: 860px;
+    }
+
+    .csp-cat-hero-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1rem, 1.6vw, 1.18rem);
+      color: rgba(241, 245, 249, 0.9);
+      line-height: 1.65;
+      max-width: 680px;
+      margin: 0 auto 24px auto;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      font-weight: 400;
+    }
+
+    .csp-cat-hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    /* Signature Chat-Style Pill Submit Story Button */
+    .csp-cat-btn-chat {
+      background: #00AEFE !important;
+      background-color: #00AEFE !important;
+      background-image: none !important;
+      color: #ffffff !important;
+      fill: #ffffff !important;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      letter-spacing: -0.015em !important;
+      padding: 13px 28px !important;
+      border-radius: 999px 999px 4px 999px !important;
+      box-shadow: 0 6px 20px rgba(0, 174, 254, 0.35) !important;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-radius 0.25s ease, background-color 0.25s ease !important;
+      white-space: nowrap !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+    }
+
+    .csp-cat-btn-chat:hover {
+      background: #0096db !important;
+      background-color: #0096db !important;
+      color: #ffffff !important;
+      transform: translateY(-2px) scale(1.02) !important;
+      border-radius: 999px 999px 12px 999px !important;
+      box-shadow: 0 10px 28px rgba(0, 174, 254, 0.5) !important;
+    }
+
+    /* Secondary Glass View All Stories Button */
+    .csp-cat-btn-secondary {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.24) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      color: #ffffff !important;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      letter-spacing: -0.015em !important;
+      padding: 13px 26px !important;
+      border-radius: 50px !important;
+      text-decoration: none !important;
+      white-space: nowrap !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .csp-cat-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.16) !important;
+      border-color: rgba(255, 255, 255, 0.45) !important;
+      color: #ffffff !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+    }
+
+
+    @media (max-width: 768px) {
+      .csp-cat-hero {
+        padding: 145px 5% 45px 5%;
+        min-height: 480px;
+      }
+      .csp-cat-hero-title {
+        font-size: 2.3rem;
+      }
+      .csp-cat-hero-desc {
+        font-size: 0.98rem;
+      }
+      .csp-cat-hero-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+      }
+      .csp-cat-btn-chat,
+      .csp-cat-btn-secondary {
+        width: 100% !important;
+        max-width: 280px;
+        box-sizing: border-box;
+      }
     }
 
     /* ── ARTICLES GRID SECTION ── */
@@ -1537,38 +1662,56 @@ e-page-transition,
 <!-- CSP_HEADER_FIXES_END -->
 
 </head>
-<body class="wp-custom-logo wp-embed-responsive wp-theme-twentytwentyfour ehf-template-twentytwentyfour ehf-stylesheet-twentytwentyfour jkit-color-scheme elementor-default elementor-template-full-width elementor-kit-9 sticky-menu yes-is-sticky" data-elementor-device-mode="desktop">
+<body class="wp-custom-logo wp-embed-responsive wp-theme-twentytwentyfour ehf-template-twentytwentyfour ehf-stylesheet-twentytwentyfour jkit-color-scheme elementor-default elementor-template-full-width elementor-kit-9 sticky-menu yes-is-sticky category-page" data-elementor-device-mode="desktop">
 
   <!-- HEADER COMPONENT -->
   <!-- INCLUDE:wp-header.html -->
 
-  <!-- CATEGORY HERO -->
-  <section class="csp-cat-hero">
-    <div class="csp-cat-breadcrumb">
-      <a href="/">Home</a> &rsaquo; <a href="/stories/">All Stories &amp; Categories</a> &rsaquo; <span id="cat-bc-name">Category</span>
-    </div>
-    <div class="csp-cat-hero-flex">
-      <div class="csp-cat-hero-info">
-        <h1 class="csp-cat-hero-title">
-          <span id="cat-hero-name">Loading Category...</span>
-        </h1>
-        <p class="csp-cat-hero-desc" id="cat-hero-desc">Discover in-depth investigations, personal reflections, and diaspora stories under this category.</p>
-        <div class="csp-cat-hero-cta-bar">
-          <span class="csp-cat-count-badge" id="cat-hero-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> 0 Articles Published</span>
-          <a href="/submit-story/" class="csp-cat-share-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Share Your Story &rarr;</a>
-        </div>
+  <!-- CATEGORY HERO: CINEMATIC FULL-BLEED -->
+  <section class="csp-cat-hero" id="cat-hero-section">
+    <!-- Dynamic Category Background Image -->
+    <img id="cat-hero-bg-img" src="/wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg" alt="Category Atmosphere" class="csp-cat-hero-bg">
+    <!-- Multi-stop Dark Cinematic Vignette Overlay -->
+    <div class="csp-cat-hero-overlay"></div>
+    <!-- Ambient Category Glow Accent -->
+    <div class="csp-cat-hero-ambient" id="cat-hero-ambient"></div>
+
+    <div class="csp-cat-hero-container">
+      <div class="csp-cat-kicker-wrap">
+        <span class="csp-cat-kicker" id="cat-kicker">Diaspora Curated Series</span>
+        <span class="csp-cat-kicker-dot">•</span>
+        <span class="csp-cat-meta-count" id="cat-hero-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> 0 Articles Published</span>
       </div>
-      <img id="cat-hero-banner" src="" alt="Category Banner" class="csp-cat-banner-img" style="display:none;">
+
+      <h1 class="csp-cat-hero-title">
+        <span id="cat-hero-name">Loading Category...</span>
+      </h1>
+      <p class="csp-cat-hero-desc" id="cat-hero-desc">Discover in-depth investigations, personal reflections, and diaspora stories under this category.</p>
+
+      <!-- Breadcrumbs without outline circle -->
+      <div class="csp-cat-breadcrumb">
+        <a href="/">Home</a>
+        <span class="csp-bc-sep">/</span>
+        <a href="/stories/">All Stories</a>
+        <span class="csp-bc-sep">/</span>
+        <span class="csp-bc-current" id="cat-bc-name">Category</span>
+      </div>
+
+      <!-- Action Buttons directly UNDER breadcrumbs (Only the 2 buttons) -->
+      <div class="csp-cat-hero-actions">
+        <a href="/forum/" class="csp-cat-btn-chat" id="cat-forum-btn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Join Forum Discussion</span>
+        </a>
+        <a href="/stories/" class="csp-cat-btn-secondary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          <span>View All Stories</span>
+        </a>
+      </div>
     </div>
   </section>
-
-  <!-- DYNAMIC CATEGORY FILTER SWITCHER TABS -->
-  <div class="csp-cat-nav-wrap">
-    <div class="csp-cat-nav-inner" id="csp-cat-tabs-container">
-      <a href="/stories/" class="csp-cat-tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> All Stories</a>
-      <!-- Dynamic Category Tabs populate here -->
-    </div>
-  </div>
 
   <!-- MAIN ARTICLES GRID SECTION -->
   <section class="csp-cat-content-sec" style="padding: 40px 0;">
@@ -1753,44 +1896,109 @@ e-page-transition,
     };
   }
 
-  // 1. DYNAMICALLY LOAD CATEGORY DETAILS & TABS FROM DATABASE (api/posts.php?resource=categories)
+  var CATEGORY_CINEMATIC_MAP = {
+    'community': {
+      bg: getRootUrl('wp-content/uploads/2026/02/stories-hero-community.jpg'),
+      kicker: 'Diaspora Voices & Unity',
+      ambient: 'radial-gradient(circle, rgba(0, 174, 254, 0.35) 0%, transparent 70%)',
+      desc: 'Explore grassroots stories, collective empowerment, and shared journeys across the global African diaspora.'
+    },
+    'culture-heritage': {
+      bg: getRootUrl('wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg'),
+      kicker: 'Heritage, Roots & Identity',
+      ambient: 'radial-gradient(circle, rgba(183, 31, 113, 0.35) 0%, transparent 70%)',
+      desc: 'Preserving African traditions, celebrating global customs, and rediscovering rich historical legacies.'
+    },
+    'innovation': {
+      bg: getRootUrl('wp-content/uploads/2026/02/group-five-african-college-students-spending-time-together-campus-university-yard-black-afro-friends-making-selfie-phone-education-theme-1536x1022.jpg'),
+      kicker: 'Tech, Future & Leadership',
+      ambient: 'radial-gradient(circle, rgba(0, 174, 254, 0.4) 0%, transparent 70%)',
+      desc: 'Spotlighting technological breakthroughs, forward-thinking founders, and new economic frontiers.'
+    },
+    'art-entertainment': {
+      bg: getRootUrl('wp-content/uploads/2026/01/MoADCover-1180x664-1.jpg'),
+      kicker: 'Arts, Cinema & Expression',
+      ambient: 'radial-gradient(circle, rgba(236, 72, 153, 0.35) 0%, transparent 70%)',
+      desc: 'Celebrating music, visual arts, literature, and cinema shaping contemporary culture worldwide.'
+    },
+    'success-stories': {
+      bg: getRootUrl('wp-content/uploads/2026/02/portrait-smiley-people-african-wedding-1024x683.jpg'),
+      kicker: 'Trailblazers & Milestones',
+      ambient: 'radial-gradient(circle, rgba(245, 158, 11, 0.35) 0%, transparent 70%)',
+      desc: 'Inspiring profiles of leaders, creators, and innovators breaking boundaries around the globe.'
+    },
+    'african-diaspora-matters': {
+      bg: getRootUrl('wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg'),
+      kicker: 'Global Dialogue & Society',
+      ambient: 'radial-gradient(circle, rgba(14, 165, 233, 0.35) 0%, transparent 70%)',
+      desc: 'Critical dialogues, human rights reflections, and current affairs impacting African diaspora populations.'
+    },
+    'diaspora-insights-analysis': {
+      bg: getRootUrl('wp-content/uploads/2026/02/diaspora_writers_studio.png'),
+      kicker: 'Research, Policy & Thought',
+      ambient: 'radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 70%)',
+      desc: 'Data-driven analysis, scholarly perspectives, and policy commentary on diaspora economic developments.'
+    },
+    'interview-transcripts': {
+      bg: getRootUrl('wp-content/uploads/2026/01/about-hero-portrait.jpg'),
+      kicker: 'In-Depth Conversations',
+      ambient: 'radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, transparent 70%)',
+      desc: 'Firsthand transcripts and unedited dialogues with prominent thought leaders, activists, and icons.'
+    }
+  };
+
+  function applyCinematicHero(slug, name, desc, customImage) {
+    var meta = CATEGORY_CINEMATIC_MAP[slug] || {};
+    var bgImg = document.getElementById('cat-hero-bg-img');
+    if (bgImg) {
+      bgImg.src = customImage || meta.bg || getRootUrl('wp-content/uploads/2026/01/girls-walk-along-streets-city-scaled.jpg');
+    }
+    var ambient = document.getElementById('cat-hero-ambient');
+    if (ambient && meta.ambient) {
+      ambient.style.background = meta.ambient;
+    }
+    var kicker = document.getElementById('cat-kicker');
+    if (kicker) {
+      kicker.textContent = meta.kicker || 'Diaspora Curated Series';
+    }
+    var chn = document.getElementById('cat-hero-name');
+    if (chn && name) {
+      chn.textContent = name;
+    }
+    var bcn = document.getElementById('cat-bc-name');
+    if (bcn && name) {
+      bcn.textContent = name;
+    }
+    var chd = document.getElementById('cat-hero-desc');
+    if (chd) {
+      chd.textContent = desc || meta.desc || 'Discover in-depth investigations, personal reflections, and diaspora stories under this category.';
+    }
+    var forumBtn = document.getElementById('cat-forum-btn');
+    if (forumBtn && slug) {
+      forumBtn.href = getRootUrl('forum/?category=' + encodeURIComponent(slug));
+    }
+  }
+
+  // Pre-apply based on current slug before API completes
+  applyCinematicHero(currentSlug);
+
+  // 1. DYNAMICALLY LOAD CATEGORY DETAILS FROM DATABASE (api/posts.php?resource=categories)
   fetch(getRootUrl('api/posts.php?resource=categories'))
     .then(function(r){ return r.json(); })
     .then(function(res){
       if (!res || !res.success || !res.categories) return;
-
-      // Render category navigation tabs dynamically from database
-      var tabsContainer = document.getElementById('csp-cat-tabs-container');
-      if (tabsContainer) {
-        var tabsHtml = '<a href="' + getRootUrl('stories/') + '" class="csp-cat-tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> All Stories</a>';
-        res.categories.forEach(function(c){
-          var isActive = (c.slug === currentSlug);
-          var catUrl = getRootUrl('category/' + c.slug + '/');
-          var styleAttr = isActive 
-            ? 'padding:6px 14px;border-radius:50px;border:none;background:#00AEFE;color:#fff;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;'
-            : 'padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;text-decoration:none;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;';
-          tabsHtml += '<a href="' + catUrl + '" class="csp-cat-tab' + (isActive ? ' active' : '') + '" style="' + styleAttr + '">' + getCategorySvgIcon(c) + ' ' + c.name + '</a>';
-        });
-        tabsContainer.innerHTML = tabsHtml;
-      }
 
       // Match the active category and DYNAMICALLY update name, description, and IMAGE from database
       var matchedCat = res.categories.find(function(c){ return c.slug === currentSlug; });
       if (matchedCat) {
         document.title = matchedCat.name + ' — Conspodium Category';
         var pt = document.getElementById('page-title'); if (pt) pt.textContent = matchedCat.name + ' — Conspodium Category';
-        var bcn = document.getElementById('cat-bc-name'); if (bcn) bcn.textContent = matchedCat.name;
-        var chn = document.getElementById('cat-hero-name'); if (chn) chn.textContent = matchedCat.name;
-        if (matchedCat.description) {
-          var chd = document.getElementById('cat-hero-desc'); if (chd) chd.textContent = matchedCat.description;
-        }
-        if (matchedCat.image) {
-          var banner = document.getElementById('cat-hero-banner');
-          if (banner) {
-            banner.src = getAbsoluteImageUrl(matchedCat.image);
-            banner.style.display = 'block';
-          }
-        }
+        applyCinematicHero(
+          matchedCat.slug,
+          matchedCat.name,
+          matchedCat.description,
+          matchedCat.image ? getAbsoluteImageUrl(matchedCat.image) : null
+        );
       }
     })
     .catch(function(err){

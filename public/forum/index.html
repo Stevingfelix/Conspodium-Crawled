@@ -633,31 +633,31 @@
   }
 
   /* ── NORMAL STATE (TOP OF PAGE ON LIGHT HERO PAGES): Crisp Dark Links ─── */
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu a.elementor-item,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu .menu-item a,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-item {
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu a.elementor-item,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu .menu-item a,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-item {
     color: #0f172a !important;
     fill: #0f172a !important;
     text-shadow: none !important;
   }
 
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu a.elementor-item:hover {
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu a.elementor-item:hover {
     color: #00AEFE !important;
     fill: #00AEFE !important;
     text-shadow: none !important;
   }
 
   /* Normal State Mobile Menu Hamburger Toggle Icon (Un-scrolled on light hero pages) */
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle svg,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle svg line,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header .csp-menu-burger-svg,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg {
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .csp-menu-burger-svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg {
     color: #0f172a !important;
     fill: none !important;
     stroke: #0f172a !important;
@@ -1608,25 +1608,29 @@
 
 
   /* ── PUSH INNER PAGE ELEMENTS DOWN BELOW RELATIVE HEADER ──────────────────── */
-  body:not(.home):not(.forum-page) .csp-post-sec {
+  body:not(.home):not(.forum-page):not(.category-page) .csp-post-sec {
     padding-top: 130px !important;
   }
 
-  body:not(.home):not(.forum-page) .csp-cat-hero {
+  body:not(.home):not(.forum-page):not(.category-page) .csp-cat-hero {
     padding-top: 130px !important;
   }
 
-  body:not(.home):not(.forum-page) .csp-forum-hero {
+  body:not(.home):not(.forum-page):not(.category-page) .csp-forum-hero {
     padding-top: 130px !important;
   }
 
-  body:not(.home):not(.forum-page) .csp-thread-sec {
+  body:not(.home):not(.forum-page):not(.category-page) .csp-thread-sec {
     padding-top: 130px !important;
   }
 
   body.forum-page .csp-forum-hero {
     padding-top: 170px !important;
     padding-bottom: 90px !important;
+  }
+
+  body.category-page .csp-cat-hero {
+    padding-top: 175px !important;
   }
 
   /* ── ENTIRE POST CARD CLICKABLE ── */
@@ -1636,10 +1640,12 @@
   }
 
   /* ── NAV TEXT & TOGGLE: Normal State vs Sticky State ──────────────────────────────── */
-  /* Homepage & Forum Hero page normal state: crisp white text & toggle over dark hero */
+  /* Homepage, Forum Hero & Category Hero page normal state: crisp white text & toggle over dark hero */
   body.home:not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main .elementor-item,
   body.forum-page:not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main .elementor-item,
-  body.forum-page:not(.header-is-sticky) .elementor-item {
+  body.forum-page:not(.header-is-sticky) .elementor-item,
+  body.category-page:not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main .elementor-item,
+  body.category-page:not(.header-is-sticky) .elementor-item {
     color: #ffffff !important;
     fill: #ffffff !important;
     text-shadow: none !important;
@@ -1654,16 +1660,21 @@
   body.forum-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
   body.forum-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
   body.forum-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
-  body.forum-page:not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg {
+  body.forum-page:not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg,
+  body.category-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle,
+  body.category-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
+  body.category-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
+  body.category-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
+  body.category-page:not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg {
     color: #ffffff !important;
     fill: none !important;
     stroke: #ffffff !important;
   }
 
   /* Light hero pages normal state (un-scrolled): crisp dark text over light header */
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main a.elementor-item:not(.active-link):not(.elementor-item-active),
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 a.elementor-item:not(.active-link):not(.elementor-item-active),
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969 .elementor-item:not(.active-link):not(.elementor-item-active) {
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main a.elementor-item:not(.active-link):not(.elementor-item-active),
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 a.elementor-item:not(.active-link):not(.elementor-item-active),
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-item:not(.active-link):not(.elementor-item-active) {
     color: #0f172a !important;
     fill: #0f172a !important;
   }
@@ -1688,21 +1699,21 @@
   }
 
   /* Normal un-scrolled state for light hero pages (Dark Icon) */
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle svg,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle svg line,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .csp-menu-burger-svg,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle svg,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle svg line,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .csp-menu-burger-svg,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle svg,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle svg line,
-  body:not(.home):not(.forum-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .csp-menu-burger-svg {
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .csp-menu-burger-svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .csp-menu-burger-svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .csp-menu-burger-svg {
     color: #0f172a !important;
     fill: none !important;
     stroke: #0f172a !important;
@@ -5090,7 +5101,7 @@
     background: radial-gradient(120% 80% at 50% -10%, rgba(0, 174, 254, 0.08) 0%, rgba(240, 249, 255, 0.5) 45%, #FFFFFF 100%), #FFFFFF !important;
     padding-top: clamp(110px, 13vw, 150px) !important;
     padding-bottom: 70px !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 
   .csp-mosaic-hero-grid {
@@ -5428,6 +5439,108 @@
       height: 160px !important;
       left: 70px !important;
       bottom: 10px !important;
+  }
+  /* ── CONTACT US FAQ ACCORDION DESKTOP LUXURY ALIGNMENT ── */
+  .csp-faq-accordion {
+    max-width: 860px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  .csp-faq-item {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    background: #ffffff !important;
+    overflow: hidden !important;
+    transition: all 0.25s ease !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    text-align: left !important;
+    display: block !important;
+  }
+
+  .csp-faq-trigger,
+  button.csp-faq-trigger,
+  .csp-faq-item .csp-faq-trigger,
+  .elementor .csp-faq-trigger {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 22px 28px !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    outline: none !important;
+    gap: 20px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  .csp-faq-question,
+  .csp-faq-trigger .csp-faq-question,
+  button.csp-faq-trigger .csp-faq-question {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    color: #0f172a !important;
+    line-height: 1.45 !important;
+    text-align: left !important;
+    flex: 1 1 auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  .csp-faq-icon,
+  .csp-faq-trigger .csp-faq-icon,
+  button.csp-faq-trigger .csp-faq-icon {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    border-radius: 50% !important;
+    background: rgba(0, 174, 254, 0.08) !important;
+    border: 1.5px solid rgba(0, 174, 254, 0.25) !important;
+    color: #00AEFE !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+  }
+
+  .csp-faq-body {
+    padding: 0 28px 24px 28px !important;
+    font-size: 0.95rem !important;
+    color: #475569 !important;
+    line-height: 1.65 !important;
+    border-top: 1px dashed rgba(226, 232, 240, 0.9) !important;
+    margin-top: 4px !important;
+    padding-top: 18px !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+  }
+
+  @media (max-width: 768px) {
+    .csp-faq-trigger,
+    button.csp-faq-trigger,
+    .csp-faq-item .csp-faq-trigger {
+      padding: 18px 20px !important;
+      gap: 14px !important;
+    }
+    .csp-faq-question {
+      font-size: 0.96rem !important;
+    }
+    .csp-faq-body {
+      padding: 0 20px 20px 20px !important;
+      padding-top: 14px !important;
+      font-size: 0.9rem !important;
+    }
   }
 </style>
 <script>
@@ -6927,8 +7040,8 @@
   <script>
     (function(){
       var allThreads = [];
-      var allCategories = [];
-      var activeCat = 'All';
+      var urlParamCat = (new URLSearchParams(window.location.search)).get('category');
+      var activeCat = urlParamCat ? urlParamCat : 'All';
       var currentSort = 'trending';
       var searchQuery = '';
 
@@ -7040,7 +7153,13 @@
 
         cats.forEach(function(cat){
           var iconSvg = ICON_SVGS[cat.icon_type] || ICON_SVGS.chat;
-          var isActive = (activeCat === cat.name || activeCat === cat.slug);
+          var isMatch = activeCat !== 'All' && (
+            activeCat.toLowerCase() === (cat.name || '').toLowerCase() ||
+            activeCat.toLowerCase() === (cat.slug || '').toLowerCase() ||
+            activeCat.toLowerCase().replace(/-/g, ' ') === (cat.name || '').toLowerCase()
+          );
+          if (isMatch) { activeCat = cat.name; }
+          var isActive = (activeCat === cat.name);
           html += '<button class="csp-filter-chip ' + (isActive ? 'active' : '') + '" data-cat="' + escapeHtml(cat.name) + '" data-id="' + cat.id + '">' + iconSvg + escapeHtml(cat.name) + '</button>';
         });
 

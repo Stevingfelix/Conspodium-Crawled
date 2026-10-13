@@ -1388,8 +1388,8 @@
   <script>
     (function(){
       var allThreads = [];
-      var allCategories = [];
-      var activeCat = 'All';
+      var urlParamCat = (new URLSearchParams(window.location.search)).get('category');
+      var activeCat = urlParamCat ? urlParamCat : 'All';
       var currentSort = 'trending';
       var searchQuery = '';
 
@@ -1501,7 +1501,13 @@
 
         cats.forEach(function(cat){
           var iconSvg = ICON_SVGS[cat.icon_type] || ICON_SVGS.chat;
-          var isActive = (activeCat === cat.name || activeCat === cat.slug);
+          var isMatch = activeCat !== 'All' && (
+            activeCat.toLowerCase() === (cat.name || '').toLowerCase() ||
+            activeCat.toLowerCase() === (cat.slug || '').toLowerCase() ||
+            activeCat.toLowerCase().replace(/-/g, ' ') === (cat.name || '').toLowerCase()
+          );
+          if (isMatch) { activeCat = cat.name; }
+          var isActive = (activeCat === cat.name);
           html += '<button class="csp-filter-chip ' + (isActive ? 'active' : '') + '" data-cat="' + escapeHtml(cat.name) + '" data-id="' + cat.id + '">' + iconSvg + escapeHtml(cat.name) + '</button>';
         });
 
