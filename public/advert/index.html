@@ -1286,10 +1286,12 @@
       src: url('../wp-content/themes/twentytwentyfour/assets/fonts/cardo/cardo_normal_700.woff2') format('woff2');
     }
   </style>
-  <link rel="icon" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-32x32.png" sizes="32x32">
-  <link rel="icon" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png" sizes="192x192">
-  <link rel="apple-touch-icon" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-180x180.png">
-  <meta name="msapplication-TileImage" content="../wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-270x270.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-180x180.png">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="msapplication-TileImage" content="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-270x270.png">
   <style id="jeg_dynamic_css" type="text/css" data-type="jeg_custom-css"></style>
   <style type="text/css">
     /* Hide logout links for non-logged-in users */
@@ -11603,9 +11605,10 @@
 
     .csp-bento-tags {
       display: flex !important;
-      flex-wrap: wrap !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
       align-items: center !important;
-      justify-content: center !important;
+      justify-content: space-between !important;
       gap: 12px !important;
       margin-top: auto !important;
       padding-top: 20px !important;
@@ -11616,16 +11619,48 @@
 
     .csp-bento-tags .csp-tag {
       font-family: 'Plus Jakarta Sans', sans-serif !important;
-      font-size: 0.8rem !important;
+      font-size: 0.85rem !important;
       font-weight: 600 !important;
-      color: #475569 !important;
+      color: #334155 !important;
       background: #F8FAFC !important;
       border: 1px solid #E2E8F0 !important;
       border-radius: 50px !important;
-      padding: 6px 16px !important;
+      padding: 7px 15px !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
+      gap: 7px !important;
+      white-space: nowrap !important;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      flex-shrink: 0 !important;
+    }
+
+    .csp-bento-tags .csp-tag .tag-emoji {
+      font-size: 1.05rem !important;
+      line-height: 1 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin-right: 2px !important;
+    }
+
+    .csp-bento-tags .csp-tag:first-child {
+      margin-right: auto !important;
+      text-align: left !important;
+    }
+
+    .csp-bento-tags .csp-tag:last-child {
+      margin-left: auto !important;
+      text-align: right !important;
+    }
+
+    .csp-bento-tags .csp-tag:hover {
+      background: #FFFFFF !important;
+      border-color: rgba(0, 174, 254, 0.45) !important;
+      color: #0284C7 !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 14px rgba(0, 174, 254, 0.12) !important;
     }
 
     /* Measurable Reach Luxury Dark Container */
@@ -11931,10 +11966,21 @@
       text-align: left !important;
     }
 
-    .elementor-element-2ef9f0da .elementskit-info-box-icon {
-      width: 50px !important;
-      height: 50px !important;
-      min-width: 50px !important;
+    .elementor-element-2ef9f0da,
+    .elementor-element-2ef9f0da > .elementor-element,
+    .elementor-element-2ef9f0da .elementor-widget-container,
+    .elementor-element-2ef9f0da .ekit-wid-con,
+    .elementor-element-2ef9f0da .elementskit-infobox {
+      overflow: visible !important;
+    }
+
+    .elementor-element-2ef9f0da .elementskit-box-header .elementskit-info-box-icon,
+    .elementor-element-2ef9f0da .elementskit-info-box-icon,
+    .elementor-977 .elementor-element.elementor-element-2ef9f0da .elementskit-infobox .elementskit-box-header .elementskit-info-box-icon {
+      width: 52px !important;
+      height: 52px !important;
+      min-width: 52px !important;
+      min-height: 52px !important;
       border-radius: 14px !important;
       background: #F1F5F9 !important;
       border: 1px solid #E2E8F0 !important;
@@ -11943,21 +11989,41 @@
       align-items: center !important;
       justify-content: center !important;
       margin: 0 !important;
+      padding: 0 !important;
       align-self: flex-start !important;
       transition: all 0.3s ease !important;
+      transform: none !important;
+      -webkit-transform: none !important;
+      overflow: visible !important;
+      box-sizing: border-box !important;
     }
 
-    .elementor-element-2ef9f0da .elementskit-infobox:hover .elementskit-info-box-icon {
+    .elementor-element-2ef9f0da .elementskit-infobox:hover .elementskit-info-box-icon,
+    .elementor-977 .elementor-element.elementor-element-2ef9f0da .elementskit-infobox:hover .elementskit-info-box-icon {
       background: #00AEFE !important;
       color: #FFFFFF !important;
       border-color: #00AEFE !important;
       box-shadow: 0 6px 18px rgba(0, 174, 254, 0.3) !important;
+      transform: none !important;
+      -webkit-transform: none !important;
     }
 
-    .elementor-element-2ef9f0da .elementskit-info-box-icon i {
+    .elementor-element-2ef9f0da .elementskit-info-box-icon i,
+    .elementor-element-2ef9f0da .elementskit-info-box-icon .elementkit-infobox-icon,
+    .elementor-977 .elementor-element.elementor-element-2ef9f0da .elementskit-infobox .elementkit-infobox-icon {
       font-size: 22px !important;
       line-height: 1 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transform: none !important;
+      -webkit-transform: none !important;
+      vertical-align: middle !important;
+      margin: 0 !important;
+      padding: 0 !important;
       color: inherit !important;
+      height: auto !important;
+      width: auto !important;
     }
 
     .elementor-element-2ef9f0da .box-body {
@@ -12110,8 +12176,12 @@
       transform: scale(1.04) !important;
     }
 
+    .elementor-element-46f7ba70 .elementskit-box-header .elementskit-info-box-icon,
+    .elementor-element-455d4f47 .elementskit-box-header .elementskit-info-box-icon,
     .elementor-element-46f7ba70 .elementskit-info-box-icon,
-    .elementor-element-455d4f47 .elementskit-info-box-icon {
+    .elementor-element-455d4f47 .elementskit-info-box-icon,
+    .elementor-977 .elementor-element.elementor-element-46f7ba70 .elementskit-infobox .elementskit-box-header .elementskit-info-box-icon,
+    .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-infobox .elementskit-box-header .elementskit-info-box-icon {
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -12122,27 +12192,53 @@
       border-radius: 14px !important;
       background: #F8FAFC !important;
       border: 1px solid #E2E8F0 !important;
-      margin-bottom: 16px !important;
+      margin: 0 0 16px 0 !important;
+      padding: 0 !important;
       box-shadow: none !important;
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      transform: none !important;
+      -webkit-transform: none !important;
+      overflow: visible !important;
+      box-sizing: border-box !important;
     }
 
     .elementor-element-46f7ba70 .elementskit-info-box-icon i,
-    .elementor-element-455d4f47 .elementskit-info-box-icon i {
+    .elementor-element-455d4f47 .elementskit-info-box-icon i,
+    .elementor-element-46f7ba70 .elementkit-infobox-icon,
+    .elementor-element-455d4f47 .elementkit-infobox-icon,
+    .elementor-977 .elementor-element.elementor-element-46f7ba70 .elementskit-infobox .elementkit-infobox-icon,
+    .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-infobox .elementkit-infobox-icon {
       font-size: 22px !important;
+      line-height: 1 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transform: none !important;
+      -webkit-transform: none !important;
+      vertical-align: middle !important;
+      margin: 0 !important;
+      padding: 0 !important;
       color: #64748B !important;
       transition: color 0.35s ease !important;
+      height: auto !important;
+      width: auto !important;
     }
 
     .elementor-element-9c0f372:hover .elementor-element-46f7ba70 .elementskit-info-box-icon,
-    .elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon {
+    .elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon,
+    .elementor-977 .elementor-element.elementor-element-9c0f372:hover .elementor-element-46f7ba70 .elementskit-info-box-icon,
+    .elementor-977 .elementor-element.elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon {
       background: #00AEFE !important;
       border-color: #00AEFE !important;
       box-shadow: 0 8px 20px rgba(0, 174, 254, 0.35) !important;
+      transform: none !important;
+      -webkit-transform: none !important;
     }
 
     .elementor-element-9c0f372:hover .elementor-element-46f7ba70 .elementskit-info-box-icon i,
-    .elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon i {
+    .elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon i,
+    .elementor-977 .elementor-element.elementor-element-9c0f372:hover .elementor-element-46f7ba70 .elementskit-info-box-icon i,
+    .elementor-977 .elementor-element.elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon i {
       color: #FFFFFF !important;
     }
 
@@ -12252,30 +12348,55 @@
       gap: 10px !important;
       width: 100% !important;
       max-width: 100% !important;
-      padding: 14px 24px !important;
-      background: #F1F5F9 !important;
-      color: #334155 !important;
-      font-family: 'Plus Jakarta Sans', sans-serif !important;
-      font-weight: 700 !important;
-      font-size: 0.95rem !important;
-      border-radius: 12px !important;
-      border: 1px solid #E2E8F0 !important;
-      transition: all 0.3s ease !important;
+      height: 48px !important;
+      padding: 14px 28px !important;
+      background: #00AEFE !important;
+      background-color: #00AEFE !important;
+      background-image: none !important;
+      color: #FFFFFF !important;
+      fill: #FFFFFF !important;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      font-weight: 600 !important;
+      font-size: 15px !important;
+      line-height: 1 !important;
+      border-radius: 50px !important;
+      border: 1.5px solid #00AEFE !important;
+      box-shadow: 0 6px 20px rgba(0, 174, 254, 0.32) !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
       text-decoration: none !important;
-      box-shadow: none !important;
       box-sizing: border-box !important;
       text-align: center !important;
+      cursor: pointer !important;
+    }
+
+    .elementor-element-b75da38 .elementskit-btn i,
+    .elementor-element-3b186358 .elementskit-btn i {
+      color: #FFFFFF !important;
+      font-size: 16px !important;
+      margin-left: 8px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      vertical-align: middle !important;
+      transition: transform 0.2s ease !important;
     }
 
     .elementor-element-9c0f372:hover .elementor-element-b75da38 .elementskit-btn,
     .elementor-element-243a65ca:hover .elementor-element-3b186358 .elementskit-btn,
     .elementor-element-b75da38 .elementskit-btn:hover,
     .elementor-element-3b186358 .elementskit-btn:hover {
-      background: linear-gradient(135deg, #00AEFE 0%, #0088CC 100%) !important;
-      border-color: transparent !important;
+      background: #0096db !important;
+      background-color: #0096db !important;
+      background-image: none !important;
+      border-color: #0096db !important;
       transform: translateY(-2px) !important;
-      box-shadow: 0 12px 25px -5px rgba(0, 174, 254, 0.45) !important;
+      box-shadow: 0 10px 28px rgba(0, 174, 254, 0.45) !important;
       color: #FFFFFF !important;
+      fill: #FFFFFF !important;
+    }
+
+    .elementor-element-b75da38 .elementskit-btn:hover i,
+    .elementor-element-3b186358 .elementskit-btn:hover i {
+      transform: translateX(3px) !important;
     }
 
     /* -------------------------------------------------------------
@@ -13219,13 +13340,25 @@
       .elementor-element-3b186358 .elementskit-btn {
         width: 100% !important;
         max-width: 100% !important;
+        height: 48px !important;
         display: inline-flex !important;
         justify-content: center !important;
         align-items: center !important;
-        border-radius: 12px !important;
+        gap: 10px !important;
+        background: #00AEFE !important;
+        background-color: #00AEFE !important;
+        background-image: none !important;
+        color: #FFFFFF !important;
+        fill: #FFFFFF !important;
+        border-radius: 50px !important;
+        border: 1.5px solid #00AEFE !important;
+        box-shadow: 0 6px 20px rgba(0, 174, 254, 0.32) !important;
         box-sizing: border-box !important;
         text-align: center !important;
-        padding: 14px 20px !important;
+        padding: 14px 24px !important;
+        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif !important;
+        font-weight: 600 !important;
+        font-size: 15px !important;
         margin: 0 auto !important;
       }
 
@@ -13374,12 +13507,54 @@
         width: 100% !important;
         max-width: 100% !important;
         min-height: auto !important;
-        padding: 26px 20px 24px 20px !important;
+        padding: 26px 16px 22px 16px !important;
         border-radius: 20px !important;
         box-sizing: border-box !important;
         margin: 0 !important;
         border: 1px solid #E2E8F0 !important;
         box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
+      }
+
+      .csp-bento-tags {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        gap: 6px !important;
+        margin-top: auto !important;
+        padding-top: 16px !important;
+        border-top: 1px solid #F1F5F9 !important;
+        box-sizing: border-box !important;
+      }
+
+      .csp-bento-tags .csp-tag {
+        font-size: 0.82rem !important;
+        padding: 6px 12px !important;
+        gap: 7px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        letter-spacing: normal !important;
+      }
+
+      .csp-bento-tags .csp-tag .tag-emoji {
+        font-size: 1rem !important;
+        line-height: 1 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-right: 2px !important;
+      }
+
+      .csp-bento-tags .csp-tag:first-child {
+        margin-right: auto !important;
+        text-align: left !important;
+      }
+
+      .csp-bento-tags .csp-tag:last-child {
+        margin-left: auto !important;
+        text-align: right !important;
       }
 
       /* Measurable Reach Dark Showcase Container & Centered Button */
@@ -13532,6 +13707,79 @@
         box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04) !important;
         box-sizing: border-box !important;
         margin: 0 !important;
+        overflow: visible !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+      }
+
+      .elementor-element-2ef9f0da .elementskit-infobox:hover {
+        transform: translateY(-4px) !important;
+        border-color: #00AEFE !important;
+        box-shadow: 0 12px 28px -6px rgba(0, 174, 254, 0.22) !important;
+      }
+
+      .elementor-element-2ef9f0da .elementskit-box-header .elementskit-info-box-icon,
+      .elementor-element-2ef9f0da .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-2ef9f0da .elementskit-infobox .elementskit-box-header .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-27d2043d .elementskit-infobox .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-2dde977 .elementskit-infobox .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-6c7b80d .elementskit-infobox .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-76f974b .elementskit-infobox .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-472497a .elementskit-infobox .elementskit-info-box-icon {
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+        border-radius: 14px !important;
+        background: #F1F5F9 !important;
+        border: 1px solid #E2E8F0 !important;
+        color: #64748B !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 0 14px 0 !important;
+        padding: 0 !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        overflow: visible !important;
+        box-sizing: border-box !important;
+      }
+
+      .elementor-element-2ef9f0da .elementskit-infobox:hover .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-2ef9f0da .elementskit-infobox:hover .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-27d2043d .elementskit-infobox:hover .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-2dde977 .elementskit-infobox:hover .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-6c7b80d .elementskit-infobox:hover .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-76f974b .elementskit-infobox:hover .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-472497a .elementskit-infobox:hover .elementskit-info-box-icon {
+        background: #00AEFE !important;
+        color: #FFFFFF !important;
+        border-color: #00AEFE !important;
+        box-shadow: 0 6px 18px rgba(0, 174, 254, 0.3) !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+      }
+
+      .elementor-element-2ef9f0da .elementskit-info-box-icon i,
+      .elementor-element-2ef9f0da .elementkit-infobox-icon,
+      .elementor-977 .elementor-element.elementor-element-2ef9f0da .elementskit-infobox .elementkit-infobox-icon,
+      .elementor-977 .elementor-element.elementor-element-27d2043d .elementskit-infobox .elementkit-infobox-icon,
+      .elementor-977 .elementor-element.elementor-element-2dde977 .elementskit-infobox .elementkit-infobox-icon,
+      .elementor-977 .elementor-element.elementor-element-6c7b80d .elementskit-infobox .elementkit-infobox-icon,
+      .elementor-977 .elementor-element.elementor-element-76f974b .elementskit-infobox .elementkit-infobox-icon,
+      .elementor-977 .elementor-element.elementor-element-472497a .elementskit-infobox .elementkit-infobox-icon {
+        font-size: 22px !important;
+        line-height: 1 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        vertical-align: middle !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: inherit !important;
+        height: auto !important;
+        width: auto !important;
       }
 
       /* ── ADVERTISING OPTIONS: VISIBLE EDGES & ALL CARD ELEMENTS VISIBLE ── */
@@ -13579,10 +13827,10 @@
         background: #FFFFFF !important;
         background-color: #FFFFFF !important;
         border: 1px solid #E2E8F0 !important;
-        border-radius: 20px !important;
-        padding: 20px 18px 24px 18px !important;
-        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05) !important;
-        margin: 0 0 20px 0 !important;
+        border-radius: 24px !important;
+        padding: 24px 20px 28px 20px !important;
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+        margin: 0 0 28px 0 !important;
         display: flex !important;
         flex-direction: column !important;
         height: auto !important;
@@ -13593,9 +13841,9 @@
 
       .advert-card-media {
         width: 100% !important;
-        height: 180px !important;
-        min-height: 180px !important;
-        border-radius: 14px !important;
+        height: 190px !important;
+        min-height: 190px !important;
+        border-radius: 16px !important;
         margin-bottom: 20px !important;
         overflow: hidden !important;
         border: 1px solid #E2E8F0 !important;
@@ -13635,25 +13883,75 @@
         box-shadow: none !important;
       }
 
+      .elementor-element-46f7ba70 .elementskit-box-header .elementskit-info-box-icon,
+      .elementor-element-455d4f47 .elementskit-box-header .elementskit-info-box-icon,
       .elementor-element-46f7ba70 .elementskit-info-box-icon,
-      .elementor-element-455d4f47 .elementskit-info-box-icon {
-        width: 44px !important;
-        height: 44px !important;
-        min-width: 44px !important;
-        border-radius: 12px !important;
-        background: #F1F5F9 !important;
+      .elementor-element-455d4f47 .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-46f7ba70 .elementskit-infobox .elementskit-box-header .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-infobox .elementskit-box-header .elementskit-info-box-icon {
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+        border-radius: 14px !important;
+        background: #F8FAFC !important;
         border: 1px solid #E2E8F0 !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         margin: 0 !important;
+        padding: 0 !important;
         flex-shrink: 0 !important;
+        box-shadow: none !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        overflow: visible !important;
+        box-sizing: border-box !important;
       }
 
       .elementor-element-46f7ba70 .elementskit-info-box-icon i,
-      .elementor-element-455d4f47 .elementskit-info-box-icon i {
+      .elementor-element-455d4f47 .elementskit-info-box-icon i,
+      .elementor-element-46f7ba70 .elementkit-infobox-icon,
+      .elementor-element-455d4f47 .elementkit-infobox-icon,
+      .elementor-977 .elementor-element.elementor-element-46f7ba70 .elementskit-infobox .elementkit-infobox-icon,
+      .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-infobox .elementkit-infobox-icon {
         font-size: 20px !important;
-        color: #00AEFE !important;
+        line-height: 1 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        vertical-align: middle !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: #64748B !important;
+        transition: color 0.3s ease !important;
+        height: auto !important;
+        width: auto !important;
+      }
+
+      .elementor-element-9c0f372:hover .elementor-element-46f7ba70 .elementskit-info-box-icon,
+      .elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon,
+      .elementor-element-46f7ba70:hover .elementskit-info-box-icon,
+      .elementor-element-455d4f47:hover .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-9c0f372:hover .elementor-element-46f7ba70 .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon {
+        background: #00AEFE !important;
+        border-color: #00AEFE !important;
+        box-shadow: 0 6px 18px rgba(0, 174, 254, 0.35) !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+      }
+
+      .elementor-element-9c0f372:hover .elementor-element-46f7ba70 .elementskit-info-box-icon i,
+      .elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon i,
+      .elementor-element-46f7ba70:hover .elementskit-info-box-icon i,
+      .elementor-element-455d4f47:hover .elementskit-info-box-icon i,
+      .elementor-977 .elementor-element.elementor-element-9c0f372:hover .elementor-element-46f7ba70 .elementskit-info-box-icon i,
+      .elementor-977 .elementor-element.elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon i {
+        color: #FFFFFF !important;
       }
 
       .elementor-element-46f7ba70 .elementskit-info-box-title,
@@ -13725,6 +14023,8 @@
 
       .elementor-element-b75da38,
       .elementor-element-3b186358,
+      .elementor-977 .elementor-element.elementor-element-b75da38,
+      .elementor-977 .elementor-element.elementor-element-3b186358,
       .elementor-element-b75da38 .elementor-widget-container,
       .elementor-element-3b186358 .elementor-widget-container,
       .elementor-element-b75da38 .ekit-wid-con,
@@ -13733,28 +14033,68 @@
       .elementor-element-3b186358 .ekit-btn-wraper {
         width: 100% !important;
         display: block !important;
-        margin: 0 !important;
+        margin-top: 24px !important;
+        margin-bottom: 0 !important;
         padding: 0 !important;
+        overflow: visible !important;
+        transform: none !important;
+        -webkit-transform: none !important;
       }
 
       .elementor-element-b75da38 .elementskit-btn,
-      .elementor-element-3b186358 .elementskit-btn {
+      .elementor-element-3b186358 .elementskit-btn,
+      .elementor-977 .elementor-element.elementor-element-b75da38 .elementskit-btn,
+      .elementor-977 .elementor-element.elementor-element-3b186358 .elementskit-btn {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 10px !important;
         width: 100% !important;
         max-width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 8px !important;
+        height: 50px !important;
+        min-height: 50px !important;
+        padding: 14px 24px !important;
         background: #00AEFE !important;
+        background-color: #00AEFE !important;
+        background-image: none !important;
         color: #FFFFFF !important;
         fill: #FFFFFF !important;
-        padding: 13px 20px !important;
-        border-radius: 12px !important;
-        font-weight: 700 !important;
-        font-size: 0.95rem !important;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        font-weight: 600 !important;
+        font-size: 15px !important;
+        line-height: 1 !important;
+        border-radius: 50px !important;
+        border: 1.5px solid #00AEFE !important;
+        box-shadow: 0 6px 20px rgba(0, 174, 254, 0.32) !important;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
         text-decoration: none !important;
-        box-shadow: 0 4px 14px rgba(0, 174, 254, 0.3) !important;
         box-sizing: border-box !important;
+        text-align: center !important;
+        cursor: pointer !important;
+        margin: 0 !important;
+      }
+
+      .elementor-element-b75da38 .elementskit-btn i,
+      .elementor-element-3b186358 .elementskit-btn i {
+        color: #FFFFFF !important;
+        font-size: 16px !important;
+        margin-left: 8px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        vertical-align: middle !important;
+        transition: transform 0.2s ease !important;
+      }
+
+      .elementor-element-9c0f372:hover .elementor-element-b75da38 .elementskit-btn,
+      .elementor-element-243a65ca:hover .elementor-element-3b186358 .elementskit-btn,
+      .elementor-element-b75da38 .elementskit-btn:hover,
+      .elementor-element-3b186358 .elementskit-btn:hover {
+        background: #0095da !important;
+        background-color: #0095da !important;
+        border-color: #0095da !important;
+        color: #FFFFFF !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 24px rgba(0, 174, 254, 0.45) !important;
       }
 
       /* ── 4. PARTNERSHIP OPPORTUNITIES: SINGLE CLEAN CARD OUTLINE ── */
@@ -13963,10 +14303,10 @@
         background: #FFFFFF !important;
         background-color: #FFFFFF !important;
         border: 1px solid #E2E8F0 !important;
-        border-radius: 20px !important;
-        padding: 20px 18px 24px 18px !important;
-        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05) !important;
-        margin: 0 0 0 0 !important;
+        border-radius: 24px !important;
+        padding: 24px 20px 28px 20px !important;
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+        margin: 0 0 28px 0 !important;
         box-sizing: border-box !important;
         visibility: visible !important;
         opacity: 1 !important;
@@ -13984,9 +14324,9 @@
       /* Card images */
       .elementor-977 .advert-card-media {
         width: 100% !important;
-        height: 180px !important;
-        min-height: 180px !important;
-        border-radius: 14px !important;
+        height: 190px !important;
+        min-height: 190px !important;
+        border-radius: 16px !important;
         margin-bottom: 20px !important;
         overflow: hidden !important;
         border: 1px solid #E2E8F0 !important;
@@ -14029,13 +14369,71 @@
       .elementor-977 .elementor-element.elementor-element-46f7ba70 .elementskit-info-box-title,
       .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-info-box-title {
         color: #0f172a !important;
-        font-size: 1.15rem !important;
+        font-size: 1.25rem !important;
         font-weight: 700 !important;
       }
 
+      .elementor-977 .elementor-element.elementor-element-46f7ba70 .elementskit-box-header .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-box-header .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-46f7ba70 .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-info-box-icon {
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+        border-radius: 14px !important;
+        background: #F8FAFC !important;
+        border: 1px solid #E2E8F0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        flex-shrink: 0 !important;
+        box-shadow: none !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        overflow: visible !important;
+        box-sizing: border-box !important;
+      }
+
       .elementor-977 .elementor-element.elementor-element-46f7ba70 .elementskit-info-box-icon i,
-      .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-info-box-icon i {
-        color: #00AEFE !important;
+      .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-info-box-icon i,
+      .elementor-977 .elementor-element.elementor-element-46f7ba70 .elementskit-infobox .elementkit-infobox-icon,
+      .elementor-977 .elementor-element.elementor-element-455d4f47 .elementskit-infobox .elementkit-infobox-icon {
+        font-size: 20px !important;
+        line-height: 1 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        vertical-align: middle !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: #64748B !important;
+        transition: color 0.3s ease !important;
+        height: auto !important;
+        width: auto !important;
+      }
+
+      .elementor-977 .elementor-element.elementor-element-9c0f372:hover .elementor-element-46f7ba70 .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-46f7ba70:hover .elementskit-info-box-icon,
+      .elementor-977 .elementor-element.elementor-element-455d4f47:hover .elementskit-info-box-icon {
+        background: #00AEFE !important;
+        border-color: #00AEFE !important;
+        box-shadow: 0 6px 18px rgba(0, 174, 254, 0.35) !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+      }
+
+      .elementor-977 .elementor-element.elementor-element-9c0f372:hover .elementor-element-46f7ba70 .elementskit-info-box-icon i,
+      .elementor-977 .elementor-element.elementor-element-243a65ca:hover .elementor-element-455d4f47 .elementskit-info-box-icon i,
+      .elementor-977 .elementor-element.elementor-element-46f7ba70:hover .elementskit-info-box-icon i,
+      .elementor-977 .elementor-element.elementor-element-455d4f47:hover .elementskit-info-box-icon i {
+        color: #FFFFFF !important;
       }
 
       /* Feature lists */
@@ -14078,29 +14476,76 @@
 
       /* CTA buttons in both cards */
       .elementor-977 .elementor-element.elementor-element-b75da38,
-      .elementor-977 .elementor-element.elementor-element-3b186358 {
+      .elementor-977 .elementor-element.elementor-element-3b186358,
+      .elementor-977 .elementor-element.elementor-element-b75da38 .elementor-widget-container,
+      .elementor-977 .elementor-element.elementor-element-3b186358 .elementor-widget-container,
+      .elementor-977 .elementor-element.elementor-element-b75da38 .ekit-wid-con,
+      .elementor-977 .elementor-element.elementor-element-3b186358 .ekit-wid-con,
+      .elementor-977 .elementor-element.elementor-element-b75da38 .ekit-btn-wraper,
+      .elementor-977 .elementor-element.elementor-element-3b186358 .ekit-btn-wraper {
         display: block !important;
         width: 100% !important;
-        margin-top: 16px !important;
+        margin-top: 24px !important;
+        margin-bottom: 0 !important;
+        padding: 0 !important;
         visibility: visible !important;
         opacity: 1 !important;
+        overflow: visible !important;
+        transform: none !important;
+        -webkit-transform: none !important;
       }
 
       .elementor-977 .elementor-element.elementor-element-b75da38 .elementskit-btn,
       .elementor-977 .elementor-element.elementor-element-3b186358 .elementskit-btn {
         display: flex !important;
-        justify-content: center !important;
         align-items: center !important;
+        justify-content: center !important;
+        gap: 10px !important;
         width: 100% !important;
-        padding: 14px 20px !important;
-        border-radius: 12px !important;
-        font-size: 0.95rem !important;
-        font-weight: 700 !important;
-        color: #ffffff !important;
-        background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
-        border: none !important;
+        max-width: 100% !important;
+        height: 50px !important;
+        min-height: 50px !important;
+        padding: 14px 24px !important;
+        background: #00AEFE !important;
+        background-color: #00AEFE !important;
+        background-image: none !important;
+        color: #FFFFFF !important;
+        fill: #FFFFFF !important;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        font-weight: 600 !important;
+        font-size: 15px !important;
+        line-height: 1 !important;
+        border-radius: 50px !important;
+        border: 1.5px solid #00AEFE !important;
+        box-shadow: 0 6px 20px rgba(0, 174, 254, 0.32) !important;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
         text-decoration: none !important;
         box-sizing: border-box !important;
+        text-align: center !important;
+        cursor: pointer !important;
+        margin: 0 !important;
+      }
+
+      .elementor-977 .elementor-element.elementor-element-b75da38 .elementskit-btn i,
+      .elementor-977 .elementor-element.elementor-element-3b186358 .elementskit-btn i {
+        color: #FFFFFF !important;
+        font-size: 16px !important;
+        margin-left: 8px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        vertical-align: middle !important;
+      }
+
+      .elementor-977 .elementor-element.elementor-element-9c0f372:hover .elementor-element-b75da38 .elementskit-btn,
+      .elementor-977 .elementor-element.elementor-element-243a65ca:hover .elementor-element-3b186358 .elementskit-btn,
+      .elementor-977 .elementor-element.elementor-element-b75da38 .elementskit-btn:hover,
+      .elementor-977 .elementor-element.elementor-element-3b186358 .elementskit-btn:hover {
+        background: #0095da !important;
+        background-color: #0095da !important;
+        border-color: #0095da !important;
+        color: #FFFFFF !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 24px rgba(0, 174, 254, 0.45) !important;
       }
     }
   </style>
@@ -14113,6 +14558,13 @@
   Fixes Elementor/WordPress quirks in the static clone.
   =====================================================================
 -->
+<!-- Conspodium Canonical Circular Favicon & App Icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-180x180.png">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -15561,10 +16013,11 @@
 
   @media (max-width: 767px) {
     #csp-back-to-top {
-      bottom: 24px;
-      right: 20px;
-      width: 44px;
-      height: 44px;
+      bottom: 16px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      z-index: 90;
     }
   }
 
@@ -16010,27 +16463,46 @@
     position: relative !important;
     top: auto !important;
     right: auto !important;
-    width: 38px !important;
-    height: 38px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    aspect-ratio: 1 / 1 !important;
+    flex: 0 0 36px !important;
+    flex-shrink: 0 !important;
     border-radius: 50% !important;
     background: rgba(255, 255, 255, 0.1) !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
     color: rgba(255, 255, 255, 0.9) !important;
-    font-size: 1.4rem !important;
-    line-height: 1 !important;
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
-    transition: all 0.25s ease !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease, box-shadow 0.2s ease !important;
     padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+  }
+
+  #csp-mobile-menu-modal .csp-mobile-menu-close svg {
+    width: 17px !important;
+    height: 17px !important;
+    stroke: currentColor !important;
+    stroke-width: 2.2 !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+    pointer-events: none !important;
   }
 
   #csp-mobile-menu-modal .csp-mobile-menu-close:hover {
-    background: rgba(239, 68, 68, 0.3) !important;
-    border-color: rgba(239, 68, 68, 0.6) !important;
-    transform: rotate(90deg) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(0, 174, 254, 0.6) !important;
     color: #ffffff !important;
+    transform: scale(1.08) !important;
+    box-shadow: 0 4px 16px rgba(0, 174, 254, 0.3) !important;
   }
 
   /* Next Live Discussion & Dark Modal Form Input Legibility */
@@ -16156,7 +16628,85 @@
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  /* One-Time Gift "Contact Us" Secondary Button: Dark Pill */
+  /* ── ONE-TIME GIFT SECTION BUTTONS: EQUAL LENGTH ON MOBILE & DESKTOP ── */
+  .elementor-element-9e9662f,
+  .elementor-979 .elementor-element.elementor-element-9e9662f {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .elementor-element-c6a871e,
+  .elementor-element-f180e55,
+  .elementor-979 .elementor-element.elementor-element-c6a871e,
+  .elementor-979 .elementor-element.elementor-element-f180e55 {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: auto !important;
+    max-width: 100% !important;
+    flex: 0 0 auto !important;
+  }
+
+  .elementor-element-c6a871e .ekit-btn-wraper,
+  .elementor-element-f180e55 .ekit-btn-wraper,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .ekit-btn-wraper,
+  .elementor-979 .elementor-element.elementor-element-f180e55 .ekit-btn-wraper {
+    display: inline-flex !important;
+    justify-content: center !important;
+    width: auto !important;
+  }
+
+  .elementor-element-c6a871e .elementskit-btn,
+  .elementor-element-f180e55 .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    height: 48px !important;
+    padding: 0 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 8px !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    border-radius: 50px !important;
+  }
+
+  /* Make A Gift Primary Button */
+  .elementor-element-c6a871e .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn {
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+    fill: none !important;
+    border: 1.5px solid #00AEFE !important;
+    box-shadow: 0 6px 20px rgba(0, 174, 254, 0.35) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .elementor-element-c6a871e .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn:hover {
+    background: #0096db !important;
+    background-color: #0096db !important;
+    border-color: #0096db !important;
+    color: #FFFFFF !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 30px rgba(0, 174, 254, 0.5) !important;
+  }
+
+  /* Contact Us Secondary Button */
   .elementor-element-f180e55 .elementskit-btn,
   .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
     background: #0F172A !important;
@@ -16179,6 +16729,65 @@
     fill: #FFFFFF !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 8px 24px rgba(15, 23, 42, 0.22) !important;
+  }
+
+  /* Crisp Line-Art Gift Icon (Strictly Transparent Fill, Pristine Stroke) */
+  .csp-gift-icon,
+  .elementskit-btn .csp-gift-icon,
+  .elementor-element-c6a871e .elementskit-btn svg,
+  .elementor-element-c6a871e .elementskit-btn svg *,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn svg,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn svg * {
+    fill: none !important;
+    stroke: #FFFFFF !important;
+    stroke-width: 2 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    width: 17px !important;
+    height: 17px !important;
+    max-width: 17px !important;
+    max-height: 17px !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+    vertical-align: middle !important;
+  }
+
+  /* One-Time Gift Mobile & Tablet: Exactly Equal Length on Mobile */
+  @media (max-width: 767px) {
+    .elementor-element-9e9662f,
+    .elementor-979 .elementor-element.elementor-element-9e9662f {
+      gap: 10px !important;
+      justify-content: center !important;
+    }
+    .elementor-element-c6a871e .elementskit-btn,
+    .elementor-element-f180e55 .elementskit-btn,
+    .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+    .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
+      width: 155px !important;
+      min-width: 155px !important;
+      max-width: 155px !important;
+      height: 46px !important;
+      padding: 0 12px !important;
+      font-size: 14px !important;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .elementor-element-9e9662f,
+    .elementor-979 .elementor-element.elementor-element-9e9662f {
+      gap: 8px !important;
+    }
+    .elementor-element-c6a871e .elementskit-btn,
+    .elementor-element-f180e55 .elementskit-btn,
+    .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+    .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
+      width: 140px !important;
+      min-width: 140px !important;
+      max-width: 140px !important;
+      height: 44px !important;
+      padding: 0 8px !important;
+      font-size: 13px !important;
+    }
   }
 
   /* Stats counter numbers - solid Conspodium blue */
@@ -17348,9 +17957,9 @@
 
   /* ── STORIES PAGE RESPONSIVE CLEANUP ── */
   .csp-stories-container-inner {
-    max-width: 1360px;
+    max-width: 1680px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 clamp(20px, 3vw, 48px);
     width: 100%;
     box-sizing: border-box;
   }
@@ -18028,8 +18637,9 @@
 
         var closeBtn = document.createElement('button');
         closeBtn.className = 'csp-mobile-menu-close';
+        closeBtn.setAttribute('type', 'button');
         closeBtn.setAttribute('aria-label', 'Close Menu');
-        closeBtn.innerHTML = '&times;';
+        closeBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
 
         headerRow.appendChild(titleLabel);
         headerRow.appendChild(closeBtn);
@@ -18041,7 +18651,6 @@
           { text: 'Home', href: getRootUrl('/') },
           { text: 'About Us', href: getRootUrl('about-us/') },
           { text: 'Stories', href: getRootUrl('stories/') },
-          { text: 'Magazine', href: getRootUrl('magazine/') },
           { text: 'Forum', href: getRootUrl('forum/') },
           { text: 'Sponsorship', href: getRootUrl('sponsorship/') },
           { text: 'Advert', href: getRootUrl('advert/') },
@@ -20797,8 +21406,8 @@
                 entrepreneurs, and cultural leaders actively seeking quality products, services, and opportunities
                 aligned with their values and identity.</p>
               <div class="csp-bento-tags">
-                <span class="csp-tag">🎯 C-Suite & Founders</span>
-                <span class="csp-tag">🌍 Global Diaspora</span>
+                <span class="csp-tag"><span class="tag-emoji">🎯</span> C-Suite & Founders</span>
+                <span class="csp-tag"><span class="tag-emoji">🌍</span> Global Diaspora</span>
               </div>
             </div>
 
@@ -20821,8 +21430,8 @@
               <p class="csp-bento-card-desc">Your brand appears alongside inspiring success stories, cultural features,
                 and thought leadership content. This isn't banner ad clutter—it's association with excellence.</p>
               <div class="csp-bento-tags">
-                <span class="csp-tag">✨ Curated Editorial</span>
-                <span class="csp-tag">🏆 Zero Clutter</span>
+                <span class="csp-tag"><span class="tag-emoji">✨</span> Curated Editorial</span>
+                <span class="csp-tag"><span class="tag-emoji">🏆</span> Zero Clutter</span>
               </div>
             </div>
 
@@ -20846,8 +21455,8 @@
                 offices) and digital edition (accessible globally), maximizing impressions and engagement across
                 platforms.</p>
               <div class="csp-bento-tags">
-                <span class="csp-tag">📖 Print Edition</span>
-                <span class="csp-tag">📱 Global Digital</span>
+                <span class="csp-tag"><span class="tag-emoji">📖</span> Print Edition</span>
+                <span class="csp-tag"><span class="tag-emoji">📱</span> Global Digital</span>
               </div>
             </div>
           </div>
@@ -21146,7 +21755,7 @@
             data-id="b75da38" data-element_type="widget" data-e-type="widget"
             data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}"
             data-widget_type="elementskit-button.default"
-            style="width: 100% !important; display: block !important; margin-top: auto !important;">
+            style="width: 100% !important; display: block !important;">
             <div class="elementor-widget-container" style="width: 100% !important;">
               <div class="ekit-wid-con" style="width: 100% !important;">
                 <div class="ekit-btn-wraper" style="width: 100% !important; display: block !important;">
@@ -21227,7 +21836,7 @@
             data-id="3b186358" data-element_type="widget" data-e-type="widget"
             data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;sa_floating_ef_enable&quot;:&quot;yes&quot;}"
             data-widget_type="elementskit-button.default"
-            style="width: 100% !important; display: block !important; margin-top: auto !important;">
+            style="width: 100% !important; display: block !important;">
             <div class="elementor-widget-container" style="width: 100% !important;">
               <div class="ekit-wid-con" style="width: 100% !important;">
                 <div class="ekit-btn-wraper" style="width: 100% !important; display: block !important;">

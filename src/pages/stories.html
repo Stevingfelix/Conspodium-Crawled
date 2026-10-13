@@ -275,10 +275,12 @@ min-width: 100px;
 @font-face{font-family:Cardo;font-style:italic;font-weight:400;font-display:fallback;src:url('../wp-content/themes/twentytwentyfour/assets/fonts/cardo/cardo_italic_400.woff2') format('woff2');}
 @font-face{font-family:Cardo;font-style:normal;font-weight:700;font-display:fallback;src:url('../wp-content/themes/twentytwentyfour/assets/fonts/cardo/cardo_normal_700.woff2') format('woff2');}
 </style>
-<link rel="icon" href="../wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-32x32.png" sizes="32x32">
-<link rel="icon" href="../wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png" sizes="192x192">
-<link rel="apple-touch-icon" href="../wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-180x180.png">
-<meta name="msapplication-TileImage" content="../wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-270x270.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-180x180.png">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<meta name="msapplication-TileImage" content="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-270x270.png">
 <style id="jeg_dynamic_css" type="text/css" data-type="jeg_custom-css"></style>    <style type="text/css">
         /* Hide logout links for non-logged-in users */
         .wp-block-navigation a[href*="action=logout"],
@@ -1852,6 +1854,13 @@ e-page-transition,
     transform: translateY(-1px) !important;
   }
 
+  .csp-browse-cat-link:hover {
+    color: #0284c7 !important;
+  }
+  .csp-browse-cat-link:hover svg {
+    transform: translateY(-2px);
+  }
+
   /* Oscillating Scroll Down Link */
   @keyframes cspOscillateDown {
     0%, 100% {
@@ -2167,18 +2176,19 @@ e-page-transition,
           </div>
         </section>
 
-        <!-- 2. GLASSMORPHIC CATEGORY FILTER BAR -->
-        <div class="csp-cat-nav-wrap" style="margin-bottom:24px;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
-          <div class="csp-cat-nav-inner" id="csp-stories-filter-pills" style="display:flex;align-items:center;justify-content:flex-start;gap:8px;flex-wrap:nowrap;width:max-content;min-width:100%;padding:4px 8px;">
-            <button type="button" class="csp-cat-pill active" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('all', this);" style="padding:6px 14px;border-radius:50px;border:none;background:#00AEFE;color:#fff;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> All Stories</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('culture-heritage', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg> Culture &amp; Heritage</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('innovation', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9a6 6 0 0 0-12 0 6 6 0 0 0 2.91 5z"/></svg> Innovation &amp; Tech</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('art-entertainment', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.67-.75 1.67-1.67 0-.42-.16-.8-.44-1.09-.27-.27-.44-.66-.44-1.09 0-.92.75-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg> Art &amp; Entertainment</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('community', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Community</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('success-stories', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Success Stories</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('african-diaspora-matters', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/></svg> African Diaspora Matters</button>
-            <button type="button" class="csp-cat-pill" onclick="if(window.filterStoriesCategory) window.filterStoriesCategory('diaspora-insights-analysis', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Diaspora Insights &amp; Analysis</button>
+        <!-- 2. STORIES FEED HEADER (ALL CATEGORIES) -->
+        <div class="csp-stories-feed-header" style="display:flex;align-items:center;justify-content:space-between;margin:0 0 24px 0;padding-bottom:14px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.5rem;font-weight:700;color:#0f172a;margin:0;letter-spacing:-0.015em;">Latest Stories</h2>
+            <span id="csp-stories-feed-badge" style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:20px;font-size:0.76rem;font-weight:600;color:#64748b;letter-spacing:0.02em;">
+              <span style="width:6px;height:6px;border-radius:50%;background:#00AEFE;"></span>
+              All Categories
+            </span>
           </div>
+          <a href="#csp-stories-discover-categories" class="csp-browse-cat-link" style="display:inline-flex;align-items:center;gap:6px;font-size:0.86rem;font-weight:600;color:#00AEFE;text-decoration:none;transition:all 0.2s ease;">
+            <span>Explore by Category</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s ease;"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+          </a>
         </div>
 
         <!-- 3. 2-COLUMN FLEX CONTAINER (72% Main Article Grid + 28% Sticky Magazine Sidebar) -->
@@ -2570,16 +2580,6 @@ e-page-transition,
     .then(function(r){ return r.json(); })
     .then(function(res){
       if (!res.success || !res.categories) return;
-
-      // Render Category Filter Pills
-      if (pillContainer) {
-        var pillsHtml = '<button type="button" class="csp-cat-pill active" onclick="window.filterStoriesCategory(\'all\', this);" style="padding:6px 14px;border-radius:50px;border:none;background:#00AEFE;color:#fff;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;">' + getCatSvg('all') + ' All Stories</button>';
-        res.categories.forEach(function(cat){
-          pillsHtml += '<button type="button" class="csp-cat-pill" onclick="window.filterStoriesCategory(\'' + cat.slug + '\', this);" style="padding:6px 14px;border-radius:50px;border:1px solid #cbd5e1;background:#ffffff;color:#475569;font-weight:600;font-size:0.78rem;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:4px;">' + getCatSvg(cat) + ' ' + cat.name + '</button>';
-        });
-        pillContainer.innerHTML = pillsHtml;
-        setTimeout(scrollActivePillIntoView, 150);
-      }
 
       // Render Discover By Category Section Cards
       if (discoverContainer) {

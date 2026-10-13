@@ -5,6 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin CMS Dashboard — Conspodium</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-180x180.png">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <meta name="description"
     content="Conspodium Admin CMS Dashboard. Manage articles, publish user submissions, edit weekly polls, and manage categories.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1701,6 +1706,13 @@
   Fixes Elementor/WordPress quirks in the static clone.
   =====================================================================
 -->
+<!-- Conspodium Canonical Circular Favicon & App Icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-180x180.png">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -3149,10 +3161,11 @@
 
   @media (max-width: 767px) {
     #csp-back-to-top {
-      bottom: 24px;
-      right: 20px;
-      width: 44px;
-      height: 44px;
+      bottom: 16px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      z-index: 90;
     }
   }
 
@@ -3598,27 +3611,46 @@
     position: relative !important;
     top: auto !important;
     right: auto !important;
-    width: 38px !important;
-    height: 38px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    aspect-ratio: 1 / 1 !important;
+    flex: 0 0 36px !important;
+    flex-shrink: 0 !important;
     border-radius: 50% !important;
     background: rgba(255, 255, 255, 0.1) !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
     color: rgba(255, 255, 255, 0.9) !important;
-    font-size: 1.4rem !important;
-    line-height: 1 !important;
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
-    transition: all 0.25s ease !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease, box-shadow 0.2s ease !important;
     padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+  }
+
+  #csp-mobile-menu-modal .csp-mobile-menu-close svg {
+    width: 17px !important;
+    height: 17px !important;
+    stroke: currentColor !important;
+    stroke-width: 2.2 !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+    pointer-events: none !important;
   }
 
   #csp-mobile-menu-modal .csp-mobile-menu-close:hover {
-    background: rgba(239, 68, 68, 0.3) !important;
-    border-color: rgba(239, 68, 68, 0.6) !important;
-    transform: rotate(90deg) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(0, 174, 254, 0.6) !important;
     color: #ffffff !important;
+    transform: scale(1.08) !important;
+    box-shadow: 0 4px 16px rgba(0, 174, 254, 0.3) !important;
   }
 
   /* Next Live Discussion & Dark Modal Form Input Legibility */
@@ -3744,7 +3776,85 @@
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  /* One-Time Gift "Contact Us" Secondary Button: Dark Pill */
+  /* ── ONE-TIME GIFT SECTION BUTTONS: EQUAL LENGTH ON MOBILE & DESKTOP ── */
+  .elementor-element-9e9662f,
+  .elementor-979 .elementor-element.elementor-element-9e9662f {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .elementor-element-c6a871e,
+  .elementor-element-f180e55,
+  .elementor-979 .elementor-element.elementor-element-c6a871e,
+  .elementor-979 .elementor-element.elementor-element-f180e55 {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: auto !important;
+    max-width: 100% !important;
+    flex: 0 0 auto !important;
+  }
+
+  .elementor-element-c6a871e .ekit-btn-wraper,
+  .elementor-element-f180e55 .ekit-btn-wraper,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .ekit-btn-wraper,
+  .elementor-979 .elementor-element.elementor-element-f180e55 .ekit-btn-wraper {
+    display: inline-flex !important;
+    justify-content: center !important;
+    width: auto !important;
+  }
+
+  .elementor-element-c6a871e .elementskit-btn,
+  .elementor-element-f180e55 .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    height: 48px !important;
+    padding: 0 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 8px !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    border-radius: 50px !important;
+  }
+
+  /* Make A Gift Primary Button */
+  .elementor-element-c6a871e .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn {
+    background: #00AEFE !important;
+    background-color: #00AEFE !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+    fill: none !important;
+    border: 1.5px solid #00AEFE !important;
+    box-shadow: 0 6px 20px rgba(0, 174, 254, 0.35) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .elementor-element-c6a871e .elementskit-btn:hover,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn:hover {
+    background: #0096db !important;
+    background-color: #0096db !important;
+    border-color: #0096db !important;
+    color: #FFFFFF !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 30px rgba(0, 174, 254, 0.5) !important;
+  }
+
+  /* Contact Us Secondary Button */
   .elementor-element-f180e55 .elementskit-btn,
   .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
     background: #0F172A !important;
@@ -3767,6 +3877,65 @@
     fill: #FFFFFF !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 8px 24px rgba(15, 23, 42, 0.22) !important;
+  }
+
+  /* Crisp Line-Art Gift Icon (Strictly Transparent Fill, Pristine Stroke) */
+  .csp-gift-icon,
+  .elementskit-btn .csp-gift-icon,
+  .elementor-element-c6a871e .elementskit-btn svg,
+  .elementor-element-c6a871e .elementskit-btn svg *,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn svg,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn svg * {
+    fill: none !important;
+    stroke: #FFFFFF !important;
+    stroke-width: 2 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    width: 17px !important;
+    height: 17px !important;
+    max-width: 17px !important;
+    max-height: 17px !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+    vertical-align: middle !important;
+  }
+
+  /* One-Time Gift Mobile & Tablet: Exactly Equal Length on Mobile */
+  @media (max-width: 767px) {
+    .elementor-element-9e9662f,
+    .elementor-979 .elementor-element.elementor-element-9e9662f {
+      gap: 10px !important;
+      justify-content: center !important;
+    }
+    .elementor-element-c6a871e .elementskit-btn,
+    .elementor-element-f180e55 .elementskit-btn,
+    .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+    .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
+      width: 155px !important;
+      min-width: 155px !important;
+      max-width: 155px !important;
+      height: 46px !important;
+      padding: 0 12px !important;
+      font-size: 14px !important;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .elementor-element-9e9662f,
+    .elementor-979 .elementor-element.elementor-element-9e9662f {
+      gap: 8px !important;
+    }
+    .elementor-element-c6a871e .elementskit-btn,
+    .elementor-element-f180e55 .elementskit-btn,
+    .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+    .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
+      width: 140px !important;
+      min-width: 140px !important;
+      max-width: 140px !important;
+      height: 44px !important;
+      padding: 0 8px !important;
+      font-size: 13px !important;
+    }
   }
 
   /* Stats counter numbers - solid Conspodium blue */
@@ -4936,9 +5105,9 @@
 
   /* ── STORIES PAGE RESPONSIVE CLEANUP ── */
   .csp-stories-container-inner {
-    max-width: 1360px;
+    max-width: 1680px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 clamp(20px, 3vw, 48px);
     width: 100%;
     box-sizing: border-box;
   }
@@ -5616,8 +5785,9 @@
 
         var closeBtn = document.createElement('button');
         closeBtn.className = 'csp-mobile-menu-close';
+        closeBtn.setAttribute('type', 'button');
         closeBtn.setAttribute('aria-label', 'Close Menu');
-        closeBtn.innerHTML = '&times;';
+        closeBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
 
         headerRow.appendChild(titleLabel);
         headerRow.appendChild(closeBtn);
@@ -5629,7 +5799,6 @@
           { text: 'Home', href: getRootUrl('/') },
           { text: 'About Us', href: getRootUrl('about-us/') },
           { text: 'Stories', href: getRootUrl('stories/') },
-          { text: 'Magazine', href: getRootUrl('magazine/') },
           { text: 'Forum', href: getRootUrl('forum/') },
           { text: 'Sponsorship', href: getRootUrl('sponsorship/') },
           { text: 'Advert', href: getRootUrl('advert/') },

@@ -215,10 +215,12 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 @font-face{font-family:Cardo;font-style:italic;font-weight:400;font-display:fallback;src:url('../wp-content/themes/twentytwentyfour/assets/fonts/cardo/cardo_italic_400.woff2') format('woff2');}
 @font-face{font-family:Cardo;font-style:normal;font-weight:700;font-display:fallback;src:url('../wp-content/themes/twentytwentyfour/assets/fonts/cardo/cardo_normal_700.woff2') format('woff2');}
 </style>
-<link rel="icon" href="../wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-32x32.png" sizes="32x32">
-<link rel="icon" href="../wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png" sizes="192x192">
-<link rel="apple-touch-icon" href="../wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-180x180.png">
-<meta name="msapplication-TileImage" content="../wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-270x270.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-180x180.png">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<meta name="msapplication-TileImage" content="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-270x270.png">
 <style id="jeg_dynamic_css" type="text/css" data-type="jeg_custom-css"></style>    <style type="text/css">
         /* Hide logout links for non-logged-in users */
         .wp-block-navigation a[href*="action=logout"],
@@ -2559,13 +2561,59 @@ body.page-id-979 .elementor-menu-toggle i {
   font-size: 0.95rem !important;
 }
 
-/* One-Time Gift Section Buttons */
+/* One-Time Gift Section Buttons - Equal Length on Mobile & Desktop */
+.elementor-element-9e9662f,
+.elementor-979 .elementor-element.elementor-element-9e9662f {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+}
+
+.elementor-element-c6a871e,
+.elementor-element-f180e55,
+.elementor-979 .elementor-element.elementor-element-c6a871e,
+.elementor-979 .elementor-element.elementor-element-f180e55 {
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: auto !important;
+  max-width: 100% !important;
+  flex: 0 0 auto !important;
+}
+
+.elementor-element-c6a871e .ekit-btn-wraper,
+.elementor-element-f180e55 .ekit-btn-wraper,
+.elementor-979 .elementor-element.elementor-element-c6a871e .ekit-btn-wraper,
+.elementor-979 .elementor-element.elementor-element-f180e55 .ekit-btn-wraper {
+  display: inline-flex !important;
+  justify-content: center !important;
+  width: auto !important;
+}
+
 .elementor-element-c6a871e .elementskit-btn,
-.elementor-element-f180e55 .elementskit-btn {
+.elementor-element-f180e55 .elementskit-btn,
+.elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+.elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
+  width: 180px !important;
+  min-width: 180px !important;
+  max-width: 180px !important;
+  height: 48px !important;
+  padding: 0 16px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  text-align: center !important;
   gap: 8px !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  border-radius: 50px !important;
 }
 
 .elementor-element-c6a871e .elementskit-btn {
@@ -2573,9 +2621,8 @@ body.page-id-979 .elementor-menu-toggle i {
   background-color: #00AEFE !important;
   background-image: none !important;
   color: #FFFFFF !important;
-  fill: #FFFFFF !important;
+  fill: none !important;
   border: 1.5px solid #00AEFE !important;
-  border-radius: 50px !important;
   box-shadow: 0 6px 20px rgba(0, 174, 254, 0.35) !important;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -2587,12 +2634,26 @@ body.page-id-979 .elementor-menu-toggle i {
   transform: translateY(-2px) !important;
   box-shadow: 0 10px 30px rgba(0, 174, 254, 0.5) !important;
 }
-.elementor-element-c6a871e .elementskit-btn svg {
+
+/* Crisp Line-Art Gift Icon (Strictly Transparent Fill) */
+.csp-gift-icon,
+.elementskit-btn .csp-gift-icon,
+.elementor-element-c6a871e .elementskit-btn svg,
+.elementor-element-c6a871e .elementskit-btn svg *,
+.elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn svg,
+.elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn svg * {
+  fill: none !important;
+  stroke: #FFFFFF !important;
+  stroke-width: 2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  width: 17px !important;
+  height: 17px !important;
+  max-width: 17px !important;
+  max-height: 17px !important;
   display: inline-block !important;
   flex-shrink: 0 !important;
-  width: 18px !important;
-  height: 18px !important;
-  stroke: #FFFFFF !important;
+  vertical-align: middle !important;
 }
 
 .elementor-element-f180e55 .elementskit-btn {
@@ -2602,7 +2663,6 @@ body.page-id-979 .elementor-menu-toggle i {
   color: #FFFFFF !important;
   fill: #FFFFFF !important;
   border: 1.5px solid #0F172A !important;
-  border-radius: 50px !important;
   box-shadow: 0 4px 15px rgba(15, 23, 42, 0.12) !important;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -2614,6 +2674,43 @@ body.page-id-979 .elementor-menu-toggle i {
   fill: #FFFFFF !important;
   transform: translateY(-2px) !important;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.22) !important;
+}
+
+@media (max-width: 767px) {
+  .elementor-element-9e9662f,
+  .elementor-979 .elementor-element.elementor-element-9e9662f {
+    gap: 10px !important;
+    justify-content: center !important;
+  }
+  .elementor-element-c6a871e .elementskit-btn,
+  .elementor-element-f180e55 .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
+    width: 155px !important;
+    min-width: 155px !important;
+    max-width: 155px !important;
+    height: 46px !important;
+    padding: 0 12px !important;
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .elementor-element-9e9662f,
+  .elementor-979 .elementor-element.elementor-element-9e9662f {
+    gap: 8px !important;
+  }
+  .elementor-element-c6a871e .elementskit-btn,
+  .elementor-element-f180e55 .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-c6a871e .elementskit-btn,
+  .elementor-979 .elementor-element.elementor-element-f180e55 .elementskit-btn {
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
+    height: 44px !important;
+    padding: 0 8px !important;
+    font-size: 13px !important;
+  }
 }
 </style>
 		<div class="elementor-element elementor-element-d0d1d4a e-flex e-con-boxed e-con e-parent adv-sticky-elementor e-lazyloaded" data-id="d0d1d4a" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky_logo_enable&quot;:&quot;no&quot;}">
@@ -2881,7 +2978,7 @@ body.page-id-979 .elementor-menu-toggle i {
 					<div class="ekit-wid-con">		<div class="ekit-btn-wraper">
 							<a href="#" onclick="event.preventDefault(); window.openSponsorModal('One-Time Gift', '$50');" class="elementskit-btn whitespace--normal" id="">
 								<span>Make A Gift</span>
-								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
+								<svg class="csp-gift-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="fill:none !important; stroke:#FFFFFF !important; stroke-width:2 !important; width:17px !important; height:17px !important; display:inline-block !important; vertical-align:middle !important;"><polyline points="20 12 20 22 4 22 4 12" style="fill:none !important; stroke:#FFFFFF !important; stroke-width:2 !important;"></polyline><rect x="2" y="7" width="20" height="5" style="fill:none !important; stroke:#FFFFFF !important; stroke-width:2 !important;"></rect><line x1="12" y1="22" x2="12" y2="7" style="stroke:#FFFFFF !important; stroke-width:2 !important;"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" style="fill:none !important; stroke:#FFFFFF !important; stroke-width:2 !important;"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" style="fill:none !important; stroke:#FFFFFF !important; stroke-width:2 !important;"></path></svg>
 							</a>
 					</div>
         </div>				</div>
