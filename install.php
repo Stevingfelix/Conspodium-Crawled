@@ -302,6 +302,105 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isInstalled && $allChecksPassed) 
                         is_active INT DEFAULT 1,
                         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                    CREATE TABLE IF NOT EXISTS contact_replies (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        contact_id INT NOT NULL,
+                        subject VARCHAR(255),
+                        body LONGTEXT,
+                        sent_by VARCHAR(191) DEFAULT 'Editor Admin',
+                        provider VARCHAR(50) DEFAULT 'smtp',
+                        status VARCHAR(50) DEFAULT 'sent',
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                    CREATE TABLE IF NOT EXISTS email_logs (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        campaign_id INT DEFAULT 0,
+                        idempotency_key VARCHAR(191) NULL,
+                        recipient_email VARCHAR(191) NOT NULL,
+                        recipient_name VARCHAR(191) NULL,
+                        subject VARCHAR(255) NULL,
+                        body LONGTEXT NULL,
+                        type VARCHAR(50) DEFAULT 'general',
+                        provider VARCHAR(50) DEFAULT 'smtp',
+                        status VARCHAR(50) DEFAULT 'sent',
+                        delivery_details TEXT NULL,
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                    CREATE TABLE IF NOT EXISTS email_templates (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        template_key VARCHAR(191) NOT NULL UNIQUE,
+                        name VARCHAR(191) NOT NULL,
+                        subject VARCHAR(255) NOT NULL,
+                        body LONGTEXT NOT NULL,
+                        is_active INT DEFAULT 1,
+                        variables_hint TEXT,
+                        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                    CREATE TABLE IF NOT EXISTS admin_security_logs (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        admin_id INT NULL,
+                        admin_username VARCHAR(191) NULL,
+                        admin_email VARCHAR(191) NULL,
+                        ip_address VARCHAR(100) NULL,
+                        location VARCHAR(191) NULL,
+                        user_agent TEXT NULL,
+                        browser_device VARCHAR(191) NULL,
+                        status VARCHAR(100) DEFAULT 'Active Session',
+                        session_token VARCHAR(255) NULL,
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                    CREATE TABLE IF NOT EXISTS post_likes (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        post_id INT NOT NULL,
+                        voter_ip VARCHAR(100) NOT NULL,
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        UNIQUE KEY idx_post_likes (post_id, voter_ip)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                    CREATE TABLE IF NOT EXISTS forum_votes (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        target_type VARCHAR(50) NOT NULL,
+                        target_id INT NOT NULL,
+                        vote_type VARCHAR(50) NOT NULL,
+                        voter_ip VARCHAR(100) NOT NULL,
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        UNIQUE KEY idx_forum_votes (target_type, target_id, voter_ip)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                    CREATE TABLE IF NOT EXISTS device_identities (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        device_key VARCHAR(191) NOT NULL,
+                        ip_hash VARCHAR(191) NOT NULL,
+                        author_name VARCHAR(191) NOT NULL,
+                        author_email VARCHAR(191) DEFAULT NULL,
+                        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        KEY idx_device_identities_key (device_key),
+                        KEY idx_device_identities_ip (ip_hash)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                    CREATE TABLE IF NOT EXISTS interviews (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        interviewee_name VARCHAR(191) NOT NULL,
+                        title_role VARCHAR(255) DEFAULT NULL,
+                        quote TEXT,
+                        photo_url TEXT,
+                        transcript_content LONGTEXT,
+                        video_url TEXT,
+                        display_order INT DEFAULT 0,
+                        is_active INT DEFAULT 1,
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                    CREATE TABLE IF NOT EXISTS settings (
+                        `key` VARCHAR(191) PRIMARY KEY,
+                        `value` LONGTEXT NOT NULL
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
                 ");
             } else {
                 if (!$pdoSqliteOk) {
@@ -556,7 +655,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isInstalled && $allChecksPassed) 
                 $sqliteCandidates = [
                     $dataDir . '/conspodium.db',
                     __DIR__ . '/data/conspodium.db',
-                    __DIR__ . '/public/data/conspodium.db'
+                    __DIR__ . '/api/conspodium.db',
+                    __DIR__ . '/conspodium.db',
+                    __DIR__ . '/public/data/conspodium.db',
+                    __DIR__ . '/public/api/conspodium.db'
                 ];
                 $sqliteDb = null;
                 foreach ($sqliteCandidates as $sc) {
@@ -576,7 +678,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isInstalled && $allChecksPassed) 
                             'categories', 'posts', 'transcripts', 'polls', 'poll_votes',
                             'story_submissions', 'comments', 'contact_messages', 'homepage_sections',
                             'payment_settings', 'forum_categories', 'forum_threads', 'forum_replies',
-                            'scholar_spotlights', 'live_discussions', 'featured_interviews', 'settings'
+                            'scholar_spotlights', 'live_discussions', 'featured_interviews', 'settings',
+                            'site_settings', 'email_templates', 'email_campaigns', 'contact_replies',
+                            'interviews', 'post_likes', 'forum_votes', 'device_identities'
                         ];
 
                         $pdo->exec("SET FOREIGN_KEY_CHECKS = 0;");
@@ -609,6 +713,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isInstalled && $allChecksPassed) 
                     } catch (Throwable $mErr) {
                         $migratedFromSqlite = false;
                     }
+                }
+
+                // If PDO SQLite was not available or migration failed, import directly from conspodium_mysql_dump.sql
+                if ($dbType === 'mysql' && !$migratedFromSqlite) {
+                    $dumpCandidates = [
+                        $dataDir . '/conspodium_mysql_dump.sql',
+                        __DIR__ . '/data/conspodium_mysql_dump.sql',
+                        __DIR__ . '/public/data/conspodium_mysql_dump.sql',
+                        __DIR__ . '/conspodium_mysql_dump.sql'
+                    ];
+                    $foundDump = null;
+                    foreach ($dumpCandidates as $dc) {
+                        if (file_exists($dc) && filesize($dc) > 5000) {
+                            $foundDump = $dc;
+                            break;
+                        }
+                    }
+
+                    if ($foundDump) {
+                        try {
+                            $pdo->exec("SET FOREIGN_KEY_CHECKS = 0;");
+                            $pdo->exec("SET NAMES utf8mb4;");
+                            $handle = fopen($foundDump, 'r');
+                            if ($handle) {
+                                $buffer = '';
+                                while (($line = fgets($handle)) !== false) {
+                                    $trimmed = trim($line);
+                                    if ($trimmed === '' || str_starts_with($trimmed, '--') || str_starts_with($trimmed, '/*')) {
+                                        continue;
+                                    }
+                                    $buffer .= $line;
+                                    if (str_ends_with($trimmed, ';')) {
+                                        try {
+                                            $pdo->exec($buffer);
+                                        } catch (Throwable $stmtEx) {}
+                                        $buffer = '';
+                                    }
+                                }
+                                fclose($handle);
+                            }
+                            $pdo->exec("SET FOREIGN_KEY_CHECKS = 1;");
+                            $migratedFromSqlite = true;
+                        } catch (Throwable $dErr) {
+                            $migratedFromSqlite = false;
+                        }
+                    }
+                }
+
+                // Re-ensure the admin account submitted in the installer form remains valid
+                if ($dbType === 'mysql') {
+                    try {
+                        $stmtAdminRe = $pdo->prepare("INSERT INTO admins (username, email, password_hash, name, role) VALUES (?, ?, ?, ?, 'admin') ON DUPLICATE KEY UPDATE password_hash = VALUES(password_hash), name = VALUES(name)");
+                        $stmtAdminRe->execute([$adminUser, $adminEmail, $hashedPassword, $adminName]);
+                    } catch (Throwable $adEx) {}
                 }
 
                 // Fallback rich seeding if no SQLite file was present

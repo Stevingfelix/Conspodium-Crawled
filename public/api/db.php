@@ -112,142 +112,268 @@ try {
 
     // Unconditional Table & Column Migrations
     try {
-        $pdo->exec("
-            CREATE TABLE IF NOT EXISTS forum_categories (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                slug TEXT NOT NULL UNIQUE,
-                description TEXT,
-                icon_type TEXT DEFAULT 'globe',
-                color_accent TEXT DEFAULT '#00AEFE',
-                display_order INTEGER DEFAULT 0,
-                is_active INTEGER DEFAULT 1,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
+        if ($dbDriver === 'mysql') {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS forum_categories (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(191) NOT NULL UNIQUE,
+                    slug VARCHAR(191) NOT NULL UNIQUE,
+                    description TEXT,
+                    icon VARCHAR(50) DEFAULT 'globe',
+                    icon_type VARCHAR(50) DEFAULT 'globe',
+                    color_accent VARCHAR(50) DEFAULT '#00AEFE',
+                    display_order INT DEFAULT 0,
+                    is_active INT DEFAULT 1,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS forum_threads (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                category_id INTEGER DEFAULT NULL,
-                title TEXT NOT NULL,
-                slug TEXT NOT NULL UNIQUE,
-                category TEXT DEFAULT 'General Discussion',
-                author_name TEXT NOT NULL,
-                author_email TEXT NOT NULL,
-                content TEXT NOT NULL,
-                views INTEGER DEFAULT 0,
-                is_pinned INTEGER DEFAULT 0,
-                status TEXT DEFAULT 'approved',
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
+                CREATE TABLE IF NOT EXISTS forum_threads (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    category_id INT DEFAULT NULL,
+                    title VARCHAR(255) NOT NULL,
+                    slug VARCHAR(191) NOT NULL UNIQUE,
+                    category VARCHAR(191) DEFAULT 'General Discussion',
+                    author_name VARCHAR(191) NOT NULL,
+                    author_email VARCHAR(191) NOT NULL,
+                    content LONGTEXT NOT NULL,
+                    views INT DEFAULT 0,
+                    is_pinned INT DEFAULT 0,
+                    status VARCHAR(50) DEFAULT 'approved',
+                    upvotes INT DEFAULT 0,
+                    downvotes INT DEFAULT 0,
+                    author_location VARCHAR(191) DEFAULT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS forum_replies (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                thread_id INTEGER NOT NULL,
-                parent_id INTEGER DEFAULT NULL,
-                author_name TEXT NOT NULL,
-                author_email TEXT NOT NULL,
-                content TEXT NOT NULL,
-                status TEXT DEFAULT 'approved',
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
+                CREATE TABLE IF NOT EXISTS forum_replies (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    thread_id INT NOT NULL,
+                    parent_id INT DEFAULT NULL,
+                    author_name VARCHAR(191) NOT NULL,
+                    author_email VARCHAR(191) NOT NULL,
+                    content LONGTEXT NOT NULL,
+                    status VARCHAR(50) DEFAULT 'approved',
+                    upvotes INT DEFAULT 0,
+                    downvotes INT DEFAULT 0,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS post_likes (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                post_id INTEGER NOT NULL,
-                voter_ip TEXT NOT NULL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
-            CREATE UNIQUE INDEX IF NOT EXISTS idx_post_likes ON post_likes(post_id, voter_ip);
+                CREATE TABLE IF NOT EXISTS post_likes (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    post_id INT NOT NULL,
+                    voter_ip VARCHAR(100) NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    UNIQUE KEY idx_post_likes (post_id, voter_ip)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS forum_votes (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                target_type TEXT NOT NULL,
-                target_id INTEGER NOT NULL,
-                vote_type TEXT NOT NULL,
-                voter_ip TEXT NOT NULL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
-            CREATE UNIQUE INDEX IF NOT EXISTS idx_forum_votes ON forum_votes(target_type, target_id, voter_ip);
+                CREATE TABLE IF NOT EXISTS forum_votes (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    target_type VARCHAR(50) NOT NULL,
+                    target_id INT NOT NULL,
+                    vote_type VARCHAR(50) NOT NULL,
+                    voter_ip VARCHAR(100) NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    UNIQUE KEY idx_forum_votes (target_type, target_id, voter_ip)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS device_identities (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                device_key TEXT NOT NULL,
-                ip_hash TEXT NOT NULL,
-                author_name TEXT NOT NULL,
-                author_email TEXT,
-                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
-            CREATE INDEX IF NOT EXISTS idx_device_identities_key ON device_identities(device_key);
-            CREATE INDEX IF NOT EXISTS idx_device_identities_ip ON device_identities(ip_hash);
-        ");
+                CREATE TABLE IF NOT EXISTS device_identities (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    device_key VARCHAR(191) NOT NULL,
+                    ip_hash VARCHAR(191) NOT NULL,
+                    author_name VARCHAR(191) NOT NULL,
+                    author_email VARCHAR(191) DEFAULT NULL,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    KEY idx_device_identities_key (device_key),
+                    KEY idx_device_identities_ip (ip_hash)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-        try { $pdo->exec("ALTER TABLE posts ADD COLUMN likes INTEGER DEFAULT 0"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN category_id INTEGER DEFAULT NULL"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN views INTEGER DEFAULT 0"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN is_pinned INTEGER DEFAULT 0"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN status TEXT DEFAULT 'approved'"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN upvotes INTEGER DEFAULT 0"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN downvotes INTEGER DEFAULT 0"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN author_location TEXT DEFAULT NULL"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN parent_id INTEGER DEFAULT NULL"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN status TEXT DEFAULT 'approved'"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN upvotes INTEGER DEFAULT 0"); } catch (Exception $e) {}
-        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN downvotes INTEGER DEFAULT 0"); } catch (Exception $e) {}
+                CREATE TABLE IF NOT EXISTS contact_replies (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    contact_id INT NOT NULL,
+                    subject VARCHAR(255),
+                    body LONGTEXT,
+                    sent_by VARCHAR(191) DEFAULT 'Editor Admin',
+                    provider VARCHAR(50) DEFAULT 'smtp',
+                    status VARCHAR(50) DEFAULT 'sent',
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-        // Create contact_replies, email_logs, and email_templates
-        $pdo->exec("
-            CREATE TABLE IF NOT EXISTS contact_replies (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                contact_id INTEGER NOT NULL,
-                subject TEXT,
-                body TEXT,
-                sent_by TEXT DEFAULT 'Editor Admin',
-                provider TEXT DEFAULT 'smtp',
-                status TEXT DEFAULT 'sent',
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
+                CREATE TABLE IF NOT EXISTS email_logs (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    campaign_id INT DEFAULT 0,
+                    idempotency_key VARCHAR(191) NULL,
+                    recipient_email VARCHAR(191) NOT NULL,
+                    recipient_name VARCHAR(191) NULL,
+                    subject VARCHAR(255) NULL,
+                    body LONGTEXT NULL,
+                    type VARCHAR(50) DEFAULT 'general',
+                    provider VARCHAR(50) DEFAULT 'smtp',
+                    status VARCHAR(50) DEFAULT 'sent',
+                    delivery_details TEXT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS email_logs (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                campaign_id INTEGER DEFAULT 0,
-                idempotency_key TEXT NULL,
-                recipient_email TEXT NOT NULL,
-                recipient_name TEXT,
-                subject TEXT,
-                body TEXT,
-                type TEXT DEFAULT 'general',
-                provider TEXT DEFAULT 'smtp',
-                status TEXT DEFAULT 'sent',
-                delivery_details TEXT NULL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
+                CREATE TABLE IF NOT EXISTS email_templates (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    template_key VARCHAR(191) NOT NULL UNIQUE,
+                    name VARCHAR(191) NOT NULL,
+                    subject VARCHAR(255) NOT NULL,
+                    body LONGTEXT NOT NULL,
+                    is_active INT DEFAULT 1,
+                    variables_hint TEXT,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS email_templates (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                template_key TEXT NOT NULL UNIQUE,
-                name TEXT NOT NULL,
-                subject TEXT NOT NULL,
-                body TEXT NOT NULL,
-                is_active INTEGER DEFAULT 1,
-                variables_hint TEXT,
-                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
+                CREATE TABLE IF NOT EXISTS admin_security_logs (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    admin_id INT NULL,
+                    admin_username VARCHAR(191) NULL,
+                    admin_email VARCHAR(191) NULL,
+                    ip_address VARCHAR(100) NULL,
+                    location VARCHAR(191) NULL,
+                    user_agent TEXT NULL,
+                    browser_device VARCHAR(191) NULL,
+                    status VARCHAR(100) DEFAULT 'Active Session',
+                    session_token VARCHAR(255) NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            ");
+        } else {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS forum_categories (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    slug TEXT NOT NULL UNIQUE,
+                    description TEXT,
+                    icon_type TEXT DEFAULT 'globe',
+                    color_accent TEXT DEFAULT '#00AEFE',
+                    display_order INTEGER DEFAULT 0,
+                    is_active INTEGER DEFAULT 1,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
 
-            CREATE TABLE IF NOT EXISTS admin_security_logs (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                admin_id INTEGER NULL,
-                admin_username TEXT NULL,
-                admin_email TEXT NULL,
-                ip_address TEXT NULL,
-                location TEXT NULL,
-                user_agent TEXT NULL,
-                browser_device TEXT NULL,
-                status TEXT DEFAULT 'Active Session',
-                session_token TEXT NULL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
-        ");
+                CREATE TABLE IF NOT EXISTS forum_threads (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    category_id INTEGER DEFAULT NULL,
+                    title TEXT NOT NULL,
+                    slug TEXT NOT NULL UNIQUE,
+                    category TEXT DEFAULT 'General Discussion',
+                    author_name TEXT NOT NULL,
+                    author_email TEXT NOT NULL,
+                    content TEXT NOT NULL,
+                    views INTEGER DEFAULT 0,
+                    is_pinned INTEGER DEFAULT 0,
+                    status TEXT DEFAULT 'approved',
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+
+                CREATE TABLE IF NOT EXISTS forum_replies (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    thread_id INTEGER NOT NULL,
+                    parent_id INTEGER DEFAULT NULL,
+                    author_name TEXT NOT NULL,
+                    author_email TEXT NOT NULL,
+                    content TEXT NOT NULL,
+                    status TEXT DEFAULT 'approved',
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+
+                CREATE TABLE IF NOT EXISTS post_likes (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    post_id INTEGER NOT NULL,
+                    voter_ip TEXT NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+                CREATE UNIQUE INDEX IF NOT EXISTS idx_post_likes ON post_likes(post_id, voter_ip);
+
+                CREATE TABLE IF NOT EXISTS forum_votes (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    target_type TEXT NOT NULL,
+                    target_id INTEGER NOT NULL,
+                    vote_type TEXT NOT NULL,
+                    voter_ip TEXT NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+                CREATE UNIQUE INDEX IF NOT EXISTS idx_forum_votes ON forum_votes(target_type, target_id, voter_ip);
+
+                CREATE TABLE IF NOT EXISTS device_identities (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    device_key TEXT NOT NULL,
+                    ip_hash TEXT NOT NULL,
+                    author_name TEXT NOT NULL,
+                    author_email TEXT,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+                CREATE INDEX IF NOT EXISTS idx_device_identities_key ON device_identities(device_key);
+                CREATE INDEX IF NOT EXISTS idx_device_identities_ip ON device_identities(ip_hash);
+
+                CREATE TABLE IF NOT EXISTS contact_replies (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    contact_id INTEGER NOT NULL,
+                    subject TEXT,
+                    body TEXT,
+                    sent_by TEXT DEFAULT 'Editor Admin',
+                    provider TEXT DEFAULT 'smtp',
+                    status TEXT DEFAULT 'sent',
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+
+                CREATE TABLE IF NOT EXISTS email_logs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    campaign_id INTEGER DEFAULT 0,
+                    idempotency_key TEXT NULL,
+                    recipient_email TEXT NOT NULL,
+                    recipient_name TEXT,
+                    subject TEXT,
+                    body TEXT,
+                    type TEXT DEFAULT 'general',
+                    provider TEXT DEFAULT 'smtp',
+                    status TEXT DEFAULT 'sent',
+                    delivery_details TEXT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+
+                CREATE TABLE IF NOT EXISTS email_templates (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    template_key TEXT NOT NULL UNIQUE,
+                    name TEXT NOT NULL,
+                    subject TEXT NOT NULL,
+                    body TEXT NOT NULL,
+                    is_active INTEGER DEFAULT 1,
+                    variables_hint TEXT,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+
+                CREATE TABLE IF NOT EXISTS admin_security_logs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    admin_id INTEGER NULL,
+                    admin_username TEXT NULL,
+                    admin_email TEXT NULL,
+                    ip_address TEXT NULL,
+                    location TEXT NULL,
+                    user_agent TEXT NULL,
+                    browser_device TEXT NULL,
+                    status TEXT DEFAULT 'Active Session',
+                    session_token TEXT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+            ");
+        }
+
+        try { $pdo->exec("ALTER TABLE posts ADD COLUMN likes INT DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN category_id INT DEFAULT NULL"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN views INT DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN is_pinned INT DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN status VARCHAR(50) DEFAULT 'approved'"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN upvotes INT DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN downvotes INT DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_threads ADD COLUMN author_location VARCHAR(191) DEFAULT NULL"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN parent_id INT DEFAULT NULL"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN status VARCHAR(50) DEFAULT 'approved'"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN upvotes INT DEFAULT 0"); } catch (Exception $e) {}
+        try { $pdo->exec("ALTER TABLE forum_replies ADD COLUMN downvotes INT DEFAULT 0"); } catch (Exception $e) {}
 
         // Seed default email templates if empty
         $tmplCheck = $pdo->query("SELECT COUNT(*) as count FROM email_templates")->fetch();
@@ -802,14 +928,14 @@ try {
         $stmtAdmin->execute(['admin', 'admin@conspodium.com', $defaultPassword, 'Editor Admin', 'admin']);
     }
 
-    // Seed initial categories if empty or reset to 7 original
-    $catCount = $pdo->query("SELECT COUNT(*) as count FROM categories")->fetch()['count'];
-    if ($catCount != 7) {
-        $pdo->exec("DELETE FROM posts");
-        $pdo->exec("DELETE FROM categories");
-        if ($dbDriver === 'sqlite') {
-            @$pdo->exec("DELETE FROM sqlite_sequence WHERE name IN ('posts', 'categories')");
-        }
+    // Seed initial categories ONLY if table is completely empty
+    $catCount = 0;
+    try {
+        $catCheck = $pdo->query("SELECT COUNT(*) as count FROM categories")->fetch();
+        $catCount = (int)($catCheck['count'] ?? 0);
+    } catch (Throwable $e) {}
+
+    if ($catCount === 0) {
 
         $stmtCat = $pdo->prepare("INSERT INTO categories (id, name, slug, icon, description, image, display_order) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmtCat->execute([1, 'Culture & Heritage', 'culture-heritage', '🏛️', 'Heritage, traditions, and the African spirit abroad.', '/wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg', 1]);

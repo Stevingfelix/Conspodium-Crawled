@@ -4519,6 +4519,7 @@
           { text: 'Home', href: getRootUrl('/') },
           { text: 'About Us', href: getRootUrl('about-us/') },
           { text: 'Stories', href: getRootUrl('stories/') },
+          { text: 'Magazine', href: getRootUrl('magazine/') },
           { text: 'Forum', href: getRootUrl('forum/') },
           { text: 'Sponsorship', href: getRootUrl('sponsorship/') },
           { text: 'Advert', href: getRootUrl('advert/') },
@@ -6633,7 +6634,7 @@
 				btn.disabled = true;
 				btn.innerHTML = '<span>Registering order...</span>';
 
-				fetch(getRootUrl('api/subscribers.php?action=subscribe'), {
+				fetch(getRootUrl('api/newsletter.php?action=subscribe'), {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
