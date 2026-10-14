@@ -21,7 +21,7 @@ if (session_status() === PHP_SESSION_NONE) {
         @session_save_path('/tmp');
     }
     @session_set_cookie_params([
-        'lifetime' => 86400 * 7,
+        'lifetime' => 1800,
         'path' => '/',
         'secure' => $isHttps,
         'httponly' => true,
@@ -41,10 +41,29 @@ function requireAdmin() {
 
     global $pdo;
     if (!empty($clientToken) && isset($pdo)) {
-        $stmt = $pdo->prepare("SELECT id, username, email, name, role, session_token FROM admins WHERE session_token = ? AND session_token IS NOT NULL AND session_token != ''");
+        $stmt = $pdo->prepare("SELECT id, username, email, name, role, session_token, session_expires_at FROM admins WHERE session_token = ? AND session_token IS NOT NULL AND session_token != ''");
         $stmt->execute([$clientToken]);
         $admin = $stmt->fetch();
         if ($admin && !empty($admin['id'])) {
+            // Enforce 30-minute inactivity session cap
+            if (!empty($admin['session_expires_at']) && strtotime($admin['session_expires_at']) < time()) {
+                $pdo->prepare("UPDATE admins SET session_token = NULL, session_expires_at = NULL WHERE id = ?")->execute([$admin['id']]);
+                $pdo->prepare("UPDATE admin_security_logs SET status = 'Closed' WHERE admin_id = ? AND status IN ('Active Session', 'Current Session')")->execute([$admin['id']]);
+                $_SESSION = [];
+                http_response_code(401);
+                header("Content-Type: application/json");
+                echo json_encode([
+                    "success" => false,
+                    "expired" => true,
+                    "error" => "Session expired due to 30 minutes of inactivity. Please log in again."
+                ]);
+                exit(0);
+            }
+
+            // Extend 30-minute sliding window on activity
+            $slideExpiry = date('Y-m-d H:i:s', time() + 1800);
+            $pdo->prepare("UPDATE admins SET session_expires_at = ? WHERE id = ?")->execute([$slideExpiry, $admin['id']]);
+
             $_SESSION['admin_user'] = [
                 "id" => intval($admin['id']),
                 "username" => $admin['username'],

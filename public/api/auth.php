@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
         @session_save_path('/tmp');
     }
     @session_set_cookie_params([
-        'lifetime' => 86400 * 7,
+        'lifetime' => 1800,
         'path' => '/',
         'secure' => $isHttps,
         'httponly' => true,
@@ -42,6 +42,10 @@ $action = $_GET['action'] ?? '';
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 
 // ── GET CURRENT LOGGED IN ADMIN / CHECK AUTH ─────────────────────────────────
+try {
+    $pdo->exec("ALTER TABLE admins ADD COLUMN session_expires_at DATETIME NULL");
+} catch (Exception $e) {}
+
 if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action === 'check_auth' || empty($action))) {
     $clientToken = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
     if (empty($clientToken) && !empty($_SERVER['HTTP_AUTHORIZATION'])) {
@@ -51,11 +55,31 @@ if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action ===
     }
 
     if (!empty($clientToken)) {
-        $stmt = $pdo->prepare("SELECT id, username, email, name, role, session_token FROM admins WHERE session_token = ? AND session_token IS NOT NULL AND session_token != ''");
+        $stmt = $pdo->prepare("SELECT id, username, email, name, role, session_token, session_expires_at FROM admins WHERE session_token = ? AND session_token IS NOT NULL AND session_token != ''");
         $stmt->execute([$clientToken]);
         $admin = $stmt->fetch();
 
         if ($admin && !empty($admin['id'])) {
+            // Check session expiration (30-minute inactivity sliding window)
+            if (!empty($admin['session_expires_at']) && strtotime($admin['session_expires_at']) < time()) {
+                // Session expired due to inactivity
+                $pdo->prepare("UPDATE admins SET session_token = NULL, session_expires_at = NULL WHERE id = ?")->execute([$admin['id']]);
+                $pdo->prepare("UPDATE admin_security_logs SET status = 'Closed' WHERE admin_id = ? AND status IN ('Active Session', 'Current Session')")->execute([$admin['id']]);
+                $_SESSION = [];
+                http_response_code(401);
+                echo json_encode([
+                    "success" => false,
+                    "authenticated" => false,
+                    "expired" => true,
+                    "error" => "Session has expired due to 30 minutes of inactivity. Please sign in again."
+                ]);
+                return;
+            }
+
+            // Extend session expiration window (30 minutes sliding)
+            $slideExpiry = date('Y-m-d H:i:s', time() + 1800);
+            $pdo->prepare("UPDATE admins SET session_expires_at = ? WHERE id = ?")->execute([$slideExpiry, $admin['id']]);
+
             $userData = [
                 "id" => intval($admin['id']),
                 "username" => $admin['username'],
@@ -97,57 +121,158 @@ if ($method === 'GET' && ($action === 'me' || $action === 'check' || $action ===
 }
 
 // ── ADMIN LOGIN ─────────────────────────────────────────────────────────────
-function csp_detect_client_info() {
-    $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+function csp_is_private_ip($ip) {
+    if (empty($ip) || $ip === '127.0.0.1' || $ip === '::1' || $ip === 'localhost') return true;
+    if (strpos($ip, '192.168.') === 0 || strpos($ip, '10.') === 0) return true;
+    if (preg_match('/^172\.(1[6-9]|2[0-9]|3[0-1])\./', $ip)) return true;
+    if (strpos($ip, 'fe80:') === 0 || strpos($ip, 'fc00:') === 0 || strpos($ip, 'fd00:') === 0) return true;
+    return false;
+}
+
+function csp_resolve_geo($targetIp = '') {
+    $isPrivate = csp_is_private_ip($targetIp);
+    $cacheKey = (!$isPrivate && !empty($targetIp)) ? 'csp_geo_' . preg_replace('/[^a-zA-Z0-9_\-]/', '_', $targetIp) : 'csp_geo_self';
+    
+    if (!empty($_SESSION[$cacheKey]) && is_array($_SESSION[$cacheKey]) && (time() - ($_SESSION[$cacheKey]['time'] ?? 0) < 7200)) {
+        return $_SESSION[$cacheKey]['data'];
+    }
+
+    $url = 'http://ip-api.com/json/' . ((!$isPrivate && !empty($targetIp)) ? urlencode($targetIp) : '');
+    $ctx = stream_context_create([
+        'http' => [
+            'timeout' => 1.5,
+            'user_agent' => 'Mozilla/5.0 Conspodium/2.0'
+        ]
+    ]);
+
+    $raw = @file_get_contents($url, false, $ctx);
+    if ($raw) {
+        $data = @json_decode($raw, true);
+        if ($data && ($data['status'] ?? '') === 'success') {
+            $city = trim($data['city'] ?? '');
+            $country = trim($data['country'] ?? '');
+            $region = trim($data['regionName'] ?? '');
+            $loc = '';
+            if ($city && $country && $city !== $country) {
+                $loc = "$city, $country";
+            } elseif ($region && $country) {
+                $loc = "$region, $country";
+            } else {
+                $loc = $country ?: $city ?: 'Live Remote Session';
+            }
+
+            $res = [
+                'ip' => $data['query'] ?? '',
+                'location' => $loc,
+                'city' => $city,
+                'country' => $country,
+                'isp' => $data['isp'] ?? ''
+            ];
+            $_SESSION[$cacheKey] = ['time' => time(), 'data' => $res];
+            return $res;
+        }
+    }
+    return null;
+}
+
+function csp_detect_client_info($clientPayload = []) {
+    $clientIp = trim($clientPayload['client_ip'] ?? $_SERVER['HTTP_X_CLIENT_IP'] ?? '');
+    $clientLocation = trim($clientPayload['client_location'] ?? $_SERVER['HTTP_X_CLIENT_LOCATION'] ?? '');
+
+    $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
     if (strpos($ip, ',') !== false) {
         $ip = trim(explode(',', $ip)[0]);
     }
     
     $ua = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown Device';
-    $browser = 'Browser';
-    if (stripos($ua, 'Edg') !== false) {
-        $browser = 'Microsoft Edge';
-    } elseif (stripos($ua, 'Chrome') !== false && stripos($ua, 'Edg') === false) {
-        $browser = 'Google Chrome';
-    } elseif (stripos($ua, 'Safari') !== false && stripos($ua, 'Chrome') === false) {
-        $browser = 'Apple Safari';
-    } elseif (stripos($ua, 'Firefox') !== false) {
-        $browser = 'Mozilla Firefox';
-    } elseif (stripos($ua, 'Opera') !== false || stripos($ua, 'OPR') !== false) {
-        $browser = 'Opera';
-    }
 
-    $os = 'Workstation PC';
-    if (stripos($ua, 'Macintosh') !== false || stripos($ua, 'Mac OS') !== false) {
-        $os = 'Mac (macOS)';
-    } elseif (stripos($ua, 'Windows NT 10.0') !== false || stripos($ua, 'Windows NT 11.0') !== false) {
-        $os = 'Windows 10/11 PC';
-    } elseif (stripos($ua, 'Windows') !== false) {
-        $os = 'Windows PC';
-    } elseif (stripos($ua, 'iPhone') !== false) {
-        $os = 'Apple iPhone';
-    } elseif (stripos($ua, 'iPad') !== false) {
-        $os = 'Apple iPad';
-    } elseif (stripos($ua, 'Android') !== false) {
-        $os = 'Android Device';
-    } elseif (stripos($ua, 'Linux') !== false) {
-        $os = 'Linux PC';
-    }
-
-    $device = "$browser on $os";
-
-    $location = 'Local Machine';
-    if ($ip === '127.0.0.1' || $ip === '::1' || strpos($ip, '192.168.') === 0 || strpos($ip, '10.') === 0 || strpos($ip, '172.16.') === 0) {
-        $location = 'Localhost (LAN / Development PC)';
+    // 1. Detect CLI / Automated tools
+    if (stripos($ua, 'curl') !== false) {
+        $device = 'Automated API (cURL CLI)';
+    } elseif (stripos($ua, 'Postman') !== false) {
+        $device = 'Postman API Client';
+    } elseif (stripos($ua, 'python') !== false) {
+        $device = 'Python Automated Client';
     } else {
-        $country = $_SERVER['HTTP_CF_IPCOUNTRY'] ?? '';
-        $city = $_SERVER['HTTP_CF_IPCITY'] ?? '';
-        if ($city && $country) {
-            $location = "$city, $country";
-        } elseif ($country) {
-            $location = "Public ($country)";
+        // 2. Detect Standard Web Browsers
+        $browser = 'Desktop Web Client';
+        if (stripos($ua, 'Brave') !== false) {
+            $browser = 'Brave Browser';
+        } elseif (stripos($ua, 'Edg') !== false) {
+            $browser = 'Microsoft Edge';
+        } elseif (stripos($ua, 'Chrome') !== false && stripos($ua, 'Edg') === false) {
+            $browser = 'Google Chrome';
+        } elseif (stripos($ua, 'Safari') !== false && stripos($ua, 'Chrome') === false) {
+            $browser = 'Apple Safari';
+        } elseif (stripos($ua, 'Firefox') !== false) {
+            $browser = 'Mozilla Firefox';
+        } elseif (stripos($ua, 'Opera') !== false || stripos($ua, 'OPR') !== false) {
+            $browser = 'Opera';
+        }
+
+        // 3. Detect Operating System
+        $os = 'Desktop Device';
+        if (stripos($ua, 'Macintosh') !== false || stripos($ua, 'Mac OS') !== false) {
+            $os = 'Mac (macOS)';
+        } elseif (stripos($ua, 'Windows NT 10.0') !== false || stripos($ua, 'Windows NT 11.0') !== false) {
+            $os = 'Windows 10/11 PC';
+        } elseif (stripos($ua, 'Windows') !== false) {
+            $os = 'Windows PC';
+        } elseif (stripos($ua, 'iPhone') !== false) {
+            $os = 'Apple iPhone';
+        } elseif (stripos($ua, 'iPad') !== false) {
+            $os = 'Apple iPad';
+        } elseif (stripos($ua, 'Android') !== false) {
+            $os = 'Android Device';
+        } elseif (stripos($ua, 'Linux') !== false) {
+            $os = 'Linux PC';
+        }
+
+        $device = "$browser on $os";
+    }
+
+    // Detect actual location & real public IP
+    $location = '';
+    $cfCountry = $_SERVER['HTTP_CF_IPCOUNTRY'] ?? '';
+    $cfCity = $_SERVER['HTTP_CF_IPCITY'] ?? '';
+    if ($cfCity && $cfCountry) {
+        $location = "$cfCity, $cfCountry";
+    } elseif ($cfCountry) {
+        $location = "Public ($cfCountry)";
+    }
+
+    // If on localhost or private network (dev environment or local test)
+    if (csp_is_private_ip($ip)) {
+        if (!empty($clientIp) && !csp_is_private_ip($clientIp)) {
+            $ip = $clientIp;
+            if (!empty($clientLocation)) {
+                $location = $clientLocation;
+            }
         } else {
-            $location = "Live Remote Session";
+            $geo = csp_resolve_geo('');
+            if ($geo && !empty($geo['ip'])) {
+                $ip = $geo['ip'];
+                if (!empty($geo['location'])) {
+                    $location = $geo['location'];
+                }
+            }
+        }
+    } else {
+        if (empty($location)) {
+            $geo = csp_resolve_geo($ip);
+            if ($geo && !empty($geo['location'])) {
+                $location = $geo['location'];
+            }
+        }
+    }
+
+    if (empty($location)) {
+        if (!empty($clientLocation)) {
+            $location = $clientLocation;
+        } elseif (!csp_is_private_ip($ip)) {
+            $location = 'Live Remote Session';
+        } else {
+            $location = 'Localhost (LAN / Development PC)';
         }
     }
 
@@ -162,22 +287,130 @@ function csp_detect_client_info() {
 // ── GET SECURITY LOGS ────────────────────────────────────────────────────────
 if ($method === 'GET' && $action === 'security_logs') {
     try {
-        $stmt = $pdo->query("SELECT * FROM admin_security_logs ORDER BY id DESC LIMIT 50");
-        $logs = $stmt->fetchAll() ?: [];
+        // Upgrade legacy localhost / loopback rows to real public IP and actual location
+        $hasLocal = (int)$pdo->query("SELECT COUNT(*) FROM admin_security_logs WHERE ip_address IN ('::1', '127.0.0.1') OR location LIKE '%Localhost%'")->fetchColumn();
+        if ($hasLocal > 0) {
+            $geo = csp_resolve_geo('');
+            if ($geo && !empty($geo['ip']) && !empty($geo['location'])) {
+                $upd = $pdo->prepare("UPDATE admin_security_logs SET ip_address = ?, location = ? WHERE ip_address IN ('::1', '127.0.0.1') OR location LIKE '%Localhost%'");
+                $upd->execute([$geo['ip'], $geo['location']]);
+            }
+        }
 
-        // If table is empty or has only older logs, seed or verify active session
-        if (empty($logs)) {
+        // Clean legacy placeholder "Browser on Workstation PC" and classify cURL/CLI requests accurately
+        $pdo->exec("UPDATE admin_security_logs SET browser_device = 'Automated API (cURL CLI)' WHERE user_agent LIKE '%curl%' OR browser_device = 'Browser on Workstation PC'");
+
+        // Validate active session token
+        $clientToken = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
+        if (empty($clientToken) && !empty($_SERVER['HTTP_AUTHORIZATION'])) {
+            if (preg_match('/Bearer\s+(\S+)/i', $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
+                $clientToken = $matches[1];
+            }
+        }
+
+        $activeAdmin = null;
+        if (!empty($clientToken)) {
+            $checkStmt = $pdo->prepare("SELECT id, session_token, session_expires_at FROM admins WHERE session_token = ? AND session_token IS NOT NULL AND session_token != ''");
+            $checkStmt->execute([$clientToken]);
+            $activeAdmin = $checkStmt->fetch();
+            if ($activeAdmin && !empty($activeAdmin['session_expires_at']) && strtotime($activeAdmin['session_expires_at']) < time()) {
+                $activeAdmin = null;
+            }
+        }
+
+        if (!$activeAdmin && !empty($_SESSION['admin_user']['id'])) {
+            $activeAdmin = $pdo->query("SELECT id, session_token, session_expires_at FROM admins WHERE id = " . intval($_SESSION['admin_user']['id']))->fetch();
+        }
+
+        if (!$activeAdmin) {
+            $activeAdmin = $pdo->query("SELECT id, session_token, session_expires_at FROM admins WHERE session_token IS NOT NULL AND session_token != '' AND (session_expires_at IS NULL OR session_expires_at > datetime('now', 'localtime')) ORDER BY id ASC LIMIT 1")->fetch();
+        }
+
+        if (!$activeAdmin) {
+            $activeAdmin = $pdo->query("SELECT id, session_token, session_expires_at FROM admins WHERE id = 1")->fetch();
+        }
+
+        $latestLogId = null;
+        if ($activeAdmin) {
+            $latestLogId = $pdo->query("SELECT id FROM admin_security_logs WHERE admin_id = " . intval($activeAdmin['id']) . " ORDER BY id DESC LIMIT 1")->fetchColumn();
+        }
+        if (!$latestLogId) {
+            $latestLogId = $pdo->query("SELECT MAX(id) FROM admin_security_logs")->fetchColumn();
+        }
+
+        try {
+            $pdo->exec("ALTER TABLE admin_security_logs ADD COLUMN ended_at DATETIME DEFAULT NULL");
+        } catch (Exception $e) {}
+
+        if ($latestLogId) {
+            $pdo->exec("UPDATE admin_security_logs SET status = 'Closed', ended_at = COALESCE(ended_at, datetime(created_at, '+30 minutes')) WHERE id != " . intval($latestLogId) . " AND status IN ('Current Session', 'Active Session')");
+            $pdo->exec("UPDATE admin_security_logs SET status = 'Current Session', ended_at = NULL WHERE id = " . intval($latestLogId));
+        }
+
+        // Backfill ended_at for closed sessions if empty
+        $pdo->exec("UPDATE admin_security_logs SET ended_at = datetime(created_at, '+30 minutes') WHERE status = 'Closed' AND ended_at IS NULL");
+
+        // Filter: all, active, closed
+        $filter = strtolower($_GET['filter'] ?? 'all');
+        $whereSql = "";
+        if ($filter === 'active') {
+            $whereSql = "WHERE status IN ('Current Session', 'Active Session')";
+        } elseif ($filter === 'closed') {
+            $whereSql = "WHERE status NOT IN ('Current Session', 'Active Session')";
+        }
+
+        $activeCount = (int)$pdo->query("SELECT COUNT(*) FROM admin_security_logs WHERE status IN ('Current Session', 'Active Session')")->fetchColumn();
+        $closedCount = (int)$pdo->query("SELECT COUNT(*) FROM admin_security_logs WHERE status NOT IN ('Current Session', 'Active Session')")->fetchColumn();
+        $totalLogs = (int)$pdo->query("SELECT COUNT(*) FROM admin_security_logs $whereSql")->fetchColumn();
+
+        // Seed initial log if empty
+        if ($totalLogs === 0 && $filter === 'all') {
             $client = csp_detect_client_info();
             $adminUser = $_SESSION['admin_user']['username'] ?? 'admin';
             $adminEmail = $_SESSION['admin_user']['email'] ?? 'admin@conspodium.com';
             
-            $ins = $pdo->prepare("INSERT INTO admin_security_logs (admin_id, admin_username, admin_email, ip_address, location, user_agent, browser_device, status, created_at) VALUES (1, ?, ?, ?, ?, ?, ?, 'Active Session', datetime('now', 'localtime'))");
+            $ins = $pdo->prepare("INSERT INTO admin_security_logs (admin_id, admin_username, admin_email, ip_address, location, user_agent, browser_device, status, created_at) VALUES (1, ?, ?, ?, ?, ?, ?, 'Current Session', datetime('now', 'localtime'))");
             $ins->execute([$adminUser, $adminEmail, $client['ip'], $client['location'], $client['ua'], $client['device']]);
-            
-            $logs = $pdo->query("SELECT * FROM admin_security_logs ORDER BY id DESC LIMIT 50")->fetchAll() ?: [];
+            $totalLogs = 1;
+            $activeCount = 1;
         }
 
-        echo json_encode(["success" => true, "logs" => $logs]);
+        $limitParam = $_GET['limit'] ?? 10;
+        $pageParam = $_GET['page'] ?? 1;
+
+        // Order: Current Session guaranteed at the very top, followed by descending ID
+        $orderSql = "ORDER BY CASE WHEN status IN ('Current Session', 'Active Session') THEN 0 ELSE 1 END, id DESC";
+
+        if ($limitParam === 'all') {
+            $stmt = $pdo->query("SELECT * FROM admin_security_logs $whereSql $orderSql");
+            $logs = $stmt->fetchAll() ?: [];
+            $limit = count($logs);
+            $page = 1;
+            $totalPages = 1;
+        } else {
+            $limit = max(1, min(100, intval($limitParam)));
+            $totalPages = max(1, (int)ceil($totalLogs / $limit));
+            $page = max(1, min($totalPages, intval($pageParam)));
+            $offset = ($page - 1) * $limit;
+
+            $stmt = $pdo->prepare("SELECT * FROM admin_security_logs $whereSql $orderSql LIMIT ? OFFSET ?");
+            $stmt->bindValue(1, $limit, PDO::PARAM_INT);
+            $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+            $stmt->execute();
+            $logs = $stmt->fetchAll() ?: [];
+        }
+
+        echo json_encode([
+            "success" => true,
+            "logs" => $logs,
+            "total" => $totalLogs,
+            "activeCount" => $activeCount,
+            "closedCount" => $closedCount,
+            "filter" => $filter,
+            "page" => $page,
+            "limit" => $limit,
+            "totalPages" => $totalPages
+        ]);
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(["success" => false, "error" => $e->getMessage()]);
@@ -201,7 +434,7 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
         return;
     }
 
-    $client = csp_detect_client_info();
+    $client = csp_detect_client_info($input);
     $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ? OR email = ?");
     $stmt->execute([$username, $username]);
     $admin = $stmt->fetch();
@@ -210,15 +443,16 @@ if ($method === 'POST' && ($action === 'login' || (empty($action) && isset($inpu
         $token = bin2hex(random_bytes(32));
         
         try {
-            $upToken = $pdo->prepare("UPDATE admins SET session_token = ? WHERE id = ?");
-            $upToken->execute([$token, $admin['id']]);
+            // Set 30-minute inactivity sliding expiration
+            $loginExpiry = date('Y-m-d H:i:s', time() + 1800);
+            $upToken = $pdo->prepare("UPDATE admins SET session_token = ?, session_expires_at = ? WHERE id = ?");
+            $upToken->execute([$token, $loginExpiry, $admin['id']]);
 
-            // Mark previous active sessions as closed
-            $pdo->prepare("UPDATE admin_security_logs SET status = 'Closed' WHERE admin_id = ? AND status = 'Active Session'")
-                ->execute([$admin['id']]);
+            // Mark ALL previous sessions as Closed
+            $pdo->exec("UPDATE admin_security_logs SET status = 'Closed' WHERE status IN ('Current Session', 'Active Session')");
 
-            // Record new active session
-            $insLog = $pdo->prepare("INSERT INTO admin_security_logs (admin_id, admin_username, admin_email, ip_address, location, user_agent, browser_device, status, session_token, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, 'Active Session', ?, datetime('now', 'localtime'))");
+            // Record new active session (Current Session, placed at top)
+            $insLog = $pdo->prepare("INSERT INTO admin_security_logs (admin_id, admin_username, admin_email, ip_address, location, user_agent, browser_device, status, session_token, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, 'Current Session', ?, datetime('now', 'localtime'))");
             $insLog->execute([
                 $admin['id'],
                 $admin['username'],
@@ -276,23 +510,16 @@ if ($method === 'POST' && ($action === 'logout' || $action === 'signout')) {
         }
     }
 
-    if (!empty($_SESSION['admin_user']['id'])) {
-        try {
-            $upToken = $pdo->prepare("UPDATE admins SET session_token = NULL WHERE id = ?");
-            $upToken->execute([$_SESSION['admin_user']['id']]);
-            
-            $pdo->prepare("UPDATE admin_security_logs SET status = 'Logged Out' WHERE admin_id = ? AND status = 'Active Session'")
-                ->execute([$_SESSION['admin_user']['id']]);
-        } catch (Exception $e) {}
-    } elseif (!empty($clientToken)) {
-        try {
-            $upToken = $pdo->prepare("UPDATE admins SET session_token = NULL WHERE session_token = ?");
-            $upToken->execute([$clientToken]);
-
-            $pdo->prepare("UPDATE admin_security_logs SET status = 'Logged Out' WHERE session_token = ?")
-                ->execute([$clientToken]);
-        } catch (Exception $e) {}
-    }
+    try {
+        if (!empty($_SESSION['admin_user']['id'])) {
+            $pdo->prepare("UPDATE admins SET session_token = NULL, session_expires_at = NULL WHERE id = ?")->execute([$_SESSION['admin_user']['id']]);
+        }
+        if (!empty($clientToken)) {
+            $pdo->prepare("UPDATE admins SET session_token = NULL, session_expires_at = NULL WHERE session_token = ?")->execute([$clientToken]);
+        }
+        // All active sessions become Closed upon logout with exact ended_at timestamp
+        $pdo->exec("UPDATE admin_security_logs SET status = 'Closed', ended_at = datetime('now', 'localtime') WHERE status IN ('Current Session', 'Active Session')");
+    } catch (Exception $e) {}
 
     $_SESSION = [];
     if (ini_get("session.use_cookies")) {
@@ -303,7 +530,6 @@ if ($method === 'POST' && ($action === 'logout' || $action === 'signout')) {
         );
     }
     @session_destroy();
-
     echo json_encode(["success" => true, "message" => "Logged out successfully"]);
     return;
 }

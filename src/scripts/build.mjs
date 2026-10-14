@@ -468,6 +468,31 @@ for (const page of PAGES) {
   html = html.replace(/href=["']\.\/["']/g, 'href="/"');
   html = html.replace(/href=["']\.\.\/["']/g, 'href="/"');
 
+  // Validate all inline scripts to guarantee zero syntax errors
+  const scriptRegex = /<script(?:\s+([^>]*))?>([\s\S]*?)<\/script>/gi;
+  let match;
+  let sIdx = 0;
+  while ((match = scriptRegex.exec(html)) !== null) {
+    sIdx++;
+    const attrs = match[1] || '';
+    const code = match[2];
+    if (!code.trim()) continue;
+    // Skip JSON data blocks (schema.org, speculationrules, templates, etc.)
+    if (/type\s*=\s*["'](application\/ld\+json|speculationrules|text\/template|text\/html)["']/i.test(attrs)) {
+      continue;
+    }
+    // Only test if type is javascript, module, or omitted
+    if (attrs.includes('type=') && !/type\s*=\s*["'](module|text\/javascript|application\/javascript)["']/i.test(attrs)) {
+      continue;
+    }
+    try {
+      new Function(code);
+    } catch (err) {
+      console.error(`\n❌ BUILD ABORTED: Syntax Error in ${page.id} (script #${sIdx}): ${err.message}`);
+      process.exit(1);
+    }
+  }
+
   await mkdir(dirname(outFile), { recursive: true });
   await writeFile(outFile, html, 'utf8');
   console.log(`     ✓  ${page.id.padEnd(16)} → public/${page.out}`);

@@ -151,6 +151,11 @@ CTA;
 QUOTE;
     }
 
+    $unsubUrl = "https://conspodium.com/api/newsletter.php?action=unsubscribe";
+    if (!empty($recipientEmail)) {
+        $unsubUrl .= "&email=" . urlencode(trim($recipientEmail));
+    }
+
     return <<<HTML
 <!DOCTYPE html>
 <html lang="en">
@@ -205,7 +210,7 @@ QUOTE;
             <p style="margin:0 0 8px;font-weight:500;">Sent via Conspodium Verified Editorial Engine.</p>
             <p style="margin:0;color:#94a3b8;">
               © 2026 Conspodium Media Group. All rights reserved.<br>
-              <a href="https://conspodium.com" target="_blank" style="color:#00AEFE;text-decoration:none;font-weight:600;">Visit Conspodium.com</a> • <a href="https://conspodium.com/stories" target="_blank" style="color:#00AEFE;text-decoration:none;font-weight:600;">Browse Diaspora Stories</a>
+              <a href="https://conspodium.com" target="_blank" style="color:#00AEFE;text-decoration:none;font-weight:600;">Visit Conspodium.com</a> • <a href="https://conspodium.com/stories" target="_blank" style="color:#00AEFE;text-decoration:none;font-weight:600;">Browse Diaspora Stories</a> • <a href="{$unsubUrl}" target="_blank" style="color:#94a3b8;text-decoration:underline;">Unsubscribe</a>
             </p>
           </td>
         </tr>
@@ -218,6 +223,7 @@ QUOTE;
 HTML;
 }
 
+if (!function_exists('buildMimeEmailMessage')) {
 function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyText, $bodyHtml = null, $replyToEmail = null) {
     $fromDomain = 'conspodium.com';
     if (strpos($fromEmail, '@') !== false) {
@@ -235,6 +241,9 @@ function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyT
     }
     $plainText = renderEmailPlainText($bodyText);
 
+    $encodedRecipient = urlencode(trim($toEmail));
+    $unsubUrl = "https://conspodium.com/api/newsletter.php?action=unsubscribe&email={$encodedRecipient}";
+
     $headers = [];
     $headers[] = "From: {$fromName} <{$fromEmail}>";
     $headers[] = "Reply-To: {$fromName} <{$effectiveReplyTo}>";
@@ -246,7 +255,7 @@ function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyT
     $headers[] = "MIME-Version: 1.0";
     $headers[] = "X-Mailer: Conspodium Enterprise Editorial Mailer v2.5";
     $headers[] = "X-Priority: 3 (Normal)";
-    $headers[] = "List-Unsubscribe: <mailto:unsubscribe@{$fromDomain}?subject=unsubscribe>";
+    $headers[] = "List-Unsubscribe: <{$unsubUrl}>, <mailto:unsubscribe@{$fromDomain}?subject=unsubscribe>";
     $headers[] = "List-Unsubscribe-Post: List-Unsubscribe=One-Click";
     $headers[] = "Content-Type: multipart/alternative; boundary=\"{$boundary}\"";
 
@@ -263,8 +272,10 @@ function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyT
 
     return $mimeContent;
 }
+}
 
 // ── NATIVE SMTP SOCKET DRIVER ────────────────────────────────────────────────
+if (!function_exists('sendSmtpEmail')) {
 function sendSmtpEmail($host, $port, $user, $pass, $fromName, $fromEmail, $toEmail, $subject, $body, $bodyHtml = null) {
     $cleanHost = preg_replace('#^(ssl|tls|tcp)://#i', '', trim($host));
     $cleanHost = trim($cleanHost, "/ \t\n\r\0\x0B");
@@ -402,6 +413,7 @@ function sendSmtpEmail($host, $port, $user, $pass, $fromName, $fromEmail, $toEma
     }
 
     return ["success" => false, "error" => $lastError];
+}
 }
 
 // ── GET CONFIGURATION ────────────────────────────────────────────────────────

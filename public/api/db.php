@@ -210,6 +210,8 @@ try {
 
             CREATE TABLE IF NOT EXISTS email_logs (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                campaign_id INTEGER DEFAULT 0,
+                idempotency_key TEXT NULL,
                 recipient_email TEXT NOT NULL,
                 recipient_name TEXT,
                 subject TEXT,
@@ -217,6 +219,7 @@ try {
                 type TEXT DEFAULT 'general',
                 provider TEXT DEFAULT 'smtp',
                 status TEXT DEFAULT 'sent',
+                delivery_details TEXT NULL,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
 
@@ -485,31 +488,41 @@ try {
         $pdo->exec("UPDATE subscribers SET list_segment = 'community' WHERE list_segment = 'general' OR list_segment IS NULL OR list_segment = ''");
     } catch (Exception $e) {}
 
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS event_reminders (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            event_name TEXT NOT NULL,
-            event_date TEXT NOT NULL,
-            user_name TEXT,
-            user_email TEXT NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-        CREATE UNIQUE INDEX IF NOT EXISTS idx_event_reminders_email_event ON event_reminders (user_email, event_name);
-        CREATE VIEW IF NOT EXISTS event_registrations AS SELECT * FROM event_reminders;
+    try {
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS event_reminders (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                event_name TEXT NOT NULL,
+                event_date TEXT NOT NULL,
+                user_name TEXT,
+                user_email TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_event_reminders_email_event ON event_reminders (user_email, event_name);
+            CREATE VIEW IF NOT EXISTS event_registrations AS SELECT * FROM event_reminders;
 
-        CREATE TABLE IF NOT EXISTS admins (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL UNIQUE,
-            email TEXT NOT NULL UNIQUE,
-            password_hash TEXT NOT NULL,
-            name TEXT NOT NULL,
-            role TEXT DEFAULT 'admin',
-            session_token TEXT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-    ");
+            CREATE TABLE IF NOT EXISTS admins (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL UNIQUE,
+                email TEXT NOT NULL UNIQUE,
+                password_hash TEXT NOT NULL,
+                name TEXT NOT NULL,
+                role TEXT DEFAULT 'admin',
+                session_token TEXT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+        ");
+    } catch (Exception $e) {}
 
     try { $pdo->exec("ALTER TABLE admins ADD COLUMN session_token TEXT NULL"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE subscribers ADD COLUMN unsubscribed_at DATETIME NULL"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE email_logs ADD COLUMN campaign_id INTEGER DEFAULT 0"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE email_logs ADD COLUMN idempotency_key TEXT NULL"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE email_logs ADD COLUMN delivery_details TEXT NULL"); } catch (Exception $e) {}
+    try { $pdo->exec("CREATE INDEX IF NOT EXISTS idx_email_logs_idemp ON email_logs(idempotency_key)"); } catch (Exception $e) {}
+    try { $pdo->exec("CREATE INDEX IF NOT EXISTS idx_email_logs_camp_recip ON email_logs(campaign_id, recipient_email)"); } catch (Exception $e) {}
+    try { $pdo->exec("CREATE INDEX IF NOT EXISTS idx_subscribers_email ON subscribers(email)"); } catch (Exception $e) {}
+    try { $pdo->exec("CREATE INDEX IF NOT EXISTS idx_campaigns_status ON email_campaigns(status)"); } catch (Exception $e) {}
 
     $pdo->exec("
 
@@ -532,7 +545,8 @@ try {
             email TEXT NOT NULL UNIQUE,
             list_segment TEXT DEFAULT 'community',
             status TEXT DEFAULT 'active',
-            subscribed_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            subscribed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            unsubscribed_at DATETIME NULL
         );
 
         CREATE TABLE IF NOT EXISTS email_campaigns (

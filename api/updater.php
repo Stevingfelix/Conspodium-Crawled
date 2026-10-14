@@ -68,9 +68,15 @@ function isProtectedPath($relativePath, $protectedFiles, $protectedPrefixes) {
 if ($action === 'status') {
     $versionFile = $rootDir . '/version.json';
     $versionData = [
-        'version' => '2.1.0',
+        'version' => '2.1.4',
         'build_date' => date('Y-m-d H:i:s'),
-        'last_updated' => 'Initial installation',
+        'last_updated' => 'Recently installed',
+        'description' => 'Notification dropdown refinement, stacked single-line action buttons, and maintenance popup safeguards.',
+        'highlights' => [
+            'Removed Forum Moderation item from notification dropdown list',
+            'Vertically stacked bottom buttons with single-line labels: View All Article Comments & View All Forum Discussions',
+            'Suppressed promo popup adverts from appearing while site is in Maintenance Mode'
+        ],
         'environment' => defined('DB_DRIVER') ? DB_DRIVER : 'sqlite'
     ];
     
@@ -188,11 +194,31 @@ if ($action === 'upload_update') {
         }
     }
     
+    // Record update version log dynamically from package BEFORE closing zip archive
+    $zipVersion = null;
+    $zipVersionStream = $zip->getStream('version.json');
+    if ($zipVersionStream) {
+        $zipVersionJson = stream_get_contents($zipVersionStream);
+        fclose($zipVersionStream);
+        $zipVersion = @json_decode($zipVersionJson, true);
+    }
+
     $zip->close();
-    
-    // Record update version log
+
+    // Fallback: if stream failed, check newly written version.json on disk
+    if (!$zipVersion && file_exists($rootDir . '/version.json')) {
+        $diskJson = @file_get_contents($rootDir . '/version.json');
+        $zipVersion = @json_decode($diskJson, true);
+    }
+
+    $newVersion = !empty($zipVersion['version']) ? trim($zipVersion['version']) : '2.1.4';
+    $newDescription = !empty($zipVersion['description']) ? trim($zipVersion['description']) : 'System update successfully installed.';
+    $newHighlights = !empty($zipVersion['highlights']) ? $zipVersion['highlights'] : (!empty($zipVersion['notes']) ? $zipVersion['notes'] : []);
+
     $newVersionData = [
-        'version' => '2.1.0',
+        'version' => $newVersion,
+        'description' => $newDescription,
+        'highlights' => $newHighlights,
         'last_updated' => date('Y-m-d H:i:s'),
         'updated_by' => $admin['username'] ?? 'admin',
         'files_updated' => $updatedCount,
@@ -203,6 +229,12 @@ if ($action === 'upload_update') {
     echo json_encode([
         'success' => true,
         'message' => "Update successfully installed! {$updatedCount} files updated.",
+        'version' => $newVersion,
+        'description' => $newDescription,
+        'highlights' => $newHighlights,
+        'updated_files_count' => $updatedCount,
+        'skipped_files_count' => $skippedCount,
+        'sample_updated_files' => $updatedList,
         'details' => [
             'updated_count' => $updatedCount,
             'protected_count' => $skippedCount,

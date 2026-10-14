@@ -925,7 +925,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   .elementor-item,
   .menu-item a {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    font-size: 15px !important;
+    font-size: 15.5px !important;
     font-weight: 600 !important;
     text-shadow: none !important;
     letter-spacing: -0.015em !important;
@@ -935,13 +935,23 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   .elementor-location-header .elementor-button,
   .elementor-1969 .elementor-button,
   .elementor-1969 .elementor-element-36265fd .elementor-button,
+  .elementor-element-36265fd .elementor-button,
   .csp-header-submit-btn {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
     letter-spacing: -0.015em !important;
     text-transform: none !important;
     -webkit-font-smoothing: antialiased !important;
+  }
+
+  .elementor-location-header .elementor-button-text,
+  .elementor-1969 .elementor-element-36265fd .elementor-button-text,
+  .elementor-element-36265fd .elementor-button-text,
+  .csp-header-submit-btn .elementor-button-text {
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em !important;
   }
 
   .elementor-location-header .elementor-button-content-wrapper,
@@ -953,7 +963,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     flex-direction: row !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 8px !important;
+    gap: 10px !important;
   }
 
   /* ── NORMAL STATE (TOP OF PAGE ON LIGHT HERO PAGES): Crisp Dark Links ─── */
@@ -2785,6 +2795,71 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     filter: brightness(1.05) !important;
   }
 
+  /* ── DARK HEADER BUTTONS & INNER TEXT ENLARGEMENT (ALL PAGES) ── */
+  .csp-header-submit-btn,
+  .elementor-location-header .elementor-button,
+  .elementor-1969 .elementor-element-36265fd .elementor-button,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button,
+  .elementor-element-36265fd .elementor-button,
+  .csp-modal-cta {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em !important;
+    line-height: 1.25 !important;
+    padding: 14.5px 32px !important;
+    min-height: 48px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+
+  .csp-header-submit-btn .elementor-button-content-wrapper,
+  .elementor-location-header .elementor-button-content-wrapper,
+  .elementor-1969 .elementor-element-36265fd .elementor-button-content-wrapper,
+  .elementor-element-36265fd .elementor-button-content-wrapper {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+
+  .csp-header-submit-btn .elementor-button-text,
+  .elementor-location-header .elementor-button-text,
+  .elementor-1969 .elementor-element-36265fd .elementor-button-text,
+  .elementor-element-36265fd .elementor-button-text,
+  .csp-modal-cta span:first-child {
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em !important;
+    display: inline-block !important;
+  }
+
+  .csp-header-submit-btn svg,
+  .csp-header-submit-btn .elementor-button-icon svg,
+  .elementor-location-header .elementor-button svg,
+  .elementor-1969 .elementor-element-36265fd .elementor-button svg,
+  .elementor-element-36265fd .elementor-button svg,
+  .csp-modal-cta svg {
+    width: 19px !important;
+    height: 19px !important;
+    max-width: 19px !important;
+    max-height: 19px !important;
+    font-size: 19px !important;
+    stroke-width: 2.2 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .csp-header-submit-btn:hover,
+  .elementor-location-header .elementor-button:hover,
+  .elementor-1969 .elementor-element-36265fd .elementor-button:hover,
+  .elementor-element-36265fd .elementor-button:hover,
+  .csp-modal-cta:hover {
+    transform: translateY(-2px) scale(1.025) !important;
+    box-shadow: 0 10px 30px rgba(0, 174, 254, 0.45) !important;
+  }
+
   /* ── TIER 2: SECONDARY / STANDARD PILL BUTTONS ── */
   .csp-hero-btn-secondary,
   a.elementskit-btn[href*="about-us"],
@@ -4578,6 +4653,11 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
           if (!res.success || !res.settings) return;
 
           var s = res.settings;
+          // Suppress promotional popup adverts while site is in Maintenance Mode
+          if (s.maintenance_mode === '1' || s.maintenance_mode === 1 || s.maintenance_mode === true || s.maintenance_mode === 'true') {
+            return;
+          }
+
           var adverts = [];
 
           if (s.popup_adverts_list) {
@@ -4640,10 +4720,10 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
               var adModal = document.createElement('div');
               adModal.id = 'csp-popup-ad-modal-' + (ad.id || 'ad');
-              adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,0.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;transition:opacity 0.3s ease;padding:20px;box-sizing:border-box;';
+              adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,0.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.3s ease;padding:20px;box-sizing:border-box;';
 
               var card = document.createElement('div');
-              card.style.cssText = 'position:relative;background:#061022;border-radius:22px;max-width:470px;width:100%;overflow:hidden;box-shadow:0 25px 65px rgba(0,0,0,0.6);transform:scale(0.92);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);text-align:center;line-height:0;';
+              card.style.cssText = 'position:relative;background:linear-gradient(145deg, #1e293b 0%, #0f172a 100%);border:1px solid rgba(255,255,255,0.18);border-radius:24px;max-width:480px;width:100%;overflow:hidden;box-shadow:0 25px 65px rgba(0,0,0,0.45), 0 0 35px rgba(0,174,254,0.18);transform:scale(0.92);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);text-align:center;line-height:0;';
 
               var closeBtn = document.createElement('button');
               closeBtn.setAttribute('aria-label', 'Close advert');
@@ -4678,7 +4758,7 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
                   mediaHtml = '<div style="position:relative;width:100%;max-height:80vh;overflow:hidden;background:#000;"><video src="' + resolvedMedia + '" autoplay loop muted playsinline style="width:100%;max-height:80vh;object-fit:cover;display:block;"></video></div>';
                 } else {
                   // Floating flyer presentation: full high-res photo with direct overlay
-                  mediaHtml = '<a href="' + linkUrl + '"' + targetAttr + ' style="display:block;text-decoration:none;position:relative;overflow:hidden;cursor:pointer;background:#0a101f;line-height:0;"><img src="' + resolvedMedia + '" alt="Promotion" style="width:100%;max-height:80vh;object-fit:contain;display:block;" /></a>';
+                  mediaHtml = '<a href="' + linkUrl + '"' + targetAttr + ' style="display:block;text-decoration:none;position:relative;overflow:hidden;cursor:pointer;background:transparent;line-height:0;"><img src="' + resolvedMedia + '" alt="Promotion" style="width:100%;max-height:80vh;object-fit:contain;display:block;" /></a>';
                 }
               }
 
@@ -4706,15 +4786,28 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
                 btnColorCss = 'background:#00AEFE;color:#ffffff;box-shadow:0 8px 25px rgba(0,174,254,0.55);';
               }
 
-              var floatingOverlay = '';
-              if (titleHtml || (btnLabel && linkUrl !== '#')) {
-                floatingOverlay = '<div style="position:absolute;bottom:22px;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 20px;z-index:15;pointer-events:none;box-sizing:border-box;">' +
-                  (titleHtml ? '<div style="background:rgba(2,6,23,0.72);backdrop-filter:blur(8px);padding:8px 18px;border-radius:30px;pointer-events:auto;border:1px solid rgba(255,255,255,0.15);">' + titleHtml + '</div>' : '') +
-                  (btnLabel && linkUrl !== '#' ? '<a href="' + linkUrl + '"' + targetAttr + ' id="csp-popup-ad-cta-btn" style="' + btnBaseStyle + btnColorCss + '">' + escapeHtml(btnLabel) + '</a>' : '') +
-                  '</div>';
-              }
+              var isBelow = ad.btnPosition === 'below';
+              var ctaMarkup = (btnLabel && linkUrl !== '#') ? '<a href="' + linkUrl + '"' + targetAttr + ' id="csp-popup-ad-cta-btn" style="' + btnBaseStyle + btnColorCss + '">' + escapeHtml(btnLabel) + '</a>' : '';
 
-              card.innerHTML = mediaHtml + floatingOverlay;
+              if (isBelow) {
+                var belowBar = '';
+                if (titleHtml || ctaMarkup) {
+                  belowBar = '<div style="background:#0b1324;padding:16px 20px;border-top:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;line-height:1.4;">' +
+                    (titleHtml ? '<div style="margin-bottom:2px;">' + titleHtml + '</div>' : '') +
+                    ctaMarkup +
+                    '</div>';
+                }
+                card.innerHTML = mediaHtml + belowBar;
+              } else {
+                var floatingOverlay = '';
+                if (titleHtml || ctaMarkup) {
+                  floatingOverlay = '<div style="position:absolute;bottom:22px;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 20px;z-index:15;pointer-events:none;box-sizing:border-box;">' +
+                    (titleHtml ? '<div style="background:rgba(2,6,23,0.72);backdrop-filter:blur(8px);padding:8px 18px;border-radius:30px;pointer-events:auto;border:1px solid rgba(255,255,255,0.15);">' + titleHtml + '</div>' : '') +
+                    ctaMarkup +
+                    '</div>';
+                }
+                card.innerHTML = mediaHtml + floatingOverlay;
+              }
               card.appendChild(closeBtn);
               adModal.appendChild(card);
               document.body.appendChild(adModal);
@@ -6023,6 +6116,17 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       font-size: 0.9rem !important;
     }
   }
+
+  /* ── HERO BANNER BUTTON CONSISTENCY (10px rounded corners like View Sent Author Emails across all pages) ── */
+  .csp-hero-banner .csp-hero-btn,
+  .csp-hero-banner .csp-hero-btn-primary,
+  .csp-hero-banner .csp-hero-btn-secondary,
+  .csp-hero-banner button.csp-hero-btn,
+  .csp-hero-banner a.csp-hero-btn,
+  .csp-hero-btn,
+  .csp-hero-btn-primary {
+    border-radius: 10px !important;
+  }
 </style>
 <script>
   /* ── UNIVERSAL CONSPODIUM SVG ICON PROVIDER ────────────────── */
@@ -6146,6 +6250,129 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     container.innerHTML = html;
     if (window.cspToast) window.cspToast('Vote recorded for "' + optionText + '"!', 'success');
   };
+
+  // ── SITE MAINTENANCE MODE INTERCEPTOR & LIVE PREVIEW ──
+  (function() {
+    try {
+      var path = (window.location.pathname || '').toLowerCase();
+      // Never block admin dashboard or login page
+      if (path.indexOf('/dashboard') !== -1 || path.indexOf('/login') !== -1 || path.indexOf('/admin') !== -1) {
+        return;
+      }
+
+      var isForcedPreview = (window.location.search && window.location.search.indexOf('preview_maintenance=1') !== -1);
+      var adminToken = localStorage.getItem('conspodium_admin_token') || sessionStorage.getItem('conspodium_admin_token');
+
+      function escapeHtmlMaint(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function showMaintenanceScreen(msg, isPreview) {
+        var existing = document.getElementById('csp-live-maintenance-overlay');
+        if (existing) existing.remove();
+
+        // Strict suppression: remove and permanently disable popup adverts during maintenance
+        window.__csp_is_maintenance = true;
+        var existingAd = document.getElementById('csp-popup-ad-overlay') || document.querySelector('.csp-popup-advert-overlay') || document.querySelector('[id*="popup-ad"]');
+        if (existingAd) existingAd.remove();
+
+        if (!document.getElementById('csp-suppress-ads-style')) {
+          var adStyle = document.createElement('style');
+          adStyle.id = 'csp-suppress-ads-style';
+          adStyle.textContent = '#csp-popup-ad-overlay, .csp-popup-advert-overlay, .csp-popup-ad-container, [id*="popup-ad"] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }';
+          document.head.appendChild(adStyle);
+        }
+
+        var overlay = document.createElement('div');
+        overlay.id = 'csp-live-maintenance-overlay';
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999999;background:radial-gradient(circle at 50% 20%, #1e1b4b 0%, #090d16 100%);color:#ffffff;display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;overflow-y:auto;';
+
+        var cleanMsg = msg || 'We are currently undergoing scheduled upgrades to bring you an improved experience. Please check back shortly!';
+
+        overlay.innerHTML = 
+          '<div style="max-width:560px;width:100%;text-align:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.12);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:24px;padding:48px 36px;box-shadow:0 30px 70px -15px rgba(0,0,0,0.8);animation:cspFadeIn 0.3s ease;">' +
+            (isPreview ? '<div style="display:inline-block;background:#ea580c;color:white;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;">Live Admin Preview Mode</div><br>' : '') +
+            '<div style="margin-bottom:22px;">' +
+              '<img src="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png" alt="Conspodium" style="width:72px;height:72px;border-radius:50%;box-shadow:0 0 35px rgba(0,174,254,0.45);border:2px solid rgba(255,255,255,0.2);object-fit:cover;">' +
+            '</div>' +
+            '<div style="display:inline-flex;align-items:center;gap:8px;background:rgba(234,88,12,0.18);border:1px solid rgba(234,88,12,0.4);color:#fb923c;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;margin-bottom:20px;letter-spacing:0.5px;">' +
+              '<span style="display:inline-block;width:8px;height:8px;background:#f97316;border-radius:50%;box-shadow:0 0 10px #f97316;"></span>' +
+              'PLATFORM UPGRADE IN PROGRESS' +
+            '</div>' +
+            '<h1 style="font-family:Merriweather,serif;font-size:2rem;line-height:1.25;margin:0 0 16px;color:#ffffff;font-weight:800;letter-spacing:-0.02em;">' +
+              'We\'ll Be Right Back.' +
+            '</h1>' +
+            '<p style="font-size:1.02rem;line-height:1.65;color:#cbd5e1;margin:0 0 32px;font-weight:400;">' +
+              escapeHtmlMaint(cleanMsg) +
+            '</p>' +
+            '<div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">' +
+              '<button onclick="window.location.reload()" style="background:linear-gradient(135deg, #00AEFE 0%, #0284c7 100%);color:#ffffff;border:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(0,174,254,0.35);transition:all 0.2s;">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>' +
+                'Refresh Page' +
+              '</button>' +
+              (isPreview ? '<button onclick="document.getElementById(\'csp-live-maintenance-overlay\').remove()" style="background:rgba(255,255,255,0.12);color:#ffffff;border:1px solid rgba(255,255,255,0.25);padding:12px 22px;border-radius:12px;font-size:0.95rem;font-weight:600;cursor:pointer;">Exit Preview</button>' : '') +
+            '</div>' +
+          '</div>';
+
+        document.body.appendChild(overlay);
+        document.documentElement.style.overflow = 'hidden';
+      }
+
+      function showAdminBypassBanner() {
+        if (document.getElementById('csp-admin-maintenance-banner')) return;
+        var bar = document.createElement('div');
+        bar.id = 'csp-admin-maintenance-banner';
+        bar.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999999;background:linear-gradient(90deg, #ea580c, #c2410c);color:#ffffff;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;font-family:system-ui,-apple-system,sans-serif;font-size:12px;font-weight:600;box-shadow:0 2px 10px rgba(0,0,0,0.3);';
+        bar.innerHTML = '<div style="display:flex;align-items:center;gap:8px;"><span>⚠️ <strong>MAINTENANCE MODE ACTIVE:</strong> Public visitors cannot access this page. You have active Admin Bypass access.</span></div>' +
+          '<div style="display:flex;align-items:center;gap:10px;"><a href="/dashboard/?tab=tab-settings" style="color:#ffffff;background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:6px;text-decoration:none;font-weight:700;">Settings ⚙️</a></div>';
+        document.body.appendChild(bar);
+        document.body.style.paddingTop = ((parseInt(window.getComputedStyle(document.body).paddingTop) || 0) + 36) + 'px';
+      }
+
+      if (isForcedPreview) {
+        if (document.body) {
+          showMaintenanceScreen(null, true);
+        } else {
+          window.addEventListener('DOMContentLoaded', function() { showMaintenanceScreen(null, true); });
+        }
+        return;
+      }
+
+      // Check site settings
+      var apiUrl = '/api/settings.php';
+      fetch(apiUrl)
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+          if (!res || !res.settings) return;
+          var s = res.settings;
+          if (s.maintenance_mode === '1') {
+            if (adminToken) {
+              if (document.body) {
+                showAdminBypassBanner();
+              } else {
+                window.addEventListener('DOMContentLoaded', showAdminBypassBanner);
+              }
+            } else {
+              var runBlock = function() {
+                showMaintenanceScreen(s.maintenance_message, false);
+              };
+              if (document.body) {
+                runBlock();
+              } else {
+                window.addEventListener('DOMContentLoaded', runBlock);
+              }
+            }
+          }
+        })
+        .catch(function(err) {});
+    } catch(e) {}
+  })();
 </script>
 <!-- CSP_HEADER_FIXES_END -->
 </head>
@@ -6205,12 +6432,12 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 				<div class="elementor-element elementor-element-36265fd elementor-align-right sticky-button-prefixstyle elementor-widget-mobile__width-initial elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-button" data-id="36265fd" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
 					<div class="elementor-widget-container">
 						<div class="elementor-button-wrapper">
-							<a class="elementor-button elementor-button-link elementor-size-sm csp-header-submit-btn" href="/submit-story/">
+							<a class="elementor-button elementor-button-link elementor-size-md csp-header-submit-btn" href="/submit-story/">
 								<span class="elementor-button-content-wrapper">
 									<span class="elementor-button-text">Submit Story</span>
-									<span class="elementor-button-icon" style="margin-left: 6px; display: inline-flex; align-items: center;">
-										<svg width="17" height="17" viewBox="0 0 16 16" fill="none" style="vertical-align: middle;">
-											<path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									<span class="elementor-button-icon" style="margin-left: 8px; display: inline-flex; align-items: center;">
+										<svg width="19" height="19" viewBox="0 0 16 16" fill="none" style="vertical-align: middle;">
+											<path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
 										</svg>
 									</span>
 								</span>
@@ -8915,6 +9142,7 @@ var thickboxL10n = {"next":"Next >","prev":"< Prev","image":"Image","of":"of","c
     patchAllLogos();
   });
 })();
+</script>
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script>

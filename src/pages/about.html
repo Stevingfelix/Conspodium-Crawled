@@ -1329,6 +1329,9 @@ e-page-transition,
         if (!res.success || !res.settings) return;
 
         var s = res.settings;
+        if (s.maintenance_mode === '1' || s.maintenance_mode === 1 || s.maintenance_mode === true || s.maintenance_mode === 'true') {
+          return;
+        }
         var adverts = [];
 
         if (s.popup_adverts_list) {

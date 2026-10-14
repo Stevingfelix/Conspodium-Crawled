@@ -38,14 +38,21 @@ if (!function_exists('getEmailSetting')) {
 }
 
 if (!function_exists('buildMimeEmailMessage')) {
-    function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyText, $bodyHtml = null, $replyToEmail = null) {
+    function buildMimeEmailMessage($fromName, $fromEmail, $toEmail, $subject, $bodyText, $bodyHtml = null, $replyToEmail = null, $customMessageId = null) {
         $fromDomain = 'conspodium.com';
         if (strpos($fromEmail, '@') !== false) {
             $parts = explode('@', $fromEmail);
             if (!empty($parts[1])) $fromDomain = trim($parts[1]);
         }
         
-        $msgId = '<' . md5(uniqid(microtime(), true)) . '@' . $fromDomain . '>';
+        if (!empty($customMessageId)) {
+            $msgId = (substr(trim($customMessageId), 0, 1) === '<' && substr(trim($customMessageId), -1) === '>')
+                ? trim($customMessageId)
+                : ('<' . trim($customMessageId) . '>');
+        } else {
+            $msgId = '<' . md5(uniqid(microtime(), true)) . '@' . $fromDomain . '>';
+        }
+
         $dateStr = date("r");
         $boundary = "----=_NextPart_" . md5(uniqid(microtime(), true));
         $effectiveReplyTo = !empty($replyToEmail) ? $replyToEmail : $fromEmail;
@@ -80,7 +87,7 @@ if (!function_exists('buildMimeEmailMessage')) {
         <tr>
           <td style="background:#f1f5f9;padding:20px;text-align:center;font-size:12px;color:#64748b;border-top:1px solid #e2e8f0;">
             <p style="margin:0 0 6px;">Sent via Conspodium Verified Editorial Engine.</p>
-            <p style="margin:0;">© 2026 Conspodium. All rights reserved. • <a href="https://conspodium.com" style="color:#00AEFE;text-decoration:none;">conspodium.com</a></p>
+            <p style="margin:0;">© 2026 Conspodium. All rights reserved. • <a href="https://conspodium.com" style="color:#00AEFE;text-decoration:none;">conspodium.com</a> • <a href="https://conspodium.com/api/newsletter.php?action=unsubscribe&email={$toEmail}" style="color:#94a3b8;text-decoration:underline;">Unsubscribe</a></p>
           </td>
         </tr>
       </table>
@@ -91,6 +98,9 @@ if (!function_exists('buildMimeEmailMessage')) {
 </html>
 HTML;
         }
+
+        $encodedEmail = urlencode($toEmail);
+        $unsubUrl = "https://conspodium.com/api/newsletter.php?action=unsubscribe&email={$encodedEmail}";
 
         $headers = [];
         $headers[] = "From: {$fromName} <{$fromEmail}>";
@@ -103,19 +113,25 @@ HTML;
         $headers[] = "MIME-Version: 1.0";
         $headers[] = "X-Mailer: Conspodium Enterprise Editorial Mailer v2.5";
         $headers[] = "X-Priority: 3 (Normal)";
-        $headers[] = "List-Unsubscribe: <mailto:unsubscribe@{$fromDomain}?subject=unsubscribe>";
+        $headers[] = "List-Unsubscribe: <{$unsubUrl}>, <mailto:unsubscribe@{$fromDomain}?subject=unsubscribe>";
         $headers[] = "List-Unsubscribe-Post: List-Unsubscribe=One-Click";
         $headers[] = "Content-Type: multipart/alternative; boundary=\"{$boundary}\"";
+
+        $effectiveBodyHtml = str_ireplace('{unsubscribe_url}', $unsubUrl, $bodyHtml);
+        $effectiveBodyText = str_ireplace('{unsubscribe_url}', $unsubUrl, $bodyText);
+        if (stripos($effectiveBodyHtml, 'unsubscribe') === false) {
+            $effectiveBodyHtml = str_ireplace('</body>', '<div style="text-align:center;padding:14px;font-size:11px;color:#94a3b8;background:#f8fafc;border-top:1px solid #e2e8f0;"><p style="margin:0;">No longer want these emails? <a href="' . $unsubUrl . '" style="color:#00AEFE;text-decoration:underline;">Unsubscribe here</a></p></div></body>', $effectiveBodyHtml);
+        }
 
         $mimeContent  = implode("\r\n", $headers) . "\r\n\r\n";
         $mimeContent .= "--{$boundary}\r\n";
         $mimeContent .= "Content-Type: text/plain; charset=UTF-8\r\n";
         $mimeContent .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
-        $mimeContent .= $bodyText . "\r\n\r\n";
+        $mimeContent .= $effectiveBodyText . "\r\n\r\n";
         $mimeContent .= "--{$boundary}\r\n";
         $mimeContent .= "Content-Type: text/html; charset=UTF-8\r\n";
         $mimeContent .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
-        $mimeContent .= $bodyHtml . "\r\n\r\n";
+        $mimeContent .= $effectiveBodyHtml . "\r\n\r\n";
         $mimeContent .= "--{$boundary}--\r\n";
 
         return $mimeContent;
@@ -123,7 +139,7 @@ HTML;
 }
 
 if (!function_exists('sendSmtpEmail')) {
-    function sendSmtpEmail($host, $port, $user, $pass, $fromName, $fromEmail, $toEmail, $subject, $bodyText, $bodyHtml = null) {
+    function sendSmtpEmail($host, $port, $user, $pass, $fromName, $fromEmail, $toEmail, $subject, $bodyText, $bodyHtml = null, $customMessageId = null) {
         $cleanHost = preg_replace('#^(ssl|tls|tcp)://#i', '', trim($host));
         $cleanHost = trim($cleanHost, "/ \t\n\r\0\x0B");
         if (empty($cleanHost)) $cleanHost = 'smtp.hostinger.com';
@@ -224,41 +240,47 @@ if (!function_exists('sendSmtpEmail')) {
                 $passResp = $send($socket, base64_encode($pass));
                 if (substr(trim($passResp), 0, 3) !== "235") {
                     fclose($socket);
-                    return ["success" => false, "error" => "SMTP Password authentication failed: " . trim($passResp)];
+                    return ["success" => false, "error" => "SMTP Password authentication failed: " . trim($passResp), "data_transmitted" => false];
                 }
             }
 
             $mailFromResp = $send($socket, "MAIL FROM:<" . $effectiveFromEmail . ">");
             if (substr(trim($mailFromResp), 0, 3) !== "250") {
                 fclose($socket);
-                return ["success" => false, "error" => "MAIL FROM command failed: " . trim($mailFromResp)];
+                return ["success" => false, "error" => "MAIL FROM command failed: " . trim($mailFromResp), "data_transmitted" => false];
             }
 
             $rcptResp = $send($socket, "RCPT TO:<" . $toEmail . ">");
             if (substr(trim($rcptResp), 0, 3) !== "250" && substr(trim($rcptResp), 0, 3) !== "251") {
                 fclose($socket);
-                return ["success" => false, "error" => "RCPT TO command failed for $toEmail: " . trim($rcptResp)];
+                return ["success" => false, "error" => "RCPT TO command failed for $toEmail: " . trim($rcptResp), "data_transmitted" => false];
             }
 
             $dataResp = $send($socket, "DATA");
             if (substr(trim($dataResp), 0, 3) !== "354") {
                 fclose($socket);
-                return ["success" => false, "error" => "DATA command initiation failed: " . trim($dataResp)];
+                return ["success" => false, "error" => "DATA command initiation failed: " . trim($dataResp), "data_transmitted" => false];
             }
 
-            $mimePayload = buildMimeEmailMessage($fromName, $effectiveFromEmail, $toEmail, $subject, $bodyText, $bodyHtml, $replyToEmail);
-            $sendResp = $send($socket, $mimePayload . "\r\n.");
+            $mimePayload = buildMimeEmailMessage($fromName, $effectiveFromEmail, $toEmail, $subject, $bodyText, $bodyHtml, $replyToEmail, $customMessageId);
+            fputs($socket, $mimePayload . "\r\n.\r\n");
+            $sendResp = $read($socket);
             @$send($socket, "QUIT");
             @fclose($socket);
 
             if (substr(trim($sendResp), 0, 3) === "250") {
-                return ["success" => true, "message" => "Email successfully delivered via Hostinger SMTP engine!"];
+                return ["success" => true, "message" => "Email successfully delivered via Hostinger SMTP engine!", "data_transmitted" => true];
             } else {
-                return ["success" => false, "error" => "Message body transmission failed: " . trim($sendResp)];
+                $isTimedOut = empty(trim($sendResp));
+                return [
+                    "success" => false,
+                    "error" => $isTimedOut ? "Timeout awaiting final delivery receipt from SMTP server" : ("Message body transmission failed: " . trim($sendResp)),
+                    "data_transmitted" => true
+                ];
             }
         }
 
-        return ["success" => false, "error" => $lastError];
+        return ["success" => false, "error" => $lastError, "data_transmitted" => false];
     }
 }
 
@@ -345,7 +367,7 @@ if (!function_exists('csp_dispatch_templated_email')) {
         <tr>
           <td style="background:#f1f5f9;padding:20px;text-align:center;font-size:12px;color:#64748b;border-top:1px solid #e2e8f0;">
             <p style="margin:0 0 6px;">Sent via Conspodium Verified Editorial Engine.</p>
-            <p style="margin:0;">© 2026 Conspodium. All rights reserved. • <a href="https://conspodium.com" style="color:#00AEFE;text-decoration:none;">conspodium.com</a></p>
+            <p style="margin:0;">© 2026 Conspodium. All rights reserved. • <a href="https://conspodium.com" style="color:#00AEFE;text-decoration:none;">conspodium.com</a> • <a href="https://conspodium.com/api/newsletter.php?action=unsubscribe&email={$recipientEmail}" style="color:#94a3b8;text-decoration:underline;">Unsubscribe</a></p>
           </td>
         </tr>
       </table>
@@ -366,12 +388,20 @@ HTML;
             $smtpPass = getEmailSetting($pdo, 'email_smtp_pass', '');
 
             $sendSuccess = false;
+            $dataTransmitted = false;
             if (($provider === 'smtp' || $provider === 'hostinger') && !empty($smtpHost) && !empty($smtpUser) && !empty($smtpPass)) {
                 $smtpResult = sendSmtpEmail($smtpHost, $smtpPort, $smtpUser, $smtpPass, $fromName, $fromAddress, $recipientEmail, $subject, strip_tags($body), $finalHtml);
-                if ($smtpResult['success']) $sendSuccess = true;
+                if (!empty($smtpResult['success'])) {
+                    $sendSuccess = true;
+                } elseif (!empty($smtpResult['data_transmitted'])) {
+                    // MTA received payload but acknowledgment timed out; do NOT duplicate with PHP mail
+                    $dataTransmitted = true;
+                    $sendSuccess = true;
+                    $provider = 'smtp_queued_timeout';
+                }
             }
 
-            if (!$sendSuccess) {
+            if (!$sendSuccess && !$dataTransmitted) {
                 $headers = "From: $fromName <$fromAddress>\r\n" .
                     "Reply-To: $fromAddress\r\n" .
                     "MIME-Version: 1.0\r\n" .

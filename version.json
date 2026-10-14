@@ -1,6 +1,17 @@
 {
-  "version": "2.1.0",
-  "build_timestamp": "2026-10-08 22:02:53",
-  "description": "Conspodium System & Frontend Update Package",
-  "author": "Conspodium Core Team"
+  "version": "2.1.8",
+  "description": "Subscriber removal action in directory, edge-to-edge popup advert live preview alignment, and button placement position toggle.",
+  "author": "Conspodium Core Team",
+  "type": "lightweight_feature_patch",
+  "highlights": [
+    "Added 1-click Subscriber Deletion action in the Subscriber Directory with confirmation dialog and live list refreshing",
+    "Aligned backend live popup advert preview with frontend design (edge-to-edge flyer presentation with floating circular close button)",
+    "Added Button Placement Position selector in popup settings: choose between Floating on Image (Overlay) or Below Image (Dedicated Bar)",
+    "Synchronized both frontend and backend popup renderers to honor button placement configuration dynamically"
+  ],
+  "last_updated": "2026-10-14 15:55:00",
+  "updated_by": "admin",
+  "files_updated": 4,
+  "files_protected": 2,
+  "build_timestamp": "2026-10-14 14:57:18"
 }

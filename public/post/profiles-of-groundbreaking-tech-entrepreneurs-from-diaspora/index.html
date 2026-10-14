@@ -651,7 +651,7 @@
   .elementor-item,
   .menu-item a {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    font-size: 15px !important;
+    font-size: 15.5px !important;
     font-weight: 600 !important;
     text-shadow: none !important;
     letter-spacing: -0.015em !important;
@@ -661,13 +661,23 @@
   .elementor-location-header .elementor-button,
   .elementor-1969 .elementor-button,
   .elementor-1969 .elementor-element-36265fd .elementor-button,
+  .elementor-element-36265fd .elementor-button,
   .csp-header-submit-btn {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
     letter-spacing: -0.015em !important;
     text-transform: none !important;
     -webkit-font-smoothing: antialiased !important;
+  }
+
+  .elementor-location-header .elementor-button-text,
+  .elementor-1969 .elementor-element-36265fd .elementor-button-text,
+  .elementor-element-36265fd .elementor-button-text,
+  .csp-header-submit-btn .elementor-button-text {
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em !important;
   }
 
   .elementor-location-header .elementor-button-content-wrapper,
@@ -679,7 +689,7 @@
     flex-direction: row !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 8px !important;
+    gap: 10px !important;
   }
 
   /* ── NORMAL STATE (TOP OF PAGE ON LIGHT HERO PAGES): Crisp Dark Links ─── */
@@ -2511,6 +2521,71 @@
     filter: brightness(1.05) !important;
   }
 
+  /* ── DARK HEADER BUTTONS & INNER TEXT ENLARGEMENT (ALL PAGES) ── */
+  .csp-header-submit-btn,
+  .elementor-location-header .elementor-button,
+  .elementor-1969 .elementor-element-36265fd .elementor-button,
+  .elementor-1969 .elementor-element.elementor-element-36265fd .elementor-button,
+  .elementor-element-36265fd .elementor-button,
+  .csp-modal-cta {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em !important;
+    line-height: 1.25 !important;
+    padding: 14.5px 32px !important;
+    min-height: 48px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+
+  .csp-header-submit-btn .elementor-button-content-wrapper,
+  .elementor-location-header .elementor-button-content-wrapper,
+  .elementor-1969 .elementor-element-36265fd .elementor-button-content-wrapper,
+  .elementor-element-36265fd .elementor-button-content-wrapper {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+
+  .csp-header-submit-btn .elementor-button-text,
+  .elementor-location-header .elementor-button-text,
+  .elementor-1969 .elementor-element-36265fd .elementor-button-text,
+  .elementor-element-36265fd .elementor-button-text,
+  .csp-modal-cta span:first-child {
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em !important;
+    display: inline-block !important;
+  }
+
+  .csp-header-submit-btn svg,
+  .csp-header-submit-btn .elementor-button-icon svg,
+  .elementor-location-header .elementor-button svg,
+  .elementor-1969 .elementor-element-36265fd .elementor-button svg,
+  .elementor-element-36265fd .elementor-button svg,
+  .csp-modal-cta svg {
+    width: 19px !important;
+    height: 19px !important;
+    max-width: 19px !important;
+    max-height: 19px !important;
+    font-size: 19px !important;
+    stroke-width: 2.2 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .csp-header-submit-btn:hover,
+  .elementor-location-header .elementor-button:hover,
+  .elementor-1969 .elementor-element-36265fd .elementor-button:hover,
+  .elementor-element-36265fd .elementor-button:hover,
+  .csp-modal-cta:hover {
+    transform: translateY(-2px) scale(1.025) !important;
+    box-shadow: 0 10px 30px rgba(0, 174, 254, 0.45) !important;
+  }
+
   /* ── TIER 2: SECONDARY / STANDARD PILL BUTTONS ── */
   .csp-hero-btn-secondary,
   a.elementskit-btn[href*="about-us"],
@@ -4304,6 +4379,11 @@
           if (!res.success || !res.settings) return;
 
           var s = res.settings;
+          // Suppress promotional popup adverts while site is in Maintenance Mode
+          if (s.maintenance_mode === '1' || s.maintenance_mode === 1 || s.maintenance_mode === true || s.maintenance_mode === 'true') {
+            return;
+          }
+
           var adverts = [];
 
           if (s.popup_adverts_list) {
@@ -4366,10 +4446,10 @@
 
               var adModal = document.createElement('div');
               adModal.id = 'csp-popup-ad-modal-' + (ad.id || 'ad');
-              adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,0.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;transition:opacity 0.3s ease;padding:20px;box-sizing:border-box;';
+              adModal.style.cssText = 'position:fixed;inset:0;z-index:99999999;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,0.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.3s ease;padding:20px;box-sizing:border-box;';
 
               var card = document.createElement('div');
-              card.style.cssText = 'position:relative;background:#061022;border-radius:22px;max-width:470px;width:100%;overflow:hidden;box-shadow:0 25px 65px rgba(0,0,0,0.6);transform:scale(0.92);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);text-align:center;line-height:0;';
+              card.style.cssText = 'position:relative;background:linear-gradient(145deg, #1e293b 0%, #0f172a 100%);border:1px solid rgba(255,255,255,0.18);border-radius:24px;max-width:480px;width:100%;overflow:hidden;box-shadow:0 25px 65px rgba(0,0,0,0.45), 0 0 35px rgba(0,174,254,0.18);transform:scale(0.92);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);text-align:center;line-height:0;';
 
               var closeBtn = document.createElement('button');
               closeBtn.setAttribute('aria-label', 'Close advert');
@@ -4404,7 +4484,7 @@
                   mediaHtml = '<div style="position:relative;width:100%;max-height:80vh;overflow:hidden;background:#000;"><video src="' + resolvedMedia + '" autoplay loop muted playsinline style="width:100%;max-height:80vh;object-fit:cover;display:block;"></video></div>';
                 } else {
                   // Floating flyer presentation: full high-res photo with direct overlay
-                  mediaHtml = '<a href="' + linkUrl + '"' + targetAttr + ' style="display:block;text-decoration:none;position:relative;overflow:hidden;cursor:pointer;background:#0a101f;line-height:0;"><img src="' + resolvedMedia + '" alt="Promotion" style="width:100%;max-height:80vh;object-fit:contain;display:block;" /></a>';
+                  mediaHtml = '<a href="' + linkUrl + '"' + targetAttr + ' style="display:block;text-decoration:none;position:relative;overflow:hidden;cursor:pointer;background:transparent;line-height:0;"><img src="' + resolvedMedia + '" alt="Promotion" style="width:100%;max-height:80vh;object-fit:contain;display:block;" /></a>';
                 }
               }
 
@@ -4432,15 +4512,28 @@
                 btnColorCss = 'background:#00AEFE;color:#ffffff;box-shadow:0 8px 25px rgba(0,174,254,0.55);';
               }
 
-              var floatingOverlay = '';
-              if (titleHtml || (btnLabel && linkUrl !== '#')) {
-                floatingOverlay = '<div style="position:absolute;bottom:22px;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 20px;z-index:15;pointer-events:none;box-sizing:border-box;">' +
-                  (titleHtml ? '<div style="background:rgba(2,6,23,0.72);backdrop-filter:blur(8px);padding:8px 18px;border-radius:30px;pointer-events:auto;border:1px solid rgba(255,255,255,0.15);">' + titleHtml + '</div>' : '') +
-                  (btnLabel && linkUrl !== '#' ? '<a href="' + linkUrl + '"' + targetAttr + ' id="csp-popup-ad-cta-btn" style="' + btnBaseStyle + btnColorCss + '">' + escapeHtml(btnLabel) + '</a>' : '') +
-                  '</div>';
-              }
+              var isBelow = ad.btnPosition === 'below';
+              var ctaMarkup = (btnLabel && linkUrl !== '#') ? '<a href="' + linkUrl + '"' + targetAttr + ' id="csp-popup-ad-cta-btn" style="' + btnBaseStyle + btnColorCss + '">' + escapeHtml(btnLabel) + '</a>' : '';
 
-              card.innerHTML = mediaHtml + floatingOverlay;
+              if (isBelow) {
+                var belowBar = '';
+                if (titleHtml || ctaMarkup) {
+                  belowBar = '<div style="background:#0b1324;padding:16px 20px;border-top:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;line-height:1.4;">' +
+                    (titleHtml ? '<div style="margin-bottom:2px;">' + titleHtml + '</div>' : '') +
+                    ctaMarkup +
+                    '</div>';
+                }
+                card.innerHTML = mediaHtml + belowBar;
+              } else {
+                var floatingOverlay = '';
+                if (titleHtml || ctaMarkup) {
+                  floatingOverlay = '<div style="position:absolute;bottom:22px;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 20px;z-index:15;pointer-events:none;box-sizing:border-box;">' +
+                    (titleHtml ? '<div style="background:rgba(2,6,23,0.72);backdrop-filter:blur(8px);padding:8px 18px;border-radius:30px;pointer-events:auto;border:1px solid rgba(255,255,255,0.15);">' + titleHtml + '</div>' : '') +
+                    ctaMarkup +
+                    '</div>';
+                }
+                card.innerHTML = mediaHtml + floatingOverlay;
+              }
               card.appendChild(closeBtn);
               adModal.appendChild(card);
               document.body.appendChild(adModal);
@@ -5749,6 +5842,17 @@
       font-size: 0.9rem !important;
     }
   }
+
+  /* ── HERO BANNER BUTTON CONSISTENCY (10px rounded corners like View Sent Author Emails across all pages) ── */
+  .csp-hero-banner .csp-hero-btn,
+  .csp-hero-banner .csp-hero-btn-primary,
+  .csp-hero-banner .csp-hero-btn-secondary,
+  .csp-hero-banner button.csp-hero-btn,
+  .csp-hero-banner a.csp-hero-btn,
+  .csp-hero-btn,
+  .csp-hero-btn-primary {
+    border-radius: 10px !important;
+  }
 </style>
 <script>
   /* ── UNIVERSAL CONSPODIUM SVG ICON PROVIDER ────────────────── */
@@ -5872,6 +5976,129 @@
     container.innerHTML = html;
     if (window.cspToast) window.cspToast('Vote recorded for "' + optionText + '"!', 'success');
   };
+
+  // ── SITE MAINTENANCE MODE INTERCEPTOR & LIVE PREVIEW ──
+  (function() {
+    try {
+      var path = (window.location.pathname || '').toLowerCase();
+      // Never block admin dashboard or login page
+      if (path.indexOf('/dashboard') !== -1 || path.indexOf('/login') !== -1 || path.indexOf('/admin') !== -1) {
+        return;
+      }
+
+      var isForcedPreview = (window.location.search && window.location.search.indexOf('preview_maintenance=1') !== -1);
+      var adminToken = localStorage.getItem('conspodium_admin_token') || sessionStorage.getItem('conspodium_admin_token');
+
+      function escapeHtmlMaint(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function showMaintenanceScreen(msg, isPreview) {
+        var existing = document.getElementById('csp-live-maintenance-overlay');
+        if (existing) existing.remove();
+
+        // Strict suppression: remove and permanently disable popup adverts during maintenance
+        window.__csp_is_maintenance = true;
+        var existingAd = document.getElementById('csp-popup-ad-overlay') || document.querySelector('.csp-popup-advert-overlay') || document.querySelector('[id*="popup-ad"]');
+        if (existingAd) existingAd.remove();
+
+        if (!document.getElementById('csp-suppress-ads-style')) {
+          var adStyle = document.createElement('style');
+          adStyle.id = 'csp-suppress-ads-style';
+          adStyle.textContent = '#csp-popup-ad-overlay, .csp-popup-advert-overlay, .csp-popup-ad-container, [id*="popup-ad"] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }';
+          document.head.appendChild(adStyle);
+        }
+
+        var overlay = document.createElement('div');
+        overlay.id = 'csp-live-maintenance-overlay';
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999999;background:radial-gradient(circle at 50% 20%, #1e1b4b 0%, #090d16 100%);color:#ffffff;display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;overflow-y:auto;';
+
+        var cleanMsg = msg || 'We are currently undergoing scheduled upgrades to bring you an improved experience. Please check back shortly!';
+
+        overlay.innerHTML = 
+          '<div style="max-width:560px;width:100%;text-align:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.12);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:24px;padding:48px 36px;box-shadow:0 30px 70px -15px rgba(0,0,0,0.8);animation:cspFadeIn 0.3s ease;">' +
+            (isPreview ? '<div style="display:inline-block;background:#ea580c;color:white;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;">Live Admin Preview Mode</div><br>' : '') +
+            '<div style="margin-bottom:22px;">' +
+              '<img src="/wp-content/uploads/2026/01/cropped-CONSPODIUM-NEW-2-192x192.png" alt="Conspodium" style="width:72px;height:72px;border-radius:50%;box-shadow:0 0 35px rgba(0,174,254,0.45);border:2px solid rgba(255,255,255,0.2);object-fit:cover;">' +
+            '</div>' +
+            '<div style="display:inline-flex;align-items:center;gap:8px;background:rgba(234,88,12,0.18);border:1px solid rgba(234,88,12,0.4);color:#fb923c;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;margin-bottom:20px;letter-spacing:0.5px;">' +
+              '<span style="display:inline-block;width:8px;height:8px;background:#f97316;border-radius:50%;box-shadow:0 0 10px #f97316;"></span>' +
+              'PLATFORM UPGRADE IN PROGRESS' +
+            '</div>' +
+            '<h1 style="font-family:Merriweather,serif;font-size:2rem;line-height:1.25;margin:0 0 16px;color:#ffffff;font-weight:800;letter-spacing:-0.02em;">' +
+              'We\'ll Be Right Back.' +
+            '</h1>' +
+            '<p style="font-size:1.02rem;line-height:1.65;color:#cbd5e1;margin:0 0 32px;font-weight:400;">' +
+              escapeHtmlMaint(cleanMsg) +
+            '</p>' +
+            '<div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">' +
+              '<button onclick="window.location.reload()" style="background:linear-gradient(135deg, #00AEFE 0%, #0284c7 100%);color:#ffffff;border:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(0,174,254,0.35);transition:all 0.2s;">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>' +
+                'Refresh Page' +
+              '</button>' +
+              (isPreview ? '<button onclick="document.getElementById(\'csp-live-maintenance-overlay\').remove()" style="background:rgba(255,255,255,0.12);color:#ffffff;border:1px solid rgba(255,255,255,0.25);padding:12px 22px;border-radius:12px;font-size:0.95rem;font-weight:600;cursor:pointer;">Exit Preview</button>' : '') +
+            '</div>' +
+          '</div>';
+
+        document.body.appendChild(overlay);
+        document.documentElement.style.overflow = 'hidden';
+      }
+
+      function showAdminBypassBanner() {
+        if (document.getElementById('csp-admin-maintenance-banner')) return;
+        var bar = document.createElement('div');
+        bar.id = 'csp-admin-maintenance-banner';
+        bar.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999999;background:linear-gradient(90deg, #ea580c, #c2410c);color:#ffffff;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;font-family:system-ui,-apple-system,sans-serif;font-size:12px;font-weight:600;box-shadow:0 2px 10px rgba(0,0,0,0.3);';
+        bar.innerHTML = '<div style="display:flex;align-items:center;gap:8px;"><span>⚠️ <strong>MAINTENANCE MODE ACTIVE:</strong> Public visitors cannot access this page. You have active Admin Bypass access.</span></div>' +
+          '<div style="display:flex;align-items:center;gap:10px;"><a href="/dashboard/?tab=tab-settings" style="color:#ffffff;background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:6px;text-decoration:none;font-weight:700;">Settings ⚙️</a></div>';
+        document.body.appendChild(bar);
+        document.body.style.paddingTop = ((parseInt(window.getComputedStyle(document.body).paddingTop) || 0) + 36) + 'px';
+      }
+
+      if (isForcedPreview) {
+        if (document.body) {
+          showMaintenanceScreen(null, true);
+        } else {
+          window.addEventListener('DOMContentLoaded', function() { showMaintenanceScreen(null, true); });
+        }
+        return;
+      }
+
+      // Check site settings
+      var apiUrl = '/api/settings.php';
+      fetch(apiUrl)
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+          if (!res || !res.settings) return;
+          var s = res.settings;
+          if (s.maintenance_mode === '1') {
+            if (adminToken) {
+              if (document.body) {
+                showAdminBypassBanner();
+              } else {
+                window.addEventListener('DOMContentLoaded', showAdminBypassBanner);
+              }
+            } else {
+              var runBlock = function() {
+                showMaintenanceScreen(s.maintenance_message, false);
+              };
+              if (document.body) {
+                runBlock();
+              } else {
+                window.addEventListener('DOMContentLoaded', runBlock);
+              }
+            }
+          }
+        })
+        .catch(function(err) {});
+    } catch(e) {}
+  })();
 </script>
 <!-- CSP_HEADER_FIXES_END -->
 
@@ -6015,17 +6242,23 @@
       60% { transform: translateY(0); }
     }
 
-    /* ── SINGLE POST LAYOUT ── */
+    /* ── SINGLE POST LAYOUT (Requirement 5: Stretched full container for wide modern viewports) ── */
     .csp-post-sec {
-      padding: 24px 3% 80px 3%;
-      max-width: 1320px;
+      padding: 24px 28px 80px 28px;
+      max-width: 1540px;
       margin: 0 auto;
       width: 100% !important;
       box-sizing: border-box !important;
     }
-    @media (max-width: 768px) {
+    @media (min-width: 1680px) {
       .csp-post-sec {
-        padding: 16px 14px 60px 14px !important;
+        max-width: 1640px;
+        padding: 28px 40px 90px 40px;
+      }
+    }
+    @media (max-width: 900px) {
+      .csp-post-sec {
+        padding: 16px 16px 60px 16px !important;
         width: 100% !important;
         max-width: 100vw !important;
         box-sizing: border-box !important;
@@ -6033,13 +6266,19 @@
     }
     .csp-post-grid-layout {
       display: grid;
-      grid-template-columns: 1fr 340px;
+      grid-template-columns: minmax(0, 1fr) 370px;
       gap: 40px;
       width: 100% !important;
       min-width: 0 !important;
       box-sizing: border-box !important;
     }
-    @media (max-width: 960px) {
+    @media (max-width: 1120px) {
+      .csp-post-grid-layout { 
+        grid-template-columns: minmax(0, 1fr) 330px !important; 
+        gap: 28px !important;
+      }
+    }
+    @media (max-width: 920px) {
       .csp-post-grid-layout { 
         grid-template-columns: 100% !important; 
         gap: 32px !important;
@@ -6308,60 +6547,209 @@
       word-break: break-word;
     }
 
-    /* ── SHARE BUTTONS ── */
-    .csp-share-sec {
-      background: #ffffff;
-      border: 1px solid var(--border-card);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 40px;
+    /* ── DIRECT-UNDER-POST ACTIONS BAR (Requirement 6) ── */
+    .csp-post-actions-card {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 22px 28px;
+      margin: 32px 0 36px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 16px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+    }
+    .csp-post-actions-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .csp-sleek-like-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: 1px solid #fbcfe8;
+      background: #fdf2f8;
+      color: #db2777;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 8px rgba(219, 39, 119, 0.08);
+    }
+    .csp-sleek-like-btn:hover {
+      background: #fce7f3;
+      border-color: #f472b6;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(219, 39, 119, 0.18);
+    }
+    .csp-sleek-like-btn.liked {
+      background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+      border-color: #db2777;
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(219, 39, 119, 0.35);
+    }
+    .csp-sleek-like-btn.liked svg {
+      fill: #ffffff;
+    }
+    .csp-sleek-like-count {
+      background: rgba(219, 39, 119, 0.12);
+      color: #be185d;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .csp-sleek-like-btn.liked .csp-sleek-like-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .csp-sleek-audio-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #00AEFE 0%, #0284c7 100%);
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 16px rgba(0, 174, 254, 0.3);
+    }
+    .csp-sleek-audio-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 174, 254, 0.45);
+    }
+    .csp-audio-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2.5px;
+      height: 14px;
+    }
+    .csp-audio-bars span {
+      display: block;
+      width: 2.5px;
+      background: #ffffff;
+      border-radius: 2px;
+      height: 4px;
+    }
+    /* Normal state continuous sound wave animation (Requirement 4) */
+    .csp-audio-bars span:nth-child(1) {
+      animation: cspWave 0.75s ease-in-out infinite alternate;
+    }
+    .csp-audio-bars span:nth-child(2) {
+      animation: cspWave 0.75s ease-in-out infinite 0.22s alternate;
+    }
+    .csp-audio-bars span:nth-child(3) {
+      animation: cspWave 0.75s ease-in-out infinite 0.44s alternate;
+    }
+    @keyframes cspWave {
+      0% { height: 4px; }
+      50% { height: 13px; }
+      100% { height: 6px; }
+    }
+    .csp-sleek-audio-btn:hover .csp-audio-bars span {
+      animation-duration: 0.45s;
+    }
+
+    .csp-hero-audio-floating {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      z-index: 10;
+    }
+    @media (max-width: 640px) {
+      .csp-hero-audio-floating {
+        top: 14px;
+        right: 14px;
+      }
+      .csp-hero-audio-floating .csp-sleek-audio-btn {
+        padding: 6px 14px !important;
+        font-size: 0.76rem !important;
+      }
+    }
+
+    /* ── ALL SOCIAL SHARE BUTTONS IN ONE CLEAN LINE (Requirement 6) ── */
+    .csp-share-sec {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 20px 26px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
       width: 100% !important;
       max-width: 100% !important;
       box-sizing: border-box !important;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .csp-share-sec {
-        padding: 20px 16px !important;
-        margin-bottom: 28px !important;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px !important;
       }
     }
     .csp-share-title {
       font-family: 'Merriweather', serif;
-      font-size: 1.1rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: #0f172a;
-    }
-    .csp-share-btns {
+      white-space: nowrap;
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .csp-share-btns-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: visible;
+      -webkit-overflow-scrolling: touch;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 4px;
+      padding-right: 4px;
+      margin-top: -6px;
+      margin-bottom: -6px;
+      max-width: 100%;
     }
     .csp-share-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       padding: 8px 16px;
       border-radius: 50px;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: #ffffff;
       text-decoration: none;
-      transition: transform 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
-    .csp-share-btn:hover { transform: translateY(-2px); }
+    .csp-share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
     .csp-share-fb { background: #1877f2; }
-    .csp-share-tw { background: #1da1f2; }
+    .csp-share-tw { background: #000000; }
     .csp-share-li { background: #0a66c2; }
     .csp-share-wa { background: #25d366; }
-    .csp-share-like { background: #ec4899; transition: all 0.2s ease; }
-    .csp-share-like:hover { background: #db2777; transform: translateY(-2px); }
-    .csp-share-like.liked { background: #be185d !important; box-shadow: 0 4px 14px rgba(190, 24, 93, 0.4); }
-    .csp-share-like.liked svg { fill: #ffffff; }
+    .csp-share-copy { background: #475569; }
 
     /* Hero Like Button */
     .csp-post-like-btn {
@@ -6769,12 +7157,12 @@
 				<div class="elementor-element elementor-element-36265fd elementor-align-right sticky-button-prefixstyle elementor-widget-mobile__width-initial elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-button" data-id="36265fd" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
 					<div class="elementor-widget-container">
 						<div class="elementor-button-wrapper">
-							<a class="elementor-button elementor-button-link elementor-size-sm csp-header-submit-btn" href="/submit-story/">
+							<a class="elementor-button elementor-button-link elementor-size-md csp-header-submit-btn" href="/submit-story/">
 								<span class="elementor-button-content-wrapper">
 									<span class="elementor-button-text">Submit Story</span>
-									<span class="elementor-button-icon" style="margin-left: 6px; display: inline-flex; align-items: center;">
-										<svg width="17" height="17" viewBox="0 0 16 16" fill="none" style="vertical-align: middle;">
-											<path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									<span class="elementor-button-icon" style="margin-left: 8px; display: inline-flex; align-items: center;">
+										<svg width="19" height="19" viewBox="0 0 16 16" fill="none" style="vertical-align: middle;">
+											<path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
 										</svg>
 									</span>
 								</span>
@@ -6807,10 +7195,21 @@
     </div>
 
     <!-- IMMERSIVE DARK OVERLAY HERO (OPTION 2) -->
-    <div id="csp-immersive-hero" class="csp-opt2-hero-wrap">
+    <div id="csp-immersive-hero" class="csp-opt2-hero-wrap" style="position:relative;">
       <img id="post-hero-image" src="/wp-content/uploads/2026/01/location-1-300x210.webp" alt="Profiles of Groundbreaking Tech Entrepreneurs From Diaspora" class="csp-post-hero-img" style="display:block;">
       <div class="csp-opt2-gradient-scrim"></div>
       
+      <!-- Sleek Listen to Audio button inside the image (Requirement 4) -->
+      <div class="csp-hero-audio-floating">
+        <button id="post-hero-audio-btn" type="button" class="csp-sleek-audio-btn" style="background:rgba(15,23,42,0.68);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.32);color:#ffffff;box-shadow:0 8px 24px rgba(0,0,0,0.35);padding:9px 20px;font-size:0.85rem;" onclick="if(window.playArticleAudio){ var t=document.getElementById('post-title')?document.getElementById('post-title').textContent:'Story'; var c=document.getElementById('post-content-body')?document.getElementById('post-content-body').textContent:''; window.playArticleAudio(t, c); }" title="Listen to this article">
+          <i class="fas fa-headphones-alt" style="color:#38bdf8;"></i>
+          <span>Listen to Audio</span>
+          <div class="csp-audio-bars" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+      </div>
+
       <div class="csp-opt2-content">
         <a href="#" id="post-category-badge" class="csp-opt2-badge">
           <i class="fas fa-bookmark"></i> <span id="post-category-text">Story</span>
@@ -6827,15 +7226,6 @@
           <div style="display:inline-flex;align-items:center;gap:6px;"><i class="far fa-clock"></i> <span id="post-reading-time">6 min read</span></div>
           <a href="#comments-section" style="display:inline-flex;align-items:center;gap:6px;color:#ffffff;text-decoration:none;transition:opacity 0.2s ease;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"><i class="far fa-comment-alt"></i> <span id="post-comments-meta-count">0 comments</span></a>
           <div style="display:inline-flex;align-items:center;gap:6px;"><i class="far fa-eye"></i> <span id="post-views">1420 views</span></div>
-          <button id="post-hero-like-btn" type="button" class="csp-post-like-btn" onclick="window.likeCurrentPost()" title="Like this article">
-            <svg viewBox="0 0 24 24" class="csp-like-heart" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            <span id="post-hero-likes-count">0</span>
-          </button>
-          <div style="margin-left:auto;">
-            <button id="post-hero-audio-btn" type="button" style="background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:8px 16px;border-radius:50px;font-size:0.82rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s ease;" onclick="if(window.playArticleAudio){ var t=document.getElementById('post-title')?document.getElementById('post-title').textContent:'Story'; var c=document.getElementById('post-content-body')?document.getElementById('post-content-body').textContent:''; window.playArticleAudio(t, c); }">
-              <i class="fas fa-headphones"></i> Listen (Audio)
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -6859,6 +7249,29 @@
       <p>By cultivating bi-directional venture pipelines, diaspora founders are accelerating digital transformation across both Western ecosystems and the African continent.</p>
     </div><!-- CSP_POST_BODY_END -->
 
+        <!-- DIRECT-UNDER-POST ACTIONS (Requirement 6) -->
+        <div class="csp-post-actions-card">
+          <div class="csp-post-actions-left">
+            <button id="post-bottom-like-btn" type="button" class="csp-sleek-like-btn" onclick="window.likeCurrentPost()" title="Like this article">
+              <svg width="18" height="18" viewBox="0 0 24 24" class="csp-like-heart" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              <span id="post-bottom-like-label">Like</span>
+              <span id="post-bottom-likes-count" class="csp-sleek-like-count">0</span>
+            </button>
+            <button id="post-audio-btn" type="button" class="csp-sleek-audio-btn" onclick="if(window.playArticleAudio){ var t=document.getElementById('post-title')?document.getElementById('post-title').textContent:'Story'; var c=document.getElementById('post-content-body')?document.getElementById('post-content-body').textContent:''; window.playArticleAudio(t, c); }" title="Listen to narration">
+              <i class="fas fa-headphones-alt"></i>
+              <span>Listen to Audio</span>
+              <div class="csp-audio-bars" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+            </button>
+          </div>
+          <div style="font-size:0.84rem;color:#64748b;display:inline-flex;align-items:center;gap:6px;font-weight:600;">
+            <i class="far fa-heart" style="color:#db2777;"></i> Show your appreciation for this article
+          </div>
+        </div>
+
         <!-- AUTHOR SPOTLIGHT CARD -->
         <div class="csp-author-spotlight-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;padding:24px;margin:32px 0;display:flex;gap:20px;align-items:center;box-shadow:0 6px 20px rgba(0,0,0,0.03);">
           <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#00AEFE 0%,#0077b6 100%);box-shadow:0 4px 15px rgba(0,174,254,0.35);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Merienda',cursive;font-size:1.5rem;font-weight:700;flex-shrink:0;">
@@ -6877,18 +7290,16 @@
 
         <!-- SHARE & ENGAGEMENT SECTION -->
         <div class="csp-share-sec">
-          <div class="csp-share-title">Loved This Story? Share &amp; Like</div>
-          <div class="csp-share-btns">
-            <button id="post-bottom-like-btn" class="csp-share-btn csp-share-like" type="button" onclick="window.likeCurrentPost()">
-              <svg width="15" height="15" viewBox="0 0 24 24" class="csp-like-heart" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              <span id="post-bottom-like-label">Like</span> (<span id="post-bottom-likes-count">0</span>)
-            </button>
-            <button id="post-audio-btn" class="csp-share-btn" style="background:#00AEFE;cursor:pointer;border:none;" onclick="if(window.playArticleAudio){ var t=document.getElementById('post-title')?document.getElementById('post-title').textContent:'Story'; var c=document.getElementById('post-content-body')?document.getElementById('post-content-body').textContent:''; window.playArticleAudio(t, c); }"><i class="fas fa-headphones"></i> Listen (Audio)</button>
+          <div class="csp-share-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            <span>Share Story</span>
+          </div>
+          <div class="csp-share-btns-row">
             <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fconspodium.com%2Fpost%2Fprofiles-of-groundbreaking-tech-entrepreneurs-from-diaspora%2F" class="csp-share-btn csp-share-fb" id="share-fb" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i> Facebook</a>
             <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fconspodium.com%2Fpost%2Fprofiles-of-groundbreaking-tech-entrepreneurs-from-diaspora%2F&text=Profiles%20of%20Groundbreaking%20Tech%20Entrepreneurs%20From%20Diaspora" class="csp-share-btn csp-share-tw" id="share-tw" target="_blank" rel="noopener"><i class="fab fa-twitter"></i> Twitter</a>
             <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fconspodium.com%2Fpost%2Fprofiles-of-groundbreaking-tech-entrepreneurs-from-diaspora%2F&title=Profiles%20of%20Groundbreaking%20Tech%20Entrepreneurs%20From%20Diaspora" class="csp-share-btn csp-share-li" id="share-li" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
             <a href="https://api.whatsapp.com/send?text=Profiles%20of%20Groundbreaking%20Tech%20Entrepreneurs%20From%20Diaspora%20https%3A%2F%2Fconspodium.com%2Fpost%2Fprofiles-of-groundbreaking-tech-entrepreneurs-from-diaspora%2F" class="csp-share-btn csp-share-wa" id="share-wa" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-            <button id="share-copy-btn" class="csp-share-btn" style="background:#475569;cursor:pointer;border:none;" onclick="navigator.clipboard.writeText(window.location.href); if(window.cspToast) window.cspToast('Article link copied to clipboard!', 'success');"><i class="fas fa-link"></i> Copy Link</button>
+            <button id="share-copy-btn" class="csp-share-btn csp-share-copy" type="button" style="cursor:pointer;border:none;" onclick="navigator.clipboard.writeText(window.location.href); if(window.cspToast) window.cspToast('Article link copied to clipboard!', 'success');"><i class="fas fa-link"></i> Copy Link</button>
           </div>
         </div>
 
