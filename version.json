@@ -1,19 +1,16 @@
 {
-  "version": "2.1.9",
-  "description": "Subscriber removal action in directory, edge-to-edge popup advert live preview alignment, button placement position toggle, and dynamic clean URL directory fallbacks.",
-  "author": "Conspodium Core Team",
-  "type": "lightweight_feature_patch",
-  "highlights": [
-    "Added 1-click Subscriber Deletion action in the Subscriber Directory with confirmation dialog and live list refreshing",
-    "Aligned backend live popup advert preview with frontend design (edge-to-edge flyer presentation with floating circular close button)",
-    "Added Button Placement Position selector in popup settings: choose between Floating on Image (Overlay) or Below Image (Dedicated Bar)",
-    "Synchronized both frontend and backend popup renderers to honor button placement configuration dynamically",
-    "Added dynamic clean URL directory index fallback to automatically route any present and future subpages cleanly",
-    "Included root .htaccess in automated update packaging and in-app updater extraction for seamless 1-click deployment"
-  ],
-  "last_updated": "2026-10-15 03:40:00",
-  "updated_by": "admin",
-  "files_updated": 6,
-  "files_protected": 2,
-  "build_timestamp": "2026-10-15 03:10:11"
+    "version": "2.1.10",
+    "description": "Dynamic progressive loader with exit animations and fail-safe auto-dismissal (hotfix: inline style override)",
+    "highlights": [
+        "Fixed loader getting stuck on 'Experience ready!' (inline !important style override bug)",
+        "Dynamic progressive status text during dashboard loading",
+        "Exit loader animation with dynamic text when signing out",
+        "Login loader sequence with authentication progress messages",
+        "Fail-safe auto-dismissal prevents loader from ever getting stuck",
+        "Loader works correctly on page reload with 3-second display lock"
+    ],
+    "last_updated": "2026-10-15 06:22:47",
+    "updated_by": "Conspodium_Admin",
+    "files_updated": 2,
+    "files_protected": 0
 }

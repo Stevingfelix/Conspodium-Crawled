@@ -191,6 +191,42 @@ if ($action === 'upload_update') {
                     $updatedList[] = $entryNameNormalized;
                 }
             }
+            // Dual-extract: write to public/ path AND to flat path if host uses flat public_html layout
+            if (strpos($entryNameNormalized, 'public/') === 0) {
+                $flatRel = substr($entryNameNormalized, 7);
+                $flatPath = $rootDir . '/' . $flatRel;
+                $flatDir = dirname($flatPath);
+                if (file_exists($flatPath) || (file_exists($rootDir . '/api') && !is_dir($rootDir . '/public/src'))) {
+                    if (!is_dir($flatDir)) {
+                        @mkdir($flatDir, 0755, true);
+                    }
+                    @file_put_contents($flatPath, $contents);
+                }
+            }
+            // Dual-extract: write to public/ path AND to flat path if host uses flat public_html layout
+            if (strpos($entryNameNormalized, 'public/') === 0) {
+                $flatRel = substr($entryNameNormalized, 7);
+                $flatPath = $rootDir . '/' . $flatRel;
+                $flatDir = dirname($flatPath);
+                if (file_exists($flatPath) || (file_exists($rootDir . '/api') && !is_dir($rootDir . '/public/src'))) {
+                    if (!is_dir($flatDir)) {
+                        @mkdir($flatDir, 0755, true);
+                    }
+                    @file_put_contents($flatPath, $contents);
+                }
+            }
+            // Dual-extract: write to public/ path AND to flat path if host uses flat public_html layout
+            if (strpos($entryNameNormalized, 'public/') === 0) {
+                $flatRel = substr($entryNameNormalized, 7);
+                $flatPath = $rootDir . '/' . $flatRel;
+                $flatDir = dirname($flatPath);
+                if (file_exists($flatPath) || (file_exists($rootDir . '/api') && !is_dir($rootDir . '/public/src'))) {
+                    if (!is_dir($flatDir)) {
+                        @mkdir($flatDir, 0755, true);
+                    }
+                    @file_put_contents($flatPath, $contents);
+                }
+            }
         }
     }
     
