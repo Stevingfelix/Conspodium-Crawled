@@ -45,10 +45,6 @@
           if (window.location.hash && window.location.hash.toLowerCase() !== '#overview') {
             try { history.replaceState(null, '', window.location.pathname.replace(/\/+$/, '') + '/#overview'); } catch(e){}
           }
-          var unauthHideStyle = document.createElement('style');
-          unauthHideStyle.id = 'csp-unauth-loader-hide';
-          unauthHideStyle.textContent = '#csp-page-loader { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }';
-          document.head.appendChild(unauthHideStyle);
         } else {
           document.documentElement.classList.remove('unauthenticated');
           document.documentElement.classList.add('authenticated');
@@ -4632,14 +4628,14 @@
     pointer-events: none !important;
   }
 
-  /* ── MODERN SLEEK CONSPODIUM PAGE LOADER (PREMIUM LIGHT THEME) ────────── */
+  /* ── MODERN SLEEK CONSPODIUM PAGE LOADER (STRICT ZERO-FLASH) ───────────────── */
   #csp-page-loader {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.98) 0%, rgba(241, 245, 249, 0.96) 100%) !important;
+    background: rgba(6, 16, 34, 0.96) !important;
     backdrop-filter: blur(24px) !important;
     -webkit-backdrop-filter: blur(24px) !important;
     z-index: 999999999 !important;
@@ -4660,146 +4656,43 @@
     visibility: hidden !important;
   }
 
-  .csp-loader-card {
-    position: relative !important;
+  .csp-loader-box {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    background: rgba(255, 255, 255, 0.94) !important;
-    border: 1px solid rgba(226, 232, 240, 0.9) !important;
-    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08), 0 0 35px rgba(0, 174, 254, 0.08) !important;
-    backdrop-filter: blur(28px) !important;
-    -webkit-backdrop-filter: blur(28px) !important;
-    border-radius: 24px !important;
-    padding: 38px 44px 34px !important;
-    max-width: 380px !important;
-    width: 90% !important;
-    text-align: center !important;
-    animation: csp-card-float 3s ease-in-out infinite alternate !important;
-  }
-
-  @keyframes csp-card-float {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(-6px); }
-  }
-
-  .csp-loader-graphic {
-    position: relative !important;
-    width: 84px !important;
-    height: 84px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin-bottom: 22px !important;
-  }
-
-  .csp-loader-pulse-glow {
-    position: absolute !important;
-    width: 72px !important;
-    height: 72px !important;
-    border-radius: 50% !important;
-    background: radial-gradient(circle, rgba(0, 174, 254, 0.22) 0%, rgba(183, 31, 113, 0.12) 55%, transparent 75%) !important;
-    animation: csp-pulse 1.8s ease-in-out infinite !important;
-    pointer-events: none !important;
-  }
-
-  @keyframes csp-pulse {
-    0%, 100% { transform: scale(0.9); opacity: 0.55; }
-    50% { transform: scale(1.35); opacity: 0.95; }
+    gap: 18px !important;
   }
 
   .csp-loader-spinner-ring {
-    position: absolute !important;
-    width: 76px !important;
-    height: 76px !important;
+    width: 56px !important;
+    height: 56px !important;
     border-radius: 50% !important;
-    border: 3px solid rgba(0, 174, 254, 0.12) !important;
-    border-top: 3px solid #00AEFE !important;
-    border-right: 3px solid #B71F71 !important;
-    border-bottom: 3px solid transparent !important;
-    animation: csp-spin-ring 0.85s cubic-bezier(0.68, -0.2, 0.27, 1.25) infinite !important;
-    filter: drop-shadow(0 2px 8px rgba(0, 174, 254, 0.35)) !important;
+    border: 3px solid rgba(255, 255, 255, 0.08) !important;
+    border-top-color: #00AEFE !important;
+    border-right-color: #B71F71 !important;
+    animation: csp-spin-ring 0.75s linear infinite !important;
+    box-shadow: 0 0 32px rgba(0, 174, 254, 0.4) !important;
   }
 
   @keyframes csp-spin-ring {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
-  .csp-loader-center-icon {
-    position: relative !important;
-    z-index: 2 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    filter: drop-shadow(0 2px 6px rgba(0, 174, 254, 0.4)) !important;
-  }
-
-  .csp-loader-brand-title {
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
-    font-size: 1.15rem !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
-    color: #0f172a !important;
-    background: linear-gradient(135deg, #0f172a 30%, #334155 100%) !important;
+  .csp-loader-brand {
+    font-family: 'Merienda', cursive, sans-serif !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
-    margin-bottom: 12px !important;
-  }
-
-  .csp-loader-status-pill {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    background: #f1f5f9 !important;
-    border: 1px solid rgba(0, 174, 254, 0.2) !important;
-    border-radius: 9999px !important;
-    padding: 6px 14px !important;
-    margin-bottom: 20px !important;
-    font-size: 0.8125rem !important;
-    font-weight: 600 !important;
-    color: #334155 !important;
-    letter-spacing: 0.02em !important;
-  }
-
-  .csp-loader-status-dot {
-    width: 7px !important;
-    height: 7px !important;
-    border-radius: 50% !important;
-    background: #00AEFE !important;
-    box-shadow: 0 0 8px rgba(0, 174, 254, 0.6) !important;
-    animation: csp-status-blink 1.2s infinite ease-in-out !important;
-  }
-
-  @keyframes csp-status-blink {
-    0%, 100% { opacity: 0.35; transform: scale(0.85); }
-    50% { opacity: 1; transform: scale(1.15); }
-  }
-
-  .csp-loader-track {
-    width: 100% !important;
-    height: 4px !important;
-    background: #e2e8f0 !important;
-    border-radius: 9999px !important;
-    overflow: hidden !important;
-    position: relative !important;
-  }
-
-  .csp-loader-bar {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    height: 100% !important;
-    background: linear-gradient(90deg, #00AEFE 0%, #B71F71 100%) !important;
-    border-radius: 9999px !important;
-    animation: csp-bar-indeterminate 1.4s ease-in-out infinite !important;
-  }
-
-  @keyframes csp-bar-indeterminate {
-    0% { left: -45%; width: 45%; }
-    50% { left: 30%; width: 55%; }
-    100% { left: 100%; width: 45%; }
+    background-clip: text !important;
   }
 
   /* ── Sleek Global Toast Notifications & Confirmation Modals ── */
@@ -5886,28 +5779,11 @@
   }
 </style>
 
-<!-- CSP Page Loader (Sleek Mini Animated Screen for Smooth Transition) -->
+<!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
 <div id="csp-page-loader">
-  <div class="csp-loader-card">
-    <div class="csp-loader-graphic">
-      <div class="csp-loader-pulse-glow"></div>
-      <div class="csp-loader-spinner-ring"></div>
-      <div class="csp-loader-center-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-          <path d="M2 17l10 5 10-5"></path>
-          <path d="M2 12l10 5 10-5"></path>
-        </svg>
-      </div>
-    </div>
-    <div class="csp-loader-brand-title">CONSPODIUM</div>
-    <div class="csp-loader-status-pill">
-      <span class="csp-loader-status-dot"></span>
-      <span id="csp-loader-status-text">Loading Experience...</span>
-    </div>
-    <div class="csp-loader-track">
-      <div class="csp-loader-bar"></div>
-    </div>
+  <div class="csp-loader-box">
+    <div class="csp-loader-spinner-ring"></div>
+    <div class="csp-loader-brand">Conspodium</div>
   </div>
 </div>
 
@@ -6108,21 +5984,18 @@
       var loader = document.getElementById('csp-page-loader');
 
       function dismissLoader() {
-        if (window.location.pathname.indexOf('/dashboard') !== -1) return;
-        if (loader) {
-          loader.classList.add('loaded');
-        }
+      if (loader) {
+        loader.classList.add('loaded');
       }
+    }
 
       dismissLoader();
 
       // Event listeners for page restore/navigation
       window.addEventListener('pageshow', function () {
-        if (window.location.pathname.indexOf('/dashboard') !== -1) return;
         if (loader) loader.classList.add('loaded');
       });
       window.addEventListener('popstate', function () {
-        if (window.location.pathname.indexOf('/dashboard') !== -1) return;
         if (loader) loader.classList.add('loaded');
       });
       // Fix all header logos to strictly navigate back to Home root
@@ -6974,9 +6847,8 @@
   })();
 </script>
 <script>
-  // Instant fallback loader dismiss safety (front-end public pages only)
+  // Instant fallback loader dismiss safety
   (function () {
-    if (window.location.pathname.indexOf('/dashboard') !== -1) return;
     function dismiss() {
       var l = document.getElementById('csp-page-loader');
       if (l) {
@@ -21890,10 +21762,7 @@
 
         // Authentication & Session Guard
         function checkAuthSession() {
-          var loader = document.getElementById('csp-page-loader');
           var loginScreen = document.getElementById('csp-login-screen');
-
-          if (loader) loader.classList.add('loaded');
 
           var token = localStorage.getItem('conspodium_admin_token') || '';
           if (!token) {
@@ -23328,12 +23197,8 @@
 
                 document.documentElement.classList.remove('unauthenticated');
                 document.documentElement.classList.add('authenticated');
-                var unauthHideStyle = document.getElementById('csp-unauth-loader-hide');
-                if (unauthHideStyle) unauthHideStyle.remove();
                 var loginScreen = document.getElementById('csp-login-screen');
                 if (loginScreen) loginScreen.style.display = 'none';
-                var loader = document.getElementById('csp-page-loader');
-                if (loader) loader.classList.add('loaded');
 
                 if (res.user) {
                   var nameEl = document.getElementById('admin-sidebar-name');
@@ -23386,21 +23251,6 @@
         // Global Logout Handler (Requirement 1 & 3)
         window.handleAdminLogout = function (e) {
           if (e && e.preventDefault) e.preventDefault();
-          var loader = document.getElementById('csp-page-loader');
-          if (loader) {
-            loader.classList.add('loaded');
-            loader.style.setProperty('display', 'none', 'important');
-          }
-          var lock = document.getElementById('csp-loader-lock-style');
-          if (lock) lock.remove();
-          var unauthHideStyle = document.getElementById('csp-unauth-loader-hide');
-          if (!unauthHideStyle) {
-            unauthHideStyle = document.createElement('style');
-            unauthHideStyle.id = 'csp-unauth-loader-hide';
-            unauthHideStyle.textContent = '#csp-page-loader { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }';
-            document.head.appendChild(unauthHideStyle);
-          }
-
           var token = localStorage.getItem('conspodium_admin_token') || '';
           localStorage.removeItem('conspodium_admin_token');
           localStorage.removeItem('csp_admin_token');

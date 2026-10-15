@@ -45,10 +45,6 @@
           if (window.location.hash && window.location.hash.toLowerCase() !== '#overview') {
             try { history.replaceState(null, '', window.location.pathname.replace(/\/+$/, '') + '/#overview'); } catch(e){}
           }
-          var unauthHideStyle = document.createElement('style');
-          unauthHideStyle.id = 'csp-unauth-loader-hide';
-          unauthHideStyle.textContent = '#csp-page-loader { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }';
-          document.head.appendChild(unauthHideStyle);
         } else {
           document.documentElement.classList.remove('unauthenticated');
           document.documentElement.classList.add('authenticated');
@@ -2356,77 +2352,12 @@
       pointer-events: none !important;
     }
 
-    /* ── MODERN SLEEK CONSPODIUM PAGE LOADER (STRICT ZERO-FLASH) ───────────────── */
+    /* Baseline: Completely remove / silence loader from dashboard */
     #csp-page-loader {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      background: rgba(6, 16, 34, 0.96) !important;
-      backdrop-filter: blur(24px) !important;
-      -webkit-backdrop-filter: blur(24px) !important;
-      z-index: 999999999 !important;
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      justify-content: center !important;
-      opacity: 1;
-      pointer-events: auto;
-      visibility: visible;
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-
-    #csp-page-loader.loaded {
-      opacity: 0 !important;
-      pointer-events: none !important;
-      visibility: hidden !important;
-    }
-
-    html.unauthenticated #csp-page-loader {
       display: none !important;
       opacity: 0 !important;
       visibility: hidden !important;
       pointer-events: none !important;
-    }
-
-    .csp-loader-box {
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      gap: 18px !important;
-    }
-
-    .csp-loader-spinner-ring {
-      width: 56px !important;
-      height: 56px !important;
-      border-radius: 50% !important;
-      border: 3px solid rgba(255, 255, 255, 0.08) !important;
-      border-top-color: #00AEFE !important;
-      border-right-color: #B71F71 !important;
-      animation: csp-spin-ring 0.75s linear infinite !important;
-      box-shadow: 0 0 32px rgba(0, 174, 254, 0.4) !important;
-    }
-
-    @keyframes csp-spin-ring {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    .csp-loader-brand {
-      font-family: 'Merienda', cursive, sans-serif !important;
-      font-size: 1.25rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.08em !important;
-      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
-      -webkit-background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      background-clip: text !important;
     }
 
     /* ── Sleek Global Toast Notifications & Confirmation Modals ── */
@@ -2778,14 +2709,6 @@
     }
   </style>
 
-  <!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
-  <div id="csp-page-loader">
-    <div class="csp-loader-box">
-      <div class="csp-loader-spinner-ring"></div>
-      <div class="csp-loader-brand">Conspodium</div>
-    </div>
-  </div>
-
   <script id="csp-mobile-menu-script">
     (function () {
       function getRootUrl(targetRoute) {
@@ -3075,24 +2998,6 @@
       };
 
       function initLoaderAndLogo() {
-        var loader = document.getElementById('csp-page-loader');
-
-        function dismissLoader() {
-          if (loader) {
-            loader.classList.add('loaded');
-          }
-        }
-
-        dismissLoader();
-
-        // Event listeners for page restore/navigation
-        window.addEventListener('pageshow', function () {
-          if (loader) loader.classList.add('loaded');
-        });
-        window.addEventListener('popstate', function () {
-          if (loader) loader.classList.add('loaded');
-        });
-
         // Fix all header logos to strictly navigate back to Home root
         var homeUrl = getRootUrl('/');
         var logos = document.querySelectorAll('img.sticel-logo-shrink, .elementor-element-738d6a4 a, .elementor-element-2d4f26f a');
@@ -3102,7 +3007,6 @@
             anchor.setAttribute('href', homeUrl);
             anchor.addEventListener('click', function (e) {
               e.preventDefault();
-              if (loader) loader.classList.add('active');
               window.location.href = homeUrl;
             });
           }
@@ -17264,10 +17168,7 @@
 
         // Authentication & Session Guard
         function checkAuthSession() {
-          var loader = document.getElementById('csp-page-loader');
           var loginScreen = document.getElementById('csp-login-screen');
-
-          if (loader) loader.classList.add('loaded');
 
           var token = localStorage.getItem('conspodium_admin_token') || '';
           if (!token) {
@@ -18702,12 +18603,8 @@
 
                 document.documentElement.classList.remove('unauthenticated');
                 document.documentElement.classList.add('authenticated');
-                var unauthHideStyle = document.getElementById('csp-unauth-loader-hide');
-                if (unauthHideStyle) unauthHideStyle.remove();
                 var loginScreen = document.getElementById('csp-login-screen');
                 if (loginScreen) loginScreen.style.display = 'none';
-                var loader = document.getElementById('csp-page-loader');
-                if (loader) loader.classList.add('loaded');
 
                 if (res.user) {
                   var nameEl = document.getElementById('admin-sidebar-name');
@@ -18760,21 +18657,6 @@
         // Global Logout Handler (Requirement 1 & 3)
         window.handleAdminLogout = function (e) {
           if (e && e.preventDefault) e.preventDefault();
-          var loader = document.getElementById('csp-page-loader');
-          if (loader) {
-            loader.classList.add('loaded');
-            loader.style.setProperty('display', 'none', 'important');
-          }
-          var lock = document.getElementById('csp-loader-lock-style');
-          if (lock) lock.remove();
-          var unauthHideStyle = document.getElementById('csp-unauth-loader-hide');
-          if (!unauthHideStyle) {
-            unauthHideStyle = document.createElement('style');
-            unauthHideStyle.id = 'csp-unauth-loader-hide';
-            unauthHideStyle.textContent = '#csp-page-loader { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }';
-            document.head.appendChild(unauthHideStyle);
-          }
-
           var token = localStorage.getItem('conspodium_admin_token') || '';
           localStorage.removeItem('conspodium_admin_token');
           localStorage.removeItem('csp_admin_token');
