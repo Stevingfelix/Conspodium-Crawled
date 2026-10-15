@@ -6104,10 +6104,11 @@
       var loader = document.getElementById('csp-page-loader');
 
       function dismissLoader() {
-      if (loader) {
-        loader.classList.add('loaded');
+        if (window.location.pathname.indexOf('/dashboard') !== -1) return;
+        if (loader) {
+          loader.classList.add('loaded');
+        }
       }
-    }
 
       dismissLoader();
 
@@ -6967,8 +6968,9 @@
   })();
 </script>
 <script>
-  // Instant fallback loader dismiss safety
+  // Instant fallback loader dismiss safety (front-end public pages only)
   (function () {
+    if (window.location.pathname.indexOf('/dashboard') !== -1) return;
     function dismiss() {
       var l = document.getElementById('csp-page-loader');
       if (l) {
@@ -21890,18 +21892,45 @@
 
           var token = localStorage.getItem('conspodium_admin_token') || '';
           if (!token) {
-            if (loader) loader.classList.add('loaded');
+            if (loader) {
+              loader.classList.add('loaded');
+              loader.style.display = 'none';
+            }
             if (loginScreen) loginScreen.style.display = 'flex';
+            document.documentElement.classList.remove('authenticated');
+            document.documentElement.classList.add('unauthenticated');
             return;
           }
 
-          // User has session: display sleek loader while syncing metrics
+          // User has active session: display sleek loader for strictly 3 seconds while data loads
           if (loader) {
             loader.classList.remove('loaded');
-            if (statusText) statusText.textContent = 'Synchronizing Workspace...';
+            loader.style.removeProperty('display');
+            loader.style.removeProperty('opacity');
+            loader.style.removeProperty('visibility');
+            loader.style.removeProperty('pointer-events');
+            loader.style.display = 'flex';
+            loader.style.opacity = '1';
+            loader.style.visibility = 'visible';
+            loader.style.pointerEvents = 'auto';
           }
+          if (statusText) statusText.textContent = 'Synchronizing Workspace...';
+
           var startTime = Date.now();
-          var minDisplayTime = 800; // Silky-smooth display duration preventing data flash
+          var REQUIRED_LOADER_DURATION = 3000; // Strictly 3 seconds on screen
+
+          // Progressive status text updates during the 3 seconds
+          setTimeout(function () {
+            if (statusText && loader && !loader.classList.contains('loaded')) {
+              statusText.textContent = 'Loading analytics & posts...';
+            }
+          }, 1100);
+
+          setTimeout(function () {
+            if (statusText && loader && !loader.classList.contains('loaded')) {
+              statusText.textContent = 'Finishing workspace setup...';
+            }
+          }, 2100);
 
           var headers = { 'X-Admin-Token': token };
 
@@ -21953,26 +21982,22 @@
                   window.restoreActiveTab();
                 }
 
-                // Smoothly dismiss loader once overview metrics are loaded
-                Promise.resolve(overviewPromise).then(function () {
-                  var elapsed = Date.now() - startTime;
-                  var remaining = Math.max(0, minDisplayTime - elapsed);
-                  setTimeout(function () {
-                    if (statusText) statusText.textContent = 'Workspace Ready';
-                    setTimeout(function () {
-                      if (loader) loader.classList.add('loaded');
-                    }, 200);
-                  }, remaining);
-                }).catch(function () {
-                  if (loader) loader.classList.add('loaded');
-                });
-
-                // Safety failsafe to guarantee overlay never traps user
+                // Smoothly dismiss loader at exactly 3.0 seconds
+                var elapsed = Date.now() - startTime;
+                var remaining = Math.max(0, REQUIRED_LOADER_DURATION - elapsed);
                 setTimeout(function () {
-                  if (loader && !loader.classList.contains('loaded')) {
-                    loader.classList.add('loaded');
-                  }
-                }, 3500);
+                  if (statusText) statusText.textContent = 'Workspace Ready';
+                  setTimeout(function () {
+                    if (loader) {
+                      loader.classList.add('loaded');
+                      setTimeout(function () {
+                        if (loader.classList.contains('loaded')) {
+                          loader.style.display = 'none';
+                        }
+                      }, 550);
+                    }
+                  }, 250);
+                }, remaining);
 
                 // Background auto-update every 15 seconds (subtle, no screen flicker)
                 if (!window.cspAutoRefreshInterval) {
@@ -23351,13 +23376,27 @@
                 document.documentElement.classList.remove('unauthenticated');
                 document.documentElement.classList.add('authenticated');
                 var loginScreen = document.getElementById('csp-login-screen');
-                if (loginScreen) loginScreen.style.display = 'none';
+                if (loginScreen) {
+                  loginScreen.style.setProperty('display', 'none', 'important');
+                }
+
                 var loader = document.getElementById('csp-page-loader');
                 var statusText = document.getElementById('csp-loader-status-text');
+                var brandTitle = document.querySelector('.csp-loader-brand-title');
+                if (brandTitle) brandTitle.textContent = 'CONSPODIUM ADMIN';
+
                 if (loader) {
                   loader.classList.remove('loaded');
-                  if (statusText) statusText.textContent = 'Authenticated. Initializing workspace...';
+                  loader.style.removeProperty('display');
+                  loader.style.removeProperty('opacity');
+                  loader.style.removeProperty('visibility');
+                  loader.style.removeProperty('pointer-events');
+                  loader.style.setProperty('display', 'flex', 'important');
+                  loader.style.setProperty('opacity', '1', 'important');
+                  loader.style.setProperty('visibility', 'visible', 'important');
+                  loader.style.setProperty('pointer-events', 'auto', 'important');
                 }
+                if (statusText) statusText.textContent = 'Authenticated. Initializing workspace...';
 
                 if (res.user) {
                   var nameEl = document.getElementById('admin-sidebar-name');
@@ -23369,18 +23408,77 @@
                     var parts = (res.user.name || res.user.username || 'AD').split(' ');
                     avatarEl.textContent = ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || 'AD';
                   }
+                  var uInp = document.getElementById('prof-tab-username');
+                  var dInp = document.getElementById('prof-tab-display-name');
+                  var eInp = document.getElementById('prof-tab-email');
+                  if (uInp) uInp.value = res.user.username || '';
+                  if (dInp) dInp.value = res.user.name || '';
+                  if (eInp) eInp.value = res.user.email || '';
                 }
 
+                // Switch to Overview tab cleanly without full-page reload
                 var overviewUrl = window.location.pathname.replace(/\/+$/, '') + '/#overview';
                 try {
                   history.replaceState(null, '', overviewUrl);
                 } catch (e) {}
 
-                // Cleanly navigate to Overview
+                var overviewNav = document.querySelector('.csp-nav-item[data-tab="overview"]');
+                if (overviewNav) {
+                  overviewNav.click();
+                }
+
+                // Load all dashboard workspace data in parallel
+                loadCategoriesSelect();
+                loadOverviewData();
+                loadPosts();
+                loadSubmissions();
+                loadPolls();
+                loadHomepagePoll();
+                loadScholars();
+                loadCategoriesManager();
+                loadSettings();
+                loadHomepageSections();
+                loadPopupAdverts();
+                if (typeof loadComments === 'function') loadComments(false);
+
+                // Auto-refresh interval
+                if (!window.cspAutoRefreshInterval) {
+                  window.cspAutoRefreshInterval = setInterval(function () {
+                    loadOverviewData();
+                    loadSubmissions();
+                  }, 15000);
+                }
+
+                // Hold loader on screen for strictly 3 seconds (~3000ms) with progressive feedback
+                var REQUIRED_LOGIN_LOADER_DURATION = 3000;
                 setTimeout(function () {
-                  window.location.href = overviewUrl;
-                  window.location.reload();
-                }, 250);
+                  if (statusText && loader && !loader.classList.contains('loaded')) {
+                    statusText.textContent = 'Synchronizing CMS articles & metrics...';
+                  }
+                }, 1000);
+
+                setTimeout(function () {
+                  if (statusText && loader && !loader.classList.contains('loaded')) {
+                    statusText.textContent = 'Preparing workspace charts & controls...';
+                  }
+                }, 2000);
+
+                setTimeout(function () {
+                  if (statusText && loader && !loader.classList.contains('loaded')) {
+                    statusText.textContent = 'Workspace Ready';
+                  }
+                }, 2700);
+
+                setTimeout(function () {
+                  if (loader) {
+                    loader.classList.add('loaded');
+                    setTimeout(function () {
+                      if (loader.classList.contains('loaded')) {
+                        loader.style.setProperty('display', 'none', 'important');
+                      }
+                    }, 550);
+                  }
+                }, REQUIRED_LOGIN_LOADER_DURATION);
               } else {
                 if (submitBtn) {
                   submitBtn.disabled = false;

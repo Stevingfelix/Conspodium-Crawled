@@ -4580,10 +4580,11 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
       var loader = document.getElementById('csp-page-loader');
 
       function dismissLoader() {
-      if (loader) {
-        loader.classList.add('loaded');
+        if (window.location.pathname.indexOf('/dashboard') !== -1) return;
+        if (loader) {
+          loader.classList.add('loaded');
+        }
       }
-    }
 
       dismissLoader();
 
@@ -5443,8 +5444,9 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   })();
 </script>
 <script>
-  // Instant fallback loader dismiss safety
+  // Instant fallback loader dismiss safety (front-end public pages only)
   (function () {
+    if (window.location.pathname.indexOf('/dashboard') !== -1) return;
     function dismiss() {
       var l = document.getElementById('csp-page-loader');
       if (l) {
