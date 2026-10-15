@@ -655,7 +655,7 @@
 				btn.disabled = true;
 				btn.innerHTML = '<span>Registering order...</span>';
 
-				fetch(getRootUrl('api/newsletter.php?action=subscribe'), {
+				fetch(getRootUrl('api/subscribers.php?action=subscribe'), {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({

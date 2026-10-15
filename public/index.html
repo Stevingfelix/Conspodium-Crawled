@@ -15343,7 +15343,6 @@
           { text: 'Home', href: getRootUrl('/') },
           { text: 'About Us', href: getRootUrl('about-us/') },
           { text: 'Stories', href: getRootUrl('stories/') },
-          { text: 'Magazine', href: getRootUrl('magazine/') },
           { text: 'Forum', href: getRootUrl('forum/') },
           { text: 'Sponsorship', href: getRootUrl('sponsorship/') },
           { text: 'Advert', href: getRootUrl('advert/') },
@@ -18070,7 +18069,6 @@
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2087"><a href="/about-us/" class="elementor-item">About Us</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2089"><a href="/contact-us/" class="elementor-item">Contact Us</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2086"><a href="/stories/" class="elementor-item">Stories</a></li>
-								<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/magazine/" class="elementor-item">Magazine</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/forum/" class="elementor-item">Forum</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2090"><a href="/sponsorship/" class="elementor-item">Sponsorship</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2088"><a href="/advert/" class="elementor-item">Advert</a></li>
@@ -18583,26 +18581,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Built-in Slide 5 (Index 4) - Dynamic Featured Story Placement -->
-        <div class="csp-hero-slide" data-slide="4" id="csp-hero-slide-featured">
-          <div class="csp-hero-bg" id="csp-hero-slide-featured-bg"
-            style="background-image:url('./wp-content/uploads/2026/01/African-Diasporans-1536x864-1.jpg');"></div>
-          <div class="csp-hero-overlay"></div>
-          <div class="csp-hero-content">
-            <div class="csp-hero-eyebrow" id="csp-hero-slide-featured-eyebrow">⭐ Featured Story</div>
-            <h1 class="csp-hero-title" id="csp-hero-slide-featured-title">Pan-African Innovation &amp; Heritage:<br><em>Empowering Global Diaspora Networks</em></h1>
-            <p class="csp-hero-sub" id="csp-hero-slide-featured-sub">Exploring how pan-African leaders, creators, and innovators are shaping global economic policies and cultural narratives across the diaspora.</p>
-            <div class="csp-hero-btns">
-              <a href="./post/empowering-diaspora-communities-through-innovation-heritage/" id="csp-hero-slide-featured-btn"
-                class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg></a>
-              <a href="/stories/" class="csp-hero-btn-secondary">Explore All Stories</a>
-            </div>
-          </div>
-        </div>
       </div>
 
       <button id="csp-hero-prev" class="csp-hero-arrow" aria-label="Previous slide"><svg width="20" height="20"
@@ -18616,7 +18594,7 @@
             stroke-linejoin="round" />
         </svg></button>
       <div class="csp-hero-dots" id="csp-hero-dots"></div>
-      <div class="csp-hero-counter"><span id="csp-hero-cur">01</span> / <span id="csp-hero-tot">05</span></div>
+      <div class="csp-hero-counter"><span id="csp-hero-cur">01</span> / <span id="csp-hero-tot">04</span></div>
       <div class="csp-hero-progress" id="csp-hero-progress"></div>
 
       <script>
@@ -18737,41 +18715,59 @@
             initSlider();
           }
 
-          // Fetch Featured CMS article from DB & dynamically hydrate Slide 5 (exactly 5 slides, zero reload flicker)
+          // Fetch ALL featured CMS articles from DB & append them to the hero slider (preserving built-in slides)
           function fetchFeaturedCMSArticles() {
             var baseUrl = window.getRootUrl ? window.getRootUrl('api/posts.php?featured=1') : 'api/posts.php?featured=1';
             var endpoint = baseUrl + (baseUrl.indexOf('?') !== -1 ? '&' : '?') + '_t=' + Date.now();
             fetch(endpoint)
               .then(function (r) { return r.json(); })
               .then(function (res) {
+                // Always clean up previously appended dynamic slides
+                document.querySelectorAll('.csp-hero-slide-dynamic').forEach(function (el) { el.remove(); });
+
                 if (res.success && res.posts && res.posts.length > 0) {
-                  var post = res.posts[0];
-                  var bg = document.getElementById('csp-hero-slide-featured-bg');
-                  var eyebrow = document.getElementById('csp-hero-slide-featured-eyebrow');
-                  var title = document.getElementById('csp-hero-slide-featured-title');
-                  var sub = document.getElementById('csp-hero-slide-featured-sub');
-                  var btn = document.getElementById('csp-hero-slide-featured-btn');
+                  var wrapper = document.getElementById('csp-hero-slides-wrapper');
+                  if (!wrapper) return;
 
-                  var img = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(post.featured_image) : post.featured_image;
-                  if (bg && img) bg.style.backgroundImage = 'url(\'' + img + '\')';
-                  if (eyebrow) eyebrow.textContent = '⭐ ' + (post.eyebrow || post.category_name || 'Featured Story');
+                  var staticSlidesCount = document.querySelectorAll('.csp-hero-slide:not(.csp-hero-slide-dynamic)').length || 4;
 
-                  if (title && post.title) {
+                  res.posts.forEach(function (post, idx) {
+                    var img = window.getAbsoluteImageUrl ? window.getAbsoluteImageUrl(post.featured_image) : post.featured_image;
+                    var eyebrow = post.eyebrow || post.category_name || 'Featured Story';
+                    var slug = post.slug || post.id;
+                    var link = (window.getRootUrl ? window.getRootUrl('post/' + slug + '/') : './post/' + slug + '/');
+
                     var titleParts = (post.title || '').split(' ');
                     var formattedTitle = post.title;
                     if (titleParts.length > 3) {
                       var emWord = titleParts.slice(-2).join(' ');
                       var firstWords = titleParts.slice(0, -2).join(' ');
-                      formattedTitle = firstWords + '<br><em>' + emWord + '</em>';
+                      formattedTitle = firstWords + ' <em>' + emWord + '</em>';
                     }
-                    title.innerHTML = formattedTitle;
-                  }
 
-                  if (sub && post.excerpt) sub.textContent = post.excerpt;
-                  if (btn && (post.slug || post.id)) {
-                    var slug = post.slug || post.id;
-                    btn.href = window.getRootUrl ? window.getRootUrl('post/' + slug + '/') : './post/' + slug + '/';
-                  }
+                    var slideDiv = document.createElement('div');
+                    slideDiv.className = 'csp-hero-slide csp-hero-slide-dynamic';
+                    slideDiv.dataset.slide = staticSlidesCount + idx;
+                    slideDiv.innerHTML = `
+                      <div class="csp-hero-bg" style="background-image:url('${img}');"></div>
+                      <div class="csp-hero-overlay"></div>
+                      <div class="csp-hero-content">
+                        <div class="csp-hero-eyebrow">⭐ ${eyebrow}</div>
+                        <h1 class="csp-hero-title">${formattedTitle}</h1>
+                        <p class="csp-hero-sub">${post.excerpt || ''}</p>
+                        <div class="csp-hero-btns">
+                          <a href="${link}" class="csp-hero-btn-primary">Read Article <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                          <a href="${window.getRootUrl ? window.getRootUrl('stories/') : './stories/'}" class="csp-hero-btn-secondary">Explore All Stories</a>
+                        </div>
+                      </div>
+                    `;
+                    wrapper.appendChild(slideDiv);
+                  });
+
+                  // Update dots and counters to reflect built-in + dynamic CMS slides
+                  buildDots();
+                } else {
+                  buildDots();
                 }
               })
               .catch(function (err) { console.error('Error fetching featured CMS articles:', err); });
