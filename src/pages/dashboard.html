@@ -49,11 +49,6 @@
           document.documentElement.classList.remove('unauthenticated');
           document.documentElement.classList.add('authenticated');
           localStorage.setItem('csp_last_activity', now.toString());
-          window.__csp_reload_start = now;
-          var lockStyle = document.createElement('style');
-          lockStyle.id = 'csp-loader-lock-style';
-          lockStyle.textContent = '#csp-page-loader { display: flex !important; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }';
-          document.head.appendChild(lockStyle);
         }
 
         // Instant Zero-Flash Tab Display Before First Paint (authenticated only)
@@ -2357,14 +2352,14 @@
       pointer-events: none !important;
     }
 
-    /* ── MODERN SLEEK CONSPODIUM PAGE LOADER (PREMIUM LIGHT THEME) ────────── */
+    /* ── MODERN SLEEK CONSPODIUM PAGE LOADER (STRICT ZERO-FLASH) ───────────────── */
     #csp-page-loader {
       position: fixed !important;
       top: 0 !important;
       left: 0 !important;
       width: 100vw !important;
       height: 100vh !important;
-      background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.98) 0%, rgba(241, 245, 249, 0.96) 100%) !important;
+      background: rgba(6, 16, 34, 0.96) !important;
       backdrop-filter: blur(24px) !important;
       -webkit-backdrop-filter: blur(24px) !important;
       z-index: 999999999 !important;
@@ -2375,146 +2370,52 @@
       opacity: 1;
       pointer-events: auto;
       visibility: visible;
-      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
     #csp-page-loader.loaded {
       opacity: 0 !important;
-      transform: scale(1.03) !important;
       pointer-events: none !important;
       visibility: hidden !important;
     }
 
-    .csp-loader-card {
+    .csp-loader-box {
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
-      padding: 34px 40px !important;
-      background: rgba(255, 255, 255, 0.94) !important;
-      border: 1px solid rgba(226, 232, 240, 0.9) !important;
-      border-radius: 24px !important;
-      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08), 0 0 35px rgba(0, 174, 254, 0.08) !important;
-      backdrop-filter: blur(20px) !important;
-      -webkit-backdrop-filter: blur(20px) !important;
-      max-width: 320px !important;
-      width: 90% !important;
-      text-align: center !important;
-      box-sizing: border-box !important;
-    }
-
-    .csp-loader-graphic {
-      position: relative !important;
-      width: 68px !important;
-      height: 68px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      margin-bottom: 18px !important;
-    }
-
-    .csp-loader-pulse-glow {
-      position: absolute !important;
-      inset: -6px !important;
-      border-radius: 50% !important;
-      background: radial-gradient(circle, rgba(0, 174, 254, 0.22) 0%, rgba(183, 31, 113, 0.12) 55%, transparent 75%) !important;
-      animation: csp-glow-pulse 2s ease-in-out infinite !important;
+      gap: 18px !important;
     }
 
     .csp-loader-spinner-ring {
-      width: 64px !important;
-      height: 64px !important;
+      width: 56px !important;
+      height: 56px !important;
       border-radius: 50% !important;
-      border: 2.5px solid rgba(0, 174, 254, 0.12) !important;
+      border: 3px solid rgba(255, 255, 255, 0.08) !important;
       border-top-color: #00AEFE !important;
       border-right-color: #B71F71 !important;
-      animation: csp-spin-ring 0.9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite !important;
-      box-shadow: 0 2px 12px rgba(0, 174, 254, 0.25) !important;
-    }
-
-    .csp-loader-center-icon {
-      position: absolute !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      animation: csp-icon-bob 2s ease-in-out infinite !important;
-    }
-
-    @keyframes csp-glow-pulse {
-      0%, 100% { transform: scale(0.95); opacity: 0.5; }
-      50% { transform: scale(1.15); opacity: 0.9; }
-    }
-
-    @keyframes csp-icon-bob {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+      animation: csp-spin-ring 0.75s linear infinite !important;
+      box-shadow: 0 0 32px rgba(0, 174, 254, 0.4) !important;
     }
 
     @keyframes csp-spin-ring {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
-    .csp-loader-brand-title {
-      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif !important;
-      font-size: 0.8rem !important;
-      font-weight: 800 !important;
-      letter-spacing: 0.16em !important;
-      color: #0f172a !important;
-      margin-bottom: 8px !important;
-      text-transform: uppercase !important;
-    }
-
-    .csp-loader-status-pill {
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      padding: 6px 14px !important;
-      background: #f1f5f9 !important;
-      border: 1px solid rgba(0, 174, 254, 0.2) !important;
-      border-radius: 30px !important;
-      font-size: 0.8rem !important;
-      color: #334155 !important;
-      font-weight: 600 !important;
-      margin-bottom: 18px !important;
-    }
-
-    .csp-loader-status-dot {
-      width: 6px !important;
-      height: 6px !important;
-      border-radius: 50% !important;
-      background: #00AEFE !important;
-      box-shadow: 0 0 8px rgba(0, 174, 254, 0.6) !important;
-      animation: csp-status-blink 1.2s ease-in-out infinite !important;
-    }
-
-    @keyframes csp-status-blink {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
-
-    .csp-loader-track {
-      width: 140px !important;
-      height: 3px !important;
-      border-radius: 3px !important;
-      background: #e2e8f0 !important;
-      overflow: hidden !important;
-      position: relative !important;
-    }
-
-    .csp-loader-bar {
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      height: 100% !important;
-      width: 45% !important;
-      background: linear-gradient(90deg, #00AEFE, #B71F71) !important;
-      border-radius: 3px !important;
-      animation: csp-progress-slide 1.4s ease-in-out infinite !important;
-    }
-
-    @keyframes csp-progress-slide {
-      0% { left: -45%; }
-      100% { left: 100%; }
+    .csp-loader-brand {
+      font-family: 'Merienda', cursive, sans-serif !important;
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
     }
 
     /* ── Sleek Global Toast Notifications & Confirmation Modals ── */
@@ -2866,7 +2767,13 @@
     }
   </style>
 
-
+  <!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
+  <div id="csp-page-loader">
+    <div class="csp-loader-box">
+      <div class="csp-loader-spinner-ring"></div>
+      <div class="csp-loader-brand">Conspodium</div>
+    </div>
+  </div>
 
   <script id="csp-mobile-menu-script">
     (function () {
@@ -3158,7 +3065,22 @@
 
       function initLoaderAndLogo() {
         var loader = document.getElementById('csp-page-loader');
-        // Note: Dashboard manages its own 3-second loader sequence via checkAuthSession and login handlers
+
+        function dismissLoader() {
+          if (loader) {
+            loader.classList.add('loaded');
+          }
+        }
+
+        dismissLoader();
+
+        // Event listeners for page restore/navigation
+        window.addEventListener('pageshow', function () {
+          if (loader) loader.classList.add('loaded');
+        });
+        window.addEventListener('popstate', function () {
+          if (loader) loader.classList.add('loaded');
+        });
 
         // Fix all header logos to strictly navigate back to Home root
         var homeUrl = getRootUrl('/');
@@ -11473,7 +11395,7 @@
 
         function loadOverviewData() {
           var token = localStorage.getItem('conspodium_admin_token') || '';
-          return fetch(getRootUrl('api/dashboard.php'), { headers: { 'X-Admin-Token': token } })
+          fetch(getRootUrl('api/dashboard.php'), { headers: { 'X-Admin-Token': token } })
             .then(function (r) { return r.json(); })
             .then(function (res) {
               if (!res.success || !res.stats) return;
@@ -17333,59 +17255,14 @@
         function checkAuthSession() {
           var loader = document.getElementById('csp-page-loader');
           var loginScreen = document.getElementById('csp-login-screen');
-          var statusText = document.getElementById('csp-loader-status-text');
-          var brandTitle = document.querySelector('.csp-loader-brand-title');
-          if (brandTitle) brandTitle.textContent = 'CONSPODIUM ADMIN';
+
+          if (loader) loader.classList.add('loaded');
 
           var token = localStorage.getItem('conspodium_admin_token') || '';
           if (!token) {
-            var lock = document.getElementById('csp-loader-lock-style');
-            if (lock) lock.remove();
-            if (loader) {
-              loader.classList.add('loaded');
-              loader.style.setProperty('display', 'none', 'important');
-            }
-            if (loginScreen) loginScreen.style.setProperty('display', 'flex', 'important');
-            document.documentElement.classList.remove('authenticated');
-            document.documentElement.classList.add('unauthenticated');
+            if (loginScreen) loginScreen.style.display = 'flex';
             return;
           }
-
-          // User has active session: display sleek loader for strictly 3 seconds while data loads
-          if (loader) {
-            loader.classList.remove('loaded');
-            loader.style.removeProperty('display');
-            loader.style.removeProperty('opacity');
-            loader.style.removeProperty('visibility');
-            loader.style.removeProperty('pointer-events');
-            loader.style.setProperty('display', 'flex', 'important');
-            loader.style.setProperty('opacity', '1', 'important');
-            loader.style.setProperty('visibility', 'visible', 'important');
-            loader.style.setProperty('pointer-events', 'auto', 'important');
-          }
-          if (statusText) statusText.textContent = 'Synchronizing Workspace...';
-
-          var startTime = window.__csp_reload_start || Date.now();
-          var REQUIRED_LOADER_DURATION = 3000; // Strictly 3 seconds on screen
-
-          // Progressive status text updates during the 3 seconds
-          setTimeout(function () {
-            if (statusText && loader && !loader.classList.contains('loaded')) {
-              statusText.textContent = 'Loading analytics & posts...';
-            }
-          }, 1000);
-
-          setTimeout(function () {
-            if (statusText && loader && !loader.classList.contains('loaded')) {
-              statusText.textContent = 'Finishing workspace setup...';
-            }
-          }, 2000);
-
-          setTimeout(function () {
-            if (statusText && loader && !loader.classList.contains('loaded')) {
-              statusText.textContent = 'Workspace Ready';
-            }
-          }, 2700);
 
           var headers = { 'X-Admin-Token': token };
 
@@ -17396,7 +17273,8 @@
             })
             .then(function (res) {
               if (res.success && res.user) {
-                if (loginScreen) loginScreen.style.setProperty('display', 'none', 'important');
+                if (loginScreen) loginScreen.style.display = 'none';
+                if (loader) loader.classList.add('loaded');
                 document.documentElement.classList.remove('unauthenticated');
                 document.documentElement.classList.add('authenticated');
                 localStorage.setItem('csp_last_activity', Date.now().toString());
@@ -17420,7 +17298,7 @@
 
                 // Load Admin CMS data
                 loadCategoriesSelect();
-                var overviewPromise = loadOverviewData();
+                loadOverviewData();
                 loadPosts();
                 loadSubmissions();
                 loadPolls();
@@ -17437,22 +17315,6 @@
                   window.restoreActiveTab();
                 }
 
-                // Smoothly dismiss loader at exactly 3.0 seconds
-                var elapsed = Date.now() - startTime;
-                var remaining = Math.max(0, REQUIRED_LOADER_DURATION - elapsed);
-                setTimeout(function () {
-                  var lock = document.getElementById('csp-loader-lock-style');
-                  if (lock) lock.remove();
-                  if (loader) {
-                    loader.classList.add('loaded');
-                    setTimeout(function () {
-                      if (loader.classList.contains('loaded')) {
-                        loader.style.setProperty('display', 'none', 'important');
-                      }
-                    }, 550);
-                  }
-                }, remaining);
-
                 // Background auto-update every 15 seconds (subtle, no screen flicker)
                 if (!window.cspAutoRefreshInterval) {
                   window.cspAutoRefreshInterval = setInterval(function () {
@@ -17461,8 +17323,6 @@
                   }, 15000);
                 }
               } else {
-                var lock = document.getElementById('csp-loader-lock-style');
-                if (lock) lock.remove();
                 localStorage.removeItem('conspodium_admin_token');
                 localStorage.removeItem('csp_admin_token');
                 localStorage.removeItem('csp_admin');
@@ -17475,16 +17335,11 @@
                 if (window.location.hash && window.location.hash.toLowerCase() !== '#overview') {
                   try { history.replaceState(null, '', window.location.pathname.replace(/\/+$/, '') + '/#overview'); } catch (e) {}
                 }
-                if (loader) {
-                  loader.classList.add('loaded');
-                  loader.style.setProperty('display', 'none', 'important');
-                }
-                if (loginScreen) loginScreen.style.setProperty('display', 'flex', 'important');
+                if (loader) loader.classList.add('loaded');
+                if (loginScreen) loginScreen.style.display = 'flex';
               }
             })
             .catch(function () {
-              var lock = document.getElementById('csp-loader-lock-style');
-              if (lock) lock.remove();
               localStorage.removeItem('conspodium_admin_token');
               localStorage.removeItem('csp_admin_token');
               localStorage.removeItem('csp_admin');
@@ -17497,11 +17352,8 @@
               if (window.location.hash && window.location.hash.toLowerCase() !== '#overview') {
                 try { history.replaceState(null, '', window.location.pathname.replace(/\/+$/, '') + '/#overview'); } catch (e) {}
               }
-              if (loader) {
-                loader.classList.add('loaded');
-                loader.style.setProperty('display', 'none', 'important');
-              }
-              if (loginScreen) loginScreen.style.setProperty('display', 'flex', 'important');
+              if (loader) loader.classList.add('loaded');
+              if (loginScreen) loginScreen.style.display = 'flex';
             });
         }
 
@@ -18840,35 +18692,9 @@
                 document.documentElement.classList.remove('unauthenticated');
                 document.documentElement.classList.add('authenticated');
                 var loginScreen = document.getElementById('csp-login-screen');
-                if (loginScreen) {
-                  loginScreen.style.setProperty('display', 'none', 'important');
-                }
-
+                if (loginScreen) loginScreen.style.display = 'none';
                 var loader = document.getElementById('csp-page-loader');
-                var statusText = document.getElementById('csp-loader-status-text');
-                var brandTitle = document.querySelector('.csp-loader-brand-title');
-                if (brandTitle) brandTitle.textContent = 'CONSPODIUM ADMIN';
-
-                var lockStyle = document.getElementById('csp-loader-lock-style');
-                if (!lockStyle) {
-                  lockStyle = document.createElement('style');
-                  lockStyle.id = 'csp-loader-lock-style';
-                  lockStyle.textContent = '#csp-page-loader { display: flex !important; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }';
-                  document.head.appendChild(lockStyle);
-                }
-
-                if (loader) {
-                  loader.classList.remove('loaded');
-                  loader.style.removeProperty('display');
-                  loader.style.removeProperty('opacity');
-                  loader.style.removeProperty('visibility');
-                  loader.style.removeProperty('pointer-events');
-                  loader.style.setProperty('display', 'flex', 'important');
-                  loader.style.setProperty('opacity', '1', 'important');
-                  loader.style.setProperty('visibility', 'visible', 'important');
-                  loader.style.setProperty('pointer-events', 'auto', 'important');
-                }
-                if (statusText) statusText.textContent = 'Authenticated. Initializing workspace...';
+                if (loader) loader.classList.add('loaded');
 
                 if (res.user) {
                   var nameEl = document.getElementById('admin-sidebar-name');
@@ -18880,79 +18706,18 @@
                     var parts = (res.user.name || res.user.username || 'AD').split(' ');
                     avatarEl.textContent = ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || 'AD';
                   }
-                  var uInp = document.getElementById('prof-tab-username');
-                  var dInp = document.getElementById('prof-tab-display-name');
-                  var eInp = document.getElementById('prof-tab-email');
-                  if (uInp) uInp.value = res.user.username || '';
-                  if (dInp) dInp.value = res.user.name || '';
-                  if (eInp) eInp.value = res.user.email || '';
                 }
 
-                // Switch to Overview tab cleanly without full-page reload
                 var overviewUrl = window.location.pathname.replace(/\/+$/, '') + '/#overview';
                 try {
                   history.replaceState(null, '', overviewUrl);
                 } catch (e) {}
 
-                var overviewNav = document.querySelector('.csp-nav-item[data-tab="overview"]');
-                if (overviewNav) {
-                  overviewNav.click();
-                }
-
-                // Load all dashboard workspace data in parallel
-                loadCategoriesSelect();
-                loadOverviewData();
-                loadPosts();
-                loadSubmissions();
-                loadPolls();
-                loadHomepagePoll();
-                loadScholars();
-                loadCategoriesManager();
-                loadSettings();
-                loadHomepageSections();
-                loadPopupAdverts();
-                if (typeof loadComments === 'function') loadComments(false);
-
-                // Auto-refresh interval
-                if (!window.cspAutoRefreshInterval) {
-                  window.cspAutoRefreshInterval = setInterval(function () {
-                    loadOverviewData();
-                    loadSubmissions();
-                  }, 15000);
-                }
-
-                // Hold loader on screen for strictly 3 seconds (~3000ms) with progressive feedback
-                var REQUIRED_LOGIN_LOADER_DURATION = 3000;
+                // Cleanly navigate to Overview
                 setTimeout(function () {
-                  if (statusText && loader && !loader.classList.contains('loaded')) {
-                    statusText.textContent = 'Synchronizing CMS articles & metrics...';
-                  }
-                }, 1000);
-
-                setTimeout(function () {
-                  if (statusText && loader && !loader.classList.contains('loaded')) {
-                    statusText.textContent = 'Preparing workspace charts & controls...';
-                  }
-                }, 2000);
-
-                setTimeout(function () {
-                  if (statusText && loader && !loader.classList.contains('loaded')) {
-                    statusText.textContent = 'Workspace Ready';
-                  }
-                }, 2700);
-
-                setTimeout(function () {
-                  var lock = document.getElementById('csp-loader-lock-style');
-                  if (lock) lock.remove();
-                  if (loader) {
-                    loader.classList.add('loaded');
-                    setTimeout(function () {
-                      if (loader.classList.contains('loaded')) {
-                        loader.style.setProperty('display', 'none', 'important');
-                      }
-                    }, 550);
-                  }
-                }, REQUIRED_LOGIN_LOADER_DURATION);
+                  window.location.href = overviewUrl;
+                  window.location.reload();
+                }, 250);
               } else {
                 if (submitBtn) {
                   submitBtn.disabled = false;
@@ -24629,7 +24394,7 @@
         });
 
         // Initial Load
-        function runInitialAuth() {
+        document.addEventListener('DOMContentLoaded', function () {
           checkAuthSession();
           fetch(getRootUrl('api/settings.php'))
             .then(function (r) { return r.json(); })
@@ -24641,13 +24406,7 @@
               }
             })
             .catch(function () {});
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', runInitialAuth);
-        } else {
-          runInitialAuth();
-        }
+        });
       })();
     
         // ── Real-Time Password Matching & Profile Controls ──
