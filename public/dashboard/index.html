@@ -45,6 +45,10 @@
           if (window.location.hash && window.location.hash.toLowerCase() !== '#overview') {
             try { history.replaceState(null, '', window.location.pathname.replace(/\/+$/, '') + '/#overview'); } catch(e){}
           }
+          var unauthHideStyle = document.createElement('style');
+          unauthHideStyle.id = 'csp-unauth-loader-hide';
+          unauthHideStyle.textContent = '#csp-page-loader { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }';
+          document.head.appendChild(unauthHideStyle);
         } else {
           document.documentElement.classList.remove('unauthenticated');
           document.documentElement.classList.add('authenticated');
@@ -23324,6 +23328,8 @@
 
                 document.documentElement.classList.remove('unauthenticated');
                 document.documentElement.classList.add('authenticated');
+                var unauthHideStyle = document.getElementById('csp-unauth-loader-hide');
+                if (unauthHideStyle) unauthHideStyle.remove();
                 var loginScreen = document.getElementById('csp-login-screen');
                 if (loginScreen) loginScreen.style.display = 'none';
                 var loader = document.getElementById('csp-page-loader');
@@ -23380,6 +23386,21 @@
         // Global Logout Handler (Requirement 1 & 3)
         window.handleAdminLogout = function (e) {
           if (e && e.preventDefault) e.preventDefault();
+          var loader = document.getElementById('csp-page-loader');
+          if (loader) {
+            loader.classList.add('loaded');
+            loader.style.setProperty('display', 'none', 'important');
+          }
+          var lock = document.getElementById('csp-loader-lock-style');
+          if (lock) lock.remove();
+          var unauthHideStyle = document.getElementById('csp-unauth-loader-hide');
+          if (!unauthHideStyle) {
+            unauthHideStyle = document.createElement('style');
+            unauthHideStyle.id = 'csp-unauth-loader-hide';
+            unauthHideStyle.textContent = '#csp-page-loader { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }';
+            document.head.appendChild(unauthHideStyle);
+          }
+
           var token = localStorage.getItem('conspodium_admin_token') || '';
           localStorage.removeItem('conspodium_admin_token');
           localStorage.removeItem('csp_admin_token');
