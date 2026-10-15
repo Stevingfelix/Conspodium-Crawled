@@ -49,6 +49,11 @@
           document.documentElement.classList.remove('unauthenticated');
           document.documentElement.classList.add('authenticated');
           localStorage.setItem('csp_last_activity', now.toString());
+          window.__csp_reload_start = now;
+          var lockStyle = document.createElement('style');
+          lockStyle.id = 'csp-loader-lock-style';
+          lockStyle.textContent = '#csp-page-loader { display: flex !important; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }';
+          document.head.appendChild(lockStyle);
         }
 
         // Instant Zero-Flash Tab Display Before First Paint (authenticated only)
@@ -17334,11 +17339,13 @@
 
           var token = localStorage.getItem('conspodium_admin_token') || '';
           if (!token) {
+            var lock = document.getElementById('csp-loader-lock-style');
+            if (lock) lock.remove();
             if (loader) {
               loader.classList.add('loaded');
-              loader.style.display = 'none';
+              loader.style.setProperty('display', 'none', 'important');
             }
-            if (loginScreen) loginScreen.style.display = 'flex';
+            if (loginScreen) loginScreen.style.setProperty('display', 'flex', 'important');
             document.documentElement.classList.remove('authenticated');
             document.documentElement.classList.add('unauthenticated');
             return;
@@ -17351,14 +17358,14 @@
             loader.style.removeProperty('opacity');
             loader.style.removeProperty('visibility');
             loader.style.removeProperty('pointer-events');
-            loader.style.display = 'flex';
-            loader.style.opacity = '1';
-            loader.style.visibility = 'visible';
-            loader.style.pointerEvents = 'auto';
+            loader.style.setProperty('display', 'flex', 'important');
+            loader.style.setProperty('opacity', '1', 'important');
+            loader.style.setProperty('visibility', 'visible', 'important');
+            loader.style.setProperty('pointer-events', 'auto', 'important');
           }
           if (statusText) statusText.textContent = 'Synchronizing Workspace...';
 
-          var startTime = Date.now();
+          var startTime = window.__csp_reload_start || Date.now();
           var REQUIRED_LOADER_DURATION = 3000; // Strictly 3 seconds on screen
 
           // Progressive status text updates during the 3 seconds
@@ -17366,13 +17373,19 @@
             if (statusText && loader && !loader.classList.contains('loaded')) {
               statusText.textContent = 'Loading analytics & posts...';
             }
-          }, 1100);
+          }, 1000);
 
           setTimeout(function () {
             if (statusText && loader && !loader.classList.contains('loaded')) {
               statusText.textContent = 'Finishing workspace setup...';
             }
-          }, 2100);
+          }, 2000);
+
+          setTimeout(function () {
+            if (statusText && loader && !loader.classList.contains('loaded')) {
+              statusText.textContent = 'Workspace Ready';
+            }
+          }, 2700);
 
           var headers = { 'X-Admin-Token': token };
 
@@ -17383,7 +17396,7 @@
             })
             .then(function (res) {
               if (res.success && res.user) {
-                if (loginScreen) loginScreen.style.display = 'none';
+                if (loginScreen) loginScreen.style.setProperty('display', 'none', 'important');
                 document.documentElement.classList.remove('unauthenticated');
                 document.documentElement.classList.add('authenticated');
                 localStorage.setItem('csp_last_activity', Date.now().toString());
@@ -17428,17 +17441,16 @@
                 var elapsed = Date.now() - startTime;
                 var remaining = Math.max(0, REQUIRED_LOADER_DURATION - elapsed);
                 setTimeout(function () {
-                  if (statusText) statusText.textContent = 'Workspace Ready';
-                  setTimeout(function () {
-                    if (loader) {
-                      loader.classList.add('loaded');
-                      setTimeout(function () {
-                        if (loader.classList.contains('loaded')) {
-                          loader.style.display = 'none';
-                        }
-                      }, 550);
-                    }
-                  }, 250);
+                  var lock = document.getElementById('csp-loader-lock-style');
+                  if (lock) lock.remove();
+                  if (loader) {
+                    loader.classList.add('loaded');
+                    setTimeout(function () {
+                      if (loader.classList.contains('loaded')) {
+                        loader.style.setProperty('display', 'none', 'important');
+                      }
+                    }, 550);
+                  }
                 }, remaining);
 
                 // Background auto-update every 15 seconds (subtle, no screen flicker)
@@ -17449,6 +17461,8 @@
                   }, 15000);
                 }
               } else {
+                var lock = document.getElementById('csp-loader-lock-style');
+                if (lock) lock.remove();
                 localStorage.removeItem('conspodium_admin_token');
                 localStorage.removeItem('csp_admin_token');
                 localStorage.removeItem('csp_admin');
@@ -17461,11 +17475,16 @@
                 if (window.location.hash && window.location.hash.toLowerCase() !== '#overview') {
                   try { history.replaceState(null, '', window.location.pathname.replace(/\/+$/, '') + '/#overview'); } catch (e) {}
                 }
-                if (loader) loader.classList.add('loaded');
-                if (loginScreen) loginScreen.style.display = 'flex';
+                if (loader) {
+                  loader.classList.add('loaded');
+                  loader.style.setProperty('display', 'none', 'important');
+                }
+                if (loginScreen) loginScreen.style.setProperty('display', 'flex', 'important');
               }
             })
             .catch(function () {
+              var lock = document.getElementById('csp-loader-lock-style');
+              if (lock) lock.remove();
               localStorage.removeItem('conspodium_admin_token');
               localStorage.removeItem('csp_admin_token');
               localStorage.removeItem('csp_admin');
@@ -17478,8 +17497,11 @@
               if (window.location.hash && window.location.hash.toLowerCase() !== '#overview') {
                 try { history.replaceState(null, '', window.location.pathname.replace(/\/+$/, '') + '/#overview'); } catch (e) {}
               }
-              if (loader) loader.classList.add('loaded');
-              if (loginScreen) loginScreen.style.display = 'flex';
+              if (loader) {
+                loader.classList.add('loaded');
+                loader.style.setProperty('display', 'none', 'important');
+              }
+              if (loginScreen) loginScreen.style.setProperty('display', 'flex', 'important');
             });
         }
 
@@ -18827,6 +18849,14 @@
                 var brandTitle = document.querySelector('.csp-loader-brand-title');
                 if (brandTitle) brandTitle.textContent = 'CONSPODIUM ADMIN';
 
+                var lockStyle = document.getElementById('csp-loader-lock-style');
+                if (!lockStyle) {
+                  lockStyle = document.createElement('style');
+                  lockStyle.id = 'csp-loader-lock-style';
+                  lockStyle.textContent = '#csp-page-loader { display: flex !important; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }';
+                  document.head.appendChild(lockStyle);
+                }
+
                 if (loader) {
                   loader.classList.remove('loaded');
                   loader.style.removeProperty('display');
@@ -18912,6 +18942,8 @@
                 }, 2700);
 
                 setTimeout(function () {
+                  var lock = document.getElementById('csp-loader-lock-style');
+                  if (lock) lock.remove();
                   if (loader) {
                     loader.classList.add('loaded');
                     setTimeout(function () {
@@ -24597,7 +24629,7 @@
         });
 
         // Initial Load
-        document.addEventListener('DOMContentLoaded', function () {
+        function runInitialAuth() {
           checkAuthSession();
           fetch(getRootUrl('api/settings.php'))
             .then(function (r) { return r.json(); })
@@ -24609,7 +24641,13 @@
               }
             })
             .catch(function () {});
-        });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', runInitialAuth);
+        } else {
+          runInitialAuth();
+        }
       })();
     
         // ── Real-Time Password Matching & Profile Controls ──

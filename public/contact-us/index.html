@@ -5473,9 +5473,11 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
 
       // Event listeners for page restore/navigation
       window.addEventListener('pageshow', function () {
+        if (window.location.pathname.indexOf('/dashboard') !== -1) return;
         if (loader) loader.classList.add('loaded');
       });
       window.addEventListener('popstate', function () {
+        if (window.location.pathname.indexOf('/dashboard') !== -1) return;
         if (loader) loader.classList.add('loaded');
       });
       // Fix all header logos to strictly navigate back to Home root
