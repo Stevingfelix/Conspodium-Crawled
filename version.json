@@ -1,17 +1,18 @@
 {
-  "version": "2.1.8",
-  "description": "Subscriber removal action in directory, edge-to-edge popup advert live preview alignment, and button placement position toggle.",
+  "version": "2.1.9",
+  "description": "Admin workspace 3-second loader, homepage 5-slide hero slider, dedicated magazine page with showcase, and MySQL compatibility fixes.",
   "author": "Conspodium Core Team",
   "type": "lightweight_feature_patch",
   "highlights": [
-    "Added 1-click Subscriber Deletion action in the Subscriber Directory with confirmation dialog and live list refreshing",
-    "Aligned backend live popup advert preview with frontend design (edge-to-edge flyer presentation with floating circular close button)",
-    "Added Button Placement Position selector in popup settings: choose between Floating on Image (Overlay) or Below Image (Dedicated Bar)",
-    "Synchronized both frontend and backend popup renderers to honor button placement configuration dynamically"
+    "Added sleek 3-second animated light-theme loading screen on admin login and reload to give CMS data time to hydrate seamlessly",
+    "Enhanced homepage hero slider to exactly 5 slides with in-place CMS hydration and zero reload flicker",
+    "Restored dedicated Magazine page and homepage showcase section with order and subscription handling",
+    "Upgraded MySQL database engine compatibility with INT AUTO_INCREMENT DDL and zero-data-loss safeguards",
+    "Added automated installer fallback to import clean MySQL schema on shared hosting environments"
   ],
-  "last_updated": "2026-10-14 15:55:00",
+  "last_updated": "2026-10-15 02:30:00",
   "updated_by": "admin",
-  "files_updated": 4,
+  "files_updated": 6,
   "files_protected": 2,
-  "build_timestamp": "2026-10-14 14:57:18"
+  "build_timestamp": "2026-10-15 01:33:27"
 }
