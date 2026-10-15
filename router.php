@@ -45,12 +45,5 @@ if (file_exists($filePath . '/index.html')) {
     return true;
 }
 
-// 4. Existing static assets (CSS, JS, fonts, images)
-if (file_exists($filePath) && !is_dir($filePath)) {
-    return false;
-}
-
-// 5. 404 Not Found for missing pages
-http_response_code(404);
-echo '<!DOCTYPE html><html><head><title>404 Not Found</title></head><body style="font-family:sans-serif;text-align:center;padding:100px 20px;"><h1>404 - This Page Does Not Exist</h1><p>Sorry, the page you are looking for could not be found.</p></body></html>';
-return true;
+// Default fallback
+return false;
