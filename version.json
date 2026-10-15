@@ -1,17 +1,19 @@
 {
-  "version": "2.1.8",
-  "description": "Subscriber removal action in directory, edge-to-edge popup advert live preview alignment, and button placement position toggle.",
+  "version": "2.1.9",
+  "description": "Subscriber removal action in directory, edge-to-edge popup advert live preview alignment, button placement position toggle, and dynamic clean URL directory fallbacks.",
   "author": "Conspodium Core Team",
   "type": "lightweight_feature_patch",
   "highlights": [
     "Added 1-click Subscriber Deletion action in the Subscriber Directory with confirmation dialog and live list refreshing",
     "Aligned backend live popup advert preview with frontend design (edge-to-edge flyer presentation with floating circular close button)",
     "Added Button Placement Position selector in popup settings: choose between Floating on Image (Overlay) or Below Image (Dedicated Bar)",
-    "Synchronized both frontend and backend popup renderers to honor button placement configuration dynamically"
+    "Synchronized both frontend and backend popup renderers to honor button placement configuration dynamically",
+    "Added dynamic clean URL directory index fallback to automatically route any present and future subpages cleanly",
+    "Included root .htaccess in automated update packaging and in-app updater extraction for seamless 1-click deployment"
   ],
-  "last_updated": "2026-10-14 15:55:00",
+  "last_updated": "2026-10-15 03:40:00",
   "updated_by": "admin",
-  "files_updated": 4,
+  "files_updated": 6,
   "files_protected": 2,
-  "build_timestamp": "2026-10-14 14:57:18"
+  "build_timestamp": "2026-10-15 03:10:11"
 }

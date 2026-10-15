@@ -1,11 +1,11 @@
 # 🏛️ Conspodium — Project Handoff & Technical Documentation
 
-> **Current System Version**: `v2.1.6`  
-> **Last Updated**: October 14, 2026  
+> **Current System Version**: `v2.1.9`  
+> **Last Updated**: October 15, 2026  
 > **Repository**: `https://github.com/Stevingfelix/Conspodium-Crawled.git`  
 > **Branch**: `main`  
-> **Local Testing URL**: `http://localhost:8080/dashboard/`  
-> **Active Release Package**: `dist/conspodium-update-v2.1.6.zip` (27.42 MB — 100% Sandbox Tested)
+> **Local Testing URL**: `http://localhost:8088/dashboard/`  
+> **Active Release Package**: `dist/conspodium-update-v2.1.9.zip` (27.44 MB — 100% Sandbox Tested)
 
 ---
 
@@ -60,7 +60,17 @@ npm run test:package [dist/conspodium-update-v2.1.6.zip]
 
 ## 📦 4. Release History & Changelog
 
-### **v2.1.7 (Current Release — October 14, 2026)**
+### **v2.1.9 (Current Release — October 15, 2026)**
+* **Dynamic Clean URL Fallbacks**: Added dynamic directory index rewrite conditions (`RewriteCond %{REQUEST_URI} !^/public/` with `RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI}/index.html -f`) ensuring any present and future subfolder automatically routes without throwing 404s.
+* **Update Packaging Sync**: Updated `package-update.mjs` to automatically package `.htaccess` into release ZIPs, and updated `api/updater.php` to extract `.htaccess` during 1-click in-app updates.
+* **Subscriber Directory**: Added 1-click Subscriber Deletion action in the Subscriber Directory with confirmation dialog and live list refreshing.
+* **Popup Advert Live Preview & Placement**: Aligned backend live popup advert preview with frontend design (edge-to-edge flyer presentation with floating circular close button) and added Button Placement Position selector (Floating vs Below Image).
+
+### **v2.1.8 (October 14, 2026)**
+* **Subscriber Directory**: Added 1-click Subscriber Deletion action in the Subscriber Directory with confirmation dialog and live list refreshing.
+* **Popup Advert Live Preview & Placement**: Aligned backend live popup advert preview with frontend design (edge-to-edge flyer presentation) and added Button Placement Position selector (Floating vs Below Image).
+
+### **v2.1.7 (October 14, 2026)**
 * **Dashboard Sidebar Single Logo Mark**: Updated sidebar logo to use the single logo style without text (`CONSPODIUM-NEW-2.png`), matching the Branding Settings "Dashboard Logo" specification.
 * **Two-Way Branding Wiring**: Fully wired sidebar logo with `api/settings.php` (`dashboard_logo`), ensuring immediate visual synchronization on page load, image upload/replacement, and default reset.
 * **Automated Password Masking on Save**: Fixed password visibility leak where submitting or saving the Admin Profile form left password inputs exposed as `type="text"`. The system now guarantees that all password inputs (`prof-tab-current-pass`, `prof-tab-new-pass`, `prof-tab-confirm-pass`) immediately revert to `type="password"` (masked/invisible) upon saving, locking, or cancelling, and all eye toggle buttons restore to the default hidden icon state.

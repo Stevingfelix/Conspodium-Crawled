@@ -30,10 +30,17 @@ DirectoryIndex index.html index.php install.php
     RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
     RewriteRule ^(.*)$ public/$1 [L]
 
+    # 5b. Dynamic directory index rewrite from public/ (e.g. /magazine or /magazine/ -> public/magazine/index.html)
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI}/index.html -f
+    RewriteRule ^(.*)/?$ public/$1/index.html [L]
+
     # 6. Clean URL Rewrites for Subpages (Subfolder setup if public/ exists)
     RewriteRule ^dashboard/?$ public/dashboard/index.html [L]
     RewriteRule ^dashboard/(.*)$ public/dashboard/$1 [L]
     RewriteRule ^stories/?$ public/stories/index.html [L]
+    RewriteRule ^magazine/?$ public/magazine/index.html [L]
+    RewriteRule ^magazine/(.*)$ public/magazine/$1 [L]
     RewriteRule ^about-us/?$ public/about-us/index.html [L]
     RewriteRule ^contact-us/?$ public/contact-us/index.html [L]
     RewriteRule ^sponsorship/?$ public/sponsorship/index.html [L]
@@ -44,10 +51,19 @@ DirectoryIndex index.html index.php install.php
     RewriteRule ^story/(.*)$ public/post/index.html [L]
     RewriteRule ^forum/?$ public/forum/index.html [L]
     RewriteRule ^forum/thread/(.*)$ public/forum/thread/index.html [L]
+    RewriteRule ^account/?$ public/account/index.html [L]
+    RewriteRule ^login/?$ public/login/index.html [L]
+    RewriteRule ^subscription/?$ public/subscription/index.html [L]
+    RewriteRule ^community-thanks/?$ public/community-thanks/index.html [L]
 
     # 7. Direct setup fallback (if public contents uploaded directly into public_html root)
+    RewriteCond %{REQUEST_FILENAME}/index.html -f
+    RewriteRule ^(.*)/?$ $1/index.html [L]
+
     RewriteRule ^dashboard/?$ dashboard/index.html [L]
     RewriteRule ^stories/?$ stories/index.html [L]
+    RewriteRule ^magazine/?$ magazine/index.html [L]
+    RewriteRule ^magazine/(.*)$ magazine/$1 [L]
     RewriteRule ^about-us/?$ about-us/index.html [L]
     RewriteRule ^contact-us/?$ contact-us/index.html [L]
     RewriteRule ^sponsorship/?$ sponsorship/index.html [L]
@@ -58,6 +74,10 @@ DirectoryIndex index.html index.php install.php
     RewriteRule ^story/(.*)$ post/index.html [L]
     RewriteRule ^forum/?$ forum/index.html [L]
     RewriteRule ^forum/thread/(.*)$ forum/thread/index.html [L]
+    RewriteRule ^account/?$ account/index.html [L]
+    RewriteRule ^login/?$ login/index.html [L]
+    RewriteRule ^subscription/?$ subscription/index.html [L]
+    RewriteRule ^community-thanks/?$ community-thanks/index.html [L]
 </IfModule>
 
 # Protect SQLite database files and sensitive configs from HTTP download

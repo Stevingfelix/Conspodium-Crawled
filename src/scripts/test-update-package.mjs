@@ -111,7 +111,7 @@ try {
   for ($i = 0; $i < $zip->numFiles; $i++) {
       $entry = $zip->getNameIndex($i);
       $norm = str_replace('\\\\', '/', $entry);
-      if (preg_match('#^[^/]+/(public/|api/|src/|version\\.json|router\\.php)#i', $norm)) {
+      if (preg_match('#^[^/]+/(public/|api/|src/|version\\.json|router\\.php|\\.htaccess)#i', $norm)) {
           $norm = substr($norm, strpos($norm, '/') + 1);
       }
       if (substr($norm, -1) === '/' || strpos($norm, '__MACOSX') !== false || strpos($norm, '.DS_Store') !== false) continue;

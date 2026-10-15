@@ -31,9 +31,27 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	
-	<link rel="stylesheet" href="../wp-includes/css/dashicons.min._ver_6_8_7.css" media="all">
-	<link rel="stylesheet" href="../wp-content/plugins/elementor/assets/css/frontend.min._ver_3_34_0.css" media="all">
+	<link rel="stylesheet" id="dashicons-css" href="../wp-includes/css/dashicons.min._ver_6_8_7.css" media="all">
+	<link rel="stylesheet" id="templaters-css" href="../wp-content/plugins/skt-templates/css/templaters._ver_6_8_7.css" media="all">
+	<link rel="stylesheet" id="hfe-style-css" href="../wp-content/plugins/header-footer-elementor/assets/css/header-footer-elementor._ver_2_9_2.css" media="all">
+	<link rel="stylesheet" id="hfe-widgets-style-css" href="../wp-content/plugins/header-footer-elementor/inc/widgets-css/frontend._ver_2_9_2.css" media="all">
+	<link rel="stylesheet" id="elementor-icons-css" href="../wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min._ver_5_50_0.css" media="all">
+	<link rel="stylesheet" id="elementor-frontend-css" href="../wp-content/plugins/elementor/assets/css/frontend.min._ver_4_1_4.css" media="all">
+	<link rel="stylesheet" id="elementor-post-9-css" href="../wp-content/uploads/elementor/css/post-9._ver_1786118447.css" media="all">
+	<link rel="stylesheet" id="elementor-pro-css" href="../wp-content/plugins/elementor-pro/assets/css/frontend.min._ver_3_10_1.css" media="all">
+	<link rel="stylesheet" id="font-awesome-5-all-css" href="../wp-content/plugins/elementor/assets/lib/font-awesome/css/all.min._ver_4_1_4.css" media="all">
+	<link rel="stylesheet" id="font-awesome-4-shim-css" href="../wp-content/plugins/elementor/assets/lib/font-awesome/css/v4-shims.min._ver_4_1_4.css" media="all">
+	<link rel="stylesheet" id="she-header-style-css" href="../wp-content/plugins/sticky-header-effects-for-elementor/assets/css/she-header-style._ver_2_1_6.css" media="all">
+	<link rel="stylesheet" id="elementor-post-1969-css" href="../wp-content/uploads/elementor/css/post-1969._ver_1786118447.css" media="all">
+	<link rel="stylesheet" id="elementor-post-1374-css" href="../wp-content/uploads/elementor/css/post-1374._ver_1786118447.css" media="all">
+	<link rel="stylesheet" id="hfe-icons-list-css" href="../wp-content/plugins/elementor/assets/css/widget-icon-list.min._ver_3_24_3.css" media="all">
+	<link rel="stylesheet" id="hfe-social-icons-css" href="../wp-content/plugins/elementor/assets/css/widget-social-icons.min._ver_3_24_0.css" media="all">
+	<link rel="stylesheet" id="hfe-social-share-icons-brands-css" href="../wp-content/plugins/elementor/assets/lib/font-awesome/css/brands._ver_5_15_3.css" media="all">
+	<link rel="stylesheet" id="hfe-social-share-icons-fontawesome-css" href="../wp-content/plugins/elementor/assets/lib/font-awesome/css/fontawesome._ver_5_15_3.css" media="all">
+	<link rel="stylesheet" id="hfe-nav-menu-icons-css" href="../wp-content/plugins/elementor/assets/lib/font-awesome/css/solid._ver_5_15_3.css" media="all">
+	<link rel="stylesheet" id="sky-elementor-addons-css" href="../wp-content/plugins/sky-elementor-addons/assets/css/sky-addons._ver_3_3_3.css" media="all">
 	<link rel="stylesheet" href="../wp-content/themes/hello-elementor/style.min._ver_3_4_4.css" media="all">
+	<link rel="stylesheet" href="../wp-content/themes/hello-elementor/theme.min._ver_3_4_4.css" media="all">
 
 	<style>
 		:root {
@@ -44,6 +62,10 @@
 			--csp-text-main: #0f172a;
 			--csp-text-muted: #64748b;
 			--csp-border: #e2e8f0;
+		}
+
+		a {
+			text-decoration: none;
 		}
 
 		body {
@@ -58,7 +80,7 @@
 
 		.csp-mag-hero {
 			background: linear-gradient(135deg, #020617 0%, #061022 55%, #0a192f 100%);
-			padding: 140px 24px 90px;
+			padding: 175px 24px 90px;
 			color: #ffffff;
 			position: relative;
 			overflow: hidden;
@@ -344,10 +366,12 @@
 		}
 	</style>
 </head>
-<body class="page-template page-template-elementor_header_footer page">
+<body class="magazine-page wp-singular page-template page-template-elementor_header_footer page wp-custom-logo wp-embed-responsive wp-theme-twentytwentyfour ehf-template-twentytwentyfour ehf-stylesheet-twentytwentyfour elementor-default elementor-template-full-width elementor-kit-9 elementor-page e--ua-blink e--ua-mac e--ua-webkit sticky-menu yes-is-sticky" data-elementor-device-mode="desktop">
+
+	<!-- INCLUDE:wp-header.html -->
 
 	<!-- ── TOP EXECUTIVE HERO ── -->
-	<header class="csp-mag-hero">
+	<section class="csp-mag-hero">
 		<div class="csp-mag-container" style="position:relative;z-index:2;">
 			<div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,174,254,0.14);border:1px solid rgba(0,174,254,0.35);padding:6px 18px;border-radius:50px;margin-bottom:24px;">
 				<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#00AEFE;box-shadow:0 0 10px #00AEFE;"></span>
@@ -372,7 +396,7 @@
 				</a>
 			</div>
 		</div>
-	</header>
+	</section>
 
 	<!-- ── CURRENT ISSUE SPOTLIGHT SECTION ── -->
 	<section id="inside-edition" style="padding:90px 0;background:#ffffff;border-bottom:1px solid #e2e8f0;">
@@ -655,7 +679,7 @@
 				btn.disabled = true;
 				btn.innerHTML = '<span>Registering order...</span>';
 
-				fetch(getRootUrl('api/newsletter.php?action=subscribe'), {
+				fetch(getRootUrl('api/subscribers.php?action=subscribe'), {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
@@ -679,6 +703,59 @@
 				});
 			});
 		}
+	</script>
+
+	<!-- INCLUDE:wp-footer.html -->
+
+	<script id="csp-logo-fix">
+	(function() {
+		var LOGO_SELECTORS = [
+			'.elementor-element-738d6a4 img',
+			'.elementor-element-2d4f26f img'
+		];
+
+		function fixLogoHeight(img) {
+			var storedH = parseInt(img.getAttribute('data-original-height') || '0', 10);
+			var naturalH = img.naturalHeight;
+			var targetH = (storedH > 10) ? storedH : (naturalH > 0 ? Math.min(naturalH, 68) : 68);
+
+			if (img.style.height === '0px' || img.style.height === '0') {
+				img.style.height = targetH + 'px';
+			}
+			if (storedH < 10) {
+				img.setAttribute('data-original-height', targetH);
+			}
+		}
+
+		function patchAllLogos() {
+			LOGO_SELECTORS.forEach(function(sel) {
+				document.querySelectorAll(sel).forEach(fixLogoHeight);
+			});
+		}
+
+		document.addEventListener('DOMContentLoaded', patchAllLogos);
+		window.addEventListener('load', patchAllLogos);
+
+		var observer = new MutationObserver(function(mutations) {
+			mutations.forEach(function(m) {
+				if (m.type === 'attributes' && m.attributeName === 'style') {
+					var el = m.target;
+					if (el.classList.contains('sticel-logo-shrink')) {
+						fixLogoHeight(el);
+					}
+				}
+			});
+		});
+
+		document.addEventListener('DOMContentLoaded', function() {
+			LOGO_SELECTORS.forEach(function(sel) {
+				document.querySelectorAll(sel).forEach(function(img) {
+					observer.observe(img, { attributes: true, attributeFilter: ['style'] });
+				});
+			});
+			patchAllLogos();
+		});
+	})();
 	</script>
 </body>
 </html>

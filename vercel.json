@@ -29,6 +29,14 @@
       "dest": "/public/stories/$1"
     },
     {
+      "src": "/magazine",
+      "dest": "/public/magazine/index.html"
+    },
+    {
+      "src": "/magazine/(.*)",
+      "dest": "/public/magazine/$1"
+    },
+    {
       "src": "/about-us",
       "dest": "/public/about-us/index.html"
     },

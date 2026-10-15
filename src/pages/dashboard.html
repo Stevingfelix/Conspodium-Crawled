@@ -2352,12 +2352,70 @@
       pointer-events: none !important;
     }
 
-    /* Baseline: Completely remove / silence loader from dashboard */
+    /* ── MODERN SLEEK CONSPODIUM PAGE LOADER (STRICT ZERO-FLASH) ───────────────── */
     #csp-page-loader {
-      display: none !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background: rgba(6, 16, 34, 0.96) !important;
+      backdrop-filter: blur(24px) !important;
+      -webkit-backdrop-filter: blur(24px) !important;
+      z-index: 999999999 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    #csp-page-loader.loaded {
       opacity: 0 !important;
-      visibility: hidden !important;
       pointer-events: none !important;
+      visibility: hidden !important;
+    }
+
+    .csp-loader-box {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 18px !important;
+    }
+
+    .csp-loader-spinner-ring {
+      width: 56px !important;
+      height: 56px !important;
+      border-radius: 50% !important;
+      border: 3px solid rgba(255, 255, 255, 0.08) !important;
+      border-top-color: #00AEFE !important;
+      border-right-color: #B71F71 !important;
+      animation: csp-spin-ring 0.75s linear infinite !important;
+      box-shadow: 0 0 32px rgba(0, 174, 254, 0.4) !important;
+    }
+
+    @keyframes csp-spin-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .csp-loader-brand {
+      font-family: 'Merienda', cursive, sans-serif !important;
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
     }
 
     /* ── Sleek Global Toast Notifications & Confirmation Modals ── */
@@ -2709,6 +2767,14 @@
     }
   </style>
 
+  <!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
+  <div id="csp-page-loader">
+    <div class="csp-loader-box">
+      <div class="csp-loader-spinner-ring"></div>
+      <div class="csp-loader-brand">Conspodium</div>
+    </div>
+  </div>
+
   <script id="csp-mobile-menu-script">
     (function () {
       function getRootUrl(targetRoute) {
@@ -2998,6 +3064,24 @@
       };
 
       function initLoaderAndLogo() {
+        var loader = document.getElementById('csp-page-loader');
+
+        function dismissLoader() {
+          if (loader) {
+            loader.classList.add('loaded');
+          }
+        }
+
+        dismissLoader();
+
+        // Event listeners for page restore/navigation
+        window.addEventListener('pageshow', function () {
+          if (loader) loader.classList.add('loaded');
+        });
+        window.addEventListener('popstate', function () {
+          if (loader) loader.classList.add('loaded');
+        });
+
         // Fix all header logos to strictly navigate back to Home root
         var homeUrl = getRootUrl('/');
         var logos = document.querySelectorAll('img.sticel-logo-shrink, .elementor-element-738d6a4 a, .elementor-element-2d4f26f a');
@@ -3007,6 +3091,7 @@
             anchor.setAttribute('href', homeUrl);
             anchor.addEventListener('click', function (e) {
               e.preventDefault();
+              if (loader) loader.classList.add('active');
               window.location.href = homeUrl;
             });
           }
@@ -17168,7 +17253,10 @@
 
         // Authentication & Session Guard
         function checkAuthSession() {
+          var loader = document.getElementById('csp-page-loader');
           var loginScreen = document.getElementById('csp-login-screen');
+
+          if (loader) loader.classList.add('loaded');
 
           var token = localStorage.getItem('conspodium_admin_token') || '';
           if (!token) {
@@ -18605,6 +18693,8 @@
                 document.documentElement.classList.add('authenticated');
                 var loginScreen = document.getElementById('csp-login-screen');
                 if (loginScreen) loginScreen.style.display = 'none';
+                var loader = document.getElementById('csp-page-loader');
+                if (loader) loader.classList.add('loaded');
 
                 if (res.user) {
                   var nameEl = document.getElementById('admin-sidebar-name');

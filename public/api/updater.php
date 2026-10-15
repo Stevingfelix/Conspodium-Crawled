@@ -152,7 +152,7 @@ if ($action === 'upload_update') {
         $entryNameNormalized = str_replace('\\', '/', $entryName);
         
         // Strip common wrapping root folder if package has e.g. "conspodium-update/..."
-        if (preg_match('#^[^/]+/(public/|api/|src/|version\.json|router\.php)#i', $entryNameNormalized, $m)) {
+        if (preg_match('#^[^/]+/(public/|api/|src/|version\.json|router\.php|\.htaccess)#i', $entryNameNormalized, $m)) {
             $firstSlash = strpos($entryNameNormalized, '/');
             $entryNameNormalized = substr($entryNameNormalized, $firstSlash + 1);
         }

@@ -76,7 +76,7 @@ if (fs.existsSync(zipFilePath)) {
 // 4. Create ZIP package using zip command
 console.log(`  2. Creating secure update package (${zipFileName})...`);
 
-const zipCmd = `zip -r "${zipFilePath}" public api src version.json router.php -x "api/config.php" "data/*" "api/*.db" "api/*.sqlite" "*uploads/*" "*.mp4" "*.webm" "*.mov" "*.avi" "*videos/*" "node_modules/*" ".git/*" ".DS_Store" "*__MACOSX*"`;
+const zipCmd = `zip -r "${zipFilePath}" public api src version.json router.php .htaccess -x "api/config.php" "data/*" "api/*.db" "api/*.sqlite" "*uploads/*" "*.mp4" "*.webm" "*.mov" "*.avi" "*videos/*" "node_modules/*" ".git/*" ".DS_Store" "*__MACOSX*"`;
 
 try {
   execSync(zipCmd, { cwd: rootDir, stdio: 'pipe' });

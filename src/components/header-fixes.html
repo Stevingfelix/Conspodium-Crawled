@@ -531,6 +531,7 @@
     text-shadow: none !important;
     letter-spacing: -0.015em !important;
     -webkit-font-smoothing: antialiased !important;
+    text-decoration: none !important;
   }
 
   .elementor-location-header .elementor-button,
@@ -568,31 +569,32 @@
   }
 
   /* ── NORMAL STATE (TOP OF PAGE ON LIGHT HERO PAGES): Crisp Dark Links ─── */
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu a.elementor-item,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu .menu-item a,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-item {
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu a.elementor-item,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu .menu-item a,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header .elementor-item {
     color: #0f172a !important;
     fill: #0f172a !important;
     text-shadow: none !important;
+    text-decoration: none !important;
   }
 
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu a.elementor-item:hover {
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header .elementor-nav-menu a.elementor-item:hover {
     color: #00AEFE !important;
     fill: #00AEFE !important;
     text-shadow: none !important;
   }
 
   /* Normal State Mobile Menu Hamburger Toggle Icon (Un-scrolled on light hero pages) */
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle svg,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle svg line,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header .csp-menu-burger-svg,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg {
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header .csp-menu-burger-svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg {
     color: #0f172a !important;
     fill: none !important;
     stroke: #0f172a !important;
@@ -1581,7 +1583,9 @@
   body.forum-page:not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main .elementor-item,
   body.forum-page:not(.header-is-sticky) .elementor-item,
   body.category-page:not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main .elementor-item,
-  body.category-page:not(.header-is-sticky) .elementor-item {
+  body.category-page:not(.header-is-sticky) .elementor-item,
+  body.magazine-page:not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main .elementor-item,
+  body.magazine-page:not(.header-is-sticky) .elementor-item {
     color: #ffffff !important;
     fill: #ffffff !important;
     text-shadow: none !important;
@@ -1601,16 +1605,21 @@
   body.category-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
   body.category-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
   body.category-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
-  body.category-page:not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg {
+  body.category-page:not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg,
+  body.magazine-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle,
+  body.magazine-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle i,
+  body.magazine-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg,
+  body.magazine-page:not(.header-is-sticky) .elementor-1969 .elementor-menu-toggle svg line,
+  body.magazine-page:not(.header-is-sticky) .elementor-1969 .csp-menu-burger-svg {
     color: #ffffff !important;
     fill: none !important;
     stroke: #ffffff !important;
   }
 
   /* Light hero pages normal state (un-scrolled): crisp dark text over light header */
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main a.elementor-item:not(.active-link):not(.elementor-item-active),
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 a.elementor-item:not(.active-link):not(.elementor-item-active),
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969 .elementor-item:not(.active-link):not(.elementor-item-active) {
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969 .elementor-nav-menu--main a.elementor-item:not(.active-link):not(.elementor-item-active),
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969 a.elementor-item:not(.active-link):not(.elementor-item-active),
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969 .elementor-item:not(.active-link):not(.elementor-item-active) {
     color: #0f172a !important;
     fill: #0f172a !important;
   }
@@ -1635,21 +1644,21 @@
   }
 
   /* Normal un-scrolled state for light hero pages (Dark Icon) */
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle svg,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle svg line,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .csp-menu-burger-svg,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle svg,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle svg line,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .csp-menu-burger-svg,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle i,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle svg,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle svg line,
-  body:not(.home):not(.forum-page):not(.category-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .csp-menu-burger-svg {
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-1969:not(.is-sticky) .csp-menu-burger-svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-location-header:not(.is-sticky) .csp-menu-burger-svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle i,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle svg,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .elementor-menu-toggle svg line,
+  body:not(.home):not(.forum-page):not(.category-page):not(.magazine-page):not(.header-is-sticky) .elementor-element-2d9e131:not(.is-sticky) .csp-menu-burger-svg {
     color: #0f172a !important;
     fill: none !important;
     stroke: #0f172a !important;
