@@ -3132,43 +3132,146 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
     visibility: hidden !important;
   }
 
-  .csp-loader-box {
+  .csp-loader-card {
+    position: relative !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 18px !important;
+    background: rgba(15, 23, 42, 0.78) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 174, 254, 0.15) !important;
+    backdrop-filter: blur(28px) !important;
+    -webkit-backdrop-filter: blur(28px) !important;
+    border-radius: 24px !important;
+    padding: 38px 44px 34px !important;
+    max-width: 380px !important;
+    width: 90% !important;
+    text-align: center !important;
+    animation: csp-card-float 3s ease-in-out infinite alternate !important;
+  }
+
+  @keyframes csp-card-float {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-6px); }
+  }
+
+  .csp-loader-graphic {
+    position: relative !important;
+    width: 84px !important;
+    height: 84px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 22px !important;
+  }
+
+  .csp-loader-pulse-glow {
+    position: absolute !important;
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 50% !important;
+    background: radial-gradient(circle, rgba(0, 174, 254, 0.45) 0%, rgba(183, 31, 113, 0.25) 55%, transparent 75%) !important;
+    animation: csp-pulse 1.8s ease-in-out infinite !important;
+    pointer-events: none !important;
+  }
+
+  @keyframes csp-pulse {
+    0%, 100% { transform: scale(0.9); opacity: 0.55; }
+    50% { transform: scale(1.35); opacity: 0.95; }
   }
 
   .csp-loader-spinner-ring {
-    width: 56px !important;
-    height: 56px !important;
+    position: absolute !important;
+    width: 76px !important;
+    height: 76px !important;
     border-radius: 50% !important;
     border: 3px solid rgba(255, 255, 255, 0.08) !important;
-    border-top-color: #00AEFE !important;
-    border-right-color: #B71F71 !important;
-    animation: csp-spin-ring 0.75s linear infinite !important;
-    box-shadow: 0 0 32px rgba(0, 174, 254, 0.4) !important;
+    border-top: 3px solid #00AEFE !important;
+    border-right: 3px solid #B71F71 !important;
+    border-bottom: 3px solid transparent !important;
+    animation: csp-spin-ring 0.85s cubic-bezier(0.68, -0.2, 0.27, 1.25) infinite !important;
+    filter: drop-shadow(0 0 12px rgba(0, 174, 254, 0.5)) !important;
   }
 
   @keyframes csp-spin-ring {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    100% {
-      transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 
-  .csp-loader-brand {
-    font-family: 'Merienda', cursive, sans-serif !important;
-    font-size: 1.25rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.08em !important;
-    background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
+  .csp-loader-center-icon {
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    filter: drop-shadow(0 2px 8px rgba(0, 174, 254, 0.6)) !important;
+  }
+
+  .csp-loader-brand-title {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
-    background-clip: text !important;
+    margin-bottom: 12px !important;
+  }
+
+  .csp-loader-status-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 9999px !important;
+    padding: 6px 14px !important;
+    margin-bottom: 20px !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    color: #cbd5e1 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .csp-loader-status-dot {
+    width: 7px !important;
+    height: 7px !important;
+    border-radius: 50% !important;
+    background: #00AEFE !important;
+    box-shadow: 0 0 10px #00AEFE !important;
+    animation: csp-status-blink 1.2s infinite ease-in-out !important;
+  }
+
+  @keyframes csp-status-blink {
+    0%, 100% { opacity: 0.35; transform: scale(0.85); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  .csp-loader-track {
+    width: 100% !important;
+    height: 4px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 9999px !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  .csp-loader-bar {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100% !important;
+    width: 45% !important;
+    background: linear-gradient(90deg, transparent 0%, #00AEFE 50%, #B71F71 100%) !important;
+    border-radius: 9999px !important;
+    animation: csp-bar-indeterminate 1.4s ease-in-out infinite !important;
+  }
+
+  @keyframes csp-bar-indeterminate {
+    0% { left: -45%; width: 45%; }
+    50% { left: 30%; width: 55%; }
+    100% { left: 100%; width: 45%; }
   }
 
   /* ── Sleek Global Toast Notifications & Confirmation Modals ── */
@@ -4255,11 +4358,28 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
   }
 </style>
 
-<!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
+<!-- CSP Page Loader (Sleek Mini Animated Screen for Smooth Transition) -->
 <div id="csp-page-loader">
-  <div class="csp-loader-box">
-    <div class="csp-loader-spinner-ring"></div>
-    <div class="csp-loader-brand">Conspodium</div>
+  <div class="csp-loader-card">
+    <div class="csp-loader-graphic">
+      <div class="csp-loader-pulse-glow"></div>
+      <div class="csp-loader-spinner-ring"></div>
+      <div class="csp-loader-center-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00AEFE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+          <path d="M2 17l10 5 10-5"></path>
+          <path d="M2 12l10 5 10-5"></path>
+        </svg>
+      </div>
+    </div>
+    <div class="csp-loader-brand-title">CONSPODIUM</div>
+    <div class="csp-loader-status-pill">
+      <span class="csp-loader-status-dot"></span>
+      <span id="csp-loader-status-text">Loading Experience...</span>
+    </div>
+    <div class="csp-loader-track">
+      <div class="csp-loader-bar"></div>
+    </div>
   </div>
 </div>
 
@@ -4570,7 +4690,6 @@ var pluploadL10n = {"queue_limit_exceeded":"You have attempted to queue too many
           { text: 'Home', href: getRootUrl('/') },
           { text: 'About Us', href: getRootUrl('about-us/') },
           { text: 'Stories', href: getRootUrl('stories/') },
-          { text: 'Magazine', href: getRootUrl('magazine/') },
           { text: 'Forum', href: getRootUrl('forum/') },
           { text: 'Sponsorship', href: getRootUrl('sponsorship/') },
           { text: 'Advert', href: getRootUrl('advert/') },

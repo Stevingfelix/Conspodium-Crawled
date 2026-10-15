@@ -2359,7 +2359,7 @@
       left: 0 !important;
       width: 100vw !important;
       height: 100vh !important;
-      background: rgba(6, 16, 34, 0.96) !important;
+      background: radial-gradient(circle at 50% 45%, #0b1528 0%, #050b16 100%) !important;
       backdrop-filter: blur(24px) !important;
       -webkit-backdrop-filter: blur(24px) !important;
       z-index: 999999999 !important;
@@ -2370,52 +2370,146 @@
       opacity: 1;
       pointer-events: auto;
       visibility: visible;
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
     #csp-page-loader.loaded {
       opacity: 0 !important;
+      transform: scale(1.03) !important;
       pointer-events: none !important;
       visibility: hidden !important;
     }
 
-    .csp-loader-box {
+    .csp-loader-card {
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
-      gap: 18px !important;
+      padding: 34px 40px !important;
+      background: rgba(15, 23, 42, 0.76) !important;
+      border: 1px solid rgba(0, 174, 254, 0.22) !important;
+      border-radius: 24px !important;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), 0 0 35px rgba(0, 174, 254, 0.15) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      max-width: 320px !important;
+      width: 90% !important;
+      text-align: center !important;
+      box-sizing: border-box !important;
+    }
+
+    .csp-loader-graphic {
+      position: relative !important;
+      width: 68px !important;
+      height: 68px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin-bottom: 18px !important;
+    }
+
+    .csp-loader-pulse-glow {
+      position: absolute !important;
+      inset: -6px !important;
+      border-radius: 50% !important;
+      background: radial-gradient(circle, rgba(0, 174, 254, 0.3) 0%, transparent 70%) !important;
+      animation: csp-glow-pulse 2s ease-in-out infinite !important;
     }
 
     .csp-loader-spinner-ring {
-      width: 56px !important;
-      height: 56px !important;
+      width: 64px !important;
+      height: 64px !important;
       border-radius: 50% !important;
-      border: 3px solid rgba(255, 255, 255, 0.08) !important;
+      border: 2.5px solid rgba(255, 255, 255, 0.08) !important;
       border-top-color: #00AEFE !important;
       border-right-color: #B71F71 !important;
-      animation: csp-spin-ring 0.75s linear infinite !important;
-      box-shadow: 0 0 32px rgba(0, 174, 254, 0.4) !important;
+      animation: csp-spin-ring 0.9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite !important;
+      box-shadow: 0 0 20px rgba(0, 174, 254, 0.25) !important;
+    }
+
+    .csp-loader-center-icon {
+      position: absolute !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      animation: csp-icon-bob 2s ease-in-out infinite !important;
+    }
+
+    @keyframes csp-glow-pulse {
+      0%, 100% { transform: scale(0.95); opacity: 0.5; }
+      50% { transform: scale(1.15); opacity: 0.9; }
+    }
+
+    @keyframes csp-icon-bob {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
     }
 
     @keyframes csp-spin-ring {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    .csp-loader-brand {
-      font-family: 'Merienda', cursive, sans-serif !important;
-      font-size: 1.25rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.08em !important;
-      background: linear-gradient(110deg, #00AEFE 0%, #B71F71 100%) !important;
-      -webkit-background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      background-clip: text !important;
+    .csp-loader-brand-title {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif !important;
+      font-size: 0.8rem !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.16em !important;
+      color: #94a3b8 !important;
+      margin-bottom: 8px !important;
+      text-transform: uppercase !important;
+    }
+
+    .csp-loader-status-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 6px 14px !important;
+      background: rgba(0, 174, 254, 0.08) !important;
+      border: 1px solid rgba(0, 174, 254, 0.2) !important;
+      border-radius: 30px !important;
+      font-size: 0.8rem !important;
+      color: #38bdf8 !important;
+      font-weight: 600 !important;
+      margin-bottom: 18px !important;
+    }
+
+    .csp-loader-status-dot {
+      width: 6px !important;
+      height: 6px !important;
+      border-radius: 50% !important;
+      background: #00AEFE !important;
+      box-shadow: 0 0 8px #00AEFE !important;
+      animation: csp-status-blink 1.2s ease-in-out infinite !important;
+    }
+
+    @keyframes csp-status-blink {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    .csp-loader-track {
+      width: 140px !important;
+      height: 3px !important;
+      border-radius: 3px !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      overflow: hidden !important;
+      position: relative !important;
+    }
+
+    .csp-loader-bar {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      height: 100% !important;
+      width: 45% !important;
+      background: linear-gradient(90deg, #00AEFE, #B71F71) !important;
+      border-radius: 3px !important;
+      animation: csp-progress-slide 1.4s ease-in-out infinite !important;
+    }
+
+    @keyframes csp-progress-slide {
+      0% { left: -45%; }
+      100% { left: 100%; }
     }
 
     /* ── Sleek Global Toast Notifications & Confirmation Modals ── */
@@ -2767,13 +2861,7 @@
     }
   </style>
 
-  <!-- CSP Page Loader (Static HTML in head for zero-flash immediate display) -->
-  <div id="csp-page-loader">
-    <div class="csp-loader-box">
-      <div class="csp-loader-spinner-ring"></div>
-      <div class="csp-loader-brand">Conspodium</div>
-    </div>
-  </div>
+
 
   <script id="csp-mobile-menu-script">
     (function () {
@@ -11395,7 +11483,7 @@
 
         function loadOverviewData() {
           var token = localStorage.getItem('conspodium_admin_token') || '';
-          fetch(getRootUrl('api/dashboard.php'), { headers: { 'X-Admin-Token': token } })
+          return fetch(getRootUrl('api/dashboard.php'), { headers: { 'X-Admin-Token': token } })
             .then(function (r) { return r.json(); })
             .then(function (res) {
               if (!res.success || !res.stats) return;
@@ -17255,14 +17343,24 @@
         function checkAuthSession() {
           var loader = document.getElementById('csp-page-loader');
           var loginScreen = document.getElementById('csp-login-screen');
-
-          if (loader) loader.classList.add('loaded');
+          var statusText = document.getElementById('csp-loader-status-text');
+          var brandTitle = document.querySelector('.csp-loader-brand-title');
+          if (brandTitle) brandTitle.textContent = 'CONSPODIUM ADMIN';
 
           var token = localStorage.getItem('conspodium_admin_token') || '';
           if (!token) {
+            if (loader) loader.classList.add('loaded');
             if (loginScreen) loginScreen.style.display = 'flex';
             return;
           }
+
+          // User has session: display sleek loader while syncing metrics
+          if (loader) {
+            loader.classList.remove('loaded');
+            if (statusText) statusText.textContent = 'Synchronizing Workspace...';
+          }
+          var startTime = Date.now();
+          var minDisplayTime = 800; // Silky-smooth display duration preventing data flash
 
           var headers = { 'X-Admin-Token': token };
 
@@ -17274,7 +17372,6 @@
             .then(function (res) {
               if (res.success && res.user) {
                 if (loginScreen) loginScreen.style.display = 'none';
-                if (loader) loader.classList.add('loaded');
                 document.documentElement.classList.remove('unauthenticated');
                 document.documentElement.classList.add('authenticated');
                 localStorage.setItem('csp_last_activity', Date.now().toString());
@@ -17298,7 +17395,7 @@
 
                 // Load Admin CMS data
                 loadCategoriesSelect();
-                loadOverviewData();
+                var overviewPromise = loadOverviewData();
                 loadPosts();
                 loadSubmissions();
                 loadPolls();
@@ -17314,6 +17411,27 @@
                 if (typeof window.restoreActiveTab === 'function') {
                   window.restoreActiveTab();
                 }
+
+                // Smoothly dismiss loader once overview metrics are loaded
+                Promise.resolve(overviewPromise).then(function () {
+                  var elapsed = Date.now() - startTime;
+                  var remaining = Math.max(0, minDisplayTime - elapsed);
+                  setTimeout(function () {
+                    if (statusText) statusText.textContent = 'Workspace Ready';
+                    setTimeout(function () {
+                      if (loader) loader.classList.add('loaded');
+                    }, 200);
+                  }, remaining);
+                }).catch(function () {
+                  if (loader) loader.classList.add('loaded');
+                });
+
+                // Safety failsafe to guarantee overlay never traps user
+                setTimeout(function () {
+                  if (loader && !loader.classList.contains('loaded')) {
+                    loader.classList.add('loaded');
+                  }
+                }, 3500);
 
                 // Background auto-update every 15 seconds (subtle, no screen flicker)
                 if (!window.cspAutoRefreshInterval) {
@@ -18694,7 +18812,11 @@
                 var loginScreen = document.getElementById('csp-login-screen');
                 if (loginScreen) loginScreen.style.display = 'none';
                 var loader = document.getElementById('csp-page-loader');
-                if (loader) loader.classList.add('loaded');
+                var statusText = document.getElementById('csp-loader-status-text');
+                if (loader) {
+                  loader.classList.remove('loaded');
+                  if (statusText) statusText.textContent = 'Authenticated. Initializing workspace...';
+                }
 
                 if (res.user) {
                   var nameEl = document.getElementById('admin-sidebar-name');
